@@ -1,0 +1,215 @@
+metadata:
+  registry_version: "1.0"
+  last_updated: "2026-08-06T19:40:00Z"
+  maintainer: "gridworks-energy"
+
+formats:
+  left.right.dot:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/left.right.dot"
+    created: "2022-01-01T00:00:00Z"
+    status: "published"
+    description: "Dot-separated hierarchical identifier composed of lowercase alphanumeric segments"
+
+  non.empty.string:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/non.empty.string"
+    created: "2024-12-31T15:00:00Z"
+    status: "published"
+    description: "String with at least one character"
+
+  non.negative.int:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/non.negative.int"
+    created: "2024-09-02T15:00:00Z"
+    status: "published"
+    description: "Non-negative integer with non-coercive serialized validation"
+
+  pascal.case:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/pascal.case"
+    created: "2026-05-05T11:40:39Z"
+    status: "published"
+    description: "PascalCase identifier composed of ASCII alphanumeric characters"
+
+  positive.float:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/positive.float"
+    created: "2026-03-30T16:00:00Z"
+    status: "published"
+    description: "Floating-point number strictly greater than zero"
+
+  positive.int:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/positive.int"
+    created: "2024-09-02T15:00:00Z"
+    status: "published"
+    description: "Positive integer with non-coercive serialized validation"
+
+  spaceheat.name:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/spaceheat.name"
+    created: "2024-09-02T15:00:00Z"
+    status: "published"
+    description: "Single-segment lowercase identifier with optional internal hyphen-separated words"
+
+  utc.milliseconds:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/utc.milliseconds"
+    created: "2024-09-02T15:00:00Z"
+    status: "published"
+    description: "UTC timestamp in whole milliseconds since Unix epoch (2000–3000 range)"
+
+  uuid4.str:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/uuid4.str"
+    created: "2024-09-02T15:00:00Z"
+    status: "published"
+    description: "Canonical lowercase UUIDv4 string (RFC 4122) in 8-4-4-4-12 format"
+
+enums:
+  i2c.adc.channel:
+    owner: gridworks-energy
+    enum_type: "literal"
+    description: "ADC input pin identifier for I2C ADC devices."
+    schema_url: "https://schemas.electricity.works/enums/i2c.adc.channel/000"
+    created: "2026-03-04T19:00:00Z"
+    status: "staging"
+
+  spaceheat.unit:
+    latest_version: "001"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "Legacy Spaceheat measurement-unit vocabulary used in channel configuration and telemetry payloads."
+
+    versions:
+      "001":
+        schema_url: "https://schemas.electricity.works/enums/spaceheat.unit/001"
+        created: "2024-09-02T15:00:00Z"
+        status: "published"
+
+  temp.calc.method:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "Method used to calculate temperature from thermistor voltage measurements."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/temp.calc.method/000"
+        created: "2024-10-21T23:19:00Z"
+        status: "published"
+
+types:
+  gw.channel.jump.stats:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Jump/spike statistics for one fleet telemetry channel over one archive window, in the channel's own serialized units — the element of the canary view of board electrical health."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/types/gw.channel.jump.stats/000"
+        created: "2026-08-06T19:40:00Z"
+        status: "staging"
+        summary: "Initial version, from the semafy-experiments pilot (ads-noise at spruce). Travels with the channel's own sema object (ChannelTypeName/ChannelVersion); values in the channel's serialized units."
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+            - "non.negative.int"
+            - "positive.float"
+            - "positive.int"
+            - "spaceheat.name"
+            - "utc.milliseconds"
+
+  gw.experiment.run:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "The metadata every experiment result carries: kind slug, host GNode alias, wall-clock measurement window, optional code pointer."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/types/gw.experiment.run/000"
+        created: "2026-08-06T19:40:00Z"
+        status: "staging"
+        summary: "Initial version, from the semafy-experiments pilot (ads-noise at spruce)."
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+            - "non.empty.string"
+            - "spaceheat.name"
+            - "utc.milliseconds"
+
+  i2c.thermistor.channel.config:
+    latest_version: "002"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Per-channel configuration for a thermistor input read through an I2C ADC."
+
+    versions:
+      "002":
+        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.channel.config/002"
+        created: "2026-06-26T03:40:00Z"
+        status: "staging"
+        summary: "- Unit: drop (redundant; unit and scaling are carried by channel identity) - Exponent: drop (redundant; unit and scaling are carried by channel identity) - CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop (capture/report tuning moved to operational-params capture.tuning) - SendToDerived: drop (derived routing is computed from DerivedChannel InputChannelNames)"
+        direct_dependencies:
+          structural:
+            - "i2c.adc.channel:000"
+            - "positive.int"
+            - "spaceheat.name"
+      "001":
+        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.channel.config/001"
+        created: "2026-03-30T16:07:00Z"
+        status: "staging"
+        summary: "Initial Sema version. Starts at 001 to match the only version ever emitted in the field; the never-emitted sema 000 was dropped."
+        direct_dependencies:
+          structural:
+            - "i2c.adc.channel:000"
+            - "positive.int"
+            - "spaceheat.name"
+            - "spaceheat.unit:001"
+
+  i2c.thermistor.reader.component.gt:
+    latest_version: "003"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Configuration for an I2C thermistor reader component that samples one board-resident ADC (named by AdcName against the board record) and publishes one or more thermistor-backed temperature channels."
+
+    versions:
+      "003":
+        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.reader.component.gt/003"
+        created: "2026-07-19T18:55:00Z"
+        status: "staging"
+        summary: "- Bus, AdcAddress, AdcReferenceVolts, SeriesResistanceKOhms dropped (facts on the board's thermistor-interface capability entry); AdcName added, naming that entry in the board record's ThermistorAdcs; DeviceType dropped (TypeName is the kind; board identity lives on the board component); BoardComponentId added, anchoring the reader to its scada.board.component.gt. Context-dependent: AdcName and BoardComponentId are derived from the source layout, which the standalone component does not carry."
+        direct_dependencies:
+          structural:
+            - "i2c.thermistor.channel.config:002"
+            - "pascal.case"
+            - "temp.calc.method:000"
+            - "uuid4.str"
+      "002":
+        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.reader.component.gt/002"
+        created: "2026-06-26T03:40:00Z"
+        status: "staging"
+        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
+        direct_dependencies:
+          structural:
+            - "i2c.thermistor.channel.config:002"
+            - "pascal.case"
+            - "positive.float"
+            - "spaceheat.name"
+            - "temp.calc.method:000"
+            - "uuid4.str"
+      "001":
+        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.reader.component.gt/001"
+        created: "2026-03-30T16:07:00Z"
+        status: "staging"
+        summary: "Initial Sema version. Starts at 001 to match the only field-emitted version; the never-emitted sema 000 was dropped. Structural-only (gwsproto ConfigUniqueness/AddressValidity axioms deferred)."
+        direct_dependencies:
+          structural:
+            - "i2c.thermistor.channel.config:001"
+            - "positive.float"
+            - "spaceheat.name"
+            - "temp.calc.method:000"
+            - "uuid4.str"

@@ -1,0 +1,20 @@
+# 2026-06-11 — SimSensor outputs exactly what we want (first sim-actor step) · PASS
+
+**Why:** the simulated-actors "DO THIS NEXT" — prove a SimSensor can output
+exactly the sensor channels/units we want, witnessed on a broker, before
+wiring the full scada loop.
+
+**Found (PASS):** a thin SimSensor, configured **generically** from the
+layout's sensor channels (`house0.imaginary`), published a reading per channel
+on the sensor broker (mosquitto :1883); an independent observer witnessed
+**20/20 expected channels, 0 missing, 0 extra** — 3 Power, 8 Temperature, 9
+Voltage, each with the right quantity. The generic-config idea holds: one
+publisher, any unit, any `AboutNodeName`, no per-device drivers.
+
+**Not yet (next fidelity rungs):** publish the *real* `SyncedReadings` type on
+the *real* channel topics (not a `sim/sensor/...` topic); a separate sensor
+*rabbit* broker (so killing it tests a data outage); drive values from a plant
+instead of scripted; then wire into the real scada + LTN dashboard.
+
+**Reproducer:** `sim-time-experiment/sim_sensor_experiment.py` (SimSensor +
+observer, self-verifying PASS); result in `sim_sensor_out/result.json`.

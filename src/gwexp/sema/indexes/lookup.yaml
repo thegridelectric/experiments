@@ -1,0 +1,58 @@
+# GENERATED FILE - DO NOT EDIT
+# Generated from definitions/registry.yaml
+#
+# ------------------------------------------------------------------
+# LOCAL LOOKUP (NON-AUTHORITATIVE)
+#
+# This file provides local resolution from Sema vocabulary words
+# to schema files within this snapshot.
+# ------------------------------------------------------------------
+
+types:
+  gw.channel.jump.stats:
+    latest_version: '000'
+    versioning_strategy: literal
+    versions:
+      '000': definitions/types/gw.channel.jump.stats/000.yaml
+  gw.experiment.run:
+    latest_version: '000'
+    versioning_strategy: literal
+    versions:
+      '000': definitions/types/gw.experiment.run/000.yaml
+  i2c.thermistor.channel.config:
+    latest_version: '002'
+    versioning_strategy: literal
+    versions:
+      '002': definitions/types/i2c.thermistor.channel.config/002.yaml
+      '001': definitions/types/i2c.thermistor.channel.config/001.yaml
+  i2c.thermistor.reader.component.gt:
+    latest_version: '003'
+    versioning_strategy: literal
+    versions:
+      '003': definitions/types/i2c.thermistor.reader.component.gt/003.yaml
+      '002': definitions/types/i2c.thermistor.reader.component.gt/002.yaml
+      '001': definitions/types/i2c.thermistor.reader.component.gt/001.yaml
+enums:
+  i2c.adc.channel:
+    enum_type: literal
+    schema: definitions/enums/i2c.adc.channel/000.yaml
+  spaceheat.unit:
+    enum_type: versioned
+    latest_version: '001'
+    versions:
+      '001': definitions/enums/spaceheat.unit/001.yaml
+  temp.calc.method:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/temp.calc.method/000.yaml
+formats:
+  left.right.dot: definitions/formats/left.right.dot.yaml
+  non.empty.string: definitions/formats/non.empty.string.yaml
+  non.negative.int: definitions/formats/non.negative.int.yaml
+  pascal.case: definitions/formats/pascal.case.yaml
+  positive.float: definitions/formats/positive.float.yaml
+  positive.int: definitions/formats/positive.int.yaml
+  spaceheat.name: definitions/formats/spaceheat.name.yaml
+  utc.milliseconds: definitions/formats/utc.milliseconds.yaml
+  uuid4.str: definitions/formats/uuid4.str.yaml

@@ -1,0 +1,12 @@
+# Sema seed request for the experiments consumer (gwexp.sema snapshot).
+# The two staging experiment words, plus the thermistor-reader lineage the
+# ads-noise harness decodes from box layouts (001-003; the fleet's
+# pre-registry 000 records fall back to a legacy dict-walk in the
+# harness). Formats arrive via dependencies.
+
+initial_targets:
+  types:
+    gw.experiment.run: {}
+    gw.channel.jump.stats: {}
+    i2c.thermistor.reader.component.gt:
+      versions: ["001", "003"]

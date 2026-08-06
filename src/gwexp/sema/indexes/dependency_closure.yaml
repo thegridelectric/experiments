@@ -1,0 +1,84 @@
+# GENERATED FILE - DO NOT EDIT
+# Generated from definitions/registry.yaml
+
+types:
+  gw.channel.jump.stats:
+    '000':
+      enums: []
+      formats:
+      - left.right.dot
+      - non.negative.int
+      - positive.float
+      - positive.int
+      - spaceheat.name
+      - utc.milliseconds
+      types: []
+      versionless_types: []
+  gw.experiment.run:
+    '000':
+      enums: []
+      formats:
+      - left.right.dot
+      - non.empty.string
+      - spaceheat.name
+      - utc.milliseconds
+      types: []
+      versionless_types: []
+  i2c.thermistor.channel.config:
+    '001':
+      enums:
+      - i2c.adc.channel:000
+      - spaceheat.unit:001
+      formats:
+      - positive.int
+      - spaceheat.name
+      types: []
+      versionless_types: []
+    '002':
+      enums:
+      - i2c.adc.channel:000
+      formats:
+      - positive.int
+      - spaceheat.name
+      types: []
+      versionless_types: []
+  i2c.thermistor.reader.component.gt:
+    '001':
+      enums:
+      - i2c.adc.channel:000
+      - spaceheat.unit:001
+      - temp.calc.method:000
+      formats:
+      - positive.float
+      - positive.int
+      - spaceheat.name
+      - uuid4.str
+      types:
+      - i2c.thermistor.channel.config:001
+      versionless_types: []
+    '002':
+      enums:
+      - i2c.adc.channel:000
+      - temp.calc.method:000
+      formats:
+      - pascal.case
+      - positive.float
+      - positive.int
+      - spaceheat.name
+      - uuid4.str
+      types:
+      - i2c.thermistor.channel.config:002
+      versionless_types: []
+    '003':
+      enums:
+      - i2c.adc.channel:000
+      - temp.calc.method:000
+      formats:
+      - pascal.case
+      - positive.int
+      - spaceheat.name
+      - uuid4.str
+      types:
+      - i2c.thermistor.channel.config:002
+      versionless_types: []
+versionless_types: {}

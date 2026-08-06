@@ -1,0 +1,58 @@
+metadata:
+  generated_from: indexes/public_registry.yaml
+  generated_at: '2026-08-06T20:18:20Z'
+  note: Transitive closure of initial_targets
+initial_targets:
+- gw.experiment.run:000
+- gw.channel.jump.stats:000
+- i2c.thermistor.reader.component.gt:001
+- i2c.thermistor.reader.component.gt:003
+worklist:
+  formats:
+    left.right.dot:
+      path: definitions/formats/left.right.dot.yaml
+    non.empty.string:
+      path: definitions/formats/non.empty.string.yaml
+    non.negative.int:
+      path: definitions/formats/non.negative.int.yaml
+    pascal.case:
+      path: definitions/formats/pascal.case.yaml
+    positive.float:
+      path: definitions/formats/positive.float.yaml
+    positive.int:
+      path: definitions/formats/positive.int.yaml
+    spaceheat.name:
+      path: definitions/formats/spaceheat.name.yaml
+    utc.milliseconds:
+      path: definitions/formats/utc.milliseconds.yaml
+    uuid4.str:
+      path: definitions/formats/uuid4.str.yaml
+  enums:
+    i2c.adc.channel:
+      '000':
+        path: definitions/enums/i2c.adc.channel/000.yaml
+    spaceheat.unit:
+      '001':
+        path: definitions/enums/spaceheat.unit/001.yaml
+    temp.calc.method:
+      '000':
+        path: definitions/enums/temp.calc.method/000.yaml
+  types:
+    gw.channel.jump.stats:
+      '000':
+        path: definitions/types/gw.channel.jump.stats/000.yaml
+    gw.experiment.run:
+      '000':
+        path: definitions/types/gw.experiment.run/000.yaml
+    i2c.thermistor.channel.config:
+      '001':
+        path: definitions/types/i2c.thermistor.channel.config/001.yaml
+      '002':
+        path: definitions/types/i2c.thermistor.channel.config/002.yaml
+    i2c.thermistor.reader.component.gt:
+      '001':
+        path: definitions/types/i2c.thermistor.reader.component.gt/001.yaml
+      '002':
+        path: definitions/types/i2c.thermistor.reader.component.gt/002.yaml
+      '003':
+        path: definitions/types/i2c.thermistor.reader.component.gt/003.yaml
