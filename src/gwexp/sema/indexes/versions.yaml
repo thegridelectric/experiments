@@ -3,19 +3,134 @@
 
 
 types:
+  channel.config:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
+
+  channel.readings:
+    latest_version: "002"
+    versioning_strategy: "literal"
+    versions:
+      "002":
+        summary: >
+          - ChannelId: remove
+          - additionalProperties: true -> false
+
+  data.channel.gt:
+    latest_version: "003"
+    versioning_strategy: "literal"
+    versions:
+      "003":
+        summary: >
+          - InPowerMetering: drop (metering is declared by the consuming transactive channel, not here)
+          - PowerMeteringConstraint axiom: drop
+      "002":
+        summary: >
+          - Quantity: add
+          - TelemetryName: spaceheat.telemetry.name:006 -> 007
+          - TelemetryQuantityConsistency axiom: add
+
+  derived.channel.gt:
+    latest_version: "002"
+    versioning_strategy: "literal"
+    versions:
+      "002":
+        summary: >
+          - OutputUnit: gw1.unit 000 -> 001
+          - OutputUnit: required
+          - OutputQuantity: gw1.quantity 000 -> 001
+          - OutputQuantity: add
+          - OutputUnitQuantityConsistency axiom: add
+      "001":
+        summary: >
+          - InputChannelNames[]: add
+          - EmissionMethod: add
+          - Parameters: add (Optional)
+
+  glitch:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
+
+  gw.channel.gap.stats:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial version."
+
   gw.channel.jump.stats:
     latest_version: "000"
     versioning_strategy: "literal"
     versions:
       "000":
-        summary: "Initial version, from the semafy-experiments pilot (ads-noise at spruce). Travels with the channel's own sema object (ChannelTypeName/ChannelVersion); values in the channel's serialized units."
+        summary: "Initial version."
+
+  gw.channel.noise.stats:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial version."
 
   gw.experiment.run:
     latest_version: "000"
     versioning_strategy: "literal"
     versions:
       "000":
-        summary: "Initial version, from the semafy-experiments pilot (ads-noise at spruce)."
+        summary: "Initial version."
+
+  gw.readings:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial version."
+
+  gw1.tank.temp.calibration:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
+
+  gw1.tank.temp.calibration.map:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
+
+  gw1.unit.quantity.projection:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
+
+  ha1.params:
+    latest_version: "006"
+    versioning_strategy: "literal"
+    versions:
+      "006":
+        summary: >
+          - HpMaxKwEl: add as optional
+          - HpMaxKwTh: required -> optional
+          - HpTurnOnMinutes: add
+
+  i2c.multichannel.dt.relay.component.gt:
+    latest_version: "004"
+    versioning_strategy: "literal"
+    versions:
+      "004":
+        summary: "- ConfigList[]: relay.actor.config:002 -> 003"
+      "003":
+        summary: "- Add I2cBus"
 
   i2c.thermistor.channel.config:
     latest_version: "002"
@@ -28,7 +143,9 @@ types:
           - CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop (capture/report tuning moved to operational-params capture.tuning)
           - SendToDerived: drop (derived routing is computed from DerivedChannel InputChannelNames)
       "001":
-        summary: "Initial Sema version. Starts at 001 to match the only version ever emitted in the field; the never-emitted sema 000 was dropped."
+        summary: "Structural-only restamp of the field-emitted shape (see 000)."
+      "000":
+        summary: "Reinstated 2026-08-06 from wire evidence: deployed layouts emit Version 000 records (the lineage was begun at 001 in the belief 000 was never emitted). Field-identical to 001 — upgrade is a version restamp."
 
   i2c.thermistor.reader.component.gt:
     latest_version: "003"
@@ -39,14 +156,171 @@ types:
       "002":
         summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
       "001":
-        summary: "Initial Sema version. Starts at 001 to match the only field-emitted version; the never-emitted sema 000 was dropped. Structural-only (gwsproto ConfigUniqueness/AddressValidity axioms deferred)."
+        summary: "Structural-only restamp of the field-emitted shape (see 000; gwsproto ConfigUniqueness/AddressValidity axioms deferred)."
+      "000":
+        summary: "Reinstated 2026-08-06 from wire evidence: deployed layouts (spruce, July deploy) emit Version 000 records (the lineage was begun at 001 in the belief 000 was never emitted). Field-identical to 001 with 000-stamped ConfigList children — upgrade is a recursive version restamp."
+
+  layout.lite:
+    latest_version: "013"
+    versioning_strategy: "literal"
+    versions:
+      "013":
+        summary: "- I2cRelayComponent: i2c.multichannel.dt.relay.component.gt:003 -> 004"
+      "012":
+        summary: >
+          - DerivedChannels[]: derived.channel.gt:000 | 001 -> 001
+          - DataChannels[]: data.channel.gt:001 -> 002
+          - Ha1Params: ha1.params:004 | 005 | 006 -> ha1.params:006
+          - I2cRelayComponent: i2c.multichannel.dt.relay.component.gt:002 -> 003
+          - ShNodes[]: spaceheat.node.gt:300 | 301 -> 301
+
+  pico.flow.module.component.gt:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
+
+  pico.tank.module.component.gt:
+    latest_version: "011"
+    versioning_strategy: "literal"
+    versions:
+      "011":
+        summary: "Baseline runtime version (no prior version tracked)."
+
+  relay.actor.config:
+    latest_version: "003"
+    versioning_strategy: "literal"
+    versions:
+      "003":
+        summary: "- AsyncCaptureDelta: require when AsyncCapture is true"
+      "002":
+        summary: "Baseline runtime version (no prior version tracked)."
+
+  sim.pico.tank.module.component.gt:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
+
+  spaceheat.node.gt:
+    latest_version: "301"
+    versioning_strategy: "literal"
+    versions:
+      "301":
+        summary: >
+          - BoardComponentId: add as Optional
+          - ActorClass: gw1.actor.class:009 -> 011
+
+  spaceheat.telemetry.quantity.projection:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
 
 enums:
+  change.relay.state:
+    enum_type: "literal"
+    note: "This enum is literal; version 000 is immutable and exclusive."
+    versions:
+      "000": {}
+
+  gpm.from.hz.method:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw1.actor.class:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "011":
+        added_values:
+          - "I2cThermistorReader"
+
+  gw1.emission.method:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw1.quantity:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "001":
+        added_values:
+          - "Time"
+      "000": {}
+
+  gw1.seasonal.storage.mode:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw1.system.mode:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw1.unit:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "001":
+        added_values:
+          - "Seconds"
+          - "SecondsX10"
+      "000": {}
+
+  hz.calc.method:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "001": {}
+
   i2c.adc.channel:
     enum_type: "literal"
     note: "This enum is literal; version 000 is immutable and exclusive."
     versions:
       "000": {}
+
+  log.level:
+    enum_type: "literal"
+    note: "This enum is literal; version 000 is immutable and exclusive."
+    versions:
+      "000": {}
+
+  relay.closed.or.open:
+    enum_type: "literal"
+    note: "This enum is literal; version 000 is immutable and exclusive."
+    versions:
+      "000": {}
+
+  relay.wiring.config:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  spaceheat.make.model:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "003": {}
+
+  spaceheat.telemetry.name:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "007":
+        added_values:
+          - "BinaryState"
 
   spaceheat.unit:
     enum_type: "versioned"

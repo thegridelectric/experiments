@@ -1,0 +1,27 @@
+warning: `VIRTUAL_ENV=/Users/jessica/GridWorks/gridworks-scada/gw_spaceheat/venv` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+Installed 10 packages in 16ms
+2026-06-11 18:23:52,839 [INFO] gwbase.actor_base: Connecting to amqp://smqPublic:smqPublic@localhost:5672/d1__1
+2026-06-11 18:23:52,843 [INFO] gwbase.actor_base: Connection opened
+2026-06-11 18:23:52,843 [INFO] gwbase.actor_base: Creating a new channel
+2026-06-11 18:23:52,843 [INFO] gwbase.actor_base: Channel opened
+2026-06-11 18:23:52,844 [INFO] gwbase.actor_base: Adding consumer channel close callback
+2026-06-11 18:23:52,844 [INFO] gwbase.actor_base: Asserting consume exchange exists: time_tx
+2026-06-11 18:23:52,844 [INFO] gwbase.actor_base: Consume exchange present: time_tx
+2026-06-11 18:23:52,844 [INFO] gwbase.actor_base: Declaring queue d1.tc-Fc7c
+2026-06-11 18:23:52,845 [INFO] gwbase.orchestrator: Binding time_tx to d1.tc-Fc7c with rj.*.*.*.*.d1-tc
+2026-06-11 18:23:52,846 [INFO] gwbase.actor_base: Queue d1.tc-Fc7c bound with rj.*.*.*.*.d1-tc
+2026-06-11 18:23:52,846 [INFO] gwbase.actor_base: QOS set to: 1
+2026-06-11 18:23:52,846 [INFO] gwbase.actor_base: Start consuming
+2026-06-11 18:23:52,846 [INFO] gwbase.actor_base: Adding consumer cancellation callback
+2026-06-11 18:23:52,899 [INFO] gwtc.hello: [d1.tc] consuming; beating every 3.0s, advancing 60s per beat
+2026-06-11 18:23:52,900 [INFO] gwtc.hello: [d1.tc] sim time -> 1781216632
+2026-06-11 18:23:55,910 [INFO] gwtc.hello: [d1.tc] sim time -> 1781216692
+2026-06-11 18:23:58,912 [INFO] gwtc.hello: [d1.tc] sim time -> 1781216752
+2026-06-11 18:24:01,923 [INFO] gwtc.hello: [d1.tc] sim time -> 1781216812
+2026-06-11 18:24:04,935 [INFO] gwtc.hello: [d1.tc] sim time -> 1781216872
+2026-06-11 18:24:07,945 [INFO] gwtc.hello: [d1.tc] sim time -> 1781216932
+2026-06-11 18:24:10,953 [INFO] gwtc.hello: [d1.tc] sim time -> 1781216992
+2026-06-11 18:24:13,963 [INFO] gwtc.hello: [d1.tc] sim time -> 1781217052
+2026-06-11 18:24:16,972 [INFO] gwtc.hello: [d1.tc] sim time -> 1781217112
+2026-06-11 18:24:19,983 [INFO] gwtc.hello: [d1.tc] sim time -> 1781217172
+2026-06-11 18:24:22,985 [INFO] gwtc.hello: [d1.tc] sim time -> 1781217232

@@ -34,7 +34,18 @@ a hand-patch — so we stopped grinding and used a current layout instead.
 layout imaginary (fresh instance UUIDs; canonical device-type UUIDs;
 refreshes stale versions; validates by loading). Proven on
 `house0-layout.json` → loadable imaginary House0 (103 instance ids
-re-randomized, 6 device-type ids canonicalized). Lives in
-`sim-time-experiment/`. The kind of reusable tool EDD throws off.
+re-randomized, 6 device-type ids canonicalized). The kind of reusable
+tool EDD throws off.
 
-(Reproducer not yet in this repo — still in a local workspace; owed.)
+## Folder contents & experimental method
+
+The migration ran against June-era layouts and libraries and no
+longer reproduces; the files here are the archived record, verbatim
+(scripts excluded from the pyright gate):
+
+- `make_imaginary_layout.py` — the wand above.
+- `house0.imaginary.json` — its proven output, the loadable imaginary
+  House0 the sim experiments consumed.
+- `layout_roundtrip_check.py` — the same thread's cross-carrier
+  check: every instance in a scada-format layout decoded through the
+  sema runtime.

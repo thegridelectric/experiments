@@ -2,8 +2,8 @@
 """Pico reporting-gap analysis (READ-ONLY).
 
 Measures inter-report gap statistics for pico-fed channels (flow / depth /
-lwt / ewt / micro-v / pump-ct) over the last 14 days of data, aggregated
-per house (terminal_asset_alias).
+lwt / ewt / micro-v / pump-ct) over the last WINDOW_DAYS days of data,
+aggregated per house (terminal_asset_alias).
 
 A channel's normal cadence = median inter-report interval.
 A GAP = an interval > max(10 min, 3 x median cadence).
@@ -17,18 +17,36 @@ GJK_DB_URL set to its postgres URL (psycopg required).
 """
 
 import os
+import sys
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import LiteralString, NamedTuple
 
 import psycopg
+from pydantic import TypeAdapter
 
-import os
+HERE = Path(__file__).parent
+sys.path.insert(0, str(HERE.parent / "src"))
+
+from gwexp.sema.property_format import (  # noqa: E402
+    LeftRightDot,
+    SpaceheatName,
+    UTCSeconds,
+)
+
+_LRD = TypeAdapter(LeftRightDot)
+_SPACEHEAT = TypeAdapter(SpaceheatName)
+_UTC_S = TypeAdapter(UTCSeconds)
+
 WINDOW_DAYS = int(os.environ.get("WINDOW_DAYS", "14"))
 ABS_GAP_S = 600.0  # 10 minutes
 MEDIAN_MULT = 3.0
 WORST_N = 5
 
-NAME_PATTERNS = ["%-flow%", "%-depth%", "%-lwt%", "%-ewt%", "%micro-v%", "%-pump-ct%"]
+# list[LiteralString] keeps the composed SQL a LiteralString for psycopg.
+NAME_PATTERNS: list[LiteralString] = [
+    "%-flow%", "%-depth%", "%-lwt%", "%-ewt%", "%micro-v%", "%-pump-ct%"]
 
 ANCHOR_SQL = """
 SELECT max("timestamp") FROM gridworks.readings
@@ -55,7 +73,7 @@ hgaps AS (
     FROM house_ts
 )
 SELECT ta, EXTRACT(EPOCH FROM ts) - dt AS gap_start, dt AS gap_dur
-FROM hgaps WHERE dt > {ABS_GAP_S}
+FROM hgaps WHERE dt > %(abs_gap)s
 ORDER BY ta, gap_start
 """
 
@@ -86,17 +104,11 @@ agg AS (
            count(*)                          AS n_readings,
            min(i.ts)                         AS first_ts,
            max(i.ts)                         AS last_ts,
-           count(*) FILTER
-             (WHERE i.dt > GREATEST({ABS_GAP_S}, {MEDIAN_MULT} * m.median_dt))
-                                             AS gap_count,
-           COALESCE(sum(i.dt) FILTER
-             (WHERE i.dt > GREATEST({ABS_GAP_S}, {MEDIAN_MULT} * m.median_dt)), 0)
-                                             AS gap_secs,
-           array_agg(i.dt ORDER BY i.dt) FILTER
-             (WHERE i.dt > GREATEST({ABS_GAP_S}, {MEDIAN_MULT} * m.median_dt))
+           array_agg(i.dt ORDER BY i.ts) FILTER
+             (WHERE i.dt > GREATEST(%(abs_gap)s, %(med_mult)s * m.median_dt))
                                              AS gap_durs,
            array_agg(EXTRACT(EPOCH FROM i.ts) - i.dt ORDER BY i.ts) FILTER
-             (WHERE i.dt > GREATEST({ABS_GAP_S}, {MEDIAN_MULT} * m.median_dt))
+             (WHERE i.dt > GREATEST(%(abs_gap)s, %(med_mult)s * m.median_dt))
                                              AS gap_starts
     FROM intervals i
     JOIN med m USING (channel_id)
@@ -108,8 +120,6 @@ SELECT c.terminal_asset_alias,
        a.n_readings,
        a.first_ts,
        a.last_ts,
-       a.gap_count,
-       a.gap_secs,
        a.gap_durs,
        a.gap_starts
 FROM agg a
@@ -119,16 +129,60 @@ ORDER BY c.terminal_asset_alias, c.name
 """
 
 
-def house_overlap_frac(gap_start, gap_dur, hgaps):
+class GapSpan(NamedTuple):
+    """One reporting gap on one channel: silence start + duration."""
+    start_unix_s: UTCSeconds
+    dur_s: float
+
+    @property
+    def end_unix_s(self) -> float:
+        return self.start_unix_s + self.dur_s
+
+
+class HouseWindow(NamedTuple):
+    """One whole-house silence (all pico channels quiet together —
+    house / scada / pipeline outage, not pico data)."""
+    start_unix_s: UTCSeconds
+    end_unix_s: UTCSeconds
+
+
+class ChannelRow(NamedTuple):
+    """One channel's gap aggregate over the window (one MAIN_SQL row)."""
+    ta: LeftRightDot
+    name: SpaceheatName
+    median_dt_s: float | None
+    n_readings: int
+    first_ts: datetime
+    last_ts: datetime
+    gaps: list[GapSpan]
+
+
+class ChannelSummary(NamedTuple):
+    """Per-channel display aggregate after house-window exclusion."""
+    name: SpaceheatName
+    median_dt_s: float
+    gap_count: int
+    gap_secs: float
+    max_gap_s: float
+    gap_pct: float
+
+
+class GapEvent(NamedTuple):
+    """One kept gap, channel-labeled, for cross-channel overlap."""
+    channel: SpaceheatName
+    start_unix_s: UTCSeconds
+    end_s: float
+
+
+def house_overlap_frac(gap: GapSpan, hgaps: list[HouseWindow]) -> float:
     """Fraction of a channel gap covered by house-silent windows."""
-    g0, g1 = gap_start, gap_start + gap_dur
-    cov = 0.0
-    for h0, h1 in hgaps:
-        cov += max(0.0, min(g1, h1) - max(g0, h0))
-    return cov / gap_dur if gap_dur > 0 else 0.0
+    g0, g1 = gap.start_unix_s, gap.end_unix_s
+    cov = sum(max(0.0, min(g1, h.end_unix_s) - max(g0, h.start_unix_s))
+              for h in hgaps)
+    return cov / gap.dur_s if gap.dur_s > 0 else 0.0
 
 
-def pctl(sorted_vals, q):
+def pctl(sorted_vals: list[float], q: float) -> float | None:
     """Linear-interpolated percentile of a pre-sorted list."""
     if not sorted_vals:
         return None
@@ -137,45 +191,70 @@ def pctl(sorted_vals, q):
     return sorted_vals[f] + (sorted_vals[c] - sorted_vals[f]) * (k - f)
 
 
-def fmin(secs):
+def fmin(secs: float) -> str:
     return f"{secs / 60:.1f}"
 
 
-def house_short(alias):
+def house_short(alias: LeftRightDot) -> str:
+    """Display name only: second-to-last alias segment."""
     parts = alias.split(".")
     return parts[-2] if len(parts) >= 2 and parts[-1] == "ta" else alias
 
 
-def overlap_fraction(events):
-    """events: list of (chan, start_s, end_s). Fraction of gap events that
-    overlap in time with a gap on a DIFFERENT channel of the same house."""
+def overlap_fraction(events: list[GapEvent]) -> float:
+    """Fraction of gap events that overlap in time with a gap on a
+    DIFFERENT channel of the same house."""
     if len(events) < 2:
         return 0.0
     n_overlap = 0
-    for i, (ch, s, e) in enumerate(events):
-        for j, (ch2, s2, e2) in enumerate(events):
-            if i != j and ch2 != ch and s < e2 and s2 < e:
+    for i, a in enumerate(events):
+        for j, b in enumerate(events):
+            if (i != j and b.channel != a.channel
+                    and a.start_unix_s < b.end_s and b.start_unix_s < a.end_s):
                 n_overlap += 1
                 break
     return n_overlap / len(events)
 
 
-def main():
+def fetch(cur: psycopg.Cursor, t0: datetime,
+          anchor: datetime) -> tuple[list[ChannelRow], dict[LeftRightDot, list[HouseWindow]]]:
+    """Both SQL passes, converted to typed records at this boundary."""
+    params = {"t0": t0, "t1": anchor,
+              "abs_gap": ABS_GAP_S, "med_mult": MEDIAN_MULT}
+    cur.execute(MAIN_SQL, params)
+    rows = [ChannelRow(
+        ta=_LRD.validate_python(ta),
+        name=_SPACEHEAT.validate_python(name),
+        median_dt_s=float(med) if med is not None else None,
+        n_readings=n,
+        first_ts=first_ts,
+        last_ts=last_ts,
+        gaps=[GapSpan(start_unix_s=_UTC_S.validate_python(int(s)),
+                      dur_s=float(d))
+              for s, d in zip(gstarts or [], gdurs or [])],
+    ) for ta, name, med, n, first_ts, last_ts, gdurs, gstarts in cur.fetchall()]
+
+    cur.execute(HOUSE_SQL, params)
+    house_gaps: dict[LeftRightDot, list[HouseWindow]] = {}
+    for ta, gs, gd in cur.fetchall():
+        house_gaps.setdefault(_LRD.validate_python(ta), []).append(
+            HouseWindow(start_unix_s=_UTC_S.validate_python(int(gs)),
+                        end_unix_s=_UTC_S.validate_python(int(float(gs) + float(gd)))))
+    return rows, house_gaps
+
+
+def main() -> None:
     url = os.environ["GJK_DB_URL"].replace("postgresql+psycopg://", "postgresql://")
     with psycopg.connect(url) as conn:
         conn.read_only = True
         with conn.cursor() as cur:
             cur.execute(ANCHOR_SQL, (WINDOW_DAYS,))
-            anchor = cur.fetchone()[0]
+            row = cur.fetchone()
+            anchor = row[0] if row else None
             if anchor is None:
                 raise SystemExit("no readings in the last 30 days")
-            t0 = anchor - __import__("datetime").timedelta(days=WINDOW_DAYS)
-            cur.execute(MAIN_SQL, {"t0": t0, "t1": anchor})
-            rows = cur.fetchall()
-            cur.execute(HOUSE_SQL, {"t0": t0, "t1": anchor})
-            house_gaps = {}
-            for ta, gs, gd in cur.fetchall():
-                house_gaps.setdefault(ta, []).append((float(gs), float(gs) + float(gd)))
+            t0 = anchor - timedelta(days=WINDOW_DAYS)
+            rows, house_gaps = fetch(cur, t0, anchor)
 
     window_s = WINDOW_DAYS * 86400.0
     print(f"Pico reporting-gap analysis — window {t0:%Y-%m-%d %H:%M} .. "
@@ -183,46 +262,51 @@ def main():
     print(f"Gap = interval > max({ABS_GAP_S / 60:.0f} min, "
           f"{MEDIAN_MULT:.0f} x median cadence)\n")
 
-    houses = defaultdict(list)
+    houses: dict[LeftRightDot, list[ChannelRow]] = defaultdict(list)
     for r in rows:
-        houses[r[0]].append(r)
+        houses[r.ta].append(r)
 
-    fleet_lines = []
-    hour_hist = Counter()
+    fleet_lines: list[str] = []
+    hour_hist: Counter[int] = Counter()
 
     for alias in sorted(houses):
         chans = houses[alias]
         short = house_short(alias)
-        medians = sorted(float(c[2]) for c in chans if c[2] is not None)
+        medians = sorted(c.median_dt_s for c in chans
+                         if c.median_dt_s is not None)
         hgaps = house_gaps.get(alias, [])
-        all_gap_durs, events = [], []
+        all_gap_durs: list[float] = []
+        events: list[GapEvent] = []
         tot_gap_secs, tot_gaps = 0.0, 0
         excl_house_gaps, excl_house_secs = 0, 0.0
-        per_chan = []
-        for (_, name, med, n, first_ts, last_ts, gc, gsecs, gdurs, gstarts) in chans:
-            gdurs = [float(d) for d in (gdurs or [])]
-            gstarts = [float(s) for s in (gstarts or [])]
-            kept_d, kept_s = [], []
-            for s, d in zip(gstarts, gdurs):
-                if house_overlap_frac(s, d, hgaps) >= 0.6:
+        per_chan: list[ChannelSummary] = []
+        for c in chans:
+            kept: list[GapSpan] = []
+            for g in c.gaps:
+                if house_overlap_frac(g, hgaps) >= 0.6:
                     excl_house_gaps += 1
-                    excl_house_secs += d
+                    excl_house_secs += g.dur_s
                 else:
-                    kept_d.append(d)
-                    kept_s.append(s)
-            gdurs, gstarts = kept_d, kept_s
-            gc = len(gdurs)
-            gsecs = sum(gdurs)
-            all_gap_durs.extend(gdurs)
-            tot_gap_secs += float(gsecs)
-            tot_gaps += gc
-            span = (last_ts - first_ts).total_seconds() or 1.0
-            per_chan.append((name, float(med) if med else 0.0, n, gc,
-                             float(gsecs), max(gdurs) if gdurs else 0.0,
-                             100.0 * float(gsecs) / span))
-            for s, d in zip(gstarts, gdurs):
-                events.append((name, s, s + d))
-                hour_hist[datetime.fromtimestamp(s, tz=timezone.utc).hour] += 1
+                    kept.append(g)
+            gsecs = sum(g.dur_s for g in kept)
+            all_gap_durs.extend(g.dur_s for g in kept)
+            tot_gap_secs += gsecs
+            tot_gaps += len(kept)
+            span = (c.last_ts - c.first_ts).total_seconds() or 1.0
+            per_chan.append(ChannelSummary(
+                name=c.name,
+                median_dt_s=c.median_dt_s or 0.0,
+                gap_count=len(kept),
+                gap_secs=gsecs,
+                max_gap_s=max((g.dur_s for g in kept), default=0.0),
+                gap_pct=100.0 * gsecs / span,
+            ))
+            for g in kept:
+                events.append(GapEvent(channel=c.name,
+                                       start_unix_s=g.start_unix_s,
+                                       end_s=g.end_unix_s))
+                hour_hist[datetime.fromtimestamp(
+                    g.start_unix_s, tz=timezone.utc).hour] += 1
 
         all_gap_durs.sort()
         n_chan = len(chans)
@@ -231,25 +315,27 @@ def main():
 
         print("=" * 78)
         if hgaps:
-            hsum = sum(h1 - h0 for h0, h1 in hgaps)
+            hsum = sum(h.end_unix_s - h.start_unix_s for h in hgaps)
             print(f"  HOUSE-WIDE SILENCE (all pico channels quiet together — house/"
                   f"scada/pipeline outage, NOT pico problems): {len(hgaps)} "
                   f"window(s), {fmin(hsum)} total; {excl_house_gaps} channel-gaps "
                   f"({fmin(excl_house_secs)}) EXCLUDED from the stats above.")
-            for h0, h1 in hgaps[:5]:
-                from datetime import datetime as _dt
-                print(f"    {_dt.fromtimestamp(h0, tz=timezone.utc):%m-%d %H:%M} -> "
-                      f"{_dt.fromtimestamp(h1, tz=timezone.utc):%m-%d %H:%M} UTC "
-                      f"({fmin(h1 - h0)})")
+            for h in hgaps[:5]:
+                print(f"    {datetime.fromtimestamp(h.start_unix_s, tz=timezone.utc):%m-%d %H:%M} -> "
+                      f"{datetime.fromtimestamp(h.end_unix_s, tz=timezone.utc):%m-%d %H:%M} UTC "
+                      f"({fmin(h.end_unix_s - h.start_unix_s)})")
         print(f"HOUSE {short}  ({alias})")
         print(f"  pico channels analyzed : {n_chan}")
         if medians:
+            med_of_meds = pctl(medians, 0.5) or 0.0
             print(f"  median cadence range   : {medians[0]:.0f}s .. {medians[-1]:.0f}s"
-                  f"  (median of medians {pctl(medians, 0.5):.0f}s)")
+                  f"  (median of medians {med_of_meds:.0f}s)")
         print(f"  total gaps             : {tot_gaps}")
         if all_gap_durs:
-            print(f"  gap duration (min)     : p50={fmin(pctl(all_gap_durs, 0.5))}"
-                  f"  p95={fmin(pctl(all_gap_durs, 0.95))}"
+            p50 = pctl(all_gap_durs, 0.5) or 0.0
+            p95 = pctl(all_gap_durs, 0.95) or 0.0
+            print(f"  gap duration (min)     : p50={fmin(p50)}"
+                  f"  p95={fmin(p95)}"
                   f"  max={fmin(all_gap_durs[-1])}")
         print(f"  gapped time % of window: {gap_pct:.3f}%  "
               f"(sum {tot_gap_secs / 3600:.1f} ch-hours over {n_chan} ch x {WINDOW_DAYS} d)")
@@ -258,17 +344,17 @@ def main():
         print(f"  worst {WORST_N} channels (by gapped time):")
         print(f"    {'channel':38s} {'med_s':>6s} {'gaps':>5s} "
               f"{'gap_min':>8s} {'max_min':>8s} {'gap%':>6s}")
-        for name, med, n, gc, gsecs, gmax, gpct in sorted(
-                per_chan, key=lambda x: -x[4])[:WORST_N]:
-            print(f"    {name:38s} {med:6.0f} {gc:5d} "
-                  f"{gsecs / 60:8.1f} {gmax / 60:8.1f} {gpct:6.3f}")
+        for s in sorted(per_chan, key=lambda x: -x.gap_secs)[:WORST_N]:
+            print(f"    {s.name:38s} {s.median_dt_s:6.0f} {s.gap_count:5d} "
+                  f"{s.gap_secs / 60:8.1f} {s.max_gap_s / 60:8.1f} {s.gap_pct:6.3f}")
         print()
 
+        p50s = fmin(pctl(all_gap_durs, 0.5) or 0.0) if all_gap_durs else "-"
+        p95s = fmin(pctl(all_gap_durs, 0.95) or 0.0) if all_gap_durs else "-"
+        maxs = fmin(all_gap_durs[-1]) if all_gap_durs else "-"
         fleet_lines.append(
             f"  {short:12s} chans={n_chan:3d}  gaps={tot_gaps:4d}  "
-            f"p50={fmin(pctl(all_gap_durs, 0.5)) if all_gap_durs else '-':>6s}m  "
-            f"p95={fmin(pctl(all_gap_durs, 0.95)) if all_gap_durs else '-':>6s}m  "
-            f"max={fmin(all_gap_durs[-1]) if all_gap_durs else '-':>7s}m  "
+            f"p50={p50s:>6s}m  p95={p95s:>6s}m  max={maxs:>7s}m  "
             f"gapped={gap_pct:.3f}%  overlap={100 * ovl:.0f}%")
 
     print("=" * 78)

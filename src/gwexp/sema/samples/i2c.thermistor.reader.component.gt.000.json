@@ -1,0 +1,28 @@
+{
+  "TypeName": "i2c.thermistor.reader.component.gt",
+  "Version": "000",
+  "ComponentId": "d2f4d553-6ef0-453d-976d-a1cf297ed1c0",
+  "ComponentAttributeClassId": "8ad2f6fe-e834-4334-80c8-4a0d4ef4b04f",
+  "ConfigList": [
+    {
+      "TypeName": "i2c.thermistor.channel.config",
+      "Version": "000",
+      "ChannelName": "zone1-bedrooms-gw-temp",
+      "PollPeriodMs": 1000,
+      "CapturePeriodS": 60,
+      "AsyncCapture": true,
+      "AsyncCaptureDelta": 50,
+      "Exponent": 2,
+      "Unit": "Celcius",
+      "AdcChannel": "P0",
+      "SendToDerived": false,
+      "ThermistorBeta": 3977
+    }
+  ],
+  "DisplayName": "GW108 Thermistor Reader",
+  "Bus": "i2c-1",
+  "AdcAddress": 73,
+  "AdcReferenceVolts": 3.3,
+  "SeriesResistanceKOhms": 5.6,
+  "TempCalcMethod": "SimpleBeta"
+}

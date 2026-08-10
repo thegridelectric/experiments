@@ -1,9 +1,43 @@
 enums:
+  change.relay.state: change.relay.state
+  gpm.from.hz.method: gpm.from.hz.method
+  gw1.actor.class: gw1.actor.class
+  gw1.emission.method: gw1.emission.method
+  gw1.quantity: gw1.quantity
+  gw1.seasonal.storage.mode: gw1.seasonal.storage.mode
+  gw1.system.mode: gw1.system.mode
+  gw1.unit: gw1.unit
+  hz.calc.method: hz.calc.method
   i2c.adc.channel: i2c.adc.channel
+  log.level: log.level
+  relay.closed.or.open: relay.closed.or.open
+  relay.wiring.config: relay.wiring.config
+  spaceheat.make.model: spaceheat.make.model
+  spaceheat.telemetry.name: spaceheat.telemetry.name
   spaceheat.unit: spaceheat.unit
   temp.calc.method: temp.calc.method
 types:
+  channel.config: channel.config
+  channel.readings: channel.readings
+  data.channel.gt: data.channel.gt
+  derived.channel.gt: derived.channel.gt
+  glitch: glitch
+  gw.channel.gap.stats: gw.channel.gap.stats
   gw.channel.jump.stats: gw.channel.jump.stats
+  gw.channel.noise.stats: gw.channel.noise.stats
   gw.experiment.run: gw.experiment.run
+  gw.readings: gw.readings
+  gw1.tank.temp.calibration: gw1.tank.temp.calibration
+  gw1.tank.temp.calibration.map: gw1.tank.temp.calibration.map
+  gw1.unit.quantity.projection: gw1.unit.quantity.projection
+  ha1.params: ha1.params
+  i2c.multichannel.dt.relay.component.gt: i2c.multichannel.dt.relay.component.gt
   i2c.thermistor.channel.config: i2c.thermistor.channel.config
   i2c.thermistor.reader.component.gt: i2c.thermistor.reader.component.gt
+  layout.lite: layout.lite
+  pico.flow.module.component.gt: pico.flow.module.component.gt
+  pico.tank.module.component.gt: pico.tank.module.component.gt
+  relay.actor.config: relay.actor.config
+  sim.pico.tank.module.component.gt: sim.pico.tank.module.component.gt
+  spaceheat.node.gt: spaceheat.node.gt
+  spaceheat.telemetry.quantity.projection: spaceheat.telemetry.quantity.projection

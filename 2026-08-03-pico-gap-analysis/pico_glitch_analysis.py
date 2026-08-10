@@ -16,49 +16,58 @@ import os
 import re
 import sys
 from collections import Counter, defaultdict
+from pathlib import Path
 
 import psycopg
+
+HERE = Path(__file__).parent
+sys.path.insert(0, str(HERE.parent / "src"))
+
+from gwexp.sema.codec import SemaCodec  # noqa: E402
+from gwexp.sema.property_format import LeftRightDot, SpaceheatName  # noqa: E402
+from gwexp.sema.types import Glitch  # noqa: E402
 
 WINDOW_DAYS = int(os.environ.get("WINDOW_DAYS", "14"))
 PICO_SUMMARIES = ("pico-just-zombied", "pico-zombies")
 
 
+def house(alias: LeftRightDot) -> str:
+    """Display name only: the house segment of the scada alias."""
+    m = re.search(r"\.([a-z0-9]+)\.scada$", alias)
+    return m.group(1) if m else alias
+
+
 def main() -> int:
     url = os.environ["GJK_DB_URL"].replace("postgresql+psycopg://", "postgresql://")
-    conn = psycopg.connect(url)
-    cur = conn.cursor()
+    codec = SemaCodec()
+    with psycopg.connect(url) as conn:
+        conn.read_only = True
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT m.payload
+                FROM gridworks.messages m
+                WHERE m.message_type_name = 'glitch'
+                  AND m.timestamp > now() - interval '1 day' * %s
+                """,
+                (WINDOW_DAYS,),
+            )
+            rows = [codec.from_dict(payload, expect=Glitch)
+                    for (payload,) in cur.fetchall()]
 
-    cur.execute(
-        """
-        SELECT m.from_alias, m.payload->>'Summary',
-               m.payload->>'Node', m.payload->>'Details',
-               m.timestamp AT TIME ZONE 'America/New_York'
-        FROM gridworks.messages m
-        WHERE m.message_type_name = 'glitch'
-          AND m.timestamp > now() - interval '1 day' * %s
-        """,
-        (WINDOW_DAYS,),
-    )
-    rows = cur.fetchall()
-    conn.close()
-
-    def house(alias: str) -> str:
-        m = re.search(r"\.([a-z0-9]+)\.scada$", alias or "")
-        return m.group(1) if m else (alias or "?")
-
-    by_house = defaultdict(Counter)
-    pico_glitches = defaultdict(Counter)
-    zombie_picos = defaultdict(Counter)
-    zombie_nodes = defaultdict(Counter)
-    for alias, summary, node, details, ts in rows:
-        h = house(alias)
-        by_house[h][summary] += 1
-        if summary in PICO_SUMMARIES:
-            pico_glitches[h][summary] += 1
-            for pico in re.findall(r"pico_[0-9a-f]+", details or ""):
+    by_house: dict[str, Counter[str]] = defaultdict(Counter)
+    pico_glitches: dict[str, Counter[str]] = defaultdict(Counter)
+    zombie_picos: dict[str, Counter[str]] = defaultdict(Counter)
+    zombie_nodes: dict[str, Counter[SpaceheatName]] = defaultdict(Counter)
+    for g in rows:
+        h = house(g.from_g_node_alias)
+        by_house[h][g.summary] += 1
+        if g.summary in PICO_SUMMARIES:
+            pico_glitches[h][g.summary] += 1
+            for pico in re.findall(r"pico_[0-9a-f]+", g.details):
                 zombie_picos[h][pico] += 1
-            if summary == "pico-just-zombied" and node:
-                zombie_nodes[h][node] += 1
+            if g.summary == "pico-just-zombied":
+                zombie_nodes[h][g.node] += 1
 
     print(f"Glitch census, last {WINDOW_DAYS} days "
           f"(gridworks.messages, {len(rows)} glitch rows)\n")

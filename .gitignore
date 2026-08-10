@@ -1,6 +1,9 @@
-# Environments and caches — the data files themselves are the record
-# and stay committed.
+# Committed data = sema instances + external evidence (with provenance
+# headers). Generated CSVs and envs are never committed.
+.env
 __pycache__/
 *.pyc
 .venv/
 .DS_Store
+*-display.csv
+*-readable.csv

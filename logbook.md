@@ -9,8 +9,16 @@ Genres share the one namespace, marked in the slug tail: unmarked =
 designed experiment (Why / Setup / Found / data manifest);
 `-analysis` = observational study; `-postmortem` = incident
 investigation (impact, timeline, contributing causes, action items —
-leading with what went well).
+leading with what went well). Queued experiments live in
+`future/<slug>/` and sit at the top here as **queued** until their
+first run dates them.
 
+- **queued · [pico-rejoin](future/pico-rejoin/)** — trace
+  `wlan.status()` timing across power cycles. Why the spruce
+  secondary pico's stereotyped 13–14 min post-shake silence — deployed
+  firmware has no retry (one connect, wait forever), so the schedule
+  lives in the driver/DHCP/router stack; baseline at home, then the
+  sick pico onsite.
 - **2026-08-06 · [ads-noise](2026-08-06-ads-noise/)** — re-run,
   two windows. Run 1 invalidated: the gwspaceheat-restart watchdog
   fired 35 s into the window and restarted the scada under the
@@ -35,12 +43,6 @@ leading with what went well).
   re-alias + full ear slice capture (cmd/ack/forest, SendTimeMs →
   created_at), snapshot heals a corrupted row. Edge projection not
   wire-exercised (no seeded edge).
-- **2026-08-05 · [pico-rejoin](2026-08-05-pico-rejoin/)** — planned:
-  trace `wlan.status()` timing across power cycles. Why the spruce
-  secondary pico's stereotyped 13–14 min post-shake silence — deployed
-  firmware has no retry (one connect, wait forever), so the schedule
-  lives in the driver/DHCP/router stack; baseline at home, then the
-  sick pico onsite.
 - **2026-08-05 · [pico-link-census](2026-08-05-pico-link-census/)** —
   analysis, NEGATIVE result: MAC OUI cannot discriminate wired vs wifi
   picos (ethernet firmware sets no WIZnet MAC). Ground truth is each
@@ -49,8 +51,12 @@ leading with what went well).
   gaps + glitches + their Venn, 56 d: fir/oak/maple tied clean (router
   pick free to rest on other criteria); spruce's "flaky pico" is a
   FEEDBACK LOOP (permanent zombie → half-hourly VDC shakes → one
-  slow-rejoining pico logs a dropout each shake — floor2 fix is the
-  pending discriminator); beech has an unexplained HOURLY disturbance.
+  slow-rejoining pico logs a dropout each shake); beech has an
+  unexplained HOURLY disturbance. 08-10 semafied re-run CONFIRMED the
+  loop via the floor2-removal discriminator: spruce gaps 104 → 17/day,
+  secondary-BTU pico 21.4 → 3.7/day per channel, ~30 min spacing
+  signature gone; residual is the pico's own slow rejoins (pico-rejoin
+  thread).
 - **2026-07-30 · [spruce-no-cool-postmortem](2026-07-30-spruce-no-cool-postmortem/)**
   — heat pump soft-OFF overnight + two gw108 chip failures (0x21
   expander per-start brownouts; dac3 i2c death).

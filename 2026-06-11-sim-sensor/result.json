@@ -1,0 +1,41 @@
+{
+  "broker": "localhost:1883",
+  "expected_channels": 20,
+  "witnessed_channels": 20,
+  "by_quantity_witnessed": {
+    "Power": 3,
+    "Temperature": 8,
+    "Voltage": 9
+  },
+  "missing": [],
+  "extra": [],
+  "quantity_consistent": true,
+  "values_present": true,
+  "PASS": true,
+  "sample": {
+    "hp-odu-pwr": {
+      "ChannelName": "hp-odu-pwr",
+      "AboutNodeName": "hp-odu",
+      "TelemetryName": "PowerW",
+      "Quantity": "Power",
+      "Value": 1500,
+      "ScadaReadTimeUnixMs": 1781233587554
+    },
+    "hp-idu-pwr": {
+      "ChannelName": "hp-idu-pwr",
+      "AboutNodeName": "hp-idu",
+      "TelemetryName": "PowerW",
+      "Quantity": "Power",
+      "Value": 1500,
+      "ScadaReadTimeUnixMs": 1781233587554
+    },
+    "store-pump-pwr": {
+      "ChannelName": "store-pump-pwr",
+      "AboutNodeName": "store-pump",
+      "TelemetryName": "PowerW",
+      "Quantity": "Power",
+      "Value": 1500,
+      "ScadaReadTimeUnixMs": 1781233587554
+    }
+  }
+}

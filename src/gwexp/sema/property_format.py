@@ -7,9 +7,15 @@ from pydantic import BeforeValidator, Field, StrictFloat, StrictInt
 
 
 # --- patterns ---
+HANDLE_NAME_PATTERN = re.compile(
+    r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:\.[a-z][a-z0-9]*(?:-[a-z0-9]+)*)*$"
+)
+
 LEFT_RIGHT_DOT_PATTERN = re.compile(r"^[a-z][a-z0-9]*(\.[a-z0-9]+)*$")
 
 PASCAL_CASE_PATTERN = re.compile(r"^[A-Z][A-Za-z0-9]*$")
+
+POSITIVE_INT_AS_STR_PATTERN = re.compile(r"^[1-9][0-9]*$")
 
 SPACEHEAT_NAME_PATTERN = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
 
@@ -19,6 +25,16 @@ UUID4_STR_PATTERN = re.compile(
 
 
 # --- methods ---
+def is_handle_name(v: str) -> str:
+    if not isinstance(v, str):
+        raise ValueError(f"<{v}>: HandleName must be a string.")
+
+    if not HANDLE_NAME_PATTERN.fullmatch(v):
+        raise ValueError(f"<{v}>: Fails HandleName format.")
+
+    return v
+
+
 def is_left_right_dot(v: str) -> str:
     if not isinstance(v, str):
         raise ValueError(f"<{v}>: LeftRightDot must be a string.")
@@ -55,6 +71,14 @@ def is_positive_int(v: int) -> int:
     return v
 
 
+def is_positive_int_as_str(v: str) -> str:
+    if not isinstance(v, str):
+        raise ValueError(f"<{v}>: positive.int.as.str must be a string.")
+    if not POSITIVE_INT_AS_STR_PATTERN.fullmatch(v):
+        raise ValueError(f"<{v}>: Fails positive.int.as.str format.")
+    return v
+
+
 def is_spaceheat_name(v: str) -> str:
     if not isinstance(v, str):
         raise ValueError(f"<{v}>: SpaceheatName must be a string.")
@@ -84,6 +108,22 @@ def is_utc_milliseconds(v: int) -> int:
     return v
 
 
+def is_utc_seconds(v: int) -> int:
+    if not isinstance(v, int):
+        raise ValueError("Not an int!")
+    start_date = datetime(2000, 1, 1, tzinfo=UTC)
+    end_date = datetime(3000, 1, 1, tzinfo=UTC)
+
+    start_timestamp = int(start_date.timestamp())
+    end_timestamp = int(end_date.timestamp())
+
+    if v < start_timestamp:
+        raise ValueError(f"{v}: Fails UTCSeconds format! Must be after Jan 1 2000")
+    if v > end_timestamp:
+        raise ValueError(f"{v}: Fails UTCSeconds format! Must be before Jan 1 3000")
+    return v
+
+
 def is_uuid4_str(v: str) -> str:
     if not isinstance(v, str):
         raise ValueError(f"<{v}>: uuid4.str must be a string.")
@@ -103,6 +143,11 @@ def is_uuid4_str(v: str) -> str:
 
 
 # --- annotated types ---
+HandleName = Annotated[
+    str,
+    BeforeValidator(is_handle_name),
+]
+
 LeftRightDot = Annotated[
     str,
     BeforeValidator(is_left_right_dot),
@@ -133,6 +178,11 @@ PositiveInt = Annotated[
     BeforeValidator(is_positive_int),
 ]
 
+PositiveIntAsStr = Annotated[
+    str,
+    BeforeValidator(is_positive_int_as_str),
+]
+
 SpaceheatName = Annotated[
     str,
     BeforeValidator(is_spaceheat_name),
@@ -141,6 +191,11 @@ SpaceheatName = Annotated[
 UTCMilliseconds = Annotated[
     int,
     BeforeValidator(is_utc_milliseconds),
+]
+
+UTCSeconds = Annotated[
+    int,
+    BeforeValidator(is_utc_seconds),
 ]
 
 UUID4Str = Annotated[

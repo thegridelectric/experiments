@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "GridWorks real-condition experiments: harnesses, captured data, findings, and sema-typed results."
 requires-python = ">=3.11"
 dependencies = [
+    "psycopg[binary]>=3.1",
     "pydantic>=2.0",
 ]
 
@@ -13,3 +14,8 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/gwexp"]
+
+[tool.pyright]
+# The vendored sema snapshot and the top-level helper modules live
+# outside the installed package path; make the IDE see them.
+extraPaths = ["src", "."]

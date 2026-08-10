@@ -252,7 +252,7 @@ return (2026-07-18). None of this is yet confirmed by electrical measurement.
   still holding despite its dead i2c interface. 08-03: mux healthy,
   DACs on ch1/ch2 ACK, **dac3 still dead** (EIO).
 
-## Analysis notes (reading key, data quality, scripts)
+## Analysis notes (reading key, data quality)
 
 **Reading key for the timeline.** Baseline 07-26→28: primary flow
 > 1 GPM ⇔ active cooling (lwt ≈ 46 °F, ewt−lwt ≈ +4.7 °F); flow ≈ 0 ⇔
@@ -270,29 +270,59 @@ no reports carried them during the incident (verified against the S3
 eventstore). The Emporia minutely data on the heat-pump feed fills much
 of this in.
 
+## Folder contents & experimental method
+
+**How the data was obtained:** entirely from immutable stores — the
+`gw.readings` instance is a pull of what the deployed scada reported
+during the incident window (journal database; anyone can re-pull it),
+and the Emporia CSV is an external download (see its provenance
+header). This is a `-postmortem`: nothing was generated and the running
+system was never touched.
+
 **Files in this folder.**
 
-- `7408E4-Spruce-1MIN.csv` — Emporia 1-minute data on the HP feed (the
-  two mains-CT columns sum to the compressor-side draw).
-- `spruce_incident_data.csv` — 15-min buckets of buffer/loop temps,
-  flows, zone calls (07-26 → 08-03), from the analytics DB, in wire
-  encodings (the `# units:` header maps each channel).
-- `spruce_incident_data-readable.csv` — the same data for human
-  reading: temperatures as °F floats, flows as gpm floats, a
-  `display_unit` column naming each row's unit. Regenerate with
-  `../display.py spruce_incident_data.csv` (the experiments-top interim
-  display converter; goes away when harmonize-units ships).
-- `spruce_primary_flow.csv` — primary-flow 15-min buckets (avg + max),
-  in gpm×100 wire form.
-- `spruce_primary_flow-readable.csv` — the same as gpm floats
-  (regenerate with `../display.py spruce_primary_flow.csv`).
-- `pull_readings.py` — the one read-only DB tool behind every pull in
-  this analysis (modes: `inventory` / `buckets` / `raw` / `gaps`; run
-  with `GJK_DB_URL` pointing at the GridWorks analytics database; usage
-  examples in its header). The CSVs above reproduce as:
-  `pull_readings.py buckets --like 'buffer%' --channel hp-lwt
-  --channel hp-ewt --channel secondary-lwt --channel secondary-ewt
-  --channel secondary-flow --like '%heat-call' --like '%opto-input'
-  --like 'zone%gw-temp' --start '2026-07-26 00:00' --end
-  '2026-08-03 00:00'` (incident data) and `... buckets --channel
-  primary-flow ...` same window (primary flow).
+- `emporia-7408E4-spruce-hp-feed-1min.csv` — EXTERNAL EVIDENCE, kept
+  committed because it is not regenerable from GridWorks systems:
+  Emporia 1-minute data on the HP feed, downloaded by George from the
+  Emporia portal (provenance header in the file; the two mains-CT
+  columns sum to the compressor-side draw).
+- `instances/` — sema-typed results, constructed through the vendored
+  snapshot and derived entirely from this folder's `gw.readings`
+  instance (regenerate with `emit_instances.py`): the analysis window
+  as `gw.experiment.run`, and per-zone `gw.channel.jump.stats` over
+  the window (the incident's electrical spike cluster,
+  machine-readable: zone3 40 spikes, zone4 36, max 126 mV).
+- `hw1.isone.me.versant.keene.spruce.ta-gw.readings-000.json` — the
+  incident window's raw readings as one validated `gw.readings`
+  instance: the channel words (from the scada's own layout.lite
+  emission in the eventstore, 07-30) together with 284,922 readings
+  across 29 channels — this file is the window's data; CSV views of it
+  are generated on demand, never committed (see the paragraph at the
+  bottom). Produced by the repo-top `pull_readings.py` (three-stage:
+  eventstore channel words → DB values → assembly).
+- `emit_instances.py` — derives the folder's result instances from the
+  `gw.readings` instance (see above).
+
+The window's data reproduces from scratch with the repo-top
+`pull_readings.py`:
+`../pull_readings.py --ta hw1.isone.me.versant.keene.spruce.ta
+--like 'buffer%' --channel hp-lwt --channel hp-ewt
+--channel secondary-lwt --channel secondary-ewt
+--channel secondary-flow --channel primary-flow --like '%heat-call'
+--like '%opto-input' --like 'zone%gw-temp' --like 'zone%gw-microvolts'
+--start '2026-07-26 00:00' --end '2026-08-03 00:00' --out .`
+
+**From the instance to the display CSV.** The `*-gw.readings-000.json`
+file is the canonical record: the channel words together with their
+readings, validating against the sema registry. The `-display.csv`
+sibling is presentation only — the same readings as natural-unit floats
+(temperatures °F, flows gpm), converted per each channel word's own
+encoding. Regenerate it any time, with no database or S3 access:
+
+    uv run python ../pull_readings.py --display-from \
+        hw1.isone.me.versant.keene.spruce.ta-gw.readings-000.json
+
+**Display CSV of the jump stats** (one row per zone, thresholds and
+jumps in mV; from the repo top):
+
+    uv run python stats_display.py 2026-07-30-spruce-no-cool-postmortem/instances/*-gw.channel.jump.stats-000.json

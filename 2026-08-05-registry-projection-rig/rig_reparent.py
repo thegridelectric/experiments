@@ -20,8 +20,9 @@ from gwbase.transport_encoding import TransportClass
 
 from gnr.db.session import SessionLocal
 from gnr.dev_universe import DEV_POSITION
+from gnr.sema.codec import SemaCodec
 from gnr.sema.enums import BaseGNodeClass, GNodeStatus
-from gnr.sema.types import GNodeGt, GNodeReparentCmd
+from gnr.sema.types import GNodeForest, GNodeGt, GNodeReparentCmd
 
 KEENE = "d1.isone.me.versant.keene"
 REGISTRY = "d1.gnr"
@@ -98,13 +99,14 @@ def main() -> None:
         )
         print("reparent cmd published as keene MarketMaker")
         wait_for(lambda: len(mm.broadcasts) > 0, 30, "forest broadcast")
-        forest = json.loads(mm.broadcasts[0])
+        forest = SemaCodec().from_dict(json.loads(mm.broadcasts[0]))
+        assert isinstance(forest, GNodeForest)
         print(
-            f"broadcast received: Version={forest['Version']} "
-            f"SendTimeMs={forest.get('SendTimeMs')} "
-            f"nodes={len(forest['Nodes'])}"
+            f"broadcast received: Version={forest.version} "
+            f"SendTimeMs={forest.send_time_ms} "
+            f"nodes={len(forest.nodes)}"
         )
-        print("aliases:", sorted(g["Alias"] for g in forest["Nodes"]))
+        print("aliases:", sorted(g.alias for g in forest.nodes))
     finally:
         mm.stop()
 

@@ -1,12 +1,19 @@
 # Sema seed request for the experiments consumer (gwexp.sema snapshot).
-# The two staging experiment words, plus the thermistor-reader lineage the
-# ads-noise harness decodes from box layouts (000-003; the fleet's
-# 000 records now decode typed — no fallback needed. Formats arrive via
-# harness). Formats arrive via dependencies.
+# The experiment words, glitch (scada glitch messages decoded from the
+# journal DB by the pico reproducers), plus the thermistor-reader
+# lineage the ads-noise harness decodes from box layouts (000-003; the
+# fleet's 000 records decode typed — no fallback needed). Formats and
+# enums arrive via dependencies.
 
 initial_targets:
   types:
+    glitch: {}
+    gw.channel.gap.stats: {}
     gw.experiment.run: {}
     gw.channel.jump.stats: {}
+    gw.channel.noise.stats: {}
+    gw.readings: {}
     i2c.thermistor.reader.component.gt:
       versions: ["000", "003"]
+    layout.lite:
+      versions: ["012", "013"]
