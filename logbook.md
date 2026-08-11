@@ -19,6 +19,12 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-11 · [gwwf-scheduler-witness](2026-08-11-gwwf-scheduler-witness/)**
+  — OPS-436 build step 3 witness: the record-driven scheduler ran a
+  full scenario on gw-dev-rabbit at second-scale record schedules (no
+  time mocking) — observation slots, a silent slot, an interpolated
+  replay, per-channel forecasts on a non-uniform slice grid, and a
+  fidelity-downgrade glitch, all decoded via the snapshot. PASS.
 - **2026-08-11 · [nws-updatetime-probe](2026-08-11-nws-updatetime-probe/)**
   — RUNNING: 5-min poll of the CAR/60,114 hourly product's stamps for
   a day or two, quantifying `updateTime` freshness at :30 (the gwwf
