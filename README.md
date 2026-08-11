@@ -30,6 +30,10 @@ as validated Sema instances.
 - `display.py` — interim wire-encoding → human-readable conversion for
   CSVs (temperatures to °F floats, flows to gpm). Goes away when unit
   harmonization ships.
+- `.env` (gitignored, never committed) — `GJK_DB_URL`, the journal-DB
+  connection string `pull_readings.py` and the per-experiment analysis
+  scripts read. This is the one place journal-DB credentials live on a
+  laptop.
 
 ## Conventions
 
