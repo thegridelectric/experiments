@@ -7,10 +7,12 @@ three stamps that matter to the gwwf emission design: `updateTime`
 The analysis question: how fresh is updateTime at :30 past each hour
 — the planned forecast broadcast phase?
 
-Runs in the gwwf venv (imports its snapshot's property formats):
+Runs in the gwwf venv (imports its snapshot's property formats).
+`caffeinate -i` defeats macOS App Nap, which otherwise suspends a
+backgrounded poller between polls:
 
     cd ~/GridWorks/gridworks-weather-forecast
-    nohup uv run python \
+    nohup caffeinate -i uv run python \
       ../experiments/2026-08-11-nws-updatetime-probe/probe.py \
       >> ../experiments/2026-08-11-nws-updatetime-probe/probe.jsonl 2>> \
       ../experiments/2026-08-11-nws-updatetime-probe/probe.err &

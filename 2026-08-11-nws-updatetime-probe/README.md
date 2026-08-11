@@ -40,6 +40,16 @@ render stamp looked fresh.
   normalize when analyzing.
 - A `status` other than 200 or an `error` line is a poll miss, not a
   product gap; the product's own availability is what matters.
+- **Gaps in `polled_at` mean the probe was suspended, not that NWS
+  changed.** macOS App Nap suspends a plain nohup'd background python
+  between polls (two early launches went silent within minutes while
+  still "alive", state SN); since 13:39 ET the probe runs under
+  `caffeinate -i`, which exempts it. A lid-closed machine still gaps.
+- Early findings (interim, small sample): the 09:09:03Z revision held
+  through at least 12:05–12:33 ET — lag 417→444 min, spanning a :30 —
+  while `generatedAt` refreshed per poll; the next revision
+  (16:33:26Z) appeared by 13:39 ET. The ForecastCreated←updateTime
+  binding is already vindicated; :30 freshness looks unreliable.
 
 ## Folder contents & experimental method
 
@@ -53,10 +63,11 @@ system touched. A re-run produces a new dataset.
 - `probe.err` / `probe.pid` — run mechanics, gitignored-grade;
   not committed.
 
-Regenerate / restart:
+Regenerate / restart (`caffeinate -i` defeats App Nap — see Analysis
+notes):
 
     cd ~/GridWorks/gridworks-weather-forecast
-    nohup uv run python \
+    nohup caffeinate -i uv run python \
       ../experiments/2026-08-11-nws-updatetime-probe/probe.py \
       >> ../experiments/2026-08-11-nws-updatetime-probe/probe.jsonl 2>> \
       ../experiments/2026-08-11-nws-updatetime-probe/probe.err &
