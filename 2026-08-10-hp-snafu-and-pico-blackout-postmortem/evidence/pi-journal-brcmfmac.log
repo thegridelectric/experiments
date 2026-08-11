@@ -1,0 +1,46 @@
+# EXTERNAL EVIDENCE — captured 2026-08-10 22:38:03 EDT over ssh from the spruce pi (100.69.205.1).
+# Command: journalctl -k --since "2026-08-10 12:00" --no-pager | grep brcmfmac | head -40; echo "[...continuous through:]"; journalctl -k --no-pager | grep "set chanspec" | tail -2
+
+Aug 10 12:17:04 spruce kernel: brcmfmac: F1 signature read @0x18000000=0x15264345
+Aug 10 12:17:04 spruce kernel: brcmfmac: brcmf_fw_alloc_request: using brcm/brcmfmac43455-sdio for chip BCM4345/6
+Aug 10 12:17:04 spruce kernel: usbcore: registered new interface driver brcmfmac
+Aug 10 12:48:31 spruce kernel: brcmfmac: brcmf_c_process_txcap_blob: no txcap_blob available (err=-2)
+Aug 10 12:48:31 spruce kernel: brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4345/6 wl0: Aug 29 2023 01:47:08 version 7.45.265 (28bca26 CY) FWID 01-b677b91b
+Aug 10 12:48:33 spruce kernel: brcmfmac: brcmf_cfg80211_set_power_mgmt: power save enabled
+Aug 10 17:04:18 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:04:18 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+Aug 10 17:04:18 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 17:04:18 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+Aug 10 17:04:30 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:04:30 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+Aug 10 17:04:30 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 17:04:30 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+Aug 10 17:04:36 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:04:36 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+Aug 10 17:04:36 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 17:04:37 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+Aug 10 17:04:43 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:04:43 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+Aug 10 17:04:43 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 17:04:43 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+Aug 10 17:04:50 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:04:50 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+Aug 10 17:04:50 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 17:04:50 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+Aug 10 17:04:57 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:04:57 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+Aug 10 17:04:57 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 17:04:57 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+Aug 10 17:05:04 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:05:04 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+Aug 10 17:05:04 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 17:05:04 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+Aug 10 17:05:14 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:05:14 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+Aug 10 17:05:14 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 17:05:14 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+Aug 10 17:05:28 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+Aug 10 17:05:28 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+[...continuous through:]
+Aug 10 22:36:21 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+Aug 10 22:36:21 spruce kernel: brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52

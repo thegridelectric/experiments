@@ -1,0 +1,51 @@
+# EXTERNAL EVIDENCE — captured 2026-08-10 22:38:05 EDT over ssh from the spruce pi (100.69.205.1).
+# Command: echo "== nmcli connection show GridWorks (timestamp = last successful association) =="; nmcli -f connection.id,connection.timestamp,802-11-wireless.seen-bssids connection show GridWorks; echo; echo "== nmcli dev status =="; nmcli dev status; echo; echo "== wifi scan (2.4 GHz GridWorks BSSID 62:7F:F0:3B:2C:27 absent; 5 GHz sibling 66:...:21 beaconing) =="; nmcli dev wifi list; echo; echo "== ip neigh (pico MACs 28:cd:c1:* stale/failed; router + eGauge reachable) =="; ip neigh; echo; echo "== ping sweep =="; for ip in 1 51 131 78 202 74 67; do ping -c2 -W2 -q 192.168.2.$ip >/dev/null 2>&1 && echo "192.168.2.$ip UP" || echo "192.168.2.$ip no reply"; done
+
+== nmcli connection show GridWorks (timestamp = last successful association) ==
+connection.id:                          GridWorks
+connection.timestamp:                   1786395869
+802-11-wireless.seen-bssids:            62:7F:F0:3B:2C:27,A8:6E:84:8B:55:E0,94:18:65:E3:C3:C4
+
+== nmcli dev status ==
+DEVICE         TYPE      STATE                   CONNECTION         
+eth0           ethernet  connected               Wired connection 1 
+tailscale0     tun       connected (externally)  tailscale0         
+lo             loopback  connected (externally)  lo                 
+wlan0          wifi      disconnected            --                 
+p2p-dev-wlan0  wifi-p2p  disconnected            --                 
+
+== wifi scan (2.4 GHz GridWorks BSSID 62:7F:F0:3B:2C:27 absent; 5 GHz sibling 66:...:21 beaconing) ==
+IN-USE  BSSID              SSID        MODE   CHAN  RATE        SIGNAL  BARS  SECURITY 
+        66:7F:F0:3B:2C:21  --          Infra  40    270 Mbit/s  100     ▂▄▆█  WPA2     
+        7C:5E:98:80:EC:C4  13988e9     Mesh   100   270 Mbit/s  100     ▂▄▆█  WPA3     
+        7C:5E:98:80:EC:C8  --          Infra  100   270 Mbit/s  100     ▂▄▆█  --       
+        7C:5E:98:80:EC:C6  Lake House  Infra  100   270 Mbit/s  100     ▂▄▆█  WPA2     
+        7C:5E:98:71:F8:06  Lake House  Infra  100   270 Mbit/s  45      ▂▄__  WPA2     
+        7C:5E:98:71:F8:03  13988e9     Mesh   11    270 Mbit/s  44      ▂▄__  WPA3     
+        7C:5E:98:71:F8:04  13988e9     Mesh   100   270 Mbit/s  44      ▂▄__  WPA3     
+        7C:5E:98:71:F8:08  --          Infra  100   270 Mbit/s  44      ▂▄__  --       
+        7C:5E:98:71:F8:07  --          Infra  11    130 Mbit/s  42      ▂▄__  --       
+        7C:5E:98:71:F8:05  Lake House  Infra  11    130 Mbit/s  40      ▂▄__  WPA2     
+        7C:5E:98:80:EC:C3  13988e9     Mesh   11    270 Mbit/s  27      ▂___  WPA3     
+        E8:2C:6D:BE:89:79  ZyXEL_1137  Infra  1     260 Mbit/s  25      ▂___  WPA2     
+
+== ip neigh (pico MACs 28:cd:c1:* stale/failed; router + eGauge reachable) ==
+192.168.2.131 dev eth0 FAILED 
+192.168.2.78 dev eth0 FAILED 
+192.168.2.202 dev eth0 FAILED 
+192.168.2.203 dev eth0 lladdr 6c:7e:67:e0:92:4e STALE 
+192.168.2.1 dev eth0 lladdr 68:7f:f0:3b:2c:24 REACHABLE 
+192.168.2.51 dev eth0 lladdr f8:2f:5b:00:3f:1c REACHABLE 
+192.168.2.167 dev eth0 FAILED 
+192.168.2.74 dev eth0 FAILED 
+192.168.2.67 dev eth0 FAILED 
+fe80::14e7:5008:185f:9a6f dev eth0 lladdr 6c:7e:67:e0:92:4e STALE 
+
+== ping sweep ==
+192.168.2.1 UP
+192.168.2.51 UP
+192.168.2.131 no reply
+192.168.2.78 no reply
+192.168.2.202 no reply
+192.168.2.74 no reply
+192.168.2.67 no reply

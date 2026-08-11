@@ -1,0 +1,16 @@
+# EXTERNAL EVIDENCE — captured 2026-08-10 22:46:53 EDT over ssh from the spruce pi (100.69.205.1).
+# Command: journalctl -u NetworkManager --since "2026-08-10 16:50" --until "2026-08-10 17:20" --no-pager | grep -iE "wlan0|GridWorks|disconnect"
+
+Aug 10 17:04:14 spruce NetworkManager[641]: <info>  [1786395854.3562] device (wlan0): supplicant interface state: completed -> disconnected
+Aug 10 17:04:14 spruce NetworkManager[641]: <info>  [1786395854.3563] device (p2p-dev-wlan0): supplicant management interface state: completed -> disconnected
+Aug 10 17:04:14 spruce NetworkManager[641]: <info>  [1786395854.4503] device (wlan0): supplicant interface state: disconnected -> scanning
+Aug 10 17:04:14 spruce NetworkManager[641]: <info>  [1786395854.4504] device (p2p-dev-wlan0): supplicant management interface state: disconnected -> scanning
+Aug 10 17:04:29 spruce NetworkManager[641]: <warn>  [1786395869.2847] device (wlan0): link timed out.
+Aug 10 17:04:29 spruce NetworkManager[641]: <info>  [1786395869.2849] device (wlan0): state change: activated -> failed (reason 'ssid-not-found', sys-iface-state: 'managed')
+Aug 10 17:04:29 spruce NetworkManager[641]: <warn>  [1786395869.2880] device (wlan0): Activation: failed for connection 'GridWorks'
+Aug 10 17:04:29 spruce NetworkManager[641]: <info>  [1786395869.2930] device (wlan0): state change: failed -> disconnected (reason 'none', sys-iface-state: 'managed')
+Aug 10 17:04:29 spruce NetworkManager[641]: <info>  [1786395869.3197] dhcp4 (wlan0): canceled DHCP transaction
+Aug 10 17:04:29 spruce NetworkManager[641]: <info>  [1786395869.3198] dhcp4 (wlan0): activation: beginning transaction (timeout in 45 seconds)
+Aug 10 17:04:29 spruce NetworkManager[641]: <info>  [1786395869.3199] dhcp4 (wlan0): state changed no lease
+Aug 10 17:04:39 spruce NetworkManager[641]: <info>  [1786395879.4436] device (wlan0): supplicant interface state: scanning -> inactive
+Aug 10 17:04:39 spruce NetworkManager[641]: <info>  [1786395879.4438] device (p2p-dev-wlan0): supplicant management interface state: scanning -> inactive

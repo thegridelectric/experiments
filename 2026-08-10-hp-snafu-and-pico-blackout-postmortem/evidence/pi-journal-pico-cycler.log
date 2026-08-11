@@ -1,0 +1,46 @@
+# EXTERNAL EVIDENCE — captured 2026-08-10 22:37:58 EDT over ssh from the spruce pi (100.69.205.1).
+# Command: journalctl -u gwspaceheat --since "2026-08-10 16:55" --until "2026-08-10 17:25" --no-pager | grep pico-cycler
+
+Aug 10 17:05:13 spruce python[6587]: 2026-08-10 17:05:13.052 [pico-cycler] buffer pico_206032 flatlined
+Aug 10 17:05:13 spruce python[6587]: 2026-08-10 17:05:13.055 [pico-cycler] TRIGGERING PICO REBOOT! triggered by buffer pico_206032
+Aug 10 17:05:13 spruce python[6587]: 2026-08-10 17:05:13.057 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:05:13 spruce python[6587]: 2026-08-10 17:05:13.061 [pico-cycler] tank1 pico_9a7935 flatlined
+Aug 10 17:05:18 spruce python[6587]: 2026-08-10 17:05:18.076 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:06:18 spruce python[6587]: 2026-08-10 17:06:18.089 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_206032', 'pico_9a7935']
+Aug 10 17:06:18 spruce python[6587]: 2026-08-10 17:06:18.091 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:06:23 spruce python[6587]: 2026-08-10 17:06:23.111 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:07:23 spruce python[6587]: 2026-08-10 17:07:23.122 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_206032', 'pico_9a7935']
+Aug 10 17:07:23 spruce python[6587]: 2026-08-10 17:07:23.128 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:07:28 spruce python[6587]: 2026-08-10 17:07:28.142 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:08:28 spruce python[6587]: 2026-08-10 17:08:28.160 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_9a7935']
+Aug 10 17:08:28 spruce python[6587]: 2026-08-10 17:08:28.164 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:08:33 spruce python[6587]: 2026-08-10 17:08:33.177 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:09:58 spruce python[6587]: 2026-08-10 17:09:58.004 [pico-cycler] Sending problem event for zombies [' pico_206032 [buffer]', ' pico_9a7935 [tank1]']
+Aug 10 17:12:33 spruce python[6587]: 2026-08-10 17:12:33.397 [pico-cycler] primary-btu pico_661635 flatlined
+Aug 10 17:12:33 spruce python[6587]: 2026-08-10 17:12:33.400 [pico-cycler] TRIGGERING PICO REBOOT! triggered by primary-btu pico_661635
+Aug 10 17:12:33 spruce python[6587]: 2026-08-10 17:12:33.402 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:12:33 spruce python[6587]: 2026-08-10 17:12:33.404 [pico-cycler] dist-btu pico_387631 flatlined
+Aug 10 17:12:38 spruce python[6587]: 2026-08-10 17:12:38.416 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:13:38 spruce python[6587]: 2026-08-10 17:13:38.431 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_661635', 'pico_387631']
+Aug 10 17:13:38 spruce python[6587]: 2026-08-10 17:13:38.433 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:13:43 spruce python[6587]: 2026-08-10 17:13:43.448 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:14:43 spruce python[6587]: 2026-08-10 17:14:43.463 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_661635', 'pico_387631']
+Aug 10 17:14:43 spruce python[6587]: 2026-08-10 17:14:43.467 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:14:48 spruce python[6587]: 2026-08-10 17:14:48.481 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:15:48 spruce python[6587]: 2026-08-10 17:15:48.497 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_387631']
+Aug 10 17:15:48 spruce python[6587]: 2026-08-10 17:15:48.501 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:15:53 spruce python[6587]: 2026-08-10 17:15:53.513 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:17:33 spruce python[6587]: 2026-08-10 17:17:33.619 [pico-cycler] secondary-btu pico_1c3c31 flatlined
+Aug 10 17:17:33 spruce python[6587]: 2026-08-10 17:17:33.621 [pico-cycler] TRIGGERING PICO REBOOT! triggered by secondary-btu pico_1c3c31
+Aug 10 17:17:33 spruce python[6587]: 2026-08-10 17:17:33.623 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:17:33 spruce python[6587]: 2026-08-10 17:17:33.638 [pico-cycler] store-btu pico_3a7732 flatlined
+Aug 10 17:17:38 spruce python[6587]: 2026-08-10 17:17:38.641 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:18:38 spruce python[6587]: 2026-08-10 17:18:38.653 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_1c3c31', 'pico_3a7732']
+Aug 10 17:18:38 spruce python[6587]: 2026-08-10 17:18:38.655 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:18:43 spruce python[6587]: 2026-08-10 17:18:43.667 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:19:43 spruce python[6587]: 2026-08-10 17:19:43.680 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_1c3c31', 'pico_3a7732']
+Aug 10 17:19:43 spruce python[6587]: 2026-08-10 17:19:43.686 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:19:48 spruce python[6587]: 2026-08-10 17:19:48.698 [pico-cycler] CloseRelay to vdc-relay-gpio-23
+Aug 10 17:20:48 spruce python[6587]: 2026-08-10 17:20:48.710 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['pico_3a7732']
+Aug 10 17:20:48 spruce python[6587]: 2026-08-10 17:20:48.714 [pico-cycler] OpenRelay to vdc-relay-gpio-23
+Aug 10 17:20:53 spruce python[6587]: 2026-08-10 17:20:53.726 [pico-cycler] CloseRelay to vdc-relay-gpio-23

@@ -19,6 +19,25 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-10 · [hp-snafu-and-pico-blackout-postmortem](2026-08-10-hp-snafu-and-pico-blackout-postmortem/)**
+  — all six layout picos flatlined ~17:04 ET and stayed zombie; root
+  cause pinned to the GridWorks SSID's 2.4 GHz radio going off the air
+  (the pi's own wlan0 lost the same network at 17:04:29; router still
+  wired-reachable and beaconing 5 GHz; every wired channel healthy).
+  5 VDC bus exonerated for this incident, its shared-rail coupling to
+  the board's sick corner documented from the RevC schematic. Second
+  thread OPEN: the Samsung ignored a readback-verified 20:00 cool call
+  — ODU rose to normal standby on its own schedule 19:58–21:30, no
+  pump, no compressor, the 07-29 soft-off shape. Recovery pending: a
+  router power-cycle (owner call or site visit).
+- **2026-08-10 · [ads-declared-rate](2026-08-10-ads-declared-rate/)**
+  — the unlimbo scada's reader→bus path at the LAYOUT-DECLARED ADS
+  rate, honeysuckle bench, both pairings PASS: gated reads 137 ms at
+  8 SPS vs 75 ms at 16 SPS with the readback gate green throughout
+  (the declared rate demonstrably reaches silicon), and bus-path
+  overhead measured ~12–13 ms — putting the 16 SPS @ 2 Hz fallback
+  exactly at the sweep axiom's proposed 0.6 bound. Spruce window (real
+  thermistors) remains; pre-promote gate for the hardware words.
 - **2026-08-06 · [ads-noise](2026-08-06-ads-noise/)** — re-run,
   two windows. Run 1 invalidated: the gwspaceheat-restart watchdog
   fired 35 s into the window and restarted the scada under the
