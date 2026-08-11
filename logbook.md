@@ -19,6 +19,11 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-11 · [nws-updatetime-probe](2026-08-11-nws-updatetime-probe/)**
+  — RUNNING: 5-min poll of the CAR/60,114 hourly product's stamps for
+  a day or two, quantifying `updateTime` freshness at :30 (the gwwf
+  forecast broadcast phase, OPS-436). First poll already showed
+  `updateTime` ~7 h behind a fresh-looking `generatedAt`.
 - **2026-08-11 · [gwwf-obs-roundtrip](2026-08-11-gwwf-obs-roundtrip/)**
   — OPS-436 build step 1 witness: gwwf's publish path broadcast one
   `gw.weather.observation` on gw-dev-rabbit with radio channel =
