@@ -19,6 +19,13 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-11 · [gwwf-obs-roundtrip](2026-08-11-gwwf-obs-roundtrip/)**
+  — OPS-436 build step 1 witness: gwwf's publish path broadcast one
+  `gw.weather.observation` on gw-dev-rabbit with radio channel =
+  location alias; a slug-only tap received it and decoded byte-equal
+  through the vendored staging snapshot. PASS. Pinned: the
+  radio-channel tail keeps its dots (per-segment wildcards work).
+  Bonus: boot validation rejects pre-0.5.x all-zeros dev GNodeIds.
 - **2026-08-10 · [hp-snafu-and-pico-blackout-postmortem](2026-08-10-hp-snafu-and-pico-blackout-postmortem/)**
   — all six layout picos flatlined ~17:04 ET and stayed zombie; root
   cause pinned to the GridWorks SSID's 2.4 GHz radio going off the air
