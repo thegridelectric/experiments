@@ -158,6 +158,9 @@ tonight's failure is observable in the air from the pi's own radio,
 which no VDC-bus state can cause. Standing check: if the SSID returns
 and the picos still don't rejoin, the bus is the next suspect — and no
 journaled channel currently reports the board's 5V current.
+(Resolved 2026-08-11: the SSID returned and all six picos rejoined
+within minutes — see the Recovery timeline. The bus is exonerated
+outright for this incident.)
 
 ## Timeline (ET, 2026-08-10)
 
@@ -193,6 +196,32 @@ journaled channel currently reports the board's 5V current.
   compressor.
 - 21:30:47 — ODU drops to ~12 W low-power, call still closed.
 - ~22:10–23:45 — remote diagnosis; these captures and pulls.
+
+## Recovery timeline (ET, 2026-08-11)
+
+Matt on site; router power-cycled per NEXT STEPS 6–7. Times from the
+spruce pi's own wifi scans and the scada snapshot stream, watched
+read-only over ssh:
+
+- 12:54:50 — first post-recycle scan: router already answering on
+  ethernet (192.168.2.1, same MAC 68:7F:F0:3B:2C:24), but no beacon
+  from it on either band — only neighbor networks.
+- 12:55:40 — `GridWorks` back on the air on 2.4 GHz: BSSID
+  62:7F:F0:3B:2C:27 (the pi profile's own), channel 5, signal 90.
+- 13:02:00 — scada snapshot fully fresh: 54/54 channels, all 23
+  pico-family channels (buffer/tank depths + micro-v, flows,
+  lwt/ewt) posting with ages in seconds — all six picos rejoined on
+  their own, as predicted, with no VDC rescue needed. The eGauge
+  lagged the router reboot by a few minutes and then resumed; its
+  power channels were back at normal ~2–4 min cadence by this
+  snapshot.
+- Same visit, exact times TBD: Matt restarted the heat pump's
+  schedule and set FSV 2091 → 0. No before/after observations of
+  the panel or FSV screens were captured, so hypothesis 1 vs 2
+  above remains open — deferred to the in-person visit (Jessica +
+  George). At 13:02 the compressor was running (~2.8 kW, zones 3
+  and 5 calling) under restored panel/schedule authority — expected
+  with 2091=0, and non-discriminating between the hypotheses.
 
 ## Analysis notes
 
@@ -298,6 +327,12 @@ time, with no database or S3 access:
         hw1.isone.me.versant.keene.spruce.ta-pico.blackout-gw.readings-000.json
 
 ## NEXT STEPS
+
+NOTE 2026-08-11: steps 6–7 are done (see Recovery timeline; 8–9 not
+needed). The HP steps below assume the incident state — 2091=1 and a
+held cool call — which no longer holds: Matt has since restarted the
+schedule and set 2091 → 0. Rework the discrimination plan before the
+Jessica + George visit.
 
 Heat pump visit (Matt or Bradley; coordinate with Jessica first so
 the cool call is held closed during the test):
