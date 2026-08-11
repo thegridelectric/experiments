@@ -35,11 +35,13 @@ from gwbase.gridworks_actor import GridworksActor  # noqa: E402
 from gwbase.transport_encoding import RoutingEnvelope, TransportClass  # noqa: E402
 
 from gwwf.config import GwwfSettings  # noqa: E402
+from gwwf.names import (  # noqa: E402
+    MILLINOCKET,
+    MILLINOCKET_TEMPERATURE,
+    MILLINOCKET_WINDSPEED,
+)
 from gwwf.sema.codec import SemaCodec  # noqa: E402
 from gwwf.sema.types import GwWeatherObservation, GwWeatherReading  # noqa: E402
-
-LOCATION = "us.me.millinocket"
-OBS_TYPE = "gw.weather.observation"
 
 
 def wait_for(predicate, seconds: float, desc: str) -> None:
@@ -80,8 +82,8 @@ class SlugBoundTap(ActorBase):
         self.subscribe_broadcast(
             from_alias=self._publisher_alias,
             from_class=TransportClass.WeatherForecastService,
-            type_name=OBS_TYPE,
-            radio_channel=LOCATION,
+            type_name=GwWeatherObservation.type_name_value(),
+            radio_channel=MILLINOCKET,
         )
 
     def dispatch_message(self, *, envelope: RoutingEnvelope, body: bytes) -> None:
@@ -109,8 +111,8 @@ def main() -> int:
         .strftime("%Y-%m-%dT%H:%M:%SZ"),
         interpolated=False,
         readings=[
-            GwWeatherReading(channel_name=f"{LOCATION}.temperature", value=7268),
-            GwWeatherReading(channel_name=f"{LOCATION}.windspeed", value=4500),
+            GwWeatherReading(channel_name=MILLINOCKET_TEMPERATURE, value=7268),
+            GwWeatherReading(channel_name=MILLINOCKET_WINDSPEED, value=4500),
         ],
     )
 
@@ -122,7 +124,7 @@ def main() -> int:
         time.sleep(0.5)  # the slug bind is issued as consuming starts
 
         envelope = pub.broadcast_envelope(
-            type_name=obs.type_name, radio_channel=LOCATION
+            type_name=obs.type_name, radio_channel=MILLINOCKET
         )
         print(f"publishing on: {envelope.routing_key}")
         diag = pub.send(
