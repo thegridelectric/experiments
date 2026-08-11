@@ -3,8 +3,8 @@
 > What this is: does the unlimbo scada, booted from a sema layout that
 > DECLARES its ADS conversion rate, actually read the chip at that
 > rate? Bench rung PASSED both pairings 2026-08-10; the spruce window
-> (real thermistors) is the remaining rung. The pre-promote EDD gate
-> for the hardware vocabulary.
+> (real thermistors) PASSED 2026-08-11. The pre-promote EDD gate for
+> the hardware vocabulary is met.
 
 ## Why
 
@@ -96,6 +96,64 @@ while sema published 006. Fixed in scada `7b734d85` before the runs.
 - Standing state restored after the runs: the 8 SPS @ 1 Hz primary
   artifact, md5-checked.
 
+## Spruce window, 2026-08-11 — PASS
+
+The real-thermistor rung, on the spruce box with everything else on
+the bus stopped (deployed scada + restart watchdog + summer hack;
+JM executed the stops and restarts). Setup: fresh
+`~/gridworks-scada-unlimbo` checkout at scada `7b734d85`, driver venv,
+`~/envs/dev.env` (real hw1 identity, dev broker via the laptop's
+`ssh -R 1885` tunnel, experiment artifact paths), tlayouts artifacts
+placed at `~/.config/gridworks/scada-experiment/` — the primary
+`gw.nolan.layout.json` plus the `output/spruce-async1/` ops variant
+(zone async deltas at 1 so every polled sample publishes; at the
+operating deltas the noise floor never trips async capture and no
+per-sample series would leave the box). One 420 s bounded boot
+(`window_boot.py`), 09:42–09:48 ET.
+
+**Found:**
+
+- **Zero i2c errors, zero readback mismatches, 8/8 zone channels
+  populated** across the full window (~1,600 gated read sequences at
+  1 Hz × 4 channels, readback gate green throughout). The declared
+  8 SPS runs on the deployment silicon as on the bench.
+- **Real temperatures, sane values:** zone1 22.6 °C, zone2 22.7 °C,
+  zone3 22.9 °C, zone4 (garage) 20.4 °C.
+- **Noise floors in band:** µV sd zone1 301, zone2 332, zone3 292 —
+  inside the ads-noise 8 SPS band (214–450 µV); zone4 511, modestly
+  above (the garage; ads-noise showed elevated sd tracks real air
+  movement). Temp-channel sd 0.010–0.016 °C, matching the 07-30
+  baseline. Stats from the per-sample series in the run's one
+  `report.event` (n = 69–80 per channel over 148 s).
+- **LocalControl crashes on the Nolan layout** (window catch): at its
+  5-min missing-forecast mark it enters ScadaBlind and calls
+  `turn_off_store_pump` → `self.store_pump_failsafe.handle` on a node
+  the Nolan layout does not have (`sh_node_actor.py:797`,
+  `tou_base.py:442`). Killed only the LocalControl actor; the reader
+  ran on. The deployed `actual-spruce` branch guards the equivalent
+  case ("Store pump recovery disabled: required relay/010V nodes are
+  not present in layout") — the unlimbo path lacks the guard.
+- **The experiment env shared the deployed scada's event persister**
+  (window catch): only the layout path was overridden, so the window
+  scada wrote its 26 events into
+  `~/.local/share/gridworks/scada/event/` — which the deployed scada
+  would have uploaded to the prod broker as its own on restart.
+  Archived verbatim to `events-2026-08-11/`, then removed from the box
+  before the restart. Future windows set a distinct paths name in the
+  env so the persister is separate.
+- **No report flush at bounded stop:** a `wait_for`-bounded
+  `proactor.stop()` raises no shutdown event and flushes no final
+  report — only the one mid-run report (first ~148 s of samples)
+  survived; later samples died with the process. Snapshots (30 s
+  cadence, 14 captured) corroborate live reads across the whole
+  window.
+- **Async delta 1 ≠ every sample:** unchanged quantized readings
+  (ADS LSB = 125 µV) do not trip the delta, so the captured rate is
+  ~0.5/s per channel; stats are over changed samples only.
+- The pico-cycler ran one VDC cycle (09:42:33–38) and declared
+  buffer/tank1 `pico-just-zombied` — correct, the pico fleet was still
+  off the air (the 08-10 SSID blackout).
+
 ## Analysis notes
 
 - The timing evidence is the FIRST sweep's glitch timestamps — four
@@ -120,6 +178,29 @@ nothing). A re-run produces a NEW dataset, never a regeneration.
 - `bench-boot-8sps.log` — pairing A's full boot log (stdout+stderr of
   the bounded run), copied verbatim from the pi.
 - `bench-boot-16sps.log` — pairing B's, same.
+- `window_boot.py` — the spruce-window harness: a bounded
+  real-hardware boot built through the BASE `App.make_app_for_cli`
+  (the universe guardrail's designed test-boot exemption — an hw1
+  identity on the localhost tunnel is the window arrangement, which
+  the cli-run path rightly refuses). Runs on the pi with the unlimbo
+  checkout's venv.
+- `capture_window.py` — laptop-side raw capture: everything on the
+  local gw-dev-rabbit MQTT face for the window, one JSONL line per
+  message; refuses to overwrite.
+- `window-boot-2026-08-11.log` — the window's full boot log, copied
+  verbatim from the pi.
+- `window-capture-2026-08-11.jsonl` — the window's broker capture
+  (21 messages: 14 snapshots, 2 zombie glitches, singles).
+- `events-2026-08-11/` — the window scada's persisted events, copied
+  verbatim off the box before their removal from the deployed
+  persister (26 window events + the deployed scada's own 09:39
+  shutdown event, distinguishable by its pre-startup timestamp). The
+  `report.event` here is the canonical per-sample record.
+- `emit_window_instances.py` — distills `events-2026-08-11/` into the
+  window's sema instances.
+- `instances/2026-08-11-spruce-window/` — `gw.experiment.run` + the
+  eight `gw.channel.noise.stats` (both constructed through the gwexp
+  snapshot).
 
 **To repeat** (each run makes a new dated dataset; date the log
 filenames). Artifacts regenerate from tlayouts `jm/spruce` and the
@@ -144,3 +225,25 @@ Read the timing from the run's first sweep:
 
 Leave the pi on the 8 SPS @ 1 Hz primary artifact afterwards (the
 standing state).
+
+**To repeat the spruce window** (each run is a new dated dataset):
+regenerate artifacts (`spruce_sema_gen.py` in tlayouts — emits primary
++ `output/spruce-async1/`), place layout + async1 ops at the pi's
+`~/.config/gridworks/scada-experiment/` paths (md5-check), ship
+`window_boot.py` to `spruce:~`, open `ssh -R 1885:localhost:1885
+spruce` with `gw-dev-rabbit` up. JM stops the three units
+(`gwspaceheat-restart.timer`, `gwspaceheat`, `spruce-summer-hack` —
+timer first); then:
+
+    # laptop
+    ../../gridworks-scada/gw_spaceheat/venv/bin/python capture_window.py \
+        window-capture-<DATE>.jsonl 600
+    # pi
+    cd ~/gridworks-scada-unlimbo/gw_spaceheat && \
+        timeout 480 venv/bin/python ~/window_boot.py 420 \
+        > /tmp/window-boot-<DATE>.log 2>&1
+
+Retrieve the log, archive the new persister events (and remove them
+from the deployed persister — or set a distinct paths name in the env
+first), JM restarts the three units, then
+`emit_window_instances.py` against the new events folder.

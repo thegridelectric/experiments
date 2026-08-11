@@ -23,13 +23,16 @@ uv sync -q
 echo "==> pyright (zero errors, all repo scripts)"
 PYRIGHT_EXCLUDE='2026-08-06-ads-noise/ads_noise_experiment.py
 2026-08-05-registry-projection-rig/rig_reparent.py
+2026-08-10-ads-declared-rate/window_boot.py
+2026-08-10-ads-declared-rate/capture_window.py
 future/pico-rejoin/rejoin_trace.py
 2026-06-11-sim-sensor/sim_sensor_experiment.py
 2026-06-11-sim-time-bridge/harness.py
 2026-06-11-stale-layout-migration/layout_roundtrip_check.py
 2026-06-11-stale-layout-migration/make_imaginary_layout.py
 2026-06-12-sim-plant-flux/simulated_plant.py'
-# Top three: environments this repo lacks (smbus2 pi-only · gnr env ·
+# Top five: environments this repo lacks (smbus2 pi-only · gnr env ·
+# the pi scada checkout's venv · the laptop scada venv ·
 # MicroPython on-pico). June five: archived records of runs that no
 # longer reproduce (June-era APIs), kept verbatim as evidence.
 FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \

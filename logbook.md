@@ -32,12 +32,19 @@ first run dates them.
   router power-cycle (owner call or site visit).
 - **2026-08-10 · [ads-declared-rate](2026-08-10-ads-declared-rate/)**
   — the unlimbo scada's reader→bus path at the LAYOUT-DECLARED ADS
-  rate, honeysuckle bench, both pairings PASS: gated reads 137 ms at
+  rate. Bench rung (08-10), both pairings PASS: gated reads 137 ms at
   8 SPS vs 75 ms at 16 SPS with the readback gate green throughout
-  (the declared rate demonstrably reaches silicon), and bus-path
-  overhead measured ~12–13 ms — putting the 16 SPS @ 2 Hz fallback
-  exactly at the sweep axiom's proposed 0.6 bound. Spruce window (real
-  thermistors) remains; pre-promote gate for the hardware words.
+  (the declared rate demonstrably reaches silicon), bus-path overhead
+  ~12–13 ms — the 16 SPS @ 2 Hz fallback exactly at the sweep axiom's
+  proposed 0.6 bound. Spruce window (08-11), PASS: real thermistors on
+  the box, zero i2c errors, zero readback mismatches, all four zones
+  publishing real temperatures, noise floors in the 8 SPS band
+  (garage modestly above). The pre-promote gate for the hardware
+  words is met. Window catches: unlimbo LocalControl's ScadaBlind
+  path crashes on the Nolan layout (hard-coded House0
+  store-pump-failsafe node), and the experiment env shared the
+  deployed scada's event persister (archived + cleaned; future
+  windows use their own paths name).
 - **2026-08-06 · [ads-noise](2026-08-06-ads-noise/)** — re-run,
   two windows. Run 1 invalidated: the gwspaceheat-restart watchdog
   fired 35 s into the window and restarted the scada under the
