@@ -1,4 +1,4 @@
-# nws-updatetime-probe, 2026-08-11 (RUNNING)
+# nws-updatetime-probe, 2026-08-11 (closed 2026-08-12)
 
 > What this is: a day-or-two poll of the CAR/60,114 hourly product's
 > time stamps, quantifying how fresh `updateTime` (the stamp gwwf
@@ -20,19 +20,32 @@ treats as "same revision, still alive" idempotent re-emits).
 `probe.py` polls the hourly product every 5 minutes from the dev
 machine and appends one JSONL line per poll (`polled_at`,
 `update_time`, `generated_at`, `first_period_start`, HTTP status or
-error). Started 2026-08-11 ~12:05 ET (pid in `probe.pid`); stop by
-killing that pid after a day or two, then analyze.
+error). Started 2026-08-11 ~12:05 ET; stopped 2026-08-12 10:35 ET
+after covering nine :30s.
 
 ## Found
 
-Open — analysis after the run. First poll (12:05 ET) already shows
-the gap the design anticipated: `updateTime` 09:09Z against
-`generatedAt` 16:00Z — the underlying data was ~7 h old while the
-render stamp looked fresh.
+Across every :30 ET the probe covered (9 over two days, gaps from
+machine sleep): **zero had updateTime under an hour old; 22 % (2/9)
+under two hours** — worst 7.4 h. Revisions land 2–4×/day on the WFO
+issuance rhythm (pre-dawn package, midday update, afternoon
+adjustments), so freshness at any broadcast phase is dominated by
+NWS's own cadence: **no choice of emission minute beats another**.
+Verdict for the design: since the emission minute buys no freshness,
+its only job is the FLO ordering contract — so the broadcast moved
+from :30 to :01 (observation :00 → forecast :01 → FLO window),
+returning the rest of the hour to the FLO's randomness window; and
+`SourceUpdatedTime` (not the per-render generatedAt) is confirmed as
+the only honest revision stamp. Challenger model-blend sources that
+regenerate hourly have a real freshness edge worth skill-scoring
+later.
 
 ## Timeline
 
 - 2026-08-11 12:05 ET — probe started (5-min cadence).
+- 2026-08-11 23:00–08:00 ET — no polls (lid closed overnight).
+- 2026-08-12 10:35 ET — probe stopped; final analysis run; data
+  committed.
 
 ## Analysis notes
 

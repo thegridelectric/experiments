@@ -99,8 +99,6 @@ def forecast_channel(name: str, target: str, durations: list[int]):
         total_slices=len(durations),
         slice_duration_s_list=durations,
         forecast_duration_minutes=sum(durations) // 60,
-        emit_period_s=FC_PERIOD_S,
-        emit_offset_s=FC_OFFSET_S,
         start="2026-08-11T00:00:00Z",
         id=str(uuid.uuid4()),
     )
@@ -123,6 +121,8 @@ def witness_bundle() -> GwWeatherForecastBundleGt:
             WIND_FC, WIND, [300, 600, 300]
         ),
         wind_speed_observation_channel=wind_obs,
+        emit_period_s=FC_PERIOD_S,
+        emit_offset_s=FC_OFFSET_S,
         start="2026-08-12T00:00:00Z",
         id=str(uuid.uuid4()),
     )

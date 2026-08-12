@@ -8,9 +8,10 @@
 
 ## Why
 
-The scheduler's contract lives in the channel records: cadence from
-`EmitPeriodS`/`EmitOffsetS`, slice arithmetic from
-`SliceDurationSList`. The witness proves that contract against
+The scheduler's contract lives in the seed records: observation
+cadence from the channel's `EmitPeriodS`/`EmitOffsetS`, forecast
+cadence from the bundle's, slice arithmetic from the forecast
+channel's `SliceDurationSList`. The witness proves that contract against
 reality with no time mocking — witness records simply carry
 second-scale schedules (observations 20s/0, forecasts 20s/10), so
 the exact production code path runs a full multi-slot scenario in
