@@ -36,12 +36,36 @@ from scada_app import ScadaApp  # noqa: E402
 DEFAULT_ENV = Path("~/envs/dev.env").expanduser()
 DEFAULT_SECONDS = 420  # >= 5 min of 1 Hz reads inside the window, plus boot
 
+# The window's own paths root. NOT overridable from the env file, and not
+# even by a get_settings(paths_name=...) argument: every app-construction
+# path re-applies cls.paths_name() (get_settings ends with
+# .with_paths(name=... or cls.paths_name()), and make_app_for_cli rebuilds
+# settings through cls()). The 2026-08-12 window leaked its dying shutdown
+# event to prod through the shared event dir that way. The ONLY reliable
+# override is the classmethod itself — hence the subclass — and the boot
+# ASSERTS the isolation on the app's own settings before running.
+PATHS_NAME = "scada-experiment"
+
+
+class WindowScadaApp(ScadaApp):
+    @classmethod
+    def paths_name(cls) -> str:
+        return PATHS_NAME
+
 
 def build_app(env_file: Path) -> ScadaApp:
-    settings = ScadaApp.get_settings(env_file=env_file)
-    return App.make_app_for_cli.__func__(  # base impl: no universe assert
-        ScadaApp, app_settings=settings, env_file=env_file
+    settings = WindowScadaApp.get_settings(env_file=env_file)
+    app = App.make_app_for_cli.__func__(  # base impl: no universe assert
+        WindowScadaApp, app_settings=settings, env_file=env_file
     )
+    for isolated in (app.settings.paths.event_dir, app.settings.paths.log_dir):
+        if PATHS_NAME not in str(isolated):
+            raise SystemExit(
+                f"paths-root isolation failed: {isolated} is outside the "
+                f"{PATHS_NAME} root — refusing to run (events/logs would "
+                "share the deployed scada's dirs and reupload to prod)"
+            )
+    return app
 
 
 async def _run_bounded(app: ScadaApp, seconds: int) -> None:
