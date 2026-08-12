@@ -19,6 +19,16 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-12 · [spruce-witness-window](2026-08-12-spruce-witness-window/)**
+  — first witnessed scada actuation on spruce (NolanLocalControl scripted
+  witness, on-peak windows). #1 FAIL: a third ConfigList-walker bug spun
+  the event loop (420k log lines, no snapshots, witness never ran); one
+  generic shutdown event leaked to prod/S3 via a silently-discarded
+  paths override — found, archived, deleted; no staging words escaped.
+  #2 PASS after fixes: 6 pin-confirmed actuations, 0 glitches;
+  dist response through the Caleffi box ≤29 s (off ~5 s);
+  secondary-flow 7.46 GPM in seconds at the 65% EEPROM default
+  (off ~4 s). Warm takeover witnessed ×2; holds never moved.
 - **2026-08-11 · [gwwf-scheduler-witness](2026-08-11-gwwf-scheduler-witness/)**
   — OPS-436 build step 3 witness: the record-driven scheduler ran a
   full scenario on gw-dev-rabbit at second-scale record schedules (no
