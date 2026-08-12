@@ -72,8 +72,9 @@ the run hour), so nothing beyond code and this README is committed.
 - `roundtrip.py` — the harness: publisher + slug-bound tap in one
   process; asserts decode equality and exits non-zero on any miss.
   Repointed post-run at `gwwf.names` for the channel/location
-  constants (no semantic change; re-verified PASS) — re-running now
-  needs gwwf at the NWS-adapters commit or later.
+  constants, then again 2026-08-12 to the r2 observation shape
+  (hard-coded quantities; re-verified PASS) — re-running needs gwwf
+  at the r2-cutover commit or later.
 
 Regenerate everything (needs the local dev broker up):
 

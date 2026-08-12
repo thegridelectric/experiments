@@ -11,7 +11,7 @@ vendored snapshot and asserts:
   2. a slot with nothing new stays silent (exact message counts);
   3. recovery replays the missed grid point interpolated
      (Interpolated: true, linear value);
-  4. Live forecasts land one-per-channel with values laid on a
+  4. Live forecasts land one-per-BUNDLE with values laid on a
      NON-uniform slice grid ([300, 600, 300]);
   5. losing the live source downgrades to Stored with a glitch.
 
@@ -46,7 +46,6 @@ from gwwf.grid import next_slot, s_to_iso  # noqa: E402
 from gwwf.nws import HourlyForecastProduct  # noqa: E402
 from gwwf.scheduler import (  # noqa: E402
     EmissionScheduler,
-    ForecastEntrySpec,
     ForecastStream,
     ObservationStream,
     WeatherMessage,
@@ -58,17 +57,18 @@ from gwwf.sema.types import (  # noqa: E402
     Glitch,
     GwWeatherChannelGt,
     GwWeatherForecast,
+    GwWeatherForecastBundleGt,
     GwWeatherForecastChannelGt,
     GwWeatherObservation,
-    GwWeatherReading,
 )
 
 _lrd: TypeAdapter[LeftRightDot] = TypeAdapter(LeftRightDot)
 LOCATION = _lrd.validate_python("d1.witness")
 TEMP = _lrd.validate_python("d1.witness.temperature")
 WIND = _lrd.validate_python("d1.witness.windspeed")
-TEMP_FC = _lrd.validate_python("d1.witness.temperature.forecast.fake")
-WIND_FC = _lrd.validate_python("d1.witness.windspeed.forecast.fake")
+TEMP_FC = _lrd.validate_python("d1.witness.temperature.forecast.fake.hourly")
+WIND_FC = _lrd.validate_python("d1.witness.windspeed.forecast.fake.hourly")
+BUNDLE_NAME = _lrd.validate_python("d1.witness.forecast.fake.hourly")
 
 OBS_PERIOD_S, OBS_OFFSET_S = 20, 0
 FC_PERIOD_S, FC_OFFSET_S = 20, 10
@@ -106,14 +106,37 @@ def forecast_channel(name: str, target: str, durations: list[int]):
     )
 
 
+def witness_bundle() -> GwWeatherForecastBundleGt:
+    temp_obs = observation_channel(
+        TEMP, Gw1Quantity.Temperature, Gw1Unit.FahrenheitX100
+    )
+    wind_obs = observation_channel(
+        WIND, Gw1Quantity.WindSpeed, Gw1Unit.MilesPerHourX1000
+    )
+    return GwWeatherForecastBundleGt(
+        name=BUNDLE_NAME,
+        display_name="witness bundle",
+        location_alias=LOCATION,
+        temp_forecast_channel=forecast_channel(TEMP_FC, TEMP, [300, 600, 300]),
+        temp_observation_channel=temp_obs,
+        wind_speed_forecast_channel=forecast_channel(
+            WIND_FC, WIND, [300, 600, 300]
+        ),
+        wind_speed_observation_channel=wind_obs,
+        start="2026-08-12T00:00:00Z",
+        id=str(uuid.uuid4()),
+    )
+
+
 def observation(epoch_s: int, temp: int, wind: int) -> GwWeatherObservation:
     return GwWeatherObservation(
+        location_alias=LOCATION,
         observation_time=s_to_iso(epoch_s),
         interpolated=False,
-        readings=[
-            GwWeatherReading(channel_name=TEMP, value=temp),
-            GwWeatherReading(channel_name=WIND, value=wind),
-        ],
+        temp_channel_name=TEMP,
+        temp_value=temp,
+        wind_speed_channel_name=WIND,
+        wind_speed_value=wind,
     )
 
 
@@ -181,8 +204,7 @@ class WitnessTap(ActorBase):
     def local_rabbit_startup(self) -> None:
         for type_name, radio in [
             (GwWeatherObservation.type_name_value(), LOCATION),
-            (GwWeatherForecast.type_name_value(), TEMP_FC),
-            (GwWeatherForecast.type_name_value(), WIND_FC),
+            (GwWeatherForecast.type_name_value(), BUNDLE_NAME),
             (Glitch.type_name_value(), None),
         ]:
             self.subscribe_broadcast(
@@ -232,35 +254,25 @@ def main() -> int:
     )
     product_fetch = ScriptedFetch([product, RuntimeError("live source down")])
 
-    temp_fc_channel = forecast_channel(TEMP_FC, TEMP, [300, 600, 300])
-    wind_fc_channel = forecast_channel(WIND_FC, WIND, [300, 300, 300, 300])
+    bundle = witness_bundle()
 
     def scheduler_factory(publish, raise_glitch) -> EmissionScheduler:
         return EmissionScheduler(
             observation_streams=[
                 ObservationStream(
                     channels=[
-                        observation_channel(
-                            TEMP, Gw1Quantity.Temperature, Gw1Unit.FahrenheitX100
-                        ),
-                        observation_channel(
-                            WIND, Gw1Quantity.WindSpeed, Gw1Unit.MilesPerHourX1000
-                        ),
+                        bundle.temp_observation_channel,
+                        bundle.wind_speed_observation_channel,
                     ],
                     fetch=lambda: obs_fetch.next(),
                 )
             ],
             forecast_streams=[
                 ForecastStream(
-                    entries=[
-                        ForecastEntrySpec(
-                            channel=temp_fc_channel, series="temperature_f", scale=100
-                        ),
-                        ForecastEntrySpec(
-                            channel=wind_fc_channel, series="wind_speed_mph", scale=1000
-                        ),
-                    ],
+                    bundle=bundle,
                     fetch=lambda slices: product_fetch.next(),
+                    temp_scale=100,
+                    wind_speed_scale=1000,
                 )
             ],
             publish=publish,
@@ -321,19 +333,20 @@ def main() -> int:
     assert len(filled) == 1, f"expected exactly 1 interpolated fill, got {len(filled)}"
     fill = filled[0]
     assert fill.observation_time == s_to_iso(s1 + 20)
-    by_name = {r.channel_name: r.value for r in fill.readings}
     # Linear between (s1-5, 6000) and (s1+35, 6900) at s1+20:
     # 6000 + 900*25/40 = 6562.5 → 6562 (round-half-even).
-    assert by_name[TEMP] == 6562, by_name
-    assert by_name[WIND] == 4125, by_name  # 3000 + 1800*25/40
+    assert fill.temp_value == 6562, fill.temp_value
+    assert fill.wind_speed_value == 4125, fill.wind_speed_value  # 3000 + 1800*25/40
 
-    live_temp = [f for f in live if f.forecasts[0].channel_name == TEMP_FC]
-    assert live_temp, "no Live temperature forecast witnessed"
-    entry = live_temp[0].forecasts[0]
-    first_s = int(datetime.fromisoformat(entry.first_slice_start).timestamp())
+    assert live, "no Live forecast witnessed"
+    message = live[0]
+    assert message.bundle_name == BUNDLE_NAME
+    first_s = int(datetime.fromisoformat(message.first_slice_start).timestamp())
     starts = [first_s, first_s + 300, first_s + 900]
-    expected = [(50 + (s - p0) // SOURCE_PERIOD_S) * 100 for s in starts]
-    assert entry.values == expected, (entry.values, expected)
+    expected_temps = [(50 + (s - p0) // SOURCE_PERIOD_S) * 100 for s in starts]
+    expected_winds = [(5 + (s - p0) // SOURCE_PERIOD_S) * 1000 for s in starts]
+    assert message.temp_values == expected_temps, (message.temp_values, expected_temps)
+    assert message.wind_speed_values == expected_winds
     assert len(stored) >= 1 and len(downgrades) >= 1
 
     print("\nPASS")

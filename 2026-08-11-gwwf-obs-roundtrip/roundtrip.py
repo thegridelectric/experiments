@@ -41,7 +41,7 @@ from gwwf.names import (  # noqa: E402
     MILLINOCKET_WINDSPEED,
 )
 from gwwf.sema.codec import SemaCodec  # noqa: E402
-from gwwf.sema.types import GwWeatherObservation, GwWeatherReading  # noqa: E402
+from gwwf.sema.types import GwWeatherObservation  # noqa: E402
 
 
 def wait_for(predicate, seconds: float, desc: str) -> None:
@@ -106,14 +106,15 @@ def main() -> int:
     )
 
     obs = GwWeatherObservation(
+        location_alias=MILLINOCKET,
         observation_time=datetime.now(UTC)
         .replace(minute=0, second=0, microsecond=0)
         .strftime("%Y-%m-%dT%H:%M:%SZ"),
         interpolated=False,
-        readings=[
-            GwWeatherReading(channel_name=MILLINOCKET_TEMPERATURE, value=7268),
-            GwWeatherReading(channel_name=MILLINOCKET_WINDSPEED, value=4500),
-        ],
+        temp_channel_name=MILLINOCKET_TEMPERATURE,
+        temp_value=7268,
+        wind_speed_channel_name=MILLINOCKET_WINDSPEED,
+        wind_speed_value=4500,
     )
 
     tap.start()

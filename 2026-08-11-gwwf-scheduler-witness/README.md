@@ -72,7 +72,9 @@ A re-run replays the same scripted scenario at fresh wall-clock slots.
 
 - `witness.py` — the harness: publisher + tap in one process;
   scripted fetchers; asserts the full scenario and exits non-zero on
-  any miss.
+  any miss. Repointed 2026-08-12 to the r2 vocabulary (per-bundle
+  emission, hard-coded quantities; re-verified PASS) — re-running
+  needs gwwf at the r2-cutover commit or later.
 
 Regenerate (dev broker up):
 
