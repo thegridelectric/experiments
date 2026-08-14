@@ -1,50 +1,25 @@
-"""Spike client: connect to the spike broker with the test client cert and
-a fis.connect.claims-shaped SASL response, via a custom pika credentials
-class — the shape gwbase's real class will take. Run:
+"""Drive a real cert + real claims through the broker into the stub FIS.
 
-    uv run --with pika client_test.py
+This uses gwbase's own credentials class and the fis.connect.claims word from
+its vendored snapshot — not a local imitation of them — so what the stub
+records is what a production actor would actually send. Run:
 
-The claims JSON is hand-built: the fis.connect.claims word is not authored
-in the sema registry yet, and the plugin is payload-opaque, so any bytes
-prove the path. gwbase will construct the real word via its snapshot."""
+    uv run --with pika --with ../../gridworks-base client_test.py
+"""
 
-import json
 import ssl
+
+from gwbase.credentials import GridworksClaimsCredentials
+from gwbase.sema.types import FisConnectClaims
 
 import pika
 
-CLAIMS = {
-    "Alias": "hw1.isone.weather",
-    "InstanceId": "0f6a2f7e-6f2d-4a8b-9c3e-2d1b4a5c6e7f",
-    "Run": "hw1__1",
-    "GNodeClass": "WeatherForecastService",
-    "TypeName": "fis.connect.claims",
-    "Version": "000",
-}
-
-
-class GridworksCredentials:
-    """Pika credentials for the GRIDWORKS SASL mechanism: identity rides
-    the client cert (TLS layer); the SASL response carries the claims."""
-
-    TYPE = "GRIDWORKS"
-
-    def __init__(self, claims: dict):
-        self._claims = claims
-
-    def response_for(self, start):
-        if self.TYPE.encode() not in start.mechanisms.split():
-            return None, None
-        return self.TYPE, json.dumps(self._claims).encode()
-
-    def erase_credentials(self) -> None:
-        pass
-
-
-# pika validates the credentials object against this module-level list —
-# registering the class here is the supported extension point (gwbase's
-# real class does the same at import time).
-pika.credentials.VALID_TYPES.append(GridworksCredentials)
+CLAIMS = FisConnectClaims(
+    alias="hw1.isone.weather",
+    instance_id="0f6a2f7e-6f2d-4a8b-9c3e-2d1b4a5c6e7f",
+    run="hw1__1",
+    g_node_class="WeatherForecastService",
+)
 
 
 def main() -> None:
@@ -54,9 +29,11 @@ def main() -> None:
     params = pika.ConnectionParameters(
         host="localhost",
         port=5671,
-        virtual_host="/",
+        # The vhost names the run being joined; the claims say which run this
+        # process believes it is joining, and FIS cross-checks the two.
+        virtual_host="hw1__1",
         ssl_options=pika.SSLOptions(ctx, server_hostname="localhost"),
-        credentials=GridworksCredentials(CLAIMS),
+        credentials=GridworksClaimsCredentials(CLAIMS),
     )
     conn = pika.BlockingConnection(params)
     print("CONNECTED — now check: docker compose logs stub-fis")
