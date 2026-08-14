@@ -21,14 +21,24 @@ Everything runs locally in Docker; nothing touches prod.
 (cd ../../gridworks-infra/rmqbot/auth-mechanism && ./build.sh)   # the .ez this harness mounts
 ./certs/gen_certs.sh                 # test CA + server cert + client cert (CN = fake GNodeId)
 docker compose up -d                 # broker (TLS 5671, GRIDWORKS mechanism, http auth backend) + stub FIS
-docker compose exec broker rabbitmqctl add_vhost hw1__1          # the run being joined
-uv run --with pika --with ../../gridworks-base client_test.py    # connect with cert + claims
+docker compose exec broker rabbitmqctl add_vhost d1__1          # the run being joined
+uv run --with pika --with ../../gridworks-base actor_test.py     # a real ActorBase actor, settings-driven
+uv run --with pika --with ../../gridworks-base client_test.py    # hand-built claims (arbitrary-payload leg)
 docker compose logs stub-fis         # the witness: username = cert CN, claims = the payload, verbatim
 ```
 
+`actor_test.py` is the end-state witness: the actor builds its claims from
+its own alias/instance/run and the settings `tls` block switches it to
+cert-plus-claims connect — nothing assembled by hand. `client_test.py`
+stays as the arbitrary-payload leg (useful for driving FIS with claims an
+honest gwbase actor would never send).
+
 The vhost is a real run name rather than `/` so that `/auth/vhost` carries
-`hw1__1` — the value FIS cross-checks against the `Run` in the claims, since
-its single-writer lease is scoped to (identity, run).
+`d1__1` — the value FIS cross-checks against the `Run` in the claims, since
+its single-writer lease is scoped to (identity, run). It is a dev (`d`)
+universe because the broker is on localhost: gwbase enforces the universe
+ladder's dev rung (localhost ⟺ d-kind universe) at settings construction,
+so an ActorBase leg claiming `hw1__1` here would refuse to boot.
 
 The broker image is pinned to the same patch as prod, which is also the image
 the plugin is compiled in — a beam built on another OTP major will not load,

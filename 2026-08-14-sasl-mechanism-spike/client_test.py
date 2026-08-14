@@ -15,9 +15,9 @@ from gwbase.sema.types import FisConnectClaims
 import pika
 
 CLAIMS = FisConnectClaims(
-    alias="hw1.isone.weather",
+    alias="d1.isone.weather",
     instance_id="0f6a2f7e-6f2d-4a8b-9c3e-2d1b4a5c6e7f",
-    run="hw1__1",
+    run="d1__1",
     g_node_class="WeatherForecastService",
 )
 
@@ -31,7 +31,7 @@ def main() -> None:
         port=5671,
         # The vhost names the run being joined; the claims say which run this
         # process believes it is joining, and FIS cross-checks the two.
-        virtual_host="hw1__1",
+        virtual_host="d1__1",
         ssl_options=pika.SSLOptions(ctx, server_hostname="localhost"),
         credentials=GridworksClaimsCredentials(CLAIMS),
     )
