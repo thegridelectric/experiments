@@ -1,0 +1,23 @@
+services:
+  stub-fis:
+    image: python:3.12-slim
+    volumes:
+      - ./stub_fis.py:/app/stub_fis.py:ro
+    environment:
+      - STUB_DELAY_S=${STUB_DELAY_S:-0}
+    command: python /app/stub_fis.py
+    ports:
+      - "8085:8080" # host-side curl debugging
+
+  broker:
+    image: rabbitmq:4.1-management
+    depends_on:
+      - stub-fis
+    ports: # dev broker (gw-dev-rabbit) owns 5672/15672; spike sits beside it
+      - "5671:5671"
+      - "15673:15672"
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./certs/out:/certs:ro
+      - ./plugin/build/rabbitmq_auth_mechanism_gridworks-0.1.0:/opt/rabbitmq/plugins/rabbitmq_auth_mechanism_gridworks-0.1.0:ro

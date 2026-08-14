@@ -19,6 +19,15 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-12 · [dac-bus-bench](2026-08-12-dac-bus-bench/)** — the DAC
+  leg's bench rung on honeysuckle (scada `e551c2e1`): mux select +
+  Multi-Write + bare EEPROM read all through the I2cBus single owner on
+  the real TCA9548A/MCP4728, zero write failures. Boot #1 converged the
+  bench EEPROM to the layout PowerOn values but needed 3 heartbeat
+  passes — the chip's ~50 ms EEPROM write cycle returns stale reads, so
+  the immediate re-verify failed; boot #2 verified clean first-pass
+  (Multi-Write provably EEPROM-free). PASS with finding; settle fix +
+  sim busy model landed same day.
 - **2026-08-12 · [spruce-witness-window](2026-08-12-spruce-witness-window/)**
   — first witnessed scada actuation on spruce (NolanLocalControl scripted
   witness, on-peak windows). #1 FAIL: a third ConfigList-walker bug spun
