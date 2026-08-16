@@ -60,7 +60,8 @@ TA = _LRD.validate_python("hw1.isone.me.versant.keene.spruce.ta")
 # Filename condition fields, keying the per-window instance folders.
 CONDITIONS: list[LeftRightDot] = [
     _LRD.validate_python("pre.floor2.removal"),
-    _LRD.validate_python("post.floor2.removal")]
+    _LRD.validate_python("post.floor2.removal"),
+    _LRD.validate_python("post.wifi.herd.reduction")]
 # The feedback loop's protagonist: the secondary-BTU pico's channels.
 SECONDARY_BTU_CHANNELS: list[SpaceheatName] = [
     _SPACEHEAT.validate_python(n)

@@ -107,6 +107,43 @@ have no readings after 08-10 ~13:45 ET. Pulls spanning the boundary
 carry them as declared-then-absent, not as dropouts, and per-channel
 gap stats for them cover only the pre-disconnect span.
 
+## Wifi-herd reduction — result, CONFIRMED (2026-08-15)
+
+~4.9 days after the 08-10 13:45 ET deploy (window 08-10 14:00 → 08-15
+11:25 ET), pulled and derived the same way as the floor2-removal test
+(condition `post.wifi.herd.reduction`, 27 channels — 16 fewer than
+before, the three disconnected picos' own channels are gone):
+
+| metric | post.floor2.removal (baseline) | post.wifi.herd.reduction |
+|--------|--------------------------------|---------------------------|
+| spruce gaps/day, all pico channels | 17.0 (43 channels) | 3.47 (27 channels) |
+| secondary-BTU pico gaps/day (4 channels) | 14.0 | 2.25 |
+| secondary-BTU per-channel gap count | 14–17 | 2–3 |
+| secondary-BTU per-channel mean gap | 30–36 min | 16–19 min |
+| secondary-BTU per-channel max gap | 165 min | 19–20 min |
+
+The residual dropouts were herd/congestion, not the secondary-BTU
+pico's own radio or placement: removing 3 wifi picos from the same
+router cut its gap count ~84%, roughly halved the typical gap
+duration, and erased the ~165-min outlier entirely (08-08's solo
+outage has no counterpart in this window). Two house-silent windows
+this run (vs one for the baseline) are excluded from these counts as
+before — a fleet-wide congestion signature, not something specific to
+this pico. The `future/pico-rejoin` question (why 13–14 min to rejoin
+at all) still stands for whatever gap rate remains once congestion is
+this low.
+
+Minor open item, not investigated: `secondary-ewt`'s median report
+cadence shifted from 29 s to 144 s between the two windows (the other
+three channels' cadences are unchanged). Plausibly a more stable water
+temperature triggering fewer async publishes rather than anything
+gap-related — the gap stats already correct for cadence per-channel,
+so it doesn't affect the numbers above, but it's unexplained.
+
+Regenerate: same `pull_readings.py` invocation pattern as "Folder
+contents" below, condition `post.wifi.herd.reduction`, dates as this
+window (or later, to extend it) — then `uv run python emit_instances.py`.
+
 ## Finding 2 — beech's hourly disturbance
 
 Beech's zombie transitions are PERIODIC: sieg-flow declared at :50 past
