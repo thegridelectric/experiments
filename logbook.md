@@ -19,6 +19,38 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-15 · [living-room-thermostat-deadband](2026-08-15-living-room-thermostat-deadband/)**
+  — analysis: a week of the living-room air temp (zone2-living-rm-gw-temp)
+  vs the zone-5 fan-coil call, via Thomas's falling-edge method. Deadband is
+  too tight to resolve at the room sensor — per-cycle swing ~0.09F, the stat
+  short-cycled ~every 32 min holding ~71.5F (tighter than Thomas's 2F
+  assumption; ~1.5F warmer than our replacement's 70F target). It STOPPED
+  2026-08-11 19:18 ET (a long final call, then dead ~92 h); the room reached
+  76F, +4.4F past its call point, with no call — the failure George reported.
+- **2026-08-15 · [spruce-fancoil-dist-test](2026-08-15-spruce-fancoil-dist-test/)**
+  — incident probe: George's living-room (zone 5) fan-coil thermostat
+  "wasn't working". Forced the zone-5 call at the scada relay (hack stopped,
+  zone 3 held off, deployed scada left publishing). dist-flow jumped
+  0.06 → 1.56 GPM within ~26 s and held — downstream (relay → Caleffi →
+  valve → fan-coil) WORKS, so the fault is the wall thermostat / whitewire
+  (matches the zone-5 opto reading idle). Open: dist-pump-pwr stayed ~0 W
+  while flow rose — flow likely primary-loop-driven, or the pump is below
+  the 5 W async threshold. Zones restored to thermostat, hack restarted.
+- **2026-08-15 · [sim-boot-from-word](2026-08-15-sim-boot-from-word/)**
+  — PASS: a real ScadaApp booted on gw-dev-rabbit through the new
+  word-native `HydronicLayout.from_word` (nolan pair), with `simulate_sensors`
+  swapping 3 pico sensors → SimSensorActor + `sim.sensor.component.gt`
+  (simulated by construction, decoding through the layout word's newly-widened
+  Component union). 60 nodes, 59 channels, 35 non-null; NolanLocalControl
+  resolved, sim sensors self-generated, relays no-op'd. Verifies from_word +
+  the sema sim-in-union change end to end on a real broker (the owed EDD boot).
+- **2026-08-15 · [gwsproto-sema-layover](2026-08-15-gwsproto-sema-layover/)**
+  — PASS: a fieldless, config-less `GwsprotoSemaType` base gives all 145
+  gwsproto words `type_name_value()` with the discriminated union
+  byte-identical and the suite green (193/1). Also pins WHY the sema
+  runtime can't be adopted as-is: gwproto discovery keys on a field
+  literally named `TypeName`, so sema's snake `type_name` + alias is
+  invisible to it while still passing `sema validate`.
 - **2026-08-12 · [dac-bus-bench](2026-08-12-dac-bus-bench/)** — the DAC
   leg's bench rung on honeysuckle (scada `e551c2e1`): mux select +
   Multi-Write + bare EEPROM read all through the I2cBus single owner on
@@ -119,7 +151,10 @@ first run dates them.
   loop via the floor2-removal discriminator: spruce gaps 104 → 17/day,
   secondary-BTU pico 21.4 → 3.7/day per channel, ~30 min spacing
   signature gone; residual is the pico's own slow rejoins (pico-rejoin
-  thread).
+  thread). 08-15 wifi-herd-reduction re-run CONFIRMED the residual was
+  congestion too: after removing 3 more wifi picos (fancoil/pipes1/
+  floor1, 08-10 deploy), secondary-BTU gaps 14.0 → 2.25/day, mean gap
+  duration ~halved, the 165-min outlier gone.
 - **2026-07-30 · [spruce-no-cool-postmortem](2026-07-30-spruce-no-cool-postmortem/)**
   — heat pump soft-OFF overnight + two gw108 chip failures (0x21
   expander per-start brownouts; dac3 i2c death).
