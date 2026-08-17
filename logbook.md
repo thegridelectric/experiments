@@ -19,6 +19,14 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-16 · [spruce-store-charge-valve](2026-08-16-spruce-store-charge-valve/)**
+  — does the gw108 charge valve open energized and fail CLOSED de-energized?
+  Groundwork for tank1-as-cool-storage. First (starter-scripts) run
+  INCONCLUSIVE: fell inside a 13-min secondary-btu pico dropout (tank1 zombied
+  13:29:23 → VDC shake) and read a frozen snapshot 7.42 GPM through both legs —
+  drove OPS-497 (snapshot conveys stale pico data as live). Driver rebuilt with
+  a true-liveness gate (ScadaReadTimeUnixMs age) + retrospective gw.readings
+  pull as the arbiter; definitive run PENDING a clean pico window.
 - **2026-08-15 · [living-room-thermostat-deadband](2026-08-15-living-room-thermostat-deadband/)**
   — analysis: a week of the living-room air temp (zone2-living-rm-gw-temp)
   vs the zone-5 fan-coil call, via Thomas's falling-edge method. Deadband is
