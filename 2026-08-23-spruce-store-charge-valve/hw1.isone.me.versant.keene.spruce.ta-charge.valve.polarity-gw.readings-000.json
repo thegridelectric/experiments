@@ -1,0 +1,251 @@
+{
+ "TypeName": "gw.readings",
+ "Version": "000",
+ "TaAlias": "hw1.isone.me.versant.keene.spruce.ta",
+ "StartUnixMs": 1787514780000,
+ "EndUnixMs": 1787515380000,
+ "Channels": [
+  {
+   "TypeName": "data.channel.gt",
+   "Version": "003",
+   "Name": "secondary-ewt",
+   "DisplayName": "Secondary Ewt Celsius X 1000",
+   "AboutNodeName": "secondary-ewt",
+   "CapturedByNodeName": "secondary-btu",
+   "TelemetryName": "WaterTempCTimes1000",
+   "Quantity": "Temperature",
+   "TerminalAssetAlias": "hw1.isone.me.versant.keene.spruce.ta",
+   "Id": "e681822b-2dbc-4d15-b711-5550ea3c0f86"
+  },
+  {
+   "TypeName": "data.channel.gt",
+   "Version": "003",
+   "Name": "secondary-flow",
+   "DisplayName": "Secondary Flow Gpm X 100",
+   "AboutNodeName": "secondary-flow",
+   "CapturedByNodeName": "secondary-btu",
+   "TelemetryName": "GpmTimes100",
+   "Quantity": "FlowRate",
+   "TerminalAssetAlias": "hw1.isone.me.versant.keene.spruce.ta",
+   "Id": "3608d01d-41f7-4ea5-b548-519cbfac8ef8"
+  },
+  {
+   "TypeName": "data.channel.gt",
+   "Version": "003",
+   "Name": "secondary-lwt",
+   "DisplayName": "Secondary Lwt Celsius X 1000",
+   "AboutNodeName": "secondary-lwt",
+   "CapturedByNodeName": "secondary-btu",
+   "TelemetryName": "WaterTempCTimes1000",
+   "Quantity": "Temperature",
+   "TerminalAssetAlias": "hw1.isone.me.versant.keene.spruce.ta",
+   "Id": "138d2464-3696-4256-be24-a8e9d24b951a"
+  },
+  {
+   "TypeName": "data.channel.gt",
+   "Version": "003",
+   "Name": "store-hot-pipe",
+   "DisplayName": "Store Hot Pipe Celsius X 1000",
+   "AboutNodeName": "store-hot-pipe",
+   "CapturedByNodeName": "store-btu",
+   "TelemetryName": "WaterTempCTimes1000",
+   "Quantity": "Temperature",
+   "TerminalAssetAlias": "hw1.isone.me.versant.keene.spruce.ta",
+   "Id": "fe6135da-df58-4ea5-9965-346d4ae8cfd9"
+  },
+  {
+   "TypeName": "derived.channel.gt",
+   "Version": "002",
+   "Id": "a3c75832-3045-4c19-bd85-a6f81374a3ba",
+   "Name": "tank1-depth1",
+   "CreatedByNodeName": "derived-generator",
+   "Strategy": "identity",
+   "InputChannelNames": [
+    "tank1-depth1-device"
+   ],
+   "OutputUnit": "FahrenheitX100",
+   "OutputQuantity": "Temperature",
+   "EmissionMethod": "OnTrigger",
+   "DisplayName": "Tank1 Depth1 Effective Temperature",
+   "TerminalAssetAlias": "hw1.isone.me.versant.keene.spruce.ta"
+  },
+  {
+   "TypeName": "derived.channel.gt",
+   "Version": "002",
+   "Id": "86be75af-3c6f-4b8f-b678-7d62c1e84607",
+   "Name": "tank1-depth2",
+   "CreatedByNodeName": "derived-generator",
+   "Strategy": "identity",
+   "InputChannelNames": [
+    "tank1-depth2-device"
+   ],
+   "OutputUnit": "FahrenheitX100",
+   "OutputQuantity": "Temperature",
+   "EmissionMethod": "OnTrigger",
+   "DisplayName": "Tank1 Depth2 Effective Temperature",
+   "TerminalAssetAlias": "hw1.isone.me.versant.keene.spruce.ta"
+  }
+ ],
+ "ChannelReadingsList": [
+  {
+   "TypeName": "channel.readings",
+   "Version": "002",
+   "ChannelName": "secondary-ewt",
+   "ValueList": [
+    9760,
+    9690,
+    9890,
+    10090,
+    10260
+   ],
+   "ScadaReadTimeUnixMsList": [
+    1787514883897,
+    1787514899855,
+    1787514977912,
+    1787515077854,
+    1787515199852
+   ]
+  },
+  {
+   "TypeName": "channel.readings",
+   "Version": "002",
+   "ChannelName": "secondary-flow",
+   "ValueList": [
+    326,
+    429,
+    510,
+    566,
+    634,
+    679,
+    693,
+    706,
+    724,
+    734,
+    741,
+    561,
+    153,
+    23,
+    0,
+    76,
+    0,
+    0
+   ],
+   "ScadaReadTimeUnixMsList": [
+    1787514859852,
+    1787514860861,
+    1787514861856,
+    1787514862854,
+    1787514864855,
+    1787514866853,
+    1787514867856,
+    1787514868854,
+    1787514870857,
+    1787514873862,
+    1787514899855,
+    1787514903851,
+    1787514904854,
+    1787514905855,
+    1787514906855,
+    1787514917905,
+    1787514918857,
+    1787515199852
+   ]
+  },
+  {
+   "TypeName": "channel.readings",
+   "Version": "002",
+   "ChannelName": "secondary-lwt",
+   "ValueList": [
+    10710,
+    10410,
+    10060,
+    9770,
+    9530,
+    9280,
+    9050,
+    8820,
+    8620,
+    8380,
+    8160,
+    8360,
+    8570,
+    8780,
+    8770
+   ],
+   "ScadaReadTimeUnixMsList": [
+    1787514836851,
+    1787514872854,
+    1787514874855,
+    1787514876856,
+    1787514878854,
+    1787514881851,
+    1787514886971,
+    1787514893854,
+    1787514899855,
+    1787514904854,
+    1787514912878,
+    1787515017853,
+    1787515105853,
+    1787515192854,
+    1787515199852
+   ]
+  },
+  {
+   "TypeName": "channel.readings",
+   "Version": "002",
+   "ChannelName": "store-hot-pipe",
+   "ValueList": [
+    15850
+   ],
+   "ScadaReadTimeUnixMsList": [
+    1787514900178
+   ]
+  },
+  {
+   "TypeName": "channel.readings",
+   "Version": "002",
+   "ChannelName": "tank1-depth1",
+   "ValueList": [
+    5975,
+    5975,
+    5975,
+    5975,
+    5975,
+    5975,
+    5977
+   ],
+   "ScadaReadTimeUnixMsList": [
+    1787514783247,
+    1787514843263,
+    1787514903256,
+    1787514963268,
+    1787515023198,
+    1787515083278,
+    1787515143293
+   ]
+  },
+  {
+   "TypeName": "channel.readings",
+   "Version": "002",
+   "ChannelName": "tank1-depth2",
+   "ValueList": [
+    5903,
+    5903,
+    5903,
+    5903,
+    5903,
+    5903,
+    5903
+   ],
+   "ScadaReadTimeUnixMsList": [
+    1787514783247,
+    1787514843263,
+    1787514903256,
+    1787514963268,
+    1787515023198,
+    1787515083278,
+    1787515143293
+   ]
+  }
+ ]
+}

@@ -33,22 +33,17 @@ first run dates them.
   hardware evidence for Joe; software rule: never energize the iso relay
   with < 2 other 0x21 coils on. Cooling kept alive except ~1–2.5 min in
   the all-off runs.
-- **2026-08-16 · [spruce-store-charge-valve](2026-08-16-spruce-store-charge-valve/)**
-  — SUPERSEDED ON SITE 2026-08-20: the relay had not been wired to the
-  valve during these runs; wired, energized = flow through the store tank
-  (confirmed by hand, and in the journal DB: tank1 depth1 62.4 → 57.4 °F in
-  steps tracking the 17:16–17:43 flow bursts; flat then slowly warming since
-  with the relay de-energized — de-energized passes no meaningful flow).
-  Original entry follows. Does the gw108 charge valve open energized and fail CLOSED de-energized?
-  Groundwork for tank1-as-cool-storage. Run 1 (starter-scripts) INCONCLUSIVE:
-  fell inside a 13-min secondary-btu pico dropout and read a frozen snapshot 7.42
-  GPM — drove OPS-497 (snapshot conveys stale pico data as live). Run 2 (driver
-  rebuilt: confirm live baseline flow → isolate → legs): baseline 7.49 GPM and
-  ISO-close collapse to 0 both captured, but with ISO closed the secondary pump
-  dead-headed in EVERY charge-valve state (flow stayed 0, pico alive). Doesn't
-  prove the valve is broken — the secondary flow meter may sit downstream of the
-  store split (can't witness charging), or energized may = closed. NEXT STEP
-  ON-SITE (meter placement, does the actuator move, charge-direction path).
+- **2026-08-23 · [spruce-store-charge-valve](2026-08-23-spruce-store-charge-valve/)**
+  — which drive state OPENS the charge valve, and does the iso-closed
+  charge circuit flow? NEITHER: legs D (de-energized) and E (energized),
+  iso closed + pump on, both dead-head — flow 0, secondary temps /
+  store-hot-pipe / tank1 all flat; guard ended each leg ~2.5 min. The
+  polarity hypothesis is dead; the break is physical (wiring landed 08-20,
+  actuator, or the store-branch return / check valve) — on-site checklist
+  on GRI-11. Witnesses chosen independent of meter placement
+  (secondary-lwt/ewt + store-hot-pipe). Originally run 2026-08-16 with the
+  relay not wired to the valve — void; folder re-dated to the first real
+  run, prior artifacts in git history.
 - **2026-08-15 · [living-room-thermostat-deadband](2026-08-15-living-room-thermostat-deadband/)**
   — analysis: a week of the living-room air temp (zone2-living-rm-gw-temp)
   vs the zone-5 fan-coil call, via Thomas's falling-edge method. Deadband is

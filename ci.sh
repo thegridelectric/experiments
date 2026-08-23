@@ -27,7 +27,7 @@ PYRIGHT_EXCLUDE='2026-08-06-ads-noise/ads_noise_experiment.py
 2026-08-10-ads-declared-rate/capture_window.py
 future/pico-rejoin/rejoin_trace.py
 2026-08-15-spruce-fancoil-dist-test/spruce_fancoil_dist_test.py
-2026-08-16-spruce-store-charge-valve/charge_valve_driver.py
+2026-08-23-spruce-store-charge-valve/charge_valve_polarity.py
 2026-08-23-spruce-relay-stress/relay_stress.py
 2026-06-11-sim-sensor/sim_sensor_experiment.py
 2026-06-11-sim-time-bridge/harness.py
@@ -36,7 +36,7 @@ future/pico-rejoin/rejoin_trace.py
 2026-06-12-sim-plant-flux/simulated_plant.py'
 # Top five: environments this repo lacks (smbus2 pi-only · gnr env ·
 # the pi scada checkout's venv · the laptop scada venv ·
-# MicroPython on-pico); next three: spruce on-box harnesses (smbus2 /
+# MicroPython on-pico); next four: spruce on-box harnesses (smbus2 /
 # blinka / starter_settings — the pi's starter-scripts venv). June five:
 # archived records of runs that no longer reproduce (June-era APIs),
 # kept verbatim as evidence.
