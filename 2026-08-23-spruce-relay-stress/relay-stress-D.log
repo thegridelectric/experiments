@@ -1,0 +1,7 @@
+2026-08-23 14:18:47,926 INFO relay_stress run D: TARGET=pump PERIODS=[1.0] LOADS=[0] SPACINGS=[0.0] TOGGLES=30 posture={'iso': 1, 'hp': 0, 'charge': 0, 'pump': 0} (1 phases). Baseline registers: r0=00000000 r1=00100100 r2=00000000 r3=00100100 r6=00000000 r7=00000000. Log: /home/pi/relay-stress-runs/relay-stress-D.log
+2026-08-23 14:18:47,926 INFO === PHASE target=pump period=1.0s load=0 spacing=0.0s: 30 toggles ===
+2026-08-23 14:19:20,189 INFO PHASE RESULT {"target": "pump", "period_s": 1.0, "load": 0, "spacing_s": 0.0, "toggles": 30, "resets": 0, "first_reset_toggle": null, "pin_mismatch": 0, "elapsed_s": 30.3, "start_unix_ms": 1787509129935, "end_unix_ms": 1787509160189}
+2026-08-23 14:19:31,227 INFO exit posture: loads OFF, hp-call 0, store-pump 0, iso OPEN, secondary-pump ON, charge-valve OFF. Restart the hack: sudo systemctl start spruce-summer-hack
+2026-08-23 14:19:31,229 INFO RESULTS (0 resets total) -> /home/pi/relay-stress-runs/relay-stress-D-results.json
+2026-08-23 14:19:31,230 INFO   period=1.0s load=0 spacing=0.0s -> resets 0/30 (first at None)
+2026-08-23 14:19:31,231 INFO ACTUATION WINDOW: 2026-08-23 14:18:47 EDT -> 2026-08-23 14:19:31 EDT (1787509127926 -> 1787509171228 unix ms)

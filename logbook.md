@@ -19,14 +19,36 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-23 · [spruce-relay-stress](2026-08-23-spruce-relay-stress/)**
+  — does relay switching on the gw108 0x21 expander provoke its POR reset,
+  and does command spacing mitigate it? Runs A–F (charge valve off
+  throughout, 1 s toggles, hack stopped): ENERGIZING the iso-valve relay
+  with no other 0x21 coil energized resets the chip 33 times in 50 (B: 35
+  resets / 100 toggles, 33 of them at iso→1); with one other coil on,
+  2/30 (E); with two or more on, 0/90 (F, A); the secondary-pump relay
+  toggling never resets it (C, D: 0/60). So the iso relay's energize is
+  the transient and the chip survives it only with ≥ 2 other coils
+  energized — which is exactly the hack's start sequence (clear all, iso
+  first, alone) and why it resets at every start. Spacing is irrelevant;
+  hardware evidence for Joe; software rule: never energize the iso relay
+  with < 2 other 0x21 coils on. Cooling kept alive except ~1–2.5 min in
+  the all-off runs.
 - **2026-08-16 · [spruce-store-charge-valve](2026-08-16-spruce-store-charge-valve/)**
-  — does the gw108 charge valve open energized and fail CLOSED de-energized?
-  Groundwork for tank1-as-cool-storage. First (starter-scripts) run
-  INCONCLUSIVE: fell inside a 13-min secondary-btu pico dropout (tank1 zombied
-  13:29:23 → VDC shake) and read a frozen snapshot 7.42 GPM through both legs —
-  drove OPS-497 (snapshot conveys stale pico data as live). Driver rebuilt with
-  a true-liveness gate (ScadaReadTimeUnixMs age) + retrospective gw.readings
-  pull as the arbiter; definitive run PENDING a clean pico window.
+  — SUPERSEDED ON SITE 2026-08-20: the relay had not been wired to the
+  valve during these runs; wired, energized = flow through the store tank
+  (confirmed by hand, and in the journal DB: tank1 depth1 62.4 → 57.4 °F in
+  steps tracking the 17:16–17:43 flow bursts; flat then slowly warming since
+  with the relay de-energized — de-energized passes no meaningful flow).
+  Original entry follows. Does the gw108 charge valve open energized and fail CLOSED de-energized?
+  Groundwork for tank1-as-cool-storage. Run 1 (starter-scripts) INCONCLUSIVE:
+  fell inside a 13-min secondary-btu pico dropout and read a frozen snapshot 7.42
+  GPM — drove OPS-497 (snapshot conveys stale pico data as live). Run 2 (driver
+  rebuilt: confirm live baseline flow → isolate → legs): baseline 7.49 GPM and
+  ISO-close collapse to 0 both captured, but with ISO closed the secondary pump
+  dead-headed in EVERY charge-valve state (flow stayed 0, pico alive). Doesn't
+  prove the valve is broken — the secondary flow meter may sit downstream of the
+  store split (can't witness charging), or energized may = closed. NEXT STEP
+  ON-SITE (meter placement, does the actuator move, charge-direction path).
 - **2026-08-15 · [living-room-thermostat-deadband](2026-08-15-living-room-thermostat-deadband/)**
   — analysis: a week of the living-room air temp (zone2-living-rm-gw-temp)
   vs the zone-5 fan-coil call, via Thomas's falling-edge method. Deadband is

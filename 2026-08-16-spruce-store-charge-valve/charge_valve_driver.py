@@ -3,17 +3,22 @@
 
 Drives the gw108 flow-control manifold to answer two questions the Gw108
 schematic cannot (it shows the relay drive, not the valve body's mechanical
-fail-state):
+fail-state). The sequence STARTS with the pump on and flow CONFIRMED, so a
+later drop to 0 is meaningful (not a pump/pico artifact):
 
-  Leg 1  energized  = OPEN?    ISO closed, secondary pump on, charge valve
-                               ENERGIZED. Flow through the store branch rises
-                               => the valve opens when energized.
-  Leg 2  de-energized = CLOSED? Keep ISO closed + pump on, DE-ENERGIZE the
-                               charge valve. Flow collapses to ~0 as the valve
-                               shuts and the store pump's one-way check valve
-                               blocks the return => the valve fails closed.
-                               Stop at the MINIMUM of (fresh flow < 0.5 GPM)
-                               or 45 s, so the pump dead-heads only as long as
+  Baseline  ISO OPEN, secondary pump ON. WAIT for secondary-flow to read a
+            live, nonzero value (> BASELINE_MIN). This proves the pump runs,
+            the pico is live, and gives a real baseline. ABORT if it never
+            confirms within BASELINE_CONFIRM_MAX_S — never run the legs blind.
+  Isolate   Close ISO (pump still on). Flow should collapse toward 0 — the
+            pump now dead-heads (no path). Confirms isolation.
+  Leg 1  energized  = OPEN?    Charge valve ENERGIZED. Flow RETURNS as the
+                               store branch opens => the valve opens energized.
+  Leg 2  de-energized = CLOSED? DE-ENERGIZE the charge valve. Flow collapses to
+                               ~0 again as the valve shuts and the store pump's
+                               one-way check valve blocks the return => fails
+                               closed. Stop at the MINIMUM of (fresh flow <
+                               0.5 GPM) or 45 s, dead-heading only as long as
                                it takes to get the answer.
 
 Charge valve = the relay silkscreened "DISCHARGE VALVE" (0x21 reg3 bit3); it is
@@ -32,10 +37,11 @@ with its stale ScadaReadTimeUnixMs (OPS-497). The FIRST run of this test
 7.42 GPM throughout -> inconclusive.
 
 So this driver:
-  1. GATES on true liveness before acting: it only starts when a secondary-flow
-     reading's own ScadaReadTimeUnixMs is younger than FRESH_GATE_S (proving the
-     pico is not mid-dropout). In --auto-wait it blocks until a clean window
-     opens; otherwise it aborts.
+  1. CONFIRMS a live, nonzero baseline before acting: pump on + ISO open, then
+     wait until secondary-flow reads > BASELINE_MIN with a fresh read-time. A
+     spin-down zero or a stale fossil never satisfies this; if it never confirms
+     it ABORTS rather than running the legs blind (the first-run flaw: it started
+     from a fresh-but-zero spin-down reading and manipulated into a pico gap).
   2. judges flow live ONLY on ScadaReadTimeUnixMs age, never receipt age.
   3. prints the exact actuation WINDOW (ET + unix ms) on exit. The AUTHORITATIVE
      verdict comes from a retrospective `gw.readings` pull over that window (see
@@ -82,16 +88,17 @@ RAW_PER_VOLT = 400           # DAC calibration (per spruce_summer_hack)
 ISO_VALVE_OPEN_STATE = 1     # energized (1) = OPEN (field-verified 2026-07-16)
 CHARGE_VALVE_OPEN_STATE = 1  # HYPOTHESIS under test: energized (1) = OPEN
 
-FLOW_ON_MIN = 200            # GpmTimes100: leg 1 "flow present" (> 2.0 GPM)
-FLOW_NEAR_ZERO = 50          # GpmTimes100: leg 2 "flow collapsed" (< 0.5 GPM)
+FLOW_ON_MIN = 200            # GpmTimes100: "flow present" (> 2.0 GPM)
+FLOW_NEAR_ZERO = 50          # GpmTimes100: "flow collapsed" (< 0.5 GPM)
+BASELINE_MIN = 200           # GpmTimes100: baseline flow must exceed this (2 GPM)
+                             # to confirm the pump runs + the pico is live
 
-FRESH_GATE_S = 360           # pre-gate: secondary-flow read younger than this
-                             # (< one full 13-14 min dropout) => pico is live
-FLOW_FRESH_S = 75            # during legs: a reading older than this is not
-                             # trusted as "current" (true age, from read-time)
-GATE_WAIT_MAX_S = 1200       # --auto-wait: give up after this long with no window
+BASELINE_CONFIRM_MAX_S = 150  # abort if baseline flow never confirms in this long
+FLOW_FRESH_S = 75            # a reading older than this (true age, by read-time)
+                             # is not trusted as "current" — defeats stale fossils
 
 LEG_SECONDS = 45             # max duration of each leg
+DEADHEAD_OBSERVE_S = 30      # watch flow collapse after closing ISO
 POLL_S = 2                   # loop cadence
 ISO_TRAVEL_S = 12            # let the motorized ISO valve finish closing
 SETTLE_BEFORE_EXIT_S = 4     # leg 2: min time before honoring the near-0 exit
@@ -199,29 +206,46 @@ def gpm(v) -> str:
 
 
 # -----------------------------
-# Liveness gate
+# Baseline confirmation + observation
 # -----------------------------
-def wait_for_live_pico(auto_wait: bool) -> bool:
-    """True once secondary-flow's own read-time is younger than FRESH_GATE_S
-    (the pico is not mid-dropout). In auto-wait, block up to GATE_WAIT_MAX_S."""
-    deadline = time.monotonic() + (GATE_WAIT_MAX_S if auto_wait else 30)
-    warned = False
+def confirm_baseline_flow() -> int | None:
+    """Poll until secondary-flow reads FRESH and > BASELINE_MIN — proving the
+    pump runs, the pico is live, and there is real circulation (ISO open). A
+    spin-down zero or a stale fossil never satisfies this. Returns the confirmed
+    flow (GpmTimes100), or None on timeout (=> abort, do NOT run the legs)."""
+    print(f"[{now_et()}] BASELINE: pump on + ISO open — waiting for live flow "
+          f"> {gpm(BASELINE_MIN)} (up to {BASELINE_CONFIRM_MAX_S}s)...")
+    deadline = time.monotonic() + BASELINE_CONFIRM_MAX_S
     while time.monotonic() < deadline:
-        if "read_ms" in _flow:
-            age = time.time() - _flow["read_ms"] / 1000.0
-            if age < FRESH_GATE_S:
-                print(f"[{now_et()}] GATE OPEN: {WITNESS_CHANNEL} read {age:.0f}s "
-                      f"ago (< {FRESH_GATE_S}s) — pico live, proceeding.")
-                return True
-            if not warned:
-                print(f"[{now_et()}] GATE WAIT: {WITNESS_CHANNEL} last read "
-                      f"{age:.0f}s ago (need < {FRESH_GATE_S}s) — pico may be "
-                      f"mid-dropout.{' waiting...' if auto_wait else ''}")
-                warned = True
+        f = fresh_flow()
+        if f is not None:
+            v, age = f
+            if v > BASELINE_MIN:
+                print(f"[{now_et()}] BASELINE CONFIRMED: {gpm(v)} (read {age:.0f}s "
+                      f"ago) — pump + pico live, proceeding.")
+                return v
         time.sleep(POLL_S)
-    print(f"[{now_et()}] GATE FAILED: no live {WITNESS_CHANNEL} window within "
-          f"{'the wait budget' if auto_wait else '30s'}. Aborting (retry later).")
-    return False
+    print(f"[{now_et()}] BASELINE FAILED: no live flow > {gpm(BASELINE_MIN)} "
+          f"within {BASELINE_CONFIRM_MAX_S}s. Aborting (pump off / pico down); "
+          "retry later.")
+    return None
+
+
+def observe_flow(label: str, seconds: float):
+    """Log fresh flow readings over a window; return the peak and last fresh
+    values seen (GpmTimes100), or (None, None) if none arrived."""
+    print(f"\n[{now_et()}] {label} — watching {seconds:.0f}s")
+    end = time.monotonic() + seconds
+    peak = last = None
+    while time.monotonic() < end:
+        f = fresh_flow()
+        if f is not None:
+            v, age = f
+            print(f"    [{now_et()}] {WITNESS_CHANNEL} = {gpm(v)} (read {age:.0f}s ago)")
+            last = v
+            peak = v if peak is None else max(peak, v)
+        time.sleep(POLL_S)
+    return peak, last
 
 
 # -----------------------------
@@ -271,23 +295,35 @@ def leg2_deenergized_closed():
         time.sleep(POLL_S)
 
 
-def verdict(leg1_peak, leg1_saw, leg2_outcome, leg2_val, leg2_elapsed) -> None:
+def verdict(baseline, deadhead_last, leg1, leg2) -> None:
+    leg1_peak, leg1_saw = leg1
+    leg2_outcome, leg2_val, leg2_elapsed = leg2
     print("\n================= LIVE READ (corroborate with the DB pull) =================")
+    print(f"BASELINE (ISO open, pump on): {gpm(baseline)} — pump + pico confirmed live.")
+    if deadhead_last is None:
+        print("ISOLATE (ISO closed): no fresh reading — can't confirm isolation.")
+    elif deadhead_last < FLOW_NEAR_ZERO:
+        print(f"ISOLATE (ISO closed): flow -> {gpm(deadhead_last)} — isolation confirmed "
+              "(pump dead-heads with no store path).")
+    else:
+        print(f"ISOLATE (ISO closed): flow still {gpm(deadhead_last)} — ISO did NOT "
+              "fully isolate (leak path or slow valve) — read leg 1 with care.")
     if not leg1_saw:
-        print("LEG 1 NO DATA: no fresh flow reading — pico dropped mid-leg; RETRY.")
+        print("LEG 1 (charge energized) NO DATA: no fresh reading — pico dropped; RETRY.")
     elif leg1_peak is not None and leg1_peak >= FLOW_ON_MIN:
-        print(f"LEG 1 -> energized = OPEN. Peak {gpm(leg1_peak)} (>= {gpm(FLOW_ON_MIN)}).")
+        print(f"LEG 1 (charge energized) -> flow RETURNED to {gpm(leg1_peak)} "
+              f"(>= {gpm(FLOW_ON_MIN)}): energized = OPEN.")
     else:
-        print(f"LEG 1 -> LOW/NO FLOW ({gpm(leg1_peak) if leg1_peak is not None else 'n/a'}). "
-              "Either energized != open, ISO didn't isolate, or no store path — INVESTIGATE.")
+        print(f"LEG 1 (charge energized) -> flow stayed LOW ({gpm(leg1_peak) if leg1_peak is not None else 'n/a'}): "
+              "energized did NOT open a store path — INVESTIGATE.")
     if leg2_outcome == "collapsed":
-        print(f"LEG 2 -> de-energized = CLOSED. Flow collapsed to {gpm(leg2_val)} "
-              f"in {leg2_elapsed:.0f}s (spring-return fail-closed).")
+        print(f"LEG 2 (charge de-energized) -> flow collapsed to {gpm(leg2_val)} in "
+              f"{leg2_elapsed:.0f}s: de-energized = CLOSED (spring-return fail-closed).")
     elif leg2_outcome == "still-flowing":
-        print(f"LEG 2 -> DID NOT CLOSE. Flow still {gpm(leg2_val)} at {leg2_elapsed:.0f}s "
-              "(bistable hold or plumbed normally-open) — INVESTIGATE.")
+        print(f"LEG 2 (charge de-energized) -> flow still {gpm(leg2_val)} at {leg2_elapsed:.0f}s: "
+              "did NOT close (bistable hold / normally-open) — INVESTIGATE.")
     else:
-        print("LEG 2 NO DATA: no fresh flow reading — pico dropped mid-leg; RETRY.")
+        print("LEG 2 (charge de-energized) NO DATA: no fresh reading — pico dropped; RETRY.")
     print("============================================================================")
 
 
@@ -296,9 +332,6 @@ def verdict(leg1_peak, leg1_saw, leg2_outcome, leg2_val, leg2_elapsed) -> None:
 # -----------------------------
 def main() -> None:
     ap = argparse.ArgumentParser(description="spruce charge-valve actuation driver")
-    ap.add_argument("--auto-wait", action="store_true",
-                    help=f"block up to {GATE_WAIT_MAX_S}s for a live pico window "
-                         "(default: abort if not live within 30s)")
     ap.add_argument("--yes", action="store_true",
                     help="skip the 'summer hack stopped?' confirmation")
     args = ap.parse_args()
@@ -321,27 +354,33 @@ def main() -> None:
 
     client = start_listener()
     window_start_ms = None
+    baseline = None
+    deadhead_last = None
     leg1 = (None, False)
     leg2 = ("no-fresh-reading", None, 0.0)
     try:
-        if not wait_for_live_pico(args.auto_wait):
-            return
+        # BASELINE: ISO open (normal path) + pump on, confirm live nonzero flow.
+        set_bit(ISO_VALVE, ISO_VALVE_OPEN_STATE)
+        set_secondary_speed(TEST_PUMP_PERCENT)
+        set_bit(SECONDARY_PUMP, 1)
+        print(f"[{now_et()}] iso-valve -> OPEN, secondary-pump -> ON at "
+              f"{TEST_PUMP_PERCENT}%")
+        baseline = confirm_baseline_flow()
+        if baseline is None:
+            return  # abort; finally restores safe posture
 
-        # Isolate: ISO CLOSED, let it travel.
+        window_start_ms = int(time.time() * 1000)
+
+        # ISOLATE: close ISO, watch the pump dead-head toward 0.
         set_bit(ISO_VALVE, 0)
         print(f"[{now_et()}] iso-valve -> CLOSED; waiting {ISO_TRAVEL_S}s for travel")
         time.sleep(ISO_TRAVEL_S)
+        _, deadhead_last = observe_flow(
+            "ISOLATE: ISO CLOSED (expect flow -> 0, dead-head)", DEADHEAD_OBSERVE_S)
 
-        # Secondary pump ON at test speed.
-        set_secondary_speed(TEST_PUMP_PERCENT)
-        set_bit(SECONDARY_PUMP, 1)
-        print(f"[{now_et()}] secondary-pump -> ON at {TEST_PUMP_PERCENT}%")
-        time.sleep(STEP_PAUSE_S)
-
-        window_start_ms = int(time.time() * 1000)
         leg1 = leg1_energized_open()
         leg2 = leg2_deenergized_closed()
-        verdict(leg1[0], leg1[1], *leg2)
+        verdict(baseline, deadhead_last, leg1, leg2)
     finally:
         set_bit(CHARGE_VALVE, 0)
         set_bit(SECONDARY_PUMP, 0)

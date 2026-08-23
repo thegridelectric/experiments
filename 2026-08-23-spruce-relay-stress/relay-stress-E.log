@@ -1,0 +1,10 @@
+2026-08-23 14:32:29,506 INFO relay_stress run E: TARGET=iso PERIODS=[1.0] LOADS=[0] SPACINGS=[0.0] TOGGLES=30 posture={'iso': 1, 'hp': 0, 'charge': 0, 'pump': 1} (1 phases). Baseline registers: r0=00000000 r1=00100100 r2=00000000 r3=00100100 r6=00000000 r7=00000000. Log: /home/pi/relay-stress-runs/relay-stress-E.log
+2026-08-23 14:32:29,506 INFO === PHASE target=iso period=1.0s load=0 spacing=0.0s: 30 toggles ===
+2026-08-23 14:32:34,848 CRITICAL RESET #1 [target=iso period=1.0s load=0 spacing=0.0s toggle 4 after iso->1] REGISTERS: r0=00000000 r1=00000000 r2=11111111 r3=11111111 r6=11111111 r7=11111111
+2026-08-23 14:32:48,487 CRITICAL I2C ERROR during pin read iso-valve (attempt 1/4): [Errno 5] Input/output error
+2026-08-23 14:32:50,802 CRITICAL RESET #2 [target=iso period=1.0s load=0 spacing=0.0s toggle 18 after iso->1] REGISTERS: r0=00000000 r1=00000000 r2=11111111 r3=11111111 r6=11111111 r7=11111111
+2026-08-23 14:33:04,460 INFO PHASE RESULT {"target": "iso", "period_s": 1.0, "load": 0, "spacing_s": 0.0, "toggles": 30, "resets": 2, "first_reset_toggle": 4, "pin_mismatch": 2, "elapsed_s": 32.9, "start_unix_ms": 1787509951515, "end_unix_ms": 1787509984460}
+2026-08-23 14:33:15,496 INFO exit posture: loads OFF, hp-call 0, store-pump 0, iso OPEN, secondary-pump ON, charge-valve OFF. Restart the hack: sudo systemctl start spruce-summer-hack
+2026-08-23 14:33:15,498 INFO RESULTS (2 resets total) -> /home/pi/relay-stress-runs/relay-stress-E-results.json
+2026-08-23 14:33:15,498 INFO   period=1.0s load=0 spacing=0.0s -> resets 2/30 (first at 4)
+2026-08-23 14:33:15,499 INFO ACTUATION WINDOW: 2026-08-23 14:32:29 EDT -> 2026-08-23 14:33:15 EDT (1787509949506 -> 1787509995496 unix ms)
