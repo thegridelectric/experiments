@@ -15,10 +15,10 @@ repeatedly brought the classic 0x21 reset — config registers back to
 inputs, pins floating, every cooling actuator dropped — apparently worse
 with more 0x21 coils energized. Until now the reset looked spontaneous
 (38 in the summer-hack log since 07-17; the postmortem's supply/decoupling
-suspicion). If switching transients are a trigger, then (a) the summer hack
-and the coming scada relay actor should serialize relay commands with a
-minimum gap, and (b) the store charge/discharge scripts — which switch
-several 0x21 coils per state change — need that discipline from day one.
+suspicion). Did some more investigating to evaluate if there is a pattern
+of weakness and/or if we can replicate the on-site experiment, both for
+continued operations of GW108 rev B and in case its useful for designing
+rev C.
 
 ## Setup
 
