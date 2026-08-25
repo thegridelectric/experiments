@@ -167,6 +167,12 @@ was being exercised; the reset counts do not depend on it.
 
       ssh spruce
 
+  Load the starter-scripts venv (`st` = `source
+  ~/starter-scripts/venv/bin/activate && cd ~/starter-scripts`; alias in
+  `starter-scripts/bash_aliases_spruce`):
+
+      st
+
   Stop the summer hack (single writer on 0x21 for the window):
 
       sudo systemctl stop spruce-summer-hack
@@ -177,27 +183,27 @@ was being exercised; the reset counts do not depend on it.
 
   Run A — iso toggled, every other safe coil ON:
 
-      CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=1 LOADS=5 TARGET=iso PERIODS=1 TOGGLES=30 MAX_RESETS=1000 ~/starter-scripts/venv/bin/python relay_stress.py --run A --yes
+      CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=1 LOADS=5 TARGET=iso PERIODS=1 TOGGLES=30 MAX_RESETS=1000 python relay_stress.py --run A --yes
 
   Run B — iso toggled, every other coil OFF, 100 toggles (pump off ≈ 2.5 min):
 
-      CHARGE_POSTURE=0 PUMP_POSTURE=0 HP_POSTURE=0 LOADS=0 TARGET=iso PERIODS=1 TOGGLES=100 MAX_RESETS=1000 ~/starter-scripts/venv/bin/python relay_stress.py --run B --yes
+      CHARGE_POSTURE=0 PUMP_POSTURE=0 HP_POSTURE=0 LOADS=0 TARGET=iso PERIODS=1 TOGGLES=100 MAX_RESETS=1000 python relay_stress.py --run B --yes
 
   Run C — secondary pump toggled, every other safe coil ON:
 
-      CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=1 LOADS=5 TARGET=pump PERIODS=1 TOGGLES=30 MAX_RESETS=1000 ~/starter-scripts/venv/bin/python relay_stress.py --run C --yes
+      CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=1 LOADS=5 TARGET=pump PERIODS=1 TOGGLES=30 MAX_RESETS=1000 python relay_stress.py --run C --yes
 
   Run D — secondary pump toggled, every other coil OFF (pump off ≈ 1 min):
 
-      CHARGE_POSTURE=0 PUMP_POSTURE=0 HP_POSTURE=0 LOADS=0 TARGET=pump PERIODS=1 TOGGLES=30 MAX_RESETS=1000 ~/starter-scripts/venv/bin/python relay_stress.py --run D --yes
+      CHARGE_POSTURE=0 PUMP_POSTURE=0 HP_POSTURE=0 LOADS=0 TARGET=pump PERIODS=1 TOGGLES=30 MAX_RESETS=1000 python relay_stress.py --run D --yes
 
   Run E — iso toggled, only the secondary pump ON:
 
-      CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=0 LOADS=0 TARGET=iso PERIODS=1 TOGGLES=30 MAX_RESETS=1000 ~/starter-scripts/venv/bin/python relay_stress.py --run E --yes
+      CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=0 LOADS=0 TARGET=iso PERIODS=1 TOGGLES=30 MAX_RESETS=1000 python relay_stress.py --run E --yes
 
   Run F — iso toggled, secondary pump + hp-call ON:
 
-      CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=1 LOADS=0 TARGET=iso PERIODS=1 TOGGLES=30 MAX_RESETS=1000 ~/starter-scripts/venv/bin/python relay_stress.py --run F --yes
+      CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=1 LOADS=0 TARGET=iso PERIODS=1 TOGGLES=30 MAX_RESETS=1000 python relay_stress.py --run F --yes
 
   Restart the summer hack (it re-asserts the schedule state; expect it to
   reset 0x21 once at start and self-repair at its first 5-min enforce

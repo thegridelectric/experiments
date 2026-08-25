@@ -139,9 +139,15 @@ the authoritative record of the same channels.
 
       ssh spruce
 
+  Load the starter-scripts venv (`st` = `source
+  ~/starter-scripts/venv/bin/activate && cd ~/starter-scripts`; alias in
+  `starter-scripts/bash_aliases_spruce`):
+
+      st
+
       sudo systemctl stop spruce-summer-hack
 
-      ~/starter-scripts/venv/bin/python ~/charge_valve_polarity.py --yes
+      python ~/charge_valve_polarity.py --yes
 
       sudo systemctl start spruce-summer-hack
 
