@@ -1,0 +1,17 @@
+window 2024-12-10..2024-12-12: 41115 messages in 1054s
+window 2025-02-15..2025-02-17: 44900 messages in 1312s
+window 2025-12-20..2025-12-22: 76087 messages in 2668s
+PASS  1 active channel set unchanged — 628 before, 628 after
+PASS  2 buffer-depth1 era rows end at the newest layout — beech:WaterTempCTimes1000@2026-08-15; elm:WaterTempCTimes1000@2026-08-16; fir:WaterTempCTimes1000@2026-08-25; maple:WaterTempCTimes1000@2026-08-16; oak:WaterTempCTimes1000@2026-08-24
+PASS  3 every (TA, day) with ≥10 reports has readings — missing: []
+info  houses with reports but no channel rows (no layout seen): [('orange', 99)]
+PASS  4 buffer-depth1 readings sit in their era — 0 misrouted
+PASS  5a front-end CSV query returns a loaded day — 139071 rows for beech 2024-12-10
+PASS  5b bundle query returns rows with the era's unit — 22564 rows, buffer-depth1 unit {'WaterTempCTimes1000'}
+info  6 readings_1hr already refreshed by an earlier check (62023 rows); rerun from reset to see the empty-before state
+PASS  6 readings_1hr populated after manual refresh (owner role) — 62023 → 74456
+PASS  7 no degraded / failed / enum-fallback messages — 0 degraded, 0 failed, 0 fallbacks
+info  dropped readings by channel (8): oak/oat=18157, orange/aquastat-ctrl-relay8=130, orange/charge-discharge-relay3=110, orange/hp-failsafe-relay5=118, orange/hp-scada-ops-relay6=118, orange/store-pump-failsafe-relay9=111, orange/tstat-common-relay2=113, orange/vdc-relay1=198
+
+ALL CHECKS PASSED
+exit=0

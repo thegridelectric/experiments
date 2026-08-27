@@ -19,6 +19,22 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-08-27 · [ops-457-replay](2026-08-27-ops-457-replay/)** — PASS: a real
+  `gnr-ear` (local retry cache, dead S3 endpoint) witnessed a regenesis
+  onto a scratch `hw1` registry; wiped and rebuilt with `gnr rebuild
+  --capture-dir` from that capture alone — 25 applied, 27/27 forest
+  checkpoints (change broadcasts + snapshots), validate-clean, equal to
+  the old box's dump. Prod leg the same evening: a scratch registry
+  rebuilt from B2 alone (`--seedstore --from 20260827`) equals Helsinki,
+  25/25 new-epoch checkpoints (the 2 pre-epoch snapshots mismatch by
+  construction).
+- **2026-08-27 · [ops-457-regenesis](2026-08-27-ops-457-regenesis/)** — PASS:
+  registry regenesis from the B2 seed store's latest forest snapshots
+  through `gnr create` (25/25 nodes, same GNodeIds, `create.cmd/001`, no
+  position points), rehearsed on a scratch `hw1` registry and equal to
+  the old box's dump field-for-field; idempotent on re-run. Then run for
+  real against the Helsinki box at 20:32 UTC: 25/25, witnessed in B2 as
+  the registry's second epoch (OPS-507).
 - **2026-08-23 · [spruce-relay-stress](2026-08-23-spruce-relay-stress/)**
   — does relay switching on the gw108 0x21 expander provoke its POR reset,
   and does command spacing mitigate it? Runs A–F (charge valve off

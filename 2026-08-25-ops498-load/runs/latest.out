@@ -1,0 +1,137 @@
+== reset dev DB
+psql:/Users/jessica/GridWorks/experiments/ops498-load/reset_dev.sql:3: NOTICE:  truncate cascades to table "readings"
+== seed current era from prod
+seeded 727 reading_channels rows, 6 newest layouts
+  hw1.isone.me.versant.keene.beech.scada 2026-08-15T23:50:40.516000+00:00
+  hw1.isone.me.versant.keene.oak.scada 2026-08-24T06:12:14.439000+00:00
+  hw1.isone.me.versant.keene.spruce.scada 2026-08-25T06:43:39.928000+00:00
+  hw1.isone.me.versant.keene.elm.scada 2026-08-16T04:10:01.908000+00:00
+  hw1.isone.me.versant.keene.fir.scada 2026-08-25T10:35:02.954000+00:00
+  hw1.isone.me.versant.keene.maple.scada 2026-08-16T00:01:46.132000+00:00
+== snapshot
+snapshot written
+== pass 1: layout.lite forward
+RUN SUMMARY (messages processed: 0)
+------------------------------------------------------------------------------
+type_name                                  version       ok  degraded  failed
+------------------------------------------------------------------------------
+==============================================================================
+No degraded versions — every accepted type decoded cleanly.
+==============================================================================
+2026-08-25 16:08:46,849 | INFO | Wrote run summary to /Users/jessica/GridWorks/experiments/ops498-load/runs/20260825T2008/pass1_2024-10-13_2024-10-15.json
+RUN SUMMARY (messages processed: 0)
+------------------------------------------------------------------------------
+type_name                                  version       ok  degraded  failed
+------------------------------------------------------------------------------
+==============================================================================
+No degraded versions — every accepted type decoded cleanly.
+==============================================================================
+2026-08-25 16:09:16,147 | INFO | Wrote run summary to /Users/jessica/GridWorks/experiments/ops498-load/runs/20260825T2008/pass1_2024-11-28_2024-11-30.json
+RUN SUMMARY (messages processed: 17)
+------------------------------------------------------------------------------
+type_name                                  version       ok  degraded  failed
+------------------------------------------------------------------------------
+layout.lite                                    002       17         0       0
+==============================================================================
+No degraded versions — every accepted type decoded cleanly.
+Era rows added by add-only layout syncs:
+  - hw1.isone.me.versant.keene.beech.ta / buffer-cold-pipe (1)
+  - hw1.isone.me.versant.keene.beech.ta / buffer-depth1 (1)
+  - hw1.isone.me.versant.keene.beech.ta / buffer-depth2 (1)
+  - hw1.isone.me.versant.keene.beech.ta / buffer-depth3 (1)
+  - hw1.isone.me.versant.keene.beech.ta / buffer-depth4 (1)
+  - hw1.isone.me.versant.keene.beech.ta / buffer-depth4-micro-v (1)
+  - hw1.isone.me.versant.keene.beech.ta / dist-flow-hz (1)
+  - hw1.isone.me.versant.keene.beech.ta / oat (1)
+  - hw1.isone.me.versant.keene.beech.ta / primary-flow-hz (1)
+  - hw1.isone.me.versant.keene.beech.ta / required-energy (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank1-depth1 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank1-depth2 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank1-depth3 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank1-depth4 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank1-depth4-micro-v (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank2-depth1 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank2-depth2 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank2-depth3 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank2-depth4 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank2-depth4-micro-v (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank3-depth1 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank3-depth2 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank3-depth3 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank3-depth4 (1)
+  - hw1.isone.me.versant.keene.beech.ta / tank3-depth4-micro-v (1)
+  - hw1.isone.me.versant.keene.beech.ta / usable-energy (1)
+  - hw1.isone.me.versant.keene.fir.ta / buffer-depth1 (1)
+  - hw1.isone.me.versant.keene.fir.ta / buffer-depth2 (1)
+  - hw1.isone.me.versant.keene.fir.ta / buffer-depth3 (1)
+  - hw1.isone.me.versant.keene.fir.ta / buffer-depth4 (1)
+  - hw1.isone.me.versant.keene.fir.ta / buffer-depth4-micro-v (1)
+  - hw1.isone.me.versant.keene.fir.ta / required-energy (1)
+  - hw1.isone.me.versant.keene.fir.ta / tank1-depth1 (1)
+RUN SUMMARY (messages processed: 37)
+------------------------------------------------------------------------------
+type_name                                  version       ok  degraded  failed
+------------------------------------------------------------------------------
+layout.lite                                    004       37         0       0
+==============================================================================
+No degraded versions — every accepted type decoded cleanly.
+==============================================================================
+2026-08-25 16:10:25,515 | INFO | Wrote run summary to /Users/jessica/GridWorks/experiments/ops498-load/runs/20260825T2008/pass1_2025-02-15_2025-02-17.json
+RUN SUMMARY (messages processed: 34)
+------------------------------------------------------------------------------
+type_name                                  version       ok  degraded  failed
+------------------------------------------------------------------------------
+layout.lite                                    006       34         0       0
+==============================================================================
+No degraded versions — every accepted type decoded cleanly.
+Era rows added by add-only layout syncs:
+  - hw1.isone.me.versant.keene.elm.ta / buffer-depth1 (1)
+  - hw1.isone.me.versant.keene.elm.ta / buffer-depth2 (1)
+  - hw1.isone.me.versant.keene.elm.ta / buffer-depth3 (1)
+  - hw1.isone.me.versant.keene.elm.ta / required-energy (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank1-depth1 (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank1-depth2 (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank1-depth3 (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank2-depth1 (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank2-depth2 (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank2-depth3 (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank3-depth1 (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank3-depth2 (1)
+  - hw1.isone.me.versant.keene.elm.ta / tank3-depth3 (1)
+  - hw1.isone.me.versant.keene.elm.ta / usable-energy (1)
+  - hw1.isone.me.versant.keene.elm.ta / zone4-master-heat-call (1)
+  - hw1.isone.me.versant.keene.elm.ta / zone4-master-whitewire-pwr (1)
+  - hw1.isone.me.versant.keene.maple.ta / buffer-depth1 (1)
+  - hw1.isone.me.versant.keene.maple.ta / buffer-depth1-unadjusted (1)
+  - hw1.isone.me.versant.keene.maple.ta / buffer-depth2 (1)
+  - hw1.isone.me.versant.keene.maple.ta / buffer-depth2-unadjusted (1)
+  - hw1.isone.me.versant.keene.maple.ta / buffer-depth3 (1)
+  - hw1.isone.me.versant.keene.maple.ta / buffer-depth3-unadjusted (1)
+  - hw1.isone.me.versant.keene.maple.ta / required-energy (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank1-depth1 (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank1-depth1-unadjusted (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank1-depth2 (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank1-depth2-unadjusted (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank1-depth3 (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank1-depth3-unadjusted (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank2-depth1 (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank2-depth1-unadjusted (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank2-depth2 (1)
+  - hw1.isone.me.versant.keene.maple.ta / tank2-depth2-unadjusted (1)
+== pass 2: everything else forward
+RUN SUMMARY (messages processed: 36292)
+------------------------------------------------------------------------------
+type_name                                  version       ok  degraded  failed
+------------------------------------------------------------------------------
+gridworks.event.problem                        001      253         0       0
+gridworks.event.problem                       None        0         2       0
+power.watts                                    000     8139         0       0
+report.event                                   000     2451         0       0
+snapshot.spaceheat                             001    25447         0       0
+==============================================================================
+Degraded versions (codec cannot decode — need new sema word versions):
+  - gridworks.event.problem vNone (2 messages)
+Dropped readings (no channel row for the report time):
+  - hw1.isone.me.versant.keene.oak.ta / oat (18157)
+==============================================================================
+2026-08-25 16:20:29,354 | INFO | Wrote run summary to /Users/jessica/GridWorks/experiments/ops498-load/runs/20260825T2008/pass2_2024-10-13_2024-10-15.json
