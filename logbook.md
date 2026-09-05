@@ -15,13 +15,15 @@ first run dates them.
 
 - **2026-09-05 · [fis-gate-battery](2026-09-05-fis-gate-battery/)** — the FIS
   connect gate run against a real 4.1.8 broker + rmqbot's gate overlay on the
-  dev universe (`d1__1`), stand-up-fis step 8. 24/26 verdicts pass (100-connect
-  storm inside the 10 s handshake budget); the 2 failures are one finding — the
-  run-scoped supersession kill trusts the broker's eventually-consistent
-  management listing, so a just-connected predecessor is missed (two live
-  instances) and a clean restart is wrongly denied. Plus a narrower KNOWN-GAP:
-  `/auth/vhost` cannot see the claimed run when a live lease exists. Both to
-  OPS-422.
+  dev universe (`d1__1`), stand-up-fis step 8. Green on the fifth run: 26/26
+  verdicts, 100-connect storm max 0.63 s. The first run found the blocking
+  defect (the supersession kill trusted the broker's stats-backed management
+  listing, so a young predecessor survived beside its successor); the fix
+  is close-by-username plus a confirm on the tracking-backed by-username
+  view, after `rabbitmqctl list_connections` deadlocked with the gate and
+  `rabbitmqctl eval` cost an Erlang VM per confirm. One KNOWN-GAP (vhost
+  path cannot see the claimed run once a lease exists) and one KNOWN-LIMIT
+  (the kill is broker-wide for the identity) stay logged.
 - **queued · [spruce-pump-speed-sweep](future/spruce-pump-speed-sweep/)**
   — phase two of the DAC rung on the real spruce secondary pump
   (Grundfos UPMS 20-78 F): iso valve open, pump on, sweep the 0-10V
