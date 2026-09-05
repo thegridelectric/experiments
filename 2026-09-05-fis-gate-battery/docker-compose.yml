@@ -1,0 +1,28 @@
+# The dev-rung broker for the FIS gate battery: a stock 4.1.8 image carrying
+# gwbase's generated d1 definitions (vhost d1__1, the smqPublic admin FIS's
+# connection-kill uses) with rmqbot's gate overlay mounted piece by piece —
+# the SAME fragment, plugin list and .ez a staging or prod box mounts through
+# compose.gate.yaml, not copies of them. FIS runs on the host (battery.py
+# starts it), so one harness-only fragment repoints the auth URLs at the
+# host; everything else in the gate is untouched.
+#
+# Sits beside gw-dev-rabbit (which owns 5672/1885/15672): TLS-only 5671 and
+# 8883 here, management on 15673.
+services:
+  broker:
+    image: rabbitmq:4.1.8-management
+    container_name: fis-gate-broker
+    ports:
+      - "5671:5671"
+      - "8883:8883"
+      - "15673:15672"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ../../gridworks-base/rabbit/rabbitconfig/dev_definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ../../gridworks-infra/rmqbot/rmq-docker/gate/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ../../gridworks-infra/rmqbot/rmq-docker/gate/fis-gate.conf:/etc/rabbitmq/conf.d/30-fis-gate.conf:ro
+      - ./40-dev-fis-url.conf:/etc/rabbitmq/conf.d/40-dev-fis-url.conf:ro
+      - ../../gridworks-infra/rmqbot/auth-mechanism/rabbitmq_auth_mechanism_gridworks-0.1.0.ez:/opt/rabbitmq/plugins/rabbitmq_auth_mechanism_gridworks-0.1.0.ez:ro
+      - ./certs/out:/certs:ro

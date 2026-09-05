@@ -13,12 +13,31 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-05 · [fis-gate-battery](2026-09-05-fis-gate-battery/)** — the FIS
+  connect gate run against a real 4.1.8 broker + rmqbot's gate overlay on the
+  dev universe (`d1__1`), stand-up-fis step 8. 24/26 verdicts pass (100-connect
+  storm inside the 10 s handshake budget); the 2 failures are one finding — the
+  run-scoped supersession kill trusts the broker's eventually-consistent
+  management listing, so a just-connected predecessor is missed (two live
+  instances) and a clean restart is wrongly denied. Plus a narrower KNOWN-GAP:
+  `/auth/vhost` cannot see the claimed run when a live lease exists. Both to
+  OPS-422.
+- **queued · [spruce-pump-speed-sweep](future/spruce-pump-speed-sweep/)**
+  — phase two of the DAC rung on the real spruce secondary pump
+  (Grundfos UPMS 20-78 F): iso valve open, pump on, sweep the 0-10V
+  output linearly and in jumps, flow versus volts as the speed curve.
 - **queued · [pico-rejoin](future/pico-rejoin/)** — trace
   `wlan.status()` timing across power cycles. Why the spruce
   secondary pico's stereotyped 13–14 min post-shake silence — deployed
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-09-05 · [dac-output-bench](2026-09-05-dac-output-bench/)** —
+  FAIL (2 of 3 claims not reached), two findings: `verify_eeprom`
+  reprograms every boot on bytes that match the layout, and an admin
+  dispatch the scada forwards never reaches `ZeroTenOutputer`
+  (`_send_to` drops unrouted nodes silently). Isolation held; reproducer
+  in place.
 - **2026-08-27 · [ops-457-replay](2026-08-27-ops-457-replay/)** — PASS: a real
   `gnr-ear` (local retry cache, dead S3 endpoint) witnessed a regenesis
   onto a scratch `hw1` registry; wiped and rebuilt with `gnr rebuild

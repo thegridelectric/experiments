@@ -163,3 +163,21 @@ Dec 30 2024 – Jan 18 2025 problem-event flap is avoided on purpose.
   set; any missing day = a crashed span to relaunch. Each span also ends
   with a `RUN SUMMARY`. This rides on the single contiguous v-run finishing;
   earlier writer-count layouts (8/16/24) were idempotent supersets.
+
+## COMPLETE — 2026-08-28 03:21 ET
+
+Full back-fill verified: **453/453 days** scanned (2024-10-13 → 2026-01-08),
+all spans ended with a clean RUN SUMMARY (0 degraded, 0 persist-fail). The
+only rejects in the entire load: **3 `flo.params.house0` messages, oak,
+2025-03-28** (fractional InitialTopTempF where the type — and gwsproto —
+declare integer; the int-vs-float design question). Keys in
+`rejects-oak-flo-20250328.jsonl`; the authoritative `rejects-all.jsonl` (3
+keys, deduped from 6 log lines) is on the stopped box's EBS at
+`~/runs/rejects-all.jsonl`, to copy on next restart. Also known but outside
+the rejects log: 1 corrupt S3 object (oak layout 2025-11-23) and 18
+new.command.tree Axiom-1 rejections (beech handle-migration, 2 dates) — both
+characterized earlier, correct rejections.
+
+Box (c7i.4xlarge, i-005da05cec87777a9) **stopped** (not terminated) at 03:23
+ET — EBS preserved. PENDING (wait for Jessica in the morning): snapshot
+cleanup (~330k stray rows), and the flo int-vs-float decision.
