@@ -163,9 +163,8 @@ were; stop the façade with Ctrl-C in its terminal.
 
 - `run.sh` prints `plugin: rabbitmq_auth_backend_http` and
   `plugin: rabbitmq_auth_mechanism_gridworks` before the cases.
-- the battery ends with `26/26 cases pass`; two unscored lines appear in
-  the middle, `KNOWN-GAP run_claim_vs_vhost_with_live_lease` and
-  `KNOWN-LIMIT broker_wide_kill_closed_other_run: B closed=True`.
+- the battery ends with `27/27 cases pass`; one unscored line appears in
+  the middle, `KNOWN-LIMIT broker_wide_kill_closed_other_run: B closed=True`.
 - the storm ends with `PASS  storm: 100/100 allowed, max connect <1s`.
 - `supersession_predecessor_closed` reports `B allow in ~6s`, not
   sub-second: the battery's predecessor never answers the close (see
@@ -173,8 +172,8 @@ were; stop the façade with Ctrl-C in its terminal.
 
 ## Found
 
-**All six claims PASS on the green run (15:16 ET): 26/26 verdicts, storm
-100/100 allowed with connect p50 0.43 s and max 0.63 s.** Five runs today;
+**All six claims PASS on the green run (18:57 ET): 27/27 verdicts, storm
+100/100 allowed with connect p50 0.39 s and max 0.55 s.** Five runs today;
 the first found the blocking defect below and the middle three measured
 two candidate fixes that failed in different ways. Evidence:
 `battery-2026-09-05.log`, `storm-2026-09-05.json`.
@@ -182,15 +181,16 @@ two candidate fixes that failed in different ways. Evidence:
 1. **Claim 1, the five user verdicts: PASS.** Allow, unknown principal,
    suspended principal, revoked instance, alias mismatch, class mismatch,
    run outside the universe, each with the matching `auth_events` reason.
-2. **Claim 2, run-claim vs vhost: PASS for a fresh principal, KNOWN-GAP
-   for a principal already leased on the vhost** (unscored). The vhost
-   call carries only `username`+`vhost`+`ip`, so FIS answers it by "does
-   this principal hold an active lease on this vhost". A principal with a
-   live lease there opens the vhost even though this connection claimed a
-   different run at `/auth/user`. The executor's rule holds only when the
-   principal has no lease on the vhost. Reported for OPS-422; the fix is a
-   design decision (teach the vhost path the claimed run), not a battery
-   bug.
+2. **Claim 2, run-claim vs vhost: PASS for a fresh principal and for a
+   principal already leased on the vhost.** The 15:16 run had the second
+   as a KNOWN-GAP: the vhost call carries no claims, and FIS answered it
+   from the lease table ("does this principal hold an active lease on this
+   vhost"), which admits a connection that claimed another run whenever
+   the identity is legitimately live there. Closed by carrying the claimed
+   run on the connection itself: `/auth/user` answers `allow <run>`, the
+   broker makes that the connection's user tag and forwards it as `tags`
+   on the vhost call, and FIS compares the tag to the vhost. Scored on the
+   18:57 ET run.
 3. **Claim 3, ordered supersession: PASS, after a defect and two dead
    ends.** The 12:24 run failed it (`weather live now=2`): FIS found and
    confirmed the predecessor's connections through `GET /api/connections`,

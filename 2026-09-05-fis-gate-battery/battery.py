@@ -396,17 +396,14 @@ def run_battery(fis: Fis) -> None:
     ev = last_event(IDS["service1"], inst)
     user_leased = ev is not None and ev[0] == "Authorized"
     case("run_claim_vs_vhost_deny_fresh_principal", tag == "deny-vhost" and user_leased, f"{tag}; user-verdict={ev}")
-    # KNOWN GAP (not a pass/fail line): the same mismatch by a principal that
-    # ALREADY holds a live lease on the opened vhost is admitted. /auth/vhost
-    # carries only username+vhost+ip, so it cannot tell this connection's
-    # claimed run from the leased instance's; the executor's rule holds only
-    # when the principal has no lease on the vhost. Recorded as a finding for
-    # OPS-422 / the executor, not scored — the fix (teaching the vhost path
-    # the claimed run) is a design decision, not a battery bug.
+    # The same mismatch by a principal that ALREADY holds a live lease on the
+    # opened vhost (weather's B on d1__1). Finding B: /auth/vhost carries no
+    # claims, so a lease lookup admitted this; the claimed run now rides the
+    # connection's user tag (`allow <run>` at /auth/user) and the vhost check
+    # compares that tag, so the live lease changes nothing.
     inst = str(uuid.uuid4())
     tag, conn_gap, _ = amqp_connect("weather", weather_claims(inst, run="d1__2"), vhost=RUN)
-    log(f"KNOWN-GAP run_claim_vs_vhost_with_live_lease: {tag} "
-        f"(expected deny; /auth/vhost sees no instance id, so a live lease admits it)")
+    case("run_claim_vs_vhost_deny_with_live_lease", tag == "deny-vhost", f"{tag} (weather live on {RUN} while this connection claimed d1__2)")
     if conn_gap is not None:
         conn_gap.close()
     # KNOWN LIMIT (not scored): the supersession kill is close-by-username,
