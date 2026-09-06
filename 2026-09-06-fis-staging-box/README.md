@@ -9,7 +9,7 @@
 > the broker files are `gridworks-infra/rmqbot/`. Verdict in "Found" once
 > the battery (`../2026-09-05-fis-gate-battery/`) has run here.
 
-## Why a separate box
+## Why
 
 Colocation is the spec (one FIS per broker box, localhost auth path), but
 the box is not the prod broker: the battery kills connections by identity
@@ -18,7 +18,7 @@ container recreate that wipes runtime users. Real identities (a bench pi,
 beech's scada) join `hw1__2` here without disturbing `hw1__1`, against
 the same registry.
 
-## The box
+## Setup
 
 Hetzner Cloud, project `gridworks`, Helsinki (`hel1`), **ccx13** (2
 dedicated vCPU / 8 GB / 80 GB; dedicated because the sizing driver is the
@@ -33,7 +33,7 @@ tightening (`fail_if_no_peer_cert = true`, prod's notch 3) and vhost
 `hw1__2`; the gate itself stays the rmqbot fragment that
 `compose.gate.yaml` mounts.
 
-## Build (from a laptop checkout of the umbrella; one command per block)
+## Protocol (from a laptop checkout of the umbrella; one command per block)
 
 Prerequisites: `hcloud` with the `gridworks` context and the rmqbot key
 uploaded once (`hcloud ssh-key create --name rmqbot-jessica --public-key-from-file ~/.ssh/rmqbot-jessica.pub`),
@@ -132,4 +132,45 @@ record.
 
 ## Found
 
-Not yet run.
+Battery not yet run here.
+
+## Timeline
+
+- 2026-09-06 08:39 ET: rmqbot key uploaded to Hetzner; primary IP
+  `204.168.249.110`, firewall `hw1-2` (22, 5671, 8883, 15671, ICMP),
+  server `hw1-2` (ccx13, hel1) created and firewall applied.
+- 08:41: base OS done (docker, `broker` + `fis` logins with the rmqbot
+  per-person keys, sshd key-only, `/etc/sudoers.d/fis`, `/mnt/pgdata/fis`,
+  CA in the trust store).
+- 08:42: broker files rsynced, this folder's conf over the prod one,
+  definitions rendered for `hw1__2`; broker `.env` with a fresh
+  `smqPublic` credential (recorded nowhere but the box's two `.env`
+  files: copy it into 1Password from there).
+- 08:42: broker cert minted on certbot (`hw1-2`, expires 2028-09-05,
+  which is later than the summer policy; acceptable for an ephemeral
+  box), placed on the box, certbot copy removed. Route 53 A record
+  `hw1-2.electricity.works` created.
+- 08:43: broker up, gate OFF, `hw1__2` the only vhost, `smqPublic`
+  minted as administrator. TLS verified from the laptop against the
+  GridWorks CA (`Verify return code: 0`).
+- 08:44: `fis` login: uv installed, `fis-postgres` up on loopback
+  :5437, `.env` staged as `~/fis.env` (moves into the checkout once the
+  FIS branch is pushed); the registry façade answers from the box.
+- 08:49: `jm/stand-up-fis` pushed (`68966d2`); FIS cloned on that branch
+  (a flagged deviation from `main`, deliberate: prove it before the
+  merge), synced, migrated, `fis-api.service` enabled; `/ping` ok; the
+  mirror filled with the 25 `hw1` nodes from the registry.
+- 08:51: gate ON (compose overlay, a recreate; `smqPublic` re-minted):
+  both plugins enabled, backends `[internal, http]`, mechanisms
+  `[GRIDWORKS, PLAIN, AMQPLAIN]`. `fis` added to `systemd-journal`.
+- 08:50: FIRST FINDING. A bogus-user login through the management API
+  returned 401 but FIS saw nothing; the broker log said
+  `rabbit_auth_backend_http ... econnrefused` to 8080: inside the bridged
+  container `localhost` is the container. Fixed by `network_mode: host`
+  in `compose.gate.yaml` (mirrored into gridworks-infra); after the
+  recreate, the same probe reached FIS (`POST /auth/user 200`, a deny).
+- 08:55: SECOND FINDING. The deny left no verdict line in the journal:
+  FIS logs verdicts at INFO and nothing configured logging under
+  systemd. `fis api` now calls `logging.basicConfig` (FIS repo, pending
+  push). No `auth_events` row either, by design: a login with no claims
+  fails at parsing, before there is an instance or run to record.

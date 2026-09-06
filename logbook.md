@@ -18,10 +18,11 @@ first run dates them.
   (Grundfos UPMS 20-78 F): iso valve open, pump on, sweep the 0-10V
   output linearly and in jumps, flow versus volts as the speed curve.
   Driver built and rehearsed on the sim Nolan scada (34 levels echoed,
-  four relays under admin); the spruce window is BLOCKED on the
-  artifact: tlayouts hand-builds the affine calibration at a version
-  sema squashed on 08-13, outside the layout closure so no conformance
-  check sees it. Run pending.
+  four relays under admin). Found and fixed on the way: the spruce
+  artifact could not boot (tlayouts hand-built the affine calibration
+  at a version sema squashed on 08-13, outside the layout closure so no
+  conformance check saw it); the word is now seeded into the tlayouts
+  snapshot and rides the scada closure copy. Run pending.
 - **2026-09-05 · [fis-gate-battery](2026-09-05-fis-gate-battery/)** — the FIS
   connect gate run against a real 4.1.8 broker + rmqbot's gate overlay on the
   dev universe (`d1__1`), stand-up-fis step 8. Green on the fifth run: 26/26

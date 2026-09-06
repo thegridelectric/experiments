@@ -85,8 +85,7 @@ window short and the pump within its duty range.
 `ba2c9883` or later (the commit honeysuckle run 4 verified); the spruce
 artifact pair from tlayouts `spruce_sema_gen.py` (real identity, real
 eGauge, the DAC output on Dac2 C), archived here under the sema
-on-disk grammar once the boot-blocker below is fixed and the pair
-regenerated.
+on-disk grammar.
 
 **Driver:** `sweep.py` here, run ON the box (see Protocol). It speaks
 the admin TUI's wire shape through the gwsproto types directly
@@ -108,24 +107,21 @@ under admin (pump close, iso open, store open, hp open); restore and
 release clean. Two rehearsal findings, both filed in the design (below),
 none blocking the driver.
 
-### Before the window: two blockers and a housekeeping item
+### Before the window: one prerequisite and a housekeeping item
 
-1. **The spruce artifact does not boot on the branch.** Rehearsing the
-   window harness on the laptop against the regenerated spruce pair
-   (tlayouts `56dbcd1`) fails in `DerivedGenerator`: the four affine
-   depth channels carry `linear.one.dimensional.calibration` Version
-   `001`, and gwsproto pins `000`. tlayouts hand-builds that
-   calibration as a dict literal (`house0_sema_gen.py:1578`, shared by
-   the Nolan gen) with the version sema squashed away on 2026-08-13;
-   nothing checks it because `derived.channel.gt/002` types
-   `Parameters` as a bare object and declares no dependency on the
-   calibration word, so the word is outside the layout closure and the
-   reverse conformance test never sees it, and the tlayouts snapshot
-   validates the artifact with the same blind spot. The fix is
-   tlayouts-side (Jessica's call: emit `000`, or better construct the
-   calibration through a snapshot class and pull the word into the
-   closure). The Nolan test fixture has no affine channels, so the
-   suite's artifact-boot test is blind to it too.
+1. **The spruce artifact boots on the branch (fixed 2026-09-06).**
+   Rehearsing the window harness on the laptop against the regenerated
+   spruce pair had failed in `DerivedGenerator`: the four affine depth
+   channels carried `linear.one.dimensional.calibration` Version `001`
+   (a hand-built dict in tlayouts, at a version sema squashed away on
+   2026-08-13) while gwsproto pins `000`. The word sits outside the
+   layout closure (`derived.channel.gt/002` types `Parameters` as a
+   bare object), so no conformance check saw it and the Nolan fixture,
+   with no affine channel, could not trip on it. tlayouts now seeds the
+   word into its snapshot and builds the calibration through its class,
+   the sim pair carries the calibration, the scada closure copy carries
+   the word, and the pair archived here is the regenerated one
+   (tlayouts commit pending at writing).
 2. **The window scada's admin link.** `~/envs/dev.env` on spruce needs
    the admin block the honeysuckle bench used, pointed at the box's own
    mosquitto with the local link's user (non-repo box state; record it
@@ -178,8 +174,7 @@ About 55 minutes end to end.
 Commands under **dev machine** run from this folder; commands under
 **spruce** run in a shell on the pi (`ssh spruce`).
 
-**1. Regenerate and archive the spruce pair (dev machine, in tlayouts;
-after blocker 1 is fixed).** Ids come from the box's uploaded record,
+**1. Regenerate and archive the spruce pair (dev machine, in tlayouts).** Ids come from the box's uploaded record,
 so the regen reproduces the archived bytes; the diff proves it.
 
     cd ../../../tlayouts
@@ -293,7 +288,7 @@ stay (the experiment paths root, recorded in `~/README.md` since 08-12).
 
 ## Found
 
-(pending the first run; blocked on "Before the window" item 1)
+(pending the first run)
 
 ## Timeline
 
@@ -338,9 +333,8 @@ master at a time) and restarts them after.
   `hw1.isone.me.versant.keene.spruce-gw.nolan.operational.params-000.json`
   — the spruce pair from tlayouts `spruce_sema_gen.py` (tlayouts
   `56dbcd1`, renamed from `output/spruce/` to the sema on-disk grammar).
-  As archived they carry the Version-001 calibration that blocks the
-  boot (item 1 above); the runbook's step 1 replaces them with the
-  regenerated pair once tlayouts is fixed.
+  Regenerated 2026-09-06 after the calibration-version fix (item 1
+  above); runbook step 1 reproduces them.
 - `sweep-<run>.log`, `sweep-<run>-results.json` — (after the run) the
   driver's log and typed results, generated on spruce.
 - `boot-<DATE>.log` — (after the run) the window scada's log.
