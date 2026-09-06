@@ -174,3 +174,10 @@ Battery not yet run here.
   systemd. `fis api` now calls `logging.basicConfig` (FIS repo, pending
   push). No `auth_events` row either, by design: a login with no claims
   fails at parsing, before there is an instance or run to record.
+- 16:48–17:05: step 9 done. The battery identities minted here (three
+  GNode rows with the registry's ids, 100 service rows), their certs cut
+  on certbot, and `../2026-09-05-fis-gate-battery/` run on its remote
+  rung against this box: 27/27, storm 100/100 (max 3.0 s). The green
+  run is that folder's `battery-2026-09-06-hw1-2.log`. The box is left
+  as found: FIS under systemd, gate ON. The four platform-service
+  principals are not minted here yet.

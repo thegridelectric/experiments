@@ -199,7 +199,6 @@ class RemoteRig(Rig):
         self.fis_checkout = os.environ["BATTERY_FIS_CHECKOUT"]
         self.broker_login = os.environ["BATTERY_BROKER_LOGIN"]
         self.container = os.environ["BATTERY_BROKER_CONTAINER"]
-        self.started_utc = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
         self.tunnel = subprocess.Popen(
             ["ssh", *self.mux, "-N",
              "-L", f"{self.DB_TUNNEL_PORT}:127.0.0.1:5437",
@@ -207,6 +206,8 @@ class RemoteRig(Rig):
              self.fis_login],
             start_new_session=True,
         )
+        # the journal window opens on the box's clock, not this machine's
+        self.started_utc = self.ssh_fis("date -u '+%Y-%m-%d %H:%M:%S'").strip()
         # the box's own database credential, never copied off the box
         line = self.ssh_fis(f"grep '^FIS_DB_URL=' {self.fis_checkout}/.env")
         box_url = line.split("=", 1)[1].strip()
@@ -250,9 +251,11 @@ class RemoteRig(Rig):
         if overrides:
             # the unit reads the box's .env; an override runs FIS by hand
             exports = " ".join(f"{k}={shlex.quote(v)}" for k, v in overrides.items())
+            # setsid -f: the parent returns at once, so the ssh session's
+            # stdout closes; a trailing `&` leaves a subshell holding it open
             self.ssh_fis(
-                f"cd {self.fis_checkout} && {exports} setsid nohup .venv/bin/fis api"
-                f" >> {self.ADHOC_LOG} 2>&1 < /dev/null &"
+                f"cd {self.fis_checkout} && {exports} setsid -f nohup .venv/bin/fis api"
+                f" >> {self.ADHOC_LOG} 2>&1 < /dev/null"
             )
         else:
             self.ssh_fis("sudo systemctl start fis-api")

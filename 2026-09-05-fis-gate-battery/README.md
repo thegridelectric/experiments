@@ -68,8 +68,34 @@ source. No prod credential, host, or broker is referenced anywhere.
   the principal id as CN.
 - **Clients:** `battery.py` (pika over TLS with gwbase's
   `GridworksClaimsCredentials` for AMQP; paho for MQTT) and `storm.py`
-  (N pika connects at once). `battery.py` starts and stops the FIS
-  process itself, so it can run legs with a wrong management password.
+  (N pika connects at once). The rig (`rig.py`) owns FIS, so the battery
+  can run a leg with a wrong management password.
+
+**The remote rig** (`remote.env`, `BATTERY_RIG=remote`) is the same two
+clients against the staging box built in
+`../2026-09-06-fis-staging-box/`: broker `hw1-2.electricity.works`
+(AMQPS 5671, MQTTS 8883, vhost `hw1__2`, TLS-only, client cert
+required), FIS under `fis-api.service` in the box's `fis` login, the
+broker in the `rmq1` container under `broker`. Identities are the `hw1`
+universe's `hw1.isone.weather`, the beech scada and its LTN, resolved
+through the public registry façade; their principal rows are minted on
+the box's FIS with those ids (`setup-remote.sh`, through `fis principal`
+over ssh — nothing lands in the checkout), and the client certs are cut
+on certbot against the real GridWorks CA (`gwcert key add`, CN = the
+principal id, 90 days), streamed here and removed from certbot. Every
+lever is ssh: FIS stops and starts through `systemctl`; the
+management-API-down leg runs an ad-hoc `fis api` with a wrong password
+in the `fis` login; the broker's connection list is `rabbitmqctl` in the
+container; the FIS database (`reset`, the `auth_events` witness) and
+`/ping` ride an ssh tunnel the rig holds open. The box's database
+credential is read from its `.env` at run time, never copied here. The
+remote run's FIS log is the journal for the run window, read on the
+box's clock, plus the ad-hoc process's output. Code under test on the
+remote rung: FIS `jm/stand-up-fis` `68966d2` (without the logging fix,
+still unpushed: the run's journal holds uvicorn's access lines and the
+kill warning, which Python's last-resort handler prints, but no INFO
+verdict lines), gridworks-infra `jm/fis-gate-conf` with the
+host-network overlay, the box as its reproducer left it.
 
 ### Runbook (build → services → rig → battery → read → teardown)
 
@@ -159,6 +185,24 @@ were; stop the façade with Ctrl-C in its terminal.
 
     docker compose down
 
+**Remote rung (against the staging box).** Needs the box up with the
+gate ON and FIS answering (`../2026-09-06-fis-staging-box/`), ssh as
+`fis@` and `broker@` on the box and `certbot` (per-person keys,
+`~/.ssh/config`), and `gridworks-infra/authority/ca.crt` in the
+checkout. No local broker, façade or database is touched. Setup once
+(idempotent; principals on the box, certs from certbot):
+
+    STORM=100 ./setup-remote.sh
+
+Then the run; evidence under `runs/<UTC stamp>-hw1-2/`:
+
+    ./run-remote.sh
+
+The box's FIS is restarted under systemd and its `leases`,
+`auth_events` and `g_nodes` truncated at each FIS boot, as on the dev
+rig; it is left running under systemd at the end. Keep the evidence as
+`battery-<DATE>-hw1-2.log` and `storm-<DATE>-hw1-2.json`.
+
 ### Expected output
 
 - `run.sh` prints `plugin: rabbitmq_auth_backend_http` and
@@ -169,14 +213,55 @@ were; stop the façade with Ctrl-C in its terminal.
 - `supersession_predecessor_closed` reports `B allow in ~6s`, not
   sub-second: the battery's predecessor never answers the close (see
   Analysis notes). `clean_restart_admitted_fast` reports under 0.5 s.
+- the remote rung ends the same way (`27/27`, `100/100`); single
+  connects take ~0.7–0.8 s and the storm's max about 3 s (see Found).
 
 ## Found
 
-**All six claims PASS on the green run (18:57 ET): 27/27 verdicts, storm
-100/100 allowed with connect p50 0.39 s and max 0.55 s.** Five runs today;
-the first found the blocking defect below and the middle three measured
-two candidate fixes that failed in different ways. Evidence:
-`battery-2026-09-05.log`, `storm-2026-09-05.json`.
+**Remote rung, 2026-09-06: all six claims PASS against `hw1-2` (17:05
+ET): 27/27 verdicts, storm 100/100 allowed with connect p50 2.19 s, p95
+2.95 s, max 3.00 s.** A real CA, real TLS to a real host, FIS as the box
+runs it (systemd, the box's `.env`, the management API on the box's
+loopback), the broker in the prod container image with the gate overlay.
+Evidence: `battery-2026-09-06-hw1-2.log`, `storm-2026-09-06-hw1-2.json`
+(run `20260906T2104-hw1-2`). Three runs: the first stalled at the
+management-API-down leg, the second was green with a truncated FIS log;
+both are harness findings, below, not FIS ones. Single connects over the
+Atlantic take 0.7–0.8 s (dev: 0.03 s) and the supersession leg 6.8 s (dev
+6.2 s: the 5 s close wait dominates, not the network). The storm's 2–3 s
+is the client side: 100 TLS handshakes with RSA client certs from one
+laptop, over the internet, where dev measured 0.4–0.6 s on loopback;
+FIS's own `/auth/user` lines in the journal arrive spread over about
+3 s, matching the storm's wall time, so nothing queues in FIS. The bar
+(max < 5 s of the broker's 10 s handshake budget) holds with 2 s to
+spare; a fleet does not reconnect from one laptop, so the number is an
+upper bound on a real storm's client cost, not FIS's.
+
+**An ad-hoc process launched over ssh needs `setsid -f`, not `&`.** The
+first remote run stalled at the management-API-down leg: `ssh fis@box
+'cd … && FIS_RABBIT_MGMT_PASSWORD=wrong setsid nohup fis api >> log 2>&1
+</dev/null &'` never returned. The `&` puts the whole `cd && setsid`
+list in a background subshell whose own stdout is still the ssh channel,
+and the subshell lives as long as `fis api`, so the ssh session cannot
+close and the battery waited on it. `setsid -f` forks and returns in the
+parent, no `&`, and the session ends at once. The same shape as the
+honeysuckle bench launch rule (timeout + setsid + nohup).
+
+**The journal window is read on the box's clock.** The second run was
+green but its FIS log held six lines and the storm's none: the rig
+opened the `journalctl --since` window with this laptop's clock, which
+runs 69 s ahead of the box (`date -u` on both, 2026-09-06 21:03 UTC), so
+the window began after most of the run and, for the storm, after it
+ended. The rig now takes the window's start from `date -u` on the box.
+Any harness that pairs a laptop timestamp with a box's log must do the
+same; the laptop's clock has drifted before (the 09-05 scratch notes).
+
+**Dev rung, 2026-09-05: all six claims PASS on the green run (18:57
+ET): 27/27 verdicts, storm 100/100 allowed with connect p50 0.39 s and
+max 0.55 s.** Five runs that day; the first found the blocking defect
+below and the middle three measured two candidate fixes that failed in
+different ways. Evidence: `battery-2026-09-05.log`,
+`storm-2026-09-05.json`.
 
 1. **Claim 1, the five user verdicts: PASS.** Allow, unknown principal,
    suspended principal, revoked instance, alias mismatch, class mismatch,
@@ -260,6 +345,18 @@ Times ET. Runs are named by their UTC stamp under `runs/`.
 - 15:16 confirm moved to `GET /api/connections/username/<id>` after the
   probe showed it tracking-backed and non-blocking: 26/26, storm max
   0.63 s. Green.
+- 2026-09-06 16:47 dev rig re-run on the rig refactor (`rig.py`): 27/27,
+  storm 100/100 max 0.61 s. No regression.
+- 16:48–16:50 `setup-remote.sh`: three GNode principals and 100 service
+  principals minted on `hw1-2`, 104 client certs cut on certbot against
+  the real CA (1 min 53 s), fetched, removed from certbot.
+- 16:50 first remote run: 20 cases green, then stalled at the
+  management-API-down leg (the ad-hoc launch, Found). Killed; FIS put
+  back under systemd by hand.
+- 17:01 second remote run: 27/27, storm 100/100 max 3.14 s; FIS log
+  truncated by the laptop-clock window (Found).
+- 17:04 third remote run (`20260906T2104-hw1-2`): 27/27, storm 100/100
+  p50 2.19 s max 3.00 s, full journal. Green; the evidence kept here.
 
 ## Analysis notes
 
@@ -289,12 +386,15 @@ Times ET. Runs are named by their UTC stamp under `runs/`.
 All data in this folder is GENERATED by the harness on the dev machine;
 none of it is in the journal DB or the S3 eventstore (the harness broker
 forwards nowhere and FIS joins no broker). A re-run produces a new
-dataset under `runs/`, never a regeneration. The experiment stops no
-service: it starts its own broker and its own FIS process and ends them
-itself; `gw-dev-rabbit`, `fis-postgres` and the gnr façade are used as
-found. The one running-system side effect is the truncation of the dev
-FIS database's `leases`, `auth_events` and `g_nodes` tables at each FIS
-boot.
+dataset under `runs/`, never a regeneration. On the dev rig the
+experiment stops no service: it starts its own broker and its own FIS
+process and ends them itself; `gw-dev-rabbit`, `fis-postgres` and the
+gnr façade are used as found. The one running-system side effect is the
+truncation of the FIS database's `leases`, `auth_events` and `g_nodes`
+tables at each FIS boot. On the remote rung the staging box's FIS is
+restarted under systemd (and, for one leg, run by hand with a wrong
+management password) and its database truncated the same way; the box
+is not a production system.
 
 - `README.md` — this record.
 - `docker-compose.yml` — the harness broker: stock 4.1.8 with gwbase's
@@ -304,7 +404,12 @@ boot.
   TLS, definitions, the `ssl_options` tightening).
 - `40-dev-fis-url.conf` — harness-only conf.d fragment repointing the
   four auth URLs at `host.docker.internal:8080`.
-- `run.sh` — the whole run: rig check, broker up, battery, storm.
+- `run.sh` — the whole dev run: rig check, broker up, battery, storm.
+- `rig.py` — the rig from the environment: local (harness broker, a FIS
+  process the battery owns) or remote (a broker box over ssh).
+- `remote.env`, `setup-remote.sh`, `run-remote.sh` — the remote rung:
+  the box, its identities and logins; principals on the box and certs
+  from certbot (outputs in `certs/remote/`, gitignored: keys); the run.
 - `setup.sh`, `mint.py`, `certs/gen_certs.sh` — identities: id lookup
   through the gnr façade, principal rows on the dev FIS database, the
   throwaway CA and per-identity client certs. Outputs (`certs/out/`,
@@ -312,9 +417,11 @@ boot.
   every setup.
 - `battery.py` — the verdict battery; `storm.py` — the reconnect storm.
   Harness code, no data.
-- `battery-2026-09-05.log`, `storm-2026-09-05.json` — the green run's
-  case log and storm summary (generated; copied from
-  `runs/20260905T1916/`). Earlier runs' evidence stays local under
+- `battery-2026-09-05.log`, `storm-2026-09-05.json` — the dev rung's
+  green run, case log and storm summary (generated; copied from
+  `runs/20260905T1916/`). `battery-2026-09-06-hw1-2.log`,
+  `storm-2026-09-06-hw1-2.json` — the remote rung's green run (from
+  `runs/20260906T2104-hw1-2/`). Other runs' evidence stays local under
   `runs/`, gitignored.
 - `runs/` — per-run evidence, gitignored (`.gitkeep` holds the folder).
 
