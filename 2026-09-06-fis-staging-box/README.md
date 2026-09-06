@@ -181,3 +181,8 @@ Battery not yet run here.
   run is that folder's `battery-2026-09-06-hw1-2.log`. The box is left
   as found: FIS under systemd, gate ON. The four platform-service
   principals are not minted here yet.
+- 17:30: box dropped: server, primary IP and firewall deleted on
+  Hetzner, the Route 53 A record removed, the two cert-inventory rows
+  (broker cert, battery client certs) retired. The battery's client
+  certs in the laptop checkout are now certs for a host that no longer
+  exists; `setup-remote.sh` re-cuts them against a rebuilt box.

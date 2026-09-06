@@ -17,6 +17,9 @@ first run dates them.
   — phase two of the DAC rung on the real spruce secondary pump
   (Grundfos UPMS 20-78 F): iso valve open, pump on, sweep the 0-10V
   output linearly and in jumps, flow versus volts as the speed curve.
+  Ran 2026-09-06: run 1 PASS (curve: linear 3-9 V, ~1.4 gpm/V, max at
+  9 V, stopped 1-2 V); run 2 (bands) lost flow to a flatlined pico under
+  a dormant cycler; run 3 (linear, 3-10 V) queued.
   Driver built and rehearsed on the sim Nolan scada (34 levels echoed,
   four relays under admin). Found and fixed on the way: the spruce
   artifact could not boot (tlayouts hand-built the affine calibration

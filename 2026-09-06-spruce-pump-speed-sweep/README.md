@@ -317,11 +317,39 @@ stay (the experiment paths root, recorded in `~/README.md` since 08-12).
   on the real pump, not as curve points. A follow-on run should sample
   3-10 V, denser where the pump starts moving.
 
-(pending the first run)
+- **Run 1 (`full`, 2026-09-06 16:43-17:37 ET): PASS, 34 steps, 2525
+  readings.** Flow versus level (volts x 10), settled value, same on
+  the way up, down and in jumps to within 0.05 gpm: 30 -> 0.6, 40 ->
+  2.3, 50 -> 3.7, 60 -> 5.2, 70 -> 6.6, 80 -> 8.0, 90 -> 9.0, 100 ->
+  9.0 gpm. Linear from 3 V to 9 V at about 1.4 gpm per volt; the pump
+  is at maximum by 9 V. 10 and 20 stop the pump; 0 runs it at 0.8 gpm
+  (the booklet's signal-fail minimum speed), slightly above the 0.6 at
+  30. Every DAC dispatch echoed within 0.1 s; the four relays held
+  their posture throughout. Settling time is below the flow channel's
+  reporting cadence (one reading per 45-90 s), so 90 s holds stay.
+  `instances/1/`.
+- **Run 2 (`bands`, 17:49-18:08 ET): PASS on the wire, no flow data.**
+  The window boot's pico power-cycle did not bring the secondary BTU
+  pico back; the pico-cycler, dormant under admin, logged it
+  flatlined at 18:00 and could not cycle it, so `secondary-flow` is
+  absent for the whole run (54 of 55 channels present). Every level
+  echoed. The cycler woke on admin release and cycled the picos. The
+  bands plan wants re-running once the cycler runs under admin
+  (scada design: pico-cycler command). `instances/2/`.
 
 ## Timeline
 
-(pending the first run; ET, one bullet per event)
+- 16:42 deployed scada, restart timer and summer hack stopped; window
+  scada booted, admin link up, DAC EEPROM verified.
+- 16:43 run 1 started; posture 16:44; baseline to 16:47; up to 17:04;
+  down to 17:20; jumps to 17:37; PASS, DAC restored to 76.
+- 17:47 window scada's 3900 s budget ended; fresh window scada booted
+  (pico power-cycle at 17:48).
+- 17:49 run 2 started; 18:00 secondary BTU pico flatlined (cycler
+  dormant); 18:08 PASS, admin released, cycler woke.
+- 18:09 window scada stopped (SIGINT); deployed event dir held only
+  its own 16:42 shutdown event; services restarted; window /tmp
+  removed.
 
 ## Analysis notes
 
