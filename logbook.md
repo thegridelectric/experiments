@@ -13,6 +13,15 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-06 · [spruce-pump-speed-sweep](2026-09-06-spruce-pump-speed-sweep/)**
+  — phase two of the DAC rung on the real spruce secondary pump
+  (Grundfos UPMS 20-78 F): iso valve open, pump on, sweep the 0-10V
+  output linearly and in jumps, flow versus volts as the speed curve.
+  Driver built and rehearsed on the sim Nolan scada (34 levels echoed,
+  four relays under admin); the spruce window is BLOCKED on the
+  artifact: tlayouts hand-builds the affine calibration at a version
+  sema squashed on 08-13, outside the layout closure so no conformance
+  check sees it. Run pending.
 - **2026-09-05 · [fis-gate-battery](2026-09-05-fis-gate-battery/)** — the FIS
   connect gate run against a real 4.1.8 broker + rmqbot's gate overlay on the
   dev universe (`d1__1`), stand-up-fis step 8. Green on the fifth run: 26/26
@@ -24,10 +33,6 @@ first run dates them.
   `rabbitmqctl eval` cost an Erlang VM per confirm. One KNOWN-GAP (vhost
   path cannot see the claimed run once a lease exists) and one KNOWN-LIMIT
   (the kill is broker-wide for the identity) stay logged.
-- **queued · [spruce-pump-speed-sweep](future/spruce-pump-speed-sweep/)**
-  — phase two of the DAC rung on the real spruce secondary pump
-  (Grundfos UPMS 20-78 F): iso valve open, pump on, sweep the 0-10V
-  output linearly and in jumps, flow versus volts as the speed curve.
 - **queued · [pico-rejoin](future/pico-rejoin/)** — trace
   `wlan.status()` timing across power cycles. Why the spruce
   secondary pico's stereotyped 13–14 min post-shake silence — deployed

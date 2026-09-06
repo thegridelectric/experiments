@@ -52,3 +52,19 @@ as validated Sema instances.
 - One instrument master at a time: any bench tool reading a chip the
   deployed service also reads must stop that service — and its restart
   watchdog — for the window.
+- Start every experiment from the template. Copy
+  `experiment-README-template.md` into the folder and write Why, Setup
+  and Protocol BEFORE the first run; Found and Timeline fill in as it
+  runs. An experiment that starts without its README is the defect this
+  rule exists for. (A hook reminds any session that claims an
+  `experiments/` path.)
+- Running on a pi: the box holds ONE clone of this repo, `~/experiments`,
+  at a pushed SHA (git pull, never scp), and the harness runs from that
+  clone, launched with `timeout` + `setsid nohup` so it survives the ssh
+  session. Nothing else is placed in the pi's home dir: no scratch
+  folders, no second service-repo checkouts, no copied scripts, no
+  `__pycache__`. Every runbook ends with a restore step that lists what
+  it placed and removes it; what must stay (an env file, an alias, a tool
+  install) is recorded in the box's `~/README.md` (the instance README)
+  in the same window, or it does not stay. Spruce's `~/README.md`
+  carries the inventory of what accumulated before this rule.

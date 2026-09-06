@@ -39,9 +39,11 @@ dev machine INTO the pi's broker. The persister's 153 un-acked bench events
 (July–August boots) are archived out of the event dir before the boot so
 nothing replays.
 
-- **Code under test:** gridworks-scada `jm/spruce-unlimbo` `5940d1b9`
-  (push, then on the pi `git pull` in `~/gridworks-scada`; the pi holds
-  `e551c2e1` from the 08-12 bench). Driver venv per `tools/mkenv-pi.sh`.
+- **Code under test:** gridworks-scada `jm/spruce-unlimbo` (first run
+  `5940d1b9`; second run `0f1ff7be`, which pins gridworks-proactor
+  `v4.1.13+jm2`). Push, then on the pi `git pull` in `~/gridworks-scada`.
+  Driver venv per `tools/mkenv-pi.sh`; when the proactor pin moves, the
+  venv needs the one-package refresh in step 4b.
 - **Artifacts:** the honeysuckle pair, emitted by tlayouts
   `honeysuckle_sema_gen.py` (tlayouts `56dbcd1`, the commit that gave
   honeysuckle its real eGauge identity). The generator writes them as
@@ -74,11 +76,11 @@ stable, so the regen reproduces the archived bytes; the diff proves it.
 
     ../gridworks-scada/gw_spaceheat/venv/bin/python honeysuckle_sema_gen.py
 
-    diff output/honeysuckle/gw.nolan.layout.json ../experiments/future/dac-output-bench/d1.bench.honeysuckle-gw.nolan.layout-000.json
+    diff output/honeysuckle/gw.nolan.layout.json ../experiments/2026-09-05-dac-output-bench/d1.bench.honeysuckle-gw.nolan.layout-000.json
 
-    diff output/honeysuckle/gw.nolan.operational.params.json ../experiments/future/dac-output-bench/d1.bench.honeysuckle-gw.nolan.operational.params-000.json
+    diff output/honeysuckle/gw.nolan.operational.params.json ../experiments/2026-09-05-dac-output-bench/d1.bench.honeysuckle-gw.nolan.operational.params-000.json
 
-    cd ../experiments/future/dac-output-bench
+    cd ../experiments/2026-09-05-dac-output-bench
 
 **2. Ship the artifacts (dev machine).** The scada reads its layout as
 `hardware-layout.json` and its operational params as
@@ -114,6 +116,16 @@ prints the hash to confirm.
     git pull
 
     git log -1 --format=%h
+
+**4b. Refresh the proactor in the pi venv when its pin moved
+(honeysuckle).** The pin is a git tag, so `git pull` alone leaves the
+venv on the old tag. One package, no dependency resolution:
+
+    cd ~/gridworks-scada
+
+    gw_spaceheat/venv/bin/pip install --no-deps "gridworks-proactor @ git+https://github.com/thegridelectric/gridworks-proactor.git@v4.1.13+jm2"
+
+    gw_spaceheat/venv/bin/pip show gridworks-proactor | grep Version
 
 **5. Archive the persister's old events (honeysuckle).** The event dir
 holds 153 un-acked events from the July and August bench boots. On
@@ -157,7 +169,24 @@ values), then the first heartbeat at about 60 s.
 
     cd ~/gridworks-scada/gw_spaceheat
 
-    nohup timeout 240 venv/bin/python cli.py run > /tmp/dac-output-boot.log 2>&1 &
+    setsid nohup timeout 240 venv/bin/python cli.py run > /tmp/dac-output-boot.log 2>&1 < /dev/null &
+
+If the boot is launched from the dev machine over ssh, wrap the launch
+in `timeout 15 ssh -n honeysuckle '...'`: without it the ssh session
+holds until the scada's own timeout ends, and a dispatch sent
+afterwards lands on a dead scada (two passes of run 3 were lost that
+way).
+
+Then check which silicon the bus took. Since scada `59284cc5` the bus
+backend comes from the layout's board record (`Gw108RevB` here, so the
+real MCP4728), not from the derived `is_simulated`; that bit now means
+only "no TaDeed or a sim component", and honeysuckle still prints
+`SIMULATED` for it (two sim tank modules, no deed). The line to trust is
+the bus's: `i2c-bus` must log no `i2c-bus-init-failed` glitch, and the
+chip read in step 10 is the proof. Earlier runs (before `59284cc5`)
+exercised `SimI2c` under this same `SIMULATED` line.
+
+    grep -n "SIMULATED\|i2c-bus-init-failed" /tmp/dac-output-boot.log
 
 **9. Dispatch 5.5 V (dev machine).** Wait about 40 s after the boot for
 the verify to complete. The sender connects through the tunnel,
@@ -214,6 +243,32 @@ is bytes 12–17: input code = `((b13 & 0x0F) << 8) | b14`, EEPROM code =
 
 ## Found
 
+**Run 4 (2026-09-05 late, scada `ba2c9883`): PASS on the real chip.** The
+first run after the board-record backend selection landed (`59284cc5`).
+Boot still logs `SIMULATED` (no deed, two sim tank modules) and the bus
+took smbus2 from the `Gw108RevB` record: no `i2c-bus-init-failed`, boot
+verify `EEPROM verified against layout PowerOn values` with no reprogram
+(the 09-05 finding 3 fix, now on silicon). Admin dispatch at 23:01:37
+pi-time: `Dispatch from admin: volts x10 55 -> code 2200`. Chip read at
+~23:03:05, 88 s later and past one heartbeat (`chip-2026-09-05-run4.txt`):
+channel C input `0xe0 0x88 0x98` = code 2200, internal vref, gain 1;
+EEPROM `0xe8 0x8b 0xcc` = 3020 unchanged. The heartbeat held the
+commanded level, not the power-on code. Admin timed out at 23:03:37
+(Dormant -> LocalControl) and the 240 s timeout ended the run before the
+release command arrived; the release is therefore unwitnessed this run.
+New this run: `I2cThermistorReader` reads the real ADS1115 (address 73)
+and reports `i2c-thermistor-broken` on all four channels, correct for a
+bench with no thermistors on the dividers. Operational note: the laptop's
+ssh tunnel had died silently since run 3 (a stale process passed the
+`pgrep` check); the first dispatch got `Connection refused` on 1884.
+Re-open with `ExitOnForwardFailure=yes` and check with a connect, not a
+pgrep. Decided after the run: the sender runs on the pi from the box's
+`~/experiments` clone at a pushed SHA, against `localhost:1883`, so no
+window on spruce depends on a laptop tunnel; the tunnel step leaves the
+runbook with that move. Log: `boot-2026-09-05-run4.log`. All three "Claims wanting
+silicon" above are now witnessed.
+
+
 **Two of three claims not reached; one real finding on each leg, and
 the reproducer stands.** Two boots (pi clock, ~1 min behind ET):
 boot 1 07:45–07:49, boot 2 07:54–07:59.
@@ -245,7 +300,18 @@ boot 1 07:45–07:49, boot 2 07:54–07:59.
 - **Side findings.** (a) The scada's admin link takes the password
   from `SCADA_ADMIN__PASSWORD`; boot 1 ran with a `_PASS` key and the
   link connected and dropped every backoff cycle (fixed before boot
-  2). (b) `Trouble with SendLayout: 'NoneType' object has no attribute
+  2). The "connected" was false: gridworks-proactor treated every
+  CONNACK as a connection, refusals included. Fixed in the proactor
+  fork the same day (`3e5087f`, tag `v4.1.13+jm2`, scada pin
+  `0f1ff7be`): a refused connect now logs `CONNACK refused: Not
+  authorized (rc 135)` and stays in `connecting`. The admin panel's
+  own MQTT client (`gwadmin/watch/clients/constrained_mqtt_client.py`)
+  still ignores the reason code and logs `connecting -> subscribing`
+  on a refusal; that fix rides the Nolan admin package work. The
+  package on PyPI publishes only from `main`, so a released admin with
+  either change waits on the spruce-unlimbo merge; the branch admin
+  runs now from `packages/gridworks-admin` (uv project) with no
+  release, which is what `bench_dispatch.py` here already does. (b) `Trouble with SendLayout: 'NoneType' object has no attribute
   'component'` on every admin link-up: a House0 relay-multiplexer
   lookup on a Nolan layout; the admin client never receives
   ScadaControlCapabilities, so the admin TUI cannot watch a Nolan
@@ -253,6 +319,24 @@ boot 1 07:45–07:49, boot 2 07:54–07:59.
   the real meter with no errors in the log.
 - **Isolation held:** every link on the pi's own broker; the 153
   archived events stayed archived; nothing left the box.
+
+**Run 3 (2026-09-05 evening, scada `0f1ff7be`, proactor `v4.1.13+jm2`,
+boot `19:13:23` pi clock): claim 2's dispatch leg PASSES on the box;
+silicon still unreached.** Still `SIMULATED` (line 296: no TaDeed, two
+`sim.pico.tank.module.component.gt` in the layout, Buffer and Tank1,
+the only sim parts). Admin link `awaiting_peer` at boot, `active` on
+the sender's first message (19:14:19), then `Message from Admin!`,
+`Admin Wakes Up`, `About name is secondary-010v`, and the new outputer
+line `[secondary-010v] Dispatch from admin: volts x10 55 -> code 2200`
+at 19:14:27. So the routing finding from boot 2 is closed on the real
+box, not only on the Nolan fixture. Chip read after the heartbeat:
+channel C input 3020, EEPROM 3020, unchanged, because `SimI2c` took the
+write. `i2c-dac-eeprom-reprogrammed` fired again for the same reason.
+Evidence: `boot3-2026-09-05.log`, `chip-2026-09-05-run3.txt`. Reaching
+silicon is open: the placeholder `tadeed.json` is easy (`d1` owes no
+deed by universe class), but the two sim tank modules capture channels
+the layout requires, so they cannot simply be dropped. The design
+spoke carries the question.
 
 ## Timeline
 
@@ -305,6 +389,8 @@ and ends on its own timeout.
   log was overwritten, see Timeline.
 - `chip-2026-09-05.txt` — the 24-byte `i2ctransfer` readback after the
   boot-2 dispatch plus the log trail at that moment (generated).
+- `boot3-2026-09-05.log`, `chip-2026-09-05-run3.txt` — run 3's scada
+  log and readback (generated).
 
 Regenerate everything from scratch: the runbook above, top to bottom.
 No `gw.readings` instance: the evidence is the log and the chip read.
