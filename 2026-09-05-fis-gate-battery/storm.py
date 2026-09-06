@@ -4,51 +4,42 @@ Measures the client-side connect time; the pass bar is every connect allowed
 and none near the broker's 10 s handshake_timeout.
 
     uv run --project ../../gridworks-fleet-index-service --with pika --with ../../gridworks-base storm.py
+
+The rig (broker, identities, the FIS lever) comes from the environment, as
+for battery.py: the local harness by default, `remote.env` for a box.
 """
 
 import argparse
 import json
-import os
-import signal
 import ssl
 import statistics
-import subprocess
 import sys
 import threading
 import time
 import uuid
 from pathlib import Path
 
-import httpx
-import psycopg
 import pika
 import pika.exceptions
 from gwbase.credentials import GridworksClaimsCredentials
 from gwbase.sema.types import FisConnectClaims
 
+from rig import Rig, rig_from_env
+
 HERE = Path(__file__).parent
-FIS_DIR = (HERE / "../../gridworks-fleet-index-service").resolve()
-CERTS = HERE / "certs/out"
-IDS = dict(line.split("=", 1) for line in (CERTS / "ids.env").read_text().splitlines() if "=" in line)
-FIS_ENV = {
-    "FIS_RABBIT_MGMT_URL": "http://localhost:15673",
-    "FIS_RABBIT_MGMT_USER": "smqPublic",
-    "FIS_RABBIT_MGMT_PASSWORD": "smqPublic",
-    "FIS_GNR_URL": "http://localhost:8000",
-}
 
 
-def connect_one(name: str, out: dict[str, tuple[str, float]], go: threading.Event) -> None:
+def connect_one(rig: Rig, name: str, out: dict[str, tuple[str, float]], go: threading.Event) -> None:
     ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-    ctx.load_verify_locations(str(CERTS / "ca.pem"))
-    ctx.load_cert_chain(str(CERTS / f"{name}.pem"), str(CERTS / f"{name}.key"))
+    ctx.load_verify_locations(rig.ca)
+    ctx.load_cert_chain(*rig.cert(name))
     params = pika.ConnectionParameters(
-        host="localhost",
-        port=5671,
-        virtual_host="d1__1",
-        ssl_options=pika.SSLOptions(ctx, server_hostname="localhost"),
+        host=rig.broker_host,
+        port=rig.amqps_port,
+        virtual_host=rig.run,
+        ssl_options=pika.SSLOptions(ctx, server_hostname=rig.broker_host),
         credentials=GridworksClaimsCredentials(
-            FisConnectClaims(alias=f"d1.storm.{name}", instance_id=str(uuid.uuid4()), run="d1__1")
+            FisConnectClaims(alias=rig.alias(f"storm.{name}"), instance_id=str(uuid.uuid4()), run=rig.run)
         ),
         connection_attempts=1,
         socket_timeout=20,
@@ -70,25 +61,16 @@ def main() -> int:
     args = ap.parse_args()
     run_dir = Path(args.run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
-    names = sorted(n for n in IDS if n.startswith("service"))
+    rig = rig_from_env(run_dir, fis_log_name="fis-storm.log")
+    names = sorted(n for n in rig.ids if n.startswith("service"))
 
-    with psycopg.connect("postgresql://fis:fispass@localhost:5437/fis", autocommit=True) as _c:
-        _c.execute("truncate leases, auth_events, g_nodes")
-    fis = subprocess.Popen(
-        ["uv", "run", "--project", str(FIS_DIR), "fis", "api"],
-        cwd=HERE, env={**os.environ, **FIS_ENV},
-        stdout=open(run_dir / "fis-storm.log", "a"), stderr=subprocess.STDOUT, start_new_session=True,
-    )
+    rig.fis_stop()
+    rig.reset_lease_state()
+    rig.fis_start()
     try:
-        for _ in range(60):
-            try:
-                if httpx.get("http://127.0.0.1:8080/ping", timeout=1).status_code == 200:
-                    break
-            except httpx.HTTPError:
-                time.sleep(0.5)
         out: dict[str, tuple[str, float]] = {}
         go = threading.Event()
-        threads = [threading.Thread(target=connect_one, args=(n, out, go)) for n in names]
+        threads = [threading.Thread(target=connect_one, args=(rig, n, out, go)) for n in names]
         for t in threads:
             t.start()
         time.sleep(0.5)
@@ -98,8 +80,7 @@ def main() -> int:
             t.join()
         wall = time.perf_counter() - t_storm
     finally:
-        os.killpg(os.getpgid(fis.pid), signal.SIGTERM)
-        fis.wait(timeout=15)
+        rig.close()
 
     times = sorted(dt for _, dt in out.values())
     allowed = sum(1 for tag, _ in out.values() if tag == "allow")

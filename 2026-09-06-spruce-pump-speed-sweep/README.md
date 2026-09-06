@@ -150,7 +150,22 @@ the `~/experiments` clone at a pushed SHA, launched over ssh with
 stays only for observation (the LTN link to the dev broker), where a
 drop costs data, not control.
 
-Sequence (`sweep.py` phases; timing knobs on the command line):
+Sequence (`sweep.py` phases; timing knobs on the command line). The
+levels a run visits come from `--plan`; run 1 used `full`, the plan
+below. Two follow-on plans sample against the booklet's input bands
+(page 21, profile R: below 0.5 V minimum speed, 0.5-1 V stopped, 1-2 V
+hysteresis, 2-3 V minimum speed, 3-10 V minimum to maximum):
+
+- `bands` (run 2, ~19 min): one level per band, 0, 7, 15, 25, 40,
+  entered from below on the way up and from above on the way down, no
+  jumps. What it settles: the pump stops at 7, whether 15 keeps the
+  previous state (hysteresis) in each direction, whether 0 and 25 both
+  give the minimum flow.
+- `linear` (run 3, ~65 min at 90 s holds): the speed band only, 30 to
+  100 in steps of 5, up, down, and jumps 40, 90, 55, 100, 35, 75, 30,
+  95, 45, 80, 60. The curve at twice run 1's resolution, none of it
+  spent below the band. Use `--hold 60` (~45 min) if run 1 shows flow
+  settling well inside 60 s.
 
 1. **Posture.** Secondary pump ON, iso valve OPEN, store pump OFF, each
    confirmed in a snapshot before the next.
@@ -167,7 +182,7 @@ Sequence (`sweep.py` phases; timing knobs on the command line):
    in the sweep posture, which is the summer posture; window closed per
    the protocol above.
 
-About 55 minutes end to end.
+About 55 minutes end to end for `full`.
 
 ### Runbook
 
@@ -245,7 +260,10 @@ Wait for `admin:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer`
 and the DAC boot verify line before step 8.
 
 **8. Run the sweep (spruce).** Watch `sweep-1.log` (line-flushed), not
-the stdout file (block-buffered under redirection).
+the stdout file (block-buffered under redirection). Runs 2 and 3 are
+the same line with `--run 2 --plan bands` and `--run 3 --plan linear`
+(and their own log names); the window scada from step 7 serves all
+three if its 3900 s budget allows, else boot it again first.
 
     cd ~/experiments/2026-09-06-spruce-pump-speed-sweep && setsid nohup timeout 3800 ~/gridworks-scada-unlimbo/gw_spaceheat/venv/bin/python sweep.py --run 1 > /tmp/spruce-pump-sweep/sweep-1.stdout 2>&1 < /dev/null &
 
@@ -287,6 +305,17 @@ stay (the experiment paths root, recorded in `~/README.md` since 08-12).
    sequences agreeing at each level.
 
 ## Found
+
+- **The ramp ignores the pump's input bands (2026-09-06, noticed during
+  run 1).** Data booklet page 21, 0-10 VDC profile R: below 0.5 V the
+  pump runs at minimum speed (signal-fail behaviour); 0.5-1 V standby
+  (stopped); 1-2 V hysteresis; 2-3 V minimum speed; 3-10 V speed from
+  minimum to maximum. Levels 0, 10 and 20 therefore sit outside the
+  speed band (0 minimum speed, 10 stopped, 20 minimum speed at the
+  hysteresis edge) and the speed range is sampled at only eight points
+  at 1 V spacing. Read the low points of run 1 as a check of the bands
+  on the real pump, not as curve points. A follow-on run should sample
+  3-10 V, denser where the pump starts moving.
 
 (pending the first run)
 

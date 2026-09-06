@@ -1,4 +1,5 @@
-"""The FIS gate battery on the dev universe (`d1__1`, localhost brokers).
+"""The FIS gate battery: every done-when verdict, against the rig named by
+the environment (local harness broker by default; `remote.env` for a box).
 
 Every done-when verdict of the stand-up-fis design, witnessed twice: by the
 client's connect outcome against the real broker + mechanism + FIS, and by
@@ -6,8 +7,9 @@ the `auth_events` row FIS recorded for that verdict. The AMQP legs speak
 through gwbase's own credentials class and claims word; the MQTT legs are a
 plain paho client with a cert, the shape a scada presents.
 
-battery.py owns the FIS process so one case (kill unconfirmable) can restart
-it with a wrong management password. Run through ./run.sh, or directly:
+The rig (`rig.py`) owns FIS, so one case (kill unconfirmable) can restart it
+with a wrong management password. Run through ./run.sh (or ./run-remote.sh),
+or directly:
 
     uv run --project ../../gridworks-fleet-index-service \
         --with pika --with paho-mqtt --with ../../gridworks-base battery.py
@@ -15,17 +17,13 @@ it with a wrong management password. Run through ./run.sh, or directly:
 
 import argparse
 import json
-import os
-import signal
 import ssl
-import subprocess
 import sys
 import threading
 import time
 import uuid
 from pathlib import Path
 
-import httpx
 import paho.mqtt.client as mqtt
 import pika
 import pika.exceptions
@@ -34,28 +32,10 @@ from gwbase.credentials import GridworksClaimsCredentials
 from gwbase.sema.types import FisConnectClaims
 from gwbase.transport_encoding import RoutingClass, json_broadcast_routing_key
 
+from rig import Rig, rig_from_env
+
 HERE = Path(__file__).parent
-FIS_DIR = (HERE / "../../gridworks-fleet-index-service").resolve()
-CERTS = HERE / "certs/out"
-CA = str(CERTS / "ca.pem")
-IDS = dict(
-    line.split("=", 1) for line in (CERTS / "ids.env").read_text().splitlines() if "=" in line
-)
-RUN = "d1__1"
-AMQPS_PORT = 5671
-MQTTS_PORT = 8883
-FIS_URL = "http://127.0.0.1:8080"
-DB_URL = "postgresql://fis:fispass@localhost:5437/fis"
-BROKER = "fis-gate-broker"
-FIS_ENV = {
-    "FIS_RABBIT_MGMT_URL": "http://localhost:15673",
-    "FIS_RABBIT_MGMT_USER": "smqPublic",
-    "FIS_RABBIT_MGMT_PASSWORD": "smqPublic",
-    "FIS_GNR_URL": "http://localhost:8000",
-}
-WEATHER_ALIAS = "d1.isone.me.weather"
-WEATHER_CLASS = "WeatherForecastService"
-SCADA_ALIAS = "d1.isone.me.versant.keene.sub.beech.scada"
+RIG: Rig  # set in main(); the broker, the identities, the FIS and broker levers
 
 results: list[tuple[str, bool, str]] = []
 log_lines: list[str] = []
@@ -75,48 +55,6 @@ def case(name: str, ok: bool, detail: str) -> None:
 # --- FIS process -----------------------------------------------------------
 
 
-class Fis:
-    def __init__(self, run_dir: Path) -> None:
-        self.log_path = run_dir / "fis.log"
-        self.proc: subprocess.Popen | None = None
-
-    def start(self, **overrides: str) -> None:
-        env = {**os.environ, **FIS_ENV, **overrides}
-        self.proc = subprocess.Popen(
-            ["uv", "run", "--project", str(FIS_DIR), "fis", "api"],
-            cwd=HERE,
-            env=env,
-            stdout=open(self.log_path, "a"),
-            stderr=subprocess.STDOUT,
-            start_new_session=True,
-        )
-        for _ in range(60):
-            try:
-                if httpx.get(f"{FIS_URL}/ping", timeout=1).status_code == 200:
-                    return
-            except httpx.HTTPError:
-                pass
-            time.sleep(0.5)
-        raise RuntimeError(f"FIS did not come up; see {self.log_path}")
-
-    def stop(self) -> None:
-        if self.proc is None:
-            return
-        os.killpg(os.getpgid(self.proc.pid), signal.SIGTERM)
-        self.proc.wait(timeout=15)
-        self.proc = None
-        # the socket must be free before a restart
-        for _ in range(20):
-            try:
-                httpx.get(f"{FIS_URL}/ping", timeout=0.5)
-                time.sleep(0.5)
-            except httpx.HTTPError:
-                return
-
-    def log_has(self, needle: str) -> bool:
-        return needle in self.log_path.read_text()
-
-
 # --- witnesses -------------------------------------------------------------
 
 
@@ -124,7 +62,7 @@ def last_event(principal: str, instance: str) -> tuple[str, str] | None:
     """FIS's own record of the verdict; the write is a background task, so
     poll briefly."""
     for _ in range(20):
-        with psycopg.connect(DB_URL) as conn:
+        with psycopg.connect(RIG.db_url) as conn:
             row = conn.execute(
                 "select decision, reason from auth_events where principal_id=%s "
                 "and instance_id=%s order by decided_at_unix_ms desc limit 1",
@@ -142,35 +80,10 @@ def event_is(principal: str, instance: str, decision: str, reason: str) -> tuple
     return got == want, f"auth_events={got} want={want}"
 
 
-def reset_lease_state() -> None:
-    """Clear leases, auth events and the registry mirror before a run, so a
-    verdict is decided by this run's connects and not by a prior one's rows.
-    Principals stay (their ids are the cert CNs); the mirror re-seeds from gnr
-    on FIS boot."""
-    with psycopg.connect(DB_URL, autocommit=True) as conn:
-        conn.execute("truncate leases, auth_events, g_nodes")
-
-
-def live_connections(principal: str) -> set[str]:
-    """The broker's own list of open connections for a principal (server-side
-    truth, not the management database, which lags). Names are the broker's
-    `host:port -> host:port` connection ids."""
-    out = subprocess.run(
-        ["docker", "exec", "-u", "rabbitmq", BROKER, "rabbitmqctl", "-q",
-         "list_connections", "user", "name"],
-        capture_output=True, text=True,
-    ).stdout
-    return {
-        line.split("\t", 1)[1]
-        for line in out.splitlines()
-        if line.startswith(principal + "\t")
-    }
-
-
 def wait_connections(principal: str, want: int, within_s: float = 5.0) -> set[str]:
     deadline = time.perf_counter() + within_s
     while True:
-        live = live_connections(principal)
+        live = RIG.live_connections(principal)
         if len(live) == want or time.perf_counter() >= deadline:
             return live
         time.sleep(0.05)
@@ -181,21 +94,21 @@ def wait_connections(principal: str, want: int, within_s: float = 5.0) -> set[st
 
 def ssl_ctx(name: str | None) -> ssl.SSLContext:
     ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-    ctx.load_verify_locations(CA)
+    ctx.load_verify_locations(RIG.ca)
     if name is not None:
-        ctx.load_cert_chain(str(CERTS / f"{name}.pem"), str(CERTS / f"{name}.key"))
+        ctx.load_cert_chain(*RIG.cert(name))
     return ctx
 
 
 def amqp_connect(
-    name: str | None, claims: FisConnectClaims, vhost: str = RUN
+    name: str | None, claims: FisConnectClaims, vhost: str | None = None
 ) -> tuple[str, pika.BlockingConnection | None, float]:
     """Outcome tag, the open connection (on allow), and the connect time."""
     params = pika.ConnectionParameters(
-        host="localhost",
-        port=AMQPS_PORT,
-        virtual_host=vhost,
-        ssl_options=pika.SSLOptions(ssl_ctx(name), server_hostname="localhost"),
+        host=RIG.broker_host,
+        port=RIG.amqps_port,
+        virtual_host=RIG.run if vhost is None else vhost,
+        ssl_options=pika.SSLOptions(ssl_ctx(name), server_hostname=RIG.broker_host),
         credentials=GridworksClaimsCredentials(claims),
         connection_attempts=1,
         socket_timeout=15,
@@ -212,8 +125,13 @@ def amqp_connect(
         return f"error:{type(e).__name__}:{e}"[:160], None, time.perf_counter() - t0
 
 
-def weather_claims(instance: str, alias: str = WEATHER_ALIAS, cls: str = WEATHER_CLASS, run: str = RUN) -> FisConnectClaims:
-    return FisConnectClaims(alias=alias, instance_id=instance, run=run, g_node_class=cls)
+def weather_claims(instance: str, alias: str | None = None, cls: str | None = None, run: str | None = None) -> FisConnectClaims:
+    return FisConnectClaims(
+        alias=RIG.weather_alias if alias is None else alias,
+        instance_id=instance,
+        run=RIG.run if run is None else run,
+        g_node_class=RIG.weather_class if cls is None else cls,
+    )
 
 
 def closed_by_broker(conn: pika.BlockingConnection, within_s: float) -> float | None:
@@ -258,11 +176,8 @@ def weather_key(from_alias: str) -> str:
     )
 
 
-LTN_ALIAS = "d1.isone.me.versant.keene.sub.beech"
-
-
-def ltn_claims(instance: str, alias: str = LTN_ALIAS) -> FisConnectClaims:
-    return FisConnectClaims(alias=alias, instance_id=instance, run=RUN, g_node_class="LeafTransactiveNode")
+def ltn_claims(instance: str) -> FisConnectClaims:
+    return FisConnectClaims(alias=RIG.ltn_alias, instance_id=instance, run=RIG.run, g_node_class="LeafTransactiveNode")
 
 
 def ltn_key(from_alias: str) -> str:
@@ -285,9 +200,8 @@ class MqttProbe:
         self.client = mqtt.Client(
             mqtt.CallbackAPIVersion.VERSION2, client_id=client_id, protocol=mqtt.MQTTv311
         )
-        self.client.tls_set(
-            ca_certs=CA, certfile=str(CERTS / f"{name}.pem"), keyfile=str(CERTS / f"{name}.key")
-        )
+        cert, key = RIG.cert(name)
+        self.client.tls_set(ca_certs=RIG.ca, certfile=cert, keyfile=key)
         self.client.on_connect = self._on_connect
         self.client.on_disconnect = self._on_disconnect
         self.client.on_subscribe = lambda *_: self.subscribed.set()
@@ -301,7 +215,7 @@ class MqttProbe:
 
     def connect(self) -> str:
         try:
-            self.client.connect("localhost", MQTTS_PORT, keepalive=30)
+            self.client.connect(RIG.broker_host, RIG.mqtts_port, keepalive=30)
         except (OSError, ssl.SSLError) as e:
             return f"error:{type(e).__name__}"
         self.client.loop_start()
@@ -327,10 +241,10 @@ class MqttProbe:
 # --- the battery -----------------------------------------------------------
 
 
-def run_battery(fis: Fis) -> None:
-    weather = IDS["weather"]
-    scada = IDS["scada"]
-    service = IDS["service0"]
+def run_battery() -> None:
+    ids = RIG.ids
+    weather = ids["weather"]
+    scada = ids["scada"]
 
     # 0. no client cert → refused at the TLS layer, before any claim is heard
     tag, _, _ = amqp_connect(None, weather_claims(str(uuid.uuid4())))
@@ -338,8 +252,8 @@ def run_battery(fis: Fis) -> None:
 
     # 1. unknown principal (a cert the CA signed, never minted) → deny
     inst = str(uuid.uuid4())
-    tag, _, _ = amqp_connect("unknown", FisConnectClaims(alias="d1.nobody", instance_id=inst, run=RUN))
-    ok, d = event_is(IDS["unknown"], inst, "Denied", "PrincipalNotFound")
+    tag, _, _ = amqp_connect("unknown", FisConnectClaims(alias=RIG.alias("nobody"), instance_id=inst, run=RIG.run))
+    ok, d = event_is(ids["unknown"], inst, "Denied", "PrincipalNotFound")
     case("unknown_principal_deny", tag == "deny-user" and ok, f"{tag}; {d}")
 
     # 2. honest weather GNode, instance A → allow (supersession of nothing)
@@ -360,11 +274,11 @@ def run_battery(fis: Fis) -> None:
     # The broker's own connection list is the oracle: because the kill
     # confirms empty before allowing, exactly one weather connection (B) is
     # live the instant B is admitted, and A's connection is gone.
-    a_names = live_connections(weather)
+    a_names = RIG.live_connections(weather)
     inst_b = str(uuid.uuid4())
     tag, conn_b, dt = amqp_connect("weather", weather_claims(inst_b))
     ok, d = event_is(weather, inst_b, "Authorized", "Superseded")
-    live = live_connections(weather)
+    live = RIG.live_connections(weather)
     a_gone = a_names.isdisjoint(live)
     case(
         "supersession_predecessor_closed",
@@ -379,7 +293,7 @@ def run_battery(fis: Fis) -> None:
 
     # 6. wrong alias claim / wrong class claim → deny; B untouched
     inst = str(uuid.uuid4())
-    tag, _, _ = amqp_connect("weather", weather_claims(inst, alias="d1.isone.me.price"))
+    tag, _, _ = amqp_connect("weather", weather_claims(inst, alias=RIG.stale_alias))
     ok, d = event_is(weather, inst, "Denied", "AliasMismatch")
     case("wrong_alias_claim_deny", tag == "deny-user" and ok, f"{tag}; {d}")
     inst = str(uuid.uuid4())
@@ -390,26 +304,26 @@ def run_battery(fis: Fis) -> None:
     # 7. run claim ≠ vhost. The executor's rule ("an Active lease for
     # (principal, vhost) exists iff the claimed run equals the vhost") is
     # witnessed on a principal with no lease on this vhost: /auth/user leases
-    # d1__2, /auth/vhost for d1__1 finds nothing and denies.
+    # the other run, /auth/vhost for this one finds nothing and denies.
     inst = str(uuid.uuid4())
-    tag, _, _ = amqp_connect("service1", FisConnectClaims(alias="d1.battery.other", instance_id=inst, run="d1__2"), vhost=RUN)
-    ev = last_event(IDS["service1"], inst)
+    tag, _, _ = amqp_connect("service1", FisConnectClaims(alias=RIG.alias("battery.other"), instance_id=inst, run=RIG.other_run), vhost=RIG.run)
+    ev = last_event(ids["service1"], inst)
     user_leased = ev is not None and ev[0] == "Authorized"
     case("run_claim_vs_vhost_deny_fresh_principal", tag == "deny-vhost" and user_leased, f"{tag}; user-verdict={ev}")
     # The same mismatch by a principal that ALREADY holds a live lease on the
-    # opened vhost (weather's B on d1__1). Finding B: /auth/vhost carries no
+    # opened vhost (weather's B on this run). Finding B: /auth/vhost carries no
     # claims, so a lease lookup admitted this; the claimed run now rides the
     # connection's user tag (`allow <run>` at /auth/user) and the vhost check
     # compares that tag, so the live lease changes nothing.
     inst = str(uuid.uuid4())
-    tag, conn_gap, _ = amqp_connect("weather", weather_claims(inst, run="d1__2"), vhost=RUN)
-    case("run_claim_vs_vhost_deny_with_live_lease", tag == "deny-vhost", f"{tag} (weather live on {RUN} while this connection claimed d1__2)")
+    tag, conn_gap, _ = amqp_connect("weather", weather_claims(inst, run=RIG.other_run), vhost=RIG.run)
+    case("run_claim_vs_vhost_deny_with_live_lease", tag == "deny-vhost", f"{tag} (weather live on {RIG.run} while this connection claimed {RIG.other_run})")
     if conn_gap is not None:
         conn_gap.close()
     # KNOWN LIMIT (not scored): the supersession kill is close-by-username,
-    # broker-wide for the identity, so the d1__2 attempt above also closed
-    # weather's d1__1 connection B. Exact while a broker hosts one run (the
-    # staging and prod posture); the dev broker hosts d1__1 and d1__2. A
+    # broker-wide for the identity, so the other-run attempt above also closed
+    # weather's connection B on this run. Exact while a broker hosts one run
+    # (the staging and prod posture); the dev broker hosts d1__1 and d1__2. A
     # vhost-scoped kill would read the tracking table's vhost per connection.
     b_closed = conn_b is not None and closed_by_broker(conn_b, 2.0) is not None
     log(f"KNOWN-LIMIT broker_wide_kill_closed_other_run: B closed={b_closed}")
@@ -419,17 +333,17 @@ def run_battery(fis: Fis) -> None:
     log(f"reopened B as a fresh instance: {tag}")
     # a run outside this FIS's universe never even reaches a lease
     inst = str(uuid.uuid4())
-    tag, _, _ = amqp_connect("weather", weather_claims(inst, run="hw1__1"), vhost=RUN)
+    tag, _, _ = amqp_connect("weather", weather_claims(inst, run=RIG.foreign_run), vhost=RIG.run)
     ok, d = event_is(weather, inst, "Denied", "RunOutsideUniverse")
     case("run_outside_universe_deny", tag == "deny-user" and ok, f"{tag}; {d}")
 
     # 8. suspended principal → deny; lifted → the same instance is admitted
-    subprocess.run(["uv", "run", "--project", str(FIS_DIR), "fis", "principal", "suspend", weather], check=True, capture_output=True, cwd=HERE)
+    RIG.principal_status(weather, "suspend")
     inst = str(uuid.uuid4())
     tag, _, _ = amqp_connect("weather", weather_claims(inst))
     ok, d = event_is(weather, inst, "Denied", "PrincipalSuspended")
     case("suspended_principal_deny", tag == "deny-user" and ok, f"{tag}; {d}")
-    subprocess.run(["uv", "run", "--project", str(FIS_DIR), "fis", "principal", "activate", weather], check=True, capture_output=True, cwd=HERE)
+    RIG.principal_status(weather, "activate")
     b_still_open = conn_b is not None and conn_b.is_open and closed_by_broker(conn_b, 0.5) is None
     case("suspension_does_not_kill_live_lease", b_still_open, f"B open={b_still_open} (eviction = suspend + kill, separately)")
 
@@ -437,14 +351,14 @@ def run_battery(fis: Fis) -> None:
     # first connect is an empty kill, so this is deterministic even while the
     # supersession finding stands). A GNode with a registry alias: own-alias
     # writes pass, a stale-alias write is denied 403 at /auth/topic.
-    ltn = IDS["ltn"]
+    ltn = ids["ltn"]
     inst = str(uuid.uuid4())
     tag, conn_l, _ = amqp_connect("ltn", ltn_claims(inst))
     ok, d = event_is(ltn, inst, "Authorized", "Superseded")
     case("ltn_first_connect_allow", tag == "allow" and ok, f"{tag}; {d}")
     if conn_l is not None:
-        o1 = publish_outcome(conn_l, "ltnmic_tx", ltn_key(LTN_ALIAS), None)
-        o2 = publish_outcome(conn_l, "ltnmic_tx", ltn_key("d1.isone.me.price"), None)
+        o1 = publish_outcome(conn_l, "ltnmic_tx", ltn_key(RIG.ltn_alias), None)
+        o2 = publish_outcome(conn_l, "ltnmic_tx", ltn_key(RIG.stale_alias), None)
         case("topic_write_own_alias_ok", o1 == "ok", o1)
         case("topic_write_stale_alias_denied", o2 == "closed 403", o2)
         conn_l.close()
@@ -454,17 +368,19 @@ def run_battery(fis: Fis) -> None:
     # validated by the broker itself — own id passes, a forged id is refused
     # 406. Each leg is its own service identity, so nothing supersedes.
     inst = str(uuid.uuid4())
-    tag, conn_s, _ = amqp_connect("service0", FisConnectClaims(alias="d1.battery.tap", instance_id=inst, run=RUN))
-    ok, d = event_is(IDS["service0"], inst, "Authorized", "Superseded")
+    tap = RIG.alias("battery.tap")
+    tag, conn_s, _ = amqp_connect("service0", FisConnectClaims(alias=tap, instance_id=inst, run=RIG.run))
+    ok, d = event_is(ids["service0"], inst, "Authorized", "Superseded")
     case("service_principal_allow", tag == "allow" and ok, f"{tag}; {d}")
     if conn_s is not None:
-        case("service_topic_write_allowed", publish_outcome(conn_s, "ltnmic_tx", ltn_key("d1.battery.tap"), None) == "ok", "own claimed alias")
-        case("user_id_own_identity_ok", publish_outcome(conn_s, "ltnmic_tx", ltn_key("d1.battery.tap"), IDS["service0"]) == "ok", "user_id = self")
+        case("service_topic_write_allowed", publish_outcome(conn_s, "ltnmic_tx", ltn_key(tap), None) == "ok", "own claimed alias")
+        case("user_id_own_identity_ok", publish_outcome(conn_s, "ltnmic_tx", ltn_key(tap), ids["service0"]) == "ok", "user_id = self")
         conn_s.close()
     inst = str(uuid.uuid4())
-    _, conn_f, _ = amqp_connect("service1", FisConnectClaims(alias="d1.battery.two", instance_id=inst, run=RUN))
+    two = RIG.alias("battery.two")
+    _, conn_f, _ = amqp_connect("service1", FisConnectClaims(alias=two, instance_id=inst, run=RIG.run))
     if conn_f is not None:
-        o = publish_outcome(conn_f, "ltnmic_tx", ltn_key("d1.battery.two"), "someone-else")
+        o = publish_outcome(conn_f, "ltnmic_tx", ltn_key(two), "someone-else")
         case("user_id_forged_refused_by_broker", o == "closed 406", o)
         try:
             if conn_f.is_open:
@@ -473,14 +389,14 @@ def run_battery(fis: Fis) -> None:
             pass
 
     # 11. management API unreachable → supersession unconfirmable → deny
-    fis.stop()
-    fis.start(FIS_RABBIT_MGMT_PASSWORD="wrong")
+    RIG.fis_stop()
+    RIG.fis_start(FIS_RABBIT_MGMT_PASSWORD="wrong")
     inst = str(uuid.uuid4())
     tag, _, _ = amqp_connect("weather", weather_claims(inst))
     ok, d = event_is(weather, inst, "Denied", "KillUnconfirmed")
     case("kill_unconfirmed_fail_closed", tag == "deny-user" and ok, f"{tag}; {d}")
-    fis.stop()
-    fis.start()
+    RIG.fis_stop()
+    RIG.fis_start()
 
     # 12. clean restart: with nothing to kill, a successor is admitted at once.
     if conn_b is not None and conn_b.is_open:
@@ -502,9 +418,9 @@ def run_battery(fis: Fis) -> None:
     case("mqtt_scada_connect_allow", tag == "allow" and ok, f"{tag}; {d}")
     if tag == "allow":
         case("mqtt_subscribe_read_allowed", p.subscribe_outcome("gw/#") == "granted", "suback")
-        o1 = p.publish_outcome(f"gw/{SCADA_ALIAS.replace('.', '-')}/status")
+        o1 = p.publish_outcome(f"gw/{RIG.scada_alias.replace('.', '-')}/status")
         case("mqtt_publish_own_alias_ok", o1 == "ok", o1)
-        o2 = p.publish_outcome("gw/d1-isone-me-price/status")
+        o2 = p.publish_outcome(f"gw/{RIG.stale_alias.replace('.', '-')}/status")
         case("mqtt_publish_stale_alias_disconnected", o2 == "disconnected", o2)
         p.close()
     p2 = MqttProbe("scada", "not-a-uuid")
@@ -520,14 +436,16 @@ def main() -> int:
     run_dir = Path(args.run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    reset_lease_state()
-    fis = Fis(run_dir)
-    fis.start()
-    log(f"FIS up; universe d1; mirror seeded from gnr — see {fis.log_path}")
+    global RIG
+    RIG = rig_from_env(run_dir)
+    RIG.fis_stop()
+    RIG.reset_lease_state()
+    RIG.fis_start()
+    log(f"FIS up on {RIG.broker_host}; universe {RIG.universe}; mirror seeded from the registry — see {RIG.fis_log_path}")
     try:
-        run_battery(fis)
+        run_battery()
     finally:
-        fis.stop()
+        RIG.close()
     passed = sum(1 for _, ok, _ in results if ok)
     log(f"{passed}/{len(results)} cases pass")
     (run_dir / "battery.log").write_text("\n".join(log_lines) + "\n")

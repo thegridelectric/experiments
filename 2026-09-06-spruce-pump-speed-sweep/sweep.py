@@ -100,8 +100,39 @@ STORE_PUMP_RELAY = "store-pump-relay"
 HP_RELAY = "hp-scada-ops-relay"
 RELAYS = (PUMP_RELAY, ISO_RELAY, STORE_PUMP_RELAY, HP_RELAY)
 
-RAMP = list(range(0, 101, 10))
-JUMPS = [20, 80, 40, 100, 10, 60, 0, 90, 30, 70, 50]
+
+
+class Plan(NamedTuple):
+    """The levels a run visits: the ramp (up, then reversed for down), the
+    jump sequence, and a one-line statement of what the plan is for."""
+
+    ramp: list[int]
+    jumps: list[int]
+    note: str
+
+
+# The Grundfos UPMS booklet (page 21, 0-10 VDC profile R) puts the pump in
+# bands by input volts: below 0.5 V minimum speed (signal-fail behaviour),
+# 0.5-1 V stopped, 1-2 V hysteresis, 2-3 V minimum speed, 3-10 V speed from
+# minimum to maximum. The plans sample against those bands.
+PLANS = {
+    "full": Plan(
+        ramp=list(range(0, 101, 10)),
+        jumps=[20, 80, 40, 100, 10, 60, 0, 90, 30, 70, 50],
+        note="uniform 0-10 V at 1 V; run 1's plan, three points below the speed band",
+    ),
+    "bands": Plan(
+        ramp=[0, 7, 15, 25, 40],
+        jumps=[],
+        note="one level per booklet band, entered from below (up) then from above (down): "
+        "the hysteresis band is the point of the two directions",
+    ),
+    "linear": Plan(
+        ramp=list(range(30, 101, 5)),
+        jumps=[40, 90, 55, 100, 35, 75, 30, 95, 45, 80, 60],
+        note="the 3-10 V speed band at 0.5 V, up, down and jumps",
+    ),
+}
 RESTORE_LEVEL = 76  # volts x 10; the EEPROM power-on 3020 is 7.55 V
 HOLD_S = 90
 BASELINE_S = 180
@@ -377,9 +408,10 @@ class LinkDead(RuntimeError):
 
 
 class Sweep:
-    def __init__(self, link: AdminLink, layout: NolanLayout, hold_s: int, baseline_s: int, hp_off: bool):
+    def __init__(self, link: AdminLink, layout: NolanLayout, plan: Plan, hold_s: int, baseline_s: int, hp_off: bool):
         self.link = link
         self.layout = layout
+        self.plan = plan
         self.hold_s = hold_s
         self.baseline_s = baseline_s
         self.hp_off = hp_off
@@ -469,13 +501,13 @@ class Sweep:
             log.info("baseline: DAC reported %s; holding %ds", current.value if current else "nothing yet", self.baseline_s)
             self.hold(self.baseline_s)
         if "up" in phases:
-            for level in RAMP:
+            for level in self.plan.ramp:
                 self.dispatch("up", level, self.hold_s)
         if "down" in phases:
-            for level in reversed(RAMP):
+            for level in reversed(self.plan.ramp):
                 self.dispatch("down", level, self.hold_s)
         if "jumps" in phases:
-            for level in JUMPS:
+            for level in self.plan.jumps:
                 self.dispatch("jumps", level, self.hold_s)
 
     def restore(self) -> None:
@@ -510,6 +542,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--env", type=Path, default=DEFAULT_ENV, help="the window scada's env file (SCADA_ADMIN__* creds)")
     p.add_argument("--layout", type=Path, default=DEFAULT_LAYOUT, help="the layout the window scada boots")
     p.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    p.add_argument("--plan", choices=sorted(PLANS), default="full", help="which levels to visit; see PLANS")
     p.add_argument("--hold", type=int, default=HOLD_S)
     p.add_argument("--baseline", type=int, default=BASELINE_S)
     p.add_argument("--phases", default=",".join(PHASES), help=f"comma list from {PHASES}")
@@ -530,9 +563,11 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     layout, provenance = load_layout(args.layout)
+    plan = PLANS[args.plan]
     knobs = {
-        "Phases": list(phases), "HoldS": args.hold, "BaselineS": args.baseline, "Ramp": RAMP,
-        "Jumps": JUMPS, "RestoreLevel": RESTORE_LEVEL, "HpOff": args.hp_off,
+        "Phases": list(phases), "HoldS": args.hold, "BaselineS": args.baseline, "Plan": args.plan,
+        "PlanNote": plan.note, "Ramp": plan.ramp,
+        "Jumps": plan.jumps, "RestoreLevel": RESTORE_LEVEL, "HpOff": args.hp_off,
         "EchoS": ECHO_S, "AdminTimeoutS": ADMIN_TIMEOUT_S,
     }
     log.info("plan: %s", json.dumps(knobs))
@@ -553,7 +588,7 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit(f"{args.env}: SCADA_ADMIN__ENABLED is not true; the window scada has no admin link")
 
     link = AdminLink(host, port, username, password, provenance.scada_alias)
-    sweep = Sweep(link, layout, args.hold, args.baseline, args.hp_off)
+    sweep = Sweep(link, layout, plan, args.hold, args.baseline, args.hp_off)
     start_ms = now_ms()
     outcome = "PASS"
     link.start()
