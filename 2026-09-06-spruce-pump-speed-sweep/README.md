@@ -336,6 +336,32 @@ stay (the experiment paths root, recorded in `~/README.md` since 08-12).
   echoed. The cycler woke on admin release and cycled the picos. The
   bands plan wants re-running once the cycler runs under admin
   (scada design: pico-cycler command). `instances/2/`.
+- **Run 2b (`bands`, 19:44-20:03 ET, scada `829038b2` with the cycler
+  kept awake under admin): PASS, 11 steps, flow present throughout.**
+  Up from below: 0 -> 0.79 gpm (minimum speed), 7 -> 0.71 (still
+  running: the stop band's lower edge on this pump is above 0.7 V, not
+  the booklet's 0.5 V), 15 -> 0.08 (stopped), 25 -> no change
+  (stopped), 40 -> 2.31. Down from above: 25 -> 0.00, 15 -> 0.00, 7 ->
+  0.00 (all stopped), 0 -> 0.69 (minimum speed again). So the pump's
+  stop behaviour is path dependent across 0.7-2.5 V: entered from
+  below it runs at 0.7 V and stops at 1.5 V; entered from above it
+  stays stopped down to 0.7 V and only 0 V restarts it. The booklet's
+  "2-3 V minimum speed" band does not appear: 2.5 V leaves the pump
+  wherever it was. Brief flow spikes (3.6-5.6 gpm, one reading each)
+  appear at the minimum-speed levels; they are in the raw readings and
+  not in the settled values. `instances/2b/`.
+- **Run 3 (`linear`, 20:07-21:06 ET, 60 s baseline, 85 s holds):
+  PASS, 42 steps, 2412 readings.** The curve at 0.5 V steps, settled
+  gpm, up / down / jump agreeing to within 0.06 at every level:
+  30 -> 0.63, 35 -> 1.57, 40 -> 2.3, 45 -> 3.05, 50 -> 3.76, 55 -> 4.5,
+  60 -> 5.2, 65 -> 5.9, 70 -> 6.61, 75 -> 7.3, 80 -> 8.01, 85 -> 8.68,
+  90 -> 8.99, 95 -> 9.0, 100 -> 8.98. Linear from 3.5 V to 8.5 V at
+  1.45 gpm per volt (about 0.72 per step), the knee to maximum between
+  8.5 and 9 V, flat above 9 V. Every dispatch echoed within 0.1 s; the
+  relays held posture throughout. A first attempt at run 3 was
+  interrupted after one step to fit the window scada's budget
+  (`sweep-3a.*`, `instances/3a/`, ABORT: interrupted; restore ran).
+  `instances/3/`.
 
 ## Timeline
 
@@ -350,6 +376,16 @@ stay (the experiment paths root, recorded in `~/README.md` since 08-12).
 - 18:09 window scada stopped (SIGINT); deployed event dir held only
   its own 16:42 shutdown event; services restarted; window /tmp
   removed.
+- 19:42 second window: scada `829038b2` pulled (cycler awake under
+  admin), services stopped, window scada booted, pico reboot at
+  19:42:23, flow back by 19:43:12.
+- 19:44 run 2b (bands) started; 20:03 PASS.
+- 20:03 fresh window scada for run 3; 20:04 run 3 started, interrupted
+  at 20:07 (would outlast the budget); 20:07 run 3 restarted with 60 s
+  baseline and 85 s holds; up to 20:30; down to 20:51; jumps to 21:06;
+  PASS.
+- 21:07 window scada stopped; deployed event dir held only its own
+  19:42 shutdown event; services restarted; window /tmp removed.
 
 ## Analysis notes
 

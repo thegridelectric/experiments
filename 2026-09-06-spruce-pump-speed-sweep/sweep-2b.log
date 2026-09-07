@@ -1,0 +1,207 @@
+2026-09-06 19:44:33,139 INFO plan: {"Phases": ["posture", "baseline", "up", "down", "jumps", "restore"], "HoldS": 90, "BaselineS": 180, "Plan": "bands", "PlanNote": "one level per booklet band, entered from below (up) then from above (down): the hysteresis band is the point of the two directions", "Ramp": [0, 7, 15, 25, 40], "Jumps": [], "RestoreLevel": 76, "HpOff": false, "EchoS": 15, "AdminTimeoutS": 900}
+2026-09-06 19:44:33,139 INFO layout: /home/pi/.config/gridworks/scada-experiment/hardware-layout.json sha256 262d9f7a581a scada hw1.isone.me.versant.keene.spruce.scada
+2026-09-06 19:44:33,139 INFO relay vocabulary: RelayEvents(node='secondary-pump-relay', event_type='change.relay.state', energizing='CloseRelay', de_energizing='OpenRelay')
+2026-09-06 19:44:33,140 INFO relay vocabulary: RelayEvents(node='iso-valve-relay', event_type='change.valve.state', energizing='OpenValve', de_energizing='CloseValve')
+2026-09-06 19:44:33,140 INFO relay vocabulary: RelayEvents(node='store-pump-relay', event_type='change.relay.state', energizing='CloseRelay', de_energizing='OpenRelay')
+2026-09-06 19:44:33,140 INFO relay vocabulary: RelayEvents(node='hp-scada-ops-relay', event_type='change.relay.state', energizing='CloseRelay', de_energizing='OpenRelay')
+2026-09-06 19:44:33,145 INFO connected to localhost:1883, subscribed gw/hw1-isone-me-versant-keene-spruce-scada/to/admin/#
+2026-09-06 19:44:33,149 INFO sent send.snap
+2026-09-06 19:44:33,196 INFO snap secondary-010v = 76 @ 23:44:20.712Z
+2026-09-06 19:44:33,196 INFO snap secondary-flow = 737 @ 23:43:12.560Z
+2026-09-06 19:44:33,197 INFO snapshot 1: 52 readings, 24 states; relays {'auto.lc.n.hp-scada-ops-relay': 'RelayClosed', 'auto.lc.n.secondary-pump-relay': 'RelayClosed', 'auto.lc.n.iso-valve-relay': 'ValveOpen', 'auto.lc.n.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:44:33,653 INFO sent admin.dispatch
+2026-09-06 19:44:33,657 INFO sent send.snap
+2026-09-06 19:44:33,657 INFO posture: secondary-pump-relay CloseRelay -> RelayClosed seen after 0.0s
+2026-09-06 19:44:33,699 INFO admin link: fsm.full.report
+2026-09-06 19:44:33,701 INFO snapshot 2: 52 readings, 24 states; relays {'auto.lc.n.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'auto.lc.n.iso-valve-relay': 'ValveOpen', 'auto.lc.n.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:44:38,660 INFO sent admin.dispatch
+2026-09-06 19:44:38,663 INFO sent send.snap
+2026-09-06 19:44:38,664 INFO posture: iso-valve-relay OpenValve -> ValveOpen seen after 0.0s
+2026-09-06 19:44:38,704 INFO admin link: fsm.full.report
+2026-09-06 19:44:38,708 INFO snapshot 3: 52 readings, 24 states; relays {'auto.lc.n.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'auto.lc.n.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:44:43,668 INFO sent admin.dispatch
+2026-09-06 19:44:43,671 INFO sent send.snap
+2026-09-06 19:44:43,674 INFO posture: store-pump-relay OpenRelay -> RelayOpen seen after 0.0s
+2026-09-06 19:44:43,712 INFO admin link: fsm.full.report
+2026-09-06 19:44:43,716 INFO snapshot 4: 52 readings, 24 states; relays {'auto.lc.n.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:44:48,675 INFO baseline: DAC reported 76; holding 180s
+2026-09-06 19:45:00,027 INFO snapshot 5: 52 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:45:03,683 INFO sent send.snap
+2026-09-06 19:45:03,728 INFO snap secondary-flow = 738 @ 23:45:00.558Z
+2026-09-06 19:45:03,730 INFO snapshot 6: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:45:20,730 INFO single secondary-010v = 76 @ 23:45:20.722Z
+2026-09-06 19:45:30,011 INFO snapshot 7: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:45:33,695 INFO sent send.snap
+2026-09-06 19:45:33,741 INFO snapshot 8: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:46:00,013 INFO snapshot 9: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:46:03,701 INFO sent send.snap
+2026-09-06 19:46:03,748 INFO snapshot 10: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:46:20,747 INFO single secondary-010v = 76 @ 23:46:20.740Z
+2026-09-06 19:46:30,005 INFO snapshot 11: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:46:33,708 INFO sent send.snap
+2026-09-06 19:46:33,753 INFO snapshot 12: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:47:00,011 INFO snapshot 13: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:47:03,714 INFO sent send.snap
+2026-09-06 19:47:03,760 INFO snapshot 14: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:47:20,751 INFO single secondary-010v = 76 @ 23:47:20.748Z
+2026-09-06 19:47:30,010 INFO snapshot 15: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:47:33,719 INFO sent send.snap
+2026-09-06 19:47:33,761 INFO snapshot 16: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:47:48,730 INFO sent admin.analog.dispatch
+2026-09-06 19:47:48,748 INFO single secondary-010v = 0 @ 23:47:48.744Z
+2026-09-06 19:47:49,231 INFO up: level 0 echoed after 0.0s; holding 90s
+2026-09-06 19:48:00,012 INFO snap secondary-flow = 80 @ 23:47:54.559Z
+2026-09-06 19:48:00,013 INFO snapshot 17: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:48:04,238 INFO sent send.snap
+2026-09-06 19:48:04,251 INFO snapshot 18: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:48:30,011 INFO snap secondary-flow = 563 @ 23:48:28.561Z
+2026-09-06 19:48:30,012 INFO snapshot 19: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:48:34,245 INFO sent send.snap
+2026-09-06 19:48:34,289 INFO snap secondary-flow = 89 @ 23:48:33.564Z
+2026-09-06 19:48:34,290 INFO snapshot 20: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:48:48,762 INFO single secondary-010v = 0 @ 23:48:48.753Z
+2026-09-06 19:49:00,005 INFO snap secondary-flow = 76 @ 23:48:59.559Z
+2026-09-06 19:49:00,006 INFO snapshot 21: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:49:04,252 INFO sent send.snap
+2026-09-06 19:49:04,296 INFO snapshot 22: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:49:19,263 INFO sent admin.analog.dispatch
+2026-09-06 19:49:19,280 INFO single secondary-010v = 7 @ 23:49:19.276Z
+2026-09-06 19:49:19,764 INFO up: level 7 echoed after 0.0s; holding 90s
+2026-09-06 19:49:30,010 INFO snap secondary-flow = 82 @ 23:49:10.561Z
+2026-09-06 19:49:30,011 INFO snapshot 23: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:49:34,769 INFO sent send.snap
+2026-09-06 19:49:34,816 INFO snap secondary-flow = 70 @ 23:49:31.561Z
+2026-09-06 19:49:34,817 INFO snapshot 24: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:50:00,027 INFO snap secondary-flow = 521 @ 23:49:58.560Z
+2026-09-06 19:50:00,028 INFO snapshot 25: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:50:04,776 INFO sent send.snap
+2026-09-06 19:50:04,820 INFO snap secondary-flow = 382 @ 23:50:03.563Z
+2026-09-06 19:50:04,822 INFO snapshot 26: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:50:19,296 INFO single secondary-010v = 7 @ 23:50:19.287Z
+2026-09-06 19:50:30,011 INFO snap secondary-flow = 71 @ 23:50:23.559Z
+2026-09-06 19:50:30,012 INFO snapshot 27: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:50:34,788 INFO sent send.snap
+2026-09-06 19:50:34,836 INFO snapshot 28: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:50:49,799 INFO sent admin.analog.dispatch
+2026-09-06 19:50:49,814 INFO single secondary-010v = 15 @ 23:50:49.811Z
+2026-09-06 19:50:50,300 INFO up: level 15 echoed after 0.0s; holding 90s
+2026-09-06 19:51:00,013 INFO snap secondary-flow = 8 @ 23:50:52.564Z
+2026-09-06 19:51:00,014 INFO snapshot 29: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:51:05,304 INFO sent send.snap
+2026-09-06 19:51:05,308 INFO snapshot 30: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:51:30,013 INFO snapshot 31: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:51:35,310 INFO sent send.snap
+2026-09-06 19:51:35,357 INFO snapshot 32: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:51:49,817 INFO single secondary-010v = 15 @ 23:51:49.816Z
+2026-09-06 19:52:00,015 INFO snapshot 33: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:52:05,317 INFO sent send.snap
+2026-09-06 19:52:05,364 INFO snapshot 34: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:52:20,322 INFO sent admin.analog.dispatch
+2026-09-06 19:52:20,344 INFO single secondary-010v = 25 @ 23:52:20.340Z
+2026-09-06 19:52:20,823 INFO up: level 25 echoed after 0.0s; holding 90s
+2026-09-06 19:52:30,004 INFO snapshot 35: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:52:35,829 INFO sent send.snap
+2026-09-06 19:52:35,877 INFO snapshot 36: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:53:00,014 INFO snapshot 37: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:53:05,841 INFO sent send.snap
+2026-09-06 19:53:05,889 INFO snapshot 38: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:53:20,359 INFO single secondary-010v = 25 @ 23:53:20.350Z
+2026-09-06 19:53:30,010 INFO snapshot 39: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:53:35,846 INFO sent send.snap
+2026-09-06 19:53:35,889 INFO snapshot 40: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:53:50,855 INFO sent admin.analog.dispatch
+2026-09-06 19:53:50,870 INFO single secondary-010v = 40 @ 23:53:50.867Z
+2026-09-06 19:53:51,356 INFO up: level 40 echoed after 0.0s; holding 90s
+2026-09-06 19:54:00,013 INFO snap secondary-flow = 232 @ 23:53:55.561Z
+2026-09-06 19:54:00,014 INFO snapshot 41: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:54:06,361 INFO sent send.snap
+2026-09-06 19:54:06,372 INFO snapshot 42: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:54:30,011 INFO snapshot 43: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:54:36,367 INFO sent send.snap
+2026-09-06 19:54:36,409 INFO snapshot 44: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:54:50,878 INFO single secondary-010v = 40 @ 23:54:50.875Z
+2026-09-06 19:55:00,026 INFO snapshot 45: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:55:06,373 INFO sent send.snap
+2026-09-06 19:55:06,426 INFO snap secondary-flow = 231 @ 23:55:00.560Z
+2026-09-06 19:55:06,427 INFO snapshot 46: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:55:21,379 INFO sent admin.analog.dispatch
+2026-09-06 19:55:21,388 INFO single secondary-010v = 40 @ 23:55:21.384Z
+2026-09-06 19:55:21,880 INFO down: level 40 echoed after 0.0s; holding 90s
+2026-09-06 19:55:30,011 INFO snapshot 47: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:55:36,890 INFO sent send.snap
+2026-09-06 19:55:36,936 INFO snapshot 48: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:56:00,007 INFO snapshot 49: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:56:06,897 INFO sent send.snap
+2026-09-06 19:56:06,945 INFO snapshot 50: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:56:21,391 INFO single secondary-010v = 40 @ 23:56:21.390Z
+2026-09-06 19:56:30,012 INFO snapshot 51: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:56:36,903 INFO sent send.snap
+2026-09-06 19:56:36,948 INFO snapshot 52: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:56:51,908 INFO sent admin.analog.dispatch
+2026-09-06 19:56:51,923 INFO single secondary-010v = 25 @ 23:56:51.920Z
+2026-09-06 19:56:52,409 INFO down: level 25 echoed after 0.0s; holding 90s
+2026-09-06 19:57:00,011 INFO snap secondary-flow = 0 @ 23:56:55.564Z
+2026-09-06 19:57:00,013 INFO snapshot 53: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:57:07,415 INFO sent send.snap
+2026-09-06 19:57:07,427 INFO snapshot 54: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:57:30,011 INFO snapshot 55: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:57:37,424 INFO sent send.snap
+2026-09-06 19:57:37,469 INFO snapshot 56: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:57:51,933 INFO single secondary-010v = 25 @ 23:57:51.929Z
+2026-09-06 19:58:00,014 INFO snapshot 57: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:58:07,430 INFO sent send.snap
+2026-09-06 19:58:07,473 INFO snapshot 58: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:58:22,442 INFO sent admin.analog.dispatch
+2026-09-06 19:58:22,465 INFO single secondary-010v = 15 @ 23:58:22.456Z
+2026-09-06 19:58:22,944 INFO down: level 15 echoed after 0.0s; holding 90s
+2026-09-06 19:58:30,006 INFO snapshot 59: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:58:37,948 INFO sent send.snap
+2026-09-06 19:58:37,996 INFO snapshot 60: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:59:00,014 INFO snapshot 61: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:59:07,953 INFO sent send.snap
+2026-09-06 19:59:07,997 INFO snapshot 62: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:59:22,470 INFO single secondary-010v = 15 @ 23:59:22.466Z
+2026-09-06 19:59:30,005 INFO snapshot 63: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:59:37,958 INFO sent send.snap
+2026-09-06 19:59:38,004 INFO snapshot 64: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 19:59:52,961 INFO sent admin.analog.dispatch
+2026-09-06 19:59:52,968 INFO single secondary-010v = 7 @ 23:59:52.967Z
+2026-09-06 19:59:53,462 INFO down: level 7 echoed after 0.0s; holding 90s
+2026-09-06 20:00:00,005 INFO snapshot 65: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:00:08,466 INFO sent send.snap
+2026-09-06 20:00:08,477 INFO snap secondary-flow = 0 @ 00:00:00.561Z
+2026-09-06 20:00:08,479 INFO snapshot 66: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:00:30,013 INFO snapshot 67: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:00:38,477 INFO sent send.snap
+2026-09-06 20:00:38,490 INFO snapshot 68: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:00:52,976 INFO single secondary-010v = 7 @ 00:00:52.972Z
+2026-09-06 20:01:00,014 INFO snapshot 69: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:01:08,483 INFO sent send.snap
+2026-09-06 20:01:08,495 INFO snapshot 70: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:01:23,498 INFO sent admin.analog.dispatch
+2026-09-06 20:01:23,513 INFO single secondary-010v = 0 @ 00:01:23.510Z
+2026-09-06 20:01:24,000 INFO down: level 0 echoed after 0.0s; holding 90s
+2026-09-06 20:01:30,013 INFO snap secondary-flow = 357 @ 00:01:27.563Z
+2026-09-06 20:01:30,014 INFO snapshot 71: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:01:39,003 INFO sent send.snap
+2026-09-06 20:01:39,045 INFO snap secondary-flow = 256 @ 00:01:38.564Z
+2026-09-06 20:01:39,046 INFO snapshot 72: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:02:00,012 INFO snap secondary-flow = 74 @ 00:01:46.563Z
+2026-09-06 20:02:00,013 INFO snapshot 73: 58 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:02:09,015 INFO sent send.snap
+2026-09-06 20:02:09,059 INFO snap secondary-flow = 77 @ 00:02:03.565Z
+2026-09-06 20:02:09,061 INFO snapshot 74: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:02:23,521 INFO single secondary-010v = 0 @ 00:02:23.518Z
+2026-09-06 20:02:30,010 INFO snap secondary-flow = 82 @ 00:02:15.612Z
+2026-09-06 20:02:30,012 INFO snapshot 75: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:02:39,023 INFO sent send.snap
+2026-09-06 20:02:39,065 INFO snap secondary-flow = 69 @ 00:02:35.566Z
+2026-09-06 20:02:39,066 INFO snapshot 76: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:02:54,039 INFO sent admin.analog.dispatch
+2026-09-06 20:02:54,057 INFO single secondary-010v = 76 @ 00:02:54.048Z
+2026-09-06 20:02:54,541 INFO restore: level 76 echoed after 0.0s; holding 10s
+2026-09-06 20:03:00,005 INFO snap secondary-flow = 747 @ 00:02:57.567Z
+2026-09-06 20:03:00,006 INFO snapshot 77: 54 readings, 25 states; relays {'admin.hp-scada-ops-relay': 'RelayClosed', 'admin.secondary-pump-relay': 'RelayClosed', 'admin.iso-valve-relay': 'ValveOpen', 'admin.store-pump-relay': 'RelayOpen'}
+2026-09-06 20:03:04,552 INFO sent admin.release.control
+2026-09-06 20:03:05,554 WARNING disconnected: Normal disconnection
+2026-09-06 20:03:05,605 INFO PASS; 856 readings, 11 steps; wrote /tmp/spruce-pump-sweep/sweep-2b-results.json
