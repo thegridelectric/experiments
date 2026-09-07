@@ -1,0 +1,45 @@
+15:32:46 mqtt started -> connecting
+15:32:46 mqtt connecting -> subscribing
+15:32:46 mqtt subscribing -> active
+15:32:46 link active
+15:32:46 watching 180s for the self-provoked cycle
+15:33:00 RX snapshot {'buffer': ('Alive', 1788809542552), 'tank1': ('Alive', 1788809542552), 'auto.pico-cycler.vdc-relay': ('RelayClosed', 1788809550564), 'auto.pico-cycler': ('PicosLive', 1788809570612)}
+15:33:22 RX single.reading
+15:33:30 RX snapshot {'buffer': ('Alive', 1788809542552), 'tank1': ('Alive', 1788809542552), 'auto.pico-cycler.vdc-relay': ('RelayClosed', 1788809550564), 'auto.pico-cycler': ('PicosLive', 1788809570612)}
+15:34:00 RX snapshot {'buffer': ('Alive', 1788809542552), 'tank1': ('Alive', 1788809542552), 'auto.pico-cycler.vdc-relay': ('RelayClosed', 1788809550564), 'auto.pico-cycler': ('PicosLive', 1788809570612)}
+15:34:22 RX single.reading
+15:34:30 RX snapshot {'buffer': ('Alive', 1788809542552), 'tank1': ('Alive', 1788809542552), 'auto.pico-cycler.vdc-relay': ('RelayClosed', 1788809550564), 'auto.pico-cycler': ('PicosLive', 1788809570612)}
+15:35:00 RX snapshot {'buffer': ('Flatlined', 1788809698003), 'tank1': ('Flatlined', 1788809698003), 'auto.pico-cycler.vdc-relay': ('RelayClosed', 1788809698002), 'auto.pico-cycler': ('PicosRebooting', 1788809698003)}
+15:35:22 RX single.reading
+15:35:30 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'auto.pico-cycler.vdc-relay': ('RelayClosed', 1788809698002), 'auto.pico-cycler': ('PicosLive', 1788809717893)}
+15:35:46 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'auto.pico-cycler.vdc-relay': ('RelayClosed', 1788809698002), 'auto.pico-cycler': ('PicosLive', 1788809717893)}
+15:35:49 TX admin.dispatch RebootPicos -> admin.pico-cycler trigger=6a7f5a24-9cff-47b4-ac3f-dc23256471ed
+15:36:00 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809754866), 'admin.pico-cycler': ('PicosLive', 1788809757602)}
+15:36:22 RX single.reading
+15:36:30 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809754866), 'admin.pico-cycler': ('PicosLive', 1788809757602)}
+15:37:00 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809754866), 'admin.pico-cycler': ('PicosLive', 1788809757602)}
+15:37:20 try 1: not taken, re-sending
+15:37:20 TX admin.dispatch RebootPicos -> admin.pico-cycler trigger=893e7447-1e8d-4c63-b768-295b1f513602
+15:37:22 RX single.reading
+15:37:30 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809845517), 'admin.pico-cycler': ('PicosRebooting', 1788809845517)}
+15:38:00 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809845517), 'admin.pico-cycler': ('PicosLive', 1788809866195)}
+15:38:22 RX single.reading
+15:38:30 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809845517), 'admin.pico-cycler': ('PicosLive', 1788809866195)}
+15:38:51 try 2: not taken, re-sending
+15:38:51 TX admin.dispatch RebootPicos -> admin.pico-cycler trigger=8cb24235-c2d8-43b1-b803-d9389bd3f9a7
+15:39:00 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809936172), 'admin.pico-cycler': ('PicosRebooting', 1788809936173)}
+15:39:22 RX single.reading
+15:39:30 RX snapshot {'buffer': ('Alive', 1788809717892), 'tank1': ('Alive', 1788809717893), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809936172), 'admin.pico-cycler': ('PicosLive', 1788809956362)}
+15:40:00 RX snapshot {'buffer': ('Alive', 1788809998006), 'tank1': ('Alive', 1788809998006), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809998005), 'admin.pico-cycler': ('PicosLive', 1788809998006)}
+15:40:21 try 3: not taken, re-sending
+15:40:21 FAIL(a): no pico-cycler fsm.full.report under any dispatch's trigger
+15:40:21 RX snapshot {'buffer': ('Alive', 1788809998006), 'tank1': ('Alive', 1788809998006), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809998005), 'admin.pico-cycler': ('PicosLive', 1788809998006)}
+15:40:22 RX single.reading
+15:40:25 TX admin.release.control
+15:40:30 RX snapshot {'buffer': ('Alive', 1788809998006), 'tank1': ('Alive', 1788809998006), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809998005), 'admin.pico-cycler': ('PicosLive', 1788809998006)}
+15:41:00 RX snapshot {'buffer': ('Alive', 1788809998006), 'tank1': ('Alive', 1788809998006), 'admin.pico-cycler.vdc-relay': ('RelayClosed', 1788809998005), 'admin.pico-cycler': ('PicosLive', 1788809998006)}
+15:41:22 RX single.reading
+15:41:30 RX snapshot {'buffer': ('Flatlined', 1788810082672), 'tank1': ('Flatlined', 1788810082674), 'auto.pico-cycler.vdc-relay': ('RelayClosed', 1788810087678), 'auto.pico-cycler': ('PicosRebooting', 1788810087678)}
+15:41:35 mqtt active -> backing_off
+15:41:35 mqtt backing_off -> stopped
+15:41:36 done

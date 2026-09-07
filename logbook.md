@@ -13,6 +13,15 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-07 · [admin-reboots-picos](2026-09-07-admin-reboots-picos/)**
+  — PASS on the journal side: the real admin client, over dev rabbit,
+  asks a local sim Nolan scada's pico-cycler to reboot the picos; the
+  persisted reports carry the flatline rows before the self-provoked
+  cycle, the Alive rows after, and the commanded cycle's full report
+  under the dispatch's id. Found and fixed two scada defects (a sim GPIO
+  relay never answered its boss; the cycler's 60 s reboot wait confirmed
+  a later cycle) and one gap (admin gets no acknowledgement of the
+  command, only snapshots).
 - **2026-09-07 · [hp-boss-admin-drive](2026-09-07-hp-boss-admin-drive/)**
   — PASS: the real admin client, over dev rabbit, turns the heat pump off
   and on through hp-boss on a local Nolan/SimGw108 scada; first run found
