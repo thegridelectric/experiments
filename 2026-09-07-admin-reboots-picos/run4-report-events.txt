@@ -1,0 +1,19 @@
+== 17:25:00 ET  slot 1788816240  -> instances/1725-report.event-004.json
+   buffer                               [('Alive', '17:24:48.049'), ('Alive', '17:24:58.003')]
+   tank1                                [('Alive', '17:24:48.049'), ('Alive', '17:24:58.003')]
+   auto.pico-cycler.vdc-relay           [('RelayClosed', '17:24:50.056'), ('RelayOpen', '17:24:51.058'), ('RelayClosed', '17:24:56.062'), ('RelayClosed', '17:24:58.003')]
+   auto.pico-cycler                     [('RelayOpening', '17:24:51.054'), ('RelayOpen', '17:24:51.059'), ('RelayClosing', '17:24:56.061'), ('PicosRebooting', '17:24:56.063'), ('PicosRebooting', '17:24:58.003')]
+== 17:26:00 ET  slot 1788816300  -> instances/1726-report.event-004.json
+   auto.pico-cycler                     [('PicosLive', '17:25:16.085')]
+   fsm.full.report pico-cycler trigger=ab199d5f-2d7d-40fa-891b-5d168d71b0f9 Startup:PicosLive->RelayOpening ConfirmOpened:RelayOpening->RelayOpen StartClosing:RelayOpen->RelayClosing ConfirmClosed:RelayClosing->PicosRebooting ConfirmRebooted:PicosRebooting->PicosLive
+== 17:27:00 ET  slot 1788816360  -> instances/1727-report.event-004.json
+== 17:28:00 ET  slot 1788816420  -> instances/1728-report.event-004.json
+   buffer                               [('Flatlined', '17:27:18.078'), ('Alive', '17:27:43.282')]
+   auto.pico-cycler                     [('RelayOpening', '17:27:18.078'), ('RelayOpen', '17:27:18.080'), ('RelayClosing', '17:27:23.082'), ('PicosRebooting', '17:27:23.085'), ('PicosLive', '17:27:43.283')]
+   tank1                                [('Flatlined', '17:27:18.079'), ('Alive', '17:27:43.283')]
+   auto.pico-cycler.vdc-relay           [('RelayOpen', '17:27:18.080'), ('RelayClosed', '17:27:23.084')]
+   fsm.full.report pico-cycler trigger=f8ce4277-e866-4312-a076-376acc2fc0d3 PicoMissing:PicosLive->RelayOpening ConfirmOpened:RelayOpening->RelayOpen StartClosing:RelayOpen->RelayClosing ConfirmClosed:RelayClosing->PicosRebooting ConfirmRebooted:PicosRebooting->PicosLive
+== 17:29:00 ET  slot 1788816480  -> instances/1729-report.event-004.json
+   admin.pico-cycler                    [('RelayOpening', '17:28:15.061'), ('RelayOpen', '17:28:15.063'), ('RelayClosing', '17:28:20.065'), ('PicosRebooting', '17:28:20.068'), ('PicosLive', '17:28:40.354')]
+   admin.pico-cycler.vdc-relay          [('RelayOpen', '17:28:15.062'), ('RelayClosed', '17:28:20.067')]
+   fsm.full.report pico-cycler trigger=fe4d0489-70d7-4d05-8a51-d5ffd7884735 ShakeZombies:PicosLive->RelayOpening ConfirmOpened:RelayOpening->RelayOpen StartClosing:RelayOpen->RelayClosing ConfirmClosed:RelayClosing->PicosRebooting ConfirmRebooted:PicosRebooting->PicosLive

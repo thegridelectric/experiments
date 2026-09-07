@@ -21,7 +21,8 @@ first run dates them.
   under the dispatch's id. Found and fixed two scada defects (a sim GPIO
   relay never answered its boss; the cycler's 60 s reboot wait confirmed
   a later cycle) and one gap (admin gets no acknowledgement of the
-  command, only snapshots).
+  command, only snapshots). Run 4 on the fixes (`b095261c`): all three
+  cycles confirm 20 s after their close, on the sim reboot.
 - **2026-09-07 · [hp-boss-admin-drive](2026-09-07-hp-boss-admin-drive/)**
   — PASS: the real admin client, over dev rabbit, turns the heat pump off
   and on through hp-boss on a local Nolan/SimGw108 scada; first run found

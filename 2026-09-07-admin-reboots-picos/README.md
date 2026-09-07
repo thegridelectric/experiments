@@ -1,6 +1,6 @@
 # admin reboots the picos, local sim (2026-09-07)
 
-Status: Verified · Pass 0 · Updated 2026-09-07 · Reviewed 2026-09-07@7997fc9a+fixes
+Status: Verified · Pass 0 · Updated 2026-09-07 · Reviewed 2026-09-07@b095261c
 
 > What this is: the dev-broker rung of the pico-cycler command. The real
 > admin client, over the dev broker, asks the pico-cycler of a locally
@@ -71,9 +71,23 @@ one through `ShakeZombies` under the dispatch's id.
 
 ## Found — PASS on the journal side, with two scada fixes and one gap
 
-Three runs, all on scada `7997fc9a` plus the working-tree fixes below
-(run 1 without them; runs 2 and 3 with the relay fix; the cycler fix
-was written after run 3 and is the next run's subject).
+Four runs. Runs 1–3 on scada `7997fc9a` plus the working-tree fixes
+below (run 1 without them; runs 2 and 3 with the relay fix; the cycler
+fix was written after run 3). Run 4 on `b095261c`, both fixes landed:
+the confirming run.
+
+**Run 4 (17:24–17:30, `run4-*`): every cycle confirms on the sim
+reboot.** Three cycles, each entering through its own event and each
+confirming 20.2–20.3 s after its close (`SimRebootS` 20), none early:
+`Startup` (`ab199d5f`) closed 17:24:56.06, live 17:25:16.09;
+`PicoMissing` (`f8ce4277`) closed 17:27:23.09, live 17:27:43.28, with
+both pico rows Flatlined at 17:27:18.08 and Alive at 17:27:43.28;
+`ShakeZombies` under the dispatch's own id `fe4d0489` closed
+17:28:20.07, live 17:28:40.35. The command was taken on the first
+send, one commanded cycle only (runs 2–3 had re-sends). Pass
+conditions (a), (b), (c) all hold on `run4-report-events.txt`. The
+three cycles are 65 s and 57 s apart, both inside the old 60 s wait, so
+the run exercises exactly the overlap fix 2 closes.
 
 **Pass conditions, from the persisted `report.event`s
 (`run3-report-events.txt`, instances under `instances/`):**
@@ -117,6 +131,15 @@ the first); the driver now judges the admin side by snapshot state and
 leaves the id check to `collect_events.py`. Whether the TUI should get a
 report back is a design question for the spoke.
 
+**Also seen, missed until 2026-09-07 evening.** Every run's scada log
+carries `Trouble with SendLayout: 'NoneType' object has no attribute
+'component'` at each admin link-up. It is the `send.control.capabilities`
+reply failing (the log label is the neighbouring branch's): the nolan
+layout has no `relay-multiplexer` node and the capabilities word
+requires one, so the real TUI shows no relays or DACs for this scada.
+The driver never saw it because it judges by snapshots. The scada-side
+fix belongs to the krida-retirement work, not this rung.
+
 **Also seen.** With `SimLifeS` 120 the picos die every two minutes, so
 the cycler runs a self-provoked cycle every ~2.5 min; a real house's
 rhythm is another knob. Persisted `report.event`s carry every pico row
@@ -141,6 +164,10 @@ traffic.
 - 15:37:20 and 15:38:51 driver re-sends (`893e7447`, `8cb24235`); both
   cycles ran and confirmed at +20.7 s, the genuine pico reboot.
 - 15:40:25 release; 15:41:35 driver done; scada stopped.
+- 17:24:46 run 4 boot on `b095261c`; 17:24:56 boot cycle closes; 17:25:16 picos back.
+- 17:27:18 both sim picos flatline; cycle closes 17:27:23; 17:27:43 picos back.
+- 17:28:15 admin dispatch `fe4d0489` taken; relay open 17:28:15.06, closed 17:28:20.07; 17:28:40.35 PicosLive (+20.3 s).
+- 17:28:47 release; 17:29:57 driver done; scada stopped.
 
 ## Analysis notes
 
@@ -161,9 +188,11 @@ dataset). No deployed service was touched.
 - `admin_reboots_picos.py` — the driver; the reproducer.
 - `collect_events.py` — copies the scada's persisted `report.event`s for
   a window into `instances/` and prints the pico-cycler evidence table.
-- `instances/HHMM-report.event-004.json` — run 3's persisted report
-  events, byte for byte as the scada wrote them (sema instances).
+- `instances/HHMM-report.event-004.json` — runs 3 and 4's persisted
+  report events, byte for byte as the scada wrote them (sema instances).
 - `run3-report-events.txt` — `collect_events.py 15:32 15:42` output.
+- `run4-report-events.txt` — `collect_events.py 17:24 17:32` output;
+  `run4-notes.txt` the run's wall-clock marks.
 - `runN-admin-drive.log` — the driver's timestamped notes per run.
 - `runN-broker-capture.jsonl` — every message seen on `gw/#` per run.
 - `runN-scada.log` — the scada's stdout per run.

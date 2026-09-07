@@ -232,6 +232,37 @@ amplitude; noise is about the composite.
 - Still open: the absolute scale (a clamp-meter amps reading against
   one of these levels), and why CT1 mirrors CT2.
 
+**Graphing the ladder.** Each row of the table is one instance,
+`instances/hw1.isone.me.versant.keene.spruce.ta-p1.dac<V x10>.ladder1-gw.adc.waveform-000.json`
+(`dac030` is 3.0 V, `dac100` is 10.0 V). `fold.py` draws one level; run
+it from this folder in the experiments venv:
+
+    uv run python fold.py instances/hw1.isone.me.versant.keene.spruce.ta-p1.dac075.ladder1-gw.adc.waveform-000.json
+    uv run python fold.py instances/hw1.isone.me.versant.keene.spruce.ta-p1.dac075.ladder1-gw.adc.waveform-000.json --show
+
+The first form prints the pump drive level and flow, then the row's
+numbers (fundamental, waveform rms, noise), and writes
+`<instance>-fold.png` beside the instance with the drive level and flow
+in the plot title; `--show` also opens the interactive window. `fold.py`
+finds the level by looking the instance up in `ladder1-levels.json`
+beside it, so run it from this folder. All six at once:
+
+    for f in instances/*.dac*.ladder1-*.json; do uv run python fold.py "$f"; done
+
+The whole ladder on one axis, five cycles of each level's composite laid
+end to end in rising DAC order, each segment labelled with drive, flow
+and rms (`instances/ladder1-staircase.png`, generated):
+
+    uv run python staircase.py --run ladder1
+
+Each png has two panels: the first 100 ms of raw conversions, and the
+fold with the composite over the samples. Read them in DAC order
+(`dac030` up to `dac100`): the five-peaks-per-cycle shape is already
+there at 4.5 V and only grows in amplitude from there; 3.0 V is the
+pickup-sized trace. The y axis is the channel's volts on the 1.636 V
+bias, not current, since the scale is still open. The pngs are
+generated and gitignored, so regenerate rather than commit them.
+
 ## Timeline
 
 - 2026-09-07 10:50 ET: dry run on spruce, both modes, from clone
@@ -267,6 +298,8 @@ never a regeneration. No service was stopped: the bench runs no scada.
 - `capture.py` — the pi-side single-shot sampler (smbus2, ADS1115 at
   0x48); writes a `gw.adc.waveform` instance through the vendored class.
 - `fold.py` — the laptop-side frequency fit, fold and plot.
+- `staircase.py` — one figure of a ladder run: five composite cycles per
+  level, end to end.
 - `synth.py` — writes the synthetic dry-run instance.
 - `instances/d1.bench.synthetic.ta-p0.synth.60hz-gw.adc.waveform-000.json`
   — SYNTHETIC, from `synth.py`; the fold's fixture, not a measurement.
