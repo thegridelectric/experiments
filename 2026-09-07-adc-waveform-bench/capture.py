@@ -4,27 +4,20 @@ gw.adc.waveform instance.
 
 Runs ON THE PI from the box's ~/experiments clone with the scada venv's
 python (smbus2 and pydantic are there). Bus 1, the CT ADC at 0x48, hard
-coded: this is bench code, not the scada. Two sampling modes, because the
-pi cannot see the chip's conversion-ready signal:
+coded: this is bench code, not the scada.
 
-  single      one conversion per request: write the config with OS set,
-              poll the config register until the chip reports done, read
-              the code. Every code is exactly one conversion with its own
-              host timestamp; the effective rate is what the bus allows.
-  continuous  the chip free-runs at the data rate; the host polls the
-              conversion register as fast as it can and keeps a code when
-              it differs from the last one kept. Faster, but two equal
-              consecutive conversions collapse into one, and a code read
-              mid-slot carries the poll time, not the conversion time.
+Every code is one single-shot conversion: write the config with OS set,
+poll the config register until the chip reports done, read the code, and
+stamp it with the host clock. The pi cannot see the chip's conversion-ready
+signal, so this is the only way to know each code is exactly one
+conversion; the effective rate is what the bus allows (about 390 per
+second at 100 kHz), and the per-code offsets carry the bus timing.
 
-Which mode gives clean conversions at what rate is the bench question.
-
-    venv/bin/python capture.py --mode single --seconds 2 --tag r1
-    venv/bin/python capture.py --mode continuous --seconds 2 --tag r1
+    venv/bin/python capture.py --ta-alias d1.bench.honeysuckle.ta --seconds 2 --tag r1
 
 The instance lands in instances/ under the on-disk grammar
-<ta>-<channel>.<mode>.<tag>-gw.adc.waveform-000.json; the last line printed
-is the verdict (count, effective rate, largest gap).
+<ta>-<channel>.<tag>-gw.adc.waveform-000.json; the last line printed is
+the verdict (count, effective rate, largest gap).
 """
 
 import argparse
@@ -69,18 +62,16 @@ MODE_SINGLE_SHOT = 1 << 8
 
 
 class Sample(NamedTuple):
-    """One kept conversion: host time in perf_counter nanoseconds and the raw code."""
+    """One conversion: host time in perf_counter nanoseconds and the raw code."""
 
     host_ns: int
     code: int
 
 
-def config_word(channel: I2cAdcChannel, full_scale_mv: int, rate_hz: int, single_shot: bool) -> int:
+def config_word(channel: I2cAdcChannel, full_scale_mv: int, rate_hz: int) -> int:
     word = (MUX_SINGLE_ENDED[channel] << 12) | (PGA_BY_FULL_SCALE_MV[full_scale_mv] << 9)
     word |= DR_BY_HZ[rate_hz] << 5
-    word |= COMPARATOR_DISABLED
-    if single_shot:
-        word |= MODE_SINGLE_SHOT
+    word |= COMPARATOR_DISABLED | MODE_SINGLE_SHOT
     return word
 
 
@@ -98,7 +89,7 @@ def read_code(bus: SMBus) -> int:
     return raw - 65536 if raw & 0x8000 else raw
 
 
-def capture_single(bus: SMBus, base: int, seconds: float) -> list[Sample]:
+def capture(bus: SMBus, base: int, seconds: float) -> list[Sample]:
     """One conversion per request; the OS bit reports completion."""
     samples: list[Sample] = []
     deadline = time.perf_counter_ns() + int(seconds * 1e9)
@@ -110,42 +101,22 @@ def capture_single(bus: SMBus, base: int, seconds: float) -> list[Sample]:
     return samples
 
 
-def capture_continuous(bus: SMBus, base: int, seconds: float) -> list[Sample]:
-    """Free-running chip; keep a code whenever it differs from the last kept."""
-    write_register(bus, REG_CONFIG, base)
-    time.sleep(0.01)
-    samples: list[Sample] = []
-    last: int | None = None
-    deadline = time.perf_counter_ns() + int(seconds * 1e9)
-    while time.perf_counter_ns() < deadline:
-        code = read_code(bus)
-        if code != last:
-            samples.append(Sample(time.perf_counter_ns(), code))
-            last = code
-    write_register(bus, REG_CONFIG, base | MODE_SINGLE_SHOT)
-    return samples
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--mode", choices=["single", "continuous"], required=True)
     parser.add_argument("--seconds", type=float, default=2.0)
     parser.add_argument("--channel", type=I2cAdcChannel, choices=list(I2cAdcChannel), default=I2cAdcChannel.P0)
     parser.add_argument("--full-scale-mv", type=int, choices=sorted(PGA_BY_FULL_SCALE_MV), default=4096)
     parser.add_argument("--rate-hz", type=int, choices=sorted(DR_BY_HZ), default=860)
-    parser.add_argument("--ta-alias", type=validate_lrd, default="d1.bench.honeysuckle.ta")
+    parser.add_argument("--ta-alias", type=validate_lrd, required=True, help="terminal asset alias, e.g. d1.bench.honeysuckle.ta")
     parser.add_argument("--tag", required=True, help="run tag for the filename condition, e.g. r1")
     parser.add_argument("--out", type=Path, default=HERE / "instances")
     args = parser.parse_args()
 
-    condition = validate_lrd(f"{args.channel.value.lower()}.{args.mode}.{args.tag}")
-    base = config_word(args.channel, args.full_scale_mv, args.rate_hz, single_shot=args.mode == "single")
+    condition = validate_lrd(f"{args.channel.value.lower()}.{args.tag}")
+    base = config_word(args.channel, args.full_scale_mv, args.rate_hz)
     with SMBus(I2C_BUS) as bus:
         start_unix_ms = int(time.time() * 1000)
-        if args.mode == "single":
-            samples = capture_single(bus, base, args.seconds)
-        else:
-            samples = capture_continuous(bus, base, args.seconds)
+        samples = capture(bus, base, args.seconds)
     if not samples:
         raise SystemExit("ABORT: no conversions read")
 

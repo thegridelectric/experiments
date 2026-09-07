@@ -20,23 +20,22 @@ derived scale) will be validated against, and what a scada actor would
 one day emit as a `gw.adc.waveform`.
 
 The pi cannot see the chip's conversion-ready signal (the ALERT/RDY pin
-is not wired to a GPIO), so a polled burst cannot promise one clean
-conversion per slot. The word therefore carries a host-timed offset per
-code; whether those offsets can be dropped in favour of a bare rate is
-the first thing this bench decides.
+is not wired to a GPIO), so the sampler takes one single-shot conversion
+per request and stamps it with the host clock: every code is exactly one
+conversion, and the rate is what the bus allows, about 390 per second at
+100 kHz. The spacing is bus-timed, not chip-timed, so the word keeps a
+host-timed offset per code. (Free-running the chip and polling for
+changed codes was tried in the 2026-09-07 dry run and dropped; see
+Found.)
 
 ### Claims wanting silicon
 
 1. **The sampling path works**: `capture.py` writes a valid
-   `gw.adc.waveform` instance from the chip, in both modes.
+   `gw.adc.waveform` instance from the chip.
 2. **Single-shot gives exact conversions** at a measured effective rate
    (expected 400 to 600 per second at the 100 kHz bus), with no
    duplicate-collapsed or mid-slot codes.
-3. **Continuous at 860 SPS with change-detection dedupe** either keeps
-   one code per slot (offset gaps clustered at 1163 µs) or shows the
-   collapse and mid-slot smear the docstring predicts. Either answer
-   settles which path the scada actor takes.
-4. **The fold recovers the waveform**: on the synthetic instance,
+3. **The fold recovers the waveform**: on the synthetic instance,
    frequency within 0.01 Hz and amplitude within 2 %; on honeysuckle,
    with no CT installed, a flat composite at the 1.65 V bias with the
    residual noise stated in mV.
@@ -88,14 +87,18 @@ answers.
 
     pgrep -fa "cli.py run" ; /usr/sbin/i2cdetect -y 1 | grep -c 48
 
-**3. Capture, both modes (honeysuckle).** Two seconds each. The last
-line printed is the verdict: count, effective rate, largest gap.
+**3. Capture (honeysuckle).** Two seconds. The last line printed is
+the verdict: count, effective rate, largest gap.
 
     cd ~/experiments/2026-09-07-adc-waveform-bench
 
-    ~/gridworks-scada/gw_spaceheat/venv/bin/python capture.py --mode single --seconds 2 --tag r1
+    ~/gridworks-scada/gw_spaceheat/venv/bin/python capture.py --ta-alias d1.bench.honeysuckle.ta --seconds 2 --tag r1
 
-    ~/gridworks-scada/gw_spaceheat/venv/bin/python capture.py --mode continuous --seconds 2 --tag r1
+On spruce the alias is `hw1.isone.me.versant.keene.spruce.ta`, the scada
+stays running (nothing on the box addresses 0x48), and the channel names
+the CT: `--channel P1` is CT2, the secondary pump.
+
+    ~/gridworks-scada/gw_spaceheat/venv/bin/python capture.py --ta-alias hw1.isone.me.versant.keene.spruce.ta --channel P1 --seconds 2 --tag pump1
 
 **4. Collect (dev machine).** The instances are the evidence; they come
 back by scp from the pi and are committed here. The pi's copy is
@@ -106,31 +109,109 @@ removed in the restore step.
 **5. Fold (dev machine).** One line per instance; the plot lands
 beside it, gitignored.
 
-    uv run python fold.py instances/d1.bench.honeysuckle.ta-p0.single.r1-gw.adc.waveform-000.json
-
-    uv run python fold.py instances/d1.bench.honeysuckle.ta-p0.continuous.r1-gw.adc.waveform-000.json
+    uv run python fold.py instances/d1.bench.honeysuckle.ta-p0.r1-gw.adc.waveform-000.json
 
 **6. Restore (honeysuckle).** The clone stays (recorded in the box
 README); the run's instances leave the box.
 
     rm ~/experiments/2026-09-07-adc-waveform-bench/instances/d1.bench.honeysuckle.ta-*
 
+### Speed ladder (spruce, secondary pump)
+
+`ladder.py` steps the secondary pump's 0-10 V level and captures a CT2
+burst at each, so the waveform can be compared across speeds. It drives
+the DAC and the pump relay exactly as `spruce_summer_hack.py` does, from
+the starter-scripts venv, and calls `capture.py` under the scada venv.
+Levels 3.0, 4.5, 6.0, 7.5, 9.0, 10.0 V (the pump's speed band per the
+2026-09-06 sweep: linear 3.5 to 8.5 V, maximum from 9 V); 60 s holds so
+the pico's flow reading has a chance to land for the label.
+
+    # dev machine: commit + push this folder, then on spruce:
+    git -C ~/experiments pull
+    sudo systemctl stop spruce-summer-hack.service     # failsafe drops the pump; the driver re-energizes it
+    cd ~/experiments/2026-09-07-adc-waveform-bench
+    ~/starter-scripts/venv/bin/python ladder.py --run ladder1
+    sudo systemctl start spruce-summer-hack.service    # re-asserts the summer posture
+    # dev machine:
+    scp 'spruce:~/experiments/2026-09-07-adc-waveform-bench/instances/*ladder1*' instances/
+    scp spruce:~/experiments/2026-09-07-adc-waveform-bench/ladder1-levels.json .
+    # restore on spruce: rm the ladder1 instances and the levels file from the clone
+
+Each instance is tagged `p1.dac<volts x 10>.<run>`; `<run>-levels.json`
+holds the level table (volts, DAC code, pico flow with its age, instance
+name). The label lives there because `gw.adc.waveform` has no field for
+the drive level or the flow; the CT component vocabulary retires it.
+
 ### Reading the offsets
 
-Single-shot: every offset gap is one request round trip (config write,
-OS poll, read); the gaps' spread is the bus, not the chip. Continuous:
-gaps near 1163 µs are one slot each; a gap near 2326 µs is a collapsed
-duplicate; gaps well under 1163 µs mean the chip was read twice in one
-slot with a changed value, which should not happen. The histogram of
-gaps is the finding for claim 3.
+Every offset gap is one request round trip (config write, OS poll,
+read); the gaps' spread is the bus, not the chip. A gap well above the
+cluster is another bus user's transaction (the scada's expander reads,
+on spruce) landing between two requests.
 
 ## Found
 
-Open.
+**Dry run, 2026-09-07, on spruce (not the planned honeysuckle first run).**
+P0 with no CT jumper fitted, PGA 4096 mV, 860 SPS, two seconds per mode,
+the scada service left running (nothing on the box addresses 0x48).
+
+- Sampling path (claim 1): both modes wrote valid instances.
+- Single-shot (claim 2): 777 conversions, 388/s, gaps clustered at
+  2.5 ms with a few 3.8 to 4.0 ms stalls from the other bus users.
+  Every code is one conversion.
+- Free-running at 860 SPS with change-detection dedupe (the former
+  continuous mode): 1598 kept codes, 798/s, but 60 of 1597 gaps were two
+  slots (collapsed duplicates), 77 sat near 1.5 ms and 3 under 0.9 ms.
+  It does not deliver one clean code per slot, so the word keeps its
+  per-code offsets and the mode was dropped from the sampler; its
+  instance stays as the evidence.
+- Fold (claim 3): the open input carries a 3 mV 60 Hz pickup on a
+  1.633 V bias (residual 0.5 mV, 4 codes), which the fold locks onto at
+  59.98 to 60.00 Hz. That is the zero reference for the bulb run, not a
+  waveform.
+- Second pass (`dry2`), single-shot on all four channels, every pump off
+  per the scada snapshot: P0 and P1 sit on the bias (1.637 V) with the
+  same 3 mV pickup; P2 and P3 float (1.56 V and 2.19 V) with 17 and
+  29 mV residual. Consistent with CTs wired to CT1 and CT2 only, and
+  with the secondary pump drawing nothing at the time.
+
+**Secondary pump running, 2026-09-07 12:30 ET (`pump1`, `pump2`).** The
+summer schedule had turned the secondary and primary pumps on
+(`secondary-flow` 7.39 gpm, `primary-flow` 7.40 gpm, `store-flow` 0,
+heat pump in standby at 32 W).
+
+- P1 (CT2, secondary pump) carries a clean periodic waveform: fold at
+  59.985 Hz, composite 181 mV rms, noise about the composite 26 mV, 794 mV
+  peak to peak on the 1.636 V bias. The shape is not a sine: the
+  periodogram puts 91 mV at 60 Hz, 102 mV at 180 Hz and 209 mV at 300 Hz,
+  five peaks per cycle. The chain is validated end to end: sampling, the
+  fold, and a real CT waveform.
+- The fold's original sine-fit residual (171 mV) read as noise when it was
+  harmonics; `fold.py` now reports the composite's rms and the noise
+  about the composite instead.
+- P0 (CT1, store pump, flow 0, no burden shunt) shows the SAME waveform:
+  167 mV rms, the same 60/180/300 Hz mix, 728 mV peak to peak, with more
+  noise (70 mV). Either both CTs are on the secondary pump's conductor or
+  the unburdened CT1 picks the signal up from the adjacent cable; a field
+  check settles it.
+- P2 and P3 unchanged from the dry run (floating, no periodic content),
+  so the signal enters through the CT wiring, not the bias rail.
+- The secondary-btu pico's `secondary-pump-ct` stayed at 167 (1.67 V)
+  with the pump running, so it is not reporting current either; open.
+- Scale is open: 181 mV rms on a 20 A voltage-output CT at a nominal
+  333 mV rated output would be 11 A, far above any circulator, so the
+  CT2 rating or the number of passes through it is not what the notes
+  assume.
 
 ## Timeline
 
-Open.
+- 2026-09-07 10:50 ET: dry run on spruce, both modes, from clone
+  `193f126`; instances collected and removed from the box.
+- 2026-09-07 11:05 ET: `dry2`, single-shot on P0..P3; scada snapshot
+  at 11:14 showed all flows zero (summer OFF posture).
+- 2026-09-07 12:28 ET: `pump1` (P1, P0) and 12:33 `pump2` (P2, P3, P1)
+  with the secondary pump running; instances collected and removed from
+  the box.
 
 ## Analysis notes
 
@@ -151,13 +232,21 @@ journal DB or the S3 eventstore, and a re-run produces a new instance,
 never a regeneration. No service was stopped: the bench runs no scada.
 
 - `README.md` — this record.
-- `capture.py` — the pi-side sampler (smbus2, ADS1115 at 0x48); writes
-  a `gw.adc.waveform` instance through the vendored class.
+- `capture.py` — the pi-side single-shot sampler (smbus2, ADS1115 at
+  0x48); writes a `gw.adc.waveform` instance through the vendored class.
 - `fold.py` — the laptop-side frequency fit, fold and plot.
 - `synth.py` — writes the synthetic dry-run instance.
 - `instances/d1.bench.synthetic.ta-p0.synth.60hz-gw.adc.waveform-000.json`
   — SYNTHETIC, from `synth.py`; the fold's fixture, not a measurement.
-- `instances/d1.bench.honeysuckle.ta-p0.<mode>.<tag>-gw.adc.waveform-000.json`
+- `instances/hw1.isone.me.versant.keene.spruce.ta-p0.<single|continuous>.dry-gw.adc.waveform-000.json`
+  — the 2026-09-07 dry-run bursts from spruce, one per mode of the
+  sampler as it then was.
+- `instances/hw1.isone.me.versant.keene.spruce.ta-p<0-3>.single.dry2-gw.adc.waveform-000.json`
+  — the four-channel single-shot pass from the same dry run.
+- `instances/hw1.isone.me.versant.keene.spruce.ta-p<n>.single.pump<1|2>-gw.adc.waveform-000.json`
+  — the secondary-pump-running captures (P0, P1 at 12:28; P2, P3, P1 at
+  12:33).
+- `instances/<ta>-p0.<tag>-gw.adc.waveform-000.json`
   — the captured bursts (generated on the pi, runbook step 3).
 - `instances/*-fold.png` — generated by `fold.py`, gitignored.
 

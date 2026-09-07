@@ -9,8 +9,8 @@ hundred samples per second gives hundreds of points per cycle.
 
     uv run python fold.py instances/<instance>.json [--band 59.5 60.5] [--bins 72] [--show | --no-plot]
 
-Prints the fitted frequency, the bias, the fitted amplitude and the
-residual noise; writes <instance>-fold.png beside the instance (generated,
+Prints the fitted frequency, the bias, the fundamental's amplitude, the
+composite waveform's rms and the noise about the composite; writes <instance>-fold.png beside the instance (generated,
 gitignored). --show also opens the interactive matplotlib window (zoom,
 pan, cursor readout) and blocks until it is closed. On a channel with no
 CT the fit is a noise fit: the amplitude reported is the largest spectral
@@ -42,8 +42,11 @@ class Fold(NamedTuple):
 
     frequency_hz: the periodogram peak in the band.
     bias_v: the mean of the burst (the 1.65 V mid-rail on a CT channel).
-    amplitude_v: peak amplitude of the sinusoid at frequency_hz.
-    residual_rms_v: rms of the burst after removing bias and that sinusoid.
+    amplitude_v: peak amplitude of the fundamental sinusoid at frequency_hz.
+    waveform_rms_v: rms of the composite about the bias, the waveform's
+        true rms including harmonics (a pump's current is not a sine).
+    noise_rms_v: rms of the samples about the composite, what is not
+        periodic at frequency_hz.
     phase: each sample's position on one period, in [0, 1).
     bin_centers, composite_v: the per-bin mean waveform.
     """
@@ -51,7 +54,8 @@ class Fold(NamedTuple):
     frequency_hz: float
     bias_v: float
     amplitude_v: float
-    residual_rms_v: float
+    waveform_rms_v: float
+    noise_rms_v: float
     phase: np.ndarray
     bin_centers: np.ndarray
     composite_v: np.ndarray
@@ -80,13 +84,13 @@ def fold(waveform: GwAdcWaveform, band: tuple[float, float], bins: int) -> Fold:
     f_star = float(frequencies[int(spectrum.argmax())])
     coefficient = np.sum(x * np.exp(-2j * np.pi * f_star * t)) * 2 / len(x)
     amplitude = float(abs(coefficient))
-    fitted = (coefficient * np.exp(2j * np.pi * f_star * t)).real
-    residual_rms = float(np.sqrt(np.mean((x - fitted) ** 2)))
     phase = (t * f_star) % 1.0
     edges = np.linspace(0, 1, bins + 1)
     which = np.clip(np.digitize(phase, edges) - 1, 0, bins - 1)
     composite = np.array([v[which == b].mean() if np.any(which == b) else np.nan for b in range(bins)])
-    return Fold(f_star, bias, amplitude, residual_rms, phase, (edges[:-1] + edges[1:]) / 2, composite)
+    waveform_rms = float(np.sqrt(np.nanmean((composite - bias) ** 2)))
+    noise_rms = float(np.sqrt(np.mean((v - composite[which]) ** 2)))
+    return Fold(f_star, bias, amplitude, waveform_rms, noise_rms, phase, (edges[:-1] + edges[1:]) / 2, composite)
 
 
 def plot(waveform: GwAdcWaveform, result: Fold, out: Path, show: bool) -> None:
@@ -108,7 +112,10 @@ def plot(waveform: GwAdcWaveform, result: Fold, out: Path, show: bool) -> None:
     bottom.plot(result.bin_centers, result.composite_v, "-", lw=2, label="composite")
     bottom.set_xlabel(f"phase at {result.frequency_hz:.3f} Hz")
     bottom.set_ylabel("V")
-    bottom.set_title(f"bias {result.bias_v:.4f} V, amplitude {result.amplitude_v * 1000:.2f} mV, residual rms {result.residual_rms_v * 1000:.2f} mV")
+    bottom.set_title(
+        f"bias {result.bias_v:.4f} V, fundamental {result.amplitude_v * 1000:.2f} mV pk, "
+        f"waveform {result.waveform_rms_v * 1000:.2f} mV rms, noise {result.noise_rms_v * 1000:.2f} mV rms"
+    )
     bottom.legend(loc="upper right")
     fig.tight_layout()
     fig.savefig(out, dpi=120)
@@ -129,8 +136,9 @@ def main() -> None:
     result = fold(waveform, (args.band[0], args.band[1]), args.bins)
     print(
         f"f={result.frequency_hz:.3f} Hz bias={result.bias_v:.4f} V "
-        f"amplitude={result.amplitude_v * 1000:.2f} mV (rms {result.amplitude_v / np.sqrt(2) * 1000:.2f} mV) "
-        f"residual_rms={result.residual_rms_v * 1000:.2f} mV n={len(waveform.codes)}"
+        f"fundamental={result.amplitude_v * 1000:.2f} mV pk "
+        f"waveform_rms={result.waveform_rms_v * 1000:.2f} mV noise_rms={result.noise_rms_v * 1000:.2f} mV "
+        f"n={len(waveform.codes)}"
     )
     if not args.no_plot:
         out = args.instance.with_name(args.instance.stem + "-fold.png")
