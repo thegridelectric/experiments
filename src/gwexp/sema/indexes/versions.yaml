@@ -57,6 +57,13 @@ types:
       "000":
         summary: "Initial Sema version"
 
+  gw.adc.waveform:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial version."
+
   gw.channel.gap.stats:
     latest_version: "000"
     versioning_strategy: "literal"
@@ -128,44 +135,39 @@ types:
     versioning_strategy: "literal"
     versions:
       "004":
-        summary: "- ConfigList[]: relay.actor.config:002 -> 003"
+        summary: >
+          - AsyncCaptureDelta: ConfigList[0] example now sets it explicitly (the
+            relay.actor.config dependency itself is unchanged from 003: :002)
+          - ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case).
+            Context-dependent: the device type lived on the referenced cac, not the component.
       "003":
         summary: "- Add I2cBus"
 
   i2c.thermistor.channel.config:
-    latest_version: "002"
+    latest_version: "000"
     versioning_strategy: "literal"
     versions:
-      "002":
-        summary: >
-          - Unit: drop (redundant; unit and scaling are carried by channel identity)
-          - Exponent: drop (redundant; unit and scaling are carried by channel identity)
-          - CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop (capture/report tuning moved to operational-params capture.tuning)
-          - SendToDerived: drop (derived routing is computed from DerivedChannel InputChannelNames)
-      "001":
-        summary: "Structural-only restamp of the field-emitted shape (see 000)."
       "000":
-        summary: "Reinstated 2026-08-06 from wire evidence: deployed layouts emit Version 000 records (the lineage was begun at 001 in the belief 000 was never emitted). Field-identical to 001 — upgrade is a version restamp."
+        summary: "Initial Sema version. Unit: drop (redundant; unit and scaling are carried by channel identity). Exponent: drop (redundant; unit and scaling are carried by channel identity). CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop (capture/report tuning moved to operational-params capture.tuning). SendToDerived: drop (derived routing is computed from DerivedChannel InputChannelNames)."
 
   i2c.thermistor.reader.component.gt:
-    latest_version: "003"
+    latest_version: "000"
     versioning_strategy: "literal"
     versions:
-      "003":
-        summary: "- Bus, AdcAddress, AdcReferenceVolts, SeriesResistanceKOhms dropped (facts on the board's thermistor-interface capability entry); AdcName added, naming that entry in the board record's ThermistorAdcs; DeviceType dropped (TypeName is the kind; board identity lives on the board component); BoardComponentId added, anchoring the reader to its scada.board.component.gt. Context-dependent: AdcName and BoardComponentId are derived from the source layout, which the standalone component does not carry."
-      "002":
-        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
-      "001":
-        summary: "Structural-only restamp of the field-emitted shape (see 000; gwsproto ConfigUniqueness/AddressValidity axioms deferred)."
       "000":
-        summary: "Reinstated 2026-08-06 from wire evidence: deployed layouts (spruce, July deploy) emit Version 000 records (the lineage was begun at 001 in the belief 000 was never emitted). Field-identical to 001 with 000-stamped ConfigList children — upgrade is a recursive version restamp."
+        summary: "Initial Sema version. ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case) -> dropped (TypeName is the kind; board identity lives on the board component). Bus, AdcAddress, AdcReferenceVolts, SeriesResistanceKOhms dropped (facts on the board's thermistor-interface capability entry); AdcName added, naming that entry in the board record's ThermistorAdcs; DataRateSps added (the per-conversion data rate the reader writes in the ADC config word — a member of the board ADC's SupportedDataRatesSps); BoardComponentId added, anchoring the reader to its scada.board.component.gt. Context-dependent: AdcName and BoardComponentId are derived from the source layout, which the standalone component does not carry."
 
   layout.lite:
     latest_version: "013"
     versioning_strategy: "literal"
     versions:
       "013":
-        summary: "- I2cRelayComponent: i2c.multichannel.dt.relay.component.gt:003 -> 004"
+        summary: >
+          - ShNodes: spaceheat.node.gt:301 -> 302
+          - DataChannels: data.channel.gt:002 -> 003
+          - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component.
+          - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context).
+          - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status.
       "012":
         summary: >
           - DerivedChannels[]: derived.channel.gt:000 | 001 -> 001
@@ -175,16 +177,22 @@ types:
           - ShNodes[]: spaceheat.node.gt:300 | 301 -> 301
 
   pico.flow.module.component.gt:
-    latest_version: "000"
+    latest_version: "001"
     versioning_strategy: "literal"
     versions:
+      "001":
+        summary: >
+          - ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component.
+          - FlowMeterType: spaceheat.make.model enum value -> gw1.device.type value (pascal.case); the device-type enum is articulated by the hardware layout.
       "000":
         summary: "Initial Sema version"
 
   pico.tank.module.component.gt:
-    latest_version: "011"
+    latest_version: "012"
     versioning_strategy: "literal"
     versions:
+      "012":
+        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
       "011":
         summary: "Baseline runtime version (no prior version tracked)."
 
@@ -193,21 +201,34 @@ types:
     versioning_strategy: "literal"
     versions:
       "003":
-        summary: "- AsyncCaptureDelta: require when AsyncCapture is true"
+        summary: >
+          - Unit: drop (redundant; unit and scaling are carried by channel identity)
+          - Exponent: drop (redundant; unit and scaling are carried by channel identity)
+          - CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop (capture/report tuning moved to operational-params capture.tuning)
       "002":
-        summary: "Baseline runtime version (no prior version tracked)."
+        summary: >
+          - StateType: add (optional on the wire for the version's first two days, 2024-12-31 to 2025-01-01)
+          - DeEnergizedState: add
+          - EnergizedState: add
 
   sim.pico.tank.module.component.gt:
-    latest_version: "000"
+    latest_version: "001"
     versioning_strategy: "literal"
     versions:
+      "001":
+        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case); SimulatesVersion 011 -> 012. Context-dependent: the device type lived on the referenced cac, not the component."
       "000":
         summary: "Initial Sema version"
 
   spaceheat.node.gt:
-    latest_version: "301"
+    latest_version: "302"
     versioning_strategy: "literal"
     versions:
+      "302":
+        summary: >
+          - ActorClass: gw1.actor.class:011 -> 013 (in-place while staging)
+          - InPowerMetering: drop (routing is owned by the consuming transactive declaration, not the node)
+          - InPowerMeteringRequiresNameplate axiom: drop
       "301":
         summary: >
           - BoardComponentId: add as Optional
@@ -237,9 +258,19 @@ enums:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
     versions:
+      "013":
+        added_values:
+          - "I2cDacWriter"
+          - "HpTwin"
       "011":
         added_values:
           - "I2cThermistorReader"
+
+  gw1.actuation.authority:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
 
   gw1.emission.method:
     enum_type: "versioned"
@@ -257,6 +288,12 @@ enums:
       "000": {}
 
   gw1.seasonal.storage.mode:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw1.service.mode:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
     versions:
@@ -290,6 +327,12 @@ enums:
     versions:
       "000": {}
 
+  i2c.adc.type:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
   log.level:
     enum_type: "literal"
     note: "This enum is literal; version 000 is immutable and exclusive."
@@ -312,7 +355,13 @@ enums:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
     versions:
-      "003": {}
+      "007":
+        added_values:
+          - "SAIER__SENHZG1WA"
+          - "DFROBOT__DFR0971_TIMES2"
+          - "GRIDWORKS__TANKMODULE3"
+          - "GRIDWORKS__GW101"
+          - "GRIDWORKS__SCADA_GW108"
 
   spaceheat.telemetry.name:
     enum_type: "versioned"

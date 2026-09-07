@@ -13,6 +13,10 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-07 · [hp-boss-admin-drive](2026-09-07-hp-boss-admin-drive/)**
+  — PASS: the real admin client, over dev rabbit, turns the heat pump off
+  and on through hp-boss on a local Nolan/SimGw108 scada; first run found
+  hp-boss gated on a Krida-only ActuatorsReady.
 - **2026-09-06 · [spruce-pump-speed-sweep](2026-09-06-spruce-pump-speed-sweep/)**
   — phase two of the DAC rung on the real spruce secondary pump
   (Grundfos UPMS 20-78 F): iso valve open, pump on, sweep the 0-10V
@@ -46,6 +50,15 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
+- **2026-09-07 · [adc-waveform-bench](2026-09-07-adc-waveform-bench/)** —
+  one burst of ADS1115 conversions from a gw108 CT input, captured as a
+  `gw.adc.waveform` instance and folded on a fitted mains frequency.
+  Does the pi's polled path (single-shot vs continuous) deliver clean
+  conversions, at what effective rate, and does the fold give a
+  composite waveform? Prep 09-07: the fold recovers the synthetic
+  burst (60.019 Hz for 60.02, 100.05 mV rms for 100). Honeysuckle
+  run pending (no CT: bias noise validates the path and the fold),
+  then a resistive bulb and the secondary pump on spruce.
 - **2026-09-05 · [dac-output-bench](2026-09-05-dac-output-bench/)** —
   FAIL (2 of 3 claims not reached), two findings: `verify_eeprom`
   reprograms every boot on bytes that match the layout, and an admin

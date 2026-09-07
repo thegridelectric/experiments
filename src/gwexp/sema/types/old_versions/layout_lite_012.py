@@ -9,21 +9,22 @@ from gwexp.sema.property_format import UTCMilliseconds
 from gwexp.sema.property_format import UUID4Str
 from gwexp.sema.types.gw1_tank_temp_calibration_map import Gw1TankTempCalibrationMap
 from gwexp.sema.types.ha1_params import Ha1Params
-from gwexp.sema.types.i2c_multichannel_dt_relay_component_gt import (
-    I2cMultichannelDtRelayComponentGt,
-)
 from gwexp.sema.types.layout_lite import LayoutLite
 from gwexp.sema.types.old_versions.data_channel_gt_002 import DataChannelGt002
 from gwexp.sema.types.old_versions.derived_channel_gt_001 import DerivedChannelGt001
 from gwexp.sema.types.old_versions.i2c_multichannel_dt_relay_component_gt_003 import (
     I2cMultichannelDtRelayComponentGt003,
 )
-from gwexp.sema.types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
-from gwexp.sema.types.pico_tank_module_component_gt import PicoTankModuleComponentGt
-from gwexp.sema.types.sim_pico_tank_module_component_gt import (
-    SimPicoTankModuleComponentGt,
+from gwexp.sema.types.old_versions.pico_flow_module_component_gt_000 import (
+    PicoFlowModuleComponentGt000,
 )
-from gwexp.sema.types.spaceheat_node_gt import SpaceheatNodeGt
+from gwexp.sema.types.old_versions.pico_tank_module_component_gt_011 import (
+    PicoTankModuleComponentGt011,
+)
+from gwexp.sema.types.old_versions.sim_pico_tank_module_component_gt_000 import (
+    SimPicoTankModuleComponentGt000,
+)
+from gwexp.sema.types.old_versions.spaceheat_node_gt_301 import SpaceheatNodeGt301
 
 
 class LayoutLite012(SemaType):
@@ -39,13 +40,13 @@ class LayoutLite012(SemaType):
     zone_list: list[str]
     critical_zone_list: list[str]
     total_store_tanks: PositiveInt
-    sh_nodes: list[SpaceheatNodeGt]
+    sh_nodes: list[SpaceheatNodeGt301]
     data_channels: list[DataChannelGt002]
     derived_channels: list[DerivedChannelGt001]
     tank_module_components: list[
-        PicoTankModuleComponentGt | SimPicoTankModuleComponentGt
+        PicoTankModuleComponentGt011 | SimPicoTankModuleComponentGt000
     ]
-    flow_module_components: list[PicoFlowModuleComponentGt]
+    flow_module_components: list[PicoFlowModuleComponentGt000]
     ha1_params: Ha1Params
     i2c_relay_component: I2cMultichannelDtRelayComponentGt003 | None = None
     t_map: Gw1TankTempCalibrationMap | None = None
@@ -125,15 +126,17 @@ class LayoutLite012(SemaType):
                 )
         return self
 
-    def upgrade(self) -> LayoutLite:
-        """- I2cRelayComponent: i2c.multichannel.dt.relay.component.gt:003 -> 004"""
-        data = self.model_dump()
-        if self.i2c_relay_component is not None:
-            upgraded_component = self.i2c_relay_component.upgrade()
-            if not isinstance(upgraded_component, I2cMultichannelDtRelayComponentGt):
-                raise TypeError(
-                    "Expected I2cRelayComponent upgrade to produce I2cMultichannelDtRelayComponentGt"
-                )
-            data["i2c_relay_component"] = upgraded_component
-        data["version"] = "013"
-        return LayoutLite.model_validate(data)
+    def upgrade(self) -> "LayoutLite":
+        """
+        - ShNodes: spaceheat.node.gt:301 -> 302
+        - DataChannels: data.channel.gt:002 -> 003
+        - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component.
+        - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context).
+        - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status.
+        """
+        raise SemaType.upgrade_requires_context(
+            "LayoutLite012 cannot be upgraded to "
+            "LayoutLite without the source layout context: the embedded "
+            "components migrate cac_id -> DeviceType, which is derived from the cac the "
+            "components referenced, not carried on the standalone projection."
+        )

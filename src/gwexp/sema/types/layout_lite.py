@@ -1,18 +1,19 @@
 from typing import Literal
 from pydantic import model_validator
 from gwexp.sema.base import SemaType
+from gwexp.sema.enums import Gw1ActuationAuthority
 from gwexp.sema.enums import Gw1SeasonalStorageMode
-from gwexp.sema.enums import Gw1SystemMode
+from gwexp.sema.enums import Gw1ServiceMode
 from gwexp.sema.property_format import LeftRightDot
 from gwexp.sema.property_format import PositiveInt
 from gwexp.sema.property_format import UTCMilliseconds
 from gwexp.sema.property_format import UUID4Str
+from gwexp.sema.types.data_channel_gt import DataChannelGt
 from gwexp.sema.types.gw1_tank_temp_calibration_map import Gw1TankTempCalibrationMap
 from gwexp.sema.types.ha1_params import Ha1Params
 from gwexp.sema.types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGt,
 )
-from gwexp.sema.types.old_versions.data_channel_gt_002 import DataChannelGt002
 from gwexp.sema.types.old_versions.derived_channel_gt_001 import DerivedChannelGt001
 from gwexp.sema.types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwexp.sema.types.pico_tank_module_component_gt import PicoTankModuleComponentGt
@@ -28,15 +29,16 @@ class LayoutLite(SemaType):
     from_g_node_alias: LeftRightDot
     message_created_ms: UTCMilliseconds
     message_id: UUID4Str
-    strategy: str
-    system_mode: Gw1SystemMode
+    hardware_layout_type_name: LeftRightDot
+    actuation_authority: Gw1ActuationAuthority
+    service_mode: Gw1ServiceMode
     seasonal_storage_mode: Gw1SeasonalStorageMode
     buffer_short_cycling: bool
     zone_list: list[str]
     critical_zone_list: list[str]
     total_store_tanks: PositiveInt
     sh_nodes: list[SpaceheatNodeGt]
-    data_channels: list[DataChannelGt002]
+    data_channels: list[DataChannelGt]
     derived_channels: list[DerivedChannelGt001]
     tank_module_components: list[
         PicoTankModuleComponentGt | SimPicoTankModuleComponentGt

@@ -28,7 +28,7 @@ class RelayActorConfig002(SemaType):
     event_type: LeftRightDot
     de_energizing_event: NonEmptyString
     energizing_event: NonEmptyString
-    state_type: LeftRightDot
+    state_type: LeftRightDot | None = None
     de_energized_state: NonEmptyString
     energized_state: NonEmptyString
     type_name: Literal["relay.actor.config"] = "relay.actor.config"
@@ -124,14 +124,21 @@ class RelayActorConfig002(SemaType):
         return self
 
     def upgrade(self) -> RelayActorConfig:
-        """- AsyncCaptureDelta: require when AsyncCapture is true"""
+        """
+        - Unit: drop (redundant; unit and scaling are carried by channel identity)
+        - Exponent: drop (redundant; unit and scaling are carried by channel identity)
+        - CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop
+          (capture/report tuning moved to operational-params capture.tuning)
+        """
         data = self.model_dump()
-
-        if self.async_capture:
-            if not self.async_capture_delta:
-                data["async_capture_delta"] = 1
-
-        # Update version
+        del data["unit"]
+        del data["exponent"]
+        for key in (
+            "capture_period_s",
+            "async_capture",
+            "async_capture_delta",
+            "poll_period_ms",
+        ):
+            data.pop(key, None)
         data["version"] = "003"
-
         return RelayActorConfig.model_validate(data)

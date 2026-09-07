@@ -5,11 +5,12 @@ an `examples:` block. Generated from the authored examples (never edited
 by hand) and consumed by `roundtrip.py`. A type version without a sample
 is silently untested by the round-trip, so its absence is recorded here.
 
-Coverage: **30 of 34** seeded type versions have a sample.
+Coverage: **29 of 34** seeded type versions have a sample.
 
 Seeded type versions lacking a sample (no `examples:`):
 
 - `glitch.000`
 - `gw.readings.000`
 - `ha1.params.006`
+- `layout.lite.013`
 - `spaceheat.telemetry.quantity.projection.000`

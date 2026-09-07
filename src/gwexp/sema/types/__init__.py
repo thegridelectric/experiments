@@ -6,6 +6,7 @@ from gwexp.sema.types.glitch import Glitch
 from gwexp.sema.types.gw1_tank_temp_calibration import Gw1TankTempCalibration
 from gwexp.sema.types.gw1_tank_temp_calibration_map import Gw1TankTempCalibrationMap
 from gwexp.sema.types.gw1_unit_quantity_projection import Gw1UnitQuantityProjection
+from gwexp.sema.types.gw_adc_waveform import GwAdcWaveform
 from gwexp.sema.types.gw_channel_gap_stats import GwChannelGapStats
 from gwexp.sema.types.gw_channel_jump_stats import GwChannelJumpStats
 from gwexp.sema.types.gw_channel_noise_stats import GwChannelNoiseStats
@@ -40,6 +41,7 @@ __all__ = [
     "Gw1TankTempCalibration",
     "Gw1TankTempCalibrationMap",
     "Gw1UnitQuantityProjection",
+    "GwAdcWaveform",
     "GwChannelGapStats",
     "GwChannelJumpStats",
     "GwChannelNoiseStats",

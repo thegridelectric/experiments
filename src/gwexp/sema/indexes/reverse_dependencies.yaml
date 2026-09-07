@@ -16,10 +16,10 @@ types:
     '002':
       used_by:
       - layout.lite:012
-      - layout.lite:013
     '003':
       used_by:
       - gw.readings:000
+      - layout.lite:013
   derived.channel.gt:
     '001':
       used_by:
@@ -57,22 +57,19 @@ types:
     '000':
       used_by:
       - i2c.thermistor.reader.component.gt:000
-    '001':
-      used_by:
-      - i2c.thermistor.reader.component.gt:001
-    '002':
-      used_by:
-      - i2c.thermistor.reader.component.gt:002
-      - i2c.thermistor.reader.component.gt:003
   pico.flow.module.component.gt:
     '000':
       used_by:
       - layout.lite:012
+    '001':
+      used_by:
       - layout.lite:013
   pico.tank.module.component.gt:
     '011':
       used_by:
       - layout.lite:012
+    '012':
+      used_by:
       - layout.lite:013
   relay.actor.config:
     '002':
@@ -85,11 +82,15 @@ types:
     '000':
       used_by:
       - layout.lite:012
+    '001':
+      used_by:
       - layout.lite:013
   spaceheat.node.gt:
     '301':
       used_by:
       - layout.lite:012
+    '302':
+      used_by:
       - layout.lite:013
   spaceheat.telemetry.quantity.projection:
     '000':
@@ -106,10 +107,18 @@ enums:
     '000':
       used_by:
       - pico.flow.module.component.gt:000
+      - pico.flow.module.component.gt:001
   gw1.actor.class:
     '011':
       used_by:
       - spaceheat.node.gt:301
+    '013':
+      used_by:
+      - spaceheat.node.gt:302
+  gw1.actuation.authority:
+    '000':
+      used_by:
+      - layout.lite:013
   gw1.emission.method:
     '000':
       used_by:
@@ -130,11 +139,14 @@ enums:
       used_by:
       - layout.lite:012
       - layout.lite:013
+  gw1.service.mode:
+    '000':
+      used_by:
+      - layout.lite:013
   gw1.system.mode:
     '000':
       used_by:
       - layout.lite:012
-      - layout.lite:013
   gw1.unit:
     '000':
       used_by:
@@ -147,12 +159,16 @@ enums:
     '001':
       used_by:
       - pico.flow.module.component.gt:000
+      - pico.flow.module.component.gt:001
   i2c.adc.channel:
     '000':
       used_by:
+      - gw.adc.waveform:000
       - i2c.thermistor.channel.config:000
-      - i2c.thermistor.channel.config:001
-      - i2c.thermistor.channel.config:002
+  i2c.adc.type:
+    '000':
+      used_by:
+      - gw.adc.waveform:000
   log.level:
     '000':
       used_by:
@@ -168,7 +184,7 @@ enums:
       - relay.actor.config:002
       - relay.actor.config:003
   spaceheat.make.model:
-    '003':
+    '007':
       used_by:
       - pico.flow.module.component.gt:000
   spaceheat.telemetry.name:
@@ -181,23 +197,20 @@ enums:
     '001':
       used_by:
       - channel.config:000
-      - i2c.thermistor.channel.config:000
-      - i2c.thermistor.channel.config:001
       - relay.actor.config:002
-      - relay.actor.config:003
   temp.calc.method:
     '000':
       used_by:
       - i2c.thermistor.reader.component.gt:000
-      - i2c.thermistor.reader.component.gt:001
-      - i2c.thermistor.reader.component.gt:002
-      - i2c.thermistor.reader.component.gt:003
       - pico.tank.module.component.gt:011
+      - pico.tank.module.component.gt:012
       - sim.pico.tank.module.component.gt:000
+      - sim.pico.tank.module.component.gt:001
 formats:
   handle.name:
     used_by:
     - spaceheat.node.gt:301
+    - spaceheat.node.gt:302
   left.right.dot:
     used_by:
     - data.channel.gt:002
@@ -205,6 +218,7 @@ formats:
     - derived.channel.gt:001
     - derived.channel.gt:002
     - glitch:000
+    - gw.adc.waveform:000
     - gw.channel.gap.stats:000
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
@@ -226,33 +240,36 @@ formats:
     - gw.channel.jump.stats:000
   pascal.case:
     used_by:
-    - i2c.thermistor.reader.component.gt:002
-    - i2c.thermistor.reader.component.gt:003
+    - i2c.multichannel.dt.relay.component.gt:004
+    - i2c.thermistor.reader.component.gt:000
+    - pico.flow.module.component.gt:001
+    - pico.tank.module.component.gt:012
+    - sim.pico.tank.module.component.gt:001
   positive.float:
     used_by:
     - gw.channel.gap.stats:000
     - gw.channel.jump.stats:000
-    - i2c.thermistor.reader.component.gt:000
-    - i2c.thermistor.reader.component.gt:001
-    - i2c.thermistor.reader.component.gt:002
   positive.int:
     used_by:
     - channel.config:000
     - derived.channel.gt:001
     - derived.channel.gt:002
+    - gw.adc.waveform:000
     - gw.channel.gap.stats:000
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
     - i2c.thermistor.channel.config:000
-    - i2c.thermistor.channel.config:001
-    - i2c.thermistor.channel.config:002
+    - i2c.thermistor.reader.component.gt:000
     - layout.lite:012
     - layout.lite:013
     - pico.tank.module.component.gt:011
+    - pico.tank.module.component.gt:012
     - relay.actor.config:002
     - relay.actor.config:003
     - sim.pico.tank.module.component.gt:000
+    - sim.pico.tank.module.component.gt:001
     - spaceheat.node.gt:301
+    - spaceheat.node.gt:302
   positive.int.as.str:
     used_by:
     - gw1.tank.temp.calibration.map:000
@@ -272,19 +289,17 @@ formats:
     - i2c.multichannel.dt.relay.component.gt:003
     - i2c.multichannel.dt.relay.component.gt:004
     - i2c.thermistor.channel.config:000
-    - i2c.thermistor.channel.config:001
-    - i2c.thermistor.channel.config:002
-    - i2c.thermistor.reader.component.gt:000
-    - i2c.thermistor.reader.component.gt:001
-    - i2c.thermistor.reader.component.gt:002
     - pico.flow.module.component.gt:000
+    - pico.flow.module.component.gt:001
     - relay.actor.config:002
     - relay.actor.config:003
     - spaceheat.node.gt:301
+    - spaceheat.node.gt:302
   utc.milliseconds:
     used_by:
     - channel.readings:002
     - glitch:000
+    - gw.adc.waveform:000
     - gw.channel.gap.stats:000
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
@@ -302,15 +317,17 @@ formats:
     - data.channel.gt:003
     - derived.channel.gt:001
     - derived.channel.gt:002
+    - gw.adc.waveform:000
     - i2c.multichannel.dt.relay.component.gt:003
     - i2c.multichannel.dt.relay.component.gt:004
     - i2c.thermistor.reader.component.gt:000
-    - i2c.thermistor.reader.component.gt:001
-    - i2c.thermistor.reader.component.gt:002
-    - i2c.thermistor.reader.component.gt:003
     - layout.lite:012
     - layout.lite:013
     - pico.flow.module.component.gt:000
+    - pico.flow.module.component.gt:001
     - pico.tank.module.component.gt:011
+    - pico.tank.module.component.gt:012
     - sim.pico.tank.module.component.gt:000
+    - sim.pico.tank.module.component.gt:001
     - spaceheat.node.gt:301
+    - spaceheat.node.gt:302

@@ -79,6 +79,18 @@ types:
       - utc.milliseconds
       types: []
       versionless_types: []
+  gw.adc.waveform:
+    '000':
+      enums:
+      - i2c.adc.channel:000
+      - i2c.adc.type:000
+      formats:
+      - left.right.dot
+      - positive.int
+      - utc.milliseconds
+      - uuid4.str
+      types: []
+      versionless_types: []
   gw.channel.gap.stats:
     '000':
       enums: []
@@ -195,10 +207,10 @@ types:
       - change.relay.state:000
       - relay.closed.or.open:000
       - relay.wiring.config:000
-      - spaceheat.unit:001
       formats:
       - left.right.dot
       - non.empty.string
+      - pascal.case
       - positive.int
       - spaceheat.name
       - uuid4.str
@@ -207,24 +219,6 @@ types:
       versionless_types: []
   i2c.thermistor.channel.config:
     '000':
-      enums:
-      - i2c.adc.channel:000
-      - spaceheat.unit:001
-      formats:
-      - positive.int
-      - spaceheat.name
-      types: []
-      versionless_types: []
-    '001':
-      enums:
-      - i2c.adc.channel:000
-      - spaceheat.unit:001
-      formats:
-      - positive.int
-      - spaceheat.name
-      types: []
-      versionless_types: []
-    '002':
       enums:
       - i2c.adc.channel:000
       formats:
@@ -236,53 +230,14 @@ types:
     '000':
       enums:
       - i2c.adc.channel:000
-      - spaceheat.unit:001
       - temp.calc.method:000
       formats:
-      - positive.float
+      - pascal.case
       - positive.int
       - spaceheat.name
       - uuid4.str
       types:
       - i2c.thermistor.channel.config:000
-      versionless_types: []
-    '001':
-      enums:
-      - i2c.adc.channel:000
-      - spaceheat.unit:001
-      - temp.calc.method:000
-      formats:
-      - positive.float
-      - positive.int
-      - spaceheat.name
-      - uuid4.str
-      types:
-      - i2c.thermistor.channel.config:001
-      versionless_types: []
-    '002':
-      enums:
-      - i2c.adc.channel:000
-      - temp.calc.method:000
-      formats:
-      - pascal.case
-      - positive.float
-      - positive.int
-      - spaceheat.name
-      - uuid4.str
-      types:
-      - i2c.thermistor.channel.config:002
-      versionless_types: []
-    '003':
-      enums:
-      - i2c.adc.channel:000
-      - temp.calc.method:000
-      formats:
-      - pascal.case
-      - positive.int
-      - spaceheat.name
-      - uuid4.str
-      types:
-      - i2c.thermistor.channel.config:002
       versionless_types: []
   layout.lite:
     '012':
@@ -298,7 +253,7 @@ types:
       - hz.calc.method:001
       - relay.closed.or.open:000
       - relay.wiring.config:000
-      - spaceheat.make.model:003
+      - spaceheat.make.model:007
       - spaceheat.telemetry.name:007
       - spaceheat.unit:001
       - temp.calc.method:000
@@ -331,23 +286,23 @@ types:
       enums:
       - change.relay.state:000
       - gpm.from.hz.method:000
-      - gw1.actor.class:011
+      - gw1.actor.class:013
+      - gw1.actuation.authority:000
       - gw1.emission.method:000
       - gw1.quantity:000
       - gw1.seasonal.storage.mode:000
-      - gw1.system.mode:000
+      - gw1.service.mode:000
       - gw1.unit:000
       - hz.calc.method:001
       - relay.closed.or.open:000
       - relay.wiring.config:000
-      - spaceheat.make.model:003
       - spaceheat.telemetry.name:007
-      - spaceheat.unit:001
       - temp.calc.method:000
       formats:
       - handle.name
       - left.right.dot
       - non.empty.string
+      - pascal.case
       - positive.int
       - positive.int.as.str
       - spaceheat.name
@@ -355,18 +310,17 @@ types:
       - utc.seconds
       - uuid4.str
       types:
-      - channel.config:000
-      - data.channel.gt:002
+      - data.channel.gt:003
       - derived.channel.gt:001
       - gw1.tank.temp.calibration.map:000
       - gw1.tank.temp.calibration:000
       - ha1.params:006
       - i2c.multichannel.dt.relay.component.gt:004
-      - pico.flow.module.component.gt:000
-      - pico.tank.module.component.gt:011
+      - pico.flow.module.component.gt:001
+      - pico.tank.module.component.gt:012
       - relay.actor.config:003
-      - sim.pico.tank.module.component.gt:000
-      - spaceheat.node.gt:301
+      - sim.pico.tank.module.component.gt:001
+      - spaceheat.node.gt:302
       - spaceheat.telemetry.quantity.projection:000
       versionless_types: []
   pico.flow.module.component.gt:
@@ -374,7 +328,7 @@ types:
       enums:
       - gpm.from.hz.method:000
       - hz.calc.method:001
-      - spaceheat.make.model:003
+      - spaceheat.make.model:007
       - spaceheat.unit:001
       formats:
       - positive.int
@@ -382,6 +336,16 @@ types:
       - uuid4.str
       types:
       - channel.config:000
+      versionless_types: []
+    '001':
+      enums:
+      - gpm.from.hz.method:000
+      - hz.calc.method:001
+      formats:
+      - pascal.case
+      - spaceheat.name
+      - uuid4.str
+      types: []
       versionless_types: []
   pico.tank.module.component.gt:
     '011':
@@ -394,6 +358,15 @@ types:
       - uuid4.str
       types:
       - channel.config:000
+      versionless_types: []
+    '012':
+      enums:
+      - temp.calc.method:000
+      formats:
+      - pascal.case
+      - positive.int
+      - uuid4.str
+      types: []
       versionless_types: []
   relay.actor.config:
     '002':
@@ -414,7 +387,6 @@ types:
       - change.relay.state:000
       - relay.closed.or.open:000
       - relay.wiring.config:000
-      - spaceheat.unit:001
       formats:
       - left.right.dot
       - non.empty.string
@@ -434,10 +406,29 @@ types:
       types:
       - channel.config:000
       versionless_types: []
+    '001':
+      enums:
+      - temp.calc.method:000
+      formats:
+      - pascal.case
+      - positive.int
+      - uuid4.str
+      types: []
+      versionless_types: []
   spaceheat.node.gt:
     '301':
       enums:
       - gw1.actor.class:011
+      formats:
+      - handle.name
+      - positive.int
+      - spaceheat.name
+      - uuid4.str
+      types: []
+      versionless_types: []
+    '302':
+      enums:
+      - gw1.actor.class:013
       formats:
       - handle.name
       - positive.int

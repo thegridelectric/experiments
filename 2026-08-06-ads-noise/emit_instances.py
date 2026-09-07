@@ -21,8 +21,9 @@ folder's gw.readings instance (channel words + readings together); the
 noise-stats channel pairings and the host GNode alias come from the
 scada's own layout.lite emission (immutable store, fetched to this
 folder); the thermistor constants come from the reader-component
-instance extracted alongside it. Nothing reads the legacy layout
-envelope.
+record extracted alongside it, which is in a pre-squash wire shape no
+current word carries and is read as legacy evidence (see
+LegacyThermistorReader). Nothing reads the legacy layout envelope.
 """
 
 import datetime
@@ -31,6 +32,7 @@ import math
 import statistics
 import sys
 from pathlib import Path
+from typing import NamedTuple
 from zoneinfo import ZoneInfo
 
 HERE = Path(__file__).parent
@@ -44,9 +46,6 @@ from gwexp.sema.types import (  # noqa: E402
     GwExperimentRun,
     GwReadings,
     LayoutLite,
-)
-from gwexp.sema.types.old_versions.i2c_thermistor_reader_component_gt_000 import (  # noqa: E402
-    I2cThermistorReaderComponentGt000,
 )
 from gwexp.sema.types.old_versions.layout_lite_012 import LayoutLite012  # noqa: E402
 from naming import spaceheat_name_to_lrd_token  # noqa: E402
@@ -148,14 +147,37 @@ def jump_stats(pull: GwReadings, name: str, start_ms: int,
 EMA_WARMUP = 25  # matches the harness: EMA convergence tail discarded
 
 
-def reader_record():
-    """The thermistor-reader component instance (extracted from the
-    box layout the runs consumed; layout.lite does not carry reader
-    components), decoded at its own version — it holds the electrical
-    constants the temp conversion needs."""
-    return SemaCodec().from_dict(json.loads(READER_PATH.read_text()),
-                                 auto_upgrade=False,
-                                 expect=I2cThermistorReaderComponentGt000)
+class LegacyThermistorReader(NamedTuple):
+    """The electrical constants the temp conversion needs, read from the
+    reader-component record extracted from the box layout the runs
+    consumed. That record is in the pre-2026-08-13 wire shape of
+    i2c.thermistor.reader.component.gt/000 (reference volts and series
+    resistance on the reader, a beta per channel config), which no
+    current word carries: today's reader word holds only the channel
+    bindings and the board record holds the electrical constants. A
+    spruce layout emitted under the current words retires this record
+    and this structure with it.
+
+    adc_reference_volts: the ADC's reference, volts.
+    series_resistance_k_ohms: the divider's series resistor, kilo-ohms.
+    beta_by_zone: thermistor beta per zone name (channel name without its
+        -gw-temp / -gw-microvolts suffix).
+    """
+
+    adc_reference_volts: float
+    series_resistance_k_ohms: float
+    beta_by_zone: dict[str, int]
+
+
+def reader_record() -> LegacyThermistorReader:
+    raw = json.loads(READER_PATH.read_text())
+    assert raw["TypeName"] == "i2c.thermistor.reader.component.gt"
+    assert raw["TempCalcMethod"] == "SimpleBeta"
+    betas: dict[str, int] = {}
+    for c in raw["ConfigList"]:
+        zone = c["ChannelName"].removesuffix("-gw-temp").removesuffix("-gw-microvolts")
+        betas[zone] = int(c["ThermistorBeta"])
+    return LegacyThermistorReader(float(raw["AdcReferenceVolts"]), float(raw["SeriesResistanceKOhms"]), betas)
 
 
 def simple_beta_temp(uv: float, beta: int, vref: float, series_kohms: float) -> float | None:
@@ -171,11 +193,7 @@ def simple_beta_temp(uv: float, beta: int, vref: float, series_kohms: float) -> 
 
 def noise_stats_instances(words) -> list[tuple[str, GwChannelNoiseStats]]:
     reader = reader_record()
-    assert reader.temp_calc_method.value == "SimpleBeta"
-    betas = {}
-    for c in reader.config_list:
-        zone = c.channel_name.removesuffix("-gw-temp").removesuffix("-gw-microvolts")
-        betas[zone] = c.thermistor_beta
+    betas = reader.beta_by_zone
 
     samples: dict[tuple[str, str], list[dict]] = {}
     for line in open(HERE / "raw-samples-2026-08-06-clean.jsonl"):

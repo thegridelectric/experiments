@@ -1,6 +1,6 @@
 metadata:
   registry_version: "1.0"
-  last_updated: "2026-08-10T19:10:00Z"
+  last_updated: "2026-09-07T13:15:00Z"
   maintainer: "gridworks-energy"
 
 formats:
@@ -21,7 +21,7 @@ formats:
   non.empty.string:
     owner: gridworks-energy
     schema_url: "https://schemas.electricity.works/formats/non.empty.string"
-    created: "2024-12-31T15:00:00Z"
+    created: "2024-09-02T15:00:00Z"
     status: "published"
     description: "String with at least one character"
 
@@ -110,18 +110,37 @@ enums:
         status: "published"
 
   gw1.actor.class:
-    latest_version: "011"
+    latest_version: "013"
     owner: gridworks-energy
     enum_type: "versioned"
     description: "Classification of actors in the GridWorks SCADA system."
 
     versions:
+      "013":
+        schema_url: "https://schemas.electricity.works/enums/gw1.actor.class/013"
+        created: "2026-08-12T16:50:00Z"
+        status: "staging"
+        added_values:
+          - "I2cDacWriter"
+          - "HpTwin"
       "011":
         schema_url: "https://schemas.electricity.works/enums/gw1.actor.class/011"
         created: "2026-02-18T21:34:00Z"
         status: "published"
         added_values:
           - "I2cThermistorReader"
+
+  gw1.actuation.authority:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "Degree of physical actuation authority SCADA exercises: Active / Standby / MonitorOnly. Dominates gw1.service.mode; default MonitorOnly so an unrecognized value degrades to non-actuation."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw1.actuation.authority/000"
+        created: "2026-08-13T11:55:00Z"
+        status: "staging"
 
   gw1.emission.method:
     latest_version: "000"
@@ -165,11 +184,26 @@ enums:
         created: "2026-01-14T18:04:00Z"
         status: "published"
 
+  gw1.service.mode:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "Thermal service the system provides while actuation authority is Active: Heating / Cooling. Inert outside Active — gw1.actuation.authority dominates."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw1.service.mode/000"
+        created: "2026-08-13T11:55:00Z"
+        status: "staging"
+
   gw1.system.mode:
     latest_version: "000"
     owner: gridworks-energy
     enum_type: "versioned"
-    description: "System operational mode for HVAC control."
+    description: "System operational mode for HVAC control. Conflated actuation authority with the thermal service (Heating doubled as full authority)."
+    replaced_by:
+      - "gw1.actuation.authority"
+      - "gw1.service.mode"
 
     versions:
       "000":
@@ -216,6 +250,18 @@ enums:
     created: "2026-03-04T19:00:00Z"
     status: "staging"
 
+  i2c.adc.type:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "The model of the I²C analog-to-digital converter chipset used by a GridWorks SCADA board."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/i2c.adc.type/000"
+        created: "2026-06-17T14:20:00Z"
+        status: "staging"
+
   log.level:
     owner: gridworks-energy
     enum_type: "literal"
@@ -245,7 +291,7 @@ enums:
         status: "published"
 
   spaceheat.make.model:
-    latest_version: "003"
+    latest_version: "007"
     owner: gridworks-energy
     enum_type: "versioned"
     description: "Make and model taxonomy used by Spaceheat SCADA for physical and simulated devices. Frozen base vocabulary — superseded as device identity by gw1.device.type (the open DeviceType) when MakeModel was retired, summer 2026."
@@ -254,10 +300,16 @@ enums:
     frozen_at: "2026-06-15T20:05:00Z"
 
     versions:
-      "003":
-        schema_url: "https://schemas.electricity.works/enums/spaceheat.make.model/003"
-        created: "2024-10-18T15:21:00Z"
+      "007":
+        schema_url: "https://schemas.electricity.works/enums/spaceheat.make.model/007"
+        created: "2024-10-20T00:00:00Z"
         status: "published"
+        added_values:
+          - "SAIER__SENHZG1WA"
+          - "DFROBOT__DFR0971_TIMES2"
+          - "GRIDWORKS__TANKMODULE3"
+          - "GRIDWORKS__GW101"
+          - "GRIDWORKS__SCADA_GW108"
 
   spaceheat.telemetry.name:
     latest_version: "007"
@@ -268,7 +320,7 @@ enums:
     versions:
       "007":
         schema_url: "https://schemas.electricity.works/enums/spaceheat.telemetry.name/007"
-        created: "2026-03-30T17:12:00Z"
+        created: "2024-12-06T00:00:00Z"
         status: "published"
         added_values:
           - "BinaryState"
@@ -427,6 +479,27 @@ types:
             - "spaceheat.name"
             - "utc.milliseconds"
 
+  gw.adc.waveform:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "One burst of raw conversions from a single input of an i2c ADC, with the chip, its address, full scale and data rate, the wall clock of the first conversion, and a host-timed offset per code."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/types/gw.adc.waveform/000"
+        created: "2026-09-07T13:15:00Z"
+        status: "staging"
+        summary: "Initial version."
+        direct_dependencies:
+          structural:
+            - "i2c.adc.channel:000"
+            - "i2c.adc.type:000"
+            - "left.right.dot"
+            - "positive.int"
+            - "utc.milliseconds"
+            - "uuid4.str"
+
   gw.channel.gap.stats:
     latest_version: "000"
     owner: gridworks-energy
@@ -437,7 +510,7 @@ types:
       "000":
         schema_url: "https://schemas.electricity.works/types/gw.channel.gap.stats/000"
         created: "2026-08-10T19:05:00Z"
-        status: "staging"
+        status: "published"
         summary: "Initial version."
         direct_dependencies:
           structural:
@@ -458,7 +531,7 @@ types:
       "000":
         schema_url: "https://schemas.electricity.works/types/gw.channel.jump.stats/000"
         created: "2026-08-06T19:40:00Z"
-        status: "staging"
+        status: "published"
         summary: "Initial version."
         direct_dependencies:
           structural:
@@ -479,7 +552,7 @@ types:
       "000":
         schema_url: "https://schemas.electricity.works/types/gw.channel.noise.stats/000"
         created: "2026-08-07T12:15:00Z"
-        status: "staging"
+        status: "published"
         summary: "Initial version."
         direct_dependencies:
           structural:
@@ -499,7 +572,7 @@ types:
       "000":
         schema_url: "https://schemas.electricity.works/types/gw.experiment.run/000"
         created: "2026-08-06T19:40:00Z"
-        status: "staging"
+        status: "published"
         summary: "Initial version."
         direct_dependencies:
           structural:
@@ -518,7 +591,7 @@ types:
       "000":
         schema_url: "https://schemas.electricity.works/types/gw.readings/000"
         created: "2026-08-07T13:20:00Z"
-        status: "staging"
+        status: "published"
         summary: "Initial version."
         direct_dependencies:
           structural:
@@ -601,11 +674,15 @@ types:
     versions:
       "004":
         schema_url: "https://schemas.electricity.works/types/i2c.multichannel.dt.relay.component.gt/004"
-        created: "2026-04-01T10:49:00Z"
+        created: "2026-08-13T16:30:00Z"
         status: "staging"
-        summary: "- ConfigList[]: relay.actor.config:002 -> 003"
+        summary: "- AsyncCaptureDelta: ConfigList[0] example now sets it explicitly (the
+  relay.actor.config dependency itself is unchanged from 003: :002)
+- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case).
+  Context-dependent: the device type lived on the referenced cac, not the component."
         direct_dependencies:
           structural:
+            - "pascal.case"
             - "relay.actor.config:003"
             - "spaceheat.name"
             - "uuid4.str"
@@ -621,98 +698,40 @@ types:
             - "uuid4.str"
 
   i2c.thermistor.channel.config:
-    latest_version: "002"
+    latest_version: "000"
     owner: gridworks-energy
     versioning_strategy: "literal"
     description: "Per-channel configuration for a thermistor input read through an I2C ADC."
 
     versions:
-      "002":
-        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.channel.config/002"
-        created: "2026-06-26T03:40:00Z"
-        status: "staging"
-        summary: "- Unit: drop (redundant; unit and scaling are carried by channel identity) - Exponent: drop (redundant; unit and scaling are carried by channel identity) - CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop (capture/report tuning moved to operational-params capture.tuning) - SendToDerived: drop (derived routing is computed from DerivedChannel InputChannelNames)"
-        direct_dependencies:
-          structural:
-            - "i2c.adc.channel:000"
-            - "positive.int"
-            - "spaceheat.name"
-      "001":
-        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.channel.config/001"
-        created: "2026-03-30T16:07:00Z"
-        status: "staging"
-        summary: "Structural-only restamp of the field-emitted shape (see 000)."
-        direct_dependencies:
-          structural:
-            - "i2c.adc.channel:000"
-            - "positive.int"
-            - "spaceheat.name"
-            - "spaceheat.unit:001"
       "000":
         schema_url: "https://schemas.electricity.works/types/i2c.thermistor.channel.config/000"
         created: "2026-03-30T16:00:00Z"
         status: "staging"
-        summary: "Reinstated 2026-08-06 from wire evidence: deployed layouts emit Version 000 records (the lineage was begun at 001 in the belief 000 was never emitted). Field-identical to 001 — upgrade is a version restamp."
+        summary: "Initial Sema version. Unit: drop (redundant; unit and scaling are carried by channel identity). Exponent: drop (redundant; unit and scaling are carried by channel identity). CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop (capture/report tuning moved to operational-params capture.tuning). SendToDerived: drop (derived routing is computed from DerivedChannel InputChannelNames)."
         direct_dependencies:
           structural:
             - "i2c.adc.channel:000"
             - "positive.int"
             - "spaceheat.name"
-            - "spaceheat.unit:001"
 
   i2c.thermistor.reader.component.gt:
-    latest_version: "003"
+    latest_version: "000"
     owner: gridworks-energy
     versioning_strategy: "literal"
     description: "Configuration for an I2C thermistor reader component that samples one board-resident ADC (named by AdcName against the board record) and publishes one or more thermistor-backed temperature channels."
 
     versions:
-      "003":
-        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.reader.component.gt/003"
-        created: "2026-07-19T18:55:00Z"
-        status: "staging"
-        summary: "- Bus, AdcAddress, AdcReferenceVolts, SeriesResistanceKOhms dropped (facts on the board's thermistor-interface capability entry); AdcName added, naming that entry in the board record's ThermistorAdcs; DeviceType dropped (TypeName is the kind; board identity lives on the board component); BoardComponentId added, anchoring the reader to its scada.board.component.gt. Context-dependent: AdcName and BoardComponentId are derived from the source layout, which the standalone component does not carry."
-        direct_dependencies:
-          structural:
-            - "i2c.thermistor.channel.config:002"
-            - "pascal.case"
-            - "temp.calc.method:000"
-            - "uuid4.str"
-      "002":
-        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.reader.component.gt/002"
-        created: "2026-06-26T03:40:00Z"
-        status: "staging"
-        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
-        direct_dependencies:
-          structural:
-            - "i2c.thermistor.channel.config:002"
-            - "pascal.case"
-            - "positive.float"
-            - "spaceheat.name"
-            - "temp.calc.method:000"
-            - "uuid4.str"
-      "001":
-        schema_url: "https://schemas.electricity.works/types/i2c.thermistor.reader.component.gt/001"
-        created: "2026-03-30T16:07:00Z"
-        status: "staging"
-        summary: "Structural-only restamp of the field-emitted shape (see 000; gwsproto ConfigUniqueness/AddressValidity axioms deferred)."
-        direct_dependencies:
-          structural:
-            - "i2c.thermistor.channel.config:001"
-            - "positive.float"
-            - "spaceheat.name"
-            - "temp.calc.method:000"
-            - "uuid4.str"
       "000":
         schema_url: "https://schemas.electricity.works/types/i2c.thermistor.reader.component.gt/000"
-        created: "2026-03-30T16:00:00Z"
+        created: "2026-08-10T20:40:00Z"
         status: "staging"
-        summary: "Reinstated 2026-08-06 from wire evidence: deployed layouts (spruce, July deploy) emit Version 000 records (the lineage was begun at 001 in the belief 000 was never emitted). Field-identical to 001 with 000-stamped ConfigList children — upgrade is a recursive version restamp."
+        summary: "Initial Sema version. ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case) -> dropped (TypeName is the kind; board identity lives on the board component). Bus, AdcAddress, AdcReferenceVolts, SeriesResistanceKOhms dropped (facts on the board's thermistor-interface capability entry); AdcName added, naming that entry in the board record's ThermistorAdcs; DataRateSps added (the per-conversion data rate the reader writes in the ADC config word — a member of the board ADC's SupportedDataRatesSps); BoardComponentId added, anchoring the reader to its scada.board.component.gt. Context-dependent: AdcName and BoardComponentId are derived from the source layout, which the standalone component does not carry."
         direct_dependencies:
           structural:
             - "i2c.thermistor.channel.config:000"
-            - "positive.float"
-            - "spaceheat.name"
+            - "pascal.case"
+            - "positive.int"
             - "temp.calc.method:000"
             - "uuid4.str"
 
@@ -725,24 +744,25 @@ types:
     versions:
       "013":
         schema_url: "https://schemas.electricity.works/types/layout.lite/013"
-        created: "2026-04-01T10:49:00Z"
+        created: "2026-08-16T16:30:00Z"
         status: "staging"
-        summary: "- I2cRelayComponent: i2c.multichannel.dt.relay.component.gt:003 -> 004"
+        summary: "- ShNodes: spaceheat.node.gt:301 -> 302 - DataChannels: data.channel.gt:002 -> 003 - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component. - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context). - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status."
         direct_dependencies:
           structural:
-            - "data.channel.gt:002"
+            - "data.channel.gt:003"
             - "derived.channel.gt:001"
+            - "gw1.actuation.authority:000"
             - "gw1.seasonal.storage.mode:000"
-            - "gw1.system.mode:000"
+            - "gw1.service.mode:000"
             - "gw1.tank.temp.calibration.map:000"
             - "ha1.params:006"
             - "i2c.multichannel.dt.relay.component.gt:004"
             - "left.right.dot"
-            - "pico.flow.module.component.gt:000"
-            - "pico.tank.module.component.gt:011"
+            - "pico.flow.module.component.gt:001"
+            - "pico.tank.module.component.gt:012"
             - "positive.int"
-            - "sim.pico.tank.module.component.gt:000"
-            - "spaceheat.node.gt:301"
+            - "sim.pico.tank.module.component.gt:001"
+            - "spaceheat.node.gt:302"
             - "utc.milliseconds"
             - "uuid4.str"
       "012":
@@ -769,12 +789,24 @@ types:
             - "uuid4.str"
 
   pico.flow.module.component.gt:
-    latest_version: "000"
+    latest_version: "001"
     owner: gridworks-energy
     versioning_strategy: "literal"
     description: "Configuration for a Pico-based flow module component."
 
     versions:
+      "001":
+        schema_url: "https://schemas.electricity.works/types/pico.flow.module.component.gt/001"
+        created: "2026-06-26T03:40:00Z"
+        status: "staging"
+        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component. - FlowMeterType: spaceheat.make.model enum value -> gw1.device.type value (pascal.case); the device-type enum is articulated by the hardware layout."
+        direct_dependencies:
+          structural:
+            - "gpm.from.hz.method:000"
+            - "hz.calc.method:001"
+            - "pascal.case"
+            - "spaceheat.name"
+            - "uuid4.str"
       "000":
         schema_url: "https://schemas.electricity.works/types/pico.flow.module.component.gt/000"
         created: "2024-10-23T19:32:00Z"
@@ -785,17 +817,28 @@ types:
             - "channel.config:000"
             - "gpm.from.hz.method:000"
             - "hz.calc.method:001"
-            - "spaceheat.make.model:003"
+            - "spaceheat.make.model:007"
             - "spaceheat.name"
             - "uuid4.str"
 
   pico.tank.module.component.gt:
-    latest_version: "011"
+    latest_version: "012"
     owner: gridworks-energy
     versioning_strategy: "literal"
     description: "Configuration for a Pico-based tank temperature module component."
 
     versions:
+      "012":
+        schema_url: "https://schemas.electricity.works/types/pico.tank.module.component.gt/012"
+        created: "2026-06-26T03:40:00Z"
+        status: "staging"
+        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
+        direct_dependencies:
+          structural:
+            - "pascal.case"
+            - "positive.int"
+            - "temp.calc.method:000"
+            - "uuid4.str"
       "011":
         schema_url: "https://schemas.electricity.works/types/pico.tank.module.component.gt/011"
         created: "2025-12-05T02:59:00Z"
@@ -819,9 +862,9 @@ types:
     versions:
       "003":
         schema_url: "https://schemas.electricity.works/types/relay.actor.config/003"
-        created: "2026-04-01T10:49:00Z"
+        created: "2026-08-13T16:14:00Z"
         status: "staging"
-        summary: "- AsyncCaptureDelta: require when AsyncCapture is true"
+        summary: "- Unit: drop (redundant; unit and scaling are carried by channel identity) - Exponent: drop (redundant; unit and scaling are carried by channel identity) - CapturePeriodS / AsyncCapture / AsyncCaptureDelta / PollPeriodMs: drop (capture/report tuning moved to operational-params capture.tuning)"
         direct_dependencies:
           structural:
             - "left.right.dot"
@@ -829,15 +872,14 @@ types:
             - "positive.int"
             - "relay.wiring.config:000"
             - "spaceheat.name"
-            - "spaceheat.unit:001"
           axiom:
             - "change.relay.state:000"
             - "relay.closed.or.open:000"
       "002":
         schema_url: "https://schemas.electricity.works/types/relay.actor.config/002"
-        created: "2024-12-31T15:38:00Z"
+        created: "2024-12-08T00:00:00Z"
         status: "published"
-        summary: "Baseline runtime version (no prior version tracked)."
+        summary: "- StateType: add (optional on the wire for the version's first two days, 2024-12-31 to 2025-01-01) - DeEnergizedState: add - EnergizedState: add"
         direct_dependencies:
           structural:
             - "left.right.dot"
@@ -851,12 +893,23 @@ types:
             - "relay.closed.or.open:000"
 
   sim.pico.tank.module.component.gt:
-    latest_version: "000"
+    latest_version: "001"
     owner: gridworks-energy
     versioning_strategy: "literal"
     description: "Simulation configuration corresponding to pico.tank.module.component.gt (the component-faithful simulation facet)."
 
     versions:
+      "001":
+        schema_url: "https://schemas.electricity.works/types/sim.pico.tank.module.component.gt/001"
+        created: "2026-06-26T03:40:00Z"
+        status: "staging"
+        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case); SimulatesVersion 011 -> 012. Context-dependent: the device type lived on the referenced cac, not the component."
+        direct_dependencies:
+          structural:
+            - "pascal.case"
+            - "positive.int"
+            - "temp.calc.method:000"
+            - "uuid4.str"
       "000":
         schema_url: "https://schemas.electricity.works/types/sim.pico.tank.module.component.gt/000"
         created: "2026-01-03T14:27:00Z"
@@ -870,12 +923,24 @@ types:
             - "uuid4.str"
 
   spaceheat.node.gt:
-    latest_version: "301"
+    latest_version: "302"
     owner: gridworks-energy
     versioning_strategy: "literal"
     description: "A Spaceheat node representing a named element in the SCADA system."
 
     versions:
+      "302":
+        schema_url: "https://schemas.electricity.works/types/spaceheat.node.gt/302"
+        created: "2026-08-12T18:25:00Z"
+        status: "staging"
+        summary: "- ActorClass: gw1.actor.class:011 -> 013 (in-place while staging) - InPowerMetering: drop (routing is owned by the consuming transactive declaration, not the node) - InPowerMeteringRequiresNameplate axiom: drop"
+        direct_dependencies:
+          structural:
+            - "gw1.actor.class:013"
+            - "handle.name"
+            - "positive.int"
+            - "spaceheat.name"
+            - "uuid4.str"
       "301":
         schema_url: "https://schemas.electricity.works/types/spaceheat.node.gt/301"
         created: "2026-02-18T21:34:00Z"

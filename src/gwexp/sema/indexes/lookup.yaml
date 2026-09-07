@@ -36,6 +36,11 @@ types:
     versioning_strategy: literal
     versions:
       '000': definitions/types/glitch/000.yaml
+  gw.adc.waveform:
+    latest_version: '000'
+    versioning_strategy: literal
+    versions:
+      '000': definitions/types/gw.adc.waveform/000.yaml
   gw.channel.gap.stats:
     latest_version: '000'
     versioning_strategy: literal
@@ -88,19 +93,14 @@ types:
       '004': definitions/types/i2c.multichannel.dt.relay.component.gt/004.yaml
       '003': definitions/types/i2c.multichannel.dt.relay.component.gt/003.yaml
   i2c.thermistor.channel.config:
-    latest_version: '002'
+    latest_version: '000'
     versioning_strategy: literal
     versions:
-      '002': definitions/types/i2c.thermistor.channel.config/002.yaml
-      '001': definitions/types/i2c.thermistor.channel.config/001.yaml
       '000': definitions/types/i2c.thermistor.channel.config/000.yaml
   i2c.thermistor.reader.component.gt:
-    latest_version: '003'
+    latest_version: '000'
     versioning_strategy: literal
     versions:
-      '003': definitions/types/i2c.thermistor.reader.component.gt/003.yaml
-      '002': definitions/types/i2c.thermistor.reader.component.gt/002.yaml
-      '001': definitions/types/i2c.thermistor.reader.component.gt/001.yaml
       '000': definitions/types/i2c.thermistor.reader.component.gt/000.yaml
   layout.lite:
     latest_version: '013'
@@ -109,14 +109,16 @@ types:
       '013': definitions/types/layout.lite/013.yaml
       '012': definitions/types/layout.lite/012.yaml
   pico.flow.module.component.gt:
-    latest_version: '000'
+    latest_version: '001'
     versioning_strategy: literal
     versions:
+      '001': definitions/types/pico.flow.module.component.gt/001.yaml
       '000': definitions/types/pico.flow.module.component.gt/000.yaml
   pico.tank.module.component.gt:
-    latest_version: '011'
+    latest_version: '012'
     versioning_strategy: literal
     versions:
+      '012': definitions/types/pico.tank.module.component.gt/012.yaml
       '011': definitions/types/pico.tank.module.component.gt/011.yaml
   relay.actor.config:
     latest_version: '003'
@@ -125,14 +127,16 @@ types:
       '003': definitions/types/relay.actor.config/003.yaml
       '002': definitions/types/relay.actor.config/002.yaml
   sim.pico.tank.module.component.gt:
-    latest_version: '000'
+    latest_version: '001'
     versioning_strategy: literal
     versions:
+      '001': definitions/types/sim.pico.tank.module.component.gt/001.yaml
       '000': definitions/types/sim.pico.tank.module.component.gt/000.yaml
   spaceheat.node.gt:
-    latest_version: '301'
+    latest_version: '302'
     versioning_strategy: literal
     versions:
+      '302': definitions/types/spaceheat.node.gt/302.yaml
       '301': definitions/types/spaceheat.node.gt/301.yaml
   spaceheat.telemetry.quantity.projection:
     latest_version: '000'
@@ -150,9 +154,15 @@ enums:
       '000': definitions/enums/gpm.from.hz.method/000.yaml
   gw1.actor.class:
     enum_type: versioned
-    latest_version: '011'
+    latest_version: '013'
     versions:
+      '013': definitions/enums/gw1.actor.class/013.yaml
       '011': definitions/enums/gw1.actor.class/011.yaml
+  gw1.actuation.authority:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/gw1.actuation.authority/000.yaml
   gw1.emission.method:
     enum_type: versioned
     latest_version: '000'
@@ -169,6 +179,11 @@ enums:
     latest_version: '000'
     versions:
       '000': definitions/enums/gw1.seasonal.storage.mode/000.yaml
+  gw1.service.mode:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/gw1.service.mode/000.yaml
   gw1.system.mode:
     enum_type: versioned
     latest_version: '000'
@@ -188,6 +203,11 @@ enums:
   i2c.adc.channel:
     enum_type: literal
     schema: definitions/enums/i2c.adc.channel/000.yaml
+  i2c.adc.type:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/i2c.adc.type/000.yaml
   log.level:
     enum_type: literal
     schema: definitions/enums/log.level/000.yaml
@@ -201,9 +221,9 @@ enums:
       '000': definitions/enums/relay.wiring.config/000.yaml
   spaceheat.make.model:
     enum_type: versioned
-    latest_version: '003'
+    latest_version: '007'
     versions:
-      '003': definitions/enums/spaceheat.make.model/003.yaml
+      '007': definitions/enums/spaceheat.make.model/007.yaml
   spaceheat.telemetry.name:
     enum_type: versioned
     latest_version: '007'

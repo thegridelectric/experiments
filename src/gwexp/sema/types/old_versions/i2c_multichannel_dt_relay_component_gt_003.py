@@ -45,17 +45,15 @@ class I2cMultichannelDtRelayComponentGt003(SemaType):
         return self
 
     def upgrade(self) -> I2cMultichannelDtRelayComponentGt:
-        """- ConfigList[]: relay.actor.config:002 -> 003"""
-        data = self.model_dump()
-
-        upgraded_configs = []
-        for cfg in self.config_list:
-            if isinstance(cfg, RelayActorConfig002):
-                upgraded_configs.append(cfg.upgrade())
-            else:
-                upgraded_configs.append(cfg)
-
-        data["config_list"] = upgraded_configs
-        data["version"] = "004"
-
-        return I2cMultichannelDtRelayComponentGt.model_validate(data)
+        """
+        - AsyncCaptureDelta: ConfigList[0] example now sets it explicitly (the
+          relay.actor.config dependency itself is unchanged from 003: :002)
+        - ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case).
+          Context-dependent: the device type lived on the referenced cac, not the component.
+        """
+        raise SemaType.upgrade_requires_context(
+            "I2cMultichannelDtRelayComponentGt003 cannot be upgraded to "
+            "I2cMultichannelDtRelayComponentGt without the source layout "
+            "context: DeviceType is derived from the cac the component "
+            "referenced, which the standalone component does not carry."
+        )
