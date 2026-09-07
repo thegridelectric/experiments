@@ -1,0 +1,706 @@
+2026-09-07 11:13:28.698 
+2026-09-07 11:13:28.699 Env file: <.env>  exists: True
+2026-09-07 11:13:28.699 Settings:
+2026-09-07 11:13:28.700 {
+  "paths": {
+    "base": "gridworks",
+    "name": "scada",
+    "relative_path": "gridworks/scada",
+    "data_home": "/home/pi/.local/share",
+    "state_home": "/home/pi/.local/state",
+    "config_home": "/home/pi/.config",
+    "data_dir": "/home/pi/.local/share/gridworks/scada",
+    "config_dir": "/home/pi/.config/gridworks/scada",
+    "certs_dir": "/home/pi/.config/gridworks/scada/certs",
+    "event_dir": "/home/pi/.local/share/gridworks/scada/event",
+    "log_dir": "/home/pi/.local/state/gridworks/scada/log",
+    "hardware_layout": "/home/pi/.config/gridworks/scada/hardware-layout.json",
+    "operational_params": "/home/pi/.config/gridworks/scada/operational-params.json",
+    "tadeed": "/home/pi/.config/gridworks/scada/tadeed.json"
+  },
+  "logging": {
+    "base_log_name": "gridworks",
+    "base_log_level": 30,
+    "levels": {
+      "message_summary": 30,
+      "lifecycle": 20,
+      "comm_event": 20,
+      "io_loop": 20
+    },
+    "formatter": {
+      "fmt": "%(asctime)s %(message)s",
+      "datefmt": "",
+      "default_msec_format": "%s.%03d",
+      "use_utc": false
+    },
+    "file_handler": {
+      "filename": "proactor.log",
+      "bytes_per_log_file": 2097152,
+      "num_log_files": 10,
+      "level": 0
+    },
+    "io_loop": {
+      "file_handler": {
+        "filename": "io_loop.log",
+        "bytes_per_log_file": 2097152,
+        "num_log_files": 2,
+        "level": 0
+      },
+      "on_screen": false
+    },
+    "aiohttp_logging": false,
+    "paho_logging": false
+  },
+  "proactor": {
+    "mqtt_link_poll_seconds": 60.0,
+    "ack_timeout_seconds": 5.0,
+    "num_initial_event_reuploads": 5,
+    "num_inflight_events": 50
+  },
+  "pico_cycler_state_logging": false,
+  "power_meter_logging_level": 30,
+  "contract_rep_logging_level": 20,
+  "relay_multiplexer_logging_level": 20,
+  "paho_logging": false,
+  "local_mqtt": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "bench",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/local_mqtt.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/private/local_mqtt.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    }
+  },
+  "gridworks_mqtt": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "bench",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/gridworks_mqtt.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/private/gridworks_mqtt.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    }
+  },
+  "seconds_per_report": 300,
+  "seconds_per_snapshot": 30,
+  "async_power_reporting_threshold": 0.02,
+  "persister": {
+    "max_bytes": 524288000
+  },
+  "admin": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "bench",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/admin/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada/certs/admin/admin.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada/certs/admin/private/admin.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    },
+    "enabled": true,
+    "name": "admin",
+    "max_timeout_seconds": 86400.0
+  },
+  "timezone_str": "America/New_York",
+  "latitude": 45.6573,
+  "longitude": -68.7098,
+  "whitewire_threshold_watts": 20.0,
+  "hp_model": "SamsungFiveTonneHydroKit",
+  "airtable_pat": "bogus_pat"
+}
+ScadaSettings(
+    paths=ScadaPaths(
+        base=PosixPath('gridworks'),
+        name=PosixPath('scada'),
+        relative_path=PosixPath('gridworks/scada'),
+        data_home=PosixPath('/home/pi/.local/share'),
+        state_home=PosixPath('/home/pi/.local/state'),
+        config_home=PosixPath('/home/pi/.config'),
+        data_dir=PosixPath('/home/pi/.local/share/gridworks/scada'),
+        config_dir=PosixPath('/home/pi/.config/gridworks/scada'),
+        certs_dir=PosixPath('/home/pi/.config/gridworks/scada/certs'),
+        event_dir=PosixPath('/home/pi/.local/share/gridworks/scada/event'),
+        log_dir=PosixPath('/home/pi/.local/state/gridworks/scada/log'),
+        hardware_layout=PosixPath('/home/pi/.config/gridworks/scada/hardware-lay
+out.json'),
+        operational_params=PosixPath('/home/pi/.config/gridworks/scada/operation
+al-params.json'),
+        tadeed=PosixPath('/home/pi/.config/gridworks/scada/tadeed.json')
+    ),
+    logging=LoggingSettings(
+        base_log_name='gridworks',
+        base_log_level=30,
+        levels=LoggerLevels(
+            message_summary=30,
+            lifecycle=20,
+            comm_event=20,
+            io_loop=20
+        ),
+        formatter=FormatterSettings(
+            fmt='%(asctime)s %(message)s',
+            datefmt='',
+            default_msec_format='%s.%03d',
+            use_utc=False
+        ),
+        file_handler=RotatingFileHandlerSettings(
+            filename='proactor.log',
+            bytes_per_log_file=2097152,
+            num_log_files=10,
+            level=0
+        ),
+        io_loop=IOLoopLoggerSettings(
+            file_handler=RotatingFileHandlerSettings(
+                filename='io_loop.log',
+                bytes_per_log_file=2097152,
+                num_log_files=2,
+                level=0
+            ),
+            on_screen=False
+        ),
+        aiohttp_logging=False,
+        paho_logging=False
+    ),
+    proactor=ProactorSettings(
+        mqtt_link_poll_seconds=60.0,
+        ack_timeout_seconds=5.0,
+        num_initial_event_reuploads=5,
+        num_inflight_events=50
+    ),
+    pico_cycler_state_logging=False,
+    power_meter_logging_level=30,
+    contract_rep_logging_level=20,
+    relay_multiplexer_logging_level=20,
+    paho_logging=False,
+    local_mqtt=MQTTClient(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='bench',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/l
+ocal_mqtt/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/loca
+l_mqtt/local_mqtt.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+ts/local_mqtt/private/local_mqtt.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        )
+    ),
+    gridworks_mqtt=MQTTClient(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='bench',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/g
+ridworks_mqtt/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/grid
+works_mqtt/gridworks_mqtt.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+ts/gridworks_mqtt/private/gridworks_mqtt.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        )
+    ),
+    seconds_per_report=300,
+    seconds_per_snapshot=30,
+    async_power_reporting_threshold=0.02,
+    persister=PersisterSettings(max_bytes=524288000),
+    admin=AdminLinkSettings(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='bench',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/a
+dmin/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/admi
+n/admin.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+ts/admin/private/admin.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        ),
+        enabled=True,
+        name='admin',
+        max_timeout_seconds=86400.0
+    ),
+    timezone_str='America/New_York',
+    latitude=45.6573,
+    longitude=-68.7098,
+    whitewire_threshold_watts=20.0,
+    hp_model=<HpModel.SamsungFiveTonneHydroKit: 'SamsungFiveTonneHydroKit'>,
+    airtable_pat='bogus_pat'
+)
+2026-09-07 11:13:28.783 Proactor <ProactorName(long_name='d1.bench.honeysuckle.scada', short_name='s')> reindexing events
+2026-09-07 11:13:28.788 Proactor <ProactorName(long_name='d1.bench.honeysuckle.scada', short_name='s')> reindexing complete.
+  56 events present for upload, using approximately 51 KB / 0.0 MB storage space.
+2026-09-07 11:13:28.792 [scada] SIMULATED
+2026-09-07 11:13:28.804 Skip binding of 'trigger' to model due to model override policy.
+2026-09-07 11:13:28.804 Skip binding of 'may_trigger' to model due to model override policy.
+2026-09-07 11:13:28.862 Creating LeafAlly with strategy AllTanks, using actors.leaf_ally.nolan.NolanLeafAlly
+2026-09-07 11:13:28.864 Skip binding of 'WakeUp' to model due to model override policy.
+2026-09-07 11:13:28.865 [derived-generator] self.timezone: America/New_York
+2026-09-07 11:13:28.865 [derived-generator] self.latitude: 45.6573
+2026-09-07 11:13:28.865 [derived-generator] self.longitude: -68.7098
+2026-09-07 11:13:28.866 [derived-generator] Params: AlphaTimes10=55 BetaTimes100=-10 GammaEx6=0 IntermediatePowerKw=1.5 IntermediateRswtF=100 DdPowerKw=5.5 DdRswtF=150 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=170 LoadOverestimationPercent=0 CopIntercept=1.02 CopOatCoeff=0.0257 CopLwtCoeff=0.0 CopMin=1.4 CopMinOatF=15.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-09-07 11:13:28.875 [lc] Set auto.lc.n command tree
+2026-09-07 11:13:28.876 [lc] Starting Nolan Local Control in Normal (TOU cooling; ops ActuationAuthority Active, ServiceMode Heating)
+2026-09-07 11:13:28.876 Creating LocalControl with actuation authority Active and seasonal storage mode AllTanks, using actors.local_control.nolan.NolanLocalControl
+/home/pi/gridworks-scada/gw_spaceheat/actors/relay.py:191: RuntimeWarning: This channel is already in use, continuing anyway.  Use GPIO.setwarnings(False) to disable warnings.
+  self.GPIO.setup(self._gpio_pin, GPIO.OUT)
+2026-09-07 11:13:28.893 
+Subscription info for <d1.bench.honeysuckle.scada> [construction]
+  Client name: <gridworks_mqtt>  topic_dst: <ltn>
+    Publish to: gw/d1-bench-honeysuckle-scada/to/ltn/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/d1-bench-honeysuckle/to/s/#', <QOS.AtMostOnce: 0>)]
+  Client name: <local_mqtt>  topic_dst: <s2>
+    Publish to: gw/d1-bench-honeysuckle-scada/to/s2/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/d1-bench-honeysuckle-scada-s2/to/s/#', <QOS.AtMostOnce: 0>)]
+  Client name: <admin>  topic_dst: <admin>
+    Publish to: gw/d1-bench-honeysuckle-scada/to/admin/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/admin/to/d1-bench-honeysuckle-scada/#', <QOS.AtMostOnce: 0>)]
+
+2026-09-07 11:13:28.907 [zone1-bench1-opto] GpioSensor started on GPIO 17
+2026-09-07 11:13:28.908 [zone2-bench2-opto] GpioSensor started on GPIO 27
+2026-09-07 11:13:28.911 [zone3-bench3-opto] GpioSensor started on GPIO 22
+2026-09-07 11:13:28.911 [zone4-bench4-opto] GpioSensor started on GPIO 10
+2026-09-07 11:13:28.912 [gw108-thermistor-reader] I2cThermistorReader started at address 73
+2026-09-07 11:13:28.912 ++Proactor<s>.join()
+2026-09-07 11:13:28.914 Tasks: 62  [Proactor.join() - all tasks]
+	1/62  zone4-bench4-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908340>
+	2/62  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8c80>
+	3/62  buffer-top-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908540>
+	4/62  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f6f8ba4d0>
+	5/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb010>
+	6/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba6b0>
+	7/62  zone3-bench3-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb6a0>
+	8/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bab60>
+	9/62  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8040>
+	10/62  NolanLocalControl keepalive     done:False   exception: None  <coroutine object NolanLocalControl.main at 0x7f6fad6f60>
+	11/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb100>
+	12/62  zone2-bench2-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3d40>
+	13/62  zone2-bench2-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3e40>
+	14/62  zone4-bench4-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb5b0>
+	15/62  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908440>
+	16/62  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8d60>
+	17/62  buffer-bottom-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908a40>
+	18/62  NolanLocalControl tou           done:False   exception: None  <coroutine object NolanLocalControl.tou_control at 0x7f6f8f8e40>
+	19/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba7a0>
+	20/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bac50>
+	21/62  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8fab20>
+	22/62  i2c-bus-init-guard              done:False   exception: None  <coroutine object I2cBus._init_expanders at 0x7f6f8f4160>
+	23/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb1f0>
+	24/62  zone3-bench3-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908040>
+	25/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bad40>
+	26/62  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f6f8f43a0>
+	27/62  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f6fad7030>
+	28/62  tank1-top-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908b40>
+	29/62  Task-1                          done:False   exception: None  <coroutine object Proactor.run_forever at 0x7f6fa7b1c0>
+	30/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba890>
+	31/62  iso-valve-relay-boot-adopt      done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908740>
+	32/62  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbc40>
+	33/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba2f0>
+	34/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb2e0>
+	35/62  pat_watchdog                    done:False   exception: None  <coroutine object WatchdogManager._check_pats at 0x7f6fb52770>
+	36/62  secondary-pump-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908640>
+	37/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bae30>
+	38/62  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbd30>
+	39/62  zone1-bench1-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3a40>
+	40/62  tank1-bottom-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908c40>
+	41/62  zone3-bench3-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908140>
+	42/62  charge-valve-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908840>
+	43/62  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbe20>
+	44/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba200>
+	45/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb3d0>
+	46/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba980>
+	47/62  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f6f909240>
+	48/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8baf20>
+	49/62  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f6fb102b0>
+	50/62  zone1-bench1-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3c40>
+	51/62  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f6fb10380>
+	52/62  zone4-bench4-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908240>
+	53/62  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f6f910040>
+	54/62  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908940>
+	55/62  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f6fad7100>
+	56/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba5c0>
+	57/62  zone1-bench1-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb4c0>
+	58/62  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f6fe3bec0>
+	59/62  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8baa70>
+	60/62  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f6f909340>
+	61/62  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f6f8f44c0>
+	62/62  zone2-bench2-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb790>
+
+2026-09-07 11:13:28.916 Tasks: 101  [WAITING FOR]
+	1/101  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f6f8ba4d0>
+	2/101  zone3-bench3-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb6a0>
+	3/101  zone3-bench3-opto.join          done:False   exception: None  <coroutine object GpioSensor.join at 0x7f6f919fc0>
+	4/101  NolanLocalControl keepalive     done:False   exception: None  <coroutine object NolanLocalControl.main at 0x7f6fad6f60>
+	5/101  vdc-relay.join                  done:False   exception: None  <coroutine object Relay.join at 0x7f6f918040>
+	6/101  zone4-bench4-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb5b0>
+	7/101  NolanLocalControl tou           done:False   exception: None  <coroutine object NolanLocalControl.tou_control at 0x7f6f8f8e40>
+	8/101  zone4-bench4-opto.join          done:False   exception: None  <coroutine object GpioSensor.join at 0x7f6f91a140>
+	9/101  i2c-bus-init-guard              done:False   exception: None  <coroutine object I2cBus._init_expanders at 0x7f6f8f4160>
+	10/101  zone1-bench1-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f6f9181c0>
+	11/101  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f6fad7030>
+	12/101  gw108-thermistor-reader.join    done:False   exception: None  <coroutine object I2cThermistorReader.join at 0x7f6f91a2c0>
+	13/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba2f0>
+	14/101  zone1-bench1-ops-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7f6f918340>
+	15/101  zone1-bench1-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3a40>
+	16/101  buffer.join                     done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f6f91a440>
+	17/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba200>
+	18/101  zone2-bench2-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f6f9184c0>
+	19/101  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f6f909240>
+	20/101  zone1-bench1-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3c40>
+	21/101  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f6f910040>
+	22/101  tank1.join                      done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f6f91a5c0>
+	23/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba5c0>
+	24/101  zone2-bench2-ops-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7f6f918640>
+	25/101  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f6f909340>
+	26/101  zone2-bench2-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3d40>
+	27/101  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8c80>
+	28/101  primary-btu.join                done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f6f91a740>
+	29/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba6b0>
+	30/101  zone3-bench3-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f6f9187c0>
+	31/101  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8040>
+	32/101  zone2-bench2-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3e40>
+	33/101  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8d60>
+	34/101  secondary-btu.join              done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f6f91a8c0>
+	35/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba7a0>
+	36/101  zone3-bench3-ops-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7f6f918940>
+	37/101  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8fab20>
+	38/101  zone3-bench3-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908040>
+	39/101  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f6f8f43a0>
+	40/101  store-btu.join                  done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f6f91aa40>
+	41/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba890>
+	42/101  zone4-bench4-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f6f918ac0>
+	43/101  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbc40>
+	44/101  secondary-pump-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908640>
+	45/101  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbd30>
+	46/101  dist-btu.join                   done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f6f91abc0>
+	47/101  zone3-bench3-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908140>
+	48/101  zone4-bench4-ops-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7f6f918c40>
+	49/101  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbe20>
+	50/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba980>
+	51/101  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f6fb102b0>
+	52/101  zone4-bench4-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908240>
+	53/101  hp-scada-ops-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7f6f918dc0>
+	54/101  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f6fad7100>
+	55/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8baa70>
+	56/101  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f6f8f44c0>
+	57/101  zone4-bench4-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908340>
+	58/101  secondary-pump-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7f6f918f40>
+	59/101  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f6f8fadc0>
+	60/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bab60>
+	61/101  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908440>
+	62/101  iso-valve-relay.join            done:False   exception: None  <coroutine object Relay.join at 0x7f6f9190c0>
+	63/101  io_loop_manager.join            done:False   exception: None  <coroutine object IOLoop.join at 0x7f6f907100>
+	64/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bac50>
+	65/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bad40>
+	66/101  charge-valve-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7f6f919240>
+	67/101  _WebManager.join                done:False   exception: None  <coroutine object _WebManager.join at 0x7f6f907280>
+	68/101  iso-valve-relay-boot-adopt      done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908740>
+	69/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bae30>
+	70/101  store-pump-relay.join           done:False   exception: None  <coroutine object Relay.join at 0x7f6f9193c0>
+	71/101  s.join                          done:False   exception: None  <coroutine object PrimeActor.join at 0x7f6f907400>
+	72/101  charge-valve-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908840>
+	73/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8baf20>
+	74/101  buffer-top-elt-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7f6f919540>
+	75/101  la.join                         done:False   exception: None  <coroutine object LeafAlly.join at 0x7f6f907580>
+	76/101  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908940>
+	77/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb010>
+	78/101  buffer-bottom-elt-relay.join    done:False   exception: None  <coroutine object Relay.join at 0x7f6f9196c0>
+	79/101  pico-cycler.join                done:False   exception: None  <coroutine object PicoCycler.join at 0x7f6f907700>
+	80/101  buffer-top-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908540>
+	81/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb100>
+	82/101  tank1-top-elt-relay.join        done:False   exception: None  <coroutine object Relay.join at 0x7f6f919840>
+	83/101  derived-generator.join          done:False   exception: None  <coroutine object DerivedGenerator.join at 0x7f6f907880>
+	84/101  buffer-bottom-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908a40>
+	85/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb1f0>
+	86/101  tank1-bottom-elt-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7f6f9199c0>
+	87/101  hp-boss.join                    done:False   exception: None  <coroutine object HpBoss.join at 0x7f6f907a00>
+	88/101  tank1-top-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908b40>
+	89/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb2e0>
+	90/101  secondary-010v.join             done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f6f919b40>
+	91/101  lc.join                         done:False   exception: None  <coroutine object LocalControl.join at 0x7f6f907b80>
+	92/101  tank1-bottom-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908c40>
+	93/101  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb3d0>
+	94/101  zone1-bench1-opto.join          done:False   exception: None  <coroutine object GpioSensor.join at 0x7f6f919cc0>
+	95/101  i2c-bus.join                    done:False   exception: None  <coroutine object I2cBus.join at 0x7f6f907d00>
+	96/101  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f6fb10380>
+	97/101  zone1-bench1-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb4c0>
+	98/101  zone2-bench2-opto.join          done:False   exception: None  <coroutine object GpioSensor.join at 0x7f6f919e40>
+	99/101  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f6fe3bec0>
+	100/101  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f6f907e80>
+	101/101  zone2-bench2-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb790>
+
+2026-09-07 11:13:28.918 [derived-generator] SynthGen about to get forecasts
+2026-09-07 11:13:28.924 [i2c-bus] expander 0x20: already configured — warm takeover, outputs left driving
+2026-09-07 11:13:28.925 [i2c-bus] expander 0x21: already configured — warm takeover, outputs left driving
+2026-09-07 11:13:28.944 gridworks_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-07 11:13:28.946 admin:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-07 11:13:28.974 local_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-07 11:13:28.994 Tasks: 57  [DONE]
+	1/57  zone4-bench4-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908340>
+	2/57  secondary-pump-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7f6f918f40>
+	3/57  primary-btu.join                done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f6f91a740>
+	4/57  buffer-top-elt-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908540>
+	5/57  zone3-bench3-opto.join          done:True   exception: None  <coroutine object GpioSensor.join at 0x7f6f919fc0>
+	6/57  zone3-bench3-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f6f9187c0>
+	7/57  vdc-relay.join                  done:True   exception: None  <coroutine object Relay.join at 0x7f6f918040>
+	8/57  tank1-top-elt-relay.join        done:True   exception: None  <coroutine object Relay.join at 0x7f6f919840>
+	9/57  zone2-bench2-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3e40>
+	10/57  derived-generator.join          done:True   exception: None  <coroutine object DerivedGenerator.join at 0x7f6f907880>
+	11/57  iso-valve-relay.join            done:True   exception: None  <coroutine object Relay.join at 0x7f6f9190c0>
+	12/57  hp-scada-ops-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908440>
+	13/57  secondary-btu.join              done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f6f91a8c0>
+	14/57  io_loop_manager.join            done:True   exception: None  <coroutine object IOLoop.join at 0x7f6f907100>
+	15/57  buffer-bottom-elt-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908a40>
+	16/57  zone4-bench4-opto.join          done:True   exception: None  <coroutine object GpioSensor.join at 0x7f6f91a140>
+	17/57  zone3-bench3-ops-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7f6f918940>
+	18/57  i2c-bus-init-guard              done:True   exception: None  <coroutine object I2cBus._init_expanders at 0x7f6f8f4160>
+	19/57  zone1-bench1-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f6f9181c0>
+	20/57  pico-cycler.join                done:True   exception: None  <coroutine object PicoCycler.join at 0x7f6f907700>
+	21/57  tank1-bottom-elt-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7f6f9199c0>
+	22/57  zone3-bench3-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908040>
+	23/57  hp-boss.join                    done:True   exception: None  <coroutine object HpBoss.join at 0x7f6f907a00>
+	24/57  charge-valve-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7f6f919240>
+	25/57  store-btu.join                  done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f6f91aa40>
+	26/57  _WebManager.join                done:True   exception: None  <coroutine object _WebManager.join at 0x7f6f907280>
+	27/57  tank1-top-elt-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908b40>
+	28/57  gw108-thermistor-reader.join    done:True   exception: None  <coroutine object I2cThermistorReader.join at 0x7f6f91a2c0>
+	29/57  zone4-bench4-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f6f918ac0>
+	30/57  iso-valve-relay-boot-adopt      done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908740>
+	31/57  zone1-bench1-ops-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7f6f918340>
+	32/57  secondary-010v.join             done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f6f919b40>
+	33/57  secondary-pump-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908640>
+	34/57  lc.join                         done:True   exception: None  <coroutine object LocalControl.join at 0x7f6f907b80>
+	35/57  store-pump-relay.join           done:True   exception: None  <coroutine object Relay.join at 0x7f6f9193c0>
+	36/57  dist-btu.join                   done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f6f91abc0>
+	37/57  zone1-bench1-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3a40>
+	38/57  s.join                          done:True   exception: None  <coroutine object PrimeActor.join at 0x7f6f907400>
+	39/57  tank1-bottom-elt-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908c40>
+	40/57  buffer.join                     done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f6f91a440>
+	41/57  zone3-bench3-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908140>
+	42/57  zone4-bench4-ops-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7f6f918c40>
+	43/57  charge-valve-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908840>
+	44/57  zone2-bench2-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f6f9184c0>
+	45/57  zone1-bench1-opto.join          done:True   exception: None  <coroutine object GpioSensor.join at 0x7f6f919cc0>
+	46/57  i2c-bus.join                    done:True   exception: None  <coroutine object I2cBus.join at 0x7f6f907d00>
+	47/57  buffer-top-elt-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7f6f919540>
+	48/57  zone1-bench1-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3c40>
+	49/57  la.join                         done:True   exception: None  <coroutine object LeafAlly.join at 0x7f6f907580>
+	50/57  tank1.join                      done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f6f91a5c0>
+	51/57  zone4-bench4-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908240>
+	52/57  hp-scada-ops-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7f6f918dc0>
+	53/57  store-pump-relay-boot-adopt     done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f908940>
+	54/57  zone2-bench2-ops-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7f6f918640>
+	55/57  zone2-bench2-opto.join          done:True   exception: None  <coroutine object GpioSensor.join at 0x7f6f919e40>
+	56/57  buffer-bottom-elt-relay.join    done:True   exception: None  <coroutine object Relay.join at 0x7f6f9196c0>
+	57/57  zone2-bench2-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f6f9f3d40>
+
+2026-09-07 11:13:28.995 Tasks: 44  [PENDING]
+	1/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8c80>
+	2/44  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f6f8ba4d0>
+	3/44  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f6f8fadc0>
+	4/44  zone3-bench3-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb6a0>
+	5/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba6b0>
+	6/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bab60>
+	7/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8040>
+	8/44  NolanLocalControl keepalive     done:False   exception: None  <coroutine object NolanLocalControl.main at 0x7f6fad6f60>
+	9/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb100>
+	10/44  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f6f8f44c0>
+	11/44  zone4-bench4-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb5b0>
+	12/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8d60>
+	13/44  NolanLocalControl tou           done:False   exception: None  <coroutine object NolanLocalControl.tou_control at 0x7f6f8f8e40>
+	14/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba7a0>
+	15/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bac50>
+	16/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8fab20>
+	17/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb1f0>
+	18/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bad40>
+	19/44  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f6f8f43a0>
+	20/44  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f6fad7030>
+	21/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba890>
+	22/44  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbc40>
+	23/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba2f0>
+	24/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb2e0>
+	25/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bae30>
+	26/44  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbd30>
+	27/44  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbe20>
+	28/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba200>
+	29/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb3d0>
+	30/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f6f909240>
+	31/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba980>
+	32/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8baf20>
+	33/44  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f6fb102b0>
+	34/44  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f6fb10380>
+	35/44  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f6f910040>
+	36/44  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f6fad7100>
+	37/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba5c0>
+	38/44  zone1-bench1-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb4c0>
+	39/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f6f909340>
+	40/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8baa70>
+	41/44  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f6fe3bec0>
+	42/44  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f6f907e80>
+	43/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb010>
+	44/44  zone2-bench2-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb790>
+
+2026-09-07 11:13:28.995 Tasks: 44  [WAITING FOR]
+	1/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8c80>
+	2/44  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f6f8ba4d0>
+	3/44  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f6f8fadc0>
+	4/44  zone3-bench3-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb6a0>
+	5/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba6b0>
+	6/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bab60>
+	7/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8040>
+	8/44  NolanLocalControl keepalive     done:False   exception: None  <coroutine object NolanLocalControl.main at 0x7f6fad6f60>
+	9/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb100>
+	10/44  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f6f8f44c0>
+	11/44  zone4-bench4-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb5b0>
+	12/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8f8d60>
+	13/44  NolanLocalControl tou           done:False   exception: None  <coroutine object NolanLocalControl.tou_control at 0x7f6f8f8e40>
+	14/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba7a0>
+	15/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bac50>
+	16/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f6f8fab20>
+	17/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb1f0>
+	18/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bad40>
+	19/44  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f6f8f43a0>
+	20/44  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f6fad7030>
+	21/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba890>
+	22/44  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbc40>
+	23/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba2f0>
+	24/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb2e0>
+	25/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bae30>
+	26/44  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbd30>
+	27/44  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f6f8bbe20>
+	28/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba200>
+	29/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb3d0>
+	30/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f6f909240>
+	31/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba980>
+	32/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8baf20>
+	33/44  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f6fb102b0>
+	34/44  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f6fb10380>
+	35/44  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f6f910040>
+	36/44  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f6fad7100>
+	37/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8ba5c0>
+	38/44  zone1-bench1-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb4c0>
+	39/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f6f909340>
+	40/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8baa70>
+	41/44  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f6fe3bec0>
+	42/44  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f6f907e80>
+	43/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f6f8bb010>
+	44/44  zone2-bench2-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f6f8bb790>
+
+2026-09-07 11:13:28.996 gridworks_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-07 11:13:28.999 admin:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-07 11:13:29.001 local_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-07 11:13:29.011 [secondary-010v] secondary-010v: EEPROM verified against layout PowerOn values
+2026-09-07 11:13:29.130 [gw108-thermistor-reader] Warning Glitch: i2c-thermistor-broken
+2026-09-07 11:13:29.159 [derived-generator] Obtained a 154-hour weather forecast starting at 1788796800
+2026-09-07 11:13:29.164 [derived-generator] Calculating rswt_quadratic_params: [ 4.91228070e-04 -4.28070175e-02  8.68421053e-01]
+2026-09-07 11:13:29.173 [derived-generator] Updating usable and required energy
+2026-09-07 11:13:29.173 [derived-generator] Got forecast starting 2026-09-07 12:00:00
+2026-09-07 11:13:29.267 [gw108-thermistor-reader] Warning Glitch: i2c-thermistor-broken
+2026-09-07 11:13:29.403 [gw108-thermistor-reader] Warning Glitch: i2c-thermistor-broken
+2026-09-07 11:13:29.539 [gw108-thermistor-reader] Warning Glitch: i2c-thermistor-broken
+2026-09-07 11:13:31.922 [pico-cycler] TRIGGERING PICO REBOOT! None
+2026-09-07 11:13:31.923 [pico-cycler] OpenRelay to vdc-relay
+2026-09-07 11:13:31.925 [vdc-relay] Energizing: Setting pin 23 to High
+2026-09-07 11:13:32.987 [scada] About to initialize contracts
+2026-09-07 11:13:32.988 No contract
+2026-09-07 11:13:32.988 Starting with no contract
+2026-09-07 11:13:36.931 [pico-cycler] CloseRelay to vdc-relay
+2026-09-07 11:13:36.934 [vdc-relay] De-energizing: Setting pin 23 to Low
+2026-09-07 11:13:58.925 [lc] SwitchToScada to zone1-bench1-failsafe-relay
+2026-09-07 11:13:58.927 [lc] OpenRelay to zone1-bench1-ops-relay
+2026-09-07 11:13:58.927 [lc] zone hold commanded: circuit bench1 (Z1)
+2026-09-07 11:13:58.929 [lc] SwitchToScada to zone2-bench2-failsafe-relay
+2026-09-07 11:13:58.930 [lc] OpenRelay to zone2-bench2-ops-relay
+2026-09-07 11:13:58.931 [lc] zone hold commanded: circuit bench2 (Z2)
+2026-09-07 11:13:58.932 [lc] SwitchToScada to zone4-bench4-failsafe-relay
+2026-09-07 11:13:58.933 [lc] OpenRelay to zone4-bench4-ops-relay
+2026-09-07 11:13:58.934 [lc] zone hold commanded: circuit bench4 (Z4)
+2026-09-07 11:13:58.936 [lc] TurnOff to hp-boss
+2026-09-07 11:13:58.942 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='a608b9c0-65aa-4458-8847-5197caaa6fdc' SendTimeUnixMs=1788794038935 TypeName='fsm.event' Version='000'
+2026-09-07 11:13:58.944 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-09-07 11:14:02.010 admin:  awaiting_peer -- message_from_peer --> active
+2026-09-07 11:14:02.015 [scada] Trouble with SendLayout: 'NoneType' object has no attribute 'component'
+2026-09-07 11:14:04.065 [scada] Message from Admin! top_state Admin
+2026-09-07 11:14:04.073 [scada] AutoGoesDormant: LocalControl -> Dormant
+2026-09-07 11:14:04.091 [lc] TopGoDormant: Normal -> Dormant
+2026-09-07 11:14:04.092 [scada] Admin Wakes Up
+2026-09-07 11:14:04.093 [scada] AdminDispatch event is TurnOff
+2026-09-07 11:14:04.094 [hp-boss] Got FromHandle='admin' ToHandle='admin.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='e82843bf-0d90-4160-b9ac-858847532ac7' SendTimeUnixMs=1788794115215 TypeName='fsm.event' Version='000'
+2026-09-07 11:14:04.096 [hp-boss] admin.hp-boss sending OpenRelay to admin.hp-boss.hp-scada-ops-relay
+2026-09-07 11:14:13.938 [lc] Tried to command OpenRelay on secondary-pump-relay but didn't have the rights: 1 validation error for FsmEvent
+  Value error, FromHandle auto.lc.n must be immediate boss of ToHandle admin.secondary-pump-relay [type=value_error, input_value={'FromHandle': 'auto.lc.n...4599-99b9-c44cac209533'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+2026-09-07 11:14:16.059 [scada] AdminDispatch event is TurnOn
+2026-09-07 11:14:16.060 [hp-boss] Got FromHandle='admin' ToHandle='admin.hp-boss' EventType='turn.hp.on.off' EventName='TurnOn' TriggerId='595080c7-f7b3-4ede-aa4b-d7c5bc986796' SendTimeUnixMs=1788794127220 TypeName='fsm.event' Version='000'
+2026-09-07 11:14:16.061 [hp-boss] admin.hp-boss sending CloseRelay to admin.hp-boss.hp-scada-ops-relay
+2026-09-07 11:14:28.058 [scada] Admin releases control: Auto
+2026-09-07 11:14:28.059 [scada] AutoWakesUp: Dormant -> LocalControl
+2026-09-07 11:14:28.075 [lc] TopWakeUp: Dormant -> Normal
+2026-09-07 11:14:28.087 [lc] Set auto.lc.n command tree
+2026-09-07 11:14:28.088 [lc] Nolan: actuators left at their adopted states; nothing commanded

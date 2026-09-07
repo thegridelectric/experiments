@@ -1,0 +1,14 @@
+11:15:12 mqtt started -> connecting
+11:15:13 mqtt connecting -> subscribing
+11:15:13 mqtt subscribing -> active
+11:15:13 link active
+11:15:15 TX admin.dispatch TurnOff -> admin.hp-boss
+11:15:23 RX snapshot {'admin.hp-boss.hp-scada-ops-relay': ('RelayOpen', 1788794044110), 'admin.hp-boss': ('HpOff', 1788794044096)}
+11:15:27 TX admin.dispatch TurnOn -> admin.hp-boss
+11:15:35 RX snapshot {'admin.hp-boss.hp-scada-ops-relay': ('RelayClosed', 1788794056074), 'admin.hp-boss': ('HpOn', 1788794056062)}
+11:15:39 TX admin.release.control
+11:15:40 RX single.reading
+11:15:41 RX snapshot {'admin.hp-boss.hp-scada-ops-relay': ('RelayClosed', 1788794056074), 'admin.hp-boss': ('HpOn', 1788794056062)}
+11:15:45 mqtt active -> backing_off
+11:15:45 done
+11:15:45 mqtt backing_off -> stopped

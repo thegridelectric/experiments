@@ -1,6 +1,9 @@
-"""Rung 2 driver: the admin client turns the heat pump off and on through
-hp-boss over the dev broker, on the spruce-sim Nolan layout."""
-import asyncio, json, logging, time, uuid, sys
+"""The admin client turns the heat pump off and on through hp-boss. Rung 2:
+the dev broker and the spruce-sim Nolan layout (defaults). Rung 3: the
+honeysuckle bench through the ssh tunnel, selected by environment:
+HP_BOSS_DRIVE_SCADA (scada GNode alias), HP_BOSS_DRIVE_PORT,
+HP_BOSS_DRIVE_USER, HP_BOSS_DRIVE_PASS."""
+import asyncio, json, logging, os, time, uuid, sys
 from gwproactor.config.mqtt import TLSInfo
 from gwadmin.config import AdminMQTTClient, CurrentAdminConfig, ScadaConfig, AdminConfig
 from gwadmin.watch.clients.admin_client import AdminClient, AdminClientCallbacks
@@ -8,7 +11,10 @@ from gwsproto.data_classes.house_0_names import H0N
 from gwsproto.enums import TurnHpOnOff
 from gwsproto.named_types import AdminDispatch, AdminReleaseControl, FsmEvent, SendSnap
 
-SCADA = "d1.isone.me.versant.keene.spruce.scada"
+SCADA = os.environ.get("HP_BOSS_DRIVE_SCADA", "d1.isone.me.versant.keene.spruce.scada")
+PORT = int(os.environ.get("HP_BOSS_DRIVE_PORT", "1885"))
+USER = os.environ.get("HP_BOSS_DRIVE_USER", "smqPublic")
+PASS = os.environ.get("HP_BOSS_DRIVE_PASS", "smqPublic")
 log = open(sys.argv[1], "w")
 def note(s):
     log.write(f"{time.strftime('%H:%M:%S')} {s}\n"); log.flush()
@@ -25,8 +31,9 @@ def on_msg(topic, payload):
             a = p.get("AtomicList", [{}])[0]
             note(f"RX {t} from={p.get('FromName')} {a.get('Event')} {a.get('FromState')}->{a.get('ToState')} {a.get('Handle')}")
         elif t == "snapshot.spaceheat":
-            vals = {n: v for n, v in zip(p.get("LatestReadingList", []) and [r.get("ChannelName") for r in p["LatestReadingList"]], [r.get("Value") for r in p.get("LatestReadingList", [])]) if "hp-scada-ops" in n}
-            note(f"RX snapshot hp-scada-ops-relay={vals}")
+            # Relay and hp-boss states ride LatestStateList, not the readings.
+            states = {m["MachineHandle"]: (m["State"], m["UnixMs"]) for m in p.get("LatestStateList", []) if m["MachineHandle"].endswith(("hp-boss", "hp-scada-ops-relay"))}
+            note(f"RX snapshot {states}")
         elif t == "new.command.tree":
             hb = [n for n in p.get("ShNodes", []) if n.get("Name") in ("hp-boss", "hp-scada-ops-relay")]
             note(f"RX {t} " + " ".join(f"{n['Name']}@{n.get('Handle')}" for n in hb))
@@ -37,7 +44,7 @@ def on_msg(topic, payload):
 
 cfg = CurrentAdminConfig(
     config=AdminConfig(scadas={"spruce-sim": ScadaConfig(long_name=SCADA, mqtt=AdminMQTTClient(
-        host="localhost", port=1885, username="smqPublic", password="smqPublic", tls=TLSInfo(use_tls=False)))}),
+        host="localhost", port=PORT, username=USER, password=PASS, tls=TLSInfo(use_tls=False)))}),
     curr_scada="spruce-sim")
 client = AdminClient(cfg, AdminClientCallbacks(mqtt_state_change_callback=on_state, mqtt_message_received_callback=on_msg))
 
