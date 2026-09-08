@@ -28,7 +28,7 @@ PYRIGHT_EXCLUDE='2026-08-06-ads-noise/ads_noise_experiment.py
 future/pico-rejoin/rejoin_trace.py
 2026-08-15-spruce-fancoil-dist-test/spruce_fancoil_dist_test.py
 2026-08-23-spruce-store-charge-valve/charge_valve_polarity.py
-2026-08-23-spruce-relay-stress/relay_stress.py
+2026-08-23-gw108-relay-stress/relay_stress.py
 2026-09-06-spruce-pump-speed-sweep/sweep.py
 2026-06-11-sim-sensor/sim_sensor_experiment.py
 2026-06-11-sim-time-bridge/harness.py

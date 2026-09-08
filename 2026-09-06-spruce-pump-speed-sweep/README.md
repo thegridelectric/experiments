@@ -37,7 +37,7 @@ level. The heat-pump call relay is left where the hack left it unless
 relays are commanded through admin the same way the DAC is, pump
 before iso valve: energizing the iso relay with no other 0x21 coil
 energized resets that expander about one toggle in three
-(`2026-08-23-spruce-relay-stress/`).
+(`2026-08-23-gw108-relay-stress/2026-08-23-spruce/`).
 
 **What is measured, and from where:**
 

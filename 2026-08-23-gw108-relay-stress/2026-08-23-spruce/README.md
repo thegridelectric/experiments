@@ -1,4 +1,4 @@
-# spruce-relay-stress, 2026-08-23
+# spruce, 2026-08-23 (gw108-relay-stress run 1)
 
 > What this is: does relay switching on the gw108's 0x21 expander provoke
 > its power-on reset (the OPS-452 signature), and does command spacing
@@ -179,7 +179,7 @@ was being exercised; the reset counts do not depend on it.
 
   Go to the harness:
 
-      cd ~/experiments/2026-08-23-spruce-relay-stress
+      cd ~/experiments/2026-08-23-gw108-relay-stress
 
   Run A — iso toggled, every other safe coil ON:
 

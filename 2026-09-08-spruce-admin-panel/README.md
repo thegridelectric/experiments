@@ -57,7 +57,7 @@ clicks, and restored.
 iso valve open, secondary pump off, heat-pump call open. The hack was
 stopped for the window and exits to failsafe. Cooling stakes: none.
 
-**Hazard carried from `2026-08-23-spruce-relay-stress/`:** energizing
+**Hazard carried from `2026-08-23-gw108-relay-stress/2026-08-23-spruce/`:** energizing
 the iso relay with no other 0x21 coil energized resets that expander
 about one toggle in three. So the pump was toggled with the valve left
 open, and the valve only toggled with the pump on.
@@ -247,7 +247,7 @@ the box.
   a button; TurnOn/TurnOff/RebootPicos all answered.
 - 15:02–15:10 charge valve OpenValve: pin high, store-flow 0, secondary
   3.96 gpm on the distribution path; DAC 5.0 V → 4.00 gpm.
-- 15:14–15:18 relay stress B2/F2/A2 (`../2026-09-08-spruce-relay-stress-board2/`).
+- 15:14–15:18 relay stress B2/F2/A2 (`../2026-08-23-gw108-relay-stress/2026-09-08-spruce-board2/`).
 - 15:23–15:35 FSV 2091 = 1; TurnOn ×3; RIB red; hp-ctrl-box 6–8 W,
   hp-odu 62–70 W throughout (`egauge_live.py` reads); units
   power-cycled ~15:30, 2091 still 1.

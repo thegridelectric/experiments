@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).parent
-sys.path.insert(0, str(HERE.parent / "src"))
+sys.path.insert(0, str(HERE.parent.parent / "src"))
 
 from gwexp.sema.types import GwExperimentRun  # noqa: E402
 

@@ -1,7 +1,7 @@
-# spruce-relay-stress-board2, 2026-09-08
+# spruce-board2, 2026-09-08 (gw108-relay-stress run 2)
 
 > What this is: does the 0x21 expander reset on iso-valve energize
-> (`2026-08-23-spruce-relay-stress`, run B: 35 resets in 100 toggles)
+> (`../2026-08-23-spruce/`, run B: 35 resets in 100 toggles)
 > follow the gw108 board, or the house? Same harness, same runs, a
 > replaced board. Verdict: the reset follows the house, not the board:
 > B2 17 resets in 100 toggles on the new board (08-23: 35), still none
@@ -19,7 +19,7 @@ house, not the board. Runs F and A are the guards: they were clean on
 
 ## Setup
 
-Harness: `../2026-08-23-spruce-relay-stress/relay_stress.py`, run on
+Harness: `../relay_stress.py`, run on
 spruce from the box's `~/experiments` checkout, exactly as its README
 "Folder contents & experimental method" gives the commands, with new
 labels. Single writer on 0x21 for the window: `spruce-summer-hack`,
@@ -29,7 +29,7 @@ run and the panel quit, and restarted afterwards. Charge valve OFF
 throughout; the DAC untouched; run B has the secondary pump off for
 about 2.5 min.
 
-    cd ~/experiments/2026-08-23-spruce-relay-stress
+    cd ~/experiments/2026-08-23-gw108-relay-stress
     CHARGE_POSTURE=0 PUMP_POSTURE=0 HP_POSTURE=0 LOADS=0 TARGET=iso PERIODS=1 TOGGLES=100 MAX_RESETS=1000 python relay_stress.py --run B2 --yes
     CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=1 LOADS=0 TARGET=iso PERIODS=1 TOGGLES=30 MAX_RESETS=1000 python relay_stress.py --run F2 --yes
     CHARGE_POSTURE=0 PUMP_POSTURE=1 HP_POSTURE=1 LOADS=5 TARGET=iso PERIODS=1 TOGGLES=30 MAX_RESETS=1000 python relay_stress.py --run A2 --yes

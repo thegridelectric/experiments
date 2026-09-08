@@ -13,7 +13,13 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
-- **2026-09-08 · [spruce-relay-stress-board2](2026-09-08-spruce-relay-stress-board2/)**
+- **2026-09-08 · [gw108-relay-stress / honeysuckle](2026-08-23-gw108-relay-stress/2026-09-08-honeysuckle/)**
+  — the 0x21 reset needs the house, not the board: the same B/F/A
+  triplet on the bench gw108 with nothing on the relay contacts gave
+  0/100, 0/30, 0/30 (spruce boards: 35/100 and 17/100 on B). Relay
+  stress runs now live in one folder, harness at the top, a dated
+  subfolder per run.
+- **2026-09-08 · [gw108-relay-stress / spruce-board2](2026-08-23-gw108-relay-stress/2026-09-08-spruce-board2/)**
   — the 0x21 reset on iso-relay switching follows the house, not the
   gw108: on the replaced board B2 reset 17/100 with no other coil on
   (08-23: 35/100, edge flipped energize → de-energize), 0/60 with two or
@@ -109,7 +115,7 @@ first run dates them.
   the old box's dump field-for-field; idempotent on re-run. Then run for
   real against the Helsinki box at 20:32 UTC: 25/25, witnessed in B2 as
   the registry's second epoch (OPS-507).
-- **2026-08-23 · [spruce-relay-stress](2026-08-23-spruce-relay-stress/)**
+- **2026-08-23 · [gw108-relay-stress / spruce](2026-08-23-gw108-relay-stress/2026-08-23-spruce/)**
   — does relay switching on the gw108 0x21 expander provoke its POR reset,
   and does command spacing mitigate it? Runs A–F (charge valve off
   throughout, 1 s toggles, hack stopped): ENERGIZING the iso-valve relay
