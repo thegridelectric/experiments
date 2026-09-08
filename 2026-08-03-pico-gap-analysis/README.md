@@ -183,6 +183,33 @@ maple 1). Zombies tagged by a gap: 220; untagged: 116 (fir's rescues,
 beech's hourly events, and spruce work-session artifacts from the 07-30
 pico swap).
 
+## Scada-side mechanism, found and fixed (2026-09-08)
+
+Two paired flaws in the deployed scada code sit behind part of what
+this analysis measured, found while witnessing the admin panel on a
+simulated Nolan scada:
+
+- **A single slow post from a tank pico triggered a whole-bus VDC
+  cycle.** The tank module counted its pico missing after one capture
+  period of silence (the BTU and flow modules used 2.5), and its
+  once-a-minute report limit compared a timestamp to a duration, so
+  once missing it sent `PicoMissing` every 10 s. Each false report from
+  `PicosLive` opened the shared VDC relay, rebooting every pico on the
+  house into the wifi herd this analysis measured. Not separable from
+  the zombie-shake rhythm in this folder's data; a second source of
+  bus cycles in the same windows.
+- **The cycler's own guard left the relay-open window unguarded.** Its
+  "ignore `PicoMissing` within a minute of a cycle" clock started at
+  the relay close, not the open, so a pico the cycler had just cut
+  could be marked Flatlined during the 5 s open.
+
+Fixed in scada `e0029d3d` on `jm/spruce-unlimbo`: one liveness rule for
+the three actors (missing after 2.5 expected post periods, first report
+at the crossing, one a minute while silent) and the guard clock at the
+relay open. Not on the fleet until the renovation deploys, so every
+window in this folder, and any pulled before that deploy, carries the
+old behaviour.
+
 ## Folder contents & experimental method
 
 All data in this folder comes from the journal DB — readings, and the

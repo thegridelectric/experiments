@@ -1,0 +1,18 @@
+== 102500-report.event-004.json  slot 10:20:00
+  secondary-pump-relay: 10:22:03 RelayOpen, 10:22:05 RelayOpen, 10:22:48 RelayOpen
+  iso-valve-relay: 10:22:03 ValveOpen, 10:22:05 ValveOpen
+  vdc-relay: 10:22:05 RelayClosed, 10:22:06 RelayOpen, 10:22:11 RelayClosed
+  pico-cycler: 10:22:06 RelayOpening, 10:22:06 RelayOpen, 10:22:11 RelayClosing, 10:22:11 PicosRebooting, 10:22:20 PicosLive, 10:23:36 RelayOpening, 10:23:36 RelayOpen, 10:23:41 RelayClosing, 10:23:41 PicosRebooting, 10:23:48 PicosLive, 10:24:58 PicosLive
+  vdc-relay: 10:23:36 RelayOpen, 10:23:41 RelayClosed, 10:24:58 RelayClosed
+  secondary-pump-relay: 10:24:16 RelayClosed, 10:24:58 RelayClosed
+  iso-valve-relay: 10:24:58 ValveOpen
+  fsm pico-cycler trigger 8de921dc: RelayOpening@10:22:06 -> RelayOpen@10:22:06 -> RelayClosing@10:22:11 -> PicosRebooting@10:22:11 -> PicosLive@10:22:20
+  fsm pico-cycler trigger dc5deb34: RelayOpening@10:23:36 -> RelayOpen@10:23:36 -> RelayClosing@10:23:41 -> PicosRebooting@10:23:41 -> PicosLive@10:23:48
+  secondary-flow (gpm): 10:22:20 0.00, 10:23:49 0.00, 10:24:17 4.86, 10:24:19 7.52, 10:24:28 7.42, 10:24:59 7.40
+== 103000-report.event-004.json  slot 10:25:00
+  pico-cycler: 10:25:23 RelayOpening, 10:25:23 RelayOpen, 10:25:28 RelayClosing, 10:25:28 PicosRebooting, 10:25:37 PicosLive, 10:29:58 PicosLive
+  vdc-relay: 10:25:23 RelayOpen, 10:25:28 RelayClosed, 10:29:58 RelayClosed
+  secondary-pump-relay: 10:26:50 RelayOpen, 10:28:03 RelayClosed, 10:29:04 RelayClosed, 10:29:58 RelayClosed
+  iso-valve-relay: 10:28:43 ValveClosed, 10:29:04 ValveClosed, 10:29:37 ValveOpen, 10:29:58 ValveOpen
+  fsm pico-cycler trigger 5bd77f7b: RelayOpening@10:25:23 -> RelayOpen@10:25:23 -> RelayClosing@10:25:28 -> PicosRebooting@10:25:28 -> PicosLive@10:25:37
+  secondary-flow (gpm): 10:25:37 7.38, 10:25:38 3.99, 10:25:39 3.75, 10:26:52 1.58, 10:26:53 0.29, 10:26:54 0.00, 10:28:08 7.32, 10:28:44 2.73, 10:28:45 0.74, 10:28:46 0.00, 10:29:06 0.11, 10:29:07 0.00, 10:29:59 0.00

@@ -13,6 +13,13 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-08 · [spruce-admin-panel](2026-09-08-spruce-admin-panel/)**
+  — PASS: the real admin TUI drives the real spruce gw108 through the
+  krida-retirement rung-1 command interfaces: three vdc power cycles
+  (picos back in 7–9 s), secondary pump and iso valve each witnessed
+  against secondary-flow, DAC speed against flow; one 0x21 expander
+  reset survived; tank params POST rejected pending gridworks-pico #15;
+  hp-boss does not handle its relay's ack (Open on the design).
 - **2026-09-07 · [admin-reboots-picos](2026-09-07-admin-reboots-picos/)**
   — PASS on the journal side: the real admin client, over dev rabbit,
   asks a local sim Nolan scada's pico-cycler to reboot the picos; the
