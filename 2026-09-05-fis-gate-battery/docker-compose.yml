@@ -20,6 +20,8 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./advanced.config:/etc/rabbitmq/advanced.config:ro
+      - ./certs/out/crl:/etc/rabbitmq/crl:ro
       - ../../gridworks-base/rabbit/rabbitconfig/dev_definitions.json:/etc/rabbitmq/definitions.json:ro
       - ../../gridworks-infra/rmqbot/rmq-docker/gate/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
       - ../../gridworks-infra/rmqbot/rmq-docker/gate/fis-gate.conf:/etc/rabbitmq/conf.d/30-fis-gate.conf:ro

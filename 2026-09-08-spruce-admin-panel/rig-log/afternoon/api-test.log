@@ -1,0 +1,220 @@
+INFO:     Started server process [4744]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+
+Current comms config for pico_387631:
+- HwUid: pico_387631
+- BaseUrl: http://192.168.2.116:8000
+- BackupUrl: http://spruce.local:8000
+- TypeName: pico.comms.params
+- Version: 000
+INFO:     192.168.2.74:58511 - "POST /dist-btu/pico-comms-params HTTP/1.0" 200 OK
+
+Current parameters for pico_387631:
+- HwUid: pico_387631
+- ActorNodeName: dist-btu
+- FlowChannelName: dist-flow
+- SendHz: False
+- ReadCtVoltage: False
+- HotChannelName: dist-swt
+- ColdChannelName: dist-rwt
+- CtChannelName: None
+- CapturePeriodS: 300
+- GallonsPerPulse: 0.0009
+- AsyncCaptureDeltaGpmX100: 10
+- AsyncCaptureDeltaCelsiusX100: 20
+- AsyncCaptureDeltaCtVoltsX100: None
+- TypeName: async.btu.params
+- Version: 000
+INFO:     192.168.2.74:58512 - "POST /dist-btu/async-btu-params HTTP/1.0" 200 OK
+
+[2026-09-08 14:41:44.559] No pending code update for pico_387631 (dist-btu).
+INFO:     192.168.2.74:58513 - "POST /dist-btu/code-update HTTP/1.0" 200 OK
+BTU data from dist-btu: 3 measurements
+  dist-flow: raw=392 (GpmTimes100), interpreted=392 (GpmTimes100)
+  dist-swt: raw=1177 (CelsiusTimes100), interpreted=11770 (WaterTempCTimes1000)
+  dist-rwt: raw=1246 (CelsiusTimes100), interpreted=12460 (WaterTempCTimes1000)
+INFO:     192.168.2.74:58514 - "POST /dist-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+Current comms config for pico_661635:
+- HwUid: pico_661635
+- BaseUrl: http://192.168.2.116:8000
+- BackupUrl: http://spruce.local:8000
+- TypeName: pico.comms.params
+- Version: 000
+INFO:     192.168.2.67:50144 - "POST /primary-btu/pico-comms-params HTTP/1.0" 200 OK
+
+Current parameters for pico_661635:
+- HwUid: pico_661635
+- ActorNodeName: primary-btu
+- FlowChannelName: primary-flow
+- SendHz: False
+- ReadCtVoltage: False
+- HotChannelName: hp-lwt
+- ColdChannelName: hp-ewt
+- CtChannelName: None
+- CapturePeriodS: 300
+- GallonsPerPulse: 0.0009
+- AsyncCaptureDeltaGpmX100: 10
+- AsyncCaptureDeltaCelsiusX100: 20
+- AsyncCaptureDeltaCtVoltsX100: None
+- TypeName: async.btu.params
+- Version: 000
+INFO:     192.168.2.67:50145 - "POST /primary-btu/async-btu-params HTTP/1.0" 200 OK
+
+[2026-09-08 14:41:51.193] No pending code update for pico_661635 (primary-btu).
+INFO:     192.168.2.67:50146 - "POST /primary-btu/code-update HTTP/1.0" 200 OK
+
+Current comms config for pico_1c3c31:
+- HwUid: pico_1c3c31
+- BaseUrl: http://192.168.2.116:8000
+- BackupUrl: http://spruce.local:8000
+- TypeName: pico.comms.params
+- Version: 000
+INFO:     192.168.2.78:65271 - "POST /secondary-btu/pico-comms-params HTTP/1.0" 200 OK
+
+[2026-09-08 14:41:51.474] No pending code update for pico_9a7935 (tank1).
+INFO:     192.168.2.167:64493 - "POST /tank1/code-update HTTP/1.0" 200 OK
+
+Current parameters for pico_1c3c31:
+- HwUid: pico_1c3c31
+- ActorNodeName: secondary-btu
+- FlowChannelName: secondary-flow
+- SendHz: False
+- ReadCtVoltage: True
+- HotChannelName: secondary-lwt
+- ColdChannelName: secondary-ewt
+- CtChannelName: secondary-pump-ct
+- CapturePeriodS: 300
+- GallonsPerPulse: 0.0009
+- AsyncCaptureDeltaGpmX100: 10
+- AsyncCaptureDeltaCelsiusX100: 20
+- AsyncCaptureDeltaCtVoltsX100: 1
+- TypeName: async.btu.params
+- Version: 000
+INFO:     192.168.2.78:65272 - "POST /secondary-btu/async-btu-params HTTP/1.0" 200 OK
+
+[2026-09-08 14:41:51.491] No pending code update for pico_206032 (buffer).
+INFO:     192.168.2.203:52819 - "POST /buffer/code-update HTTP/1.0" 200 OK
+
+Current parameters for pico_9a7935:
+- HwUid: pico_9a7935
+- ActorNodeName: tank1
+- PicoAB: None
+- CapturePeriodS: 60
+- Samples: 1000
+- NumSampleAverages: 30
+- AsyncCaptureDeltaMicroVolts: 2000
+- CaptureOffsetS: 8.472
+- TypeName: tank.module.params
+- Version: 110
+INFO:     192.168.2.167:64494 - "POST /tank1/tank-module-params HTTP/1.0" 200 OK
+
+Current comms config for pico_3a7732:
+- HwUid: pico_3a7732
+- BaseUrl: http://192.168.2.116:8000
+- BackupUrl: http://spruce.local:8000
+- TypeName: pico.comms.params
+- Version: 000
+INFO:     192.168.2.131:51827 - "POST /store-btu/pico-comms-params HTTP/1.0" 200 OK
+
+Current parameters for pico_206032:
+- HwUid: pico_206032
+- ActorNodeName: buffer
+- PicoAB: None
+- CapturePeriodS: 60
+- Samples: 1000
+- NumSampleAverages: 30
+- AsyncCaptureDeltaMicroVolts: 2000
+- CaptureOffsetS: 8.464
+- TypeName: tank.module.params
+- Version: 110
+INFO:     192.168.2.203:52820 - "POST /buffer/tank-module-params HTTP/1.0" 200 OK
+
+[2026-09-08 14:41:51.579] No pending code update for pico_1c3c31 (secondary-btu).
+INFO:     192.168.2.78:65273 - "POST /secondary-btu/code-update HTTP/1.0" 200 OK
+
+Current parameters for pico_3a7732:
+- HwUid: pico_3a7732
+- ActorNodeName: store-btu
+- FlowChannelName: store-flow
+- SendHz: False
+- ReadCtVoltage: False
+- HotChannelName: store-hot-pipe
+- ColdChannelName: store-cold-pipe
+- CtChannelName: None
+- CapturePeriodS: 300
+- GallonsPerPulse: 0.0009
+- AsyncCaptureDeltaGpmX100: 10
+- AsyncCaptureDeltaCelsiusX100: 20
+- AsyncCaptureDeltaCtVoltsX100: None
+- TypeName: async.btu.params
+- Version: 000
+INFO:     192.168.2.131:51828 - "POST /store-btu/async-btu-params HTTP/1.0" 200 OK
+
+[2026-09-08 14:41:51.834] No pending code update for pico_3a7732 (store-btu).
+INFO:     192.168.2.131:51829 - "POST /store-btu/code-update HTTP/1.0" 200 OK
+BTU data from primary-btu: 3 measurements
+  primary-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+  hp-lwt: raw=1491 (CelsiusTimes100), interpreted=14910 (WaterTempCTimes1000)
+  hp-ewt: raw=1412 (CelsiusTimes100), interpreted=14120 (WaterTempCTimes1000)
+INFO:     192.168.2.67:50147 - "POST /primary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 3 measurements
+  store-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+  store-hot-pipe: raw=1789 (CelsiusTimes100), interpreted=17890 (WaterTempCTimes1000)
+  store-cold-pipe: raw=15409 (CelsiusTimes100), interpreted=154090 (WaterTempCTimes1000)
+INFO:     192.168.2.131:51830 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=15374 (CelsiusTimes100), interpreted=153740 (WaterTempCTimes1000)
+INFO:     192.168.2.131:51831 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-09-08 14:41:56.712] buffer-depth1: 2.543 V, R_th=18.98 kOhm, 52.425 F (R_fixed=5.65 kOhm)
+[2026-09-08 14:41:56.712] buffer-depth2: 2.536 V, R_th=18.76 kOhm, 52.85 F (R_fixed=5.65 kOhm)
+[2026-09-08 14:41:56.712] buffer-depth3: 2.557 V, R_th=19.45 kOhm, 51.536 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.203:52821 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-08 14:41:56.720] tank1-depth1: 2.393 V, R_th=14.9 kOhm, 61.433 F (R_fixed=5.65 kOhm)
+[2026-09-08 14:41:56.720] tank1-depth2: 2.399 V, R_th=15.03 kOhm, 61.096 F (R_fixed=5.65 kOhm)
+[2026-09-08 14:41:56.720] tank1-depth3: 2.402 V, R_th=15.1 kOhm, 60.921 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.167:64495 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=15422 (CelsiusTimes100), interpreted=154220 (WaterTempCTimes1000)
+INFO:     192.168.2.131:51832 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=15397 (CelsiusTimes100), interpreted=153970 (WaterTempCTimes1000)
+INFO:     192.168.2.131:51833 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=15432 (CelsiusTimes100), interpreted=154320 (WaterTempCTimes1000)
+INFO:     192.168.2.131:51834 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=15402 (CelsiusTimes100), interpreted=154020 (WaterTempCTimes1000)
+INFO:     192.168.2.131:51835 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=15376 (CelsiusTimes100), interpreted=153760 (WaterTempCTimes1000)
+INFO:     192.168.2.131:51836 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=15420 (CelsiusTimes100), interpreted=154200 (WaterTempCTimes1000)
+INFO:     192.168.2.131:51837 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-09-08 14:42:15.425] buffer-depth1: 2.543 V, R_th=18.98 kOhm, 52.43 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.203:52822 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-08 14:42:15.432] tank1-depth1: 2.392 V, R_th=14.89 kOhm, 61.461 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.167:64496 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-08 14:42:15.456] buffer-depth2: 2.536 V, R_th=18.76 kOhm, 52.848 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.203:52823 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-08 14:42:15.464] tank1-depth2: 2.398 V, R_th=15.03 kOhm, 61.108 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.167:64497 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-08 14:42:15.482] buffer-depth3: 2.557 V, R_th=19.44 kOhm, 51.55 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.203:52824 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-08 14:42:15.493] tank1-depth3: 2.401 V, R_th=15.1 kOhm, 60.934 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.167:64498 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4744]

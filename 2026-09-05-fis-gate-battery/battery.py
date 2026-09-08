@@ -429,6 +429,95 @@ def run_battery() -> None:
     p2.close() if tag == "allow" else None
 
 
+def run_revocation() -> None:
+    """The replaced-pi case: a second, still-valid cert with the same CN.
+    The gate cannot tell the two apart (the flaw, witnessed first); the
+    broker's CRL can, at the handshake, on both transports, with no
+    restart. Local rig only (throwaway CA)."""
+    ids = RIG.ids
+    weather = ids["weather"]
+    scada = ids["scada"]
+    started_at = RIG.broker_started_at()
+
+    # 14. the conf under test: crl_check from rabbitmq.conf and the hash-dir
+    # cache from advanced.config in ONE ssl_options list, beside the cert keys
+    opts = RIG.ssl_options()
+    merged = all(k in opts for k in ("{crl_check,peer}", "ssl_crl_hash_dir", "cacertfile", "fail_if_no_peer_cert"))
+    case("ssl_options_merge_conf_and_advanced", merged, opts.replace("\n", " ")[:200])
+
+    # 15. the flaw: weather and weather2 (same CN, different serials) supersede
+    # each other in turn on AMQP; scada and scada2 likewise on MQTT
+    a = str(uuid.uuid4())
+    tag_a, conn_a, _ = amqp_connect("weather", weather_claims(a))
+    b = str(uuid.uuid4())
+    tag_b, conn_b, _ = amqp_connect("weather2", weather_claims(b))
+    a_closed = conn_a is not None and closed_by_broker(conn_a, 5.0) is not None
+    c = str(uuid.uuid4())
+    tag_c, conn_c, _ = amqp_connect("weather", weather_claims(c))
+    b_closed = conn_b is not None and closed_by_broker(conn_b, 5.0) is not None
+    case(
+        "same_cn_pair_ping_pong_amqp",
+        (tag_a, tag_b, tag_c) == ("allow", "allow", "allow") and a_closed and b_closed,
+        f"{tag_a}/{tag_b}/{tag_c}; A closed by B={a_closed}; B closed by A'={b_closed}",
+    )
+    if conn_c is not None:
+        conn_c.close()
+    p_old = MqttProbe("scada", str(uuid.uuid4()))
+    tag_old = p_old.connect()
+    p_new = MqttProbe("scada2", str(uuid.uuid4()))
+    tag_new = p_new.connect()
+    old_kicked = p_old.disconnected.wait(5)
+    case("same_cn_pair_ping_pong_mqtt", tag_old == "allow" and tag_new == "allow" and old_kicked, f"{tag_old}/{tag_new}; old kicked={old_kicked}")
+    p_old.close()
+    p_new.close()
+    wait_connections(weather, 0)
+    wait_connections(scada, 0)
+
+    # 16. the older serials listed, CRL replaced, no restart: the old certs
+    # are refused at the handshake on 5671 and on 8883; FIS never asked
+    t0 = time.time()
+    log(RIG.crl(["weather", "scada"]))
+    inst = str(uuid.uuid4())
+    tag, _, _ = amqp_connect("weather", weather_claims(inst))
+    no_event = last_event(weather, inst) is None
+    case("revoked_cert_refused_amqp", "CERTIFICATE_REVOKED" in tag and no_event, f"{tag}; FIS asked={not no_event}")
+    p = MqttProbe("scada", str(uuid.uuid4()))
+    tag = p.connect()
+    case("revoked_cert_refused_mqtt", tag != "allow", tag)
+    p.close() if tag == "allow" else None
+    log_lines_seen = RIG.broker_log_since(t0, "revoked")
+    case("broker_log_names_revocation", len(log_lines_seen) >= 1, log_lines_seen[0][:160] if log_lines_seen else "no 'revoked' line in the broker log")
+
+    # 17. the newer certs are admitted, same broker process
+    inst = str(uuid.uuid4())
+    tag, conn, _ = amqp_connect("weather2", weather_claims(inst))
+    ok, d = event_is(weather, inst, "Authorized", "Superseded")
+    case("newer_cert_admitted_amqp", tag == "allow" and ok, f"{tag}; {d}")
+    if conn is not None:
+        conn.close()
+    p = MqttProbe("scada2", str(uuid.uuid4()))
+    tag = p.connect()
+    case("newer_cert_admitted_mqtt", tag == "allow", tag)
+    p.close() if tag == "allow" else None
+    case("no_broker_restart", RIG.broker_started_at() == started_at, f"StartedAt {started_at}")
+
+    # 18. an expired CRL refuses every new connection, the unrevoked cert too
+    log(RIG.crl(["weather", "scada"], expired=True))
+    time.sleep(1.5)
+    tag_amqp, _, _ = amqp_connect("weather2", weather_claims(str(uuid.uuid4())))
+    p = MqttProbe("scada2", str(uuid.uuid4()))
+    tag_mqtt = p.connect()
+    p.close() if tag_mqtt == "allow" else None
+    case("expired_crl_refuses_all", "SSLError" in tag_amqp and tag_mqtt != "allow", f"amqp {tag_amqp}; mqtt {tag_mqtt}")
+
+    # a fresh list (same revocations) so the storm that follows is not refused
+    log(RIG.crl(["weather", "scada"]))
+    tag, conn, _ = amqp_connect("weather2", weather_claims(str(uuid.uuid4())))
+    case("fresh_crl_admits_again", tag == "allow", tag)
+    if conn is not None:
+        conn.close()
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-dir", default=str(HERE / "runs" / time.strftime("%Y%m%dT%H%M", time.gmtime())))
@@ -438,12 +527,18 @@ def main() -> int:
 
     global RIG
     RIG = rig_from_env(run_dir)
+    if RIG.supports_crl:
+        log(RIG.crl([]))  # every run opens with an empty list; the last run's revocations do not carry
     RIG.fis_stop()
     RIG.reset_lease_state()
     RIG.fis_start()
     log(f"FIS up on {RIG.broker_host}; universe {RIG.universe}; mirror seeded from the registry — see {RIG.fis_log_path}")
     try:
         run_battery()
+        if RIG.supports_crl:
+            run_revocation()
+        else:
+            log("revocation group skipped: the CRL lever is local-rig only")
     finally:
         RIG.close()
     passed = sum(1 for _, ok, _ in results if ok)

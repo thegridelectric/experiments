@@ -142,6 +142,32 @@ holds the level table (volts, DAC code, pico flow with its age, instance
 name). The label lives there because `gw.adc.waveform` has no field for
 the drive level or the flow; the CT component vocabulary retires it.
 
+### Burden jumper on CT1 (spruce, store pump)
+
+`jumper.py` reads CT1 (P0) once its burden jumper is fitted: P0 and P1
+with the store pump off, then with it on, secondary pump running
+throughout. Two questions: does the unburdened mirror of CT2 seen in
+`pump1` (167 mV rms on P0 with the store pump off) vanish once CT1 is
+burdened, and what does a burdened current-type CT read on its own
+pump. Relay bits from `store_common.py`'s table (0x21 reg 3: store bit
+4, secondary bit 5). The DAC is left at whatever level it holds; the
+phases file does not record it, so note it in Found.
+
+    # dev machine: commit + push this folder, then on spruce:
+    git -C ~/experiments pull
+    sudo systemctl stop spruce-summer-hack.service     # no scada may be up either; the driver checks both
+    cd ~/experiments/2026-09-07-adc-waveform-bench
+    ~/starter-scripts/venv/bin/python jumper.py --run jump1
+    sudo systemctl start spruce-summer-hack.service
+    # dev machine:
+    scp 'spruce:~/experiments/2026-09-07-adc-waveform-bench/instances/*jump1*' instances/
+    scp spruce:~/experiments/2026-09-07-adc-waveform-bench/jump1-phases.json .
+    # restore on spruce: rm the jump1 instances and the phases file from the clone
+
+Instances are tagged `<channel>.<phase>.<run>` (`p0.storeon.jump1`);
+`<run>-phases.json` records each phase's store pump bit and instance
+names.
+
 ### Reading the offsets
 
 Every offset gap is one request round trip (config write, OS poll,

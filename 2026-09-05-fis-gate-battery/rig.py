@@ -10,6 +10,7 @@ ride an ssh tunnel. The cases themselves are the same code either way.
 """
 
 import os
+import re
 import shlex
 import signal
 import subprocess
@@ -88,6 +89,26 @@ class Rig:
         """`fis principal suspend|activate` on the FIS that gates the rig."""
         raise NotImplementedError
 
+    supports_crl = False  # the CRL lever exists on the local rig only
+
+    def crl(self, revoked: list[str], expired: bool = False) -> str:
+        """Replace the broker's CRL: those leaves (by cert name) revoked;
+        `expired` puts nextUpdate one second out. Returns the writer's line.
+        Local rig only: revocation is witnessed on the throwaway CA."""
+        raise NotImplementedError
+
+    def ssl_options(self) -> str:
+        """The broker's effective ssl_options, as Erlang holds them."""
+        raise NotImplementedError
+
+    def broker_started_at(self) -> str:
+        """When the broker process came up: the no-restart witness."""
+        raise NotImplementedError
+
+    def broker_log_since(self, started: float, pattern: str) -> list[str]:
+        """Broker log lines since a wall-clock instant that carry `pattern`."""
+        raise NotImplementedError
+
     def close(self) -> None:
         """End of run: FIS back as found, evidence collected."""
         self.fis_stop()
@@ -129,6 +150,7 @@ class LocalRig(Rig):
     owns, logging to the run folder."""
 
     BROKER = "fis-gate-broker"
+    supports_crl = True
     FIS_ENV: ClassVar[dict[str, str]] = {
         "FIS_RABBIT_MGMT_URL": "http://localhost:15673",
         "FIS_RABBIT_MGMT_USER": "smqPublic",
@@ -169,18 +191,43 @@ class LocalRig(Rig):
         self.wait_fis(up=False, within_s=10)  # the socket must be free before a restart
 
     def live_connections(self, principal: str) -> set[str]:
-        out = subprocess.run(
-            ["docker", "exec", "-u", "rabbitmq", self.BROKER, "rabbitmqctl", "-q",
-             "list_connections", "user", "name"],
-            capture_output=True, text=True, check=False,
-        ).stdout
-        return self.connection_names(out, principal)
+        return self.connection_names(self.rabbitmqctl("list_connections", "user", "name"), principal)
 
     def principal_status(self, principal: str, verb: str) -> None:
         subprocess.run(
             ["uv", "run", "--project", str(FIS_DIR), "fis", "principal", verb, principal],
             check=True, capture_output=True, cwd=HERE,
         )
+
+    def crl(self, revoked: list[str], expired: bool = False) -> str:
+        args = (["--expired"] if expired else []) + revoked
+        return subprocess.run(
+            [str(self.certs.parent / "crl.sh"), *args],
+            check=True, capture_output=True, text=True, cwd=HERE,
+        ).stdout.strip()
+
+    def ssl_options(self) -> str:
+        return self.rabbitmqctl("eval", "application:get_env(rabbit, ssl_options).").strip()
+
+    def broker_started_at(self) -> str:
+        return subprocess.run(
+            ["docker", "inspect", "-f", "{{.State.StartedAt}}", self.BROKER],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+
+    def broker_log_since(self, started: float, pattern: str) -> list[str]:
+        out = subprocess.run(
+            ["docker", "logs", "--since", str(int(started)), self.BROKER],
+            capture_output=True, text=True, check=False,
+        )
+        plain = re.sub(r"\x1b\[[0-9;]*m", "", out.stdout + out.stderr)  # the image colours its log
+        return [ln for ln in plain.splitlines() if pattern in ln]
+
+    def rabbitmqctl(self, *args: str) -> str:
+        return subprocess.run(
+            ["docker", "exec", "-u", "rabbitmq", self.BROKER, "rabbitmqctl", "-q", *args],
+            capture_output=True, text=True, check=False,
+        ).stdout
 
 
 class RemoteRig(Rig):

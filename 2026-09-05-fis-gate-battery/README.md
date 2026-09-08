@@ -37,6 +37,11 @@ recorded for it.
 5. A stale-alias publish is denied at `/auth/topic`; a forged
    `user_id` is refused by the broker itself.
 6. Auth stays fast under 100 concurrent connects.
+7. Revocation holds on both transports: two certs with the same CN
+   supersede each other in turn (the replaced-pi flaw, witnessed first);
+   once the older serial is on the broker's CRL that cert is refused at
+   the handshake on 5671 and 8883 with no broker restart, the newer one
+   is admitted, and an expired CRL refuses every new connection.
 
 ## Setup
 
@@ -53,19 +58,27 @@ source. No prod credential, host, or broker is referenced anywhere.
   claims credentials class and the `d1` definitions); grid-node-registry
   `dev` `274b974` (the dev universe the identities come from).
 - **Broker:** stock `rabbitmq:4.1.8-management`, `rabbitmq.conf` here
-  (listeners, TLS, definitions, the `ssl_options` tightening a staging box
-  carries from day one), plus the SAME `fis-gate.conf`, `enabled_plugins`
-  and mechanism `.ez` a box mounts through `compose.gate.yaml`, mounted
-  file by file from `../../gridworks-infra/rmqbot/`. One harness-only
-  fragment, `40-dev-fis-url.conf`, repoints the gate's localhost auth URLs
-  at the host, where FIS runs.
+  (listeners, definitions) with the whole TLS block in `advanced.config`
+  (material, `verify_peer` + `fail_if_no_peer_cert`, the tightening a
+  staging box carries from day one, and `crl_check = peer` with the
+  hash-dir CRL cache pointed at a mounted `crl/` directory), plus the
+  SAME `fis-gate.conf`, `enabled_plugins` and mechanism `.ez` a box
+  mounts through `compose.gate.yaml`, mounted file by file from
+  `../../gridworks-infra/rmqbot/`. One harness-only fragment,
+  `40-dev-fis-url.conf`, repoints the gate's localhost auth URLs at the
+  host, where FIS runs.
 - **Identities:** the dev universe's `d1.isone.me.weather` (a GNode
   service), the beech scada and its LTN (GNodes with registry aliases),
   `STORM` service principals for the storm, and one never-minted id for
   the unknown-principal case. `setup.sh` resolves the GNode ids through
   the gnr façade, `mint.py` mints the principal rows on the dev FIS
   database, `certs/gen_certs.sh` cuts one client cert per identity with
-  the principal id as CN.
+  the principal id as CN, plus a second cert with the same CN for
+  weather and for the scada (`weather2`, `scada2`: the replaced pi), and
+  an empty CRL. `certs/crl.sh` rewrites the CRL from the throwaway CA
+  (names to revoke by serial; `--expired` for a one-second `nextUpdate`)
+  into `certs/out/crl/<issuer hash>.r0`, which the broker reads at every
+  handshake through the directory mount.
 - **Clients:** `battery.py` (pika over TLS with gwbase's
   `GridworksClaimsCredentials` for AMQP; paho for MQTT) and `storm.py`
   (N pika connects at once). The rig (`rig.py`) owns FIS, so the battery
@@ -207,16 +220,49 @@ rig; it is left running under systemd at the end. Keep the evidence as
 
 - `run.sh` prints `plugin: rabbitmq_auth_backend_http` and
   `plugin: rabbitmq_auth_mechanism_gridworks` before the cases.
-- the battery ends with `27/27 cases pass`; one unscored line appears in
+- the battery ends with `38/38 cases pass`; one unscored line appears in
   the middle, `KNOWN-LIMIT broker_wide_kill_closed_other_run: B closed=True`.
+  The revocation group (cases 14–18) runs on the dev rig only, after the
+  MQTT leg, and prints the CRL writer's line before each swap.
 - the storm ends with `PASS  storm: 100/100 allowed, max connect <1s`.
 - `supersession_predecessor_closed` reports `B allow in ~6s`, not
   sub-second: the battery's predecessor never answers the close (see
   Analysis notes). `clean_restart_admitted_fast` reports under 0.5 s.
-- the remote rung ends the same way (`27/27`, `100/100`); single
+- the remote rung ends with `27/27` and `100/100` (no CRL lever; the
+  group logs itself skipped); single
   connects take ~0.7–0.8 s and the storm's max about 3 s (see Found).
 
 ## Found
+
+**Revocation, dev rig, 2026-09-08: claim 7 PASS, 38/38, storm 100/100
+max 0.60 s** (`battery-2026-09-08-crl.log`, `storm-2026-09-08-crl.json`,
+run `20260908T1619`). The flaw first: `weather` and `weather2` (one CN,
+two serials) supersede each other in turn on AMQP, `scada` and `scada2`
+likewise on MQTT, each admission closing the other, FIS recording every
+one as an honest supersession. Then the older serials on the CRL, file
+replaced under the running broker: the old certs are refused in the TLS
+handshake on 5671 (`SSLV3_ALERT_CERTIFICATE_REVOKED`) and on 8883, FIS
+is never asked (no `auth_events` row), the broker log carries
+`{tls_alert,{certificate_revoked,...}}`, the newer certs are admitted on
+both ports, and the container's `StartedAt` is unchanged. An expired CRL
+(`nextUpdate` one second out) refuses the unrevoked cert too, on both
+ports (`SSLV3_ALERT_BAD_CERTIFICATE`); a fresh list admits it again.
+The MQTT listener shares the global `ssl_options`, as the two-pi case
+needs. One conf finding, below.
+
+**`advanced.config` REPLACES `rabbitmq.conf`'s `ssl_options`; it does
+not merge.** The design's set-up sequence had the material and
+`crl_check` in `rabbitmq.conf` and only the `crl_cache` option in
+`advanced.config`. On 4.1.8 the broker then started both TLS listeners
+with an `ssl_options` list holding `crl_cache` alone and crashed at
+boot: `ranch_ssl:listen ... reason no_cert` on 8883, no 5671 listener
+at all. The 4.1.8 schema has `ssl_options.crl_check` but no
+`crl_cache` key, so the whole block moves to `advanced.config` (the
+seven keys in this folder's file) and `rabbitmq.conf` carries no
+`ssl_options.*` at all; case 14 reads the effective list back through
+`rabbitmqctl eval` and checks material and CRL keys sit in one list.
+For a box this means the `ssl_options.*` lines leave its
+`rabbitmq.conf` in the same recreate that adds `advanced.config`.
 
 **Remote rung, 2026-09-06: all six claims PASS against `hw1-2` (17:05
 ET): 27/27 verdicts, storm 100/100 allowed with connect p50 2.19 s, p95
@@ -357,6 +403,16 @@ Times ET. Runs are named by their UTC stamp under `runs/`.
   truncated by the laptop-clock window (Found).
 - 17:04 third remote run (`20260906T2104-hw1-2`): 27/27, storm 100/100
   p50 2.19 s max 3.00 s, full journal. Green; the evidence kept here.
+- 2026-09-08 12:14 revocation leg, first run: the broker crashes at boot,
+  `no_cert` on 8883; `advanced.config`'s `ssl_options` replaced the conf
+  file's (Found). Whole block moved to `advanced.config`.
+- 12:17 36/38: every revocation verdict right on the wire, two predicates
+  looking for `SSLError` at the head of a tag pika reports as
+  `IncompatibleProtocolError`. Predicates fixed.
+- 12:19 20/35: the previous run's CRL still revoking `weather` and
+  `scada` at the start. The battery now writes an empty list first.
+- 12:20 `20260908T1619`: 38/38, storm 100/100 max 0.60 s. Green; the
+  evidence kept here.
 
 ## Analysis notes
 
@@ -399,9 +455,11 @@ is not a production system.
 - `README.md` — this record.
 - `docker-compose.yml` — the harness broker: stock 4.1.8 with gwbase's
   `dev_definitions.json` and the rmqbot overlay files mounted from
-  `../../gridworks-infra/rmqbot/`, plus `40-dev-fis-url.conf`.
+  `../../gridworks-infra/rmqbot/`, plus `40-dev-fis-url.conf`,
+  `advanced.config` and the `certs/out/crl/` directory.
 - `rabbitmq.conf` — the box-side conf the overlay layers on (listeners,
-  TLS, definitions, the `ssl_options` tightening).
+  definitions); `advanced.config` — the whole TLS block (material, the
+  `ssl_options` tightening, `crl_check` and the hash-dir CRL cache).
 - `40-dev-fis-url.conf` — harness-only conf.d fragment repointing the
   four auth URLs at `host.docker.internal:8080`.
 - `run.sh` — the whole dev run: rig check, broker up, battery, storm.
@@ -410,18 +468,20 @@ is not a production system.
 - `remote.env`, `setup-remote.sh`, `run-remote.sh` — the remote rung:
   the box, its identities and logins; principals on the box and certs
   from certbot (outputs in `certs/remote/`, gitignored: keys); the run.
-- `setup.sh`, `mint.py`, `certs/gen_certs.sh` — identities: id lookup
-  through the gnr façade, principal rows on the dev FIS database, the
-  throwaway CA and per-identity client certs. Outputs (`certs/out/`,
-  `g_node/`) are gitignored: keys, and a registry record re-pulled on
-  every setup.
+- `setup.sh`, `mint.py`, `certs/gen_certs.sh`, `certs/crl.sh` —
+  identities: id lookup through the gnr façade, principal rows on the dev
+  FIS database, the throwaway CA, per-identity client certs plus the
+  same-CN pair, and the CRL writer. Outputs (`certs/out/`, `g_node/`)
+  are gitignored: keys, and a registry record re-pulled on every setup.
 - `battery.py` — the verdict battery; `storm.py` — the reconnect storm.
   Harness code, no data.
 - `battery-2026-09-05.log`, `storm-2026-09-05.json` — the dev rung's
   green run, case log and storm summary (generated; copied from
   `runs/20260905T1916/`). `battery-2026-09-06-hw1-2.log`,
   `storm-2026-09-06-hw1-2.json` — the remote rung's green run (from
-  `runs/20260906T2104-hw1-2/`). Other runs' evidence stays local under
+  `runs/20260906T2104-hw1-2/`). `battery-2026-09-08-crl.log`,
+  `storm-2026-09-08-crl.json` — the dev rung with the revocation group
+  (from `runs/20260908T1619/`). Other runs' evidence stays local under
   `runs/`, gitignored.
 - `runs/` — per-run evidence, gitignored (`.gitkeep` holds the folder).
 

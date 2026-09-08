@@ -13,6 +13,12 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-08 · [spruce-relay-stress-board2](2026-09-08-spruce-relay-stress-board2/)**
+  — the 0x21 reset on iso-relay switching follows the house, not the
+  gw108: on the replaced board B2 reset 17/100 with no other coil on
+  (08-23: 35/100, edge flipped energize → de-energize), 0/60 with two or
+  more other coils on (F2, A2). Two-coil rule stands; the electrical
+  question moves to the iso actuator / relay supply.
 - **2026-09-08 · [spruce-admin-panel](2026-09-08-spruce-admin-panel/)**
   — PASS: the real admin TUI drives the real spruce gw108 through the
   krida-retirement rung-1 command interfaces: three vdc power cycles
@@ -60,7 +66,12 @@ first run dates them.
   view, after `rabbitmqctl list_connections` deadlocked with the gate and
   `rabbitmqctl eval` cost an Erlang VM per confirm. One KNOWN-GAP (vhost
   path cannot see the claimed run once a lease exists) and one KNOWN-LIMIT
-  (the kill is broker-wide for the identity) stay logged.
+  (the kill is broker-wide for the identity) stay logged. 2026-09-08:
+  revocation group added, 38/38 on the dev rig — a same-CN cert pair
+  supersedes in turn (the replaced-pi flaw), then the CRL refuses the old
+  serial at the handshake on 5671 and 8883 with no restart; found that
+  `advanced.config` replaces `rabbitmq.conf`'s `ssl_options` outright, so
+  the whole TLS block lives there.
 - **queued · [pico-rejoin](future/pico-rejoin/)** — trace
   `wlan.status()` timing across power cycles. Why the spruce
   secondary pico's stereotyped 13–14 min post-shake silence — deployed
