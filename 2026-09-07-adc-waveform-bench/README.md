@@ -168,6 +168,32 @@ Instances are tagged `<channel>.<phase>.<run>` (`p0.storeon.jump1`);
 `<run>-phases.json` records each phase's store pump bit and instance
 names.
 
+### Leads lifted on CT1 (spruce, the tie test)
+
+`peek.py` runs on the dev machine and drives one check over ssh: read
+the secondary pump relay bit, capture P1 (CT2) then P0 (CT1) with the
+box's `capture.py`, copy the instances back, fold both, print a verdict.
+The site step it reads: George unscrews CT1's two leads from the CT1
+terminal pair (clamp stays on the pipe, jumper stays fitted). With the
+leads off, the only path from CT2's signal to P0 is on the gw108, so P0
+flat means the clamps share a conductor and P0 still mirroring P1 means
+the inputs are tied on the board or terminal strip.
+
+    # dev machine, from this folder; the box already holds capture.py at a pushed SHA
+    uv run python peek.py                        # tag defaults to peek<HHMMSS> ET
+    uv run python peek.py --run lift1            # a named run
+
+If the pump relay is off the script stops the hack and the scada,
+energizes the secondary pump, holds 15 s, captures, and restores both;
+with the pump running only the capture happens. About 25 s with the
+pump running, about a minute otherwise. `--baseline` captures with the
+pump off instead of energizing it and is the pipeline check; `base1`
+(2026-09-08 17:50 ET) read 2.7 mV rms on both channels, verdict
+INCONCLUSIVE, as it should. Instances are tagged `<channel>.<run>` and
+stay here; the box's copies are removed by the script. The verdict thresholds (20 mV floor on P1, P0/P1 under 0.1 flat,
+over 0.5 mirrored) sit between the 3 mV pickup and the 170 to 185 mV the
+pump has read at its summer level.
+
 ### Reading the offsets
 
 Every offset gap is one request round trip (config write, OS poll,
@@ -258,6 +284,35 @@ amplitude; noise is about the composite.
 - Still open: the absolute scale (a clamp-meter amps reading against
   one of these levels), and why CT1 mirrors CT2.
 
+**Burden jumper `jump1`, 2026-09-08 16:02 ET.** Jumper fitted on CT1's
+burden position on site; no scada up, summer hack stopped, secondary
+pump on at the DAC level the window scada left (7.6 V, `secondary-010v`
+76 in its last snapshot). A `rig1` P1 capture at 15:57 with the window
+scada still running, same pump level, folded at 184.7 mV rms, the
+ladder's 7.5 V row.
+
+| capture | waveform rms mV | fundamental pk mV | noise rms mV |
+| --- | --- | --- | --- |
+| P0, store pump off | 184.3 | 89.3 | 21.4 |
+| P1, store pump off | 174.3 | 92.0 | 61.5 |
+| P0, store pump on | 771.6 | 147.4 | 255.6 |
+| P1, store pump on | 737.4 | 146.1 | 307.6 |
+
+- P0 and P1 carry the same signal in both phases: the same five-peak
+  shape with the store pump off, the same four-fold rise with both pumps
+  running (samples 0.13 to 3.2 V on the 1.64 V bias, inside the 4.096 V
+  full scale). The jumper changed nothing on P0 (167 mV rms unburdened in
+  `pump1`, 184 with the burden), so P0 is not reading a current-type CT
+  of its own; both inputs read what CT2's input carries, and that
+  carries both pumps. Either both CTs sit on one conductor feeding both
+  pumps, or the two inputs are tied in the wiring or on the board. The
+  field check is where the clamps are and a P0 capture with CT1's leads
+  off the terminal.
+- With both pumps on, the noise about the composite rises to 256 and
+  308 mV: the two currents are not one steady periodic shape, so the
+  fold's residual is the second pump's contribution drifting in phase,
+  not bus noise.
+
 **Graphing the ladder.** Each row of the table is one instance,
 `instances/hw1.isone.me.versant.keene.spruce.ta-p1.dac<V x10>.ladder1-gw.adc.waveform-000.json`
 (`dac030` is 3.0 V, `dac100` is 10.0 V). `fold.py` draws one level; run
@@ -301,6 +356,11 @@ generated and gitignored, so regenerate rather than commit them.
 - 2026-09-07 13:05 ET: `ladder1` from clone `63e7bdc`, hack stopped
   13:04, restarted 13:13; instances, levels file and log collected and
   removed from the box.
+- 2026-09-08 15:57 ET: `rig1`, P1 with the window scada running
+  (scada-owned pump at 7.6 V); collected and removed from the box.
+- 2026-09-08 16:02 ET: `jump1` from clone `84352c7`, jumper on CT1,
+  hack stopped since 14:24 for the admin rig, no scada up; instances
+  and phases file collected and removed from the box.
 
 ## Analysis notes
 
