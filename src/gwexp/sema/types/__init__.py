@@ -2,6 +2,8 @@ from gwexp.sema.types.channel_config import ChannelConfig
 from gwexp.sema.types.channel_readings import ChannelReadings
 from gwexp.sema.types.data_channel_gt import DataChannelGt
 from gwexp.sema.types.derived_channel_gt import DerivedChannelGt
+from gwexp.sema.types.fsm_atomic_report import FsmAtomicReport
+from gwexp.sema.types.fsm_full_report import FsmFullReport
 from gwexp.sema.types.glitch import Glitch
 from gwexp.sema.types.gw1_tank_temp_calibration import Gw1TankTempCalibration
 from gwexp.sema.types.gw1_tank_temp_calibration_map import Gw1TankTempCalibrationMap
@@ -21,9 +23,12 @@ from gwexp.sema.types.i2c_thermistor_reader_component_gt import (
     I2cThermistorReaderComponentGt,
 )
 from gwexp.sema.types.layout_lite import LayoutLite
+from gwexp.sema.types.machine_states import MachineStates
 from gwexp.sema.types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwexp.sema.types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwexp.sema.types.relay_actor_config import RelayActorConfig
+from gwexp.sema.types.report import Report
+from gwexp.sema.types.report_event import ReportEvent
 from gwexp.sema.types.sim_pico_tank_module_component_gt import (
     SimPicoTankModuleComponentGt,
 )
@@ -37,6 +42,8 @@ __all__ = [
     "ChannelReadings",
     "DataChannelGt",
     "DerivedChannelGt",
+    "FsmAtomicReport",
+    "FsmFullReport",
     "Glitch",
     "Gw1TankTempCalibration",
     "Gw1TankTempCalibrationMap",
@@ -52,9 +59,12 @@ __all__ = [
     "I2cThermistorChannelConfig",
     "I2cThermistorReaderComponentGt",
     "LayoutLite",
+    "MachineStates",
     "PicoFlowModuleComponentGt",
     "PicoTankModuleComponentGt",
     "RelayActorConfig",
+    "Report",
+    "ReportEvent",
     "SimPicoTankModuleComponentGt",
     "SpaceheatNodeGt",
     "SpaceheatTelemetryQuantityProjection",

@@ -1,5 +1,6 @@
 enums:
   change.relay.state: change.relay.state
+  fsm.report.type: fsm.report.type
   gpm.from.hz.method: gpm.from.hz.method
   gw1.actor.class: gw1.actor.class
   gw1.actuation.authority: gw1.actuation.authority
@@ -14,6 +15,7 @@ enums:
   i2c.adc.type: i2c.adc.type
   log.level: log.level
   relay.closed.or.open: relay.closed.or.open
+  relay.energization.state: relay.energization.state
   relay.wiring.config: relay.wiring.config
   spaceheat.make.model: spaceheat.make.model
   spaceheat.telemetry.name: spaceheat.telemetry.name
@@ -24,6 +26,8 @@ types:
   channel.readings: channel.readings
   data.channel.gt: data.channel.gt
   derived.channel.gt: derived.channel.gt
+  fsm.atomic.report: fsm.atomic.report
+  fsm.full.report: fsm.full.report
   glitch: glitch
   gw.adc.waveform: gw.adc.waveform
   gw.channel.gap.stats: gw.channel.gap.stats
@@ -39,9 +43,12 @@ types:
   i2c.thermistor.channel.config: i2c.thermistor.channel.config
   i2c.thermistor.reader.component.gt: i2c.thermistor.reader.component.gt
   layout.lite: layout.lite
+  machine.states: machine.states
   pico.flow.module.component.gt: pico.flow.module.component.gt
   pico.tank.module.component.gt: pico.tank.module.component.gt
   relay.actor.config: relay.actor.config
+  report: report
+  report.event: report.event
   sim.pico.tank.module.component.gt: sim.pico.tank.module.component.gt
   spaceheat.node.gt: spaceheat.node.gt
   spaceheat.telemetry.quantity.projection: spaceheat.telemetry.quantity.projection

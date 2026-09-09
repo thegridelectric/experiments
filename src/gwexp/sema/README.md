@@ -7,7 +7,7 @@ brokers only. It MUST NOT be used against hybrid or production brokers.
 
 Staging words in this snapshot:
 
-- enum gw1.actor.class:013
+- enum gw1.actor.class:014
 - enum gw1.actuation.authority:000
 - enum gw1.service.mode:000
 - enum i2c.adc.channel
@@ -21,7 +21,7 @@ Staging words in this snapshot:
 - type pico.tank.module.component.gt:012
 - type relay.actor.config:003
 - type sim.pico.tank.module.component.gt:001
-- type spaceheat.node.gt:302
+- type spaceheat.node.gt:303
 
 When these words promote to published, rebuild without `--allow-staged` to
 get a publication-grade snapshot (and this section disappears).

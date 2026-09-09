@@ -50,6 +50,22 @@ types:
           - EmissionMethod: add
           - Parameters: add (Optional)
 
+  fsm.atomic.report:
+    latest_version: "001"
+    versioning_strategy: "literal"
+    versions:
+      "001":
+        summary: >
+          - ActionType: remove
+          - Action: scalar -> unconstrained object payload
+
+  fsm.full.report:
+    latest_version: "001"
+    versioning_strategy: "literal"
+    versions:
+      "001":
+        summary: "- AtomicList[]: fsm.atomic.report:000 -> 001"
+
   glitch:
     latest_version: "000"
     versioning_strategy: "literal"
@@ -163,7 +179,7 @@ types:
     versions:
       "013":
         summary: >
-          - ShNodes: spaceheat.node.gt:301 -> 302
+          - ShNodes: spaceheat.node.gt:301 -> 303
           - DataChannels: data.channel.gt:002 -> 003
           - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component.
           - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context).
@@ -175,6 +191,13 @@ types:
           - Ha1Params: ha1.params:004 | 005 | 006 -> ha1.params:006
           - I2cRelayComponent: i2c.multichannel.dt.relay.component.gt:002 -> 003
           - ShNodes[]: spaceheat.node.gt:300 | 301 -> 301
+
+  machine.states:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
 
   pico.flow.module.component.gt:
     latest_version: "001"
@@ -211,19 +234,39 @@ types:
           - DeEnergizedState: add
           - EnergizedState: add
 
+  report:
+    latest_version: "003"
+    versioning_strategy: "literal"
+    versions:
+      "003":
+        summary: "- FsmReportList[]: fsm.full.report:000 -> 001"
+
+  report.event:
+    latest_version: "004"
+    versioning_strategy: "literal"
+    versions:
+      "004":
+        summary: "- Axioms: reinstate ReportIdentityPropagation, ReportCreatedTimePropagation and ReportSourcePropagation"
+      "003":
+        summary: >
+          - Report: report:002 -> 003
+          - Axioms: remove former ReportIdentityPropagation and ReportCreatedTimePropagation
+
   sim.pico.tank.module.component.gt:
     latest_version: "001"
     versioning_strategy: "literal"
     versions:
       "001":
-        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case); SimulatesVersion 011 -> 012. Context-dependent: the device type lived on the referenced cac, not the component."
+        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case); SimulatesVersion 011 -> 012. Context-dependent: the device type lived on the referenced cac, not the component. Optional SimLifeS / SimRebootS (positive.int seconds) script the simulated pico's liveness."
       "000":
         summary: "Initial Sema version"
 
   spaceheat.node.gt:
-    latest_version: "302"
+    latest_version: "303"
     versioning_strategy: "literal"
     versions:
+      "303":
+        summary: "- ActorClass: gw1.actor.class:013 -> 014 (adds FiveVBoss)"
       "302":
         summary: >
           - ActorClass: gw1.actor.class:011 -> 013 (in-place while staging)
@@ -248,6 +291,12 @@ enums:
     versions:
       "000": {}
 
+  fsm.report.type:
+    enum_type: "literal"
+    note: "This enum is literal; version 000 is immutable and exclusive."
+    versions:
+      "000": {}
+
   gpm.from.hz.method:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
@@ -258,6 +307,9 @@ enums:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
     versions:
+      "014":
+        added_values:
+          - "FiveVBoss"
       "013":
         added_values:
           - "I2cDacWriter"
@@ -340,6 +392,12 @@ enums:
       "000": {}
 
   relay.closed.or.open:
+    enum_type: "literal"
+    note: "This enum is literal; version 000 is immutable and exclusive."
+    versions:
+      "000": {}
+
+  relay.energization.state:
     enum_type: "literal"
     note: "This enum is literal; version 000 is immutable and exclusive."
     versions:

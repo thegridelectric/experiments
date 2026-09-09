@@ -4,7 +4,7 @@ from gwexp.sema.enums.gw_str_enum import SemaEnum
 
 
 class Gw1ActorClass(SemaEnum):
-    """Sema: https://schemas.electricity.works/enums/gw1.actor.class/013"""
+    """Sema: https://schemas.electricity.works/enums/gw1.actor.class/014"""
 
     NoActor = auto()
     PrimaryScada = auto()
@@ -34,6 +34,7 @@ class Gw1ActorClass(SemaEnum):
     SimRelayActor = auto()
     I2cDacWriter = auto()
     HpTwin = auto()
+    FiveVBoss = auto()
 
     @classmethod
     def default(cls) -> "Gw1ActorClass":
@@ -49,4 +50,4 @@ class Gw1ActorClass(SemaEnum):
 
     @classmethod
     def enum_version(cls) -> str:
-        return "013"
+        return "014"

@@ -1,4 +1,5 @@
 from gwexp.sema.enums.change_relay_state import ChangeRelayState
+from gwexp.sema.enums.fsm_report_type import FsmReportType
 from gwexp.sema.enums.gpm_from_hz_method import GpmFromHzMethod
 from gwexp.sema.enums.gw1_actor_class import Gw1ActorClass
 from gwexp.sema.enums.gw1_actuation_authority import Gw1ActuationAuthority
@@ -13,6 +14,7 @@ from gwexp.sema.enums.i2c_adc_channel import I2cAdcChannel
 from gwexp.sema.enums.i2c_adc_type import I2cAdcType
 from gwexp.sema.enums.log_level import LogLevel
 from gwexp.sema.enums.relay_closed_or_open import RelayClosedOrOpen
+from gwexp.sema.enums.relay_energization_state import RelayEnergizationState
 from gwexp.sema.enums.relay_wiring_config import RelayWiringConfig
 from gwexp.sema.enums.spaceheat_make_model import SpaceheatMakeModel
 from gwexp.sema.enums.spaceheat_telemetry_name import SpaceheatTelemetryName
@@ -21,6 +23,7 @@ from gwexp.sema.enums.temp_calc_method import TempCalcMethod
 
 __all__ = [
     "ChangeRelayState",
+    "FsmReportType",
     "GpmFromHzMethod",
     "Gw1ActorClass",
     "Gw1ActuationAuthority",
@@ -35,6 +38,7 @@ __all__ = [
     "I2cAdcType",
     "LogLevel",
     "RelayClosedOrOpen",
+    "RelayEnergizationState",
     "RelayWiringConfig",
     "SpaceheatMakeModel",
     "SpaceheatTelemetryName",

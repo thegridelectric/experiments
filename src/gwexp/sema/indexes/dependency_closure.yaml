@@ -69,6 +69,32 @@ types:
       types:
       - gw1.unit.quantity.projection:000
       versionless_types: []
+  fsm.atomic.report:
+    '001':
+      enums:
+      - fsm.report.type:000
+      - relay.energization.state:000
+      formats:
+      - handle.name
+      - left.right.dot
+      - utc.milliseconds
+      - uuid4.str
+      types: []
+      versionless_types: []
+  fsm.full.report:
+    '001':
+      enums:
+      - fsm.report.type:000
+      - relay.energization.state:000
+      formats:
+      - handle.name
+      - left.right.dot
+      - spaceheat.name
+      - utc.milliseconds
+      - uuid4.str
+      types:
+      - fsm.atomic.report:001
+      versionless_types: []
   glitch:
     '000':
       enums:
@@ -286,7 +312,7 @@ types:
       enums:
       - change.relay.state:000
       - gpm.from.hz.method:000
-      - gw1.actor.class:013
+      - gw1.actor.class:014
       - gw1.actuation.authority:000
       - gw1.emission.method:000
       - gw1.quantity:000
@@ -320,8 +346,18 @@ types:
       - pico.tank.module.component.gt:012
       - relay.actor.config:003
       - sim.pico.tank.module.component.gt:001
-      - spaceheat.node.gt:302
+      - spaceheat.node.gt:303
       - spaceheat.telemetry.quantity.projection:000
+      versionless_types: []
+  machine.states:
+    '000':
+      enums:
+      - relay.closed.or.open:000
+      formats:
+      - handle.name
+      - left.right.dot
+      - utc.milliseconds
+      types: []
       versionless_types: []
   pico.flow.module.component.gt:
     '000':
@@ -394,6 +430,67 @@ types:
       - spaceheat.name
       types: []
       versionless_types: []
+  report:
+    '003':
+      enums:
+      - fsm.report.type:000
+      - relay.closed.or.open:000
+      - relay.energization.state:000
+      formats:
+      - handle.name
+      - left.right.dot
+      - positive.int
+      - spaceheat.name
+      - utc.milliseconds
+      - utc.seconds
+      - uuid4.str
+      types:
+      - channel.readings:002
+      - fsm.atomic.report:001
+      - fsm.full.report:001
+      - machine.states:000
+      versionless_types: []
+  report.event:
+    '003':
+      enums:
+      - fsm.report.type:000
+      - relay.closed.or.open:000
+      - relay.energization.state:000
+      formats:
+      - handle.name
+      - left.right.dot
+      - positive.int
+      - spaceheat.name
+      - utc.milliseconds
+      - utc.seconds
+      - uuid4.str
+      types:
+      - channel.readings:002
+      - fsm.atomic.report:001
+      - fsm.full.report:001
+      - machine.states:000
+      - report:003
+      versionless_types: []
+    '004':
+      enums:
+      - fsm.report.type:000
+      - relay.closed.or.open:000
+      - relay.energization.state:000
+      formats:
+      - handle.name
+      - left.right.dot
+      - positive.int
+      - spaceheat.name
+      - utc.milliseconds
+      - utc.seconds
+      - uuid4.str
+      types:
+      - channel.readings:002
+      - fsm.atomic.report:001
+      - fsm.full.report:001
+      - machine.states:000
+      - report:003
+      versionless_types: []
   sim.pico.tank.module.component.gt:
     '000':
       enums:
@@ -429,6 +526,16 @@ types:
     '302':
       enums:
       - gw1.actor.class:013
+      formats:
+      - handle.name
+      - positive.int
+      - spaceheat.name
+      - uuid4.str
+      types: []
+      versionless_types: []
+    '303':
+      enums:
+      - gw1.actor.class:014
       formats:
       - handle.name
       - positive.int

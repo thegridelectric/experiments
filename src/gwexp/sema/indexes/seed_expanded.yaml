@@ -1,6 +1,6 @@
 metadata:
   generated_from: indexes/public_registry.yaml
-  generated_at: '2026-09-07T13:46:47Z'
+  generated_at: '2026-09-09T15:05:38Z'
   note: Transitive closure of initial_targets
 initial_targets:
 - glitch:000
@@ -11,6 +11,8 @@ initial_targets:
 - gw.channel.noise.stats:000
 - gw.readings:000
 - i2c.thermistor.reader.component.gt:000
+- report.event:003
+- report.event:004
 - layout.lite:012
 - layout.lite:013
 worklist:
@@ -43,6 +45,9 @@ worklist:
     change.relay.state:
       '000':
         path: definitions/enums/change.relay.state/000.yaml
+    fsm.report.type:
+      '000':
+        path: definitions/enums/fsm.report.type/000.yaml
     gpm.from.hz.method:
       '000':
         path: definitions/enums/gpm.from.hz.method/000.yaml
@@ -51,6 +56,8 @@ worklist:
         path: definitions/enums/gw1.actor.class/011.yaml
       '013':
         path: definitions/enums/gw1.actor.class/013.yaml
+      '014':
+        path: definitions/enums/gw1.actor.class/014.yaml
     gw1.actuation.authority:
       '000':
         path: definitions/enums/gw1.actuation.authority/000.yaml
@@ -91,6 +98,9 @@ worklist:
     relay.closed.or.open:
       '000':
         path: definitions/enums/relay.closed.or.open/000.yaml
+    relay.energization.state:
+      '000':
+        path: definitions/enums/relay.energization.state/000.yaml
     relay.wiring.config:
       '000':
         path: definitions/enums/relay.wiring.config/000.yaml
@@ -123,6 +133,12 @@ worklist:
         path: definitions/types/derived.channel.gt/001.yaml
       '002':
         path: definitions/types/derived.channel.gt/002.yaml
+    fsm.atomic.report:
+      '001':
+        path: definitions/types/fsm.atomic.report/001.yaml
+    fsm.full.report:
+      '001':
+        path: definitions/types/fsm.full.report/001.yaml
     glitch:
       '000':
         path: definitions/types/glitch/000.yaml
@@ -172,6 +188,9 @@ worklist:
         path: definitions/types/layout.lite/012.yaml
       '013':
         path: definitions/types/layout.lite/013.yaml
+    machine.states:
+      '000':
+        path: definitions/types/machine.states/000.yaml
     pico.flow.module.component.gt:
       '000':
         path: definitions/types/pico.flow.module.component.gt/000.yaml
@@ -187,6 +206,14 @@ worklist:
         path: definitions/types/relay.actor.config/002.yaml
       '003':
         path: definitions/types/relay.actor.config/003.yaml
+    report:
+      '003':
+        path: definitions/types/report/003.yaml
+    report.event:
+      '003':
+        path: definitions/types/report.event/003.yaml
+      '004':
+        path: definitions/types/report.event/004.yaml
     sim.pico.tank.module.component.gt:
       '000':
         path: definitions/types/sim.pico.tank.module.component.gt/000.yaml
@@ -197,6 +224,8 @@ worklist:
         path: definitions/types/spaceheat.node.gt/301.yaml
       '302':
         path: definitions/types/spaceheat.node.gt/302.yaml
+      '303':
+        path: definitions/types/spaceheat.node.gt/303.yaml
     spaceheat.telemetry.quantity.projection:
       '000':
         path: definitions/types/spaceheat.telemetry.quantity.projection/000.yaml

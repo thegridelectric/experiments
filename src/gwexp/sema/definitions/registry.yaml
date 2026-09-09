@@ -1,6 +1,6 @@
 metadata:
   registry_version: "1.0"
-  last_updated: "2026-09-07T13:15:00Z"
+  last_updated: "2026-09-09T02:05:00Z"
   maintainer: "gridworks-energy"
 
 formats:
@@ -97,6 +97,14 @@ enums:
     created: "2024-09-17T20:17:00Z"
     status: "published"
 
+  fsm.report.type:
+    owner: gridworks-energy
+    enum_type: "literal"
+    description: "Enumeration of atomic FSM report categories."
+    schema_url: "https://schemas.electricity.works/enums/fsm.report.type/000"
+    created: "2024-10-08T17:17:00Z"
+    status: "published"
+
   gpm.from.hz.method:
     latest_version: "000"
     owner: gridworks-energy
@@ -110,16 +118,22 @@ enums:
         status: "published"
 
   gw1.actor.class:
-    latest_version: "013"
+    latest_version: "014"
     owner: gridworks-energy
     enum_type: "versioned"
     description: "Classification of actors in the GridWorks SCADA system."
 
     versions:
+      "014":
+        schema_url: "https://schemas.electricity.works/enums/gw1.actor.class/014"
+        created: "2026-09-08T21:20:00Z"
+        status: "staging"
+        added_values:
+          - "FiveVBoss"
       "013":
         schema_url: "https://schemas.electricity.works/enums/gw1.actor.class/013"
         created: "2026-08-12T16:50:00Z"
-        status: "staging"
+        status: "published"
         added_values:
           - "I2cDacWriter"
           - "HpTwin"
@@ -276,6 +290,15 @@ enums:
     description: "FSM states for a simple relay with open and closed positions."
     schema_url: "https://schemas.electricity.works/enums/relay.closed.or.open/000"
     created: "2024-09-17T20:17:00Z"
+    status: "published"
+
+  relay.energization.state:
+    owner: gridworks-energy
+    enum_type: "literal"
+    value_type: "integer"
+    description: "Two-state relay energization state."
+    schema_url: "https://schemas.electricity.works/enums/relay.energization.state/000"
+    created: "2024-03-06T22:07:00Z"
     status: "published"
 
   relay.wiring.config:
@@ -457,6 +480,46 @@ types:
             - "gw1.unit:000"
             - "left.right.dot"
             - "positive.int"
+            - "spaceheat.name"
+            - "uuid4.str"
+
+  fsm.atomic.report:
+    latest_version: "001"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Single atomic FSM report item representing either an event or an action."
+
+    versions:
+      "001":
+        schema_url: "https://schemas.electricity.works/types/fsm.atomic.report/001"
+        created: "2025-04-23T18:03:00Z"
+        status: "published"
+        summary: "- ActionType: remove - Action: scalar -> unconstrained object payload"
+        direct_dependencies:
+          structural:
+            - "fsm.report.type:000"
+            - "handle.name"
+            - "left.right.dot"
+            - "utc.milliseconds"
+            - "uuid4.str"
+          axiom:
+            - "relay.energization.state:000"
+
+  fsm.full.report:
+    latest_version: "001"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Full FSM report emitted for one trigger, including its ordered atomic report items."
+
+    versions:
+      "001":
+        schema_url: "https://schemas.electricity.works/types/fsm.full.report/001"
+        created: "2025-04-23T18:03:00Z"
+        status: "published"
+        summary: "- AtomicList[]: fsm.atomic.report:000 -> 001"
+        direct_dependencies:
+          structural:
+            - "fsm.atomic.report:001"
             - "spaceheat.name"
             - "uuid4.str"
 
@@ -744,9 +807,9 @@ types:
     versions:
       "013":
         schema_url: "https://schemas.electricity.works/types/layout.lite/013"
-        created: "2026-08-16T16:30:00Z"
+        created: "2026-09-08T21:20:00Z"
         status: "staging"
-        summary: "- ShNodes: spaceheat.node.gt:301 -> 302 - DataChannels: data.channel.gt:002 -> 003 - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component. - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context). - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status."
+        summary: "- ShNodes: spaceheat.node.gt:301 -> 303 - DataChannels: data.channel.gt:002 -> 003 - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component. - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context). - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status."
         direct_dependencies:
           structural:
             - "data.channel.gt:003"
@@ -762,7 +825,7 @@ types:
             - "pico.tank.module.component.gt:012"
             - "positive.int"
             - "sim.pico.tank.module.component.gt:001"
-            - "spaceheat.node.gt:302"
+            - "spaceheat.node.gt:303"
             - "utc.milliseconds"
             - "uuid4.str"
       "012":
@@ -787,6 +850,26 @@ types:
             - "spaceheat.node.gt:301"
             - "utc.milliseconds"
             - "uuid4.str"
+
+  machine.states:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Sequence of machine states observed for one state machine during a reporting interval."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/types/machine.states/000"
+        created: "2024-11-09T16:36:00Z"
+        status: "published"
+        summary: "Initial Sema version"
+        direct_dependencies:
+          structural:
+            - "handle.name"
+            - "left.right.dot"
+            - "utc.milliseconds"
+          axiom:
+            - "relay.closed.or.open:000"
 
   pico.flow.module.component.gt:
     latest_version: "001"
@@ -892,6 +975,59 @@ types:
             - "change.relay.state:000"
             - "relay.closed.or.open:000"
 
+  report:
+    latest_version: "003"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Primary telemetry and state reporting message produced by a SCADA node for a specific reporting slot."
+
+    versions:
+      "003":
+        schema_url: "https://schemas.electricity.works/types/report/003"
+        created: "2026-03-30T19:01:47Z"
+        status: "published"
+        summary: "- FsmReportList[]: fsm.full.report:000 -> 001"
+        direct_dependencies:
+          structural:
+            - "channel.readings:002"
+            - "fsm.full.report:001"
+            - "left.right.dot"
+            - "machine.states:000"
+            - "positive.int"
+            - "utc.milliseconds"
+            - "utc.seconds"
+            - "uuid4.str"
+
+  report.event:
+    latest_version: "004"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Event wrapper for a report payload with message tracking metadata."
+
+    versions:
+      "004":
+        status: "published"
+        schema_url: "https://schemas.electricity.works/types/report.event/004"
+        created: "2026-05-06T00:00:00Z"
+        summary: "- Axioms: reinstate ReportIdentityPropagation, ReportCreatedTimePropagation and ReportSourcePropagation"
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+            - "report:003"
+            - "utc.milliseconds"
+            - "uuid4.str"
+      "003":
+        schema_url: "https://schemas.electricity.works/types/report.event/003"
+        created: "2026-03-30T19:01:47Z"
+        status: "published"
+        summary: "- Report: report:002 -> 003 - Axioms: remove former ReportIdentityPropagation and ReportCreatedTimePropagation"
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+            - "report:003"
+            - "utc.milliseconds"
+            - "uuid4.str"
+
   sim.pico.tank.module.component.gt:
     latest_version: "001"
     owner: gridworks-energy
@@ -903,7 +1039,7 @@ types:
         schema_url: "https://schemas.electricity.works/types/sim.pico.tank.module.component.gt/001"
         created: "2026-06-26T03:40:00Z"
         status: "staging"
-        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case); SimulatesVersion 011 -> 012. Context-dependent: the device type lived on the referenced cac, not the component."
+        summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case); SimulatesVersion 011 -> 012. Context-dependent: the device type lived on the referenced cac, not the component. Optional SimLifeS / SimRebootS (positive.int seconds) script the simulated pico's liveness."
         direct_dependencies:
           structural:
             - "pascal.case"
@@ -923,16 +1059,28 @@ types:
             - "uuid4.str"
 
   spaceheat.node.gt:
-    latest_version: "302"
+    latest_version: "303"
     owner: gridworks-energy
     versioning_strategy: "literal"
     description: "A Spaceheat node representing a named element in the SCADA system."
 
     versions:
+      "303":
+        schema_url: "https://schemas.electricity.works/types/spaceheat.node.gt/303"
+        created: "2026-09-08T21:20:00Z"
+        status: "staging"
+        summary: "- ActorClass: gw1.actor.class:013 -> 014 (adds FiveVBoss)"
+        direct_dependencies:
+          structural:
+            - "gw1.actor.class:014"
+            - "handle.name"
+            - "positive.int"
+            - "spaceheat.name"
+            - "uuid4.str"
       "302":
         schema_url: "https://schemas.electricity.works/types/spaceheat.node.gt/302"
         created: "2026-08-12T18:25:00Z"
-        status: "staging"
+        status: "published"
         summary: "- ActorClass: gw1.actor.class:011 -> 013 (in-place while staging) - InPowerMetering: drop (routing is owned by the consuming transactive declaration, not the node) - InPowerMeteringRequiresNameplate axiom: drop"
         direct_dependencies:
           structural:

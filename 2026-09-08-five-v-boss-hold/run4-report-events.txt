@@ -1,0 +1,37 @@
+== 19:29:00 ET  slot 1788910080  -> instances/1929-report.event-004.json
+== 19:30:00 ET  slot 1788910140  -> instances/1930-report.event-004.json
+   auto.five-v-boss                     [('PicoCycler', '19:29:41.646')]
+   buffer                               [('Alive', '19:29:41.646'), ('Alive', '19:29:58.006')]
+   tank1                                [('Alive', '19:29:41.646'), ('Alive', '19:29:58.006')]
+   auto.five-v-boss.pico-cycler.vdc-relay [('RelayClosed', '19:29:43.652'), ('RelayOpen', '19:29:44.655'), ('RelayClosed', '19:29:49.662'), ('RelayClosed', '19:29:58.006')]
+   auto.five-v-boss.pico-cycler         [('RelayOpening', '19:29:44.651'), ('RelayOpen', '19:29:44.656'), ('RelayClosing', '19:29:49.659'), ('PicosRebooting', '19:29:49.663'), ('PicosRebooting', '19:29:58.006')]
+== 19:31:00 ET  slot 1788910200  -> instances/1931-report.event-004.json
+   auto.five-v-boss.pico-cycler         [('PicosLive', '19:30:09.698')]
+   fsm.full.report pico-cycler trigger=2b2999e8-e0ec-4b66-a075-a7381a4d4ee3 Startup:PicosLive->RelayOpening ConfirmOpened:RelayOpening->RelayOpen StartClosing:RelayOpen->RelayClosing ConfirmClosed:RelayClosing->PicosRebooting ConfirmRebooted:PicosRebooting->PicosLive
+== 19:32:00 ET  slot 1788910260  -> instances/1932-report.event-004.json
+== 19:33:00 ET  slot 1788910320  -> instances/1933-report.event-004.json
+   admin.five-v-boss                    [('TurningOff', '19:32:37.871'), ('FiveVOff', '19:32:37.874')]
+   admin.five-v-boss.pico-cycler        [('Dormant', '19:32:37.873')]
+   admin.five-v-boss.vdc-relay          [('RelayOpen', '19:32:37.874')]
+   fsm.full.report five-v-boss trigger=2695ad10-d6f2-4db5-bb13-1cf858a0c17c TurnOff:PicoCycler->TurningOff TurnOff:TurningOff->FiveVOff
+== 19:34:00 ET  slot 1788910380  -> instances/1934-report.event-004.json
+   buffer                               [('Flatlined', '19:33:41.695')]
+   tank1                                [('Flatlined', '19:33:41.696')]
+== 19:35:00 ET  slot 1788910440  -> instances/1935-report.event-004.json
+   admin.five-v-boss.vdc-relay          [('RelayOpen', '19:34:58.003')]
+   admin.five-v-boss.pico-cycler        [('Dormant', '19:34:58.004')]
+   buffer                               [('Flatlined', '19:34:58.004')]
+   tank1                                [('Flatlined', '19:34:58.004')]
+== 19:36:00 ET  slot 1788910500  -> instances/1936-report.event-004.json
+   admin.five-v-boss                    [('TurningOn', '19:35:11.909'), ('PicoCycler', '19:35:11.912'), ('TurningOff', '19:35:57.920'), ('FiveVOff', '19:35:57.924')]
+   admin.five-v-boss.vdc-relay          [('RelayClosed', '19:35:11.911'), ('RelayOpen', '19:35:57.924')]
+   admin.five-v-boss.pico-cycler        [('PicosLive', '19:35:11.914'), ('Dormant', '19:35:57.923')]
+   buffer                               [('Alive', '19:35:32.182')]
+   tank1                                [('Alive', '19:35:32.183')]
+   fsm.full.report five-v-boss trigger=5a7ae0d1-d4d3-47b9-834a-19549dc691d5 TurnOn:FiveVOff->TurningOn TurnOn:TurningOn->PicoCycler
+   fsm.full.report five-v-boss trigger=be5a9eb1-0b6b-4336-bdb9-bb68aae2b5de TurnOff:PicoCycler->TurningOff TurnOff:TurningOff->FiveVOff
+== 19:37:00 ET  slot 1788910560  -> instances/1937-report.event-004.json
+   auto.five-v-boss                     [('TurningOn', '19:36:01.923'), ('PicoCycler', '19:36:01.923')]
+   auto.five-v-boss.vdc-relay           [('RelayClosed', '19:36:01.923')]
+   auto.five-v-boss.pico-cycler         [('PicosLive', '19:36:01.924')]
+   fsm.full.report five-v-boss trigger=b7aa33ab-5d2d-4a84-98be-73783e90985f TurnOn:FiveVOff->TurningOn TurnOn:TurningOn->PicoCycler

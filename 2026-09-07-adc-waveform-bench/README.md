@@ -6,6 +6,30 @@
 > frequency give a composite waveform? Verdict in "Found" once run; the
 > logbook line is the index record.
 
+## Field quickstart (supporting George at spruce)
+
+Read this section and "One pump at a time" below; nothing else is
+needed to be useful. The box runs pushed SHAs only: after any push,
+`git pull` in the box's `~/experiments` and `~/gridworks-scada-unlimbo`.
+
+- **Swap spruce between the deployed scada and the unlimbo window
+  scada**, from the umbrella dir: `experiments/spruce_window.sh on
+  [minutes]`, then `gridworks-scada/gw_spaceheat/venv/bin/gwa watch
+  spruce`; `experiments/spruce_window.sh off` restores the deployed
+  scada and the summer hack; `status` shows services, window scada,
+  tunnel and the 0x21 relay bits.
+- **CT check, one pump at a time:** from this folder,
+  `uv run python peek.py --run <tag>` (about a minute, restores
+  everything itself). Do not run it while the window scada is up: both
+  drive the 0x21 relays.
+- **Where things stand.** `jump1` (09-08) showed P0 and P1 carrying the
+  same signal with both pumps on; the two-phase `peek.py` has had its
+  dry run only. The panel witness of the five-v-boss hold is
+  `../2026-09-08-five-v-boss-hold/` (the window section); the admin panel still offers one
+  command on the five-v-boss row (RebootPicos missing) and the owned
+  rows are not yet indented, both queued in the pico-cycler-command
+  spoke, not for the field.
+
 ## Why
 
 The gw108's four CT terminal pairs have never been read as waveforms.
@@ -168,31 +192,40 @@ Instances are tagged `<channel>.<phase>.<run>` (`p0.storeon.jump1`);
 `<run>-phases.json` records each phase's store pump bit and instance
 names.
 
-### Leads lifted on CT1 (spruce, the tie test)
+### One pump at a time (spruce, `peek.py`)
 
-`peek.py` runs on the dev machine and drives one check over ssh: read
-the secondary pump relay bit, capture P1 (CT2) then P0 (CT1) with the
-box's `capture.py`, copy the instances back, fold both, print a verdict.
-The site step it reads: George unscrews CT1's two leads from the CT1
-terminal pair (clamp stays on the pipe, jumper stays fitted). With the
-leads off, the only path from CT2's signal to P0 is on the gw108, so P0
-flat means the clamps share a conductor and P0 still mirroring P1 means
-the inputs are tied on the board or terminal strip.
+`peek.py` runs on the dev machine and drives one check over ssh: stop
+the summer hack and the scada, hold the iso valve open, run the
+secondary pump alone (`sec`) and then the store pump alone (`store`),
+capturing P1 (CT2) then P0 (CT1) in each, copy the instances back,
+fold, and print a verdict per phase. Relays and services are restored
+in a finally. With CT1's leads still on the terminal pair it reads
+which conductor each clamp is on; the site step George adds is lifting
+CT1's two leads (clamp stays on the pipe, jumper stays fitted), after
+which the only path from CT2's signal to P0 is on the gw108.
 
     # dev machine, from this folder; the box already holds capture.py at a pushed SHA
-    uv run python peek.py                        # tag defaults to peek<HHMMSS> ET
-    uv run python peek.py --run lift1            # a named run
+    uv run python peek.py --dry-run              # entry bits and the plan, touches nothing
+    uv run python peek.py --run lift1            # a named run, about a minute
+    uv run python peek.py --baseline             # nothing energized, services untouched: expect flat/flat
 
-If the pump relay is off the script stops the hack and the scada,
-energizes the secondary pump, holds 15 s, captures, and restores both;
-with the pump running only the capture happens. About 25 s with the
-pump running, about a minute otherwise. `--baseline` captures with the
-pump off instead of energizing it and is the pipeline check; `base1`
-(2026-09-08 17:50 ET) read 2.7 mV rms on both channels, verdict
-INCONCLUSIVE, as it should. Instances are tagged `<channel>.<run>` and
-stay here; the box's copies are removed by the script. The verdict thresholds (20 mV floor on P1, P0/P1 under 0.1 flat,
-over 0.5 mirrored) sit between the 3 mV pickup and the 170 to 185 mV the
-pump has read at its summer level.
+Per phase the driven pump's own channel is CT2/P1 for the secondary and
+CT1/P0 for the store. Own under 20 mV rms is INCONCLUSIVE (the pump did
+not run or draws nothing the CT sees); other/own under 0.1 is CLEAN
+(only the pump's own CT sees it); over 0.5 is MIRRORED (shared
+conductor or tied inputs); between is PARTIAL, read the fold pngs. The
+thresholds sit between the 3 mV pickup and the 170 to 185 mV the
+secondary pump has read at its summer level; `jump1` put the store
+pump's contribution near 550 mV on both channels. Instances are tagged
+`<channel>.<phase>.<run>` and stay here; the box's copies are removed
+by the script. `base1` (2026-09-08 17:50 ET, the earlier one-phase
+script) read 2.7 mV rms on both channels with the pump off.
+
+The 0x21 reset hazard (`../2026-08-23-gw108-relay-stress/`) is handled
+in the script: the iso valve is expected open already (the summer
+posture); if not, it is energized only after the secondary coil is on,
+and every relay write is followed by the power-on-reset check. A reset
+aborts the run and the restore still runs.
 
 ### Reading the offsets
 

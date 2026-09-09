@@ -13,6 +13,8 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-08 to 09-09 · [five-v-boss-hold](2026-09-08-five-v-boss-hold/)**
+  — the 5 V hold through admin: dev-broker rung (three scada fixes) then `gwa watch spruce` on the real gw108, PASS both; three layout picos never posted; RebootPicos missing from the row.
 - **2026-09-08 · [gw108-relay-stress / honeysuckle](2026-08-23-gw108-relay-stress/2026-09-08-honeysuckle/)**
   — the 0x21 reset needs the house, not the board: the same B/F/A
   triplet on the bench gw108 with nothing on the relay contacts gave

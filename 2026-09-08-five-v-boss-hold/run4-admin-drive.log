@@ -1,0 +1,109 @@
+19:30:05 mqtt started -> connecting
+19:30:05 mqtt connecting -> subscribing
+19:30:05 mqtt subscribing -> active
+19:30:05 RX scada.control.capabilities
+19:30:05 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.pico-cycler.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosRebooting'}
+19:30:05 link active
+19:30:05 (1) watching 150s for the boot cycle and the sim picos' posts
+19:30:09 RX single.machine.state auto.five-v-boss.pico-cycler pico.cycler.state=PicosLive
+19:30:30 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.pico-cycler.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:30:41 RX single.reading
+19:31:00 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.pico-cycler.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:31:30 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.pico-cycler.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:31:41 RX single.reading
+19:32:00 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.pico-cycler.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:32:30 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.pico-cycler.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:32:35 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.pico-cycler.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:32:37 PASS (2) five-v-boss row present in scada.control.capabilities: ['buffer-bottom-elt-relay', 'buffer-top-elt-relay', 'charge-valve-relay', 'five-v-boss', 'hp-boss', 'hp-scada-ops-relay', 'iso-valve-relay', 'pico-cycler', 'secondary-pump-relay', 'store-pump-relay', 'tank1-bottom-elt-relay', 'tank1-top-elt-relay', 'vdc-relay', 'zone1-bedrooms-failsafe-relay', 'zone1-bedrooms-ops-relay', 'zone2-living-rm-failsafe-relay', 'zone2-living-rm-ops-relay', 'zone3-upstairs-failsafe-relay', 'zone3-upstairs-ops-relay', 'zone4-garage-failsafe-relay', 'zone4-garage-ops-relay', 'zone5-living-rm-fancoil-failsafe-relay', 'zone5-living-rm-fancoil-ops-relay']
+19:32:37 PASS (2) five-v-boss reads PicoCycler at rest: PicoCycler
+19:32:37 (2) TurnOff
+19:32:37 TX admin.dispatch TurnOff -> admin.five-v-boss trigger=2695ad10-d6f2-4db5-bb13-1cf858a0c17c
+19:32:37 BROKER new.command.tree {'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.pico-cycler.vdc-relay'}
+19:32:37 REPLY gw.dispatch.ack for TurnOff trigger=2695ad10-d6f2-4db5-bb13-1cf858a0c17c 
+19:32:37 RX gw.dispatch.ack {"FromHandle": "admin.five-v-boss", "ToHandle": "admin", "TriggerId": "2695ad10-d6f2-4db5-bb13-1cf858a0c17c", "UnixTimeMs": 1788910357870, "TypeName": "gw.dispatch.ack", "Version": "000"}
+19:32:37 BROKER new.command.tree {'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'}
+19:32:37 RX single.machine.state admin.five-v-boss five.v.boss.state=TurningOff
+19:32:37 RX single.machine.state admin.five-v-boss.pico-cycler pico.cycler.state=Dormant
+19:32:37 RX single.machine.state admin.five-v-boss.vdc-relay relay.closed.or.open=RelayOpen
+19:32:37 RX single.machine.state admin.five-v-boss five.v.boss.state=FiveVOff
+19:32:37 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:32:39 PASS (2) TurnOff reply: boss=FiveVOff cycler=Dormant relay=RelayOpen tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'}
+19:32:39 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:32:41 RX single.reading
+19:32:41 PASS (2) FiveVOff, relay under five-v-boss + RelayOpen, cycler Dormant: boss=FiveVOff cycler=Dormant relay=RelayOpen tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'}
+19:32:41 (3) holding 150s past a would-be flatline (SimLifeS 120)
+19:32:41 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:32:51 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:33:00 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:33:01 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:33:11 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:33:21 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:33:30 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:33:31 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:33:41 RX single.reading
+19:33:41 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:33:51 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:00 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:01 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:11 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:21 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:30 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:31 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:41 RX single.reading
+19:34:41 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:51 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:34:58 RX single.machine.state admin.five-v-boss.vdc-relay relay.closed.or.open=RelayOpen
+19:34:58 RX single.machine.state admin.five-v-boss.pico-cycler pico.cycler.state=Dormant
+19:35:00 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:35:01 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:35:11 PASS (3) hold: no relay event, no cycler transition: boss=FiveVOff relay=RelayOpen cycler=Dormant
+19:35:11 (4) TurnOn
+19:35:11 TX admin.dispatch TurnOn -> admin.five-v-boss trigger=5a7ae0d1-d4d3-47b9-834a-19549dc691d5
+19:35:11 REPLY gw.dispatch.ack for TurnOn trigger=5a7ae0d1-d4d3-47b9-834a-19549dc691d5 
+19:35:11 RX gw.dispatch.ack {"FromHandle": "admin.five-v-boss", "ToHandle": "admin", "TriggerId": "5a7ae0d1-d4d3-47b9-834a-19549dc691d5", "UnixTimeMs": 1788910511908, "TypeName": "gw.dispatch.ack", "Version": "000"}
+19:35:11 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:35:11 RX single.machine.state admin.five-v-boss five.v.boss.state=TurningOn
+19:35:11 RX single.machine.state admin.five-v-boss.vdc-relay relay.closed.or.open=RelayClosed
+19:35:11 RX single.machine.state admin.five-v-boss five.v.boss.state=PicoCycler
+19:35:11 RX single.machine.state admin.five-v-boss.pico-cycler pico.cycler.state=PicosLive
+19:35:11 BROKER new.command.tree {'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.pico-cycler.vdc-relay'}
+19:35:13 PASS (4) TurnOn reply: boss=PicoCycler cycler=PicosLive relay=RelayClosed tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.pico-cycler.vdc-relay'}
+19:35:13 RX snapshot {'admin.five-v-boss': 'PicoCycler', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayClosed', 'admin.five-v-boss.pico-cycler': 'PicosLive'}
+19:35:15 PASS (4) PicoCycler, relay back under the cycler + RelayClosed, cycler PicosLive: boss=PicoCycler cycler=PicosLive relay=RelayClosed tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.pico-cycler.vdc-relay'}
+19:35:15 (4) waiting 40s for the picos to re-POST
+19:35:30 RX snapshot {'admin.five-v-boss': 'PicoCycler', 'buffer': 'Flatlined', 'tank1': 'Flatlined', 'admin.five-v-boss.vdc-relay': 'RelayClosed', 'admin.five-v-boss.pico-cycler': 'PicosLive'}
+19:35:41 RX single.reading
+19:35:55 RX snapshot {'admin.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayClosed', 'admin.five-v-boss.pico-cycler': 'PicosLive'}
+19:35:57 (5) TurnOff again, then release admin
+19:35:57 TX admin.dispatch TurnOff -> admin.five-v-boss trigger=be5a9eb1-0b6b-4336-bdb9-bb68aae2b5de
+19:35:57 REPLY gw.dispatch.ack for TurnOff trigger=be5a9eb1-0b6b-4336-bdb9-bb68aae2b5de 
+19:35:57 RX gw.dispatch.ack {"FromHandle": "admin.five-v-boss", "ToHandle": "admin", "TriggerId": "be5a9eb1-0b6b-4336-bdb9-bb68aae2b5de", "UnixTimeMs": 1788910557920, "TypeName": "gw.dispatch.ack", "Version": "000"}
+19:35:57 RX single.machine.state admin.five-v-boss five.v.boss.state=TurningOff
+19:35:57 RX single.machine.state admin.five-v-boss.pico-cycler pico.cycler.state=Dormant
+19:35:57 BROKER new.command.tree {'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'}
+19:35:57 RX single.machine.state admin.five-v-boss.vdc-relay relay.closed.or.open=RelayOpen
+19:35:57 RX single.machine.state admin.five-v-boss five.v.boss.state=FiveVOff
+19:35:57 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:35:59 PASS (5) second TurnOff reply: boss=FiveVOff cycler=Dormant relay=RelayOpen tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'}
+19:35:59 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:36:00 RX snapshot {'admin.five-v-boss': 'FiveVOff', 'buffer': 'Alive', 'tank1': 'Alive', 'admin.five-v-boss.vdc-relay': 'RelayOpen', 'admin.five-v-boss.pico-cycler': 'Dormant'}
+19:36:01 PASS (5) FiveVOff again: boss=FiveVOff cycler=Dormant relay=RelayOpen tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'}
+19:36:01 TX admin.release.control
+19:36:01 BROKER new.command.tree {'five-v-boss': 'auto.five-v-boss', 'pico-cycler': 'auto.five-v-boss.pico-cycler', 'vdc-relay': 'auto.five-v-boss.vdc-relay'}
+19:36:01 BROKER new.command.tree {'five-v-boss': 'auto.five-v-boss', 'pico-cycler': 'auto.five-v-boss.pico-cycler', 'vdc-relay': 'auto.five-v-boss.vdc-relay'}
+19:36:01 RX single.machine.state auto.five-v-boss five.v.boss.state=TurningOn
+19:36:01 RX single.machine.state auto.five-v-boss.vdc-relay relay.closed.or.open=RelayClosed
+19:36:01 RX single.machine.state auto.five-v-boss five.v.boss.state=PicoCycler
+19:36:01 BROKER new.command.tree {'five-v-boss': 'auto.five-v-boss', 'pico-cycler': 'auto.five-v-boss.pico-cycler', 'vdc-relay': 'auto.five-v-boss.pico-cycler.vdc-relay'}
+19:36:01 RX single.machine.state auto.five-v-boss.pico-cycler pico.cycler.state=PicosLive
+19:36:01 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:36:03 PASS (5) after release: AutoWakesUp restores PicoCycler + RelayClosed + PicosLive: boss=PicoCycler cycler=PicosLive relay=RelayClosed tree={'five-v-boss': 'auto.five-v-boss', 'pico-cycler': 'auto.five-v-boss.pico-cycler', 'vdc-relay': 'auto.five-v-boss.pico-cycler.vdc-relay'}
+19:36:03 waiting 70s for the next journal-bound report
+19:36:30 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:36:41 RX single.reading
+19:37:00 RX snapshot {'auto.five-v-boss': 'PicoCycler', 'buffer': 'Alive', 'tank1': 'Alive', 'auto.five-v-boss.vdc-relay': 'RelayClosed', 'auto.five-v-boss.pico-cycler': 'PicosLive'}
+19:37:13 ids: off=2695ad10-d6f2-4db5-bb13-1cf858a0c17c on=5a7ae0d1-d4d3-47b9-834a-19549dc691d5 off2=be5a9eb1-0b6b-4336-bdb9-bb68aae2b5de
+19:37:13 SUMMARY PASS (2) five-v-boss row present in scada.control.capabilities: ['buffer-bottom-elt-relay', 'buffer-top-elt-relay', 'charge-valve-relay', 'five-v-boss', 'hp-boss', 'hp-scada-ops-relay', 'iso-valve-relay', 'pico-cycler', 'secondary-pump-relay', 'store-pump-relay', 'tank1-bottom-elt-relay', 'tank1-top-elt-relay', 'vdc-relay', 'zone1-bedrooms-failsafe-relay', 'zone1-bedrooms-ops-relay', 'zone2-living-rm-failsafe-relay', 'zone2-living-rm-ops-relay', 'zone3-upstairs-failsafe-relay', 'zone3-upstairs-ops-relay', 'zone4-garage-failsafe-relay', 'zone4-garage-ops-relay', 'zone5-living-rm-fancoil-failsafe-relay', 'zone5-living-rm-fancoil-ops-relay'] | PASS (2) five-v-boss reads PicoCycler at rest: PicoCycler | PASS (2) TurnOff reply: boss=FiveVOff cycler=Dormant relay=RelayOpen tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'} | PASS (2) FiveVOff, relay under five-v-boss + RelayOpen, cycler Dormant: boss=FiveVOff cycler=Dormant relay=RelayOpen tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'} | PASS (3) hold: no relay event, no cycler transition: boss=FiveVOff relay=RelayOpen cycler=Dormant | PASS (4) TurnOn reply: boss=PicoCycler cycler=PicosLive relay=RelayClosed tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.pico-cycler.vdc-relay'} | PASS (4) PicoCycler, relay back under the cycler + RelayClosed, cycler PicosLive: boss=PicoCycler cycler=PicosLive relay=RelayClosed tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.pico-cycler.vdc-relay'} | PASS (5) second TurnOff reply: boss=FiveVOff cycler=Dormant relay=RelayOpen tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'} | PASS (5) FiveVOff again: boss=FiveVOff cycler=Dormant relay=RelayOpen tree={'five-v-boss': 'admin.five-v-boss', 'pico-cycler': 'admin.five-v-boss.pico-cycler', 'vdc-relay': 'admin.five-v-boss.vdc-relay'} | PASS (5) after release: AutoWakesUp restores PicoCycler + RelayClosed + PicosLive: boss=PicoCycler cycler=PicosLive relay=RelayClosed tree={'five-v-boss': 'auto.five-v-boss', 'pico-cycler': 'auto.five-v-boss.pico-cycler', 'vdc-relay': 'auto.five-v-boss.pico-cycler.vdc-relay'}
+19:37:13 mqtt active -> backing_off
+19:37:13 mqtt backing_off -> stopped
+19:37:14 done
