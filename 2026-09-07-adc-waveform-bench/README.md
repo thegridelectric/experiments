@@ -12,16 +12,22 @@ Read this section and "One pump at a time" below; nothing else is
 needed to be useful. The box runs pushed SHAs only: after any push,
 `git pull` in the box's `~/experiments` and `~/gridworks-scada-unlimbo`.
 
-- **Swap spruce between the deployed scada and the unlimbo window
-  scada**, from the umbrella dir: `experiments/spruce_window.sh on
-  [minutes]`, then `gridworks-scada/gw_spaceheat/venv/bin/gwa watch
-  spruce`; `experiments/spruce_window.sh off` restores the deployed
-  scada and the summer hack; `status` shows services, window scada,
-  tunnel and the 0x21 relay bits.
+- **Names.** *Unlimbo* is the newer scada (the `jm/spruce-unlimbo`
+  checkout: sema words, works with the admin); *the deployed scada* is
+  the one systemd runs, always with the summer hack beside it. Claude
+  does every start, stop and prep; the human says "bring up unlimbo",
+  "bring down unlimbo" or "we want to run peek, tag `<name>`".
+- **Bring up / bring down unlimbo**, from the umbrella dir:
+  `experiments/spruce_window.sh on [minutes]`, then
+  `gridworks-scada/gw_spaceheat/venv/bin/gwa watch spruce`;
+  `experiments/spruce_window.sh off` restores the deployed scada and
+  the summer hack; `status` shows services, unlimbo, tunnel and the
+  0x21 relay bits.
 - **CT check, one pump at a time:** from this folder,
-  `uv run python peek.py --run <tag>` (about a minute, restores
-  everything itself). Do not run it while the window scada is up: both
-  drive the 0x21 relays.
+  `uv run python peek.py --run <tag>` (about a minute). It stops the
+  deployed scada and the summer hack itself and restores them in a
+  finally, but knows nothing about unlimbo: check `status` and bring
+  unlimbo down first, since both drive the 0x21 relays.
 - **Where things stand.** `jump1` (09-08) showed P0 and P1 carrying the
   same signal with both pumps on; the two-phase `peek.py` has had its
   dry run only. The panel witness of the five-v-boss hold is
