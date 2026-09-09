@@ -28,13 +28,13 @@ needed to be useful. The box runs pushed SHAs only: after any push,
   deployed scada and the summer hack itself and restores them in a
   finally, but knows nothing about unlimbo: check `status` and bring
   unlimbo down first, since both drive the 0x21 relays.
-- **Where things stand.** `jump1` (09-08) showed P0 and P1 carrying the
-  same signal with both pumps on; the two-phase `peek.py` has had its
-  dry run only. The panel witness of the five-v-boss hold is
-  `../2026-09-08-five-v-boss-hold/` (the window section); the admin panel still offers one
-  command on the five-v-boss row (RebootPicos missing) and the owned
-  rows are not yet indented, both queued in the pico-cycler-command
-  spoke, not for the field.
+- **Where things stand.** Seven `peek.py` runs at spruce on 2026-09-09
+  showed ADC inputs P0, P1 and P3 reading one signal whichever holds the
+  CT, P2 independent; the run-by-run setup, numbers and open questions
+  are in `2026-09-09-spruce-runs/README.md` (the handoff). The eGauge CT
+  now meters the secondary pump on eGauge port 05 (`secondary-pump-pwr`);
+  the blue 1 A current CT reads the store pump on P0 (two passes,
+  31 mV against a 1.6 mV off state).
 
 ## Why
 
@@ -120,7 +120,7 @@ answers.
 **3. Capture (honeysuckle).** Two seconds. The last line printed is
 the verdict: count, effective rate, largest gap.
 
-    cd ~/experiments/2026-09-07-adc-waveform-bench
+    cd ~/experiments/2026-09-07-gw108-ct-testing
 
     ~/gridworks-scada/gw_spaceheat/venv/bin/python capture.py --ta-alias d1.bench.honeysuckle.ta --seconds 2 --tag r1
 
@@ -134,7 +134,7 @@ the CT: `--channel P1` is CT2, the secondary pump.
 back by scp from the pi and are committed here. The pi's copy is
 removed in the restore step.
 
-    scp 'honeysuckle:~/experiments/2026-09-07-adc-waveform-bench/instances/d1.bench.honeysuckle.ta-*' instances/
+    scp 'honeysuckle:~/experiments/2026-09-07-gw108-ct-testing/instances/d1.bench.honeysuckle.ta-*' instances/
 
 **5. Fold (dev machine).** One line per instance; the plot lands
 beside it, gitignored.
@@ -144,7 +144,7 @@ beside it, gitignored.
 **6. Restore (honeysuckle).** The clone stays (recorded in the box
 README); the run's instances leave the box.
 
-    rm ~/experiments/2026-09-07-adc-waveform-bench/instances/d1.bench.honeysuckle.ta-*
+    rm ~/experiments/2026-09-07-gw108-ct-testing/instances/d1.bench.honeysuckle.ta-*
 
 ### Speed ladder (spruce, secondary pump)
 
@@ -159,12 +159,12 @@ the pico's flow reading has a chance to land for the label.
     # dev machine: commit + push this folder, then on spruce:
     git -C ~/experiments pull
     sudo systemctl stop spruce-summer-hack.service     # failsafe drops the pump; the driver re-energizes it
-    cd ~/experiments/2026-09-07-adc-waveform-bench
+    cd ~/experiments/2026-09-07-gw108-ct-testing
     ~/starter-scripts/venv/bin/python ladder.py --run ladder1
     sudo systemctl start spruce-summer-hack.service    # re-asserts the summer posture
     # dev machine:
-    scp 'spruce:~/experiments/2026-09-07-adc-waveform-bench/instances/*ladder1*' instances/
-    scp spruce:~/experiments/2026-09-07-adc-waveform-bench/ladder1-levels.json .
+    scp 'spruce:~/experiments/2026-09-07-gw108-ct-testing/instances/*ladder1*' instances/
+    scp spruce:~/experiments/2026-09-07-gw108-ct-testing/ladder1-levels.json .
     # restore on spruce: rm the ladder1 instances and the levels file from the clone
 
 Each instance is tagged `p1.dac<volts x 10>.<run>`; `<run>-levels.json`
@@ -186,12 +186,12 @@ phases file does not record it, so note it in Found.
     # dev machine: commit + push this folder, then on spruce:
     git -C ~/experiments pull
     sudo systemctl stop spruce-summer-hack.service     # no scada may be up either; the driver checks both
-    cd ~/experiments/2026-09-07-adc-waveform-bench
+    cd ~/experiments/2026-09-07-gw108-ct-testing
     ~/starter-scripts/venv/bin/python jumper.py --run jump1
     sudo systemctl start spruce-summer-hack.service
     # dev machine:
-    scp 'spruce:~/experiments/2026-09-07-adc-waveform-bench/instances/*jump1*' instances/
-    scp spruce:~/experiments/2026-09-07-adc-waveform-bench/jump1-phases.json .
+    scp 'spruce:~/experiments/2026-09-07-gw108-ct-testing/instances/*jump1*' instances/
+    scp spruce:~/experiments/2026-09-07-gw108-ct-testing/jump1-phases.json .
     # restore on spruce: rm the jump1 instances and the phases file from the clone
 
 Instances are tagged `<channel>.<phase>.<run>` (`p0.storeon.jump1`);
@@ -214,6 +214,7 @@ which the only path from CT2's signal to P0 is on the gw108.
     uv run python peek.py --dry-run              # entry bits and the plan, touches nothing
     uv run python peek.py --run lift1            # a named run, about a minute
     uv run python peek.py --baseline             # nothing energized, services untouched: expect flat/flat
+    uv run python peek.py --run run3 --channels P3,P0   # CT2 moved to the fourth connector: own channels P3 (sec) and P0 (store)
 
 Per phase the driven pump's own channel is CT2/P1 for the secondary and
 CT1/P0 for the store. Own under 20 mV rms is INCONCLUSIVE (the pump did
@@ -413,6 +414,9 @@ generated and gitignored, so regenerate rather than commit them.
   scale; the spruce runs (bulb, secondary pump) carry that.
 
 ## Folder contents & experimental method
+
+- `2026-09-09-spruce-runs/` — the seven one-pump-at-a-time runs at spruce
+  with the CTs moved between connectors; handoff README + instances.
 
 All data in this folder is GENERATED by the experiment's own harness on
 the bench pi: the chip is read directly over i2c, nothing is in the

@@ -86,7 +86,7 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
-- **2026-09-07 · [adc-waveform-bench](2026-09-07-adc-waveform-bench/)** —
+- **2026-09-07 · [gw108-ct-testing](2026-09-07-gw108-ct-testing/)** (was adc-waveform-bench) —
   one burst of ADS1115 conversions from a gw108 CT input, captured as a
   `gw.adc.waveform` instance and folded on a fitted mains frequency.
   Does the pi's polled path (single-shot vs continuous) deliver clean

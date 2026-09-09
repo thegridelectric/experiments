@@ -55,7 +55,7 @@ from fold import fold, load  # noqa: E402
 
 HOST = "spruce"
 TA_ALIAS = "hw1.isone.me.versant.keene.spruce.ta"
-BOX_DIR = "~/experiments/2026-09-07-adc-waveform-bench"
+BOX_DIR = "~/experiments/2026-09-07-gw108-ct-testing"
 SCADA_PYTHON = "~/gridworks-scada/gw_spaceheat/venv/bin/python"
 SERVICES = ("spruce-summer-hack.service", "gwspaceheat.service")
 # gw108 expander 0x21 register 3 bits (the store_common.py table).
@@ -197,12 +197,18 @@ def run_phases(run: str, hold: int, dry_run: bool) -> dict[str, dict[str, str]]:
 
 
 def main() -> None:
+    global CHANNELS, PHASES
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--run", default=f"peek{datetime.now():%H%M%S}", help="run tag, lowercase alnum; names the instances p<n>.<phase>.<run> (default: peek<HHMMSS>)")
     parser.add_argument("--hold", type=int, default=15, help="seconds after a pump comes on alone before capturing")
     parser.add_argument("--baseline", action="store_true", help="energize nothing, services untouched: one 'base' phase (a flat/flat pipeline check)")
     parser.add_argument("--dry-run", action="store_true", help="print the entry bits and the plan; touch nothing")
+    parser.add_argument("--channels", default=",".join(CHANNELS), help="two ADC inputs, the secondary pump's own CT first, the store pump's second (default P1,P0; P3,P0 once CT2 moves to the fourth connector)")
     args = parser.parse_args()
+    CHANNELS = tuple(args.channels.upper().split(","))
+    if len(CHANNELS) != 2 or not all(ch in ("P0", "P1", "P2", "P3") for ch in CHANNELS):
+        parser.error("--channels takes two of P0..P3, e.g. P3,P0")
+    PHASES = (Phase("sec", SEC_BIT, CHANNELS[0]), Phase("store", STORE_BIT, CHANNELS[1]))
     t0 = time.monotonic()
     print(f"run {args.run}")
 
