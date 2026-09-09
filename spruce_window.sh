@@ -29,7 +29,7 @@ case "${1:-}" in
     MIN="${2:-30}"
     tunnel_up || ssh -f -N -o ExitOnForwardFailure=yes -R 1885:localhost:1885 "$HOST"
     echo "tunnel up"
-    ssh "$HOST" "sudo systemctl stop $SERVICES; mkdir -p $BOX_LOG_DIR; SECS=$((MIN * 60)); $BOOT; sleep 20; git -C ~/gridworks-scada-unlimbo log --oneline -1; tail -3 $BOX_LOG_DIR/boot.log | cut -c1-140"
+    ssh "$HOST" "sudo systemctl stop $SERVICES; mkdir -p $BOX_LOG_DIR; SECS=$((MIN * 60)); $BOOT sleep 20; git -C ~/gridworks-scada-unlimbo log --oneline -1; tail -3 $BOX_LOG_DIR/boot.log | cut -c1-140"
     echo "window scada up for $MIN min; now: gridworks-scada/gw_spaceheat/venv/bin/gwa watch spruce"
     ;;
   off)
