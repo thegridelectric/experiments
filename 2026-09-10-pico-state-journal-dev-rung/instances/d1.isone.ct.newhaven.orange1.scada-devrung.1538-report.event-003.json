@@ -1,0 +1,127 @@
+{
+  "Src": "d1.isone.ct.newhaven.orange1.scada",
+  "Report": {
+    "Id": "e991a646-e95f-41b3-8b09-4c266ff731c6",
+    "Version": "003",
+    "TypeName": "report",
+    "StateList": [
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "single.pico.state",
+        "StateList": [
+          "Flatlined"
+        ],
+        "UnixMsList": [
+          1789054653967
+        ],
+        "MachineHandle": "buffer"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "single.pico.state",
+        "StateList": [
+          "Flatlined"
+        ],
+        "UnixMsList": [
+          1789054653968
+        ],
+        "MachineHandle": "tank1"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "gw1.local.control.all.tanks.state",
+        "StateList": [
+          "HpOffStoreOff"
+        ],
+        "UnixMsList": [
+          1789054658960
+        ],
+        "MachineHandle": "auto.lc.n"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "top.state",
+        "StateList": [
+          "Auto"
+        ],
+        "UnixMsList": [
+          1789054678801
+        ],
+        "MachineHandle": "s"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "gw1.main.auto.state",
+        "StateList": [
+          "LocalControl"
+        ],
+        "UnixMsList": [
+          1789054678801
+        ],
+        "MachineHandle": "auto"
+      }
+    ],
+    "FsmReportList": [],
+    "SlotDurationS": 60,
+    "FromGNodeAlias": "d1.isone.ct.newhaven.orange1.scada",
+    "SlotStartUnixS": 1789054620,
+    "AboutGNodeAlias": "d1.isone.ct.newhaven.orange1.ta",
+    "MessageCreatedMs": 1789054680002,
+    "ChannelReadingList": [
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          12397
+        ],
+        "ChannelName": "zone1-main-gw-temp",
+        "ScadaReadTimeUnixMsList": [
+          1789054620003
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          200000
+        ],
+        "ChannelName": "zone1-main-gw-microvolts",
+        "ScadaReadTimeUnixMsList": [
+          1789054620003
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          0
+        ],
+        "ChannelName": "usable-energy",
+        "ScadaReadTimeUnixMsList": [
+          1789054656429
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          0
+        ],
+        "ChannelName": "required-energy",
+        "ScadaReadTimeUnixMsList": [
+          1789054656441
+        ]
+      }
+    ],
+    "FromGNodeInstanceId": "c9794c6d-e013-4d74-9570-f9ba4b0f0b0d"
+  },
+  "Version": "003",
+  "TypeName": "report.event",
+  "MessageId": "785e326e-c440-478a-8cf5-9325c61ff73f",
+  "TimeCreatedMs": 1789054680002
+}

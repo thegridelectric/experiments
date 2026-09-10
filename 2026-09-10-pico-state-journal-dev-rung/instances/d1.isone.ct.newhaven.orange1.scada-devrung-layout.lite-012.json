@@ -1,0 +1,907 @@
+{
+  "TMap": {
+    "Tank": {
+      "1": {
+        "Depth1B": 0.0,
+        "Depth1M": 1.0,
+        "Depth2B": 0.0,
+        "Depth2M": 1.0,
+        "Depth3B": 0.0,
+        "Depth3M": 1.0,
+        "Version": "000",
+        "TypeName": "gw1.tank.temp.calibration"
+      }
+    },
+    "Buffer": {
+      "Depth1B": 0.0,
+      "Depth1M": 1.0,
+      "Depth2B": 0.0,
+      "Depth2M": 1.0,
+      "Depth3B": 0.0,
+      "Depth3M": 1.0,
+      "Version": "000",
+      "TypeName": "gw1.tank.temp.calibration"
+    },
+    "Version": "000",
+    "TypeName": "gw1.tank.temp.calibration.map"
+  },
+  "ShNodes": [
+    {
+      "Name": "s",
+      "Version": "301",
+      "ShNodeId": "259f9431-c6a1-4170-8766-04cbf65cff4a",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "PrimaryScada",
+      "DisplayName": "Little Orange House Main Scada"
+    },
+    {
+      "Name": "s2",
+      "Version": "301",
+      "ShNodeId": "a7842e1d-05d6-4111-b7fc-1f240ed0d0b7",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "SecondaryScada",
+      "DisplayName": "Secondary Scada"
+    },
+    {
+      "Name": "admin",
+      "Handle": "admin",
+      "Version": "301",
+      "ShNodeId": "cf6bcccc-ef66-4088-82ef-5953953f448a",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "Local Admin"
+    },
+    {
+      "Name": "auto",
+      "Handle": "auto",
+      "Version": "301",
+      "ShNodeId": "7249aee4-6bcb-4f1c-b6d4-0e0dbe7792f6",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "Auto - FSM for dispatch contract"
+    },
+    {
+      "Name": "ltn",
+      "Version": "301",
+      "ShNodeId": "ed56817a-cd46-4f33-bb4d-525d01718f2c",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "LeafTransactiveNode"
+    },
+    {
+      "Name": "la",
+      "Handle": "ltn.la",
+      "Version": "301",
+      "ShNodeId": "6a5ba7db-4f21-4deb-93b4-f462c584fb27",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "LeafAlly",
+      "DisplayName": "Leaf Ally",
+      "ActorHierarchyName": "s.la"
+    },
+    {
+      "Name": "pico-cycler",
+      "Handle": "auto.pico-cycler",
+      "Version": "301",
+      "ShNodeId": "67eac5fe-72e3-49fd-a606-ec3363f73501",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "PicoCycler",
+      "DisplayName": "Pico Cycler - responsible for power cycling the 5VDC bus",
+      "ActorHierarchyName": "s.pico-cycler"
+    },
+    {
+      "Name": "derived-generator",
+      "Version": "301",
+      "ShNodeId": "5ca6a864-169e-4bf8-a1a9-c4ea1066b0ea",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "DerivedGenerator",
+      "DisplayName": "Derived Generator",
+      "ActorHierarchyName": "s.derived-generator"
+    },
+    {
+      "Name": "lc",
+      "Handle": "auto.lc",
+      "Version": "301",
+      "ShNodeId": "f2d1897d-e3df-493f-8137-35b5f9b71f47",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "LocalControl",
+      "DisplayName": "LocalControl",
+      "ActorHierarchyName": "s.lc"
+    },
+    {
+      "Name": "n",
+      "Handle": "auto.lc.n",
+      "Version": "301",
+      "ShNodeId": "5d01b433-8731-483f-b8e8-641f725a1760",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "LocalControl Normal"
+    },
+    {
+      "Name": "backup",
+      "Handle": "auto.lc.backup",
+      "Version": "301",
+      "ShNodeId": "95dc63f0-bd76-4e6e-b95f-c2f5d395ba5c",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "LocalControl Backup"
+    },
+    {
+      "Name": "scada-blind",
+      "Handle": "auto.lc.scada-blind",
+      "Version": "301",
+      "ShNodeId": "1bc33f7e-29cc-4702-9f9e-e7eac37500a2",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "LocalControl Scada Blind"
+    },
+    {
+      "Name": "hp-boss",
+      "Handle": "auto.lc.n.hp-boss",
+      "Version": "301",
+      "ShNodeId": "203a4a00-70d4-4b20-878d-310342a83db8",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "HpBoss",
+      "DisplayName": "HeatpumpBoss",
+      "ActorHierarchyName": "s.hp-boss"
+    },
+    {
+      "Name": "power-meter",
+      "Version": "301",
+      "ShNodeId": "0dd8a803-4724-4f49-b845-14ff57bdb3e6",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "PowerMeter",
+      "ComponentId": "2bfd0036-0b0e-4732-8790-bc7d0536a85e",
+      "DisplayName": "Main Power Meter Little Orange House Test System",
+      "ActorHierarchyName": "s.power-meter"
+    },
+    {
+      "Name": "hp-odu",
+      "Version": "301",
+      "ShNodeId": "f1692ea8-9866-423c-b260-93d2affc9881",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "HP ODU",
+      "InPowerMetering": true,
+      "NameplatePowerW": 6000
+    },
+    {
+      "Name": "hp-idu",
+      "Version": "301",
+      "ShNodeId": "7da56e55-3cf0-4a2f-9c06-0c6c176b795c",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "HP IDU",
+      "InPowerMetering": true,
+      "NameplatePowerW": 4000
+    },
+    {
+      "Name": "store-pump",
+      "Version": "301",
+      "ShNodeId": "c35d9c77-1ebb-4822-b01e-00ff189092f7",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "Store Pump"
+    },
+    {
+      "Name": "vdc-relay-gpio-23",
+      "Handle": "auto.pico-cycler.vdc-relay-gpio-23",
+      "Version": "301",
+      "ShNodeId": "0af888b2-e1f1-4f74-a003-1e425e87b559",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "Relay",
+      "ComponentId": "514e4f8c-6ca0-4bc1-97a7-b737de76e4f4",
+      "DisplayName": "5VDC Relay",
+      "ActorHierarchyName": "s.vdc-relay-gpio-23"
+    },
+    {
+      "Name": "buffer",
+      "Version": "301",
+      "ShNodeId": "68596845-2e66-4f9d-a876-90da381ddc37",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "ApiTankModule",
+      "ComponentId": "00593fba-9975-49ad-bce0-7f7e1dfb26b1",
+      "DisplayName": "Buffer SIMULATED ApiTankModule actor",
+      "ActorHierarchyName": "s.buffer"
+    },
+    {
+      "Name": "buffer-depth1",
+      "Version": "301",
+      "ShNodeId": "575642e0-2c83-49b5-b682-8032d6a63f7e",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "buffer-depth1"
+    },
+    {
+      "Name": "buffer-depth2",
+      "Version": "301",
+      "ShNodeId": "04eb01a7-af6c-40fd-a5bd-f0ca1e3919f4",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "buffer-depth2"
+    },
+    {
+      "Name": "buffer-depth3",
+      "Version": "301",
+      "ShNodeId": "4f78d07e-3ddc-4cc9-8955-5a1796d7b740",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "buffer-depth3"
+    },
+    {
+      "Name": "tank1",
+      "Version": "301",
+      "ShNodeId": "72c08f97-4466-414a-8fac-88847d704a88",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "ApiTankModule",
+      "ComponentId": "bd65556c-2ca4-499d-ad25-57767a785685",
+      "DisplayName": "Tank1 SIMULATED ApiTankModule actor",
+      "ActorHierarchyName": "s.tank1"
+    },
+    {
+      "Name": "tank1-depth1",
+      "Version": "301",
+      "ShNodeId": "30fb84c2-cf33-4a26-a023-e8b80a90b543",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "tank1-depth1"
+    },
+    {
+      "Name": "tank1-depth2",
+      "Version": "301",
+      "ShNodeId": "b226043b-9c49-4c37-8748-178e1162d292",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "tank1-depth2"
+    },
+    {
+      "Name": "tank1-depth3",
+      "Version": "301",
+      "ShNodeId": "b08f8764-6f26-444c-bf21-e69959f59817",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "tank1-depth3"
+    },
+    {
+      "Name": "zone1-main",
+      "Version": "301",
+      "ShNodeId": "9d1067d3-4d20-4bad-a7f7-a14e277c6cb2",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "Zone 1 Main"
+    },
+    {
+      "Name": "zone1-main-whitewire",
+      "Version": "301",
+      "ShNodeId": "5c963e12-a634-4a85-8345-7f3e6589e7a9",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "NoActor",
+      "DisplayName": "Zone 1 Main Whitewire"
+    },
+    {
+      "Name": "zone1-main-opto",
+      "Version": "301",
+      "ShNodeId": "561004d9-40cb-494c-a1c9-ca969e4e2667",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "GpioSensor",
+      "ComponentId": "6415ae92-d345-4003-bb8d-5ad13142f9d0",
+      "DisplayName": "Zone 1 Main Opto",
+      "ActorHierarchyName": "s.zone1-main-opto"
+    },
+    {
+      "Name": "gw108-thermistor-reader",
+      "Version": "301",
+      "ShNodeId": "f7d7a2e2-a2b2-4954-a368-09df969a4b65",
+      "TypeName": "spaceheat.node.gt",
+      "ActorClass": "I2cThermistorReader",
+      "ComponentId": "1ce64678-ce36-4001-abd9-454ea6a306b4",
+      "DisplayName": "GW108 Thermistor Reader",
+      "ActorHierarchyName": "s.gw108-thermistor-reader"
+    }
+  ],
+  "Version": "012",
+  "Strategy": "House0",
+  "TypeName": "layout.lite",
+  "ZoneList": [
+    "main"
+  ],
+  "Ha1Params": {
+    "CopMin": 1.4,
+    "DdRswtF": 150,
+    "MaxEwtF": 170,
+    "Version": "006",
+    "GammaEx6": 0,
+    "TypeName": "ha1.params",
+    "DdDeltaTF": 20,
+    "DdPowerKw": 5.5,
+    "HpMaxKwEl": 9.66,
+    "CopMinOatF": 15.0,
+    "CopLwtCoeff": 0.0,
+    "CopOatCoeff": 0.0257,
+    "AlphaTimes10": 55,
+    "BetaTimes100": -10,
+    "CopIntercept": 1.02,
+    "HpTurnOnMinutes": 12,
+    "IntermediateRswtF": 100,
+    "IntermediatePowerKw": 1.5,
+    "LoadOverestimationPercent": 0
+  },
+  "MessageId": "cd863313-27f5-44ff-815e-1105ee664db5",
+  "SystemMode": "Heating",
+  "DataChannels": [
+    {
+      "Id": "4cb6a9e6-24c4-4b72-9a7d-af5b884c83bd",
+      "Name": "hp-odu-pwr",
+      "Version": "002",
+      "Quantity": "Power",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "HP ODU PWR",
+      "AboutNodeName": "hp-odu",
+      "TelemetryName": "PowerW",
+      "InPowerMetering": true,
+      "CapturedByNodeName": "power-meter",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "5ac27781-2976-49c4-8890-0d0fdad219f7",
+      "Name": "hp-idu-pwr",
+      "Version": "002",
+      "Quantity": "Power",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "HP IDU PWR",
+      "AboutNodeName": "hp-idu",
+      "TelemetryName": "PowerW",
+      "InPowerMetering": true,
+      "CapturedByNodeName": "power-meter",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "7876ebb2-03d2-4c7f-9046-011b7c5d4deb",
+      "Name": "store-pump-pwr",
+      "Version": "002",
+      "Quantity": "Power",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "STORE PUMP PWR",
+      "AboutNodeName": "store-pump",
+      "TelemetryName": "PowerW",
+      "InPowerMetering": false,
+      "CapturedByNodeName": "power-meter",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "6766d5d4-560a-419a-9611-8eb6ab208be9",
+      "Name": "vdc-relay",
+      "Version": "002",
+      "Quantity": "Unitless",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "5V DC Bus Relay State",
+      "AboutNodeName": "vdc-relay-gpio-23",
+      "TelemetryName": "RelayState",
+      "CapturedByNodeName": "vdc-relay-gpio-23",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "688294c8-0045-487e-909e-feaa1116731f",
+      "Name": "buffer-depth1-device",
+      "Version": "002",
+      "Quantity": "Temperature",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Buffer Depth 1 Device Temp",
+      "AboutNodeName": "buffer-depth1",
+      "TelemetryName": "WaterTempCTimes1000",
+      "CapturedByNodeName": "buffer",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "a44d54b2-a745-40da-b4dc-0deb822bcac9",
+      "Name": "buffer-depth2-device",
+      "Version": "002",
+      "Quantity": "Temperature",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Buffer Depth 2 Device Temp",
+      "AboutNodeName": "buffer-depth2",
+      "TelemetryName": "WaterTempCTimes1000",
+      "CapturedByNodeName": "buffer",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "f221308c-1ccf-4e31-8761-31d6f735eed0",
+      "Name": "buffer-depth3-device",
+      "Version": "002",
+      "Quantity": "Temperature",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Buffer Depth 3 Device Temp",
+      "AboutNodeName": "buffer-depth3",
+      "TelemetryName": "WaterTempCTimes1000",
+      "CapturedByNodeName": "buffer",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "e7a9c6eb-493b-4030-ae4c-90303088b61d",
+      "Name": "buffer-depth1-micro-v",
+      "Version": "002",
+      "Quantity": "Voltage",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Buffer Depth 1 MicroVolts",
+      "AboutNodeName": "buffer-depth1",
+      "TelemetryName": "MicroVolts",
+      "CapturedByNodeName": "buffer",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "10620558-7c19-462d-9677-c412cf7bb65f",
+      "Name": "buffer-depth2-micro-v",
+      "Version": "002",
+      "Quantity": "Voltage",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Buffer Depth 2 MicroVolts",
+      "AboutNodeName": "buffer-depth2",
+      "TelemetryName": "MicroVolts",
+      "CapturedByNodeName": "buffer",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "d071e40c-8196-4c5f-aa69-12c6d40e28d6",
+      "Name": "buffer-depth3-micro-v",
+      "Version": "002",
+      "Quantity": "Voltage",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Buffer Depth 3 MicroVolts",
+      "AboutNodeName": "buffer-depth3",
+      "TelemetryName": "MicroVolts",
+      "CapturedByNodeName": "buffer",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "5982051b-dc4a-41fc-bdcc-2731bd821ccd",
+      "Name": "tank1-depth1-device",
+      "Version": "002",
+      "Quantity": "Temperature",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Tank1 Depth 1 Device Temp",
+      "AboutNodeName": "tank1-depth1",
+      "TelemetryName": "WaterTempCTimes1000",
+      "CapturedByNodeName": "tank1",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "732f8bbb-bf6b-4b66-a3d3-b581e68b1993",
+      "Name": "tank1-depth2-device",
+      "Version": "002",
+      "Quantity": "Temperature",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Tank1 Depth 2 Device Temp",
+      "AboutNodeName": "tank1-depth2",
+      "TelemetryName": "WaterTempCTimes1000",
+      "CapturedByNodeName": "tank1",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "61740e76-ff8d-444a-ac30-dff5e9b51177",
+      "Name": "tank1-depth3-device",
+      "Version": "002",
+      "Quantity": "Temperature",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Tank1 Depth 3 Device Temp",
+      "AboutNodeName": "tank1-depth3",
+      "TelemetryName": "WaterTempCTimes1000",
+      "CapturedByNodeName": "tank1",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "05f95dbd-5221-4913-8901-14e0844a78cf",
+      "Name": "tank1-depth1-micro-v",
+      "Version": "002",
+      "Quantity": "Voltage",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Tank1 Depth 1 MicroVolts",
+      "AboutNodeName": "tank1-depth1",
+      "TelemetryName": "MicroVolts",
+      "CapturedByNodeName": "tank1",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "10b0b49b-65d2-46e8-8388-2ad0373467fe",
+      "Name": "tank1-depth2-micro-v",
+      "Version": "002",
+      "Quantity": "Voltage",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Tank1 Depth 2 MicroVolts",
+      "AboutNodeName": "tank1-depth2",
+      "TelemetryName": "MicroVolts",
+      "CapturedByNodeName": "tank1",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "fdc533b0-569f-499f-85e2-3bb449856e0a",
+      "Name": "tank1-depth3-micro-v",
+      "Version": "002",
+      "Quantity": "Voltage",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Tank1 Depth 3 MicroVolts",
+      "AboutNodeName": "tank1-depth3",
+      "TelemetryName": "MicroVolts",
+      "CapturedByNodeName": "tank1",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "3df43449-7933-451b-9c43-75301785a8f8",
+      "Name": "zone1-main-opto-input",
+      "Version": "002",
+      "Quantity": "Unitless",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Zone 1 Main Opto Input",
+      "AboutNodeName": "zone1-main-whitewire",
+      "TelemetryName": "BinaryState",
+      "CapturedByNodeName": "zone1-main-opto",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "8164626f-02aa-4ebb-aaa0-199e9f06a4fe",
+      "Name": "zone1-main-gw-temp",
+      "Version": "002",
+      "Quantity": "Temperature",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Zone 1 Main GW Temp",
+      "AboutNodeName": "zone1-main",
+      "TelemetryName": "CelsiusTimes100",
+      "CapturedByNodeName": "gw108-thermistor-reader",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "97f5d63c-95d0-4e02-bef7-abdbb1d45be0",
+      "Name": "zone1-main-gw-microvolts",
+      "Version": "002",
+      "Quantity": "Voltage",
+      "TypeName": "data.channel.gt",
+      "DisplayName": "Zone 1 Main GW Microvolts",
+      "AboutNodeName": "zone1-main",
+      "TelemetryName": "MicroVolts",
+      "CapturedByNodeName": "gw108-thermistor-reader",
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    }
+  ],
+  "FromGNodeAlias": "d1.isone.ct.newhaven.orange1.scada",
+  "DerivedChannels": [
+    {
+      "Id": "23bf86b8-266a-4244-9b72-914179ab85aa",
+      "Name": "usable-energy",
+      "Version": "001",
+      "Strategy": "system-model",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "WattHours",
+      "Parameters": {
+        "EnergyModel": {
+          "Version": "000",
+          "TypeName": "gw0.usable.energy.layered"
+        }
+      },
+      "DisplayName": "Usable Energy Wh",
+      "EmitPeriodS": 60,
+      "EmissionMethod": "Periodic",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "26c5f643-96cc-4ede-b958-75d626790c01",
+      "Name": "required-energy",
+      "Version": "001",
+      "Strategy": "system-model",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "WattHours",
+      "Parameters": {
+        "EnergyModel": {
+          "Version": "000",
+          "TypeName": "gw0.required.energy.layered"
+        }
+      },
+      "DisplayName": "Required Energy Wh",
+      "EmitPeriodS": 60,
+      "EmissionMethod": "Periodic",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "e9e383c7-b9b4-4583-8992-1bd800190bc9",
+      "Name": "buffer-depth1",
+      "Version": "001",
+      "Strategy": "identity",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "FahrenheitX100",
+      "DisplayName": "Buffer Depth1 Effective Temperature",
+      "EmissionMethod": "OnTrigger",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [
+        "buffer-depth1-device"
+      ],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "bd8f88b0-bf92-4133-a98d-bc51b75effbe",
+      "Name": "buffer-depth2",
+      "Version": "001",
+      "Strategy": "identity",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "FahrenheitX100",
+      "DisplayName": "Buffer Depth2 Effective Temperature",
+      "EmissionMethod": "OnTrigger",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [
+        "buffer-depth2-device"
+      ],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "9361490f-8286-4263-88d0-501ee6a7278b",
+      "Name": "buffer-depth3",
+      "Version": "001",
+      "Strategy": "identity",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "FahrenheitX100",
+      "DisplayName": "Buffer Depth3 Effective Temperature",
+      "EmissionMethod": "OnTrigger",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [
+        "buffer-depth3-device"
+      ],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "91061a8a-7f9e-42a6-b8dd-53612d146777",
+      "Name": "tank1-depth1",
+      "Version": "001",
+      "Strategy": "identity",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "FahrenheitX100",
+      "DisplayName": "Tank1 Depth1 Effective Temperature",
+      "EmissionMethod": "OnTrigger",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [
+        "tank1-depth1-device"
+      ],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "17db3a70-71c8-4565-8fa0-7cc6ae38da06",
+      "Name": "tank1-depth2",
+      "Version": "001",
+      "Strategy": "identity",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "FahrenheitX100",
+      "DisplayName": "Tank1 Depth2 Effective Temperature",
+      "EmissionMethod": "OnTrigger",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [
+        "tank1-depth2-device"
+      ],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "976b0878-f9eb-47e1-9cb4-6cdd7eed7f2a",
+      "Name": "tank1-depth3",
+      "Version": "001",
+      "Strategy": "identity",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "FahrenheitX100",
+      "DisplayName": "Tank1 Depth3 Effective Temperature",
+      "EmissionMethod": "OnTrigger",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [
+        "tank1-depth3-device"
+      ],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "e72979c4-5273-4430-8f57-113b6042f63a",
+      "Name": "zone1-main-heat-call",
+      "Version": "001",
+      "Strategy": "heat-call",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "Unitless",
+      "Parameters": {
+        "Interpretation": "DigitalZeroIsActive"
+      },
+      "DisplayName": "Zone 1 Main Heat Call",
+      "EmitPeriodS": 300,
+      "AsyncEmitDelta": 1,
+      "EmissionMethod": "AsyncAndPeriodic",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [
+        "zone1-main-opto-input"
+      ],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    },
+    {
+      "Id": "5aada055-4694-4875-bb06-67bf121c3ea8",
+      "Name": "zone1-main-set",
+      "Version": "001",
+      "Strategy": "simple-falling-edge-setpoint",
+      "TypeName": "derived.channel.gt",
+      "OutputUnit": "FahrenheitX100",
+      "Parameters": {
+        "SetpointThresholdFX100": 200
+      },
+      "DisplayName": "Zone 1 Main Predicted Setpoint",
+      "EmitPeriodS": 300,
+      "AsyncEmitDelta": 20,
+      "EmissionMethod": "AsyncAndPeriodic",
+      "CreatedByNodeName": "derived-generator",
+      "InputChannelNames": [
+        "zone1-main-gw-temp",
+        "zone1-main-heat-call"
+      ],
+      "TerminalAssetAlias": "d1.isone.ct.newhaven.orange1.ta"
+    }
+  ],
+  "TotalStoreTanks": 1,
+  "CriticalZoneList": [
+    "main"
+  ],
+  "MessageCreatedMs": 1789054593977,
+  "BufferShortCycling": false,
+  "SeasonalStorageMode": "AllTanks",
+  "FlowModuleComponents": [],
+  "TankModuleComponents": [
+    {
+      "Enabled": true,
+      "Samples": 1000,
+      "Version": "000",
+      "TypeName": "sim.pico.tank.module.component.gt",
+      "PicoHwUid": "sim-buffer-pico",
+      "ConfigList": [
+        {
+          "Unit": "Celcius",
+          "Version": "000",
+          "Exponent": 3,
+          "TypeName": "channel.config",
+          "ChannelName": "buffer-depth1-device",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "VoltsRms",
+          "Version": "000",
+          "Exponent": 6,
+          "TypeName": "channel.config",
+          "ChannelName": "buffer-depth1-micro-v",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "Celcius",
+          "Version": "000",
+          "Exponent": 3,
+          "TypeName": "channel.config",
+          "ChannelName": "buffer-depth2-device",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "VoltsRms",
+          "Version": "000",
+          "Exponent": 6,
+          "TypeName": "channel.config",
+          "ChannelName": "buffer-depth2-micro-v",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "Celcius",
+          "Version": "000",
+          "Exponent": 3,
+          "TypeName": "channel.config",
+          "ChannelName": "buffer-depth3-device",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "VoltsRms",
+          "Version": "000",
+          "Exponent": 6,
+          "TypeName": "channel.config",
+          "ChannelName": "buffer-depth3-micro-v",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        }
+      ],
+      "ComponentId": "00593fba-9975-49ad-bce0-7f7e1dfb26b1",
+      "DisplayName": "Buffer",
+      "SerialNumber": "NA",
+      "SendMicroVolts": true,
+      "TempCalcMethod": "SimpleBeta",
+      "ThermistorBeta": 3977,
+      "SimulatesVersion": "011",
+      "NumSampleAverages": 30,
+      "SimulatesTypeName": "pico.tank.module.component.gt",
+      "ComponentAttributeClassId": "627ac482-24fe-46b2-ba8c-3d6f1e1ee069",
+      "AsyncCaptureDeltaMicroVolts": 2000
+    },
+    {
+      "Enabled": true,
+      "Samples": 1000,
+      "Version": "000",
+      "TypeName": "sim.pico.tank.module.component.gt",
+      "PicoHwUid": "sim-tank1-pico",
+      "ConfigList": [
+        {
+          "Unit": "Celcius",
+          "Version": "000",
+          "Exponent": 3,
+          "TypeName": "channel.config",
+          "ChannelName": "tank1-depth1-device",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "VoltsRms",
+          "Version": "000",
+          "Exponent": 6,
+          "TypeName": "channel.config",
+          "ChannelName": "tank1-depth1-micro-v",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "Celcius",
+          "Version": "000",
+          "Exponent": 3,
+          "TypeName": "channel.config",
+          "ChannelName": "tank1-depth2-device",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "VoltsRms",
+          "Version": "000",
+          "Exponent": 6,
+          "TypeName": "channel.config",
+          "ChannelName": "tank1-depth2-micro-v",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "Celcius",
+          "Version": "000",
+          "Exponent": 3,
+          "TypeName": "channel.config",
+          "ChannelName": "tank1-depth3-device",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        },
+        {
+          "Unit": "VoltsRms",
+          "Version": "000",
+          "Exponent": 6,
+          "TypeName": "channel.config",
+          "ChannelName": "tank1-depth3-micro-v",
+          "AsyncCapture": true,
+          "CapturePeriodS": 60,
+          "AsyncCaptureDelta": 2000
+        }
+      ],
+      "ComponentId": "bd65556c-2ca4-499d-ad25-57767a785685",
+      "DisplayName": "Tank1",
+      "SerialNumber": "NA",
+      "SendMicroVolts": true,
+      "TempCalcMethod": "SimpleBeta",
+      "ThermistorBeta": 3977,
+      "SimulatesVersion": "011",
+      "NumSampleAverages": 30,
+      "SimulatesTypeName": "pico.tank.module.component.gt",
+      "ComponentAttributeClassId": "627ac482-24fe-46b2-ba8c-3d6f1e1ee069",
+      "AsyncCaptureDeltaMicroVolts": 2000
+    }
+  ]
+}

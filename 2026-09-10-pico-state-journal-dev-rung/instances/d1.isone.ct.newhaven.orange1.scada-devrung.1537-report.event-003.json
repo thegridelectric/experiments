@@ -1,0 +1,172 @@
+{
+  "Src": "d1.isone.ct.newhaven.orange1.scada",
+  "Report": {
+    "Id": "4e4e3059-3ef3-4673-b28c-4c2f5e611a05",
+    "Version": "003",
+    "TypeName": "report",
+    "StateList": [
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "single.pico.state",
+        "StateList": [
+          "Alive"
+        ],
+        "UnixMsList": [
+          1789054593953
+        ],
+        "MachineHandle": "buffer"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "single.pico.state",
+        "StateList": [
+          "Alive"
+        ],
+        "UnixMsList": [
+          1789054593953
+        ],
+        "MachineHandle": "tank1"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "relay.closed.or.open",
+        "StateList": [
+          "RelayClosed"
+        ],
+        "UnixMsList": [
+          1789054595956
+        ],
+        "MachineHandle": "auto.pico-cycler.vdc-relay-gpio-23"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "pico.cycler.state",
+        "StateList": [
+          "RelayOpening"
+        ],
+        "UnixMsList": [
+          1789054596956
+        ],
+        "MachineHandle": "auto.pico-cycler"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "top.state",
+        "StateList": [
+          "Auto"
+        ],
+        "UnixMsList": [
+          1789054618801
+        ],
+        "MachineHandle": "s"
+      },
+      {
+        "Version": "000",
+        "TypeName": "machine.states",
+        "StateEnum": "gw1.main.auto.state",
+        "StateList": [
+          "LocalControl"
+        ],
+        "UnixMsList": [
+          1789054618801
+        ],
+        "MachineHandle": "auto"
+      }
+    ],
+    "FsmReportList": [],
+    "SlotDurationS": 60,
+    "FromGNodeAlias": "d1.isone.ct.newhaven.orange1.scada",
+    "SlotStartUnixS": 1789054560,
+    "AboutGNodeAlias": "d1.isone.ct.newhaven.orange1.ta",
+    "MessageCreatedMs": 1789054620001,
+    "ChannelReadingList": [
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          0
+        ],
+        "ChannelName": "hp-odu-pwr",
+        "ScadaReadTimeUnixMsList": [
+          1789054593953
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          0
+        ],
+        "ChannelName": "hp-idu-pwr",
+        "ScadaReadTimeUnixMsList": [
+          1789054593953
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          0
+        ],
+        "ChannelName": "store-pump-pwr",
+        "ScadaReadTimeUnixMsList": [
+          1789054593953
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          1
+        ],
+        "ChannelName": "zone1-main-opto-input",
+        "ScadaReadTimeUnixMsList": [
+          1789054593956
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          12397
+        ],
+        "ChannelName": "zone1-main-gw-temp",
+        "ScadaReadTimeUnixMsList": [
+          1789054593956
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          200000
+        ],
+        "ChannelName": "zone1-main-gw-microvolts",
+        "ScadaReadTimeUnixMsList": [
+          1789054593956
+        ]
+      },
+      {
+        "Version": "002",
+        "TypeName": "channel.readings",
+        "ValueList": [
+          0
+        ],
+        "ChannelName": "zone1-main-heat-call",
+        "ScadaReadTimeUnixMsList": [
+          1789054593956
+        ]
+      }
+    ],
+    "FromGNodeInstanceId": "c9794c6d-e013-4d74-9570-f9ba4b0f0b0d"
+  },
+  "Version": "003",
+  "TypeName": "report.event",
+  "MessageId": "782f7d88-96b1-4955-8e81-3cb1333bc4c1",
+  "TimeCreatedMs": 1789054620001
+}
