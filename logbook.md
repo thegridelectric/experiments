@@ -13,7 +13,7 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
-- **2026-09-10 · [pico-state-journal-dev-rung](2026-09-10-pico-state-journal-dev-rung/)**
+- **2026-09-10 · [pico-state-reported](2026-09-10-pico-state-reported/)**
   — journalkeeper `3a8bc57` against the actual-spruce sim scada on the dev broker with an LTN peer: `<node>-pico-state` channels created from `layout.lite` 012, Alive → Flatlined readable in order, PASS; no cycler state channel exists to order against; the unlimbo line's `layout.lite` 013 is staging and outside the journal seed.
 - **2026-09-08 to 09-09 · [five-v-boss-hold](2026-09-08-five-v-boss-hold/)**
   — the 5 V hold through admin: dev-broker rung (three scada fixes) then `gwa watch spruce` on the real gw108, PASS both; three layout picos never posted; RebootPicos missing from the row.
