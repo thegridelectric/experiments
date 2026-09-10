@@ -5,7 +5,7 @@ drive level, laid end to end in rising DAC order on one time axis.
 Laptop side, from this folder. Each level's segment is its fold composite
 (fold.py) repeated CYCLES times at the fitted frequency, so the segment is
 the periodic waveform, not the raw burst; the level's pump drive and flow
-label the segment. Writes instances/<run>-staircase.png (generated).
+label the segment. Writes <run>-staircase.png beside this script (committed, embedded in the README).
 
     uv run python staircase.py --run ladder1 [--show]
 """
@@ -19,11 +19,18 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent))  # fold.py lives in the parent folder
 
-from fold import Fold, describe, fold, load  # noqa: E402
+from fold import Fold, fold, load  # noqa: E402
 from ladder import Level  # noqa: E402
 
 CYCLES = 5
+
+
+def describe(level: Level) -> str:
+    flow = "no fresh flow" if level.flow_gpm_x100 is None else f"secondary-flow {level.flow_gpm_x100 / 100:.2f} gpm"
+    return f"pump drive {level.volts_x10 / 10:.1f} V (DAC {level.dac_code}), {flow}"
+
 
 
 def levels(run: str) -> list[Level]:
@@ -55,17 +62,21 @@ def main() -> None:
 
     fig, ax = plt.subplots(figsize=(16, 6))
     start = 0.0
-    for level in levels(args.run):
+    run_levels = levels(args.run)
+    if not run_levels:
+        raise SystemExit(f"no levels for run {args.run}")
+    for level in run_levels:
         waveform = load(HERE / "instances" / level.instance)
         result = fold(waveform, (args.band[0], args.band[1]), args.bins)
         t, v = segment(result)
         ax.plot((start + t) * 1000, v, "-", lw=1.2)
         width = CYCLES / result.frequency_hz
         ax.axvline((start + width) * 1000, color="0.8", lw=0.8)
+        flow = "no flow reading" if level.flow_gpm_x100 is None else f"{level.flow_gpm_x100 / 100:.2f} gpm"
         ax.text(
             (start + width / 2) * 1000,
             1.0,
-            f"{level.volts_x10 / 10:.1f} V\n{level.flow_gpm_x100 / 100:.2f} gpm\n{result.waveform_rms_v * 1000:.0f} mV rms",
+            f"{level.volts_x10 / 10:.1f} V\n{flow}\n{result.waveform_rms_v * 1000:.0f} mV rms",
             transform=ax.get_xaxis_transform(),
             ha="center",
             va="bottom",
@@ -75,9 +86,9 @@ def main() -> None:
         start += width
     ax.set_xlabel(f"ms ({CYCLES} cycles of the fold composite per level, levels laid end to end)")
     ax.set_ylabel("V")
-    ax.set_title(f"{args.run}: CT2 waveform vs secondary pump drive, {waveform.ta_alias}", pad=44)
+    ax.set_title(f"{args.run}: CT2 waveform vs secondary pump drive, {load(HERE / "instances" / run_levels[0].instance).ta_alias}", pad=44)
     fig.tight_layout()
-    out = HERE / "instances" / f"{args.run}-staircase.png"
+    out = HERE / f"{args.run}-staircase.png"
     fig.savefig(out, dpi=120)
     print(f"plot -> {out}")
     if args.show:

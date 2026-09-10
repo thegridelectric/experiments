@@ -86,15 +86,16 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
-- **2026-09-07 · [gw108-ct-testing](2026-09-07-gw108-ct-testing/)** (was adc-waveform-bench) —
-  one burst of ADS1115 conversions from a gw108 CT input, captured as a
-  `gw.adc.waveform` instance and folded on a fitted mains frequency.
-  Does the pi's polled path (single-shot vs continuous) deliver clean
-  conversions, at what effective rate, and does the fold give a
-  composite waveform? Prep 09-07: the fold recovers the synthetic
-  burst (60.019 Hz for 60.02, 100.05 mV rms for 100). Honeysuckle
-  run pending (no CT: bias noise validates the path and the fold),
-  then a resistive bulb and the secondary pump on spruce.
+- **2026-09-07 → 09-10 · [gw108-ct-testing](2026-09-07-gw108-ct-testing/)** —
+  a gw108 CT input with nothing on it reads 94 % of the CT on a
+  neighbouring input (spruce run 3, P0 against P3). Cause, from the
+  RevB schematic: the four inputs' return node `1V65` is held by two
+  100 kΩ resistors and no capacitor, so it wobbles at 60 Hz by half the
+  CT's voltage and any shunted input reads the wobble. Fix: 10 µF from
+  `1V65` to ground (Joe's CircuitLab agrees), checked on the bench
+  before spruce. The README walks the circuit; the CTs only need to say
+  on or off. `speed-ladder/`: the same CT across six pump drive levels,
+  fold locked at every one, rms up 27-fold from minimum to maximum.
 - **2026-09-05 · [dac-output-bench](2026-09-05-dac-output-bench/)** —
   FAIL (2 of 3 claims not reached), two findings: `verify_eeprom`
   reprograms every boot on bytes that match the layout, and an admin
