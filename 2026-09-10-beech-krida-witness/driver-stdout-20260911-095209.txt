@@ -1,0 +1,9 @@
+PASS (1) both zone1-down relay rows present in scada.control.capabilities: ['aquastat-ctrl-relay', 'charge-discharge-relay', 'five-v-boss', 'hp-boss', 'hp-failsafe-relay', 'hp-loop-keep-send-relay', 'hp-loop-on-off-relay', 'hp-scada-ops-relay', 'pico-cycler', 'primary-pump-failsafe-relay', 'primary-pump-scada-ops-relay', 'store-pump-relay', 'tstat-common-relay', 'vdc-relay', 'zone1-down-failsafe-relay', 'zone1-down-ops-relay', 'zone2-up-failsafe-relay', 'zone2-up-ops-relay']
+PASS (2) reply: relays={'zone1-down-failsafe-relay': 'Scada', 'zone1-down-ops-relay': 'RelayOpen'}
+PASS (2) zone1-down-failsafe-relay reads Scada: relays={'zone1-down-failsafe-relay': 'Scada', 'zone1-down-ops-relay': 'RelayOpen'}
+PASS (2) heat call: reply: relays={'zone1-down-failsafe-relay': 'Scada', 'zone1-down-ops-relay': 'RelayClosed'}
+PASS (2) heat call: zone1-down-ops-relay reads RelayClosed: relays={'zone1-down-failsafe-relay': 'Scada', 'zone1-down-ops-relay': 'RelayClosed'}
+PASS (4) call released: reply: relays={'zone1-down-failsafe-relay': 'Scada', 'zone1-down-ops-relay': 'RelayOpen'}
+PASS (4) call released: zone1-down-ops-relay reads RelayOpen: relays={'zone1-down-failsafe-relay': 'Scada', 'zone1-down-ops-relay': 'RelayOpen'}
+PASS (4) reply: relays={'zone1-down-failsafe-relay': 'WallThermostat', 'zone1-down-ops-relay': 'RelayOpen'}
+PASS (4) zone1-down-failsafe-relay reads WallThermostat: relays={'zone1-down-failsafe-relay': 'WallThermostat', 'zone1-down-ops-relay': 'RelayOpen'}

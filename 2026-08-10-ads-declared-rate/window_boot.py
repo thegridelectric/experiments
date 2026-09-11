@@ -17,7 +17,8 @@ bounded harness is the guardrail's designed test-boot exemption
 (credential-structural isolation: the env file carries no hw1 creds).
 
 The run is bounded by asyncio.wait_for, so the window self-terminates even
-on a dropped connection; the i2c evidence (read sequences, readback gate,
+on a dropped connection; seconds 0 means unbounded (a standing window, ended
+by `spruce_window.sh off`), with the boot-log summary skipped; the i2c evidence (read sequences, readback gate,
 errors) lands in the boot log, the per-sample zone series on the dev
 broker (spruce-async1 ops artifact: every polled sample trips async
 capture).
@@ -69,6 +70,10 @@ def build_app(env_file: Path) -> ScadaApp:
 
 
 async def _run_bounded(app: ScadaApp, seconds: int) -> None:
+    """seconds 0: no bound, run until killed."""
+    if seconds == 0:
+        await app.proactor.run_forever()
+        return
     try:
         await asyncio.wait_for(app.proactor.run_forever(), timeout=seconds)
     except asyncio.TimeoutError:
@@ -82,7 +87,8 @@ def main(argv: list[str] | None = None) -> int:
     app = build_app(env_file)
     layout = app.hardware_layout
     print(
-        f"== window boot: {layout.scada_g_node_alias} for {seconds}s, "
+        f"== window boot: {layout.scada_g_node_alias} for "
+        f"{'ever (unbounded)' if seconds == 0 else f'{seconds}s'}, "
         f"broker {app.settings.gridworks_mqtt.host}:"
         f"{app.settings.gridworks_mqtt.port} ==",
         flush=True,  # stdout is block-buffered under redirection

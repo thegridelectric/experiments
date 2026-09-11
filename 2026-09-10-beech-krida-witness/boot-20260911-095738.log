@@ -1,0 +1,1187 @@
+2026-09-11 09:48:37.090 
+2026-09-11 09:48:37.091 Env file: </home/pi/envs/dev.env>  exists: True
+2026-09-11 09:48:37.091 Settings:
+2026-09-11 09:48:37.092 {
+  "paths": {
+    "base": "gridworks",
+    "name": "scada-experiment",
+    "relative_path": "gridworks/scada-experiment",
+    "data_home": "/home/pi/.local/share",
+    "state_home": "/home/pi/.local/state",
+    "config_home": "/home/pi/.config",
+    "data_dir": "/home/pi/.local/share/gridworks/scada-experiment",
+    "config_dir": "/home/pi/.config/gridworks/scada-experiment",
+    "certs_dir": "/home/pi/.config/gridworks/scada-experiment/certs",
+    "event_dir": "/home/pi/.local/share/gridworks/scada-experiment/event",
+    "log_dir": "/home/pi/.local/state/gridworks/scada-experiment/log",
+    "hardware_layout": "/home/pi/.config/gridworks/scada-experiment/hardware-layout.json",
+    "operational_params": "/home/pi/.config/gridworks/scada-experiment/operational-params.json",
+    "tadeed": "/home/pi/.config/gridworks/scada-experiment/ta-deed.json"
+  },
+  "logging": {
+    "base_log_name": "gridworks",
+    "base_log_level": 30,
+    "levels": {
+      "message_summary": 30,
+      "lifecycle": 20,
+      "comm_event": 20,
+      "io_loop": 20
+    },
+    "formatter": {
+      "fmt": "%(asctime)s %(message)s",
+      "datefmt": "",
+      "default_msec_format": "%s.%03d",
+      "use_utc": false
+    },
+    "file_handler": {
+      "filename": "proactor.log",
+      "bytes_per_log_file": 2097152,
+      "num_log_files": 10,
+      "level": 0
+    },
+    "io_loop": {
+      "file_handler": {
+        "filename": "io_loop.log",
+        "bytes_per_log_file": 2097152,
+        "num_log_files": 2,
+        "level": 0
+      },
+      "on_screen": false
+    },
+    "aiohttp_logging": false,
+    "paho_logging": false
+  },
+  "proactor": {
+    "mqtt_link_poll_seconds": 60.0,
+    "ack_timeout_seconds": 5.0,
+    "num_initial_event_reuploads": 5,
+    "num_inflight_events": 50
+  },
+  "pico_cycler_state_logging": false,
+  "power_meter_logging_level": 30,
+  "contract_rep_logging_level": 20,
+  "paho_logging": false,
+  "local_mqtt": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "sara",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/local_mqtt.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/private/local_mqtt.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    }
+  },
+  "gridworks_mqtt": {
+    "host": "localhost",
+    "port": 1885,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "smqPublic",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/gridworks_mqtt.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/private/gridworks_mqtt.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    }
+  },
+  "seconds_per_report": 300,
+  "seconds_per_snapshot": 30,
+  "async_power_reporting_threshold": 0.02,
+  "persister": {
+    "max_bytes": 524288000
+  },
+  "admin": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "sara",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/admin.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/private/admin.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    },
+    "enabled": true,
+    "name": "admin",
+    "max_timeout_seconds": 86400.0
+  },
+  "timezone_str": "America/New_York",
+  "latitude": 45.6573,
+  "longitude": -68.7098,
+  "whitewire_threshold_watts": 20.0,
+  "hp_model": "SamsungFiveTonneHydroKit",
+  "airtable_pat": "bogus_pat"
+}
+ScadaSettings(
+    paths=ScadaPaths(
+        base=PosixPath('gridworks'),
+        name=PosixPath('scada-experiment'),
+        relative_path=PosixPath('gridworks/scada-experiment'),
+        data_home=PosixPath('/home/pi/.local/share'),
+        state_home=PosixPath('/home/pi/.local/state'),
+        config_home=PosixPath('/home/pi/.config'),
+        data_dir=PosixPath('/home/pi/.local/share/gridworks/scada-experiment'),
+        config_dir=PosixPath('/home/pi/.config/gridworks/scada-experiment'),
+        certs_dir=PosixPath('/home/pi/.config/gridworks/scada-experiment/certs')
+,
+        event_dir=PosixPath('/home/pi/.local/share/gridworks/scada-experiment/ev
+ent'),
+        log_dir=PosixPath('/home/pi/.local/state/gridworks/scada-experiment/log'
+),
+        hardware_layout=PosixPath('/home/pi/.config/gridworks/scada-experiment/h
+ardware-layout.json'),
+        operational_params=PosixPath('/home/pi/.config/gridworks/scada-experimen
+t/operational-params.json'),
+        tadeed=PosixPath('/home/pi/.config/gridworks/scada-experiment/ta-deed.js
+on')
+    ),
+    logging=LoggingSettings(
+        base_log_name='gridworks',
+        base_log_level=30,
+        levels=LoggerLevels(
+            message_summary=30,
+            lifecycle=20,
+            comm_event=20,
+            io_loop=20
+        ),
+        formatter=FormatterSettings(
+            fmt='%(asctime)s %(message)s',
+            datefmt='',
+            default_msec_format='%s.%03d',
+            use_utc=False
+        ),
+        file_handler=RotatingFileHandlerSettings(
+            filename='proactor.log',
+            bytes_per_log_file=2097152,
+            num_log_files=10,
+            level=0
+        ),
+        io_loop=IOLoopLoggerSettings(
+            file_handler=RotatingFileHandlerSettings(
+                filename='io_loop.log',
+                bytes_per_log_file=2097152,
+                num_log_files=2,
+                level=0
+            ),
+            on_screen=False
+        ),
+        aiohttp_logging=False,
+        paho_logging=False
+    ),
+    proactor=ProactorSettings(
+        mqtt_link_poll_seconds=60.0,
+        ack_timeout_seconds=5.0,
+        num_initial_event_reuploads=5,
+        num_inflight_events=50
+    ),
+    pico_cycler_state_logging=False,
+    power_meter_logging_level=30,
+    contract_rep_logging_level=20,
+    paho_logging=False,
+    local_mqtt=MQTTClient(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='sara',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/local_mqtt/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/local_mqtt/local_mqtt.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/local_mqtt/private/local_mqtt.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        )
+    ),
+    gridworks_mqtt=MQTTClient(
+        host='localhost',
+        port=1885,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='smqPublic',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/gridworks_mqtt/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/gridworks_mqtt/gridworks_mqtt.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/gridworks_mqtt/private/gridworks_mqtt.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        )
+    ),
+    seconds_per_report=300,
+    seconds_per_snapshot=30,
+    async_power_reporting_threshold=0.02,
+    persister=PersisterSettings(max_bytes=524288000),
+    admin=AdminLinkSettings(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='sara',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/admin/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/admin/admin.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/admin/private/admin.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        ),
+        enabled=True,
+        name='admin',
+        max_timeout_seconds=86400.0
+    ),
+    timezone_str='America/New_York',
+    latitude=45.6573,
+    longitude=-68.7098,
+    whitewire_threshold_watts=20.0,
+    hp_model=<HpModel.SamsungFiveTonneHydroKit: 'SamsungFiveTonneHydroKit'>,
+    airtable_pat='bogus_pat'
+)
+2026-09-11 09:48:37.278 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.beech.scada', short_name='s')> reindexing events
+2026-09-11 09:48:37.279 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.beech.scada', short_name='s')> reindexing complete.
+  0 events present for upload, using approximately 0 KB / 0.0 MB storage space.
+2026-09-11 09:48:37.283 [scada] SIMULATED
+2026-09-11 09:48:37.290 Skip binding of 'trigger' to model due to model override policy.
+2026-09-11 09:48:37.290 Skip binding of 'may_trigger' to model due to model override policy.
+2026-09-11 09:48:37.368 [la] Params: AlphaTimes10=55 BetaTimes100=-10 GammaEx6=0 IntermediatePowerKw=1.5 IntermediateRswtF=100 DdPowerKw=5.5 DdRswtF=150 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=170 LoadOverestimationPercent=0 CopIntercept=1.02 CopOatCoeff=0.0257 CopLwtCoeff=0.0 CopMin=1.4 CopMinOatF=15.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-09-11 09:48:37.369 Creating LeafAlly with strategy AllTanks, using actors.leaf_ally.house0.all_tanks.AllTanksLeafAlly
+2026-09-11 09:48:37.370 Skip binding of 'WakeUp' to model due to model override policy.
+2026-09-11 09:48:37.371 [derived-generator] self.timezone: America/New_York
+2026-09-11 09:48:37.371 [derived-generator] self.latitude: 45.6573
+2026-09-11 09:48:37.372 [derived-generator] self.longitude: -68.7098
+2026-09-11 09:48:37.372 [derived-generator] Params: AlphaTimes10=55 BetaTimes100=-10 GammaEx6=0 IntermediatePowerKw=1.5 IntermediateRswtF=100 DdPowerKw=5.5 DdRswtF=150 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=170 LoadOverestimationPercent=0 CopIntercept=1.02 CopOatCoeff=0.0257 CopLwtCoeff=0.0 CopMin=1.4 CopMinOatF=15.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-09-11 09:48:37.383 [lc] Set auto.lc.n command tree
+2026-09-11 09:48:37.383 [lc] Starting Standby Local Control
+2026-09-11 09:48:37.383 Creating LocalControl with actuation authority Standby and seasonal storage mode AllTanks, using actors.local_control.house0.standby.StandbyLocalControl
+2026-09-11 09:48:37.393 Skip binding of 'trigger' to model due to model override policy.
+2026-09-11 09:48:37.394 Skip binding of 'may_trigger' to model due to model override policy.
+2026-09-11 09:48:37.399 
+Subscription info for <hw1.isone.me.versant.keene.beech.scada> [construction]
+  Client name: <gridworks_mqtt>  topic_dst: <ltn>
+    Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/ltn/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/hw1-isone-me-versant-keene-beech/to/s/#', <QOS.AtMostOnce: 0>)]
+  Client name: <local_mqtt>  topic_dst: <s2>
+    Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/s2/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/hw1-isone-me-versant-keene-beech-scada-s2/to/s/#', <QOS.AtMostOnce: 0>)]
+  Client name: <admin>  topic_dst: <admin>
+    Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/admin/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/admin/to/hw1-isone-me-versant-keene-beech-scada/#', <QOS.AtMostOnce: 0>)]
+
+== window boot: hw1.isone.me.versant.keene.beech.scada for 14400s, broker localhost:1885 ==
+2026-09-11 09:48:37.410 [zero-ten-multiplexer] INITILIZING I2C DFR MULTIPLEXER
+2026-09-11 09:48:37.411 [zero-ten-multiplexer] SIMULATED ... no actual i2c bus object
+2026-09-11 09:48:37.414 [zero-ten-multiplexer] Set dist-010v to 20
+2026-09-11 09:48:37.418 [zero-ten-multiplexer] Set primary-010v to 40
+2026-09-11 09:48:37.419 [zero-ten-multiplexer] Set store-010v to 0
+2026-09-11 09:48:37.421 ++Proactor<s>.join()
+2026-09-11 09:48:37.423 Tasks: 52  [Proactor.join() - all tasks]
+	1/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891df100>
+	2/52  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f894aa3e0>
+	3/52  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f891dd300>
+	4/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de7a0>
+	5/52  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4740>
+	6/52  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7f891f4d40>
+	7/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de2f0>
+	8/52  zone2-up-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5940>
+	9/52  LocalControl keepalive          done:False   exception: None  <coroutine object StandbyLocalControl.main at 0x7f893a6500>
+	10/52  hp-loop-on-off-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4c40>
+	11/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de3e0>
+	12/52  maintain_dfr_states             done:False   exception: None  <coroutine object I2cZeroTenMultiplexer.maintain_dfr_states at 0x7f891df010>
+	13/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891df1f0>
+	14/52  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f893a6880>
+	15/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de890>
+	16/52  aquastat-ctrl-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4840>
+	17/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f89224c80>
+	18/52  vdc-relay-boot-adopt            done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4240>
+	19/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de980>
+	20/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de4d0>
+	21/52  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f894aa2b0>
+	22/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de020>
+	23/52  zone1-down-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4f40>
+	24/52  hp-loop-keep-send-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4e40>
+	25/52  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7f891d0e10>
+	26/52  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5a40>
+	27/52  tstat-common-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4440>
+	28/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891dea70>
+	29/52  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4940>
+	30/52  Task-2                          done:False   exception: None  <coroutine object Proactor.run_forever at 0x7f894b1480>
+	31/52  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5b40>
+	32/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de110>
+	33/52  zone1-down-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5040>
+	34/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de5c0>
+	35/52  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5c40>
+	36/52  charge-discharge-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4540>
+	37/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891deb60>
+	38/52  primary-pump-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4a40>
+	39/52  LeafAlly keepalive              done:False   exception: None  <coroutine object AllTanksLeafAlly.main at 0x7f893a5540>
+	40/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de200>
+	41/52  Task-1                          done:False   exception: None  <coroutine object _run_bounded at 0x7f89595540>
+	42/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f893a66c0>
+	43/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de6b0>
+	44/52  pat_watchdog                    done:False   exception: None  <coroutine object WatchdogManager._check_pats at 0x7f894a9df0>
+	45/52  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f89224ba0>
+	46/52  hp-failsafe-relay-boot-adopt    done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4640>
+	47/52  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7f891f5140>
+	48/52  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f896423b0>
+	49/52  primary-pump-scada-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4b40>
+	50/52  zone2-up-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5740>
+	51/52  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f89224d60>
+	52/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f893a67a0>
+
+2026-09-11 09:48:37.424 Tasks: 85  [WAITING FOR]
+	1/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de7a0>
+	2/85  buffer.join                     done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f89217f40>
+	3/85  five-v-boss.join                done:False   exception: None  <coroutine object FiveVBoss.join at 0x7f89215fc0>
+	4/85  hp-loop-on-off-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4c40>
+	5/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de890>
+	6/85  tank1.join                      done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f89234100>
+	7/85  pico-cycler.join                done:False   exception: None  <coroutine object PicoCycler.join at 0x7f89216140>
+	8/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de980>
+	9/85  zone1-down-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4f40>
+	10/85  zero-ten-multiplexer.join       done:False   exception: None  <coroutine object I2cZeroTenMultiplexer.join at 0x7f89234280>
+	11/85  derived-generator.join          done:False   exception: None  <coroutine object DerivedGenerator.join at 0x7f892162c0>
+	12/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891dea70>
+	13/85  zone1-down-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5040>
+	14/85  dist-010v.join                  done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f89234400>
+	15/85  lc.join                         done:False   exception: None  <coroutine object LocalControl.join at 0x7f89216440>
+	16/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891deb60>
+	17/85  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f893a66c0>
+	18/85  primary-010v.join               done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f89234580>
+	19/85  hp-boss.join                    done:False   exception: None  <coroutine object HpBoss.join at 0x7f892165c0>
+	20/85  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7f891f5140>
+	21/85  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f893a67a0>
+	22/85  store-010v.join                 done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f89234700>
+	23/85  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f89216740>
+	24/85  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7f891f4d40>
+	25/85  maintain_dfr_states             done:False   exception: None  <coroutine object I2cZeroTenMultiplexer.maintain_dfr_states at 0x7f891df010>
+	26/85  sieg-loop.join                  done:False   exception: None  <coroutine object SiegLoop.join at 0x7f89234880>
+	27/85  hubitat.join                    done:False   exception: None  <coroutine object Hubitat.join at 0x7f892168c0>
+	28/85  zone2-up-failsafe-relay.join    done:False   exception: None  <coroutine object Relay.join at 0x7f89234a00>
+	29/85  i2c-bus.join                    done:False   exception: None  <coroutine object I2cBus.join at 0x7f89216a40>
+	30/85  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7f891d0e10>
+	31/85  zone2-up-ops-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7f89234b80>
+	32/85  vdc-relay.join                  done:False   exception: None  <coroutine object Relay.join at 0x7f89216bc0>
+	33/85  dist-btu.join                   done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f89234d00>
+	34/85  LeafAlly keepalive              done:False   exception: None  <coroutine object AllTanksLeafAlly.main at 0x7f893a5540>
+	35/85  tstat-common-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7f89216d40>
+	36/85  zone2-up-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5740>
+	37/85  charge-discharge-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7f89216ec0>
+	38/85  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f896423b0>
+	39/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891df100>
+	40/85  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f891dd300>
+	41/85  zone2-up-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5940>
+	42/85  LocalControl keepalive          done:False   exception: None  <coroutine object StandbyLocalControl.main at 0x7f893a6500>
+	43/85  hp-failsafe-relay.join          done:False   exception: None  <coroutine object Relay.join at 0x7f89217040>
+	44/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891df1f0>
+	45/85  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f893a6880>
+	46/85  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f89224c80>
+	47/85  vdc-relay-boot-adopt            done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4240>
+	48/85  hp-scada-ops-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7f892171c0>
+	49/85  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f894aa2b0>
+	50/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de020>
+	51/85  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5a40>
+	52/85  tstat-common-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4440>
+	53/85  aquastat-ctrl-relay.join        done:False   exception: None  <coroutine object Relay.join at 0x7f89217340>
+	54/85  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5b40>
+	55/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de110>
+	56/85  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5c40>
+	57/85  charge-discharge-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4540>
+	58/85  store-pump-relay.join           done:False   exception: None  <coroutine object Relay.join at 0x7f892174c0>
+	59/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de200>
+	60/85  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f89224ba0>
+	61/85  hp-failsafe-relay-boot-adopt    done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4640>
+	62/85  primary-pump-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f89217640>
+	63/85  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f89224d60>
+	64/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de2f0>
+	65/85  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f894aa3e0>
+	66/85  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4740>
+	67/85  primary-pump-scada-ops-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f892177c0>
+	68/85  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f89224f20>
+	69/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de3e0>
+	70/85  aquastat-ctrl-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4840>
+	71/85  hp-loop-on-off-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7f89217940>
+	72/85  io_loop_manager.join            done:False   exception: None  <coroutine object IOLoop.join at 0x7f892159c0>
+	73/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de4d0>
+	74/85  hp-loop-keep-send-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4e40>
+	75/85  hp-loop-keep-send-relay.join    done:False   exception: None  <coroutine object Relay.join at 0x7f89217ac0>
+	76/85  _WebManager.join                done:False   exception: None  <coroutine object _WebManager.join at 0x7f89215b40>
+	77/85  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4940>
+	78/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de5c0>
+	79/85  zone1-down-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f89217c40>
+	80/85  s.join                          done:False   exception: None  <coroutine object PrimeActor.join at 0x7f89215cc0>
+	81/85  primary-pump-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4a40>
+	82/85  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de6b0>
+	83/85  zone1-down-ops-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7f89217dc0>
+	84/85  la.join                         done:False   exception: None  <coroutine object LeafAlly.join at 0x7f89215e40>
+	85/85  primary-pump-scada-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4b40>
+
+2026-09-11 09:48:37.426 [derived-generator] SynthGen about to get forecasts
+2026-09-11 09:48:37.430 [sieg-loop] Engaging brain, control state is Initializing, hp boss state is HpOn
+2026-09-11 09:48:37.431 [sieg-loop] Waiting for actuators to be ready to get out of Initializing state
+2026-09-11 09:48:37.434 [scada] Sending auto.lc.n.hp-boss state to sieg-loop
+2026-09-11 09:48:37.435 [sieg-loop] Just received state HpOff from HpBoss
+2026-09-11 09:48:37.435 [scada] Trouble with process_single_machine_state_: 
+ 'SiegLoop' object has no attribute 'hp_boss'
+2026-09-11 09:48:37.438 [scada] Actuator zero-ten-multiplexer is ready. 1/1
+2026-09-11 09:48:37.438 [scada] All actuators are ready!
+2026-09-11 09:48:37.438 [sieg-loop] Engaging brain, control state is Initializing, hp boss state is HpOn
+2026-09-11 09:48:37.439 [sieg-loop] DoneInitializingBlind: Initializing -> Blind
+2026-09-11 09:48:37.439 [sieg-loop] Moving to full send
+2026-09-11 09:48:37.440 [lc] Initializing relays
+2026-09-11 09:48:37.440 [lc] de-energizing most relays
+2026-09-11 09:48:37.441 [lc] DischargeStore to charge-discharge-relay
+2026-09-11 09:48:37.442 [lc] SwitchToHeatPump to primary-pump-failsafe-relay
+2026-09-11 09:48:37.443 [lc] OpenRelay to primary-pump-scada-ops-relay
+2026-09-11 09:48:37.443 [lc] OpenRelay to store-pump-relay
+2026-09-11 09:48:37.444 [lc] CloseRelay to tstat-common-relay
+2026-09-11 09:48:37.444 [lc] SwitchToWallThermostat to zone1-down-failsafe-relay
+2026-09-11 09:48:37.444 [lc] OpenRelay to zone1-down-ops-relay
+2026-09-11 09:48:37.445 [lc] SwitchToWallThermostat to zone2-up-failsafe-relay
+2026-09-11 09:48:37.446 [lc] OpenRelay to zone2-up-ops-relay
+2026-09-11 09:48:37.446 [lc] energizing key relays for keeping things off
+2026-09-11 09:48:37.447 [lc] auto.lc.n sending SwitchToScada to Hp Failsafe auto.lc.n.hp-failsafe-relay
+2026-09-11 09:48:37.447 [lc] auto.lc.n sending SwitchToScada to Aquastat Ctrl auto.lc.n.aquastat-ctrl-relay
+2026-09-11 09:48:37.448 [lc] TurnOff to hp-boss
+2026-09-11 09:48:37.449 local_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-11 09:48:37.450 admin:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-11 09:48:37.460 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='6931b124-872c-400c-81a2-8b9a3f316178' SendTimeUnixMs=1789134517447 TypeName='fsm.event' Version='000'
+2026-09-11 09:48:37.460 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-09-11 09:48:37.464 [scada] Sending auto.lc.n.hp-boss state to sieg-loop
+2026-09-11 09:48:37.465 [sieg-loop] Just received state HpOff from HpBoss
+2026-09-11 09:48:37.465 [scada] Trouble with process_single_machine_state_: 
+ 'SiegLoop' object has no attribute 'hp_boss'
+2026-09-11 09:48:37.466 [hp-boss] hp-boss received unexpected message: Src='hp-scada-ops-relay' Dst='hp-boss' MessageType='gw.dispatch.ack' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-11 09:48:37.471 [sieg-loop] Task 181d: move to send for 110 seconds
+2026-09-11 09:48:37.473 Tasks: 49  [DONE]
+	1/49  buffer.join                     done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f89217f40>
+	2/49  five-v-boss.join                done:True   exception: None  <coroutine object FiveVBoss.join at 0x7f89215fc0>
+	3/49  hp-scada-ops-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4740>
+	4/49  primary-pump-scada-ops-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f892177c0>
+	5/49  zone2-up-ops-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5940>
+	6/49  hp-loop-on-off-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4c40>
+	7/49  hp-failsafe-relay.join          done:True   exception: None  <coroutine object Relay.join at 0x7f89217040>
+	8/49  sieg-loop.join                  done:True   exception: None  <coroutine object SiegLoop.join at 0x7f89234880>
+	9/49  hubitat.join                    done:True   exception: None  <coroutine object Hubitat.join at 0x7f892168c0>
+	10/49  tank1.join                      done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f89234100>
+	11/49  pico-cycler.join                done:True   exception: None  <coroutine object PicoCycler.join at 0x7f89216140>
+	12/49  aquastat-ctrl-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4840>
+	13/49  hp-loop-on-off-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7f89217940>
+	14/49  vdc-relay-boot-adopt            done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4240>
+	15/49  hp-scada-ops-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7f892171c0>
+	16/49  io_loop_manager.join            done:True   exception: None  <coroutine object IOLoop.join at 0x7f892159c0>
+	17/49  zone2-up-failsafe-relay.join    done:True   exception: None  <coroutine object Relay.join at 0x7f89234a00>
+	18/49  i2c-bus.join                    done:True   exception: None  <coroutine object I2cBus.join at 0x7f89216a40>
+	19/49  zone1-down-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4f40>
+	20/49  zero-ten-multiplexer.join       done:True   exception: None  <coroutine object I2cZeroTenMultiplexer.join at 0x7f89234280>
+	21/49  derived-generator.join          done:True   exception: None  <coroutine object DerivedGenerator.join at 0x7f892162c0>
+	22/49  hp-loop-keep-send-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4e40>
+	23/49  hp-loop-keep-send-relay.join    done:True   exception: None  <coroutine object Relay.join at 0x7f89217ac0>
+	24/49  tstat-common-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4440>
+	25/49  aquastat-ctrl-relay.join        done:True   exception: None  <coroutine object Relay.join at 0x7f89217340>
+	26/49  _WebManager.join                done:True   exception: None  <coroutine object _WebManager.join at 0x7f89215b40>
+	27/49  zone2-up-ops-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7f89234b80>
+	28/49  store-pump-relay-boot-adopt     done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4940>
+	29/49  vdc-relay.join                  done:True   exception: None  <coroutine object Relay.join at 0x7f89216bc0>
+	30/49  zone1-down-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5040>
+	31/49  dist-010v.join                  done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f89234400>
+	32/49  lc.join                         done:True   exception: None  <coroutine object LocalControl.join at 0x7f89216440>
+	33/49  zone1-down-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f89217c40>
+	34/49  charge-discharge-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4540>
+	35/49  store-pump-relay.join           done:True   exception: None  <coroutine object Relay.join at 0x7f892174c0>
+	36/49  s.join                          done:True   exception: None  <coroutine object PrimeActor.join at 0x7f89215cc0>
+	37/49  dist-btu.join                   done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f89234d00>
+	38/49  primary-pump-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4a40>
+	39/49  tstat-common-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7f89216d40>
+	40/49  primary-010v.join               done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f89234580>
+	41/49  hp-boss.join                    done:True   exception: None  <coroutine object HpBoss.join at 0x7f892165c0>
+	42/49  zone1-down-ops-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7f89217dc0>
+	43/49  hp-failsafe-relay-boot-adopt    done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4640>
+	44/49  primary-pump-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f89217640>
+	45/49  la.join                         done:True   exception: None  <coroutine object LeafAlly.join at 0x7f89215e40>
+	46/49  zone2-up-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f5740>
+	47/49  primary-pump-scada-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f891f4b40>
+	48/49  charge-discharge-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7f89216ec0>
+	49/49  store-010v.join                 done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f89234700>
+
+2026-09-11 09:48:37.473 Tasks: 36  [PENDING]
+	1/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891df100>
+	2/36  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f89216740>
+	3/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de7a0>
+	4/36  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f891dd300>
+	5/36  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f89224d60>
+	6/36  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f894aa3e0>
+	7/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de2f0>
+	8/36  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7f891f4d40>
+	9/36  LocalControl keepalive          done:False   exception: None  <coroutine object StandbyLocalControl.main at 0x7f893a6500>
+	10/36  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f89224f20>
+	11/36  maintain_dfr_states             done:False   exception: None  <coroutine object I2cZeroTenMultiplexer.maintain_dfr_states at 0x7f891df010>
+	12/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de3e0>
+	13/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891df1f0>
+	14/36  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f893a6880>
+	15/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de890>
+	16/36  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f89224c80>
+	17/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de980>
+	18/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de4d0>
+	19/36  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f894aa2b0>
+	20/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de020>
+	21/36  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7f891d0e10>
+	22/36  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5a40>
+	23/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891dea70>
+	24/36  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5b40>
+	25/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de110>
+	26/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de5c0>
+	27/36  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5c40>
+	28/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891deb60>
+	29/36  LeafAlly keepalive              done:False   exception: None  <coroutine object AllTanksLeafAlly.main at 0x7f893a5540>
+	30/36  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f893a66c0>
+	31/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de200>
+	32/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de6b0>
+	33/36  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f89224ba0>
+	34/36  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7f891f5140>
+	35/36  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f896423b0>
+	36/36  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f893a67a0>
+
+2026-09-11 09:48:37.474 Tasks: 36  [WAITING FOR]
+	1/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891df100>
+	2/36  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f89216740>
+	3/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de7a0>
+	4/36  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f891dd300>
+	5/36  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f89224d60>
+	6/36  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f894aa3e0>
+	7/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de2f0>
+	8/36  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7f891f4d40>
+	9/36  LocalControl keepalive          done:False   exception: None  <coroutine object StandbyLocalControl.main at 0x7f893a6500>
+	10/36  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f89224f20>
+	11/36  maintain_dfr_states             done:False   exception: None  <coroutine object I2cZeroTenMultiplexer.maintain_dfr_states at 0x7f891df010>
+	12/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de3e0>
+	13/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891df1f0>
+	14/36  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f893a6880>
+	15/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de890>
+	16/36  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f89224c80>
+	17/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de980>
+	18/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de4d0>
+	19/36  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f894aa2b0>
+	20/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de020>
+	21/36  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7f891d0e10>
+	22/36  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5a40>
+	23/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891dea70>
+	24/36  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5b40>
+	25/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de110>
+	26/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de5c0>
+	27/36  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f891f5c40>
+	28/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891deb60>
+	29/36  LeafAlly keepalive              done:False   exception: None  <coroutine object AllTanksLeafAlly.main at 0x7f893a5540>
+	30/36  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f893a66c0>
+	31/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de200>
+	32/36  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f891de6b0>
+	33/36  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f89224ba0>
+	34/36  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7f891f5140>
+	35/36  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f896423b0>
+	36/36  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f893a67a0>
+
+2026-09-11 09:48:37.477 local_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-11 09:48:37.482 [scada] First Buffer temps arrived! Sending to LocalControl
+2026-09-11 09:48:37.486 [sieg-loop] Error during movement: 'SiegLoop' object has no attribute 'change_to_hp_keep_less'
+2026-09-11 09:48:37.486 [sieg-loop] Movement 181d completed: 100 seconds, state FullyKeep
+2026-09-11 09:48:37.487 admin:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:48:37.633 gridworks_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-11 09:48:37.793 gridworks_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-11 09:48:37.958 [derived-generator] Obtained a 155-hour weather forecast starting at 1789135200
+2026-09-11 09:48:37.962 [derived-generator] Calculating rswt_quadratic_params: [ 4.91228070e-04 -4.28070175e-02  8.68421053e-01]
+2026-09-11 09:48:37.970 [derived-generator] Updating usable and required energy
+2026-09-11 09:48:37.971 [derived-generator] Got forecast starting 2026-09-11 10:00:00
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:48:39.438 [zero-ten-multiplexer] Set dist-010v to 20
+2026-09-11 09:48:39.439 [zero-ten-multiplexer] Set primary-010v to 40
+2026-09-11 09:48:39.439 [zero-ten-multiplexer] Set store-010v to 0
+2026-09-11 09:48:40.428 [pico-cycler] TRIGGERING PICO REBOOT! startup
+2026-09-11 09:48:40.428 [pico-cycler] OpenRelay to vdc-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:48:41.467 [scada] About to initialize contracts
+2026-09-11 09:48:41.467 No contract
+2026-09-11 09:48:41.467 Starting with no contract
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:48:45.440 [pico-cycler] CloseRelay to vdc-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:48:52.788 [dist-btu] btu report period of 300s. seconds_to_next_top is 67.2
+2026-09-11 09:48:54.550 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:48:57.763 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:49:06.103 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:49:06.139 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:49:06.171 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:49:07.433 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+2026-09-11 09:49:08.745 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:49:08.767 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:49:08.787 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:49:37.436 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:49:54.584 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:49:57.815 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:49:58.801 Top state: Auto
+2026-09-11 09:49:58.802 Auto state: LocalControl
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:50:07.439 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:50:37.442 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:50:54.588 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:50:57.796 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:50:59.623 admin:  awaiting_peer -- message_from_peer --> active
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:51:07.445 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:51:17.476 [pico-cycler] buffer sim-buffer-pico flatlined
+2026-09-11 09:51:17.479 [pico-cycler] TRIGGERING PICO REBOOT! triggered by buffer sim-buffer-pico
+2026-09-11 09:51:17.480 [pico-cycler] OpenRelay to vdc-relay
+2026-09-11 09:51:17.484 [pico-cycler] tank1 sim-tank1-pico flatlined
+2026-09-11 09:51:22.504 [pico-cycler] CloseRelay to vdc-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:51:30.310 [dist-btu] btu report period of 300s. seconds_to_next_top is 209.7
+2026-09-11 09:51:31.601 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:51:35.324 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:51:37.446 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:51:43.164 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:51:43.200 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:51:43.233 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:51:46.308 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:51:46.330 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:51:46.356 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:51:59.675 [scada] Message from Admin! top_state Admin
+2026-09-11 09:51:59.677 [scada] AutoGoesDormant: LocalControl -> Dormant
+2026-09-11 09:51:59.690 [lc] TopGoDormant: EverythingOff -> Dormant
+2026-09-11 09:51:59.691 [lc] Set top state command tree
+2026-09-11 09:51:59.692 [scada] Admin Wakes Up
+2026-09-11 09:51:59.692 [scada] AdminDispatch SwitchToScada to admin.zone1-down-failsafe-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:52:03.670 [scada] AdminDispatch CloseRelay to admin.zone1-down-ops-relay
+2026-09-11 09:52:07.449 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:52:22.518 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['sim-buffer-pico', 'sim-tank1-pico']
+2026-09-11 09:52:22.520 [pico-cycler] OpenRelay to vdc-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:52:27.539 [pico-cycler] CloseRelay to vdc-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:52:35.295 [dist-btu] btu report period of 300s. seconds_to_next_top is 144.7
+2026-09-11 09:52:36.636 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:52:37.453 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+2026-09-11 09:52:40.350 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:52:48.200 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:52:48.236 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:52:48.270 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:52:51.336 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:52:51.358 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:52:51.378 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:53:07.457 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:53:27.549 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['sim-buffer-pico', 'sim-tank1-pico']
+2026-09-11 09:53:27.555 [pico-cycler] OpenRelay to vdc-relay
+2026-09-11 09:53:32.578 [pico-cycler] CloseRelay to vdc-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:53:37.429 [lc] HaStrategy: Standby |  State: Dormant
+2026-09-11 09:53:37.459 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+2026-09-11 09:53:39.678 [zero-ten-multiplexer] Set dist-010v to 20
+2026-09-11 09:53:39.679 [zero-ten-multiplexer] Set primary-010v to 40
+2026-09-11 09:53:39.681 [zero-ten-multiplexer] Set store-010v to 0
+2026-09-11 09:53:40.352 [dist-btu] btu report period of 300s. seconds_to_next_top is 79.6
+2026-09-11 09:53:41.776 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:53:45.397 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:53:53.341 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:53:53.375 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:53:53.409 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:53:56.379 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:53:56.403 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:53:56.423 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:54:07.463 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:54:32.599 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['sim-tank1-pico']
+2026-09-11 09:54:32.603 [pico-cycler] OpenRelay to vdc-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:54:37.466 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+2026-09-11 09:54:37.623 [pico-cycler] CloseRelay to vdc-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:54:45.399 [dist-btu] btu report period of 300s. seconds_to_next_top is 14.6
+2026-09-11 09:54:46.720 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:54:50.447 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:54:58.014 [pico-cycler] Sending problem event for zombies [' sim-buffer-pico [buffer]', ' sim-tank1-pico [tank1]']
+2026-09-11 09:54:58.286 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:54:58.322 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:54:58.356 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:54:58.802 Top state: Admin
+2026-09-11 09:54:58.802 Auto state: Dormant
+2026-09-11 09:55:01.429 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:55:01.452 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+2026-09-11 09:55:01.471 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:55:07.469 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+2026-09-11 09:55:07.734 [scada] AdminDispatch OpenRelay to admin.zone1-down-ops-relay
+2026-09-11 09:55:11.727 [scada] AdminDispatch SwitchToWallThermostat to admin.zone1-down-failsafe-relay
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:55:15.739 [scada] Admin releases control: Auto
+2026-09-11 09:55:15.740 [scada] AutoWakesUp: Dormant -> LocalControl
+2026-09-11 09:55:15.755 [lc] TopWakeUp: Dormant -> EverythingOff
+2026-09-11 09:55:15.756 [lc] Set top state command tree
+2026-09-11 09:55:15.765 [lc] Set auto.lc.n command tree
+2026-09-11 09:55:15.766 [lc] TopWakeUp: Dormant -> EverythingOff
+2026-09-11 09:55:15.767 [lc] Initializing relays
+2026-09-11 09:55:15.768 [lc] de-energizing most relays
+2026-09-11 09:55:15.770 [lc] DischargeStore to charge-discharge-relay
+2026-09-11 09:55:15.771 [lc] SwitchToHeatPump to primary-pump-failsafe-relay
+2026-09-11 09:55:15.772 [lc] OpenRelay to primary-pump-scada-ops-relay
+2026-09-11 09:55:15.774 [lc] OpenRelay to store-pump-relay
+2026-09-11 09:55:15.775 [lc] CloseRelay to tstat-common-relay
+2026-09-11 09:55:15.776 [lc] SwitchToWallThermostat to zone1-down-failsafe-relay
+2026-09-11 09:55:15.778 [lc] OpenRelay to zone1-down-ops-relay
+2026-09-11 09:55:15.779 [lc] SwitchToWallThermostat to zone2-up-failsafe-relay
+2026-09-11 09:55:15.781 [lc] OpenRelay to zone2-up-ops-relay
+2026-09-11 09:55:15.781 [lc] energizing key relays for keeping things off
+2026-09-11 09:55:15.783 [lc] auto.lc.n sending SwitchToScada to Hp Failsafe auto.lc.n.hp-failsafe-relay
+2026-09-11 09:55:15.784 [lc] auto.lc.n sending SwitchToScada to Aquastat Ctrl auto.lc.n.aquastat-ctrl-relay
+2026-09-11 09:55:15.785 [lc] TurnOff to hp-boss
+2026-09-11 09:55:15.787 [five-v-boss] wake.up in PicoCycler: nothing to restore
+2026-09-11 09:55:15.801 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='20d211ae-c756-4da0-b0bc-c1616d4a3b84' SendTimeUnixMs=1789134915785 TypeName='fsm.event' Version='000'
+2026-09-11 09:55:15.802 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-09-11 09:55:15.806 [scada] Sending auto.lc.n.hp-boss state to sieg-loop
+2026-09-11 09:55:15.806 [sieg-loop] Just received state HpOff from HpBoss
+2026-09-11 09:55:15.807 [scada] Trouble with process_single_machine_state_: 
+ 'SiegLoop' object has no attribute 'hp_boss'
+2026-09-11 09:55:15.807 [hp-boss] hp-boss received unexpected message: Src='hp-scada-ops-relay' Dst='hp-boss' MessageType='gw.dispatch.ack' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:55:37.470 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:55:46.761 [buffer] buffer: Ignoring data from pico pico_72a121 - not recognized!
+2026-09-11 09:55:50.504 [tank1] tank1: Ignoring data from pico pico_81a436 - not recognized!
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+2026-09-11 09:56:07.473 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOn
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'
+Exception ignored in: <function ModbusClient.__del__ at 0x7f8976f6a0>
+Traceback (most recent call last):
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 136, in __del__
+    self.close()
+  File "/home/pi/gridworks-scada-unlimbo/gw_spaceheat/venv/lib/python3.11/site-packages/pyModbusTCP/client.py", line 324, in close
+    self._sock.close()
+    ^^^^^^^^^^
+AttributeError: 'ModbusClient' object has no attribute '_sock'

@@ -52,7 +52,7 @@ case "${1:-}" in
     STAMP=$(date +%Y%m%d-%H%M%S)
     scp -q "$HOST:$BOX_LOG_DIR/boot.log" "$HERE/boot-$STAMP.log" 2>/dev/null || echo "no boot.log to copy"
     mkdir -p "$HERE/instances"
-    scp -q "$HOST:$BOX_EVENTS/*.json" "$HERE/instances/" 2>/dev/null && ssh "$HOST" "rm -f $BOX_EVENTS/*.json" || echo "no pending events in $BOX_EVENTS"
+    scp -q "$HOST:$BOX_EVENTS/*/*.json" "$HERE/instances/" 2>/dev/null && ssh "$HOST" "rm -rf $BOX_EVENTS/*" || echo "no pending events in $BOX_EVENTS"
     ssh "$HOST" "echo 'port words after window:'; $PORTS; rm -rf $BOX_LOG_DIR; sudo systemctl start $SERVICES; sleep 3; systemctl is-active $SERVICES | paste -sd' '"
     echo "deployed scada + timer back; window log at $HERE/boot-$STAMP.log; events in instances/"
     ;;

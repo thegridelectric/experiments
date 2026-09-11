@@ -1,6 +1,6 @@
 # beech-krida-witness, 2026-09-10
 
-Status: Draft · Pass 0 · Updated 2026-09-10
+Status: Accepted · Pass 0 · Updated 2026-09-11
 
 > What this is: the hardware witness for the House0 relay decommission
 > (krida-retirement rung 3): a window scada on the real beech box, on
@@ -41,7 +41,9 @@ one I2C actuation path), in a full HTTPS clone at
 `~/gridworks-scada-unlimbo` on beech with its own venv
 (`tools/mkenv.sh`, admin installed, no flo). The deployed service in
 `~/gridworks-scada` (`main`, `0f623987`) is stopped for the window and
-never touched.
+never touched. The box also carries a full clone of this repo at
+`~/experiments` (pushed SHAs only; `8d880b3` for the run), which the
+window script reads the layout pair and `window_boot.py` from.
 
 **Layout pair.** The two files in `instances/`, derived by `derive_beech_layout.py`
 from the scada House0 fixture pair (the one House0 layout in the
@@ -138,7 +140,48 @@ state; after admin release both relays read WallThermostat and
 RelayOpen. This is the first time the admin path has been exercised
 against a House0 layout.
 
-**Beech: not yet run.**
+**Beech (2026-09-11 09:52–09:57 ET): PASS, all nine checks, and the
+pump ran under the call.** Relay 17 (zone1-down-failsafe) took
+SwitchToScada and relay 18 (zone1-down-ops) took CloseRelay; each
+dispatch was acked within two seconds and the relay's
+`single.machine.state` and the next snapshot showed the commanded
+state. The port word read off the bus went from `0x21: 0xff 0xff` to
+`0x21: 0x3f 0xff` with the call (17 and 18 energized, low bits on the
+active-low Krida) and back to `0xff` after the release. About 32 s
+after the call the `dist-flow` row went 0 → 196, then 200 for the rest
+of the hold, and the return water warmed from 155.7 to 161.2 F; flow
+fell to 35 within five seconds of OpenRelay and to 0 ten seconds
+later. The deployed scada came back with both port words as before the
+window (`0x20: 0xf2 0xdf`, `0x21: 0xff 0xff`). Rung 3 of the relay
+decommission is witnessed on a real Krida panel.
+
+**Not witnessed: pump power.** The window's eGauge driver logged an
+empty "startup warning" and never produced a reading, so no `-pwr`
+channel reached a snapshot or report; the box resolves
+`eGauge6069.local` and reaches port 502, so the failure is in the
+driver, not the network. The 16 `ModbusClient.__del__` tracebacks in
+the boot log are its discarded clients. The flow meter is the witness.
+
+**Side findings, none on the relay path:**
+
+- **The pico-cycler rebooted the vdc-relay every 65 s.** The fixture's
+  simulated tank picos (`sim-buffer-pico`, `sim-tank1-pico`) post
+  nothing on a real box, so they "flatline" and the cycler cuts pico
+  power over and over (09:48:40, 09:51:17, 09:52:22, 09:53:27, 09:54:32
+  box time; zombie problem event at 09:54:58). The port-word sample at
+  box 09:52:24 caught one cycle: `0x20: 0x72` is the vdc relay
+  energized (open) for its five seconds. A derived window layout
+  should drop the simulated tank modules, or the cycler should ignore
+  simulated picos.
+- **Beech's real tank picos post to the window and fail validation:**
+  `TankModuleParams` from the picos lacks `PicoBoardVariant` and
+  `MicropythonVersion` and carries a `Version` the fixture's shape
+  rejects (ten `gridworks.event.problem` events, buffer and tank1
+  alternating). Older pico firmware against the current tank-module
+  word; a fleet question, not this rung's.
+- **The box clock runs about 70 s behind the laptop** (the driver's
+  09:53:16 CloseRelay ack is the box's 09:52:03 dispatch). Timeline
+  times below are the laptop's unless marked box.
 
 ## Timeline
 
@@ -149,15 +192,28 @@ against a House0 layout.
 - 21:04:23 CloseRelay acked, ops relay RelayClosed by 21:04:27; 60 s hold.
 - 21:05:27 OpenRelay acked; 21:05:31 SwitchToWallThermostat acked; admin released 21:05:35.
 - 21:06:35 driver done, SUMMARY all PASS.
+- 2026-09-11 08:53–08:57 dev rung replicated by a fresh session (`dev2-*`), all nine PASS.
+- 09:48:37 (box) beech window scada booted; port words before and after boot `0x20: 0xf2 0xdf`, `0x21: 0xff 0xff`.
+- 09:52:09 driver started, 60 s of snapshots: `dist-flow` 0.
+- 09:53:12 SwitchToScada on zone1-down-failsafe-relay acked; reads Scada 09:53:14.
+- 09:53:16 CloseRelay on zone1-down-ops-relay acked; reads RelayClosed 09:53:18. Bus: `0x21: 0x3f 0xff` (box 09:52:04).
+- 09:53:48 `dist-flow` 196 (first non-zero snapshot, 32 s after the call); 200 from 09:55:08; `dist-rwt` 155.7 → 161.2 F over the hold.
+- 09:56:18 OpenRelay acked 09:56:20, reads RelayOpen 09:56:22; SwitchToWallThermostat acked 09:56:24, reads WallThermostat 09:56:26; admin released 09:56:26.
+- 09:56:23 `dist-flow` 35; 09:56:27 0. Bus: `0x21: 0xff 0xff` (box 09:55:25).
+- 09:57:26 driver done, SUMMARY all PASS.
+- 09:57:38 window off; port words `0x20: 0xf2 0xdf`, `0x21: 0xff 0xff`; deployed scada and timer active.
 
 ## Analysis notes
 
 - The port word is read with `i2ctransfer -y 1 r2@0x21` (two bytes,
   P0-7 then P10-17). A PCF8575 read returns pin levels, so a bit reads
   low while the relay is energized; all `0xff` is every relay off.
-- Nothing in the layout beyond the board and relays is beech's. Zone
-  temperatures, tank readings and power in the window are simulated or
-  absent and mean nothing.
+- Nothing in the layout beyond the board, the relays, the eGauge and
+  the dist BTU meter is beech's. Zone temperatures and tank readings in
+  the window are simulated or absent and mean nothing.
+- The `report.event` at 09:55 carries the dist channels and the 0-10V
+  outputs only; the 09:50 one still carries the fixture's simulated
+  tank depths. Neither carries a power channel (the eGauge gap above).
 
 ## Folder contents & experimental method
 
@@ -173,4 +229,14 @@ event dir); nothing is pulled from the journal or the eventstore.
   dev-broker traffic to `broker-<stamp>.jsonl`.
 - `boot-<stamp>.log` — the window scada's boot log (copied by `off`).
 - `dev-scada.log`, `dev-drive.log`, `dev-broker.jsonl`,
-  `dev-driver-stdout.txt` — the dev rung on the sim House0 fixture.
+  `dev-driver-stdout.txt` — the dev rung on the sim House0 fixture;
+  `dev2-*` — the same rung replicated on 2026-09-11 before beech.
+- `drive-20260911-095209.log`, `broker-20260911-095209.jsonl`,
+  `driver-stdout-20260911-095209.txt` — the beech run: the driver's
+  log, the dev-broker capture (11 snapshots, 3 command trees, 3
+  glitches), the nine verdicts.
+- `portwords-20260911-095209.log` — both Krida port words read off the
+  bus every 20 s through the run (box time).
+- `boot-20260911-095738.log` — the beech window scada's boot log.
+- `semafy_events.py` — names the box's uid-named persisted events as
+  sema instances in `instances/` (`<HHMMSS ET>[-<subject>]-<type>-<version>.json`).

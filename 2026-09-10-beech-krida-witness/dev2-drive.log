@@ -1,0 +1,84 @@
+08:54:40 mqtt started -> connecting
+08:54:40 mqtt connecting -> subscribing
+08:54:40 mqtt subscribing -> active
+08:54:40 RX scada.control.capabilities
+08:54:40 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:54:40 link active
+08:54:40 (1) watching 60s for the boot and the first state reports
+08:54:40 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:54:41 RX gridworks.ping
+08:54:50 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:54:58 RX single.machine.state auto.lc.n.zone1-main-ops-relay RelayOpen
+08:54:58 RX single.machine.state auto.lc.n.zone1-main-failsafe-relay WallThermostat
+08:55:00 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:00 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:10 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:20 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:30 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:30 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:40 PASS (1) both zone1-main relay rows present in scada.control.capabilities: ['aquastat-ctrl-relay', 'charge-discharge-relay', 'five-v-boss', 'hp-boss', 'hp-failsafe-relay', 'hp-loop-keep-send-relay', 'hp-loop-on-off-relay', 'hp-scada-ops-relay', 'pico-cycler', 'primary-pump-failsafe-relay', 'primary-pump-scada-ops-relay', 'store-pump-relay', 'tstat-common-relay', 'vdc-relay', 'zone1-main-failsafe-relay', 'zone1-main-ops-relay']
+08:55:40 (2) SwitchToScada -> zone1-main-failsafe-relay
+08:55:40 TX admin.dispatch SwitchToScada -> admin.zone1-main-failsafe-relay trigger=3003fb06-fb98-4761-bc15-05a685fe4f5a
+08:55:40 REPLY gw.dispatch.ack for SwitchToScada trigger=3003fb06-fb98-4761-bc15-05a685fe4f5a 
+08:55:40 RX gw.dispatch.ack {"FromHandle": "admin.zone1-main-failsafe-relay", "ToHandle": "admin", "TriggerId": "3003fb06-fb98-4761-bc15-05a685fe4f5a", "UnixTimeMs": 1789131340771, "TypeName": "gw.dispatch.ack", "Version": "000"}
+08:55:40 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:40 RX fsm.full.report
+08:55:40 RX single.machine.state admin.zone1-main-failsafe-relay Scada
+08:55:42 PASS (2) reply: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'}
+08:55:42 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:44 PASS (2) zone1-main-failsafe-relay reads Scada: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'}
+08:55:44 (2) heat call: CloseRelay -> zone1-main-ops-relay
+08:55:44 TX admin.dispatch CloseRelay -> admin.zone1-main-ops-relay trigger=2f65b69a-f78a-442e-8fb7-7654f3edab8d
+08:55:44 REPLY gw.dispatch.ack for CloseRelay trigger=2f65b69a-f78a-442e-8fb7-7654f3edab8d 
+08:55:44 RX gw.dispatch.ack {"FromHandle": "admin.zone1-main-ops-relay", "ToHandle": "admin", "TriggerId": "2f65b69a-f78a-442e-8fb7-7654f3edab8d", "UnixTimeMs": 1789131344768, "TypeName": "gw.dispatch.ack", "Version": "000"}
+08:55:44 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:55:44 RX fsm.full.report
+08:55:44 RX single.machine.state admin.zone1-main-ops-relay RelayClosed
+08:55:46 PASS (2) heat call: reply: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'}
+08:55:46 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:55:48 PASS (2) heat call: zone1-main-ops-relay reads RelayClosed: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'}
+08:55:48 (3) holding the call 60s; the Caleffi box should start the dist pump in ~40 s
+08:55:48 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:55:58 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:56:00 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:56:08 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:56:18 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:56:28 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:56:30 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:56:38 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:56:48 (3) end of hold: {'dist-flow': 0}
+08:56:48 (4) call released: OpenRelay -> zone1-main-ops-relay
+08:56:48 TX admin.dispatch OpenRelay -> admin.zone1-main-ops-relay trigger=92e76212-8b7b-46ae-bbf6-86646d4decb0
+08:56:48 REPLY gw.dispatch.ack for OpenRelay trigger=92e76212-8b7b-46ae-bbf6-86646d4decb0 
+08:56:48 RX gw.dispatch.ack {"FromHandle": "admin.zone1-main-ops-relay", "ToHandle": "admin", "TriggerId": "92e76212-8b7b-46ae-bbf6-86646d4decb0", "UnixTimeMs": 1789131408790, "TypeName": "gw.dispatch.ack", "Version": "000"}
+08:56:48 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} {'dist-flow': 0}
+08:56:48 RX fsm.full.report
+08:56:48 RX single.machine.state admin.zone1-main-ops-relay RelayOpen
+08:56:50 PASS (4) call released: reply: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'}
+08:56:50 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:56:52 PASS (4) call released: zone1-main-ops-relay reads RelayOpen: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'}
+08:56:52 (4) SwitchToWallThermostat -> zone1-main-failsafe-relay
+08:56:52 TX admin.dispatch SwitchToWallThermostat -> admin.zone1-main-failsafe-relay trigger=56364b30-4bc4-4fbc-8713-35fc8112e032
+08:56:52 REPLY gw.dispatch.ack for SwitchToWallThermostat trigger=56364b30-4bc4-4fbc-8713-35fc8112e032 
+08:56:52 RX gw.dispatch.ack {"FromHandle": "admin.zone1-main-failsafe-relay", "ToHandle": "admin", "TriggerId": "56364b30-4bc4-4fbc-8713-35fc8112e032", "UnixTimeMs": 1789131412791, "TypeName": "gw.dispatch.ack", "Version": "000"}
+08:56:52 RX snapshot relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:56:52 RX fsm.full.report
+08:56:52 RX single.machine.state admin.zone1-main-failsafe-relay WallThermostat
+08:56:54 PASS (4) reply: relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'}
+08:56:54 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:56:56 PASS (4) zone1-main-failsafe-relay reads WallThermostat: relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'}
+08:56:56 TX admin.release.control
+08:56:56 (5) 60s after release, snapshots for the standby control's posture
+08:56:56 RX single.reading
+08:56:56 RX single.reading
+08:56:56 RX single.reading
+08:56:56 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:56:56 RX single.machine.state auto.lc.n.zone1-main-failsafe-relay WallThermostat
+08:56:56 RX single.machine.state auto.lc.n.zone1-main-ops-relay RelayOpen
+08:57:00 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:57:06 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:57:16 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:57:26 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:57:30 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:57:36 RX snapshot relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} {'dist-flow': 0}
+08:57:56 SUMMARY PASS (1) both zone1-main relay rows present in scada.control.capabilities: ['aquastat-ctrl-relay', 'charge-discharge-relay', 'five-v-boss', 'hp-boss', 'hp-failsafe-relay', 'hp-loop-keep-send-relay', 'hp-loop-on-off-relay', 'hp-scada-ops-relay', 'pico-cycler', 'primary-pump-failsafe-relay', 'primary-pump-scada-ops-relay', 'store-pump-relay', 'tstat-common-relay', 'vdc-relay', 'zone1-main-failsafe-relay', 'zone1-main-ops-relay'] | PASS (2) reply: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'} | PASS (2) zone1-main-failsafe-relay reads Scada: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'} | PASS (2) heat call: reply: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} | PASS (2) heat call: zone1-main-ops-relay reads RelayClosed: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayClosed'} | PASS (4) call released: reply: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'} | PASS (4) call released: zone1-main-ops-relay reads RelayOpen: relays={'zone1-main-failsafe-relay': 'Scada', 'zone1-main-ops-relay': 'RelayOpen'} | PASS (4) reply: relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'} | PASS (4) zone1-main-failsafe-relay reads WallThermostat: relays={'zone1-main-failsafe-relay': 'WallThermostat', 'zone1-main-ops-relay': 'RelayOpen'}

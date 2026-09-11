@@ -2,11 +2,16 @@
 # Swap spruce between the deployed scada and a window scada on the
 # unlimbo checkout, from the laptop, in one word each.
 #
-#   ./spruce_window.sh on [minutes]   stop the deployed scada + summer hack, open the
-#                                     ssh -R 1885 tunnel to the laptop's gw-dev-rabbit,
-#                                     boot the unlimbo window scada (default 30 min)
+#   ./spruce_window.sh on [minutes]   stop the deployed scada (+ its restart timer +
+#                                     the summer hack), open the ssh -R 1885 tunnel to
+#                                     the laptop's gw-dev-rabbit, boot the unlimbo window
+#                                     scada. No minutes = UNBOUNDED: a standing window
+#                                     that runs until `off` (no restart on a crash: check
+#                                     `status`). With minutes, a bounded window.
 #   ./spruce_window.sh off            kill the window scada, copy its log to
-#                                     ../scratch/, restart the deployed services
+#                                     ../scratch/, restart the deployed scada + timer
+#                                     (NOT the summer hack: disabled since 2026-09-09,
+#                                     the heat pump is in heating)
 #   ./spruce_window.sh status         services, window scada, tunnel, 0x21 relay bits
 #
 # The window scada runs the box's ~/gridworks-scada-unlimbo checkout through
@@ -18,26 +23,30 @@ set -euo pipefail
 
 HOST=spruce
 SERVICES="spruce-summer-hack gwspaceheat gwspaceheat-restart.timer"
+DEPLOYED="gwspaceheat gwspaceheat-restart.timer"
 BOX_LOG_DIR=/tmp/spruce-window
-BOOT="cd ~/gridworks-scada-unlimbo/gw_spaceheat && SCADA_PICO_CYCLER_STATE_LOGGING=true setsid nohup timeout \$((SECS + 60)) venv/bin/python ~/experiments/2026-08-10-ads-declared-rate/window_boot.py \$SECS ~/envs/dev.env > $BOX_LOG_DIR/boot.log 2>&1 < /dev/null &"
+# SECS=0 is the unbounded window (window_boot.py runs until killed); the
+# `timeout` wrapper is dropped in that case.
+BOOT="cd ~/gridworks-scada-unlimbo/gw_spaceheat && SCADA_PICO_CYCLER_STATE_LOGGING=true setsid nohup \$([ \$SECS -gt 0 ] && echo timeout \$((SECS + 60))) venv/bin/python ~/experiments/2026-08-10-ads-declared-rate/window_boot.py \$SECS ~/envs/dev.env > $BOX_LOG_DIR/boot.log 2>&1 < /dev/null &"
 SCRATCH="$(cd "$(dirname "$0")/.." && pwd)/scratch"
 
 tunnel_up() { pgrep -f "ssh -f -N.*-R 1885:localhost:1885 $HOST" >/dev/null; }
 
 case "${1:-}" in
   on)
-    MIN="${2:-30}"
+    MIN="${2:-0}"
     tunnel_up || ssh -f -N -o ExitOnForwardFailure=yes -R 1885:localhost:1885 "$HOST"
     echo "tunnel up"
     ssh "$HOST" "sudo systemctl stop $SERVICES; mkdir -p $BOX_LOG_DIR; SECS=$((MIN * 60)); $BOOT sleep 20; git -C ~/gridworks-scada-unlimbo log --oneline -1; tail -3 $BOX_LOG_DIR/boot.log | cut -c1-140"
-    echo "window scada up for $MIN min; now: gridworks-scada/gw_spaceheat/venv/bin/gwa watch spruce"
+    [ "$MIN" -gt 0 ] && echo "window scada up for $MIN min" || echo "window scada up, UNBOUNDED (until ./spruce_window.sh off)"
+    echo "now: gridworks-scada/gw_spaceheat/venv/bin/gwa watch spruce (or on the box: gwa watch spruce in tmux)"
     ;;
   off)
     mkdir -p "$SCRATCH"
     ssh "$HOST" 'pkill -f "[w]indow_boot.py" || true; sleep 3'
     scp -q "$HOST:$BOX_LOG_DIR/boot.log" "$SCRATCH/spruce-window-$(date +%Y%m%d-%H%M%S).log" 2>/dev/null || echo "no boot.log to copy"
-    ssh "$HOST" "rm -rf $BOX_LOG_DIR; sudo systemctl start $SERVICES; sleep 3; systemctl is-active $SERVICES | paste -sd' '"
-    echo "deployed scada + summer hack back; window log in $SCRATCH"
+    ssh "$HOST" "rm -rf $BOX_LOG_DIR; sudo systemctl start $DEPLOYED; sleep 3; systemctl is-active $SERVICES | paste -sd' '"
+    echo "deployed scada + timer back (summer hack left off); window log in $SCRATCH"
     ;;
   status)
     tunnel_up && echo "tunnel: up" || echo "tunnel: down"
