@@ -13,6 +13,8 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-10 · [beech-krida-witness](2026-09-10-beech-krida-witness/)**
+  — krida-retirement rung 3 on real hardware: a 5-minute window scada (`jm/spruce-unlimbo` `1a7a41d1`, derived beech layout, dev broker only) on beech, admin takes zone1-down on the second Krida and makes a heat call, dist flow + pump power watched. Dev rung on the sim House0 fixture PASS (first admin exercise on a House0 tree); beech run pending.
 - **2026-09-10 · [pico-state-reported](2026-09-10-pico-state-reported/)**
   — journalkeeper `3a8bc57` against the actual-spruce sim scada on the dev broker with an LTN peer: `<node>-pico-state` channels created from `layout.lite` 012, Alive → Flatlined readable in order, PASS; no cycler state channel exists to order against; the unlimbo line's `layout.lite` 013 is staging and outside the journal seed.
 - **2026-09-08 to 09-09 · [five-v-boss-hold](2026-09-08-five-v-boss-hold/)**
