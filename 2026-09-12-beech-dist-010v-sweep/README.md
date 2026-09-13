@@ -48,9 +48,11 @@ Two things hang on the answer:
 
 ## Setup
 
-**Code under test.** gridworks-scada `jm/spruce-unlimbo` at `17e277d3`
+**Code under test.** gridworks-scada `jm/spruce-unlimbo` at `e6d5b39b`
 (House0's three 0-10V outputs on per-output components against the
-Krida record; the GP8403 arm; the multiplexer retired), in the full
+Krida record, the GP8403 arm, the multiplexer retired, as of `17e277d3`;
+the partition residue closed in `3f607f8c`; axiom 15 ComponentBinding
+and the fixture's web-server node in `e6d5b39b`), in the full
 clone at `~/gridworks-scada-unlimbo` on beech (its own venv, admin
 installed, no flo). The deployed service in `~/gridworks-scada`
 (`main`) is stopped for the window and never touched. The box's
@@ -61,9 +63,10 @@ installed, no flo). The deployed service in `~/gridworks-scada`
 krida witness rung's derivation (beech identity, zone1 main → down,
 zone2 up cloned on relays 19/20, `ActuationAuthority=Standby`, the real
 eGauge and dist-btu pico) applied to the scada House0 fixture pair as
-it stands after `17e277d3` (each `*-010v` node on a DAC-output
+it stands after `e6d5b39b` (each `*-010v` node on a DAC-output
 component against the Krida record's GP8403 entries; the multiplexer
-gone), plus beech's deployed power-on levels in `ZeroTenPowerOnList`.
+gone; the web-server node axiom 15's ComponentBinding requires), plus
+beech's deployed power-on levels in `ZeroTenPowerOnList`.
 The pair decodes through gwsproto (`sema_to_dc.load_layout`: 64 nodes,
 three `I2cDacOutputComponent`s, board DACs `Dfr1`/`Dfr2` at 94/95
 `Gp8403`) and validates with `sema validate`. Placed on the box as
@@ -72,7 +75,7 @@ three `I2cDacOutputComponent`s, board DACs `Dfr1`/`Dfr2` at 94/95
 
 | file | type | sha256 (first 16) |
 | --- | --- | --- |
-| `instances/beech-window-gw.house0.layout-000.json` | `gw.house0.layout/000` | `2d843c4cb4e48108` |
+| `instances/beech-window-gw.house0.layout-000.json` | `gw.house0.layout/000` | `6f1487127924ca70` |
 | `instances/beech-window-gw.house0.operational.params-000.json` | `gw.house0.operational.params/000` | `944b9a16497fe048` |
 
 **Isolation.** As the krida witness: `~/envs/dev.env` on the box (real
