@@ -1,6 +1,6 @@
 # beech-dist-010v-sweep, 2026-09-12
 
-Status: Draft · Pass 0 · Updated 2026-09-12
+Status: Draft · Pass 0 · Updated 2026-09-13
 
 > What this is: the hardware witness for House0's 0-10V outputs on
 > per-output components (spruce-unlimbo, house0-zero-ten-outputs):
@@ -170,6 +170,29 @@ cd ../experiments/2026-09-12-beech-dist-010v-sweep
 
 **Beech: not yet run.**
 
+**Idle soak (2026-09-13 09:45–09:56 ET, scada `3f607f8c`): PASS.** The
+sim House0 pair on the dev broker, no driver, 10 minutes to the
+timeout's SIGTERM: three outputs ready at boot, no task died, the
+derived generator's loop ran every minute through the tenth, no
+missing channel or node. One boot-time finding: local control's
+`initialize_actuators` (`tou_base.py:368`) calls `sieg_valve_hold` under
+its own handle and the rights check refuses it (the relay's immediate
+boss is sieg-loop), so the hold it intends never reaches the relay; it
+is logged and harmless here, and it is the command-surface question of
+the sieg loop. Log: `soak-idle-scada.log`.
+
+**Driver soak (2026-09-13 09:56–10:07 ET, scada `3f607f8c`): PASS.** The
+same pair, the sweep driver started 45 s after boot with the short
+plan: all ten steps echoed on `dist-010v` (20, 50, 80, 100, 100, 80,
+50, 20, 35, 20 volts times ten, each within the second), the heat call
+acked and read back, restore and the two relay releases answered, the
+driver's verdict PASS with the expected sim-only FAIL on dist flow (510
+readings, 10 steps); the scada ran on after the release, through the
+local control's re-wake, to the timeout's SIGTERM at 10:07 with no
+task dead and no missing channel or node. Both soaks clean: the beech
+window is no longer gated on the scada. Logs: `soak-driver-scada.log`,
+`sweep-soak.log`, `sweep-soak-results.json`.
+
 **Dev rung (2026-09-12 19:42–19:47 ET): the arm works; the run aborted
 on an unrelated scada shutdown.** On the sim House0 fixture (scada
 `17e277d3`, dev broker): all three outputs reported ready and the
@@ -193,6 +216,8 @@ shutdown would end the window mid-sweep.
 
 (ET)
 
+- 2026-09-13 09:56:36 driver soak: scada booted; 09:59:25–10:02:31 ten steps echoed; 10:02:55 driver released admin, PASS; 10:07:05 SIGTERM, no fault.
+- 2026-09-13 09:45:33 idle soak: sim House0 scada booted on the dev broker, three outputs ready the same second; 09:56:02 SIGTERM from the 630 s timeout, no fault.
 - 2026-09-12 19:42:23 dev rung: sim House0 scada booted on the dev broker; three outputs ready 19:42:31.
 - 19:43:00 driver started; 19:43:10 SwitchToScada and CloseRelay both acked and read back.
 - 19:43:33 (scada) derived-generator task died; 19:44:48 driver: flow verdict FAIL (expected in the sim).
@@ -231,6 +256,9 @@ for the window and restarts it after.
 - `dev.env` — the dev rung's admin-link block (dev broker, public creds).
 - `dev-scada.log`, `sweep-dev.log`, `sweep-dev-results.json` — the dev
   rung on the sim House0 fixture.
+- `soak-idle-scada.log`, `soak-driver-scada.log`, `sweep-soak.log`,
+  `sweep-soak-results.json`, `soak-driver-console.log` — the 10-minute
+  soaks on the sim House0 fixture (idle; with the driver in front).
 - `sweep-<run>.log`, `sweep-<run>-results.json`, `boot-<stamp>.log` —
   (after the run) the driver's log and typed results from beech, the
   window scada's boot log.
