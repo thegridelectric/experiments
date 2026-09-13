@@ -1,0 +1,1844 @@
+{
+ "Outcome": "ABORT: up: no dist-010v echo of 80 within 15s",
+ "Verdicts": [
+  "FAIL dist-flow non-zero within 90s of the call"
+ ],
+ "StartUnixMs": 1789256580108,
+ "EndUnixMs": 1789256810251,
+ "Knobs": {
+  "Phases": [
+   "call",
+   "baseline",
+   "up",
+   "down",
+   "jumps",
+   "restore"
+  ],
+  "HoldS": 20,
+  "BaselineS": 20,
+  "CallWaitS": 90,
+  "Plan": "short",
+  "PlanNote": "four levels and back to the deployed 3.5 V: a five-minute witness",
+  "Ramp": [
+   20,
+   50,
+   80,
+   100
+  ],
+  "Jumps": [
+   35
+  ],
+  "Zone": "zone1-main",
+  "RestoreLevel": 20,
+  "EchoS": 15,
+  "AdminTimeoutS": 900
+ },
+ "Provenance": {
+  "layout_path": "../../gridworks-scada/tests/config/gw.house0.sim.layout.json",
+  "layout_sha256": "03c10c345ed4c80b09f8d9d8bdf0b3b4001eb5bc03d4ed5ab62f57167dacbfdc",
+  "ops_path": "../../gridworks-scada/tests/config/gw.house0.sim.operational.params.json",
+  "ops_sha256": "5e618d0302feaa301488b8aafe60e86e98cb3d85060c6a59d1e485958acaebdc",
+  "scada_alias": "d1.isone.ct.newhaven.orange1.scada",
+  "power_on_volts_times_ten": 20
+ },
+ "Steps": [
+  {
+   "phase": "up",
+   "level": 20,
+   "sent_unix_ms": 1789256708220,
+   "echo_unix_ms": 1789256708231,
+   "hold_s": 20
+  },
+  {
+   "phase": "up",
+   "level": 50,
+   "sent_unix_ms": 1789256728858,
+   "echo_unix_ms": 1789256728868,
+   "hold_s": 20
+  },
+  {
+   "phase": "up",
+   "level": 80,
+   "sent_unix_ms": 1789256749495,
+   "echo_unix_ms": null,
+   "hold_s": 20
+  },
+  {
+   "phase": "restore",
+   "level": 20,
+   "sent_unix_ms": 1789256764677,
+   "echo_unix_ms": null,
+   "hold_s": 10
+  }
+ ],
+ "RelayCommands": [
+  {
+   "node": "zone1-main-failsafe-relay",
+   "event": "SwitchToScada",
+   "sent_unix_ms": 1789256580636,
+   "echo_unix_ms": 1789256584196
+  },
+  {
+   "node": "zone1-main-ops-relay",
+   "event": "CloseRelay",
+   "sent_unix_ms": 1789256589206,
+   "echo_unix_ms": 1789256592762
+  },
+  {
+   "node": "zone1-main-ops-relay",
+   "event": "OpenRelay",
+   "sent_unix_ms": 1789256779853,
+   "echo_unix_ms": null
+  },
+  {
+   "node": "zone1-main-failsafe-relay",
+   "event": "SwitchToWallThermostat",
+   "sent_unix_ms": 1789256795040,
+   "echo_unix_ms": null
+  }
+ ],
+ "States": [
+  {
+   "handle": "admin.aquastat-ctrl-relay",
+   "state": "Scada",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler",
+   "state": "PicosLive",
+   "unix_ms": 1789256698005
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "admin.hp-failsafe-relay",
+   "state": "Scada",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "admin.primary-pump-failsafe-relay",
+   "state": "HeatPump",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "admin.primary-pump-scada-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789256581060
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789256611063
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789256641064
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789256671065
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789256701068
+  },
+  {
+   "handle": "admin.store-pump-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "admin.tstat-common-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "admin.zone1-main-failsafe-relay",
+   "state": "Scada",
+   "unix_ms": 1789256580646
+  },
+  {
+   "handle": "admin.zone1-main-failsafe-relay",
+   "state": "Scada",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "admin.zone1-main-ops-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789256589215
+  },
+  {
+   "handle": "admin.zone1-main-ops-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789256698008
+  },
+  {
+   "handle": "auto",
+   "state": "LocalControl",
+   "unix_ms": 1789256578802
+  },
+  {
+   "handle": "auto",
+   "state": "Dormant",
+   "unix_ms": 1789256638801
+  },
+  {
+   "handle": "auto",
+   "state": "Dormant",
+   "unix_ms": 1789256698801
+  },
+  {
+   "handle": "auto.five-v-boss",
+   "state": "PicoCycler",
+   "unix_ms": 1789256551055
+  },
+  {
+   "handle": "auto.five-v-boss.pico-cycler",
+   "state": "PicosLive",
+   "unix_ms": 1789256580110
+  },
+  {
+   "handle": "auto.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789256559073
+  },
+  {
+   "handle": "auto.lc",
+   "state": "Normal",
+   "unix_ms": 1789256551056
+  },
+  {
+   "handle": "auto.lc",
+   "state": "Dormant",
+   "unix_ms": 1789256580644
+  },
+  {
+   "handle": "auto.lc.n",
+   "state": "Dormant",
+   "unix_ms": 1789256580644
+  },
+  {
+   "handle": "auto.lc.n.aquastat-ctrl-relay",
+   "state": "Scada",
+   "unix_ms": 1789256553060
+  },
+  {
+   "handle": "auto.lc.n.hp-boss",
+   "state": "HpOff",
+   "unix_ms": 1789256551056
+  },
+  {
+   "handle": "auto.lc.n.hp-failsafe-relay",
+   "state": "Scada",
+   "unix_ms": 1789256553060
+  },
+  {
+   "handle": "auto.lc.n.primary-pump-failsafe-relay",
+   "state": "HeatPump",
+   "unix_ms": 1789256553061
+  },
+  {
+   "handle": "auto.lc.n.primary-pump-scada-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789256553061
+  },
+  {
+   "handle": "auto.lc.n.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789256551061
+  },
+  {
+   "handle": "auto.lc.n.store-pump-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789256553060
+  },
+  {
+   "handle": "auto.lc.n.tstat-common-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789256553060
+  },
+  {
+   "handle": "auto.lc.n.zone1-main-failsafe-relay",
+   "state": "WallThermostat",
+   "unix_ms": 1789256553061
+  },
+  {
+   "handle": "auto.lc.n.zone1-main-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789256553061
+  },
+  {
+   "handle": "buffer",
+   "state": "Alive",
+   "unix_ms": 1789256551055
+  },
+  {
+   "handle": "buffer",
+   "state": "Alive",
+   "unix_ms": 1789256698005
+  },
+  {
+   "handle": "ltn.la",
+   "state": "Dormant",
+   "unix_ms": 1789256551055
+  },
+  {
+   "handle": "s",
+   "state": "Auto",
+   "unix_ms": 1789256578802
+  },
+  {
+   "handle": "s",
+   "state": "Admin",
+   "unix_ms": 1789256638801
+  },
+  {
+   "handle": "s",
+   "state": "Admin",
+   "unix_ms": 1789256698801
+  },
+  {
+   "handle": "tank1",
+   "state": "Alive",
+   "unix_ms": 1789256551055
+  },
+  {
+   "handle": "tank1",
+   "state": "Alive",
+   "unix_ms": 1789256698005
+  }
+ ],
+ "Readings": [
+  {
+   "channel": "buffer-depth1",
+   "value": 13100,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth1",
+   "value": 13100,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "buffer-depth1-device",
+   "value": 55000,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth1-device",
+   "value": 55000,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "buffer-depth1-micro-v",
+   "value": 1132083,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth1-micro-v",
+   "value": 1132083,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "buffer-depth2",
+   "value": 12200,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth2",
+   "value": 12200,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "buffer-depth2-device",
+   "value": 50000,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth2-device",
+   "value": 50000,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "buffer-depth2-micro-v",
+   "value": 1275476,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth2-micro-v",
+   "value": 1275476,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "buffer-depth3",
+   "value": 11300,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth3",
+   "value": 11300,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "buffer-depth3-device",
+   "value": 45000,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth3-device",
+   "value": 45000,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "buffer-depth3-micro-v",
+   "value": 1429875,
+   "unix_ms": 1789256580109
+  },
+  {
+   "channel": "buffer-depth3-micro-v",
+   "value": 1429875,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "dist-010v",
+   "value": 20,
+   "unix_ms": 1789256551129
+  },
+  {
+   "channel": "dist-010v",
+   "value": 20,
+   "unix_ms": 1789256611133
+  },
+  {
+   "channel": "dist-010v",
+   "value": 20,
+   "unix_ms": 1789256671136
+  },
+  {
+   "channel": "dist-010v",
+   "value": 20,
+   "unix_ms": 1789256708231
+  },
+  {
+   "channel": "dist-010v",
+   "value": 50,
+   "unix_ms": 1789256728868
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256581073
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256591077
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256601083
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256626092
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256631093
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256676110
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256716127
+  },
+  {
+   "channel": "dist-flow",
+   "value": 0,
+   "unix_ms": 1789256726131
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256581073
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256591077
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256601083
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256626092
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256631093
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256676110
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256716127
+  },
+  {
+   "channel": "dist-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256726131
+  },
+  {
+   "channel": "hp-idu-pwr",
+   "value": 0,
+   "unix_ms": 1789256551056
+  },
+  {
+   "channel": "hp-odu-pwr",
+   "value": 0,
+   "unix_ms": 1789256551056
+  },
+  {
+   "channel": "primary-010v",
+   "value": 40,
+   "unix_ms": 1789256551129
+  },
+  {
+   "channel": "primary-010v",
+   "value": 40,
+   "unix_ms": 1789256611133
+  },
+  {
+   "channel": "primary-010v",
+   "value": 40,
+   "unix_ms": 1789256671136
+  },
+  {
+   "channel": "primary-010v",
+   "value": 40,
+   "unix_ms": 1789256731138
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256581073
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256591077
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256601083
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256626092
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256631093
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256676111
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256716127
+  },
+  {
+   "channel": "primary-flow",
+   "value": 0,
+   "unix_ms": 1789256726131
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256581073
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256591077
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256601083
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256626092
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256631093
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256676111
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256716127
+  },
+  {
+   "channel": "primary-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256726131
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256581074
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256586076
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256591078
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256601084
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256621090
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256626093
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256631094
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256636095
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256676111
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256716128
+  },
+  {
+   "channel": "sieg-cold",
+   "value": 50000,
+   "unix_ms": 1789256726132
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256581074
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256591078
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256601084
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256626093
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256631094
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256676111
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256716127
+  },
+  {
+   "channel": "sieg-flow",
+   "value": 0,
+   "unix_ms": 1789256726132
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256581074
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256591078
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256601084
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256626093
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256631094
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256676111
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256716127
+  },
+  {
+   "channel": "sieg-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256726132
+  },
+  {
+   "channel": "store-010v",
+   "value": 0,
+   "unix_ms": 1789256551129
+  },
+  {
+   "channel": "store-010v",
+   "value": 0,
+   "unix_ms": 1789256611133
+  },
+  {
+   "channel": "store-010v",
+   "value": 0,
+   "unix_ms": 1789256671136
+  },
+  {
+   "channel": "store-010v",
+   "value": 0,
+   "unix_ms": 1789256731138
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256581073
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256591078
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256601083
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256626093
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256631093
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256676111
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256716127
+  },
+  {
+   "channel": "store-flow",
+   "value": 0,
+   "unix_ms": 1789256726131
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256576071
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256581073
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256591078
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256601083
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256626093
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256631093
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256641095
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256661104
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256676111
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256696119
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256716127
+  },
+  {
+   "channel": "store-flow-hz",
+   "value": 0,
+   "unix_ms": 1789256726131
+  },
+  {
+   "channel": "store-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789256551056
+  },
+  {
+   "channel": "tank1-depth1",
+   "value": 13100,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth1",
+   "value": 13100,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "tank1-depth1-device",
+   "value": 55000,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth1-device",
+   "value": 55000,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "tank1-depth1-micro-v",
+   "value": 1132083,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth1-micro-v",
+   "value": 1132083,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "tank1-depth2",
+   "value": 12200,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth2",
+   "value": 12200,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "tank1-depth2-device",
+   "value": 50000,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth2-device",
+   "value": 50000,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "tank1-depth2-micro-v",
+   "value": 1275476,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth2-micro-v",
+   "value": 1275476,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "tank1-depth3",
+   "value": 11300,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth3",
+   "value": 11300,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "tank1-depth3-device",
+   "value": 45000,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth3-device",
+   "value": 45000,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "tank1-depth3-micro-v",
+   "value": 1429875,
+   "unix_ms": 1789256580110
+  },
+  {
+   "channel": "tank1-depth3-micro-v",
+   "value": 1429875,
+   "unix_ms": 1789256640226
+  },
+  {
+   "channel": "usable-energy",
+   "value": 0,
+   "unix_ms": 1789256551035
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256576070
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256581073
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256586075
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256591077
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256596081
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256601083
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256606085
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256611087
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256616087
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256621089
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256626092
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256631093
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256636094
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256641094
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256646097
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256651098
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256656101
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256661103
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256666106
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256671109
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256676110
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256681113
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256696118
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256716126
+  },
+  {
+   "channel": "zone1-main-temp",
+   "value": 70000,
+   "unix_ms": 1789256726131
+  },
+  {
+   "channel": "zone1-main-whitewire-pwr",
+   "value": 0,
+   "unix_ms": 1789256551056
+  }
+ ]
+}

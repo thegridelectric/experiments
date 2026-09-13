@@ -30,6 +30,7 @@ future/pico-rejoin/rejoin_trace.py
 2026-08-23-spruce-store-charge-valve/charge_valve_polarity.py
 2026-08-23-gw108-relay-stress/relay_stress.py
 2026-09-06-spruce-pump-speed-sweep/sweep.py
+2026-09-12-beech-dist-010v-sweep/dist_sweep.py
 2026-06-11-sim-sensor/sim_sensor_experiment.py
 2026-06-11-sim-time-bridge/harness.py
 2026-06-11-stale-layout-migration/layout_roundtrip_check.py
@@ -71,7 +72,7 @@ future/pico-rejoin/rejoin_trace.py
 # (ops498 load), gnr (ops-457 regenesis), gwadmin + gwproactor (dac-output
 # bench, admin-reboots-picos, hp-boss-admin-drive, five-v-boss-hold),
 # smbus2 and the starter-scripts venv on the pi (gw108-ct-testing capture and ladder), paho
-# and the box venv (spruce-admin-panel).
+# and the box venv (spruce-admin-panel, beech-dist-010v-sweep).
 FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \
     -not -path '*/__pycache__/*' | sed 's|^\./||' | sort \
     | grep -Fxv "$PYRIGHT_EXCLUDE")

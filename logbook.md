@@ -13,6 +13,16 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-12 · [beech-dist-010v-sweep](2026-09-12-beech-dist-010v-sweep/)**
+  — **set up; dev rung run, beech not yet:** the house0-zero-ten-outputs witness: a
+  window scada on beech (`jm/spruce-unlimbo` `17e277d3`, the derived
+  beech pair with per-output DAC components and beech's own power-on
+  levels), admin makes the zone1-down heat call on the krida rig, then
+  sweeps `dist-010v` through the GP8403 arm with `dist-flow` and
+  `dist-pump-pwr` watched; restore to 3.5 V, call released. Dev rung
+  on the sim House0 fixture: call and two levels echoed through the
+  real bus actor, then the scada shut down on a derived-generator
+  AttributeError (not the 0-10V path); fix that before beech.
 - **2026-09-10 · [beech-krida-witness](2026-09-10-beech-krida-witness/)**
   — krida-retirement rung 3 on real hardware: a 5-minute window scada (`jm/spruce-unlimbo` `1a7a41d1`, derived beech layout, dev broker only) on beech, admin takes zone1-down on the second Krida and makes a heat call, dist flow + pump power watched. Dev rung on the sim House0 fixture PASS (first admin exercise on a House0 tree); beech 2026-09-11 PASS nine of nine: relays 17+18 acked, read back and seen in the port word, dist pump ran under the call (flow 0 → 200) and stopped on release, deployed scada back unchanged. Pump power not witnessed (eGauge driver fault).
 - **2026-09-10 · [pico-state-reported](2026-09-10-pico-state-reported/)**
