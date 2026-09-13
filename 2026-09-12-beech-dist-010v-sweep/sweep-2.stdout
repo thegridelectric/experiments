@@ -1,0 +1,253 @@
+2026-09-13 13:26:47,503 INFO plan: {"Phases": ["call", "baseline", "up", "down", "jumps", "restore"], "HoldS": 60, "BaselineS": 120, "CallWaitS": 90, "Plan": "top", "PlanNote": "full scale only: the top-code clamp (10 V wrote 0 V on 2026-09-13)", "Ramp": [100], "Jumps": [], "Zone": "zone1-down", "RestoreLevel": 35, "EchoS": 15, "AdminTimeoutS": 900}
+2026-09-13 13:26:47,504 INFO layout: /home/pi/.config/gridworks/scada-experiment/hardware-layout.json sha256 6f1487127924 scada hw1.isone.me.versant.keene.beech.scada; ops sha256 944b9a16497f power-on 35
+2026-09-13 13:26:47,504 INFO relay vocabulary: RelayEvents(node='zone1-down-failsafe-relay', event_type='change.heatcall.source', energizing='SwitchToScada', energized_state='Scada', de_energizing='SwitchToWallThermostat', de_energized_state='WallThermostat')
+2026-09-13 13:26:47,505 INFO relay vocabulary: RelayEvents(node='zone1-down-ops-relay', event_type='change.relay.state', energizing='CloseRelay', energized_state='RelayClosed', de_energizing='OpenRelay', de_energized_state='RelayOpen')
+2026-09-13 13:26:47,510 INFO connected to localhost:1883, subscribed gw/hw1-isone-me-versant-keene-beech-scada/to/admin/#
+2026-09-13 13:26:47,516 INFO sent send.snap
+2026-09-13 13:26:47,562 INFO snap dist-010v = 35 @ 17:26:02.920Z
+2026-09-13 13:26:47,563 INFO snap dist-pump-pwr = 0 @ 17:26:44.993Z
+2026-09-13 13:26:47,563 INFO snapshot 1: 27 readings, 25 states; relays {'auto.lc.n.zone1-down-failsafe-relay': 'WallThermostat', 'auto.lc.n.zone1-down-ops-relay': 'RelayOpen'}
+2026-09-13 13:26:48,020 INFO sent admin.dispatch
+2026-09-13 13:26:48,024 INFO sent send.snap
+2026-09-13 13:26:48,066 INFO admin link: gw.dispatch.ack
+2026-09-13 13:26:48,068 INFO snapshot 2: 27 readings, 25 states; relays {'auto.lc.n.zone1-down-failsafe-relay': 'WallThermostat', 'auto.lc.n.zone1-down-ops-relay': 'RelayOpen'}
+2026-09-13 13:26:48,078 INFO admin link: fsm.full.report
+2026-09-13 13:26:48,078 INFO admin link: single.machine.state
+2026-09-13 13:26:51,028 INFO sent send.snap
+2026-09-13 13:26:51,037 INFO snap dist-pump-pwr = 0 @ 17:26:50.994Z
+2026-09-13 13:26:51,038 INFO snapshot 3: 27 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'auto.lc.n.zone1-down-ops-relay': 'RelayOpen'}
+2026-09-13 13:26:51,529 INFO call: zone1-down-failsafe-relay SwitchToScada -> Scada seen after 3.5s
+2026-09-13 13:26:53,099 INFO admin link: single.machine.state
+2026-09-13 13:26:56,533 INFO sent admin.dispatch
+2026-09-13 13:26:56,537 INFO sent send.snap
+2026-09-13 13:26:56,578 INFO admin link: gw.dispatch.ack
+2026-09-13 13:26:56,583 INFO snap dist-pump-pwr = -1 @ 17:26:55.993Z
+2026-09-13 13:26:56,584 INFO snapshot 4: 27 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'auto.lc.n.zone1-down-ops-relay': 'RelayOpen'}
+2026-09-13 13:26:56,591 INFO admin link: fsm.full.report
+2026-09-13 13:26:56,592 INFO admin link: single.machine.state
+2026-09-13 13:26:59,542 INFO sent send.snap
+2026-09-13 13:26:59,552 INFO snap dist-pump-pwr = 0 @ 17:26:56.995Z
+2026-09-13 13:26:59,553 INFO snapshot 5: 27 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:00,011 INFO snapshot 6: 27 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:00,043 INFO call: zone1-down-ops-relay CloseRelay -> RelayClosed seen after 3.5s
+2026-09-13 13:27:02,929 INFO single dist-010v = 35 @ 17:27:02.925Z
+2026-09-13 13:27:05,045 INFO sent send.snap
+2026-09-13 13:27:05,049 INFO snap dist-pump-pwr = 0 @ 17:27:02.994Z
+2026-09-13 13:27:05,050 INFO snapshot 7: 27 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:08,049 INFO sent send.snap
+2026-09-13 13:27:08,058 INFO snap dist-pump-pwr = -1 @ 17:27:07.995Z
+2026-09-13 13:27:08,059 INFO snapshot 8: 27 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:11,053 INFO sent send.snap
+2026-09-13 13:27:11,061 INFO snap dist-pump-pwr = 0 @ 17:27:08.997Z
+2026-09-13 13:27:11,061 INFO snapshot 9: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:14,056 INFO sent send.snap
+2026-09-13 13:27:14,059 INFO snap dist-pump-pwr = -1 @ 17:27:13.998Z
+2026-09-13 13:27:14,059 INFO snapshot 10: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:17,059 INFO sent send.snap
+2026-09-13 13:27:17,067 INFO snap dist-pump-pwr = 0 @ 17:27:15.015Z
+2026-09-13 13:27:17,068 INFO snapshot 11: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:20,062 INFO sent send.snap
+2026-09-13 13:27:20,065 INFO snap dist-pump-pwr = -1 @ 17:27:20.012Z
+2026-09-13 13:27:20,065 INFO snapshot 12: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:23,065 INFO sent send.snap
+2026-09-13 13:27:23,073 INFO snap dist-pump-pwr = 0 @ 17:27:21.002Z
+2026-09-13 13:27:23,073 INFO snapshot 13: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:26,069 INFO sent send.snap
+2026-09-13 13:27:26,077 INFO snap dist-pump-pwr = -1 @ 17:27:25.999Z
+2026-09-13 13:27:26,077 INFO snapshot 14: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:29,073 INFO sent send.snap
+2026-09-13 13:27:29,081 INFO snap dist-pump-pwr = 0 @ 17:27:27.000Z
+2026-09-13 13:27:29,081 INFO snapshot 15: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:30,009 INFO snap dist-pump-pwr = 6 @ 17:27:30.000Z
+2026-09-13 13:27:30,010 INFO snapshot 16: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:32,077 INFO sent send.snap
+2026-09-13 13:27:32,085 INFO snap dist-pump-pwr = 10 @ 17:27:32.000Z
+2026-09-13 13:27:32,086 INFO snapshot 17: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:35,080 INFO sent send.snap
+2026-09-13 13:27:35,083 INFO snap dist-pump-pwr = 7 @ 17:27:34.999Z
+2026-09-13 13:27:35,083 INFO snapshot 18: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:38,083 INFO sent send.snap
+2026-09-13 13:27:38,091 INFO snap dist-pump-pwr = 8 @ 17:27:38.001Z
+2026-09-13 13:27:38,092 INFO snapshot 19: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:41,087 INFO sent send.snap
+2026-09-13 13:27:41,095 INFO snap dist-pump-pwr = 8 @ 17:27:40.001Z
+2026-09-13 13:27:41,096 INFO snapshot 20: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:42,893 INFO admin link: single.machine.state
+2026-09-13 13:27:42,906 INFO admin link: single.machine.state
+2026-09-13 13:27:42,910 INFO admin link: single.machine.state
+2026-09-13 13:27:44,091 INFO sent send.snap
+2026-09-13 13:27:44,099 INFO snap dist-pump-pwr = 7 @ 17:27:44.001Z
+2026-09-13 13:27:44,100 INFO snapshot 21: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:47,095 INFO sent send.snap
+2026-09-13 13:27:47,103 INFO snap dist-pump-pwr = 8 @ 17:27:47.001Z
+2026-09-13 13:27:47,104 INFO snapshot 22: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:47,913 INFO admin link: single.machine.state
+2026-09-13 13:27:47,918 INFO admin link: single.machine.state
+2026-09-13 13:27:47,920 INFO admin link: single.machine.state
+2026-09-13 13:27:50,098 INFO sent send.snap
+2026-09-13 13:27:50,102 INFO snap dist-pump-pwr = 7 @ 17:27:50.002Z
+2026-09-13 13:27:50,102 INFO snapshot 23: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:53,107 INFO sent send.snap
+2026-09-13 13:27:53,114 INFO snap dist-pump-pwr = 8 @ 17:27:53.001Z
+2026-09-13 13:27:53,115 INFO snapshot 24: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:56,112 INFO sent send.snap
+2026-09-13 13:27:56,119 INFO snap dist-pump-pwr = 8 @ 17:27:56.001Z
+2026-09-13 13:27:56,120 INFO snapshot 25: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:27:59,116 INFO sent send.snap
+2026-09-13 13:27:59,124 INFO snap dist-pump-pwr = 7 @ 17:27:59.003Z
+2026-09-13 13:27:59,124 INFO snapshot 26: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:00,011 INFO snapshot 27: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:02,122 INFO sent send.snap
+2026-09-13 13:28:02,129 INFO snap dist-pump-pwr = 8 @ 17:28:02.003Z
+2026-09-13 13:28:02,129 INFO snapshot 28: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:02,948 INFO single dist-010v = 35 @ 17:28:02.937Z
+2026-09-13 13:28:05,124 INFO sent send.snap
+2026-09-13 13:28:05,128 INFO snap dist-pump-pwr = 8 @ 17:28:04.004Z
+2026-09-13 13:28:05,128 INFO snapshot 29: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:08,128 INFO sent send.snap
+2026-09-13 13:28:08,135 INFO snap dist-pump-pwr = 7 @ 17:28:08.003Z
+2026-09-13 13:28:08,136 INFO snapshot 30: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:11,132 INFO sent send.snap
+2026-09-13 13:28:11,139 INFO snap dist-pump-pwr = 8 @ 17:28:11.005Z
+2026-09-13 13:28:11,140 INFO snapshot 31: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:14,136 INFO sent send.snap
+2026-09-13 13:28:14,144 INFO snap dist-pump-pwr = 8 @ 17:28:14.006Z
+2026-09-13 13:28:14,144 INFO snapshot 32: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:17,140 INFO sent send.snap
+2026-09-13 13:28:17,148 INFO snap dist-pump-pwr = 7 @ 17:28:17.006Z
+2026-09-13 13:28:17,149 INFO snapshot 33: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:20,143 INFO sent send.snap
+2026-09-13 13:28:20,146 INFO snap dist-pump-pwr = 8 @ 17:28:20.006Z
+2026-09-13 13:28:20,147 INFO snapshot 34: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:23,148 INFO sent send.snap
+2026-09-13 13:28:23,155 INFO snap dist-pump-pwr = 8 @ 17:28:23.009Z
+2026-09-13 13:28:23,155 INFO snapshot 35: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:26,152 INFO sent send.snap
+2026-09-13 13:28:26,160 INFO snap dist-pump-pwr = 8 @ 17:28:25.009Z
+2026-09-13 13:28:26,160 INFO snapshot 36: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:29,158 INFO sent send.snap
+2026-09-13 13:28:29,164 INFO snap dist-pump-pwr = 7 @ 17:28:28.008Z
+2026-09-13 13:28:29,165 INFO snapshot 37: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:30,009 INFO snapshot 38: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:32,162 INFO sent send.snap
+2026-09-13 13:28:32,170 INFO snap dist-pump-pwr = 8 @ 17:28:32.013Z
+2026-09-13 13:28:32,171 INFO snapshot 39: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:28:35,164 INFO FAIL dist-flow non-zero within 90s of the call
+2026-09-13 13:28:35,165 INFO baseline: DAC reported 35; holding 120s
+2026-09-13 13:28:47,927 INFO admin link: single.machine.state
+2026-09-13 13:28:47,938 INFO admin link: single.machine.state
+2026-09-13 13:28:47,942 INFO admin link: single.machine.state
+2026-09-13 13:28:52,944 INFO admin link: single.machine.state
+2026-09-13 13:28:52,948 INFO admin link: single.machine.state
+2026-09-13 13:28:52,950 INFO admin link: single.machine.state
+2026-09-13 13:29:00,010 INFO snap dist-pump-pwr = 8 @ 17:28:59.012Z
+2026-09-13 13:29:00,011 INFO snapshot 40: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:29:02,174 INFO sent send.snap
+2026-09-13 13:29:02,181 INFO snap dist-pump-pwr = 8 @ 17:29:02.014Z
+2026-09-13 13:29:02,182 INFO snapshot 41: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:29:02,950 INFO single dist-010v = 35 @ 17:29:02.947Z
+2026-09-13 13:29:30,011 INFO snap dist-pump-pwr = 7 @ 17:29:29.018Z
+2026-09-13 13:29:30,012 INFO snapshot 42: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:29:32,180 INFO sent send.snap
+2026-09-13 13:29:32,188 INFO snap dist-pump-pwr = 8 @ 17:29:32.019Z
+2026-09-13 13:29:32,189 INFO snapshot 43: 8 readings, 25 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:29:52,956 INFO admin link: single.machine.state
+2026-09-13 13:29:52,960 INFO admin link: single.machine.state
+2026-09-13 13:29:52,962 INFO admin link: single.machine.state
+2026-09-13 13:29:57,975 INFO admin link: single.machine.state
+2026-09-13 13:29:57,986 INFO admin link: single.machine.state
+2026-09-13 13:29:57,989 INFO admin link: single.machine.state
+2026-09-13 13:29:58,071 INFO admin link: single.machine.state
+2026-09-13 13:29:58,086 INFO admin link: single.machine.state
+2026-09-13 13:29:58,087 INFO admin link: single.machine.state
+2026-09-13 13:29:58,087 INFO admin link: single.machine.state
+2026-09-13 13:29:58,088 INFO admin link: single.machine.state
+2026-09-13 13:29:58,089 INFO admin link: single.machine.state
+2026-09-13 13:29:58,090 INFO admin link: single.machine.state
+2026-09-13 13:29:58,091 INFO admin link: single.machine.state
+2026-09-13 13:29:58,092 INFO admin link: single.machine.state
+2026-09-13 13:29:58,093 INFO admin link: single.machine.state
+2026-09-13 13:29:58,094 INFO admin link: single.machine.state
+2026-09-13 13:29:58,095 INFO admin link: single.machine.state
+2026-09-13 13:29:58,095 INFO admin link: single.machine.state
+2026-09-13 13:29:58,096 INFO admin link: single.machine.state
+2026-09-13 13:29:58,097 INFO admin link: single.machine.state
+2026-09-13 13:29:58,098 INFO admin link: single.machine.state
+2026-09-13 13:30:00,015 INFO snap dist-pump-pwr = 7 @ 17:29:59.029Z
+2026-09-13 13:30:00,016 INFO snapshot 44: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:30:02,185 INFO sent send.snap
+2026-09-13 13:30:02,188 INFO snap dist-pump-pwr = 8 @ 17:30:02.030Z
+2026-09-13 13:30:02,189 INFO snapshot 45: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:30:02,951 INFO single dist-010v = 35 @ 17:30:02.950Z
+2026-09-13 13:30:30,010 INFO snap dist-pump-pwr = 8 @ 17:30:29.035Z
+2026-09-13 13:30:30,011 INFO snapshot 46: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:30:32,191 INFO sent send.snap
+2026-09-13 13:30:32,199 INFO snap dist-pump-pwr = 7 @ 17:30:31.035Z
+2026-09-13 13:30:32,200 INFO snapshot 47: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:30:35,201 INFO sent admin.analog.dispatch
+2026-09-13 13:30:35,207 INFO admin link: gw.dispatch.ack
+2026-09-13 13:30:35,216 INFO single dist-010v = 100 @ 17:30:35.213Z
+2026-09-13 13:30:35,702 INFO up: level 100 echoed after 0.0s; holding 60s
+2026-09-13 13:30:57,999 INFO admin link: single.machine.state
+2026-09-13 13:30:58,011 INFO admin link: single.machine.state
+2026-09-13 13:30:58,016 INFO admin link: single.machine.state
+2026-09-13 13:31:00,009 INFO snap dist-pump-pwr = 48 @ 17:30:58.039Z
+2026-09-13 13:31:00,010 INFO snapshot 48: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:31:02,714 INFO sent send.snap
+2026-09-13 13:31:02,722 INFO snapshot 49: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:31:03,024 INFO admin link: single.machine.state
+2026-09-13 13:31:03,034 INFO admin link: single.machine.state
+2026-09-13 13:31:03,037 INFO admin link: single.machine.state
+2026-09-13 13:31:30,004 INFO snap dist-pump-pwr = 48 @ 17:31:28.046Z
+2026-09-13 13:31:30,004 INFO snapshot 50: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:31:32,721 INFO sent send.snap
+2026-09-13 13:31:32,728 INFO snap dist-pump-pwr = 48 @ 17:31:32.048Z
+2026-09-13 13:31:32,729 INFO snapshot 51: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:31:35,224 INFO single dist-010v = 100 @ 17:31:35.220Z
+2026-09-13 13:31:35,730 INFO sent admin.analog.dispatch
+2026-09-13 13:31:35,735 INFO admin link: gw.dispatch.ack
+2026-09-13 13:31:35,743 INFO single dist-010v = 100 @ 17:31:35.740Z
+2026-09-13 13:31:36,231 INFO down: level 100 echoed after 0.0s; holding 60s
+2026-09-13 13:32:00,009 INFO snap dist-pump-pwr = 48 @ 17:31:59.051Z
+2026-09-13 13:32:00,010 INFO snapshot 52: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:32:03,041 INFO admin link: single.machine.state
+2026-09-13 13:32:03,237 INFO sent send.snap
+2026-09-13 13:32:03,245 INFO snap dist-pump-pwr = 47 @ 17:32:03.051Z
+2026-09-13 13:32:03,246 INFO snapshot 53: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:32:30,010 INFO snap dist-pump-pwr = 47 @ 17:32:29.055Z
+2026-09-13 13:32:30,011 INFO snapshot 54: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:32:33,244 INFO sent send.snap
+2026-09-13 13:32:33,252 INFO snap dist-pump-pwr = 47 @ 17:32:33.118Z
+2026-09-13 13:32:33,253 INFO snapshot 55: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:32:35,746 INFO single dist-010v = 100 @ 17:32:35.744Z
+2026-09-13 13:32:36,246 INFO sent admin.analog.dispatch
+2026-09-13 13:32:36,249 INFO admin link: gw.dispatch.ack
+2026-09-13 13:32:36,253 INFO single dist-010v = 35 @ 17:32:36.251Z
+2026-09-13 13:32:36,747 INFO restore: level 35 echoed after 0.0s; holding 10s
+2026-09-13 13:32:46,757 INFO sent admin.dispatch
+2026-09-13 13:32:46,761 INFO sent send.snap
+2026-09-13 13:32:46,802 INFO admin link: gw.dispatch.ack
+2026-09-13 13:32:46,806 INFO snap dist-pump-pwr = 8 @ 17:32:46.059Z
+2026-09-13 13:32:46,807 INFO snapshot 56: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayClosed'}
+2026-09-13 13:32:46,815 INFO admin link: fsm.full.report
+2026-09-13 13:32:46,816 INFO admin link: single.machine.state
+2026-09-13 13:32:49,765 INFO sent send.snap
+2026-09-13 13:32:49,771 INFO snap dist-pump-pwr = 8 @ 17:32:48.089Z
+2026-09-13 13:32:49,771 INFO snapshot 57: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayOpen'}
+2026-09-13 13:32:50,266 INFO release: zone1-down-ops-relay OpenRelay -> RelayOpen seen after 3.5s
+2026-09-13 13:32:55,270 INFO sent admin.dispatch
+2026-09-13 13:32:55,273 INFO sent send.snap
+2026-09-13 13:32:55,314 INFO admin link: gw.dispatch.ack
+2026-09-13 13:32:55,317 INFO snap dist-pump-pwr = 0 @ 17:32:52.060Z
+2026-09-13 13:32:55,318 INFO snapshot 58: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'Scada', 'admin.zone1-down-ops-relay': 'RelayOpen'}
+2026-09-13 13:32:55,327 INFO admin link: fsm.full.report
+2026-09-13 13:32:55,327 INFO admin link: single.machine.state
+2026-09-13 13:32:58,280 INFO sent send.snap
+2026-09-13 13:32:58,288 INFO snap dist-pump-pwr = 0 @ 17:32:58.059Z
+2026-09-13 13:32:58,289 INFO snapshot 59: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'WallThermostat', 'admin.zone1-down-ops-relay': 'RelayOpen'}
+2026-09-13 13:32:58,781 INFO release: zone1-down-failsafe-relay SwitchToWallThermostat -> WallThermostat seen after 3.5s
+2026-09-13 13:33:00,008 INFO snapshot 60: 8 readings, 26 states; relays {'admin.zone1-down-failsafe-relay': 'WallThermostat', 'admin.zone1-down-ops-relay': 'RelayOpen'}
+2026-09-13 13:33:03,790 INFO sent admin.release.control
+2026-09-13 13:33:03,854 INFO admin link: single.machine.state
+2026-09-13 13:33:03,855 WARNING disconnected: Normal disconnection
+2026-09-13 13:33:03,865 INFO PASS; 115 readings, 3 steps; FAIL dist-flow non-zero within 90s of the call; wrote /tmp/beech-dist-sweep/sweep-2-results.json

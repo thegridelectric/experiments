@@ -1,0 +1,859 @@
+2026-09-13 13:25:02.539 
+2026-09-13 13:25:02.539 Env file: </home/pi/envs/dev.env>  exists: True
+2026-09-13 13:25:02.539 Settings:
+2026-09-13 13:25:02.540 {
+  "paths": {
+    "base": "gridworks",
+    "name": "scada-experiment",
+    "relative_path": "gridworks/scada-experiment",
+    "data_home": "/home/pi/.local/share",
+    "state_home": "/home/pi/.local/state",
+    "config_home": "/home/pi/.config",
+    "data_dir": "/home/pi/.local/share/gridworks/scada-experiment",
+    "config_dir": "/home/pi/.config/gridworks/scada-experiment",
+    "certs_dir": "/home/pi/.config/gridworks/scada-experiment/certs",
+    "event_dir": "/home/pi/.local/share/gridworks/scada-experiment/event",
+    "log_dir": "/home/pi/.local/state/gridworks/scada-experiment/log",
+    "hardware_layout": "/home/pi/.config/gridworks/scada-experiment/hardware-layout.json",
+    "operational_params": "/home/pi/.config/gridworks/scada-experiment/operational-params.json",
+    "tadeed": "/home/pi/.config/gridworks/scada-experiment/ta-deed.json"
+  },
+  "logging": {
+    "base_log_name": "gridworks",
+    "base_log_level": 30,
+    "levels": {
+      "message_summary": 30,
+      "lifecycle": 20,
+      "comm_event": 20,
+      "io_loop": 20
+    },
+    "formatter": {
+      "fmt": "%(asctime)s %(message)s",
+      "datefmt": "",
+      "default_msec_format": "%s.%03d",
+      "use_utc": false
+    },
+    "file_handler": {
+      "filename": "proactor.log",
+      "bytes_per_log_file": 2097152,
+      "num_log_files": 10,
+      "level": 0
+    },
+    "io_loop": {
+      "file_handler": {
+        "filename": "io_loop.log",
+        "bytes_per_log_file": 2097152,
+        "num_log_files": 2,
+        "level": 0
+      },
+      "on_screen": false
+    },
+    "aiohttp_logging": false,
+    "paho_logging": false
+  },
+  "proactor": {
+    "mqtt_link_poll_seconds": 60.0,
+    "ack_timeout_seconds": 5.0,
+    "num_initial_event_reuploads": 5,
+    "num_inflight_events": 50
+  },
+  "pico_cycler_state_logging": false,
+  "power_meter_logging_level": 30,
+  "contract_rep_logging_level": 20,
+  "paho_logging": false,
+  "local_mqtt": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "sara",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/local_mqtt.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/private/local_mqtt.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    }
+  },
+  "gridworks_mqtt": {
+    "host": "localhost",
+    "port": 1885,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "smqPublic",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/gridworks_mqtt.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/private/gridworks_mqtt.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    }
+  },
+  "seconds_per_report": 300,
+  "seconds_per_snapshot": 30,
+  "async_power_reporting_threshold": 0.02,
+  "persister": {
+    "max_bytes": 524288000
+  },
+  "admin": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "sara",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/admin.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/private/admin.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    },
+    "enabled": true,
+    "name": "admin",
+    "max_timeout_seconds": 86400.0
+  },
+  "timezone_str": "America/New_York",
+  "latitude": 45.6573,
+  "longitude": -68.7098,
+  "whitewire_threshold_watts": 20.0,
+  "hp_model": "SamsungFiveTonneHydroKit",
+  "airtable_pat": "bogus_pat"
+}
+ScadaSettings(
+    paths=ScadaPaths(
+        base=PosixPath('gridworks'),
+        name=PosixPath('scada-experiment'),
+        relative_path=PosixPath('gridworks/scada-experiment'),
+        data_home=PosixPath('/home/pi/.local/share'),
+        state_home=PosixPath('/home/pi/.local/state'),
+        config_home=PosixPath('/home/pi/.config'),
+        data_dir=PosixPath('/home/pi/.local/share/gridworks/scada-experiment'),
+        config_dir=PosixPath('/home/pi/.config/gridworks/scada-experiment'),
+        certs_dir=PosixPath('/home/pi/.config/gridworks/scada-experiment/certs')
+,
+        event_dir=PosixPath('/home/pi/.local/share/gridworks/scada-experiment/ev
+ent'),
+        log_dir=PosixPath('/home/pi/.local/state/gridworks/scada-experiment/log'
+),
+        hardware_layout=PosixPath('/home/pi/.config/gridworks/scada-experiment/h
+ardware-layout.json'),
+        operational_params=PosixPath('/home/pi/.config/gridworks/scada-experimen
+t/operational-params.json'),
+        tadeed=PosixPath('/home/pi/.config/gridworks/scada-experiment/ta-deed.js
+on')
+    ),
+    logging=LoggingSettings(
+        base_log_name='gridworks',
+        base_log_level=30,
+        levels=LoggerLevels(
+            message_summary=30,
+            lifecycle=20,
+            comm_event=20,
+            io_loop=20
+        ),
+        formatter=FormatterSettings(
+            fmt='%(asctime)s %(message)s',
+            datefmt='',
+            default_msec_format='%s.%03d',
+            use_utc=False
+        ),
+        file_handler=RotatingFileHandlerSettings(
+            filename='proactor.log',
+            bytes_per_log_file=2097152,
+            num_log_files=10,
+            level=0
+        ),
+        io_loop=IOLoopLoggerSettings(
+            file_handler=RotatingFileHandlerSettings(
+                filename='io_loop.log',
+                bytes_per_log_file=2097152,
+                num_log_files=2,
+                level=0
+            ),
+            on_screen=False
+        ),
+        aiohttp_logging=False,
+        paho_logging=False
+    ),
+    proactor=ProactorSettings(
+        mqtt_link_poll_seconds=60.0,
+        ack_timeout_seconds=5.0,
+        num_initial_event_reuploads=5,
+        num_inflight_events=50
+    ),
+    pico_cycler_state_logging=False,
+    power_meter_logging_level=30,
+    contract_rep_logging_level=20,
+    paho_logging=False,
+    local_mqtt=MQTTClient(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='sara',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/local_mqtt/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/local_mqtt/local_mqtt.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/local_mqtt/private/local_mqtt.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        )
+    ),
+    gridworks_mqtt=MQTTClient(
+        host='localhost',
+        port=1885,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='smqPublic',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/gridworks_mqtt/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/gridworks_mqtt/gridworks_mqtt.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/gridworks_mqtt/private/gridworks_mqtt.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        )
+    ),
+    seconds_per_report=300,
+    seconds_per_snapshot=30,
+    async_power_reporting_threshold=0.02,
+    persister=PersisterSettings(max_bytes=524288000),
+    admin=AdminLinkSettings(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='sara',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/admin/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/admin/admin.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/admin/private/admin.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        ),
+        enabled=True,
+        name='admin',
+        max_timeout_seconds=86400.0
+    ),
+    timezone_str='America/New_York',
+    latitude=45.6573,
+    longitude=-68.7098,
+    whitewire_threshold_watts=20.0,
+    hp_model=<HpModel.SamsungFiveTonneHydroKit: 'SamsungFiveTonneHydroKit'>,
+    airtable_pat='bogus_pat'
+)
+2026-09-13 13:25:02.727 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.beech.scada', short_name='s')> reindexing events
+2026-09-13 13:25:02.727 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.beech.scada', short_name='s')> reindexing complete.
+  0 events present for upload, using approximately 0 KB / 0.0 MB storage space.
+2026-09-13 13:25:02.731 [scada] SIMULATED
+2026-09-13 13:25:02.738 Skip binding of 'trigger' to model due to model override policy.
+2026-09-13 13:25:02.738 Skip binding of 'may_trigger' to model due to model override policy.
+2026-09-13 13:25:02.781 [la] Params: AlphaTimes10=55 BetaTimes100=-10 GammaEx6=0 IntermediatePowerKw=1.5 IntermediateRswtF=100 DdPowerKw=5.5 DdRswtF=150 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=170 LoadOverestimationPercent=0 CopIntercept=1.02 CopOatCoeff=0.0257 CopLwtCoeff=0.0 CopMin=1.4 CopMinOatF=15.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-09-13 13:25:02.782 Creating LeafAlly with strategy AllTanks, using actors.leaf_ally.house0.all_tanks.AllTanksLeafAlly
+2026-09-13 13:25:02.784 Skip binding of 'WakeUp' to model due to model override policy.
+2026-09-13 13:25:02.784 [derived-generator] self.timezone: America/New_York
+2026-09-13 13:25:02.784 [derived-generator] self.latitude: 45.6573
+2026-09-13 13:25:02.785 [derived-generator] self.longitude: -68.7098
+2026-09-13 13:25:02.785 [derived-generator] Params: AlphaTimes10=55 BetaTimes100=-10 GammaEx6=0 IntermediatePowerKw=1.5 IntermediateRswtF=100 DdPowerKw=5.5 DdRswtF=150 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=170 LoadOverestimationPercent=0 CopIntercept=1.02 CopOatCoeff=0.0257 CopLwtCoeff=0.0 CopMin=1.4 CopMinOatF=15.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-09-13 13:25:02.791 [lc] Set auto.lc.n command tree
+2026-09-13 13:25:02.791 [lc] Starting Standby Local Control
+2026-09-13 13:25:02.791 Creating LocalControl with actuation authority Standby and seasonal storage mode AllTanks, using actors.local_control.house0.standby.StandbyLocalControl
+2026-09-13 13:25:02.805 Skip binding of 'trigger' to model due to model override policy.
+2026-09-13 13:25:02.806 Skip binding of 'may_trigger' to model due to model override policy.
+2026-09-13 13:25:02.808 
+Subscription info for <hw1.isone.me.versant.keene.beech.scada> [construction]
+  Client name: <gridworks_mqtt>  topic_dst: <ltn>
+    Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/ltn/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/hw1-isone-me-versant-keene-beech/to/s/#', <QOS.AtMostOnce: 0>)]
+  Client name: <local_mqtt>  topic_dst: <s2>
+    Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/s2/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/hw1-isone-me-versant-keene-beech-scada-s2/to/s/#', <QOS.AtMostOnce: 0>)]
+  Client name: <admin>  topic_dst: <admin>
+    Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/admin/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/admin/to/hw1-isone-me-versant-keene-beech-scada/#', <QOS.AtMostOnce: 0>)]
+
+== window boot: hw1.isone.me.versant.keene.beech.scada for 1800s, broker localhost:1885 ==
+2026-09-13 13:25:02.830 ++Proactor<s>.join()
+2026-09-13 13:25:02.832 Tasks: 54  [Proactor.join() - all tasks]
+	1/54  aquastat-ctrl-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5ce40>
+	2/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5990>
+	3/54  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5dc40>
+	4/54  vdc-relay-boot-adopt            done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5c840>
+	5/54  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6ab20>
+	6/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db54e0>
+	7/54  zone1-down-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d540>
+	8/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5030>
+	9/54  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa0dc4370>
+	10/54  hp-loop-keep-send-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d440>
+	11/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5a80>
+	12/54  Task-2                          done:False   exception: None  <coroutine object Proactor.run_forever at 0x7fa1088400>
+	13/54  tstat-common-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5ca40>
+	14/54  zone2-up-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d840>
+	15/54  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cf40>
+	16/54  zone1-down-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d640>
+	17/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5120>
+	18/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5c60>
+	19/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db55d0>
+	20/54  LeafAlly keepalive              done:False   exception: None  <coroutine object AllTanksLeafAlly.main at 0x7fa0f68e40>
+	21/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5b70>
+	22/54  charge-discharge-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cb40>
+	23/54  zone2-up-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d940>
+	24/54  primary-pump-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d040>
+	25/54  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa0f6a180>
+	26/54  pat_watchdog                    done:False   exception: None  <coroutine object WatchdogManager._check_pats at 0x7fa104a510>
+	27/54  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa0f69fc0>
+	28/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5210>
+	29/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5d50>
+	30/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db56c0>
+	31/54  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7fa0f5d740>
+	32/54  hp-failsafe-relay-boot-adopt    done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cc40>
+	33/54  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa0f6aea0>
+	34/54  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa104a8a0>
+	35/54  primary-pump-scada-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d140>
+	36/54  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa10f2b90>
+	37/54  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa0f6a0a0>
+	38/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5300>
+	39/54  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa104a770>
+	40/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db57b0>
+	41/54  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa0db4310>
+	42/54  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7fa0f5d340>
+	43/54  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa0de0660>
+	44/54  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cd40>
+	45/54  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5da40>
+	46/54  hp-loop-on-off-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d240>
+	47/54  Task-1                          done:False   exception: None  <coroutine object _run_bounded at 0x7fa112d380>
+	48/54  LocalControl keepalive          done:False   exception: None  <coroutine object StandbyLocalControl.main at 0x7fa0f69e00>
+	49/54  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6a260>
+	50/54  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa0de0740>
+	51/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db53f0>
+	52/54  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5db40>
+	53/54  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db58a0>
+	54/54  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6a7a0>
+
+2026-09-13 13:25:02.834 Tasks: 86  [WAITING FOR]
+	1/86  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5dc40>
+	2/86  vdc-relay-boot-adopt            done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5c840>
+	3/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5030>
+	4/86  hp-scada-ops-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7fa0dde080>
+	5/86  tstat-common-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5ca40>
+	6/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5120>
+	7/86  aquastat-ctrl-relay.join        done:False   exception: None  <coroutine object Relay.join at 0x7fa0dde200>
+	8/86  charge-discharge-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cb40>
+	9/86  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa0f6a180>
+	10/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5210>
+	11/86  store-pump-relay.join           done:False   exception: None  <coroutine object Relay.join at 0x7fa0dde380>
+	12/86  hp-failsafe-relay-boot-adopt    done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cc40>
+	13/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5300>
+	14/86  primary-pump-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7fa0dde500>
+	15/86  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa0de0660>
+	16/86  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cd40>
+	17/86  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa0de0740>
+	18/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db53f0>
+	19/86  primary-pump-scada-ops-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7fa0dde680>
+	20/86  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa104a8a0>
+	21/86  aquastat-ctrl-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5ce40>
+	22/86  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa0de0820>
+	23/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db54e0>
+	24/86  hp-loop-on-off-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7fa0dde800>
+	25/86  io_loop_manager.join            done:False   exception: None  <coroutine object IOLoop.join at 0x7fa0ddc4c0>
+	26/86  hp-loop-keep-send-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d440>
+	27/86  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cf40>
+	28/86  hp-loop-keep-send-relay.join    done:False   exception: None  <coroutine object Relay.join at 0x7fa0dde980>
+	29/86  _WebManager.join                done:False   exception: None  <coroutine object _WebManager.join at 0x7fa0ddca00>
+	30/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db55d0>
+	31/86  primary-pump-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d040>
+	32/86  zone1-down-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7fa0ddeb00>
+	33/86  s.join                          done:False   exception: None  <coroutine object PrimeActor.join at 0x7fa0ddcb80>
+	34/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db56c0>
+	35/86  primary-pump-scada-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d140>
+	36/86  zone1-down-ops-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7fa0ddec80>
+	37/86  la.join                         done:False   exception: None  <coroutine object LeafAlly.join at 0x7fa0ddcd00>
+	38/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db57b0>
+	39/86  hp-loop-on-off-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d240>
+	40/86  buffer.join                     done:False   exception: None  <coroutine object ApiTankModule.join at 0x7fa0ddee00>
+	41/86  five-v-boss.join                done:False   exception: None  <coroutine object FiveVBoss.join at 0x7fa0ddce80>
+	42/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db58a0>
+	43/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5990>
+	44/86  tank1.join                      done:False   exception: None  <coroutine object ApiTankModule.join at 0x7fa0ddef80>
+	45/86  pico-cycler.join                done:False   exception: None  <coroutine object PicoCycler.join at 0x7fa0ddd000>
+	46/86  zone1-down-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d540>
+	47/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5a80>
+	48/86  dist-010v.join                  done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa0ddf100>
+	49/86  derived-generator.join          done:False   exception: None  <coroutine object DerivedGenerator.join at 0x7fa0ddd180>
+	50/86  zone1-down-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d640>
+	51/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5b70>
+	52/86  primary-010v.join               done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa0ddf280>
+	53/86  lc.join                         done:False   exception: None  <coroutine object LocalControl.join at 0x7fa0ddd300>
+	54/86  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa0f69fc0>
+	55/86  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7fa0f5d740>
+	56/86  store-010v.join                 done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa0ddf400>
+	57/86  hp-boss.join                    done:False   exception: None  <coroutine object HpBoss.join at 0x7fa0ddd480>
+	58/86  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa0f6a0a0>
+	59/86  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7fa0f5d340>
+	60/86  sieg-loop.join                  done:False   exception: None  <coroutine object SiegLoop.join at 0x7fa0ddf580>
+	61/86  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa0ddd600>
+	62/86  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6a260>
+	63/86  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6a7a0>
+	64/86  zone2-up-failsafe-relay.join    done:False   exception: None  <coroutine object Relay.join at 0x7fa0ddf700>
+	65/86  hubitat.join                    done:False   exception: None  <coroutine object Hubitat.join at 0x7fa0ddd780>
+	66/86  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6ab20>
+	67/86  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa0dc4370>
+	68/86  zone2-up-ops-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7fa0ddf880>
+	69/86  i2c-bus.join                    done:False   exception: None  <coroutine object I2cBus.join at 0x7fa0ddd900>
+	70/86  zone2-up-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d840>
+	71/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5c60>
+	72/86  dist-btu.join                   done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa0ddfa00>
+	73/86  LeafAlly keepalive              done:False   exception: None  <coroutine object AllTanksLeafAlly.main at 0x7fa0f68e40>
+	74/86  vdc-relay.join                  done:False   exception: None  <coroutine object Relay.join at 0x7fa0ddda80>
+	75/86  zone2-up-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d940>
+	76/86  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5d50>
+	77/86  tstat-common-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7fa0dddc00>
+	78/86  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa0f6aea0>
+	79/86  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa10f2b90>
+	80/86  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa104a770>
+	81/86  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa0db4310>
+	82/86  charge-discharge-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7fa0dddd80>
+	83/86  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5da40>
+	84/86  LocalControl keepalive          done:False   exception: None  <coroutine object StandbyLocalControl.main at 0x7fa0f69e00>
+	85/86  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5db40>
+	86/86  hp-failsafe-relay.join          done:False   exception: None  <coroutine object Relay.join at 0x7fa0dddf00>
+
+2026-09-13 13:25:02.836 [derived-generator] SynthGen about to get forecasts
+2026-09-13 13:25:02.842 [sieg-loop] Engaging brain, control state is Initializing, hp boss state is HpOn
+2026-09-13 13:25:02.842 [sieg-loop] Waiting for actuators to be ready to get out of Initializing state
+2026-09-13 13:25:02.846 [scada] Sending auto.lc.n.hp-boss state to sieg-loop
+2026-09-13 13:25:02.847 [sieg-loop] Just received state HpOff from HpBoss
+2026-09-13 13:25:02.847 [sieg-loop] Engaging brain, control state is Initializing, hp boss state is HpOff
+2026-09-13 13:25:02.847 [sieg-loop] Waiting for actuators to be ready to get out of Initializing state
+2026-09-13 13:25:02.848 [scada] Actuator dist-010v is ready. 1/3
+2026-09-13 13:25:02.848 [scada] Actuator primary-010v is ready. 2/3
+2026-09-13 13:25:02.849 [scada] Actuator store-010v is ready. 3/3
+2026-09-13 13:25:02.849 [scada] All actuators are ready!
+2026-09-13 13:25:02.849 [sieg-loop] Engaging brain, control state is Initializing, hp boss state is HpOff
+2026-09-13 13:25:02.849 [sieg-loop] DoneInitializingBlind: Initializing -> Blind
+2026-09-13 13:25:02.850 [sieg-loop] Moving to full send
+2026-09-13 13:25:02.850 [lc] Initializing relays
+2026-09-13 13:25:02.851 [lc] de-energizing most relays
+2026-09-13 13:25:02.852 [lc] DischargeStore to charge-discharge-relay
+2026-09-13 13:25:02.853 [lc] SwitchToHeatPump to primary-pump-failsafe-relay
+2026-09-13 13:25:02.853 [lc] OpenRelay to primary-pump-scada-ops-relay
+2026-09-13 13:25:02.854 [lc] OpenRelay to store-pump-relay
+2026-09-13 13:25:02.854 [lc] CloseRelay to tstat-common-relay
+2026-09-13 13:25:02.855 [lc] SwitchToWallThermostat to zone1-down-failsafe-relay
+2026-09-13 13:25:02.855 [lc] OpenRelay to zone1-down-ops-relay
+2026-09-13 13:25:02.856 [lc] SwitchToWallThermostat to zone2-up-failsafe-relay
+2026-09-13 13:25:02.856 [lc] OpenRelay to zone2-up-ops-relay
+2026-09-13 13:25:02.856 [lc] energizing key relays for keeping things off
+2026-09-13 13:25:02.857 [lc] auto.lc.n sending SwitchToScada to Hp Failsafe auto.lc.n.hp-failsafe-relay
+2026-09-13 13:25:02.857 [lc] auto.lc.n sending SwitchToScada to Aquastat Ctrl auto.lc.n.aquastat-ctrl-relay
+2026-09-13 13:25:02.858 [lc] TurnOff to hp-boss
+2026-09-13 13:25:02.870 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='7393f4d8-9b4a-4e03-ba41-59ffd7f2d128' SendTimeUnixMs=1789320302857 TypeName='fsm.event' Version='000'
+2026-09-13 13:25:02.871 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-09-13 13:25:02.875 [scada] Sending auto.lc.n.hp-boss state to sieg-loop
+2026-09-13 13:25:02.876 [sieg-loop] Just received state HpOff from HpBoss
+2026-09-13 13:25:02.876 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:25:02.877 [hp-boss] hp-boss received unexpected message: Src='hp-scada-ops-relay' Dst='hp-boss' MessageType='gw.dispatch.ack' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-13 13:25:02.880 [sieg-loop] Task e208: move to send for 110 seconds
+2026-09-13 13:25:02.881 local_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-13 13:25:02.883 admin:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-13 13:25:02.890 [scada] First Buffer temps arrived! Sending to LocalControl
+2026-09-13 13:25:02.896 Tasks: 48  [DONE]
+	1/48  aquastat-ctrl-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5ce40>
+	2/48  tank1.join                      done:True   exception: None  <coroutine object ApiTankModule.join at 0x7fa0ddef80>
+	3/48  hubitat.join                    done:True   exception: None  <coroutine object Hubitat.join at 0x7fa0ddd780>
+	4/48  vdc-relay-boot-adopt            done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5c840>
+	5/48  pico-cycler.join                done:True   exception: None  <coroutine object PicoCycler.join at 0x7fa0ddd000>
+	6/48  hp-loop-on-off-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7fa0dde800>
+	7/48  zone1-down-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d540>
+	8/48  hp-scada-ops-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7fa0dde080>
+	9/48  io_loop_manager.join            done:True   exception: None  <coroutine object IOLoop.join at 0x7fa0ddc4c0>
+	10/48  zone2-up-ops-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7fa0ddf880>
+	11/48  hp-loop-keep-send-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d440>
+	12/48  dist-010v.join                  done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa0ddf100>
+	13/48  i2c-bus.join                    done:True   exception: None  <coroutine object I2cBus.join at 0x7fa0ddd900>
+	14/48  tstat-common-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5ca40>
+	15/48  zone2-up-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d840>
+	16/48  derived-generator.join          done:True   exception: None  <coroutine object DerivedGenerator.join at 0x7fa0ddd180>
+	17/48  store-pump-relay-boot-adopt     done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cf40>
+	18/48  hp-loop-keep-send-relay.join    done:True   exception: None  <coroutine object Relay.join at 0x7fa0dde980>
+	19/48  zone1-down-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d640>
+	20/48  aquastat-ctrl-relay.join        done:True   exception: None  <coroutine object Relay.join at 0x7fa0dde200>
+	21/48  _WebManager.join                done:True   exception: None  <coroutine object _WebManager.join at 0x7fa0ddca00>
+	22/48  dist-btu.join                   done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa0ddfa00>
+	23/48  primary-010v.join               done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa0ddf280>
+	24/48  vdc-relay.join                  done:True   exception: None  <coroutine object Relay.join at 0x7fa0ddda80>
+	25/48  charge-discharge-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cb40>
+	26/48  zone2-up-ops-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d940>
+	27/48  lc.join                         done:True   exception: None  <coroutine object LocalControl.join at 0x7fa0ddd300>
+	28/48  primary-pump-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d040>
+	29/48  zone1-down-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7fa0ddeb00>
+	30/48  store-pump-relay.join           done:True   exception: None  <coroutine object Relay.join at 0x7fa0dde380>
+	31/48  s.join                          done:True   exception: None  <coroutine object PrimeActor.join at 0x7fa0ddcb80>
+	32/48  store-010v.join                 done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa0ddf400>
+	33/48  tstat-common-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7fa0dddc00>
+	34/48  hp-failsafe-relay-boot-adopt    done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cc40>
+	35/48  hp-boss.join                    done:True   exception: None  <coroutine object HpBoss.join at 0x7fa0ddd480>
+	36/48  primary-pump-scada-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d140>
+	37/48  zone1-down-ops-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7fa0ddec80>
+	38/48  primary-pump-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7fa0dde500>
+	39/48  la.join                         done:True   exception: None  <coroutine object LeafAlly.join at 0x7fa0ddcd00>
+	40/48  hp-failsafe-relay.join          done:True   exception: None  <coroutine object Relay.join at 0x7fa0dddf00>
+	41/48  sieg-loop.join                  done:True   exception: None  <coroutine object SiegLoop.join at 0x7fa0ddf580>
+	42/48  charge-discharge-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7fa0dddd80>
+	43/48  hp-scada-ops-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5cd40>
+	44/48  hp-loop-on-off-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa0f5d240>
+	45/48  buffer.join                     done:True   exception: None  <coroutine object ApiTankModule.join at 0x7fa0ddee00>
+	46/48  primary-pump-scada-ops-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7fa0dde680>
+	47/48  five-v-boss.join                done:True   exception: None  <coroutine object FiveVBoss.join at 0x7fa0ddce80>
+	48/48  zone2-up-failsafe-relay.join    done:True   exception: None  <coroutine object Relay.join at 0x7fa0ddf700>
+
+2026-09-13 13:25:02.897 Tasks: 38  [PENDING]
+	1/38  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5dc40>
+	2/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5990>
+	3/38  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa0de0820>
+	4/38  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6ab20>
+	5/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db54e0>
+	6/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5030>
+	7/38  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa0dc4370>
+	8/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5a80>
+	9/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5120>
+	10/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5c60>
+	11/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db55d0>
+	12/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5b70>
+	13/38  LeafAlly keepalive              done:False   exception: None  <coroutine object AllTanksLeafAlly.main at 0x7fa0f68e40>
+	14/38  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa0f6a180>
+	15/38  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa0f69fc0>
+	16/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5210>
+	17/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5d50>
+	18/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db56c0>
+	19/38  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7fa0f5d740>
+	20/38  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa104a8a0>
+	21/38  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa0f6aea0>
+	22/38  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa0f6a0a0>
+	23/38  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa10f2b90>
+	24/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5300>
+	25/38  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa104a770>
+	26/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db57b0>
+	27/38  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa0de0660>
+	28/38  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7fa0f5d340>
+	29/38  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa0db4310>
+	30/38  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5da40>
+	31/38  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa0ddd600>
+	32/38  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa0de0740>
+	33/38  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6a260>
+	34/38  LocalControl keepalive          done:False   exception: None  <coroutine object StandbyLocalControl.main at 0x7fa0f69e00>
+	35/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db53f0>
+	36/38  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5db40>
+	37/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db58a0>
+	38/38  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6a7a0>
+
+2026-09-13 13:25:02.897 Tasks: 38  [WAITING FOR]
+	1/38  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5dc40>
+	2/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5990>
+	3/38  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa0de0820>
+	4/38  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6ab20>
+	5/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db54e0>
+	6/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5030>
+	7/38  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa0dc4370>
+	8/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5a80>
+	9/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5120>
+	10/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5c60>
+	11/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db55d0>
+	12/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5b70>
+	13/38  LeafAlly keepalive              done:False   exception: None  <coroutine object AllTanksLeafAlly.main at 0x7fa0f68e40>
+	14/38  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa0f6a180>
+	15/38  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa0f69fc0>
+	16/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5210>
+	17/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5d50>
+	18/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db56c0>
+	19/38  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7fa0f5d740>
+	20/38  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa104a8a0>
+	21/38  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa0f6aea0>
+	22/38  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa0f6a0a0>
+	23/38  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa10f2b90>
+	24/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db5300>
+	25/38  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa104a770>
+	26/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db57b0>
+	27/38  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa0de0660>
+	28/38  ApiTankModule sim pico          done:False   exception: None  <coroutine object ApiTankModule.sim_pico_main at 0x7fa0f5d340>
+	29/38  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa0db4310>
+	30/38  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5da40>
+	31/38  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa0ddd600>
+	32/38  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa0de0740>
+	33/38  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6a260>
+	34/38  LocalControl keepalive          done:False   exception: None  <coroutine object StandbyLocalControl.main at 0x7fa0f69e00>
+	35/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db53f0>
+	36/38  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa0f5db40>
+	37/38  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa0db58a0>
+	38/38  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa0f6a7a0>
+
+2026-09-13 13:25:02.898 [sieg-loop] auto.lc.n.sieg-loop sending SendMore to HpLoopKeepSend relay auto.lc.n.sieg-loop.hp-loop-keep-send-relay
+2026-09-13 13:25:02.899 [sieg-loop] auto.lc.n.sieg-loop sending CloseRelay to HpLoopOnOff relay auto.lc.n.sieg-loop.hp-loop-on-off-relay
+2026-09-13 13:25:02.899 [sieg-loop] StartKeepingLess: FullyKeep -> KeepingLess
+2026-09-13 13:25:02.899 [sieg-loop] keep seconds 100  [e208]
+2026-09-13 13:25:02.899 [dist-010v] dist-010v: output range set to 0-10 V
+2026-09-13 13:25:02.900 [primary-010v] primary-010v: output range set to 0-10 V
+2026-09-13 13:25:02.901 [store-010v] store-010v: output range set to 0-10 V
+2026-09-13 13:25:02.905 local_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-13 13:25:02.908 admin:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-13 13:25:02.910 [sieg-loop] sieg-loop received unexpected message: Src='hp-loop-keep-send-relay' Dst='sieg-loop' MessageType='gw.dispatch.ack' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-13 13:25:02.910 [sieg-loop] sieg-loop received unexpected message: Src='hp-loop-on-off-relay' Dst='sieg-loop' MessageType='gw.dispatch.ack' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-13 13:25:02.960 [sieg-loop] sieg-loop received unexpected message: Src='hp-loop-keep-send-relay' Dst='sieg-loop' MessageType='fsm.full.report' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-13 13:25:02.961 [sieg-loop] sieg-loop received unexpected message: Src='hp-loop-on-off-relay' Dst='sieg-loop' MessageType='fsm.full.report' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-13 13:25:03.017 gridworks_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-13 13:25:03.155 gridworks_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-13 13:25:03.417 [derived-generator] Obtained a 155-hour weather forecast starting at 1789322400
+2026-09-13 13:25:03.421 [derived-generator] Calculating rswt_quadratic_params: [ 4.91228070e-04 -4.28070175e-02  8.68421053e-01]
+2026-09-13 13:25:03.428 [derived-generator] Updating usable and required energy
+2026-09-13 13:25:03.429 [derived-generator] Got forecast starting 2026-09-13 14:00:00
+2026-09-13 13:25:03.900 [sieg-loop] keep seconds 99.0  [e208]
+2026-09-13 13:25:04.901 [sieg-loop] keep seconds 98.0  [e208]
+2026-09-13 13:25:05.837 [pico-cycler] TRIGGERING PICO REBOOT! startup
+2026-09-13 13:25:05.838 [pico-cycler] OpenRelay to vdc-relay
+2026-09-13 13:25:05.903 [sieg-loop] keep seconds 97.0  [e208]
+2026-09-13 13:25:06.879 [scada] About to initialize contracts
+2026-09-13 13:25:06.880 No contract
+2026-09-13 13:25:06.880 Starting with no contract
+2026-09-13 13:25:06.903 [sieg-loop] keep seconds 96.0  [e208]
+2026-09-13 13:25:07.904 [sieg-loop] keep seconds 95.0  [e208]
+2026-09-13 13:25:08.905 [sieg-loop] keep seconds 94.0  [e208]
+2026-09-13 13:25:09.907 [sieg-loop] keep seconds 93.0  [e208]
+2026-09-13 13:25:10.849 [pico-cycler] CloseRelay to vdc-relay
+2026-09-13 13:25:10.913 [sieg-loop] keep seconds 92.0  [e208]
+2026-09-13 13:25:11.915 [sieg-loop] keep seconds 91.0  [e208]
+2026-09-13 13:25:12.916 [sieg-loop] keep seconds 90.0  [e208]
+2026-09-13 13:25:13.918 [sieg-loop] keep seconds 89.0  [e208]
+2026-09-13 13:25:14.920 [sieg-loop] keep seconds 88.0  [e208]
+2026-09-13 13:25:15.928 [sieg-loop] keep seconds 87.0  [e208]
+2026-09-13 13:25:16.930 [sieg-loop] keep seconds 86.0  [e208]
+2026-09-13 13:25:17.932 [sieg-loop] keep seconds 85.0  [e208]
+2026-09-13 13:25:18.934 [sieg-loop] keep seconds 84.0  [e208]
+2026-09-13 13:25:19.936 [sieg-loop] keep seconds 83.0  [e208]
+2026-09-13 13:25:20.942 [sieg-loop] keep seconds 82.0  [e208]
+2026-09-13 13:25:21.944 [sieg-loop] keep seconds 81.0  [e208]
+2026-09-13 13:25:22.945 [sieg-loop] keep seconds 80.0  [e208]
+2026-09-13 13:25:23.947 [sieg-loop] keep seconds 79.0  [e208]
+2026-09-13 13:25:24.949 [sieg-loop] keep seconds 78.0  [e208]
+2026-09-13 13:25:25.956 [sieg-loop] keep seconds 77.0  [e208]
+2026-09-13 13:25:26.957 [sieg-loop] keep seconds 76.0  [e208]
+2026-09-13 13:25:27.959 [sieg-loop] keep seconds 75.0  [e208]
+2026-09-13 13:25:28.961 [sieg-loop] keep seconds 74.0  [e208]
+2026-09-13 13:25:29.963 [sieg-loop] keep seconds 73.0  [e208]
+2026-09-13 13:25:30.969 [sieg-loop] keep seconds 72.0  [e208]
+2026-09-13 13:25:31.971 [sieg-loop] keep seconds 71.0  [e208]
+2026-09-13 13:25:32.845 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:25:32.974 [sieg-loop] keep seconds 70.0  [e208]
+2026-09-13 13:25:33.975 [sieg-loop] keep seconds 69.0  [e208]
+2026-09-13 13:25:34.977 [sieg-loop] keep seconds 68.0  [e208]
+2026-09-13 13:25:35.985 [sieg-loop] keep seconds 67.0  [e208]
+2026-09-13 13:25:36.987 [sieg-loop] keep seconds 66.0  [e208]
+2026-09-13 13:25:37.989 [sieg-loop] keep seconds 65.0  [e208]
+2026-09-13 13:25:38.992 [sieg-loop] keep seconds 64.0  [e208]
+2026-09-13 13:25:39.995 [sieg-loop] keep seconds 63.0  [e208]
+2026-09-13 13:25:41.002 [sieg-loop] keep seconds 62.0  [e208]
+2026-09-13 13:25:42.004 [sieg-loop] keep seconds 61.0  [e208]
+2026-09-13 13:25:43.006 [sieg-loop] keep seconds 60.0  [e208]
+2026-09-13 13:25:44.008 [sieg-loop] keep seconds 59.0  [e208]
+2026-09-13 13:25:45.010 [sieg-loop] keep seconds 58.0  [e208]
+2026-09-13 13:25:46.015 [sieg-loop] keep seconds 57.0  [e208]
+2026-09-13 13:25:47.017 [sieg-loop] keep seconds 56.0  [e208]
+2026-09-13 13:25:48.019 [sieg-loop] keep seconds 55.0  [e208]
+2026-09-13 13:25:49.022 [sieg-loop] keep seconds 54.0  [e208]
+2026-09-13 13:25:50.022 [sieg-loop] keep seconds 53.0  [e208]
+2026-09-13 13:25:51.027 [sieg-loop] keep seconds 52.0  [e208]
+2026-09-13 13:25:52.028 [sieg-loop] keep seconds 51.0  [e208]
+2026-09-13 13:25:53.029 [sieg-loop] keep seconds 50.0  [e208]
+2026-09-13 13:25:54.031 [sieg-loop] keep seconds 49.0  [e208]
+2026-09-13 13:25:55.033 [sieg-loop] keep seconds 48.0  [e208]
+2026-09-13 13:25:56.038 [sieg-loop] keep seconds 47.0  [e208]
+2026-09-13 13:25:57.040 [sieg-loop] keep seconds 46.0  [e208]
+2026-09-13 13:25:58.042 [sieg-loop] keep seconds 45.0  [e208]
+2026-09-13 13:25:59.044 [sieg-loop] keep seconds 43.9  [e208]
+2026-09-13 13:26:00.046 [sieg-loop] keep seconds 42.9  [e208]
+2026-09-13 13:26:01.052 [sieg-loop] keep seconds 41.9  [e208]
+2026-09-13 13:26:02.055 [sieg-loop] keep seconds 40.9  [e208]
+2026-09-13 13:26:02.847 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:26:03.056 [sieg-loop] keep seconds 39.9  [e208]
+2026-09-13 13:26:04.057 [sieg-loop] keep seconds 38.9  [e208]
+2026-09-13 13:26:05.059 [sieg-loop] keep seconds 37.9  [e208]
+2026-09-13 13:26:06.065 [sieg-loop] keep seconds 36.9  [e208]
+2026-09-13 13:26:07.067 [sieg-loop] keep seconds 35.9  [e208]
+2026-09-13 13:26:08.068 [sieg-loop] keep seconds 34.9  [e208]
+2026-09-13 13:26:09.070 [sieg-loop] keep seconds 33.9  [e208]
+2026-09-13 13:26:10.072 [sieg-loop] keep seconds 32.9  [e208]
+2026-09-13 13:26:11.078 [sieg-loop] keep seconds 31.9  [e208]
+2026-09-13 13:26:12.080 [sieg-loop] keep seconds 30.9  [e208]
+2026-09-13 13:26:13.082 [sieg-loop] keep seconds 29.9  [e208]
+2026-09-13 13:26:14.084 [sieg-loop] keep seconds 28.9  [e208]
+2026-09-13 13:26:15.086 [sieg-loop] keep seconds 27.9  [e208]
+2026-09-13 13:26:16.092 [sieg-loop] keep seconds 26.9  [e208]
+2026-09-13 13:26:17.094 [sieg-loop] keep seconds 25.9  [e208]
+2026-09-13 13:26:18.096 [sieg-loop] keep seconds 24.9  [e208]
+2026-09-13 13:26:19.098 [sieg-loop] keep seconds 23.9  [e208]
+2026-09-13 13:26:20.099 [sieg-loop] keep seconds 22.9  [e208]
+2026-09-13 13:26:21.104 [sieg-loop] keep seconds 21.9  [e208]
+2026-09-13 13:26:22.105 [sieg-loop] keep seconds 20.9  [e208]
+2026-09-13 13:26:23.106 [sieg-loop] keep seconds 19.9  [e208]
+2026-09-13 13:26:24.108 [sieg-loop] keep seconds 18.9  [e208]
+2026-09-13 13:26:25.110 [sieg-loop] keep seconds 17.9  [e208]
+2026-09-13 13:26:26.114 [sieg-loop] keep seconds 16.9  [e208]
+2026-09-13 13:26:27.116 [sieg-loop] keep seconds 15.9  [e208]
+2026-09-13 13:26:28.118 [sieg-loop] keep seconds 14.9  [e208]
+2026-09-13 13:26:29.120 [sieg-loop] keep seconds 13.9  [e208]
+2026-09-13 13:26:30.122 [sieg-loop] keep seconds 12.9  [e208]
+2026-09-13 13:26:31.128 [sieg-loop] keep seconds 11.9  [e208]
+2026-09-13 13:26:32.129 [sieg-loop] keep seconds 10.9  [e208]
+2026-09-13 13:26:32.848 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:26:33.131 [sieg-loop] keep seconds 9.9  [e208]
+2026-09-13 13:26:34.132 [sieg-loop] keep seconds 8.9  [e208]
+2026-09-13 13:26:35.133 [sieg-loop] keep seconds 7.9  [e208]
+2026-09-13 13:26:36.138 [sieg-loop] keep seconds 6.9  [e208]
+2026-09-13 13:26:37.139 [sieg-loop] keep seconds 5.9  [e208]
+2026-09-13 13:26:38.140 [sieg-loop] keep seconds 4.9  [e208]
+2026-09-13 13:26:39.142 [sieg-loop] keep seconds 3.9  [e208]
+2026-09-13 13:26:40.145 [sieg-loop] keep seconds 2.9  [e208]
+2026-09-13 13:26:41.155 [sieg-loop] keep seconds 1.9  [e208]
+2026-09-13 13:26:42.157 [sieg-loop] keep seconds 0.9  [e208]
+2026-09-13 13:26:43.159 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:44.161 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:45.162 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:46.168 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:47.169 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:47.517 admin:  awaiting_peer -- message_from_peer --> active
+2026-09-13 13:26:48.023 [scada] Message from Admin! top_state Admin
+2026-09-13 13:26:48.023 [scada] AutoGoesDormant: LocalControl -> Dormant
+2026-09-13 13:26:48.029 [lc] TopGoDormant: EverythingOff -> Dormant
+2026-09-13 13:26:48.029 [lc] Set top state command tree
+2026-09-13 13:26:48.029 [scada] Admin Wakes Up
+2026-09-13 13:26:48.030 [scada] AdminDispatch SwitchToScada to admin.zone1-down-failsafe-relay
+2026-09-13 13:26:48.170 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:49.171 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:50.172 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:51.180 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:52.182 [sieg-loop] keep seconds 0  [e208]
+2026-09-13 13:26:53.084 [sieg-loop] admin.sieg-loop sending OpenRelay to HpLoopOnOff relay admin.sieg-loop.hp-loop-on-off-relay
+2026-09-13 13:26:53.085 [sieg-loop] StopKeepingLess: KeepingLess -> SteadyBlend
+2026-09-13 13:26:53.085 [sieg-loop] Movement e208 completed: 0 seconds, state SteadyBlend
+2026-09-13 13:26:53.088 [sieg-loop] sieg-loop received unexpected message: Src='hp-loop-on-off-relay' Dst='sieg-loop' MessageType='gw.dispatch.ack' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-13 13:26:53.099 [sieg-loop] sieg-loop received unexpected message: Src='hp-loop-on-off-relay' Dst='sieg-loop' MessageType='fsm.full.report' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-13 13:26:56.535 [scada] AdminDispatch CloseRelay to admin.zone1-down-ops-relay
+2026-09-13 13:27:02.851 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:27:32.854 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:27:42.879 [pico-cycler] buffer sim-buffer-pico flatlined
+2026-09-13 13:27:42.882 [pico-cycler] TRIGGERING PICO REBOOT! triggered by buffer sim-buffer-pico
+2026-09-13 13:27:42.884 [pico-cycler] OpenRelay to vdc-relay
+2026-09-13 13:27:42.888 [pico-cycler] tank1 sim-tank1-pico flatlined
+2026-09-13 13:27:47.912 [pico-cycler] CloseRelay to vdc-relay
+2026-09-13 13:28:02.856 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:28:32.859 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:28:47.922 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['sim-buffer-pico', 'sim-tank1-pico']
+2026-09-13 13:28:47.924 [pico-cycler] OpenRelay to vdc-relay
+2026-09-13 13:28:52.942 [pico-cycler] CloseRelay to vdc-relay
+2026-09-13 13:29:02.862 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:29:32.865 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:29:52.952 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['sim-buffer-pico', 'sim-tank1-pico']
+2026-09-13 13:29:52.954 [pico-cycler] OpenRelay to vdc-relay
+2026-09-13 13:29:57.966 [pico-cycler] CloseRelay to vdc-relay
+2026-09-13 13:29:58.020 [pico-cycler] Sending problem event for zombies [' sim-buffer-pico [buffer]']
+2026-09-13 13:29:58.801 Top state: Admin
+2026-09-13 13:29:58.802 Auto state: Dormant
+2026-09-13 13:30:02.839 [lc] HaStrategy: Standby |  State: Dormant
+2026-09-13 13:30:02.867 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:30:32.868 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:30:35.203 [scada] AdminAnalogDispatch 100 to admin.dist-010v
+2026-09-13 13:30:35.206 [dist-010v] Dispatch from admin: volts x10 100 -> code 4095
+2026-09-13 13:30:57.992 [pico-cycler] TRIGGERING PICO REBOOT! Flatlined picos: ['sim-tank1-pico']
+2026-09-13 13:30:57.996 [pico-cycler] OpenRelay to vdc-relay
+2026-09-13 13:31:02.871 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:31:03.017 [pico-cycler] CloseRelay to vdc-relay
+2026-09-13 13:31:32.874 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:31:35.732 [scada] AdminAnalogDispatch 100 to admin.dist-010v
+2026-09-13 13:31:35.735 [dist-010v] Dispatch from admin: volts x10 100 -> code 4095
+2026-09-13 13:32:02.876 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:32:32.879 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:32:36.247 [scada] AdminAnalogDispatch 35 to admin.dist-010v
+2026-09-13 13:32:36.249 [dist-010v] Dispatch from admin: volts x10 35 -> code 1434
+2026-09-13 13:32:46.760 [scada] AdminDispatch OpenRelay to admin.zone1-down-ops-relay
+2026-09-13 13:32:55.272 [scada] AdminDispatch SwitchToWallThermostat to admin.zone1-down-failsafe-relay
+2026-09-13 13:33:02.882 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:33:03.792 [scada] Admin releases control: Auto
+2026-09-13 13:33:03.793 [scada] AutoWakesUp: Dormant -> LocalControl
+2026-09-13 13:33:03.805 [lc] TopWakeUp: Dormant -> EverythingOff
+2026-09-13 13:33:03.806 [lc] Set top state command tree
+2026-09-13 13:33:03.815 [lc] Set auto.lc.n command tree
+2026-09-13 13:33:03.816 [lc] TopWakeUp: Dormant -> EverythingOff
+2026-09-13 13:33:03.816 [lc] Initializing relays
+2026-09-13 13:33:03.817 [lc] de-energizing most relays
+2026-09-13 13:33:03.819 [lc] DischargeStore to charge-discharge-relay
+2026-09-13 13:33:03.819 [lc] SwitchToHeatPump to primary-pump-failsafe-relay
+2026-09-13 13:33:03.820 [lc] OpenRelay to primary-pump-scada-ops-relay
+2026-09-13 13:33:03.821 [lc] OpenRelay to store-pump-relay
+2026-09-13 13:33:03.822 [lc] CloseRelay to tstat-common-relay
+2026-09-13 13:33:03.823 [lc] SwitchToWallThermostat to zone1-down-failsafe-relay
+2026-09-13 13:33:03.824 [lc] OpenRelay to zone1-down-ops-relay
+2026-09-13 13:33:03.825 [lc] SwitchToWallThermostat to zone2-up-failsafe-relay
+2026-09-13 13:33:03.826 [lc] OpenRelay to zone2-up-ops-relay
+2026-09-13 13:33:03.826 [lc] energizing key relays for keeping things off
+2026-09-13 13:33:03.827 [lc] auto.lc.n sending SwitchToScada to Hp Failsafe auto.lc.n.hp-failsafe-relay
+2026-09-13 13:33:03.828 [lc] auto.lc.n sending SwitchToScada to Aquastat Ctrl auto.lc.n.aquastat-ctrl-relay
+2026-09-13 13:33:03.829 [lc] TurnOff to hp-boss
+2026-09-13 13:33:03.830 [five-v-boss] wake.up in PicoCycler: nothing to restore
+2026-09-13 13:33:03.842 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='1612e367-96d2-46b6-a785-cc58719b8d26' SendTimeUnixMs=1789320783828 TypeName='fsm.event' Version='000'
+2026-09-13 13:33:03.844 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-09-13 13:33:03.851 [scada] Sending auto.lc.n.hp-boss state to sieg-loop
+2026-09-13 13:33:03.852 [sieg-loop] Just received state HpOff from HpBoss
+2026-09-13 13:33:03.852 [sieg-loop] Engaging brain, control state is Blind, hp boss state is HpOff
+2026-09-13 13:33:03.854 [hp-boss] hp-boss received unexpected message: Src='hp-scada-ops-relay' Dst='hp-boss' MessageType='gw.dispatch.ack' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'

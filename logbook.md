@@ -22,8 +22,9 @@ first run dates them.
   rounds to 4096 and the 12-bit mask zeroes it; the old multiplexer
   topped at 4095; fix = clamp + a level-100 test), and `dist-flow` never
   arrived (the pico-cycler bounced vdc every 65 s for the fixture's sim
-  tank picos, so the dist-btu pico never posted). Dev rung 09-12 and the
-  two 10-minute sim soaks 09-13 in the README.
+  tank picos, so the dist-btu pico never posted). Run 2 the same day on
+  `6bfa2bf9` (the clamp): 10 V held, pump power 48 W. Dev rung 09-12 and
+  the two 10-minute sim soaks 09-13 in the README.
 - **2026-09-10 · [beech-krida-witness](2026-09-10-beech-krida-witness/)**
   — krida-retirement rung 3 on real hardware: a 5-minute window scada (`jm/spruce-unlimbo` `1a7a41d1`, derived beech layout, dev broker only) on beech, admin takes zone1-down on the second Krida and makes a heat call, dist flow + pump power watched. Dev rung on the sim House0 fixture PASS (first admin exercise on a House0 tree); beech 2026-09-11 PASS nine of nine: relays 17+18 acked, read back and seen in the port word, dist pump ran under the call (flow 0 → 200) and stopped on release, deployed scada back unchanged. Pump power not witnessed (eGauge driver fault).
 - **2026-09-10 · [pico-state-reported](2026-09-10-pico-state-reported/)**

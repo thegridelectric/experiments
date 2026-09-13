@@ -206,10 +206,11 @@ The pump's speed followed the level, witnessed on `dist-pump-pwr`
   wrote `int(4095 * value / 100) << 4`, whose top code is 4095; the
   wire-byte test pins level 40 only, so the suite did not see it. The
   pump at 0 V drew 7 W, the same as at 3.5 V (its behaviour on a lost
-  signal, presumably a default speed). The fix is a clamp to
-  `codes - 1` (the MCP4728 path reaches at most code 4000 at 10 V and
-  is unaffected) and a test at level 100 on both chips; it is not in
-  this rung's scope.
+  signal, presumably a default speed). Fixed in scada
+  `6bfa2bf9`: a clamp to `codes - 1` where the code is derived (the
+  MCP4728 path reaches at most code 4000 at 10 V and was never
+  exposed), the wire-byte test pinned at level 100 and a full-scale
+  dispatch test on the gw108 sim rig; run 2 below is the witness.
 - **`dist-flow` never arrived.** The dist-btu pico (`pico_47352a`)
   posted nothing during the window: the pico-cycler cut vdc power at
   boot and then every 65 s for the fixture's simulated tank picos
@@ -218,6 +219,27 @@ The pump's speed followed the level, witnessed on `dist-pump-pwr`
   the `dist-pump-pwr` witness carried the run. The derived window
   layout should drop the simulated tank modules before the next
   window on this box.
+
+**Beech run 2 (2026-09-13 13:24–13:34 ET, scada `6bfa2bf9`, `--plan
+top`): full scale fixed.** The clamp to the top code (`6bfa2bf9`) on
+the same window setup, one level: call, baseline at 3.5 V, 10 V held
+for two minutes (the plan's up and down phases), restore, release.
+`dist-010v` echoed 100 within the second; `dist-pump-pwr` 47–48 W at
+10 V against 39–40 W at 8 V in run 1 and 7 W at the masked 0 V, back
+to 8 W on restore. PASS, the same dist-flow FAIL (the pico loop is
+unchanged). Deployed scada back, port words as before. Log
+`sweep-2.log`, results `sweep-2-results.json`, boot log
+`boot-20260913-133437.log`.
+
+The table with the fix in, up and down:
+
+| level (volts × 10) | dist-pump-pwr (W) |
+| --- | --- |
+| 20 | 4 |
+| 35 (deployed) | 8 |
+| 50 | 14 |
+| 80 | 39–40 |
+| 100 | 47–48 |
 
 **Idle soak (2026-09-13 09:45–09:56 ET, scada `3f607f8c`): PASS.** The
 sim House0 pair on the dev broker, no driver, 10 minutes to the
@@ -270,6 +292,9 @@ shutdown would end the window mid-sweep.
 - 11:59:05–12:02:07 up 20, 50, 80, 100 each echoed within the second; 12:03:07–12:06:09 down 100, 80, 50, 20; 12:07:09 jump 35; 12:08:10 restore 35.
 - 12:08:23 ops relay RelayOpen; 12:08:30 failsafe WallThermostat; 12:08:35 admin released, PASS.
 - 12:19:50 window off: deployed scada and timer back, port words unchanged.
+- 13:24 run 2: window scada booted on `6bfa2bf9`; 13:26:56 call acked; 13:27:00 CloseRelay read RelayClosed; baseline at 35.
+- 13:30:35 level 100 echoed within the second; pump power 48 W through 13:32:35 (up, then the down phase's repeat); 13:32:40 restore 35, 8 W.
+- 13:32:50 ops relay RelayOpen; 13:32:58 failsafe WallThermostat; 13:33:03 released, PASS; 13:34:37 window off, port words unchanged.
 - 2026-09-13 09:56:36 driver soak: scada booted; 09:59:25–10:02:31 ten steps echoed; 10:02:55 driver released admin, PASS; 10:07:05 SIGTERM, no fault.
 - 2026-09-13 09:45:33 idle soak: sim House0 scada booted on the dev broker, three outputs ready the same second; 09:56:02 SIGTERM from the 630 s timeout, no fault.
 - 2026-09-12 19:42:23 dev rung: sim House0 scada booted on the dev broker; three outputs ready 19:42:31.
@@ -313,7 +338,9 @@ for the window and restarts it after.
 - `soak-idle-scada.log`, `soak-driver-scada.log`, `sweep-soak.log`,
   `sweep-soak-results.json`, `soak-driver-console.log` — the 10-minute
   soaks on the sim House0 fixture (idle; with the driver in front).
-- `sweep-1.log`, `sweep-1.stdout`, `sweep-1-results.json`,
-  `boot-20260913-121950.log` — the beech run: the driver's log and typed
+- `sweep-<run>.log`, `sweep-<run>.stdout`, `sweep-<run>-results.json`,
+  `boot-<stamp>.log` — the beech runs (1: short plan on `e6d5b39b`,
+  boot `boot-20260913-121950.log`; 2: top plan on `6bfa2bf9`, boot
+  `boot-20260913-133437.log`): the driver's log and typed
   results (readings, states, relay commands, steps, provenance), the
   window scada's boot log; `instances/*.uid[*].json` its report events.

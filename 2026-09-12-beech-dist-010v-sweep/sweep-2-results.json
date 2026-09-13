@@ -1,0 +1,1057 @@
+{
+ "Outcome": "PASS",
+ "Verdicts": [
+  "FAIL dist-flow non-zero within 90s of the call"
+ ],
+ "StartUnixMs": 1789320407505,
+ "EndUnixMs": 1789320783791,
+ "Knobs": {
+  "Phases": [
+   "call",
+   "baseline",
+   "up",
+   "down",
+   "jumps",
+   "restore"
+  ],
+  "HoldS": 60,
+  "BaselineS": 120,
+  "CallWaitS": 90,
+  "Plan": "top",
+  "PlanNote": "full scale only: the top-code clamp (10 V wrote 0 V on 2026-09-13)",
+  "Ramp": [
+   100
+  ],
+  "Jumps": [],
+  "Zone": "zone1-down",
+  "RestoreLevel": 35,
+  "EchoS": 15,
+  "AdminTimeoutS": 900
+ },
+ "Provenance": {
+  "layout_path": "/home/pi/.config/gridworks/scada-experiment/hardware-layout.json",
+  "layout_sha256": "6f1487127924ca70ab278155ce8ba54996ab1d38be42fb24dc0f18e3bc384969",
+  "ops_path": "/home/pi/.config/gridworks/scada-experiment/operational-params.json",
+  "ops_sha256": "944b9a16497fe04890659ac3d4f3ff20b315945b8414b91773b817a603d56cea",
+  "scada_alias": "hw1.isone.me.versant.keene.beech.scada",
+  "power_on_volts_times_ten": 35
+ },
+ "Steps": [
+  {
+   "phase": "up",
+   "level": 100,
+   "sent_unix_ms": 1789320635192,
+   "echo_unix_ms": 1789320635213,
+   "hold_s": 60
+  },
+  {
+   "phase": "down",
+   "level": 100,
+   "sent_unix_ms": 1789320695722,
+   "echo_unix_ms": 1789320695740,
+   "hold_s": 60
+  },
+  {
+   "phase": "restore",
+   "level": 35,
+   "sent_unix_ms": 1789320756245,
+   "echo_unix_ms": 1789320756251,
+   "hold_s": 10
+  }
+ ],
+ "RelayCommands": [
+  {
+   "node": "zone1-down-failsafe-relay",
+   "event": "SwitchToScada",
+   "sent_unix_ms": 1789320408016,
+   "echo_unix_ms": 1789320411529
+  },
+  {
+   "node": "zone1-down-ops-relay",
+   "event": "CloseRelay",
+   "sent_unix_ms": 1789320416530,
+   "echo_unix_ms": 1789320420043
+  },
+  {
+   "node": "zone1-down-ops-relay",
+   "event": "OpenRelay",
+   "sent_unix_ms": 1789320766748,
+   "echo_unix_ms": 1789320770266
+  },
+  {
+   "node": "zone1-down-failsafe-relay",
+   "event": "SwitchToWallThermostat",
+   "sent_unix_ms": 1789320775267,
+   "echo_unix_ms": 1789320778781
+  }
+ ],
+ "States": [
+  {
+   "handle": "admin.aquastat-ctrl-relay",
+   "state": "Scada",
+   "unix_ms": 1789320598080
+  },
+  {
+   "handle": "admin.charge-discharge-relay",
+   "state": "DischargingStore",
+   "unix_ms": 1789320598083
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler",
+   "state": "RelayOpen",
+   "unix_ms": 1789320462906
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler",
+   "state": "PicosRebooting",
+   "unix_ms": 1789320467918
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler",
+   "state": "PicosRebooting",
+   "unix_ms": 1789320532949
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler",
+   "state": "PicosRebooting",
+   "unix_ms": 1789320598018
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler",
+   "state": "RelayOpen",
+   "unix_ms": 1789320658011
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler",
+   "state": "PicosRebooting",
+   "unix_ms": 1789320663034
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler",
+   "state": "PicosLive",
+   "unix_ms": 1789320723038
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320462902
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320467916
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320532947
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320598084
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320658007
+  },
+  {
+   "handle": "admin.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320663030
+  },
+  {
+   "handle": "admin.hp-boss.hp-scada-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320598083
+  },
+  {
+   "handle": "admin.hp-failsafe-relay",
+   "state": "Scada",
+   "unix_ms": 1789320598081
+  },
+  {
+   "handle": "admin.primary-pump-failsafe-relay",
+   "state": "HeatPump",
+   "unix_ms": 1789320598081
+  },
+  {
+   "handle": "admin.primary-pump-scada-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320598080
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320422851
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320452854
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320482857
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320512860
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320542863
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320572865
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320602867
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320632869
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320662872
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320692875
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320722877
+  },
+  {
+   "handle": "admin.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320752880
+  },
+  {
+   "handle": "admin.sieg-loop.hp-loop-keep-send-relay",
+   "state": "SendMore",
+   "unix_ms": 1789320598081
+  },
+  {
+   "handle": "admin.sieg-loop.hp-loop-on-off-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320413094
+  },
+  {
+   "handle": "admin.sieg-loop.hp-loop-on-off-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320598082
+  },
+  {
+   "handle": "admin.store-pump-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320598082
+  },
+  {
+   "handle": "admin.tstat-common-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320598084
+  },
+  {
+   "handle": "admin.zone1-down-failsafe-relay",
+   "state": "Scada",
+   "unix_ms": 1789320408036
+  },
+  {
+   "handle": "admin.zone1-down-failsafe-relay",
+   "state": "Scada",
+   "unix_ms": 1789320598083
+  },
+  {
+   "handle": "admin.zone1-down-failsafe-relay",
+   "state": "WallThermostat",
+   "unix_ms": 1789320775286
+  },
+  {
+   "handle": "admin.zone1-down-ops-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320416549
+  },
+  {
+   "handle": "admin.zone1-down-ops-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320598081
+  },
+  {
+   "handle": "admin.zone1-down-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320766773
+  },
+  {
+   "handle": "admin.zone2-up-failsafe-relay",
+   "state": "WallThermostat",
+   "unix_ms": 1789320598084
+  },
+  {
+   "handle": "admin.zone2-up-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320598082
+  },
+  {
+   "handle": "auto",
+   "state": "Dormant",
+   "unix_ms": 1789320598801
+  },
+  {
+   "handle": "auto.five-v-boss",
+   "state": "PicoCycler",
+   "unix_ms": 1789320302816
+  },
+  {
+   "handle": "auto.five-v-boss.pico-cycler",
+   "state": "PicosLive",
+   "unix_ms": 1789320370869
+  },
+  {
+   "handle": "auto.five-v-boss.pico-cycler.vdc-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320310860
+  },
+  {
+   "handle": "auto.lc",
+   "state": "EverythingOff",
+   "unix_ms": 1789320302821
+  },
+  {
+   "handle": "auto.lc",
+   "state": "Dormant",
+   "unix_ms": 1789320408028
+  },
+  {
+   "handle": "auto.lc.n.aquastat-ctrl-relay",
+   "state": "Scada",
+   "unix_ms": 1789320304840
+  },
+  {
+   "handle": "auto.lc.n.charge-discharge-relay",
+   "state": "DischargingStore",
+   "unix_ms": 1789320304839
+  },
+  {
+   "handle": "auto.lc.n.hp-boss",
+   "state": "HpOff",
+   "unix_ms": 1789320302871
+  },
+  {
+   "handle": "auto.lc.n.hp-boss.hp-scada-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320304840
+  },
+  {
+   "handle": "auto.lc.n.hp-failsafe-relay",
+   "state": "Scada",
+   "unix_ms": 1789320304839
+  },
+  {
+   "handle": "auto.lc.n.primary-pump-failsafe-relay",
+   "state": "HeatPump",
+   "unix_ms": 1789320304840
+  },
+  {
+   "handle": "auto.lc.n.primary-pump-scada-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320304840
+  },
+  {
+   "handle": "auto.lc.n.sieg-loop",
+   "state": "Blind",
+   "unix_ms": 1789320392849
+  },
+  {
+   "handle": "auto.lc.n.sieg-loop.hp-loop-keep-send-relay",
+   "state": "SendMore",
+   "unix_ms": 1789320304841
+  },
+  {
+   "handle": "auto.lc.n.sieg-loop.hp-loop-on-off-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320304841
+  },
+  {
+   "handle": "auto.lc.n.store-pump-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320304840
+  },
+  {
+   "handle": "auto.lc.n.tstat-common-relay",
+   "state": "RelayClosed",
+   "unix_ms": 1789320304839
+  },
+  {
+   "handle": "auto.lc.n.zone1-down-failsafe-relay",
+   "state": "WallThermostat",
+   "unix_ms": 1789320304841
+  },
+  {
+   "handle": "auto.lc.n.zone1-down-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320304841
+  },
+  {
+   "handle": "auto.lc.n.zone2-up-failsafe-relay",
+   "state": "WallThermostat",
+   "unix_ms": 1789320304849
+  },
+  {
+   "handle": "auto.lc.n.zone2-up-ops-relay",
+   "state": "RelayOpen",
+   "unix_ms": 1789320304849
+  },
+  {
+   "handle": "buffer",
+   "state": "Alive",
+   "unix_ms": 1789320302816
+  },
+  {
+   "handle": "buffer",
+   "state": "Flatlined",
+   "unix_ms": 1789320462880
+  },
+  {
+   "handle": "buffer",
+   "state": "Zombie",
+   "unix_ms": 1789320598018
+  },
+  {
+   "handle": "dist-btu",
+   "state": "Alive",
+   "unix_ms": 1789320302816
+  },
+  {
+   "handle": "dist-btu",
+   "state": "Alive",
+   "unix_ms": 1789320598018
+  },
+  {
+   "handle": "ltn.la",
+   "state": "Dormant",
+   "unix_ms": 1789320302815
+  },
+  {
+   "handle": "s",
+   "state": "Auto",
+   "unix_ms": 1789320302773
+  },
+  {
+   "handle": "s",
+   "state": "Admin",
+   "unix_ms": 1789320598801
+  },
+  {
+   "handle": "tank1",
+   "state": "Alive",
+   "unix_ms": 1789320302816
+  },
+  {
+   "handle": "tank1",
+   "state": "Flatlined",
+   "unix_ms": 1789320462888
+  },
+  {
+   "handle": "tank1",
+   "state": "Flatlined",
+   "unix_ms": 1789320598018
+  },
+  {
+   "handle": "tank1",
+   "state": "Zombie",
+   "unix_ms": 1789320657992
+  }
+ ],
+ "Readings": [
+  {
+   "channel": "buffer-depth1",
+   "value": 13100,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "buffer-depth1-device",
+   "value": 55000,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "buffer-depth1-micro-v",
+   "value": 1132083,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "buffer-depth2",
+   "value": 12200,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "buffer-depth2-device",
+   "value": 50000,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "buffer-depth2-micro-v",
+   "value": 1275476,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "buffer-depth3",
+   "value": 11300,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "buffer-depth3-device",
+   "value": 45000,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "buffer-depth3-micro-v",
+   "value": 1429875,
+   "unix_ms": 1789320302887
+  },
+  {
+   "channel": "dist-010v",
+   "value": 35,
+   "unix_ms": 1789320362920
+  },
+  {
+   "channel": "dist-010v",
+   "value": 35,
+   "unix_ms": 1789320422925
+  },
+  {
+   "channel": "dist-010v",
+   "value": 35,
+   "unix_ms": 1789320482937
+  },
+  {
+   "channel": "dist-010v",
+   "value": 35,
+   "unix_ms": 1789320542947
+  },
+  {
+   "channel": "dist-010v",
+   "value": 35,
+   "unix_ms": 1789320602950
+  },
+  {
+   "channel": "dist-010v",
+   "value": 100,
+   "unix_ms": 1789320635213
+  },
+  {
+   "channel": "dist-010v",
+   "value": 100,
+   "unix_ms": 1789320695220
+  },
+  {
+   "channel": "dist-010v",
+   "value": 100,
+   "unix_ms": 1789320695740
+  },
+  {
+   "channel": "dist-010v",
+   "value": 100,
+   "unix_ms": 1789320755744
+  },
+  {
+   "channel": "dist-010v",
+   "value": 35,
+   "unix_ms": 1789320756251
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320404993
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320410994
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": -1,
+   "unix_ms": 1789320415993
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320416995
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320422994
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": -1,
+   "unix_ms": 1789320427995
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320428997
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": -1,
+   "unix_ms": 1789320433998
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320435015
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": -1,
+   "unix_ms": 1789320440012
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320441002
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": -1,
+   "unix_ms": 1789320445999
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320447000
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 6,
+   "unix_ms": 1789320450000
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 10,
+   "unix_ms": 1789320452000
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320454999
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320458001
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320460001
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320464001
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320467001
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320470002
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320473001
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320476001
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320479003
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320482003
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320484004
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320488003
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320491005
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320494006
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320497006
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320500006
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320503009
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320505009
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320508008
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320512013
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320539012
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320542014
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320569018
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320572019
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320599029
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320602030
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320629035
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 7,
+   "unix_ms": 1789320631035
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 48,
+   "unix_ms": 1789320658039
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 48,
+   "unix_ms": 1789320688046
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 48,
+   "unix_ms": 1789320692048
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 48,
+   "unix_ms": 1789320719051
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 47,
+   "unix_ms": 1789320723051
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 47,
+   "unix_ms": 1789320749055
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 47,
+   "unix_ms": 1789320753118
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320766059
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 8,
+   "unix_ms": 1789320768089
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320772060
+  },
+  {
+   "channel": "dist-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320778059
+  },
+  {
+   "channel": "hp-odu-pwr",
+   "value": 20,
+   "unix_ms": 1789320303069
+  },
+  {
+   "channel": "hp-odu-pwr",
+   "value": 22,
+   "unix_ms": 1789320603030
+  },
+  {
+   "channel": "primary-010v",
+   "value": 62,
+   "unix_ms": 1789320362921
+  },
+  {
+   "channel": "primary-010v",
+   "value": 62,
+   "unix_ms": 1789320422925
+  },
+  {
+   "channel": "primary-010v",
+   "value": 62,
+   "unix_ms": 1789320482938
+  },
+  {
+   "channel": "primary-010v",
+   "value": 62,
+   "unix_ms": 1789320542947
+  },
+  {
+   "channel": "primary-010v",
+   "value": 62,
+   "unix_ms": 1789320602953
+  },
+  {
+   "channel": "primary-010v",
+   "value": 62,
+   "unix_ms": 1789320662959
+  },
+  {
+   "channel": "primary-010v",
+   "value": 62,
+   "unix_ms": 1789320722966
+  },
+  {
+   "channel": "primary-010v",
+   "value": 62,
+   "unix_ms": 1789320782973
+  },
+  {
+   "channel": "store-010v",
+   "value": 65,
+   "unix_ms": 1789320362924
+  },
+  {
+   "channel": "store-010v",
+   "value": 65,
+   "unix_ms": 1789320422929
+  },
+  {
+   "channel": "store-010v",
+   "value": 65,
+   "unix_ms": 1789320482949
+  },
+  {
+   "channel": "store-010v",
+   "value": 65,
+   "unix_ms": 1789320542956
+  },
+  {
+   "channel": "store-010v",
+   "value": 65,
+   "unix_ms": 1789320602959
+  },
+  {
+   "channel": "store-010v",
+   "value": 65,
+   "unix_ms": 1789320662966
+  },
+  {
+   "channel": "store-010v",
+   "value": 65,
+   "unix_ms": 1789320722974
+  },
+  {
+   "channel": "store-010v",
+   "value": 65,
+   "unix_ms": 1789320782981
+  },
+  {
+   "channel": "store-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320303069
+  },
+  {
+   "channel": "store-pump-pwr",
+   "value": 0,
+   "unix_ms": 1789320603030
+  },
+  {
+   "channel": "tank1-depth1",
+   "value": 13100,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "tank1-depth1-device",
+   "value": 55000,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "tank1-depth1-micro-v",
+   "value": 1132083,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "tank1-depth2",
+   "value": 12200,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "tank1-depth2-device",
+   "value": 50000,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "tank1-depth2-micro-v",
+   "value": 1275476,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "tank1-depth3",
+   "value": 11300,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "tank1-depth3-device",
+   "value": 45000,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "tank1-depth3-micro-v",
+   "value": 1429875,
+   "unix_ms": 1789320302888
+  },
+  {
+   "channel": "usable-energy",
+   "value": 0,
+   "unix_ms": 1789320302733
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 1,
+   "unix_ms": 1789320303069
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 188,
+   "unix_ms": 1789320418996
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 188,
+   "unix_ms": 1789320448002
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 186,
+   "unix_ms": 1789320462000
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 184,
+   "unix_ms": 1789320496006
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 186,
+   "unix_ms": 1789320500006
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 184,
+   "unix_ms": 1789320524010
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 182,
+   "unix_ms": 1789320582089
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 180,
+   "unix_ms": 1789320652039
+  },
+  {
+   "channel": "zone1-down-whitewire-pwr",
+   "value": 0,
+   "unix_ms": 1789320769121
+  },
+  {
+   "channel": "zone2-up-whitewire-pwr",
+   "value": 0,
+   "unix_ms": 1789320303069
+  },
+  {
+   "channel": "zone2-up-whitewire-pwr",
+   "value": -1,
+   "unix_ms": 1789320603030
+  }
+ ]
+}
