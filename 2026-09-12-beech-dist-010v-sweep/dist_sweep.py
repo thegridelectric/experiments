@@ -109,6 +109,11 @@ PLANS = {
         jumps=[35],
         note="four levels and back to the deployed 3.5 V: a five-minute witness",
     ),
+    "top": Plan(
+        ramp=[100],
+        jumps=[],
+        note="full scale only: the top-code clamp (10 V wrote 0 V on 2026-09-13)",
+    ),
 }
 HOLD_S = 60
 BASELINE_S = 120

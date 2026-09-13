@@ -171,7 +171,53 @@ cd ../experiments/2026-09-12-beech-dist-010v-sweep
 
 ## Found
 
-**Beech: not yet run.**
+**Beech (2026-09-13 11:50–12:19 ET, scada `e6d5b39b`, `--plan short`):
+the GP8403 arm works on the deployed plant; full scale writes 0 V;
+dist flow was not witnessed.** The window scada booted at 11:50:55
+with all three outputs ready the same second. The driver's heat call
+went through (SwitchToScada read Scada after 3.5 s, CloseRelay read
+RelayClosed after 3.5 s). All ten steps echoed on `dist-010v` within
+the second, restore returned it to 35, both relays released to their
+de-energized states, the driver's verdict PASS with one FAIL (dist
+flow, below). The deployed scada came back with both port words as
+before (`0x20: 0xf2 0xdf`, `0x21: 0xff 0xff`). Log `sweep-1.log`,
+results `sweep-1-results.json`, boot log `boot-20260913-121950.log`.
+
+The pump's speed followed the level, witnessed on `dist-pump-pwr`
+(the eGauge reported this time):
+
+| level (volts × 10) | dist-pump-pwr (W), up | down |
+| --- | --- | --- |
+| 35 (baseline, deployed) | 8 | 8 (jump and restore) |
+| 20 | 4 | 4 |
+| 50 | 14 | 14 |
+| 80 | 39 | 40 |
+| 100 | 7 | 7 |
+
+- **The arm is verified through 8 V.** 2, 5 and 8 V each drew a
+  distinct, repeatable power up and down, through admin dispatch, the
+  outputer, the bus actor and the module. The pump under 0-10 V:
+  near its floor at 2 V (4 W), the deployed 3.5 V a little above it
+  (8 W), 8 V at 39 W.
+- **10 V is written as 0 V: a regression in the new arm.**
+  `code_from_volts_times_ten` (`actors/zero_ten_outputer.py:67`)
+  rounds 100 to 4096 = `CODES`, and `gp8403.encode_word` masks the
+  code to 12 bits, so the register word is 0. The retired multiplexer
+  wrote `int(4095 * value / 100) << 4`, whose top code is 4095; the
+  wire-byte test pins level 40 only, so the suite did not see it. The
+  pump at 0 V drew 7 W, the same as at 3.5 V (its behaviour on a lost
+  signal, presumably a default speed). The fix is a clamp to
+  `codes - 1` (the MCP4728 path reaches at most code 4000 at 10 V and
+  is unaffected) and a test at level 100 on both chips; it is not in
+  this rung's scope.
+- **`dist-flow` never arrived.** The dist-btu pico (`pico_47352a`)
+  posted nothing during the window: the pico-cycler cut vdc power at
+  boot and then every 65 s for the fixture's simulated tank picos
+  (eight cycles in the window; the krida witness recorded the same
+  loop, and its flow readings came through then). Not the 0-10V path;
+  the `dist-pump-pwr` witness carried the run. The derived window
+  layout should drop the simulated tank modules before the next
+  window on this box.
 
 **Idle soak (2026-09-13 09:45–09:56 ET, scada `3f607f8c`): PASS.** The
 sim House0 pair on the dev broker, no driver, 10 minutes to the
@@ -219,6 +265,11 @@ shutdown would end the window mid-sweep.
 
 (ET)
 
+- 2026-09-13 11:50:55 beech: window scada booted; three outputs ready the same second; 11:53:35 first pico-cycler vdc cut for the sim tank picos (then every 65 s).
+- 11:55:17 driver started; 11:55:21 SwitchToScada read Scada; 11:55:29 CloseRelay read RelayClosed; 11:57:05 flow verdict FAIL (no readings); baseline 120 s at 35.
+- 11:59:05–12:02:07 up 20, 50, 80, 100 each echoed within the second; 12:03:07–12:06:09 down 100, 80, 50, 20; 12:07:09 jump 35; 12:08:10 restore 35.
+- 12:08:23 ops relay RelayOpen; 12:08:30 failsafe WallThermostat; 12:08:35 admin released, PASS.
+- 12:19:50 window off: deployed scada and timer back, port words unchanged.
 - 2026-09-13 09:56:36 driver soak: scada booted; 09:59:25–10:02:31 ten steps echoed; 10:02:55 driver released admin, PASS; 10:07:05 SIGTERM, no fault.
 - 2026-09-13 09:45:33 idle soak: sim House0 scada booted on the dev broker, three outputs ready the same second; 09:56:02 SIGTERM from the 630 s timeout, no fault.
 - 2026-09-12 19:42:23 dev rung: sim House0 scada booted on the dev broker; three outputs ready 19:42:31.
@@ -262,6 +313,7 @@ for the window and restarts it after.
 - `soak-idle-scada.log`, `soak-driver-scada.log`, `sweep-soak.log`,
   `sweep-soak-results.json`, `soak-driver-console.log` — the 10-minute
   soaks on the sim House0 fixture (idle; with the driver in front).
-- `sweep-<run>.log`, `sweep-<run>-results.json`, `boot-<stamp>.log` —
-  (after the run) the driver's log and typed results from beech, the
-  window scada's boot log.
+- `sweep-1.log`, `sweep-1.stdout`, `sweep-1-results.json`,
+  `boot-20260913-121950.log` — the beech run: the driver's log and typed
+  results (readings, states, relay commands, steps, provenance), the
+  window scada's boot log; `instances/*.uid[*].json` its report events.
