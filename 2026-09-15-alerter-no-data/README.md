@@ -82,9 +82,7 @@ Nothing deployed is touched. Logs go to the run dir, not the folder.
 the first two runs met the same bar but their stop step failed, see
 Analysis notes, and the third ran the scripts on the alerter's snapshot
 before this repo's carried the alert words). Code under test:
-`gridworks-alerter` at `d5b8387` plus the NoData change on `jm/scaffold`
-(pending commit at the time of the run; the changelog entry names the
-hash). gridworks-base 0.5.13.
+`gridworks-alerter` `410d52e` on `jm/scaffold`, gridworks-base 0.5.13.
 
 - One `gw.house.alert`, `Kind=NoData`, about
   `d1.isone.me.versant.keene.spruce.ta`, `RaisedMs` 30.3 s after the
