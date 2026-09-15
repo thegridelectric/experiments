@@ -59,7 +59,9 @@ future/pico-rejoin/rejoin_trace.py
 2026-09-08-spruce-admin-panel/extract_window.py
 2026-09-08-spruce-admin-panel/flow_watch.py
 2026-09-08-spruce-admin-panel/rig-log/afternoon/egauge_live.py
-2026-09-08-spruce-admin-panel/rig_record.py'
+2026-09-08-spruce-admin-panel/rig_record.py
+2026-09-15-alerter-no-data/mock_scada.py
+2026-09-15-alerter-no-data/watcher.py'
 # Top five: environments this repo lacks (smbus2 pi-only · gnr env ·
 # the pi scada checkout's venv · the laptop scada venv ·
 # MicroPython on-pico); next four: spruce on-box harnesses (smbus2 /
@@ -72,7 +74,8 @@ future/pico-rejoin/rejoin_trace.py
 # (ops498 load), gnr (ops-457 regenesis), gwadmin + gwproactor (dac-output
 # bench, admin-reboots-picos, hp-boss-admin-drive, five-v-boss-hold),
 # smbus2 and the starter-scripts venv on the pi (gw108-ct-testing capture and ladder), paho
-# and the box venv (spruce-admin-panel, beech-dist-010v-sweep).
+# and the box venv (spruce-admin-panel, beech-dist-010v-sweep), gwbase
+# and pika in the alerter venv (alerter-no-data).
 FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \
     -not -path '*/__pycache__/*' | sed 's|^\./||' | sort \
     | grep -Fxv "$PYRIGHT_EXCLUDE")

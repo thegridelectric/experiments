@@ -9,6 +9,7 @@ from gwexp.sema.enums.gw1_seasonal_storage_mode import Gw1SeasonalStorageMode
 from gwexp.sema.enums.gw1_service_mode import Gw1ServiceMode
 from gwexp.sema.enums.gw1_system_mode import Gw1SystemMode
 from gwexp.sema.enums.gw1_unit import Gw1Unit
+from gwexp.sema.enums.gw_house_alert_kind import GwHouseAlertKind
 from gwexp.sema.enums.hz_calc_method import HzCalcMethod
 from gwexp.sema.enums.i2c_adc_channel import I2cAdcChannel
 from gwexp.sema.enums.i2c_adc_type import I2cAdcType
@@ -33,6 +34,7 @@ __all__ = [
     "Gw1ServiceMode",
     "Gw1SystemMode",
     "Gw1Unit",
+    "GwHouseAlertKind",
     "HzCalcMethod",
     "I2cAdcChannel",
     "I2cAdcType",

@@ -11,6 +11,8 @@ types:
   channel.readings:
     '002':
       used_by:
+      - gw.house.alert.cleared:000
+      - gw.house.alert:000
       - gw.readings:000
       - report:003
   data.channel.gt:
@@ -130,6 +132,11 @@ enums:
       used_by:
       - pico.flow.module.component.gt:000
       - pico.flow.module.component.gt:001
+  gw.house.alert.kind:
+    '000':
+      used_by:
+      - gw.house.alert.cleared:000
+      - gw.house.alert:000
   gw1.actor.class:
     '011':
       used_by:
@@ -257,6 +264,8 @@ formats:
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
+    - gw.house.alert.cleared:000
+    - gw.house.alert:000
     - gw.readings:000
     - layout.lite:012
     - layout.lite:013
@@ -347,6 +356,8 @@ formats:
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
+    - gw.house.alert.cleared:000
+    - gw.house.alert:000
     - gw.readings:000
     - layout.lite:012
     - layout.lite:013
@@ -368,6 +379,8 @@ formats:
     - fsm.atomic.report:001
     - fsm.full.report:001
     - gw.adc.waveform:000
+    - gw.house.alert.cleared:000
+    - gw.house.alert:000
     - i2c.multichannel.dt.relay.component.gt:003
     - i2c.multichannel.dt.relay.component.gt:004
     - i2c.thermistor.reader.component.gt:000

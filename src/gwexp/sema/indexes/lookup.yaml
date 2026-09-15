@@ -71,6 +71,16 @@ types:
     versioning_strategy: literal
     versions:
       '000': definitions/types/gw.experiment.run/000.yaml
+  gw.house.alert:
+    latest_version: '000'
+    versioning_strategy: literal
+    versions:
+      '000': definitions/types/gw.house.alert/000.yaml
+  gw.house.alert.cleared:
+    latest_version: '000'
+    versioning_strategy: literal
+    versions:
+      '000': definitions/types/gw.house.alert.cleared/000.yaml
   gw.readings:
     latest_version: '000'
     versioning_strategy: literal
@@ -182,6 +192,11 @@ enums:
     latest_version: '000'
     versions:
       '000': definitions/enums/gpm.from.hz.method/000.yaml
+  gw.house.alert.kind:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/gw.house.alert.kind/000.yaml
   gw1.actor.class:
     enum_type: versioned
     latest_version: '014'

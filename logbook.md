@@ -13,6 +13,12 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-15 · [alerter-no-data](2026-09-15-alerter-no-data/)** — the
+  broker alerter's NoData rule on the dev broker: a mocked house talks,
+  goes quiet, resumes; one `gw.house.alert` 30 s into the silence, the
+  alerter restarted with it open raises nothing, one cleared word with
+  the same id at the first resume report. PASS. Runbook lesson: stop
+  background jobs with SIGTERM, not SIGINT.
 - **2026-09-12 · [beech-dist-010v-sweep](2026-09-12-beech-dist-010v-sweep/)**
   — the house0-zero-ten-outputs witness. Beech 2026-09-13 (`jm/spruce-unlimbo`
   `e6d5b39b`, short plan): the GP8403 arm works on the deployed plant, all
