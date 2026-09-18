@@ -52,9 +52,9 @@ for PAIR in "$GEN_LAYOUT:hardware-layout" "$GEN_OPS:operational-params"; do
   if ssh "$HOUSE" 'pgrep -f "[w]indow_boot.py" >/dev/null'; then
     echo "a window scada is running on $HOUSE; stop it first"; exit 1
   fi
-  ssh "$HOUSE" "mkdir -p $BOX_DIR; [ ! -f $BOX_DIR/$STEM.json ] || cp -p $BOX_DIR/$STEM.json $BOX_DIR/$STEM.$STAMP-pre-$CHANGE.json"
+  KEPT="$(ssh "$HOUSE" "mkdir -p $BOX_DIR; [ ! -f $BOX_DIR/$STEM.json ] || { cp -p $BOX_DIR/$STEM.json $BOX_DIR/$STEM.$STAMP-pre-$CHANGE.json && echo $STEM.$STAMP-pre-$CHANGE.json; }")"
   scp -q "$GEN" "$HOUSE:$BOX_DIR/$STEM.json"
   [ "$(box_sha "$STEM.json")" = "$WANT" ] || { echo "$STEM.json: sha256 MISMATCH after the copy"; exit 1; }
-  echo "$STEM.json: put (${WANT:0:12}); the previous file is $STEM.$STAMP-pre-$CHANGE.json"
+  echo "$STEM.json: put (${WANT:0:12}); previous file: ${KEPT:-none, the box had no $STEM.json}"
 done
 [ "$CHANGE" = check ] && exit $DIFFERS || exit 0
