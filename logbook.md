@@ -13,6 +13,12 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-16 · [gwalert-no-data-page](2026-09-16-gwalert-no-data-page/)** —
+  the deployed spruce scada stopped for 15 min on the live fleet: gwalert
+  pages Opsgenie 14.7 min after the stop, alert `2026-09-16-spruce-no_data`
+  created and answered from the phone; fresh data seen 5 min after the
+  restart. PASS. Motivated by 2026-09-15, when the evening spruce outage
+  folded into the morning's open, acknowledged alert and paged nobody.
 - **2026-09-15 · [alerter-no-data](2026-09-15-alerter-no-data/)** — the
   broker alerter's NoData rule on the dev broker: a mocked house talks,
   goes quiet, resumes; one `gw.house.alert` 30 s into the silence, the

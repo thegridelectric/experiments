@@ -1,0 +1,548 @@
+# EXTERNAL EVIDENCE (journald). Captured 2026-09-17 over ssh from the alerts box:
+#   ssh alerts 'journalctl -u gridworks-alerts --since "2026-09-16 18:00" --until "2026-09-16 18:30" --no-pager -q -o short-iso'
+# Box clock UTC. gwalert at gridworks-alerts e3e9b47 (PR #10 merge 9d89666), service restarted 18:04:32Z.
+2026-09-16T18:01:25+00:00 alerts gwalert[126832]: -------------- CHECKS START 2026-09-16 14:01:25 --------------
+2026-09-16T18:01:26+00:00 alerts gwalert[126832]: Freshness query: 5 houses in 0.4s
+2026-09-16T18:01:26+00:00 alerts gwalert[126832]: Checking for data...
+2026-09-16T18:01:26+00:00 alerts gwalert[126832]: - beech: Found data up to 1.4 minutes ago
+2026-09-16T18:01:26+00:00 alerts gwalert[126832]: - fir: Found data up to 1.4 minutes ago
+2026-09-16T18:01:26+00:00 alerts gwalert[126832]: - maple: Found data up to 1.4 minutes ago
+2026-09-16T18:01:26+00:00 alerts gwalert[126832]: - oak: Found data up to 1.4 minutes ago
+2026-09-16T18:01:26+00:00 alerts gwalert[126832]: - spruce: Found data up to 1.4 minutes ago
+2026-09-16T18:01:26+00:00 alerts gwalert[126832]: Finding data from journaldb...
+2026-09-16T18:01:30+00:00 alerts gwalert[126832]: Finding latest layout.lite messages for each house...
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: Found 34276 readings and 0 layout lites (0 skipped) in 5.2s
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: Selected house aliases: ['beech', 'fir', 'maple', 'oak', 'spruce']
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: - beech: Found data
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: - fir: Found data
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: - maple: Found data
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: - oak: Found data
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: - spruce: Found data
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: Checking for glitches...
+2026-09-16T18:01:31+00:00 alerts gwalert[126832]: Found 18 glitches (0 skipped), of which 0 are critical
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: Checking for zones below setpoint...
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - beech:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- beech is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - fir:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- fir is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - maple:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- maple is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - oak:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- oak is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - spruce:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone1-bedrooms: Missing setpoint channel or readings
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone2-living: Missing setpoint channel or readings
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone3-upstairs: Missing setpoint channel or readings
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone4-garage is not a critical zone
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone5-living: Missing setpoint channel or readings
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: Checking for zones freezing...
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - beech:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- beech is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - fir:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- fir is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - maple:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- maple is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - oak:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- oak is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - spruce:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone1-bedrooms is ok
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone2-living is ok
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone3-upstairs is ok
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone4-garage is ok
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- zone5-living: Missing temperature channel
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: Checking for distribution pump activity...
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - beech:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- beech is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - fir:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- fir is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - maple:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- maple is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - oak:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- oak is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - spruce:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: spruce: Missing data!
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: Checking for store pump activity...
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- beech is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- fir is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- maple is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- oak is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: spruce: Missing relay9 data!
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: Checking for HP activity...
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - beech:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- beech is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - fir:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- fir is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - maple:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- Skipping for Maple
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - oak:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- oak is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - spruce:
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- The HP should not be on
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: Checking that the HP is not on during onpeak...
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- beech is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- fir is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- maple is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: -- oak is in Standby, skipping
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - spruce: HP is not on during onpeak
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: Checking for rebooting...
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - beech: No rebooting (no layout.lite messages found)
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - fir: No rebooting (no layout.lite messages found)
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - maple: No rebooting (no layout.lite messages found)
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - oak: No rebooting (no layout.lite messages found)
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: - spruce: No rebooting (no layout.lite messages found)
+2026-09-16T18:01:32+00:00 alerts gwalert[126832]: [mem] RSS after iteration: 79 MB
+2026-09-16T18:04:33+00:00 alerts gwalert[134952]: -------------- CHECKS START 2026-09-16 14:04:33 --------------
+2026-09-16T18:04:35+00:00 alerts gwalert[134952]: Freshness query: 5 houses in 2.7s
+2026-09-16T18:04:35+00:00 alerts gwalert[134952]: Checking for data...
+2026-09-16T18:04:35+00:00 alerts gwalert[134952]: - beech: Found data up to 4.6 minutes ago
+2026-09-16T18:04:35+00:00 alerts gwalert[134952]: - fir: Found data up to 4.6 minutes ago
+2026-09-16T18:04:35+00:00 alerts gwalert[134952]: - maple: Found data up to 4.6 minutes ago
+2026-09-16T18:04:35+00:00 alerts gwalert[134952]: - oak: Found data up to 4.6 minutes ago
+2026-09-16T18:04:35+00:00 alerts gwalert[134952]: - spruce: Found data up to 4.6 minutes ago
+2026-09-16T18:04:35+00:00 alerts gwalert[134952]: Finding data from journaldb...
+2026-09-16T18:04:40+00:00 alerts gwalert[134952]: Finding latest layout.lite messages for each house...
+2026-09-16T18:04:40+00:00 alerts gwalert[134952]: Adding fir to the list of houses in standby
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: Adding oak to the list of houses in standby
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: Adding beech to the list of houses in standby
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: Adding maple to the list of houses in standby
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: Found 33340 readings and 0 layout lites (0 skipped) in 6.0s
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: Selected house aliases: ['beech', 'fir', 'maple', 'oak', 'spruce']
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: - beech: Found data
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: - fir: Found data
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: - maple: Found data
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: - oak: Found data
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: - spruce: Found data
+2026-09-16T18:04:41+00:00 alerts gwalert[134952]: Checking for glitches...
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: Found 18 glitches (0 skipped), of which 0 are critical
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: Checking for zones below setpoint...
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone1-bedrooms: Missing setpoint channel or readings
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone2-living: Missing setpoint channel or readings
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone3-upstairs: Missing setpoint channel or readings
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone4-garage is not a critical zone
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone5-living: Missing setpoint channel or readings
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: Checking for zones freezing...
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone1-bedrooms is ok
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone2-living is ok
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone3-upstairs is ok
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone4-garage is ok
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- zone5-living: Missing temperature channel
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: Checking for distribution pump activity...
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: spruce: Missing data!
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: Checking for store pump activity...
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: spruce: Missing relay9 data!
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: Checking for HP activity...
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- Skipping for Maple
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- The HP should not be on
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: Checking that the HP is not on during onpeak...
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - spruce: HP is not on during onpeak
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: Checking for rebooting...
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - beech: No rebooting (no layout.lite messages found)
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - fir: No rebooting (no layout.lite messages found)
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - maple: No rebooting (no layout.lite messages found)
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - oak: No rebooting (no layout.lite messages found)
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: - spruce: No rebooting (no layout.lite messages found)
+2026-09-16T18:04:42+00:00 alerts gwalert[134952]: [mem] RSS after iteration: 76 MB
+2026-09-16T18:09:42+00:00 alerts gwalert[134952]: -------------- CHECKS START 2026-09-16 14:09:42 --------------
+2026-09-16T18:09:43+00:00 alerts gwalert[134952]: Freshness query: 5 houses in 0.4s
+2026-09-16T18:09:43+00:00 alerts gwalert[134952]: Checking for data...
+2026-09-16T18:09:43+00:00 alerts gwalert[134952]: - beech: Found data up to 4.7 minutes ago
+2026-09-16T18:09:43+00:00 alerts gwalert[134952]: - fir: Found data up to 4.7 minutes ago
+2026-09-16T18:09:43+00:00 alerts gwalert[134952]: - maple: Found data up to 4.7 minutes ago
+2026-09-16T18:09:43+00:00 alerts gwalert[134952]: - oak: Found data up to 4.7 minutes ago
+2026-09-16T18:09:43+00:00 alerts gwalert[134952]: - spruce: Found data up to 4.7 minutes ago
+2026-09-16T18:09:43+00:00 alerts gwalert[134952]: Finding data from journaldb...
+2026-09-16T18:09:48+00:00 alerts gwalert[134952]: Finding latest layout.lite messages for each house...
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: Found 33333 readings and 0 layout lites (0 skipped) in 5.8s
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: Selected house aliases: ['beech', 'fir', 'maple', 'oak', 'spruce']
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: - beech: Found data
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: - fir: Found data
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: - maple: Found data
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: - oak: Found data
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: - spruce: Found data
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: Checking for glitches...
+2026-09-16T18:09:49+00:00 alerts gwalert[134952]: Found 18 glitches (0 skipped), of which 0 are critical
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: Checking for zones below setpoint...
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone1-bedrooms: Missing setpoint channel or readings
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone2-living: Missing setpoint channel or readings
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone3-upstairs: Missing setpoint channel or readings
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone4-garage is not a critical zone
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone5-living: Missing setpoint channel or readings
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: Checking for zones freezing...
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone1-bedrooms is ok
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone2-living is ok
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone3-upstairs is ok
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone4-garage is ok
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- zone5-living: Missing temperature channel
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: Checking for distribution pump activity...
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: spruce: Missing data!
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: Checking for store pump activity...
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: spruce: Missing relay9 data!
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: Checking for HP activity...
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- Skipping for Maple
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- The HP should not be on
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: Checking that the HP is not on during onpeak...
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - spruce: HP is not on during onpeak
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: Checking for rebooting...
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - beech: No rebooting (no layout.lite messages found)
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - fir: No rebooting (no layout.lite messages found)
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - maple: No rebooting (no layout.lite messages found)
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - oak: No rebooting (no layout.lite messages found)
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: - spruce: No rebooting (no layout.lite messages found)
+2026-09-16T18:09:50+00:00 alerts gwalert[134952]: [mem] RSS after iteration: 77 MB
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: -------------- CHECKS START 2026-09-16 14:14:50 --------------
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: Freshness query: 5 houses in 0.4s
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: Checking for data...
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: - beech: Found data up to 4.8 minutes ago
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: - fir: Found data up to 4.9 minutes ago
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: - maple: Found data up to 4.8 minutes ago
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: - oak: Found data up to 4.8 minutes ago
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: - spruce: Found data up to 9.9 minutes ago
+2026-09-16T18:14:50+00:00 alerts gwalert[134952]: Finding data from journaldb...
+2026-09-16T18:14:55+00:00 alerts gwalert[134952]: Finding latest layout.lite messages for each house...
+2026-09-16T18:14:56+00:00 alerts gwalert[134952]: Found 33241 readings and 0 layout lites (0 skipped) in 5.7s
+2026-09-16T18:14:56+00:00 alerts gwalert[134952]: Selected house aliases: ['beech', 'fir', 'maple', 'oak', 'spruce']
+2026-09-16T18:14:56+00:00 alerts gwalert[134952]: - beech: Found data
+2026-09-16T18:14:56+00:00 alerts gwalert[134952]: - fir: Found data
+2026-09-16T18:14:56+00:00 alerts gwalert[134952]: - maple: Found data
+2026-09-16T18:14:56+00:00 alerts gwalert[134952]: - oak: Found data
+2026-09-16T18:14:56+00:00 alerts gwalert[134952]: - spruce: Found data
+2026-09-16T18:14:56+00:00 alerts gwalert[134952]: Checking for glitches...
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: Found 18 glitches (0 skipped), of which 0 are critical
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: Checking for zones below setpoint...
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone1-bedrooms: Missing setpoint channel or readings
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone2-living: Missing setpoint channel or readings
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone3-upstairs: Missing setpoint channel or readings
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone4-garage is not a critical zone
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone5-living: Missing setpoint channel or readings
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: Checking for zones freezing...
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone1-bedrooms is ok
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone2-living is ok
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone3-upstairs is ok
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone4-garage is ok
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- zone5-living: Missing temperature channel
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: Checking for distribution pump activity...
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: spruce: Missing data!
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: Checking for store pump activity...
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: spruce: Missing relay9 data!
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: Checking for HP activity...
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- Skipping for Maple
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- The HP should not be on
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: Checking that the HP is not on during onpeak...
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - spruce: HP is not on during onpeak
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: Checking for rebooting...
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - beech: No rebooting (no layout.lite messages found)
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - fir: No rebooting (no layout.lite messages found)
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - maple: No rebooting (no layout.lite messages found)
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - oak: No rebooting (no layout.lite messages found)
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: - spruce: No rebooting (no layout.lite messages found)
+2026-09-16T18:14:57+00:00 alerts gwalert[134952]: [mem] RSS after iteration: 77 MB
+2026-09-16T18:19:57+00:00 alerts gwalert[134952]: -------------- CHECKS START 2026-09-16 14:19:57 --------------
+2026-09-16T18:19:57+00:00 alerts gwalert[134952]: Freshness query: 5 houses in 0.4s
+2026-09-16T18:19:57+00:00 alerts gwalert[134952]: Checking for data...
+2026-09-16T18:19:57+00:00 alerts gwalert[134952]: - beech: Found data up to 5.0 minutes ago
+2026-09-16T18:19:57+00:00 alerts gwalert[134952]: - fir: Found data up to 5.0 minutes ago
+2026-09-16T18:19:57+00:00 alerts gwalert[134952]: - maple: Found data up to 5.0 minutes ago
+2026-09-16T18:19:57+00:00 alerts gwalert[134952]: - oak: Found data up to 5.0 minutes ago
+2026-09-16T18:19:57+00:00 alerts gwalert[134952]: [ALERT] spruce: No data coming in since 15.0 minutes
+2026-09-16T18:19:58+00:00 alerts gwalert[134952]: Opsgenie accepted alert 2026-09-16-spruce-no_data
+2026-09-16T18:20:00+00:00 alerts gwalert[134952]: Finding data from journaldb...
+2026-09-16T18:20:05+00:00 alerts gwalert[134952]: Finding latest layout.lite messages for each house...
+2026-09-16T18:20:06+00:00 alerts gwalert[134952]: Found 33239 readings and 0 layout lites (0 skipped) in 5.9s
+2026-09-16T18:20:06+00:00 alerts gwalert[134952]: Selected house aliases: ['beech', 'fir', 'maple', 'oak', 'spruce']
+2026-09-16T18:20:06+00:00 alerts gwalert[134952]: - beech: Found data
+2026-09-16T18:20:06+00:00 alerts gwalert[134952]: - fir: Found data
+2026-09-16T18:20:06+00:00 alerts gwalert[134952]: - maple: Found data
+2026-09-16T18:20:06+00:00 alerts gwalert[134952]: - oak: Found data
+2026-09-16T18:20:06+00:00 alerts gwalert[134952]: - spruce: Found data
+2026-09-16T18:20:06+00:00 alerts gwalert[134952]: Checking for glitches...
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: Found 18 glitches (0 skipped), of which 0 are critical
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: Checking for zones below setpoint...
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone1-bedrooms: Missing setpoint channel or readings
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone2-living: Missing setpoint channel or readings
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone3-upstairs: Missing setpoint channel or readings
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone4-garage is not a critical zone
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone5-living: Missing setpoint channel or readings
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: Checking for zones freezing...
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone1-bedrooms is ok
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone2-living is ok
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone3-upstairs is ok
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone4-garage is ok
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- zone5-living: Missing temperature channel
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: Checking for distribution pump activity...
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: spruce: Missing data!
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: Checking for store pump activity...
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: spruce: Missing relay9 data!
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: Checking for HP activity...
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- Skipping for Maple
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- The HP should not be on
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: Checking that the HP is not on during onpeak...
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - spruce: HP is not on during onpeak
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: Checking for rebooting...
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - beech: No rebooting (no layout.lite messages found)
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - fir: No rebooting (no layout.lite messages found)
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - maple: No rebooting (no layout.lite messages found)
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - oak: No rebooting (no layout.lite messages found)
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: - spruce: No rebooting (no layout.lite messages found)
+2026-09-16T18:20:07+00:00 alerts gwalert[134952]: [mem] RSS after iteration: 78 MB
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: -------------- CHECKS START 2026-09-16 14:25:07 --------------
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: Freshness query: 5 houses in 0.4s
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: Checking for data...
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: - beech: Found data up to 5.1 minutes ago
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: - fir: Found data up to 0.1 minutes ago
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: - maple: Found data up to 0.1 minutes ago
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: - oak: Found data up to 0.1 minutes ago
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: - spruce: Found data up to 0.1 minutes ago
+2026-09-16T18:25:07+00:00 alerts gwalert[134952]: Finding data from journaldb...
+2026-09-16T18:25:12+00:00 alerts gwalert[134952]: Finding latest layout.lite messages for each house...
+2026-09-16T18:25:13+00:00 alerts gwalert[134952]: Found 34429 readings and 1 layout lites (0 skipped) in 5.7s
+2026-09-16T18:25:13+00:00 alerts gwalert[134952]: Selected house aliases: ['beech', 'fir', 'maple', 'oak', 'spruce']
+2026-09-16T18:25:13+00:00 alerts gwalert[134952]: - beech: Found data
+2026-09-16T18:25:13+00:00 alerts gwalert[134952]: - fir: Found data
+2026-09-16T18:25:13+00:00 alerts gwalert[134952]: - maple: Found data
+2026-09-16T18:25:13+00:00 alerts gwalert[134952]: - oak: Found data
+2026-09-16T18:25:13+00:00 alerts gwalert[134952]: - spruce: Found data
+2026-09-16T18:25:13+00:00 alerts gwalert[134952]: Checking for glitches...
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: Found 20 glitches (0 skipped), of which 0 are critical
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: Checking for zones below setpoint...
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone1-bedrooms: Missing setpoint channel or readings
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone2-living: Missing setpoint channel or readings
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone3-upstairs: Missing setpoint channel or readings
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone4-garage is not a critical zone
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone5-living: Missing setpoint channel or readings
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: Checking for zones freezing...
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone1-bedrooms is ok
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone2-living is ok
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone3-upstairs is ok
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone4-garage is ok
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- zone5-living: Missing temperature channel
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: Checking for distribution pump activity...
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: spruce: Missing data!
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: Checking for store pump activity...
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: spruce: Missing relay9 data!
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: Checking for HP activity...
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - beech:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - fir:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - maple:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- Skipping for Maple
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - oak:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - spruce:
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- The HP should not be on
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: Checking that the HP is not on during onpeak...
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- beech is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- fir is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- maple is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: -- oak is in Standby, skipping
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - spruce: HP is not on during onpeak
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: Checking for rebooting...
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - beech: No rebooting (no layout.lite messages found)
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - fir: No rebooting (no layout.lite messages found)
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - maple: No rebooting (no layout.lite messages found)
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - oak: No rebooting (no layout.lite messages found)
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: - spruce: No rebooting detected in found layout.lite messages
+2026-09-16T18:25:14+00:00 alerts gwalert[134952]: [mem] RSS after iteration: 78 MB

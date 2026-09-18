@@ -52,12 +52,23 @@ as validated Sema instances.
 - One instrument master at a time: any bench tool reading a chip the
   deployed service also reads must stop that service — and its restart
   watchdog — for the window.
-- Start every experiment from the template. Copy
-  `experiment-README-template.md` into the folder and write Why, Setup
-  and Protocol BEFORE the first run; Found and Timeline fill in as it
-  runs. An experiment that starts without its README is the defect this
-  rule exists for. (A hook reminds any session that claims an
-  `experiments/` path.)
+- Run first, record right after. The first pass is quick and native:
+  note the wall clock at each step, keep the commands actually run,
+  capture logs to files. What precedes the act is a pre-flight, not a
+  document: what could make the run prove nothing (an open alert that
+  would swallow the page, a window shorter than the detector's cycle)
+  and what could make it unsafe or self-undoing (a restart watchdog to
+  stop with the service, a house that needs heat, a bus the deployed
+  service also reads). Then, in the same session and before moving
+  on, the record: the folder's README from
+  `experiment-README-template.md` (Why, Setup, Protocol as run, Found,
+  Timeline, Folder contents), the commands as a runbook, evidence with
+  provenance headers, `instances/` sema results (a `gw.experiment.run`
+  at minimum), a logbook line, and the executor claim the run verifies
+  pointed at the folder. An experiment that ran and left no record is
+  the defect this rule exists for; a Stop hook holds the turn end until
+  the README exists once a session has stopped or driven a deployed
+  service.
 - Running on a pi: the box holds ONE clone of this repo, `~/experiments`,
   at a pushed SHA (git pull, never scp), and the harness runs from that
   clone, launched with `timeout` + `setsid nohup` so it survives the ssh

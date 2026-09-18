@@ -1,0 +1,54 @@
+# EXTERNAL EVIDENCE (Opsgenie REST API, point-in-time). Captured 2026-09-17 from the alerts box with gwalert's key:
+#   curl -G https://api.opsgenie.com/v2/alerts --data-urlencode 'query=alias:2026-09-16-spruce-no_data'
+# Response body verbatim below (closed alerts are found by query, not by alias lookup).
+{
+    "data": [
+        {
+            "seen": true,
+            "id": "5ec7f78b-bd46-4810-ab0b-813c0ff0e7fd-1789582798300",
+            "tinyId": "1226",
+            "alias": "2026-09-16-spruce-no_data",
+            "message": "[Spruce] No data coming in since 15.0 minutes",
+            "status": "closed",
+            "acknowledged": false,
+            "isSeen": true,
+            "tags": [],
+            "snoozed": false,
+            "count": 1,
+            "lastOccurredAt": "2026-09-16T18:19:58.3Z",
+            "createdAt": "2026-09-16T18:19:58.3Z",
+            "updatedAt": "2026-09-16T18:20:34.384Z",
+            "source": "62.238.124.242",
+            "owner": "",
+            "priority": "P1",
+            "teams": [
+                {
+                    "id": "edaccf48-a7c9-40b7-858a-7822c6f862a4"
+                }
+            ],
+            "responders": [
+                {
+                    "type": "team",
+                    "id": "edaccf48-a7c9-40b7-858a-7822c6f862a4"
+                }
+            ],
+            "integration": {
+                "id": "91119c29-c5e2-4120-8421-25ab5bf89fa9",
+                "name": "Default API",
+                "type": "API"
+            },
+            "report": {
+                "ackTime": 36084,
+                "closeTime": 36084,
+                "closedBy": "jessica.lynn.millar@gmail.com"
+            },
+            "ownerTeamId": "edaccf48-a7c9-40b7-858a-7822c6f862a4"
+        }
+    ],
+    "paging": {
+        "first": "https://api.opsgenie.com/v2/alerts?limit=20&sort=createdAt&offset=0&order=desc&query=alias%3A2026-09-16-spruce-no_data",
+        "last": "https://api.opsgenie.com/v2/alerts?limit=20&sort=createdAt&offset=0&order=desc&query=alias%3A2026-09-16-spruce-no_data"
+    },
+    "took": 0.026,
+    "requestId": "e4d51283-3dc3-4f45-b924-7ff68a7bab00"
+}
