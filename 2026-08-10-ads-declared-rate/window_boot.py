@@ -5,7 +5,7 @@ Runs ON THE SPRUCE PI with the unlimbo checkout's venv, everything else on
 the bus stopped (deployed scada + its restart watchdog + the winter hack):
 
     cd ~/gridworks-scada-unlimbo/gw_spaceheat && \
-        venv/bin/python ~/window_boot.py [seconds]
+        venv/bin/python ~/window_boot.py [seconds] [env-file] [scada gw_spaceheat dir]
 
 Environment comes from ~/envs/dev.env: real spruce (hw1) identity, dev
 broker only via the laptop's ssh -R 1885 tunnel, experiment artifact paths
@@ -28,7 +28,11 @@ import asyncio
 import sys
 from pathlib import Path
 
-SCADA_GW = Path("~/gridworks-scada-unlimbo/gw_spaceheat").expanduser()
+# The scada checkout to boot: the box's unlimbo clone, or the third argument
+# (the laptop's checkout, for a dev window).
+SCADA_GW = Path(
+    sys.argv[3] if len(sys.argv) > 3 else "~/gridworks-scada-unlimbo/gw_spaceheat"
+).expanduser()
 sys.path.insert(0, str(SCADA_GW))
 
 from gwproactor.app import App  # noqa: E402

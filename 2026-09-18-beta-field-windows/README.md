@@ -63,24 +63,32 @@ completes. The window-open hook prints this section before any
    changed a gen and place it with `./put_layout.sh <house> <change>`. `on`
    refuses when the box checkout or the window pair is behind — a refusal
    is the pre-flight doing its job.
-3. Start the captures first, bracketing the actuation (begin before `on`,
-   run past the last expected actuation), and prove the broker-side
-   subscriber connects before `on`. Then:
+3. Open the windows. `on` starts `capture_broker.py` on the laptop's dev
+   broker if none is running and refuses to open a window without a
+   proven capture; a bus-side capture (port samples, register reads) is
+   still started by hand, before `on`, and runs past the last expected
+   actuation. `--debug` puts the scada's loggers at DEBUG; `--ltn` runs
+   the LTN on the laptop against the target's layout. `dev` is the
+   laptop's scada checkout on its sim pair, the rehearsal for a house:
 
-        ./beech_window.sh on 30
-        ./spruce_window.sh on 30
+        ./house_window.sh dev on 5 --debug --ltn
+        ./beech_window.sh on 30 --debug
+        ./spruce_window.sh on 30 --debug
         ../gridworks-scada/gw_spaceheat/venv/bin/gwa watch <house>
 
 4. Close with `off` if the bound has not already closed it; check `status`
-   shows the recorded plant services running again:
+   shows the recorded plant services running again; stop the capture after
+   the last window:
 
         ./spruce_window.sh off
         ./beech_window.sh off
+        ./house_window.sh capture off
 
 5. Record in the same sitting: a `gw.experiment.run` instance per house
    (`uv run python emit_instances.py`), evidence files with provenance
-   headers, a logbook line, and this README brought current. Window logs
-   arrive in `../scratch/` from `off`; event files and window layouts are
+   headers, a logbook line, and this README brought current. Window logs,
+   the LTN log and the broker capture (`broker-capture-<stamp>.jsonl` with
+   its provenance sidecar) arrive in `../scratch/`; event files and window layouts are
    pulled off the boxes read-only with `scp` from
    `~/.local/share/gridworks/scada-experiment/event/` and
    `~/.config/gridworks/scada-experiment/`.
