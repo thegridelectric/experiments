@@ -155,6 +155,30 @@ Round one (2026-09-18):
   through the gwexp snapshot class and reading the written file back through
   the codec.
 
+Round two (2026-09-19), dev rehearsal of the startup announcements:
+
+Two one-minute dev windows on the scada change `dfc35644`
+(`jm/spruce-unlimbo`), each `./house_window.sh dev on 1 --debug` with
+no LTN, to see whether the scada announces itself on its own when the
+upstream link first becomes send-capable. Both wrote to one broker capture,
+`../scratch/broker-capture-20260919-132924.jsonl`, 163 messages over the two
+windows.
+
+- The first window (13:29:26 ET) ran with no deed in the dev config dir. It
+  sent one `to.ltn.layout-lite` at +1.0 s and one Warning glitch at +1.0 s
+  with Summary `no-ta-deed` and Details "No ta.deed at
+  tests/config/ta-deed.json". Neither repeated for the rest of the window.
+- The second window (13:30:28 ET) ran with `SCADA_PATHS__TADEED` pointed at
+  `tests/config/gw.nolan.ta.deed.json`, and the env reaches the scada
+  process: one `to.ltn.layout-lite` at +1.0 s, one `to.ltn.ta-deed` at
+  +1.0 s carrying TaAlias `d1.isone.me.versant.keene.spruce.ta`,
+  ValidationState `ValidatedSimulatedAsset`, ValidatorAlias
+  `d1.validator.gridworks`, and no `no-ta-deed` glitch.
+
+Both branches of the announcement are witnessed, each exactly once per run,
+with no LTN on the broker. The capture is the only evidence of this round;
+it stays in `../scratch/` and no instance is emitted for a dev window.
+
 Regenerate the instances from the logs already here:
 
     cd ~/GridWorks/experiments/2026-09-18-beta-field-windows
