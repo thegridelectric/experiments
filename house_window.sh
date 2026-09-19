@@ -5,7 +5,8 @@
 #
 #   ./house_window.sh <house> on [minutes]   check the box is ready (below), open the
 #                                            ssh -R 1885 tunnel to the laptop's
-#                                            gw-dev-rabbit, stop the house's running
+#                                            gw-dev-rabbit (observation only; the window
+#                                            opens without it), stop the house's running
 #                                            plant services, boot the window scada.
 #                                            No minutes = a standing window until `off`.
 #   ./house_window.sh <house> off            kill the window scada, copy its log to
@@ -25,8 +26,7 @@
 #
 # The services running at `on` are recorded on the box and stopped. The box
 # starts exactly those again when the window scada exits for any reason: the
-# minutes bound, a crash, or `off`. A service that was not running (a disabled
-# seasonal hack) stays off.
+# minutes bound, a crash, or `off`. A service that was not running stays off.
 #
 # The window scada runs through
 # ~/experiments/2026-08-10-ads-declared-rate/window_boot.py from ~/envs/dev.env
@@ -38,7 +38,7 @@ HOUSE="${1:-}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 case "$HOUSE" in
   spruce)
-    SERVICES="spruce-winter-hack spruce-summer-hack gwspaceheat gwspaceheat-restart.timer"
+    SERVICES="spruce-winter-hack gwspaceheat gwspaceheat-restart.timer"
     BOOT_ENV="SCADA_PICO_CYCLER_STATE_LOGGING=true"
     # gw108 relay board 0x21, output register 3
     RELAYS="~/gridworks-scada/gw_spaceheat/venv/bin/python -c \"import smbus2; r=smbus2.SMBus(1).read_byte_data(0x21,3); print('0x21 reg3 iso=%d store=%d secondary=%d' % ((r>>2)&1,(r>>4)&1,(r>>5)&1))\""
@@ -49,7 +49,7 @@ case "$HOUSE" in
     # PCF8575: one 16-bit port word per Krida, read as two bytes; a low bit is an energized relay
     RELAYS="for a in 0x20 0x21; do echo -n \"\$a: \"; sudo i2ctransfer -y 1 r2@\$a; done"
     ;;
-  *) sed -n 2,16p "$0"; exit 1 ;;
+  *) sed -n 2,17p "$0"; exit 1 ;;
 esac
 
 BOX_LOG_DIR="/tmp/$HOUSE-window"
@@ -70,8 +70,14 @@ case "${2:-}" in
     BOX_HEAD="$(ssh "$HOUSE" 'git -C ~/gridworks-scada-unlimbo rev-parse HEAD')"
     [ "$BOX_HEAD" = "$HEAD" ] || { echo "refusing: $HOUSE unlimbo checkout is at ${BOX_HEAD:0:8}, the laptop's scada head is ${HEAD:0:8}; on the box: git -C ~/gridworks-scada-unlimbo pull --ff-only"; exit 1; }
     if window_up; then echo "refusing: a window scada is already running on $HOUSE"; exit 1; fi
-    tunnel_up || ssh -f -N -o ExitOnForwardFailure=yes -R 1885:localhost:1885 "$HOUSE"
-    echo "tunnel up"
+    # The tunnel carries the upstream (LTN) link to the laptop's dev broker for
+    # observation only; commands ride the box's own mosquitto. Without it the
+    # upstream link waits for its peer and the window's events stay on the box.
+    if tunnel_up || ssh -f -N -o ExitOnForwardFailure=yes -R 1885:localhost:1885 "$HOUSE"; then
+      echo "tunnel up"
+    else
+      echo "no tunnel: the window runs without the upstream link to the dev broker"
+    fi
     # One box-side job: run the window scada, then start what was stopped.
     # SECS=0 is the standing window (window_boot.py runs until killed), so the
     # `timeout` wrapper is dropped in that case.
@@ -112,5 +118,5 @@ case "${2:-}" in
       [ ! -f $STOPPED ] || echo \"stopped for the window: \$(paste -sd' ' $STOPPED)\"
       $RELAYS"
     ;;
-  *) sed -n 2,16p "$0"; exit 1 ;;
+  *) sed -n 2,17p "$0"; exit 1 ;;
 esac

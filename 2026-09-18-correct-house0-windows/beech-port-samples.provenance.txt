@@ -1,0 +1,11 @@
+Source: beech, /tmp/beech-window/port-samples.txt, one read of the Krida
+  PCF8575 port word at 0x20 per second (two bytes, register 0 then
+  register 1), taken off the bus during the window and copied to
+  ../scratch/ch0-beech-port-samples.txt.
+Coverage: box 19:16:11 through 19:18:46 ET only, 150 samples. It does
+  NOT cover the sieg loop's send move at box 19:09:14-19:11:04.
+Reading key: a LOW bit is an energized relay. Byte 0 is reversed
+  (Relay1 = bit 7 ... Relay8 = bit 0); byte 1 runs Relay9 = bit 0 up to
+  Relay14 = bit 5 and Relay15 = bit 6 (board record
+  KridaDoubleRelayBoard16 in the window layout).
+Regeneration: not possible; it is a bus measurement taken during the run.

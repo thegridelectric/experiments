@@ -2,7 +2,7 @@
 """Bounded real-hardware boot of the unlimbo scada — the spruce window rung.
 
 Runs ON THE SPRUCE PI with the unlimbo checkout's venv, everything else on
-the bus stopped (deployed scada + its restart watchdog + the summer hack):
+the bus stopped (deployed scada + its restart watchdog + the winter hack):
 
     cd ~/gridworks-scada-unlimbo/gw_spaceheat && \
         venv/bin/python ~/window_boot.py [seconds]

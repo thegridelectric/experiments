@@ -13,6 +13,18 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-18 · [correct-house0-windows](2026-09-18-correct-house0-windows/)** —
+  the closing rung of correct-house0: the unlimbo scada (`jm/spruce-unlimbo`
+  `cd34f5ef`) in a bounded window on spruce (Nolan layout) and beech (House0,
+  ops Standby) against the tlayouts-generated pairs, read through the log and
+  through the boxes' own reports. Both pairs boot with zero tracebacks and
+  select the right control. Spruce closed early: the Nolan TOU-cooling logic
+  took zones 1, 2 and 4 off their thermostats and shut the heat pump down
+  while ServiceMode was Heating, so the winter hack stays spruce's plant
+  controller. The silent spruce pico is floor1's, and one dead pico makes the
+  cycler power-cycle the whole bank every 65 s. Beech Standby drove to a known
+  off state at boot and the Krida port word agrees with the log; its picos
+  never reported. Open: a full-send sieg move that ends in SteadyBlend.
 - **2026-09-16 · [gwalert-no-data-page](2026-09-16-gwalert-no-data-page/)** —
   the deployed spruce scada stopped for 15 min on the live fleet: gwalert
   pages Opsgenie 14.7 min after the stop, alert `2026-09-16-spruce-no_data`
