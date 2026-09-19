@@ -30,10 +30,16 @@ as validated Sema instances.
 - `display.py` — interim wire-encoding → human-readable conversion for
   CSVs (temperatures to °F floats, flows to gpm). Goes away when unit
   harmonization ships.
+- `capture_broker.py` — records every message published on the laptop's
+  dev broker to `<out-dir>/broker-capture-<stamp>.jsonl`, through the
+  broker's firehose, so MQTT and AMQP traffic are both in it. It proves
+  its own connection with a probe before it prints `capturing`; start it
+  before the thing under observation. One capture at a time.
 - `.env` (gitignored, never committed) — `GJK_DB_URL`, the journal-DB
   connection string `pull_readings.py` and the per-experiment analysis
-  scripts read. This is the one place journal-DB credentials live on a
-  laptop.
+  scripts read, and `GWEXP_RABBIT__URL`, the dev broker's AMQP URL for
+  `capture_broker.py`. This is the one place journal-DB credentials live
+  on a laptop.
 
 ## Conventions
 

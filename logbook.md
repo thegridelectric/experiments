@@ -13,7 +13,7 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
-- **2026-09-18 · [correct-house0-windows](2026-09-18-correct-house0-windows/)** —
+- **2026-09-18 · [beta-field-windows](2026-09-18-beta-field-windows/)** —
   the closing rung of correct-house0: the unlimbo scada (`jm/spruce-unlimbo`
   `cd34f5ef`) in a bounded window on spruce (Nolan layout) and beech (House0,
   ops Standby) against the tlayouts-generated pairs, read through the log and

@@ -1,4 +1,4 @@
-"""Emit the gw.experiment.run instances for the two correct-house0 windows.
+"""Emit the gw.experiment.run instances for a round's two windows.
 
 One instance per house. Start and end come from the window scada's own log
 (the file copied into this folder by `house_window.sh <house> off`): start is
@@ -63,7 +63,7 @@ def main() -> None:
             continue
         start, end = bounds(log)
         run = GwExperimentRun(
-            experiment_slug="correct-house0-windows",
+            experiment_slug="beta-field-windows",
             host_g_node_alias=alias,
             start_unix_ms=start,
             end_unix_ms=end,
