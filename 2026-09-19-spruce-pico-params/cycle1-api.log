@@ -1,0 +1,247 @@
+INFO:     Started server process [22340]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13955 (CelsiusTimes100), interpreted=139550 (WaterTempCTimes1000)
+INFO:     192.168.2.5:49749 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13921 (CelsiusTimes100), interpreted=139210 (WaterTempCTimes1000)
+INFO:     192.168.2.5:49750 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13900 (CelsiusTimes100), interpreted=139000 (WaterTempCTimes1000)
+INFO:     192.168.2.5:49751 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13925 (CelsiusTimes100), interpreted=139250 (WaterTempCTimes1000)
+INFO:     192.168.2.5:49752 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13896 (CelsiusTimes100), interpreted=138960 (WaterTempCTimes1000)
+INFO:     192.168.2.5:49753 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13949 (CelsiusTimes100), interpreted=139490 (WaterTempCTimes1000)
+INFO:     192.168.2.5:49754 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13929 (CelsiusTimes100), interpreted=139290 (WaterTempCTimes1000)
+INFO:     192.168.2.5:49755 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13902 (CelsiusTimes100), interpreted=139020 (WaterTempCTimes1000)
+INFO:     192.168.2.5:49756 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:18.045] No pending code update for pico_206032 (buffer).
+INFO:     192.168.2.11:64804 - "POST /buffer/code-update HTTP/1.0" 200 OK
+
+Current parameters for pico_206032:
+- HwUid: pico_206032
+- ActorNodeName: buffer
+- PicoAB: None
+- CapturePeriodS: 60
+- Samples: 1000
+- NumSampleAverages: 30
+- AsyncCaptureDeltaMicroVolts: 2000
+- CaptureOffsetS: 41.9
+- PicoBoardVariant: PicoRaspberryWifi2040
+- MicropythonVersion: 1.23.0
+- TypeName: tank.module.params
+- Version: 200
+INFO:     192.168.2.11:64805 - "POST /buffer/tank-module-params HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:18.588] No pending code update for pico_239531 (fancoil).
+INFO:     192.168.2.9:49900 - "POST /fancoil/code-update HTTP/1.0" 200 OK
+
+Current parameters for pico_239531:
+- HwUid: pico_239531
+- ActorNodeName: fancoil
+- PicoAB: None
+- CapturePeriodS: 60
+- Samples: 1000
+- NumSampleAverages: 30
+- AsyncCaptureDeltaMicroVolts: 2000
+- CaptureOffsetS: 41.381
+- PicoBoardVariant: PicoRaspberryWifi2040
+- MicropythonVersion: 1.24.1
+- TypeName: tank.module.params
+- Version: 200
+INFO:     192.168.2.9:49901 - "POST /fancoil/tank-module-params HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:19.094] buffer-depth1: 2.299 V, R_th=12.98 kOhm, 66.731 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:36:19.094] buffer-depth2: 2.301 V, R_th=13.01 kOhm, 66.615 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:36:19.094] buffer-depth3: 2.32 V, R_th=13.38 kOhm, 65.557 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.11:64806 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:19.464] No pending code update for pico_661635 (primary-btu).
+INFO:     192.168.2.3:63862 - "POST /primary-btu/code-update HTTP/1.0" 200 OK
+
+Current parameters for pico_661635:
+- HwUid: pico_661635
+- ActorNodeName: primary-btu
+- FlowChannelName: primary-flow
+- SendHz: False
+- ReadCtVoltage: False
+- HotChannelName: hp-lwt
+- ColdChannelName: hp-ewt
+- CtChannelName: None
+- ThermistorBeta: 3977
+- CapturePeriodS: 300
+- GallonsPerPulse: 0.0009
+- AsyncCaptureDeltaGpmX100: 10
+- AsyncCaptureDeltaCelsiusX100: 20
+- AsyncCaptureDeltaCtVoltsX100: None
+- CaptureOffsetS: 220.5
+- PicoBoardVariant: PicoRaspberryWifi2040
+- MicropythonVersion: 1.25.0
+- TypeName: async.btu.params
+- Version: 100
+INFO:     192.168.2.3:63863 - "POST /primary-btu/async-btu-params HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:19.594] fancoil-depth1: 2.301 V, R_th=13.01 kOhm, 66.627 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:36:19.594] fancoil-depth2: 2.301 V, R_th=13.02 kOhm, 66.61 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:36:19.594] fancoil-depth3: 3.3 V, R_th=3728994.35 kOhm, -185.907 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:49902 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:20.150] buffer-depth1: 2.299 V, R_th=12.97 kOhm, 66.743 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.11:64807 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:20.173] buffer-depth2: 2.301 V, R_th=13.01 kOhm, 66.625 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.11:64808 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:20.197] buffer-depth3: 2.32 V, R_th=13.37 kOhm, 65.568 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.11:64809 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:20.524] tank1-depth1: 2.32 V, R_th=13.37 kOhm, 65.566 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:36:20.524] tank1-depth2: 2.32 V, R_th=13.38 kOhm, 65.547 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:36:20.524] tank1-depth3: 2.32 V, R_th=13.38 kOhm, 65.555 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:61200 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:20.562] pipes1-depth1: 2.315 V, R_th=13.28 kOhm, 65.831 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:36:20.562] pipes1-depth2: 2.316 V, R_th=13.29 kOhm, 65.806 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:36:20.562] pipes1-depth3: 3.3 V, R_th=4661244.35 kOhm, -188.219 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:53478 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:20.571] fancoil-depth1: 2.301 V, R_th=13.01 kOhm, 66.625 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:49903 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:20.596] fancoil-depth2: 2.301 V, R_th=13.02 kOhm, 66.609 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:49904 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:20.619] fancoil-depth3: 3.3 V, R_th=18644994.35 kOhm, -201.749 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:49905 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:21.505] tank1-depth1: 2.32 V, R_th=13.37 kOhm, 65.567 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:61201 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:21.528] tank1-depth2: 2.32 V, R_th=13.38 kOhm, 65.548 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:61202 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:21.551] tank1-depth3: 2.32 V, R_th=13.38 kOhm, 65.555 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:61203 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:21.582] pipes1-depth1: 2.315 V, R_th=13.28 kOhm, 65.831 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:53479 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:21.607] pipes1-depth2: 2.316 V, R_th=13.29 kOhm, 65.808 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:53480 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:36:21.629] pipes1-depth3: 3.3 V, R_th=9322494.35 kOhm, -195.157 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:53481 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+BTU data from primary-btu: 3 measurements
+  primary-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+  hp-lwt: raw=1891 (CelsiusTimes100), interpreted=18910 (WaterTempCTimes1000)
+  hp-ewt: raw=1876 (CelsiusTimes100), interpreted=18760 (WaterTempCTimes1000)
+INFO:     192.168.2.3:63864 - "POST /primary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from secondary-btu: 4 measurements
+  secondary-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+  secondary-lwt: raw=1890 (CelsiusTimes100), interpreted=18900 (WaterTempCTimes1000)
+  secondary-ewt: raw=1888 (CelsiusTimes100), interpreted=18880 (WaterTempCTimes1000)
+  secondary-pump-ct: raw=168 (VoltsTimes100), interpreted=168 (VoltsTimes100)
+INFO:     192.168.2.4:56785 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from dist-btu: 3 measurements
+  dist-flow: raw=277 (GpmTimes100), interpreted=277 (GpmTimes100)
+  dist-swt: raw=1873 (CelsiusTimes100), interpreted=18730 (WaterTempCTimes1000)
+  dist-rwt: raw=1874 (CelsiusTimes100), interpreted=18740 (WaterTempCTimes1000)
+INFO:     192.168.2.6:65224 - "POST /dist-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 3 measurements
+  store-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+  store-hot-pipe: raw=1897 (CelsiusTimes100), interpreted=18970 (WaterTempCTimes1000)
+  store-cold-pipe: raw=13932 (CelsiusTimes100), interpreted=139320 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54126 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13922 (CelsiusTimes100), interpreted=139220 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54127 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13901 (CelsiusTimes100), interpreted=139010 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54128 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13933 (CelsiusTimes100), interpreted=139330 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54129 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13908 (CelsiusTimes100), interpreted=139080 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54130 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13933 (CelsiusTimes100), interpreted=139330 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54131 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13901 (CelsiusTimes100), interpreted=139010 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54132 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13925 (CelsiusTimes100), interpreted=139250 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54133 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13902 (CelsiusTimes100), interpreted=139020 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54134 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13924 (CelsiusTimes100), interpreted=139240 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54135 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-09-19 17:37:20.049] buffer-depth1: 2.298 V, R_th=12.96 kOhm, 66.768 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:37:20.049] buffer-depth2: 2.3 V, R_th=13.0 kOhm, 66.659 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:37:20.049] buffer-depth3: 2.319 V, R_th=13.36 kOhm, 65.591 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.11:64810 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:37:20.312] fancoil-depth1: 2.301 V, R_th=13.01 kOhm, 66.628 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:37:20.312] fancoil-depth2: 2.301 V, R_th=13.02 kOhm, 66.612 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:37:20.312] fancoil-depth3: 3.3 V, R_th=4661244.35 kOhm, -188.219 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:49906 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:37:21.361] tank1-depth1: 2.319 V, R_th=13.36 kOhm, 65.598 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:37:21.361] tank1-depth2: 2.32 V, R_th=13.37 kOhm, 65.562 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:37:21.361] tank1-depth3: 2.32 V, R_th=13.37 kOhm, 65.578 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:61204 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-09-19 17:37:21.369] pipes1-depth1: 2.315 V, R_th=13.28 kOhm, 65.833 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:37:21.369] pipes1-depth2: 2.316 V, R_th=13.29 kOhm, 65.808 F (R_fixed=5.65 kOhm)
+[2026-09-19 17:37:21.369] pipes1-depth3: 3.3 V, R_th=9322494.35 kOhm, -195.157 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:53482 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13890 (CelsiusTimes100), interpreted=138900 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54136 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13926 (CelsiusTimes100), interpreted=139260 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54137 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13894 (CelsiusTimes100), interpreted=138940 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54138 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13933 (CelsiusTimes100), interpreted=139330 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54139 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13897 (CelsiusTimes100), interpreted=138970 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54140 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13924 (CelsiusTimes100), interpreted=139240 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54141 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13898 (CelsiusTimes100), interpreted=138980 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54142 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13923 (CelsiusTimes100), interpreted=139230 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54143 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13887 (CelsiusTimes100), interpreted=138870 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54144 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-cold-pipe: raw=13921 (CelsiusTimes100), interpreted=139210 (WaterTempCTimes1000)
+INFO:     192.168.2.5:54145 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22340]

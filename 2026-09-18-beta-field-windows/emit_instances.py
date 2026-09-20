@@ -28,11 +28,11 @@ STAMP = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}\.\d{3})")
 WINDOWS = {
     "spruce": (
         "hw1.isone.me.versant.keene.spruce.scada",
-        "spruce-window-20260918-192107.log",
+        "spruce-window-20260919-141515.excerpt.log",
     ),
     "beech": (
         "hw1.isone.me.versant.keene.beech.scada",
-        "beech-window-20260918-194106.log",
+        "beech-window-20260919-141315.log",
     ),
 }
 
@@ -67,7 +67,7 @@ def main() -> None:
             host_g_node_alias=alias,
             start_unix_ms=start,
             end_unix_ms=end,
-            code_ref=f"gridworks-scada cd34f5ef; experiments 5c30b84 house_window.sh {house}",
+            code_ref=f"gridworks-scada dfc35644; experiments 299017f house_window.sh {house}",
         )
         out = HERE / f"instances/{house}-gw.experiment.run-000.json"
         out.write_text(json.dumps(run.to_dict(), indent=1) + "\n")

@@ -46,6 +46,52 @@ What the rounds have established about the unlimbo scada.
 - **Relay state is carried in `StateList`, not as readings.** Relay-state
   channels are absent from `ChannelReadingList` because a report carries
   them in `StateList`; that absence is not missing data.
+- **The scada announces its layout and deed once per run, on a real box.**
+  When the upstream link first goes send-capable the scada sends its
+  `layout.lite` to the LTN, then either the `ta.deed` if one is configured
+  or a `no-ta-deed` Warning glitch naming the deed path if not. Both
+  branches are witnessed on real houses, each exactly once per run: spruce
+  sent its `ta.deed` (TaAlias `hw1.isone.me.versant.keene.spruce.ta`,
+  `ValidatedRealAssetAndGps`), beech with no deed sent the glitch
+  (`Details "No ta.deed at …/ta-deed.json"`).
+- **A matching pico reports its identity at DEBUG, and the glitch rides the
+  wire.** A pico posts its params to the scada at its own boot, and the
+  scada checks the board and MicroPython version against the layout only
+  inside that post; a match sends a Debug `pico-identity-matches` glitch
+  that reaches the LTN, not just the box log. Witnessed on spruce for the
+  four picos that posted (store-btu, buffer, tank1, secondary-btu), zero
+  "differs from the layout" Warnings. A pico that posts no params is never
+  checked.
+- **The boot params post is a race any pico can lose.** On a power cycle
+  some picos resume readings with no params post, a different set each
+  boot, and whenever the post is sent its path, name and word are right
+  (`../2026-09-19-spruce-pico-params/`). A pico that misses runs unchecked
+  until its next boot.
+- **The boot-time command tree matches each house's authority.** Both
+  houses set `auto.lc.n` at boot and the flat-declared actuators answer
+  under it (`auto.lc.n.hp-boss.hp-scada-ops-relay`); spruce then starts the
+  Nolan control, beech's Standby control drives everything off.
+- **A zone already calling at boot is invisible until the capture
+  boundary.** `GpioSensor` starts `latest_value` at 0 and publishes on
+  change or at the `CapturePeriodS` boundary (300 s). The spruce optos are
+  `DigitalZeroIsActive`, so a calling zone reads 0, equals the initial
+  value and publishes nothing: no `-opto-input` and no `-heat-call` for up
+  to five minutes after boot. Spruce zones 1 and 2 were calling through
+  both rounds' windows, which is why they reported nothing while the idle
+  zones 3–5 did.
+- **A whitewire house derives no heat calls.** The derived generator emits
+  a zone `heat-call` only when a reading for its input channel is sent to
+  it. Beech's inputs are the `-whitewire-pwr` channels the power meter
+  captures, and the power meter sends its readings to the scada only, so
+  beech's `heat-call` channels never get a value and `dist_pump_monitor`
+  reads nothing. The sim pairs feed heat calls through the sim sensor, so
+  the suite does not see it.
+- **The open-thermistor `ZeroDivisionError` channels feed nothing.** Spruce
+  `fancoil-depth3` and `pipes1-depth3` sit at the 3.3 V rail; neither is an
+  input to a derived channel, the store pass or the buffer predicates.
+- **Both real heat pumps have a defrost signature.** Spruce's hp-odu is
+  `SamsungAE055FCYDCG`, beech's `LGARUM048GSS5`; both are keys in
+  `DEFROST_SIGNATURES`.
 
 ## Process
 
@@ -109,14 +155,22 @@ verifies gets its `Reviewed` pointer here.
 - **Pico ingestion on both boxes.** One dead pico (spruce floor1) triggers
   a bank-wide vdc-cut reboot every ~65 s, so every healthy pico pays for
   the dead one. On beech every pico flatlined in waves and none recovered
-  (`0/2 zone gw channels populated`). Why they flatline en masse, and
-  whether the bank-wide reboot is the right response, are both open.
+  (`0/2 zone gw channels populated`); in a 70 s beech window only
+  `dist2-flow` delivered data, and store-flow, sieg-flow and dist2-flow were
+  reported `PicoMissing`. Why they flatline en masse, and whether the
+  bank-wide reboot is the right response, are both open.
+- **Beech's pico params are unwitnessed.** No beech pico posted params in
+  either round, so neither the identity check nor the older-firmware
+  `TankModuleParams` the current word is expected to reject has been seen.
+  Needs a beech window long enough to hold a pico-cycler reboot.
+- **A Warning glitch the scada sends is not in the box log.** Beech's
+  `no-ta-deed` shows only as an outbound `Glitch` line; the
+  `ShNodeActor` senders log `Warning Glitch: …` but the announcement builds
+  its `Glitch` directly. Someone reading the box log alone does not see it.
 - **Volts-to-temp divides by zero at the rail.** An open thermistor sits on
   the 3.3 V rail and the conversion raises `ZeroDivisionError` (a
-  `gridworks.event.problem`) instead of refusing the reading.
-- **Zones 1 & 2 report nothing.** The two zones on GPIO opto sensors
-  produce no `*-opto-input`, `*-heat-call` or `*-floor-temp` while zones
-  3–5 do. Whether the GPIO sensor path reaches the report is open.
+  `gridworks.event.problem`) instead of refusing the reading. Seen on spruce
+  `fancoil-depth3` and `pipes1-depth3`, once each per window.
 - **Beech report starvation.** Only the eGauge power channels and the
   0-10V readbacks reported; every thermistor, flow, BTU, water-temp and
   zone channel was absent. Confirm this is all downstream of the pico
@@ -178,6 +232,46 @@ windows.
 Both branches of the announcement are witnessed, each exactly once per run,
 with no LTN on the broker. The capture is the only evidence of this round;
 it stays in `../scratch/` and no instance is emitted for a dev window.
+
+Round three (2026-09-19), the announcement and the pico identity on real
+houses:
+
+Two 5-minute `--debug` windows on scada `dfc35644` (`jm/spruce-unlimbo`, the
+head that adds the announcement and the DEBUG pico-identity glitch; both
+boxes fast-forwarded to it first), one target each, no LTN. Both windows
+wrote to one capture, `broker-capture-20260919-141154.jsonl`, 21 messages.
+
+- **beech — the no-deed announcement.** `./beech_window.sh on 5 --debug`.
+  With no deed in the box config dir, the scada sent one `layout.lite` (85
+  ShNodes) to the LTN and one Warning glitch, Summary `no-ta-deed`, Details
+  `No ta.deed at /home/pi/.config/gridworks/scada-experiment/ta-deed.json`,
+  Node `s`, from `hw1.isone.me.versant.keene.beech.scada`. Each once.
+- **spruce — the deed announcement and the pico identity at DEBUG.**
+  `./spruce_window.sh on 5 --debug`, closed after ~2.5 min to restore the
+  winter hack. One `layout.lite` (98 ShNodes, `ActuationAuthority` Active)
+  and one `ta.deed`, each once. One pico-cycler reboot, after which four of
+  the nine pico-fed actors (store-btu, buffer, tank1, secondary-btu) posted
+  params and each sent a Debug `pico-identity-matches` glitch; all four
+  reached the capture as `Type Debug` messages. No "differs from the
+  layout" Warning. Two `gridworks.event.problem` (`fancoil-depth3`,
+  `pipes1-depth3`).
+
+The capture's 21 messages: beech `power.watts`, `gridworks.ping`, the two
+forecasts, `layout.lite`, the glitch and two snapshots; spruce the same
+four openers, `layout.lite`, `ta.deed`, the four Debug glitches and three
+snapshots. Capture stamps are the laptop clock, about 72 s ahead of the
+boxes. The collector was running about 7 s before beech's first log line;
+its sidecar records neither the scada SHA nor the probe result, and the SHA
+is in the window-log sidecars.
+
+Evidence in the folder: the capture and the beech window log, whole, and
+`spruce-window-20260919-141515.excerpt.log`, 85 lines cut from the 1.6 MB
+DEBUG trace by the patterns its sidecar lists (the announcement, the
+identity glitches, the cycler cycle, the problem events, the command tree,
+the GPIO sensor starts, first and last stamped line). Each has a provenance
+sidecar. `instances/{beech,spruce}-gw.experiment.run-000.json` are this
+round's (round one's are in git history); the excerpt keeps the first and
+last stamps, so the spruce instance regenerates from it unchanged.
 
 Regenerate the instances from the logs already here:
 

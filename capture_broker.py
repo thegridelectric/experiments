@@ -151,6 +151,7 @@ def main() -> int:
 
     count = 0
     probe_seen = False
+    proven: datetime | None = None
     probe_body = f"probe {os.getpid()} {time.time()}".encode()
 
     def on_message(ch: BlockingChannel, method: Basic.Deliver, properties: BasicProperties, body: bytes) -> None:
@@ -176,6 +177,7 @@ def main() -> int:
             if not probe_seen:
                 print("ABORT: the probe did not come back through the firehose; nothing is being captured", file=sys.stderr)
                 return 1
+            proven = datetime.now().astimezone()
             print(f"capturing vhost {vhost} -> {out}", flush=True)
             end = time.monotonic() + args.seconds if args.seconds else None
             try:
@@ -189,12 +191,21 @@ def main() -> int:
         if connection.is_open:
             connection.close()
 
+    assert proven is not None
     stopped = datetime.now().astimezone()
+    # house_window.sh notes each window it opens against this capture
+    windows_file = out.with_suffix(".windows.txt")
+    windows = windows_file.read_text().splitlines() if windows_file.exists() else []
+    windows_file.unlink(missing_ok=True)
     out.with_suffix(".provenance.txt").write_text(
         f"Source: the laptop's {BROKER_CONTAINER}, vhost {vhost}: every message published to\n"
         f"  any exchange, as the broker's firehose ({TRACE_EXCHANGE}, publish.#)\n"
         f"  reported it, written by experiments/capture_broker.py.\n"
         f"Window: {started:%Y-%m-%d %H:%M:%S} to {stopped:%H:%M:%S %Z} (laptop clock); {count} messages.\n"
+        f"Probe: a message published to {PROBE_EXCHANGE} came back through the firehose at\n"
+        f"  {proven:%H:%M:%S}; every publish from then on is in the file.\n"
+        + "".join(f"Opened: {line}\n" for line in windows)
+        +
         f"Timestamps: CapturedUnixMs is the laptop clock at receipt; stamps inside a\n"
         f"  payload are the sender's clock.\n"
         f"Regeneration: not possible. A new capture is a new run.\n"

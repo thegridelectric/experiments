@@ -70,6 +70,12 @@ ensure_capture() {
   for _ in $(seq 20); do grep -q '^capturing' "$CAPTURE_OUT" 2>/dev/null && break; sleep 1; done
   grep '^capturing' "$CAPTURE_OUT" || { cat "$CAPTURE_OUT"; echo "refusing: no proven broker capture, so the window would leave no record"; exit 1; }
 }
+# One line per window in the running capture's .windows.txt; capture_broker.py
+# folds them into the capture's provenance sidecar when it stops.
+note_window() {
+  local cap; cap="$(grep -m1 '^capturing' "$CAPTURE_OUT" | sed 's/.*-> //')"
+  echo "$(date '+%Y-%m-%d %H:%M:%S') $HOUSE window, ${MIN} min, debug=$DEBUG ltn=$LTN, scada $1" >> "${cap%.jsonl}.windows.txt"
+}
 ltn_up() { pgrep -f "gws ltn run" >/dev/null; }
 stop_ltn() { if ltn_up; then pkill -f "gws ltn run" || true; echo "ltn stopped; log: $(ls -t "$SCRATCH"/*-ltn-*.log 2>/dev/null | head -1)"; fi; }
 
@@ -137,6 +143,7 @@ if [ "$HOUSE" = dev ]; then
     on)
       if dev_up; then echo "refusing: a dev window scada is already running"; exit 1; fi
       ensure_capture
+      note_window "$(git -C "$SCADA" rev-parse HEAD)$([ -z "$(git -C "$SCADA" status --porcelain)" ] || echo ' (working tree dirty)')"
       start_ltn
       (cd "$SCADA" && exec nohup env $DEBUG_ENV gw_spaceheat/venv/bin/python "$WINDOW_BOOT" "$SECS" .env "$SCADA/gw_spaceheat" > "$DEV_LOG" 2>&1 < /dev/null) &
       sleep 15
@@ -179,6 +186,7 @@ case "${2:-}" in
     [ "$BOX_HEAD" = "$HEAD" ] || { echo "refusing: $HOUSE unlimbo checkout is at ${BOX_HEAD:0:8}, the laptop's scada head is ${HEAD:0:8}; on the box: git -C ~/gridworks-scada-unlimbo pull --ff-only"; exit 1; }
     if window_up; then echo "refusing: a window scada is already running on $HOUSE"; exit 1; fi
     ensure_capture
+    note_window "$HEAD"
     # The tunnel carries the upstream (LTN) link to the laptop's dev broker for
     # observation only; commands ride the box's own mosquitto. Without it the
     # upstream link waits for its peer and the window's events stay on the box.

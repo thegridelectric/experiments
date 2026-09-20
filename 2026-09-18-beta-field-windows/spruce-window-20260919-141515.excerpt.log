@@ -1,0 +1,85 @@
+2026-09-19 14:12:25.429 
+    "operational_params": "/home/pi/.config/gridworks/scada-experiment/operational-params.json",
+    "tadeed": "/home/pi/.config/gridworks/scada-experiment/ta-deed.json"
+        operational_params=PosixPath('/home/pi/.config/gridworks/scada-experimen
+t/operational-params.json'),
+        tadeed=PosixPath('/home/pi/.config/gridworks/scada-experiment/ta-deed.js
+2026-09-19 14:12:25.681 [derived-generator] Params: AlphaTimes10=55 BetaTimes100=-10 GammaEx6=0 IntermediatePowerKw=1.5 IntermediateRswtF=100 DdPowerKw=5.5 DdRswtF=150 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=170 LoadOverestimationPercent=0 CopIntercept=1.02 CopOatCoeff=0.0257 CopLwtCoeff=0.0 CopMin=1.4 CopMinOatF=15.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-09-19 14:12:25.690 [lc] Set auto.lc.n command tree
+2026-09-19 14:12:25.690 [lc] Starting Nolan Local Control in Normal (TOU cooling; ops ActuationAuthority Active, ServiceMode Heating)
+2026-09-19 14:12:25.741 [zone1-bedrooms-opto] GpioSensor started on GPIO 17
+2026-09-19 14:12:25.741 [zone2-living-rm-opto] GpioSensor started on GPIO 27
+2026-09-19 14:12:25.741 [zone3-upstairs-opto] GpioSensor started on GPIO 22
+2026-09-19 14:12:25.741 [zone4-garage-opto] GpioSensor started on GPIO 10
+2026-09-19 14:12:25.741 [zone5-living-rm-fancoil-opto] GpioSensor started on GPIO 9
+	6/72  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0640>
+	12/72  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0740>
+	18/72  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0840>
+	54/72  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0540>
+	67/72  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0440>
+	71/72  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7df93370>
+	2/117  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0640>
+	6/117  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0740>
+	8/117  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0840>
+	9/117  zone1-bedrooms-opto.join        done:False   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc2140>
+	15/117  zone2-living-rm-opto.join       done:False   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc22c0>
+	21/117  zone3-upstairs-opto.join        done:False   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc2440>
+	27/117  zone4-garage-opto.join          done:False   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc25c0>
+	33/117  zone5-living-rm-fancoil-opto.join  done:False   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc2740>
+	62/117  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7df93370>
+	113/117  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0440>
+	117/117  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0540>
+	2/47  zone5-living-rm-fancoil-opto.join  done:True   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc2740>
+	11/47  zone1-bedrooms-opto.join        done:True   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc2140>
+	20/47  zone2-living-rm-opto.join       done:True   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc22c0>
+	29/47  zone3-upstairs-opto.join        done:True   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc2440>
+	38/47  zone4-garage-opto.join          done:True   exception: None  <coroutine object GpioSensor.join at 0x7f7ddc25c0>
+	6/70  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0640>
+	13/70  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0740>
+	19/70  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0840>
+	47/70  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7df93370>
+	55/70  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0540>
+	66/70  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0440>
+	5/51  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0640>
+	11/51  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0740>
+	14/51  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0840>
+	33/51  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7df93370>
+	47/51  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0440>
+	51/51  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0540>
+2026-09-19 14:12:26.677 [derived-generator] Calculating rswt_quadratic_params: [ 4.91228070e-04 -4.28070175e-02  8.68421053e-01]
+2026-09-19 14:12:26.923   OUT mqtt         hw1.isone.me.versant.keene.spruce.scada to ltn         ->  [gw/hw1-isone-me-versant-keene-spruce-scada/to/ltn/layout-lite]                   LayoutLite                3d721671...
+2026-09-19 14:12:26.928   OUT mqtt         hw1.isone.me.versant.keene.spruce.scada to ltn         ->  [gw/hw1-isone-me-versant-keene-spruce-scada/to/ltn/ta-deed]                       TaDeed                   
+	1/1  startup_announcer               done:True   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7df93370>
+	5/50  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0640>
+	11/50  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0740>
+	14/50  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0840>
+	46/50  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0440>
+	50/50  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7ddb0540>
+2026-09-19 14:12:28.749 [PicoCyclerState] Startup: PicosLive -> RelayOpening
+2026-09-19 14:12:28.751 [PicoCyclerState] State is RelayOpening
+2026-09-19 14:12:28.766 [PicoCyclerState] ConfirmOpened: RelayOpening -> RelayOpen
+2026-09-19 14:12:28.769 [PicoCyclerState] Keeping VDC Relay 1 open for 5 seconds
+2026-09-19 14:12:33.774 [PicoCyclerState] StartClosing: RelayOpen -> RelayClosing
+2026-09-19 14:12:33.808 [PicoCyclerState] ConfirmClosed: RelayClosing -> PicosRebooting
+2026-09-19 14:12:33.816 [PicoCyclerState] Waiting 60 seconds for picos to come back
+2026-09-19 14:12:39.355 ++Proactor<s>.process_message  [store-btu/async.btu.params]
+2026-09-19 14:12:39.356   IN  internal     store-btu to store-btu                                 <-  [store-btu/to/store-btu/async.btu.params]                                         AsyncBtuParams           
+2026-09-19 14:12:39.361 [store-btu] Debug Glitch: pico-identity-matches
+2026-09-19 14:12:41.502 [PicoCyclerState] ConfirmRebooted: PicosRebooting -> PicosLive
+2026-09-19 14:12:44.583 ++Proactor<s>.process_message  [buffer/tank.module.params]
+2026-09-19 14:12:44.584   IN  internal     buffer to buffer                                       <-  [buffer/to/buffer/tank.module.params]                                             TankModuleParams         
+2026-09-19 14:12:44.585 [buffer] Debug Glitch: pico-identity-matches
+2026-09-19 14:12:45.699 ++Proactor<s>.process_message  [tank1/tank.module.params]
+2026-09-19 14:12:45.700   IN  internal     tank1 to tank1                                         <-  [tank1/to/tank1/tank.module.params]                                               TankModuleParams         
+2026-09-19 14:12:45.701 [tank1] Debug Glitch: pico-identity-matches
+2026-09-19 14:12:46.041 ++Proactor<s>.process_message  [secondary-btu/async.btu.params]
+2026-09-19 14:12:46.042   IN  internal     secondary-btu to secondary-btu                         <-  [secondary-btu/to/secondary-btu/async.btu.params]                                 AsyncBtuParams           
+2026-09-19 14:12:46.043 [secondary-btu] Debug Glitch: pico-identity-matches
+2026-09-19 14:12:49.809 [fancoil] Problem with simple_beta(3.3)! float division by zero
+2026-09-19 14:12:49.817 ProblemEvent <Volts to temp problem for fancoil-depth3>
+   0: <ZeroDivisionError>  <float division by zero>
+2026-09-19 14:12:52.892 [pipes1] Problem with simple_beta(3.3)! float division by zero
+2026-09-19 14:12:52.900 ProblemEvent <Volts to temp problem for pipes1-depth3>
+2026-09-19 14:13:25.800 [hp-boss] hp-boss received unexpected message: Src='hp-scada-ops-relay' Dst='hp-boss' MessageType='gw.dispatch.ack' MessageId='' AckRequired=False TypeName='gridworks.header' Version='001'
+2026-09-19 14:13:33.817 [PicoCyclerState] Reboot wait from cycle c762d9b1-20b9-4755-983c-32e59cfbf21c is stale; ignoring
+2026-09-19 14:13:58.964 ----------------------------------------------------------------------------------------

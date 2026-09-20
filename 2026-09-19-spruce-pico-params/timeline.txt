@@ -1,0 +1,32 @@
+[2026-09-19 17:35:24 EDT] BASELINE gwspaceheat=active timer=active winterhack=active
+[2026-09-19 17:35:24 EDT] STOP gwspaceheat + gwspaceheat-restart.timer
+[2026-09-19 17:35:28 EDT] after stop: gwspaceheat=inactive timer=inactive winterhack=active
+[2026-09-19 17:35:28 EDT] START tcpdump
+[2026-09-19 17:35:30 EDT] START uvicorn listener (cwd=/tmp/pico-params, PYTHONPATH=/home/pi/starter-scripts)
+[2026-09-19 17:35:39 EDT] listening check: LISTEN 0      2048                       0.0.0.0:8000       0.0.0.0:*    users:(("uvicorn",pid=22340,fd=6))  
+[2026-09-19 17:35:39 EDT] steady-state watch 20s
+[2026-09-19 17:35:59 EDT] RAIL OFF (BCM23 HIGH)
+[2026-09-19 17:36:07 EDT] RAIL ON (BCM23 LOW)
+[2026-09-19 17:36:07 EDT] watching 120s after power-on
+[2026-09-19 17:38:07 EDT] WATCH DONE
+final BCM23 = LOW (powered)
+[2026-09-19 17:38:07 EDT] kill listener + tcpdump
+[2026-09-19 17:38:10 EDT] port 8000 now: FREE
+[2026-09-19 17:38:10 EDT] RESTORE: starting gwspaceheat + timer
+[2026-09-19 17:38:13 EDT] final gwspaceheat: active
+[2026-09-19 17:38:13 EDT] final gwspaceheat-restart.timer: active
+[2026-09-19 17:38:13 EDT] final spruce-winter-hack: active
+[17:39:41] CYCLE2 stop gwspaceheat + timer
+[17:39:45] after stop: gwspaceheat=inactive winterhack=active
+[17:39:53] listening: LISTEN 0      2048                       0.0.0.0:8000       0.0.0.0:*    users:(("uvicorn",pid=22509,fd=6))  
+[17:39:53] steady watch 25s
+[17:40:18] RAIL OFF
+[17:40:28] RAIL ON
+[17:40:28] watch 150s
+[17:42:58] DONE
+final BCM23 = LOW(powered)
+[17:43:02] port 8000: FREE
+[17:43:02] RESTORE cycle2
+[17:43:05] final gwspaceheat: active mainpid=22564
+[17:43:05] final gwspaceheat-restart.timer: active mainpid=
+[17:43:05] final spruce-winter-hack: active mainpid=20182

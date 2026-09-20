@@ -13,6 +13,23 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-19 · [spruce-pico-params](2026-09-19-spruce-pico-params/)** —
+  why some spruce picos reboot without posting params (OPS-552). Two power
+  cycles of the pico rail with the starter API listener in the scada's
+  place, winter hack left running. PASS: the boot-time params post is a
+  race any pico can lose (3 of 8 posted in cycle 1, 5 of 8 in cycle 2, a
+  different set each time); path, name and word are right whenever it is
+  sent. The fix is firmware-side retry, or the scada noticing an unchecked
+  pico.
+- **2026-09-19 · [beta-field-windows](2026-09-18-beta-field-windows/)** —
+  round three (`jm/spruce-unlimbo` `dfc35644`), beech and spruce, `--debug`.
+  PASS on both new commits: the startup announcement sends `layout.lite`
+  then the `ta.deed` (spruce) or a `no-ta-deed` Warning glitch (beech), once
+  per run; four spruce picos send `pico-identity-matches` at DEBUG and the
+  glitch reaches the broker. Found: a whitewire house derives no heat calls
+  (the power meter never feeds the derived generator), a zone calling at
+  boot is invisible until the 300 s GPIO capture boundary, five spruce
+  picos reboot without posting params.
 - **2026-09-18 · [beta-field-windows](2026-09-18-beta-field-windows/)** —
   the closing rung of correct-house0: the unlimbo scada (`jm/spruce-unlimbo`
   `cd34f5ef`) in a bounded window on spruce (Nolan layout) and beech (House0,
