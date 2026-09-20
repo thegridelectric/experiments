@@ -58,6 +58,7 @@ from gwexp.sema.types import (  # noqa: E402
     GwReadings,
     LayoutLite,
 )
+from gwexp.sema.types.old_versions.layout_lite_011 import LayoutLite011  # noqa: E402
 from gwexp.sema.types.old_versions.layout_lite_012 import LayoutLite012  # noqa: E402
 from naming import validate_lrd  # noqa: E402
 from unit_encodings import word_encoding  # noqa: E402
@@ -113,7 +114,7 @@ def fetch_layout_channels(ta: LeftRightDot, end_ms: int, codec: SemaCodec):
         )
     payload, emitted_ms = row
     layout = codec.from_dict(payload, auto_upgrade=False)
-    assert isinstance(layout, (LayoutLite, LayoutLite012))
+    assert isinstance(layout, (LayoutLite, LayoutLite011, LayoutLite012))
     words = {}
     for ch in list(layout.data_channels) + list(layout.derived_channels):
         current = codec.from_dict(ch.to_dict())  # upgrade to latest version

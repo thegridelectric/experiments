@@ -25,12 +25,14 @@ types:
     versions:
       '003': definitions/types/data.channel.gt/003.yaml
       '002': definitions/types/data.channel.gt/002.yaml
+      '001': definitions/types/data.channel.gt/001.yaml
   derived.channel.gt:
     latest_version: '002'
     versioning_strategy: literal
     versions:
       '002': definitions/types/derived.channel.gt/002.yaml
       '001': definitions/types/derived.channel.gt/001.yaml
+      '000': definitions/types/derived.channel.gt/000.yaml
   fsm.atomic.report:
     latest_version: '001'
     versioning_strategy: literal
@@ -51,6 +53,11 @@ types:
     versioning_strategy: literal
     versions:
       '000': definitions/types/gw.adc.waveform/000.yaml
+  gw.alert:
+    latest_version: '000'
+    versioning_strategy: literal
+    versions:
+      '000': definitions/types/gw.alert/000.yaml
   gw.channel.gap.stats:
     latest_version: '000'
     versioning_strategy: literal
@@ -71,16 +78,6 @@ types:
     versioning_strategy: literal
     versions:
       '000': definitions/types/gw.experiment.run/000.yaml
-  gw.house.alert:
-    latest_version: '000'
-    versioning_strategy: literal
-    versions:
-      '000': definitions/types/gw.house.alert/000.yaml
-  gw.house.alert.cleared:
-    latest_version: '000'
-    versioning_strategy: literal
-    versions:
-      '000': definitions/types/gw.house.alert.cleared/000.yaml
   gw.readings:
     latest_version: '000'
     versioning_strategy: literal
@@ -106,12 +103,15 @@ types:
     versioning_strategy: literal
     versions:
       '006': definitions/types/ha1.params/006.yaml
+      '005': definitions/types/ha1.params/005.yaml
+      '004': definitions/types/ha1.params/004.yaml
   i2c.multichannel.dt.relay.component.gt:
     latest_version: '004'
     versioning_strategy: literal
     versions:
       '004': definitions/types/i2c.multichannel.dt.relay.component.gt/004.yaml
       '003': definitions/types/i2c.multichannel.dt.relay.component.gt/003.yaml
+      '002': definitions/types/i2c.multichannel.dt.relay.component.gt/002.yaml
   i2c.thermistor.channel.config:
     latest_version: '000'
     versioning_strategy: literal
@@ -128,6 +128,7 @@ types:
     versions:
       '013': definitions/types/layout.lite/013.yaml
       '012': definitions/types/layout.lite/012.yaml
+      '011': definitions/types/layout.lite/011.yaml
   machine.states:
     latest_version: '000'
     versioning_strategy: literal
@@ -175,6 +176,7 @@ types:
       '303': definitions/types/spaceheat.node.gt/303.yaml
       '302': definitions/types/spaceheat.node.gt/302.yaml
       '301': definitions/types/spaceheat.node.gt/301.yaml
+      '300': definitions/types/spaceheat.node.gt/300.yaml
   spaceheat.telemetry.quantity.projection:
     latest_version: '000'
     versioning_strategy: literal
@@ -192,11 +194,29 @@ enums:
     latest_version: '000'
     versions:
       '000': definitions/enums/gpm.from.hz.method/000.yaml
+  gw.alert.category:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/gw.alert.category/000.yaml
+  gw.alert.state:
+    enum_type: literal
+    schema: definitions/enums/gw.alert.state/000.yaml
+  gw.fleet.alert.kind:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/gw.fleet.alert.kind/000.yaml
   gw.house.alert.kind:
     enum_type: versioned
     latest_version: '000'
     versions:
       '000': definitions/enums/gw.house.alert.kind/000.yaml
+  gw.platform.alert.kind:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/gw.platform.alert.kind/000.yaml
   gw1.actor.class:
     enum_type: versioned
     latest_version: '014'
@@ -204,6 +224,7 @@ enums:
       '014': definitions/enums/gw1.actor.class/014.yaml
       '013': definitions/enums/gw1.actor.class/013.yaml
       '011': definitions/enums/gw1.actor.class/011.yaml
+      009: definitions/enums/gw1.actor.class/009.yaml
   gw1.actuation.authority:
     enum_type: versioned
     latest_version: '000'
@@ -257,6 +278,11 @@ enums:
   log.level:
     enum_type: literal
     schema: definitions/enums/log.level/000.yaml
+  pico.board.variant:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/pico.board.variant/000.yaml
   relay.closed.or.open:
     enum_type: literal
     schema: definitions/enums/relay.closed.or.open/000.yaml
@@ -278,6 +304,7 @@ enums:
     latest_version: '007'
     versions:
       '007': definitions/enums/spaceheat.telemetry.name/007.yaml
+      '006': definitions/enums/spaceheat.telemetry.name/006.yaml
   spaceheat.unit:
     enum_type: versioned
     latest_version: '001'

@@ -48,5 +48,5 @@ sleep 4
 stop "$A2"; stop "$WATCHER"
 echo "--- mock"; grep -v "report.event from" "$RUN/mock.log"
 echo "--- watcher"; cat "$RUN/watcher.log"
-echo "--- alerter logs"; grep -h "gw.house\|not sent\|ERROR" "$RUN"/state/gridworks/alerter/log/*.log
+echo "--- alerter logs"; grep -h "gw.alert\|not sent\|ERROR" "$RUN"/state/gridworks/alerter/log/*.log
 echo "--- instances"; ls -1 instances

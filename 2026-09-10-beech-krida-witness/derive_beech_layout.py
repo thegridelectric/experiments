@@ -142,7 +142,7 @@ def mentions(obj, needle: str) -> bool:
     return needle in json.dumps(obj)
 
 
-def derive(layout: dict, ops: dict) -> tuple[dict, dict]:
+def derive(layout: dict, ops: dict) -> tuple[dict, dict, list[tuple[str, str]]]:
     # 1. identity
     layout = text_sub(layout, [(ORANGE, BEECH), (ORANGE_DISPLAY, BEECH_DISPLAY)])
     ops = text_sub(ops, [(ORANGE, BEECH)])

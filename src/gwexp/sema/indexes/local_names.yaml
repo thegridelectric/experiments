@@ -2,7 +2,11 @@ enums:
   change.relay.state: change.relay.state
   fsm.report.type: fsm.report.type
   gpm.from.hz.method: gpm.from.hz.method
+  gw.alert.category: gw.alert.category
+  gw.alert.state: gw.alert.state
+  gw.fleet.alert.kind: gw.fleet.alert.kind
   gw.house.alert.kind: gw.house.alert.kind
+  gw.platform.alert.kind: gw.platform.alert.kind
   gw1.actor.class: gw1.actor.class
   gw1.actuation.authority: gw1.actuation.authority
   gw1.emission.method: gw1.emission.method
@@ -15,6 +19,7 @@ enums:
   i2c.adc.channel: i2c.adc.channel
   i2c.adc.type: i2c.adc.type
   log.level: log.level
+  pico.board.variant: pico.board.variant
   relay.closed.or.open: relay.closed.or.open
   relay.energization.state: relay.energization.state
   relay.wiring.config: relay.wiring.config
@@ -31,12 +36,11 @@ types:
   fsm.full.report: fsm.full.report
   glitch: glitch
   gw.adc.waveform: gw.adc.waveform
+  gw.alert: gw.alert
   gw.channel.gap.stats: gw.channel.gap.stats
   gw.channel.jump.stats: gw.channel.jump.stats
   gw.channel.noise.stats: gw.channel.noise.stats
   gw.experiment.run: gw.experiment.run
-  gw.house.alert: gw.house.alert
-  gw.house.alert.cleared: gw.house.alert.cleared
   gw.readings: gw.readings
   gw1.tank.temp.calibration: gw1.tank.temp.calibration
   gw1.tank.temp.calibration.map: gw1.tank.temp.calibration.map

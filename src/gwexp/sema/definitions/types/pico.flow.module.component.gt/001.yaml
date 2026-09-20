@@ -101,6 +101,17 @@ properties:
   CutoffFrequency:
     type: number
 
+  PicoBoardVariant:
+    $ref: "https://schemas.electricity.works/enums/pico.board.variant/000"
+    description: >
+      The physical board this pico was provisioned on.
+
+  MicropythonVersion:
+    type: string
+    description: >
+      The MicroPython release this pico was provisioned with, as
+      `os.uname().release` reports it.
+
   TypeName:
     const: "pico.flow.module.component.gt"
 
@@ -122,6 +133,7 @@ required:
   - SendTickLists
   - NoFlowMs
   - AsyncCaptureThresholdGpmTimes100
+  - PicoBoardVariant
   - TypeName
   - Version
 
@@ -144,6 +156,7 @@ examples:
       "SendTickLists": false,
       "NoFlowMs": 0,
       "AsyncCaptureThresholdGpmTimes100": 0,
+      "PicoBoardVariant": "PicoRaspberryWifi2040",
       "TypeName": "pico.flow.module.component.gt",
       "Version": "001"
     }

@@ -3,6 +3,7 @@ from pydantic import StrictFloat, StrictInt, model_validator
 from gwexp.sema.base import SemaType
 from gwexp.sema.enums import GpmFromHzMethod
 from gwexp.sema.enums import HzCalcMethod
+from gwexp.sema.enums import PicoBoardVariant
 from gwexp.sema.property_format import PascalCase
 from gwexp.sema.property_format import SpaceheatName
 from gwexp.sema.property_format import UUID4Str
@@ -33,6 +34,8 @@ class PicoFlowModuleComponentGt(SemaType):
     publish_ticklist_length: StrictInt | None = None
     exp_alpha: StrictFloat | None = None
     cutoff_frequency: StrictFloat | None = None
+    pico_board_variant: PicoBoardVariant
+    micropython_version: str | None = None
     type_name: Literal["pico.flow.module.component.gt"] = (
         "pico.flow.module.component.gt"
     )

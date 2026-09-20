@@ -32,6 +32,8 @@ types:
           - Quantity: add
           - TelemetryName: spaceheat.telemetry.name:006 -> 007
           - TelemetryQuantityConsistency axiom: add
+      "001":
+        summary: "Baseline runtime version (no prior version tracked)."
 
   derived.channel.gt:
     latest_version: "002"
@@ -49,6 +51,8 @@ types:
           - InputChannelNames[]: add
           - EmissionMethod: add
           - Parameters: add (Optional)
+      "000":
+        summary: "Initial Sema version"
 
   fsm.atomic.report:
     latest_version: "001"
@@ -80,6 +84,13 @@ types:
       "000":
         summary: "Initial version."
 
+  gw.alert:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version. One word for both transitions (State), a Category choosing the Kind enum (axiom 1), House requiring a .ta AboutGNodeAlias (axiom 2), ResolvedMs iff Resolved (axiom 3)."
+
   gw.channel.gap.stats:
     latest_version: "000"
     versioning_strategy: "literal"
@@ -107,20 +118,6 @@ types:
     versions:
       "000":
         summary: "Initial version."
-
-  gw.house.alert:
-    latest_version: "000"
-    versioning_strategy: "literal"
-    versions:
-      "000":
-        summary: "Initial Sema version. Axiom 1 TerminalAssetAliasConstraint: AboutGNodeAlias names the house's terminal asset (suffix .ta), never its scada."
-
-  gw.house.alert.cleared:
-    latest_version: "000"
-    versioning_strategy: "literal"
-    versions:
-      "000":
-        summary: "Initial Sema version. Axiom 1 TerminalAssetAliasConstraint as on gw.house.alert."
 
   gw.readings:
     latest_version: "000"
@@ -159,6 +156,15 @@ types:
           - HpMaxKwEl: add as optional
           - HpMaxKwTh: required -> optional
           - HpTurnOnMinutes: add
+      "005":
+        summary: >
+          - CopIntercept: add as optional
+          - CopOatCoeff: add as optional
+          - CopLwtCoeff: add as optional
+          - CopMin: add as optional
+          - CopMinOatF: add as optional
+      "004":
+        summary: "Baseline runtime version (no prior version tracked)."
 
   i2c.multichannel.dt.relay.component.gt:
     latest_version: "004"
@@ -172,6 +178,8 @@ types:
             Context-dependent: the device type lived on the referenced cac, not the component.
       "003":
         summary: "- Add I2cBus"
+      "002":
+        summary: "- ConfigList element: relay.actor.config 001 -> 002"
 
   i2c.thermistor.channel.config:
     latest_version: "000"
@@ -198,6 +206,7 @@ types:
           - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component.
           - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context).
           - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status.
+          - BufferShortCycling -> KeepBufferFull: the running scada's KeepBufferFull setting, named for what the flag does.
       "012":
         summary: >
           - DerivedChannels[]: derived.channel.gt:000 | 001 -> 001
@@ -205,6 +214,10 @@ types:
           - Ha1Params: ha1.params:004 | 005 | 006 -> ha1.params:006
           - I2cRelayComponent: i2c.multichannel.dt.relay.component.gt:002 -> 003
           - ShNodes[]: spaceheat.node.gt:300 | 301 -> 301
+      "011":
+        summary: >
+          - Ha1Params: ha1.params:004 | 005 -> ha1.params:004 | 005 | 006
+          - DerivedChannels[]: derived.channel.gt:000 -> 000 | 001
 
   machine.states:
     latest_version: "000"
@@ -290,6 +303,8 @@ types:
         summary: >
           - BoardComponentId: add as Optional
           - ActorClass: gw1.actor.class:009 -> 011
+      "300":
+        summary: "- ActorClass: string -> gw1.actor.class:009"
 
   spaceheat.telemetry.quantity.projection:
     latest_version: "000"
@@ -317,7 +332,31 @@ enums:
     versions:
       "000": {}
 
+  gw.alert.category:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw.alert.state:
+    enum_type: "literal"
+    note: "This enum is literal; version 000 is immutable and exclusive."
+    versions:
+      "000": {}
+
+  gw.fleet.alert.kind:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
   gw.house.alert.kind:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw.platform.alert.kind:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
     versions:
@@ -337,6 +376,7 @@ enums:
       "011":
         added_values:
           - "I2cThermistorReader"
+      "009": {}
 
   gw1.actuation.authority:
     enum_type: "versioned"
@@ -411,6 +451,12 @@ enums:
     versions:
       "000": {}
 
+  pico.board.variant:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
   relay.closed.or.open:
     enum_type: "literal"
     note: "This enum is literal; version 000 is immutable and exclusive."
@@ -448,6 +494,7 @@ enums:
       "007":
         added_values:
           - "BinaryState"
+      "006": {}
 
   spaceheat.unit:
     enum_type: "versioned"

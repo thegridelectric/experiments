@@ -78,6 +78,12 @@ three `I2cDacOutputComponent`s, board DACs `Dfr1`/`Dfr2` at 94/95
 | `instances/beech-window-gw.house0.layout-000.json` | `gw.house0.layout/000` | `6f1487127924ca70` |
 | `instances/beech-window-gw.house0.operational.params-000.json` | `gw.house0.operational.params/000` | `944b9a16497fe048` |
 
+TODO: this pair no longer validates. It was written against staging words
+the sema registry has since changed (`gw.house0.layout`) or dropped
+(`gw.house0.operational.params`, now `gw.operational.params`), and `ci.sh`
+skips it. The pair records what this window ran. The next beech window
+writes its pair against the current words; delete these two files then.
+
 **Isolation.** As the krida witness: `~/envs/dev.env` on the box (real
 beech identity, dev-broker creds only, upstream over the laptop's
 `ssh -R 1885` tunnel, admin link on the box's own mosquitto), the

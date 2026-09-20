@@ -1,10 +1,10 @@
 # alerter-no-data, 2026-09-15
 
-> What this is: does the broker alerter's NoData rule raise one
-> `gw.house.alert` when a tracked house goes quiet past the threshold,
-> and one `gw.house.alert.cleared` when its data resumes, on a real
-> broker with real (sped-up) timing? Verdict in Found; the logbook entry
-> is the index record.
+> What this is: does the broker alerter's NoData rule send one `gw.alert`
+> in state `Firing` when a tracked house goes quiet past the threshold,
+> and one `gw.alert` in state `Resolved` with the same id when its data
+> resumes, on a real broker with real (sped-up) timing? Not yet run
+> against `gw.alert`; see Found.
 
 ## Why
 
@@ -43,7 +43,7 @@ are the ones in `src/gwexp/sema_seed_request.yaml`. Four processes from
 `run.sh`:
 
 - `watcher.py`: an exclusive queue bound `#` on `ear_tx`; every
-  `gw.house.alert` / `gw.house.alert.cleared` on the bus is decoded
+  `gw.alert` on the bus is decoded
   through the alerter's vendored snapshot, printed with the routing key,
   and written to `instances/` as a sema instance.
 - the alerter, `gwalerter rabbit`, with a fresh store (`XDG_DATA_HOME`
@@ -66,64 +66,34 @@ Nothing deployed is touched. Logs go to the run dir, not the folder.
    (talk 0 to 20 s, quiet 20 to 80 s, resume 80 to 100 s). At 65 s,
    with the alert open, it stops the alerter and starts a second one on
    the same store; after the mock ends it stops everything.
-2. PASS is exactly one `gw.house.alert` with `Kind=NoData` about
-   `d1.isone.me.versant.keene.spruce.ta`, raised no earlier than 30 s
-   after the mock's last talking-phase report and before its first
-   resume report, and exactly one `gw.house.alert.cleared` with the same
-   `AlertId`, `ClearedMs` at the first resume report, `Evidence` holding
-   that report's channel readings. The second alerter raises nothing
-   (the open alert is in the store) and is the one that clears. Any
-   second alert, any alert about another house, or a missing cleared
-   word is FAIL.
+2. PASS is exactly one `gw.alert` with `State=Firing`, `Kind=NoData`,
+   about `d1.isone.me.versant.keene.spruce.ta`, `RaisedMs` no earlier
+   than 30 s after the mock's last talking-phase report and before its
+   first resume report, and exactly one `gw.alert` with `State=Resolved`
+   and the same `AlertId`, `ResolvedMs` at the first resume report,
+   `Evidence` holding that report's channel readings. The second alerter
+   sends nothing while the alert is open (the open alert is in the
+   store) and is the one that resolves it. Any second firing word, any
+   word about another house, or a missing resolved word is FAIL.
 
 ## Found
 
-**PASS** (2026-09-15, fourth run, the one whose instances are committed;
-the first two runs met the same bar but their stop step failed, see
-Analysis notes, and the third ran the scripts on the alerter's snapshot
-before this repo's carried the alert words). Code under test:
-`gridworks-alerter` `410d52e` on `jm/scaffold`, gridworks-base 0.5.13.
-
-- One `gw.house.alert`, `Kind=NoData`, about
-  `d1.isone.me.versant.keene.spruce.ta`, `RaisedMs` 30.3 s after the
-  last talking-phase report (the tick is 2 s), summary "No data from
-  d1.isone.me.versant.keene.spruce.ta since 2026-09-15 21:36:47Z".
-- The alerter restarted with the alert open raised nothing.
-- One `gw.house.alert.cleared` with the same `AlertId`, sent by the
-  restarted alerter 4 ms after the first resume report's read time, with
-  that report's one `channel.readings` as the evidence.
-- No word about any other house; the fleet root was narrowed to spruce.
-- The routing keys as witnessed:
-  `rjb.d1-alerts.alerts.gw-house-alert.d1.isone.me.versant.keene.spruce.ta`
-  and `rjb.d1-alerts.alerts.gw-house-alert-cleared.d1.isone.me.versant.keene.spruce.ta`;
-  a manager binds by house on the tail.
-
-## Timeline
-
-- 17:36:25 watcher bound on `ear_tx`; 17:36:27 alerter 1 up.
-- 17:36:32 mock talking, a report every 5 s; last one 17:36:47.
-- 17:36:52 mock quiet.
-- 17:37:18 alert raised (alerter 1).
-- 17:37:37 alerter 1 stopped with the alert open; alerter 2 started on
-  the same store.
-- 17:37:52 mock resumes; cleared word from alerter 2 in the same second.
-- 17:38:12 mock done; 17:38:16 everything stopped.
+Not run against `gw.alert`. No verdict and no instances until it is.
+Before the run, confirm the alerter checkout under test sends `gw.alert`
+and record its branch and commit here as the code under test.
 
 ## Analysis notes
 
-- Runs 1 and 2 met the bar and then kept going: the runbook's stop step
-  sent SIGINT, which a background job of a non-interactive shell ignores
-  (POSIX; python inherits the ignore and never installs
-  `KeyboardInterrupt`). The alerter stayed up past the mock, correctly
-  raised a second alert 30 s after the last resume report, and the
-  watcher overwrote the alert instance with it. The runbook now stops
-  with SIGTERM, children first, and stops the alerter four seconds
-  after the mock ends.
+- `run.sh` stops its background jobs with SIGTERM, children first, and
+  stops the alerter four seconds after the mock ends. SIGINT does not
+  work: a background job of a non-interactive shell ignores it (POSIX;
+  python inherits the ignore). An alerter left running past the mock
+  correctly raises a second alert 30 s after the last resume report.
 - Timing is sped up (30 s threshold, 2 s tick) against the deployed
   10 min / 10 s; the rule reads both from settings, so the run exercises
   the same code path at a different scale.
 - The alerter's clock is the laptop's wall clock; `RaisedMs` and
-  `ClearedMs` are the alerter's arrival times, not the scada's read
+  `ResolvedMs` are the alerter's arrival times, not the scada's read
   times.
 
 ## Folder contents & experimental method
@@ -137,20 +107,21 @@ deployed service was touched.
   a run dir it prints.
 - `mock_scada.py`: the mocked scada (talk / quiet / resume phases).
 - `watcher.py`: the bus tap that writes the alert words to `instances/`.
-- `instances/<house>-gw.house.alert-000.json` and
-  `instances/<house>-gw.house.alert.cleared-000.json`: the alert
-  transitions as witnessed on the bus (sema instances; filename grammar
-  `<subject>-<type.name>-<version>.json`, subject = the house alias).
+- `instances/<house>-firing-gw.alert-000.json` and
+  `instances/<house>-resolved-gw.alert-000.json`: written by the run, the
+  alert's two transitions as witnessed on the bus (sema instances;
+  filename grammar `<subject>-<condition>-<type.name>-<version>.json`,
+  subject = the house alias, condition = the alert's state).
 
-Regenerate from scratch (prerequisites above up):
+Run (prerequisites above up):
 
     cd ~/GridWorks/experiments/2026-09-15-alerter-no-data
     ./run.sh
 
-Read a committed instance back through the snapshot (no broker needed;
+Read an instance back through the snapshot (no broker needed;
 prints the word's fields, evidence included):
 
     cd ~/GridWorks/experiments/2026-09-15-alerter-no-data
-    uv run python -c "from gwexp.sema.codec import default_codec; from pathlib import Path; print(default_codec.from_bytes(Path('instances/d1.isone.me.versant.keene.spruce.ta-gw.house.alert.cleared-000.json').read_bytes()))"
+    uv run python -c "from gwexp.sema.codec import default_codec; from pathlib import Path; print(default_codec.from_bytes(Path('instances/d1.isone.me.versant.keene.spruce.ta-resolved-gw.alert-000.json').read_bytes()))"
 
 No `gw.readings` instance lives here; there is no display CSV.

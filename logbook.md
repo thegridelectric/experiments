@@ -13,6 +13,15 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-20 · [maple-starts-heating](2026-09-20-maple-starts-heating/)** —
+  field support bringing maple out of Standby into BufferOnly heating on
+  scada `main`. With the sieg valve parked at full send the always-running
+  primary pump cooled the buffer top 8 F in twelve minutes once the heat
+  pump stopped; with SiegLoop restored the loop closes at heat pump off and
+  the buffer holds. Also: SystemCold reports `Dormant` while backup keeps
+  the heat pump on; a stopped hall flow reads 0.02 gpm, not 0; and a
+  defrost profile from 67 spring defrosts (about two minutes under 100 W
+  inside each, commanded on).
 - **2026-09-19 · [spruce-pico-params](2026-09-19-spruce-pico-params/)** —
   why some spruce picos reboot without posting params (OPS-552). Two power
   cycles of the pico rail with the starter API listener in the scada's
@@ -50,10 +59,9 @@ first run dates them.
   folded into the morning's open, acknowledged alert and paged nobody.
 - **2026-09-15 · [alerter-no-data](2026-09-15-alerter-no-data/)** — the
   broker alerter's NoData rule on the dev broker: a mocked house talks,
-  goes quiet, resumes; one `gw.house.alert` 30 s into the silence, the
-  alerter restarted with it open raises nothing, one cleared word with
-  the same id at the first resume report. PASS. Runbook lesson: stop
-  background jobs with SIGTERM, not SIGINT.
+  goes quiet, resumes; the alerter is restarted with the alert open. Not
+  yet run against `gw.alert`; the runbook and PASS bar are in the folder.
+
 - **2026-09-12 · [beech-dist-010v-sweep](2026-09-12-beech-dist-010v-sweep/)**
   — the house0-zero-ten-outputs witness. Beech 2026-09-13 (`jm/spruce-unlimbo`
   `e6d5b39b`, short plan): the GP8403 arm works on the deployed plant, all

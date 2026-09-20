@@ -1,6 +1,6 @@
 metadata:
   registry_version: "1.0"
-  last_updated: "2026-09-15T21:40:00Z"
+  last_updated: "2026-09-20T13:20:00Z"
   maintainer: "gridworks-energy"
 
 formats:
@@ -117,6 +117,38 @@ enums:
         created: "2024-10-23T19:32:00Z"
         status: "published"
 
+  gw.alert.category:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "What kind of subject an alert is about: a house, the fleet, or a platform service; decides the kind enum and the subject field."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw.alert.category/000"
+        created: "2026-09-16T17:45:00Z"
+        status: "staging"
+
+  gw.alert.state:
+    owner: gridworks-energy
+    enum_type: "literal"
+    description: "Whether an alert record raises the alert (Firing) or resolves it (Resolved)."
+    schema_url: "https://schemas.electricity.works/enums/gw.alert.state/000"
+    created: "2026-09-16T17:45:00Z"
+    status: "staging"
+
+  gw.fleet.alert.kind:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "The condition a fleet alert is about, one value per detector, named for what a human acts on."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw.fleet.alert.kind/000"
+        created: "2026-09-16T17:45:00Z"
+        status: "staging"
+
   gw.house.alert.kind:
     latest_version: "000"
     owner: gridworks-energy
@@ -128,6 +160,18 @@ enums:
         schema_url: "https://schemas.electricity.works/enums/gw.house.alert.kind/000"
         created: "2026-09-15T19:35:00Z"
         status: "published"
+
+  gw.platform.alert.kind:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "The condition a platform-service alert is about, one value per check, named for what a human acts on."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw.platform.alert.kind/000"
+        created: "2026-09-16T17:45:00Z"
+        status: "staging"
 
   gw1.actor.class:
     latest_version: "014"
@@ -155,6 +199,10 @@ enums:
         status: "published"
         added_values:
           - "I2cThermistorReader"
+      "009":
+        schema_url: "https://schemas.electricity.works/enums/gw1.actor.class/009"
+        created: "2026-01-15T18:00:00Z"
+        status: "published"
 
   gw1.actuation.authority:
     latest_version: "000"
@@ -296,6 +344,18 @@ enums:
     created: "2026-05-13T00:00:00Z"
     status: "published"
 
+  pico.board.variant:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "The physical microcontroller board a pico-based sensor module runs on: chip generation and wifi or wired ethernet. Default Unknown."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/pico.board.variant/000"
+        created: "2026-09-08T00:30:00Z"
+        status: "published"
+
   relay.closed.or.open:
     owner: gridworks-energy
     enum_type: "literal"
@@ -359,6 +419,10 @@ enums:
         status: "published"
         added_values:
           - "BinaryState"
+      "006":
+        schema_url: "https://schemas.electricity.works/enums/spaceheat.telemetry.name/006"
+        created: "2024-11-24T00:00:00Z"
+        status: "published"
 
   spaceheat.unit:
     latest_version: "001"
@@ -457,6 +521,18 @@ types:
             - "uuid4.str"
           axiom:
             - "spaceheat.telemetry.quantity.projection:000"
+      "001":
+        schema_url: "https://schemas.electricity.works/types/data.channel.gt/001"
+        created: "2024-11-25T00:00:00Z"
+        status: "published"
+        summary: "Baseline runtime version (no prior version tracked)."
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+            - "spaceheat.name"
+            - "spaceheat.telemetry.name:006"
+            - "utc.seconds"
+            - "uuid4.str"
 
   derived.channel.gt:
     latest_version: "002"
@@ -492,6 +568,17 @@ types:
             - "gw1.unit:000"
             - "left.right.dot"
             - "positive.int"
+            - "spaceheat.name"
+            - "uuid4.str"
+      "000":
+        schema_url: "https://schemas.electricity.works/types/derived.channel.gt/000"
+        created: "2026-01-03T14:27:00Z"
+        status: "published"
+        summary: "Initial Sema version"
+        direct_dependencies:
+          structural:
+            - "gw1.unit:000"
+            - "left.right.dot"
             - "spaceheat.name"
             - "uuid4.str"
 
@@ -572,6 +659,30 @@ types:
             - "i2c.adc.type:000"
             - "left.right.dot"
             - "positive.int"
+            - "utc.milliseconds"
+            - "uuid4.str"
+
+  gw.alert:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "An alerting service's report that a condition needing human attention has started (Firing) or stopped (Resolved) holding, about a house, the fleet, or a platform service."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/types/gw.alert/000"
+        created: "2026-09-16T17:45:00Z"
+        status: "staging"
+        summary: "Initial Sema version. One word for both transitions (State), a Category choosing the Kind enum (axiom 1), House requiring a .ta AboutGNodeAlias (axiom 2), ResolvedMs iff Resolved (axiom 3)."
+        direct_dependencies:
+          structural:
+            - "channel.readings:002"
+            - "gw.alert.category:000"
+            - "gw.alert.state:000"
+            - "gw.fleet.alert.kind:000"
+            - "gw.house.alert.kind:000"
+            - "gw.platform.alert.kind:000"
+            - "left.right.dot"
             - "utc.milliseconds"
             - "uuid4.str"
 
@@ -656,46 +767,6 @@ types:
             - "spaceheat.name"
             - "utc.milliseconds"
 
-  gw.house.alert:
-    latest_version: "000"
-    owner: gridworks-energy
-    versioning_strategy: "literal"
-    description: "An alerting service's report that a condition needing human attention has been detected at a house, with the readings that fired it."
-
-    versions:
-      "000":
-        schema_url: "https://schemas.electricity.works/types/gw.house.alert/000"
-        created: "2026-09-15T19:35:00Z"
-        status: "published"
-        summary: "Initial Sema version. Axiom 1 TerminalAssetAliasConstraint: AboutGNodeAlias names the house's terminal asset (suffix .ta), never its scada."
-        direct_dependencies:
-          structural:
-            - "channel.readings:002"
-            - "gw.house.alert.kind:000"
-            - "left.right.dot"
-            - "utc.milliseconds"
-            - "uuid4.str"
-
-  gw.house.alert.cleared:
-    latest_version: "000"
-    owner: gridworks-energy
-    versioning_strategy: "literal"
-    description: "An alerting service's report that a previously raised house alert no longer holds, with the readings that cleared it."
-
-    versions:
-      "000":
-        schema_url: "https://schemas.electricity.works/types/gw.house.alert.cleared/000"
-        created: "2026-09-15T19:35:00Z"
-        status: "published"
-        summary: "Initial Sema version. Axiom 1 TerminalAssetAliasConstraint as on gw.house.alert."
-        direct_dependencies:
-          structural:
-            - "channel.readings:002"
-            - "gw.house.alert.kind:000"
-            - "left.right.dot"
-            - "utc.milliseconds"
-            - "uuid4.str"
-
   gw.readings:
     latest_version: "000"
     owner: gridworks-energy
@@ -779,6 +850,20 @@ types:
         summary: "- HpMaxKwEl: add as optional - HpMaxKwTh: required -> optional - HpTurnOnMinutes: add"
         direct_dependencies:
           structural: []
+      "005":
+        schema_url: "https://schemas.electricity.works/types/ha1.params/005"
+        created: "2026-01-16T15:53:00Z"
+        status: "published"
+        summary: "- CopIntercept: add as optional - CopOatCoeff: add as optional - CopLwtCoeff: add as optional - CopMin: add as optional - CopMinOatF: add as optional"
+        direct_dependencies:
+          structural: []
+      "004":
+        schema_url: "https://schemas.electricity.works/types/ha1.params/004"
+        created: "2025-12-04T15:54:00Z"
+        status: "published"
+        summary: "Baseline runtime version (no prior version tracked)."
+        direct_dependencies:
+          structural: []
 
   i2c.multichannel.dt.relay.component.gt:
     latest_version: "004"
@@ -810,6 +895,15 @@ types:
           structural:
             - "relay.actor.config:002"
             - "spaceheat.name"
+            - "uuid4.str"
+      "002":
+        schema_url: "https://schemas.electricity.works/types/i2c.multichannel.dt.relay.component.gt/002"
+        created: "2024-12-09T00:00:00Z"
+        status: "published"
+        summary: "- ConfigList element: relay.actor.config 001 -> 002"
+        direct_dependencies:
+          structural:
+            - "relay.actor.config:002"
             - "uuid4.str"
 
   i2c.thermistor.channel.config:
@@ -859,9 +953,9 @@ types:
     versions:
       "013":
         schema_url: "https://schemas.electricity.works/types/layout.lite/013"
-        created: "2026-09-08T21:20:00Z"
+        created: "2026-09-18T00:35:00Z"
         status: "staging"
-        summary: "- ShNodes: spaceheat.node.gt:301 -> 303 - DataChannels: data.channel.gt:002 -> 003 - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component. - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context). - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status."
+        summary: "- ShNodes: spaceheat.node.gt:301 -> 303 - DataChannels: data.channel.gt:002 -> 003 - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component. - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context). - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status. - BufferShortCycling -> KeepBufferFull: the running scada's KeepBufferFull setting, named for what the flag does."
         direct_dependencies:
           structural:
             - "data.channel.gt:003"
@@ -902,6 +996,32 @@ types:
             - "spaceheat.node.gt:301"
             - "utc.milliseconds"
             - "uuid4.str"
+      "011":
+        schema_url: "https://schemas.electricity.works/types/layout.lite/011"
+        created: "2026-02-25T19:23:00Z"
+        status: "published"
+        summary: "- Ha1Params: ha1.params:004 | 005 -> ha1.params:004 | 005 | 006 - DerivedChannels[]: derived.channel.gt:000 -> 000 | 001"
+        direct_dependencies:
+          structural:
+            - "data.channel.gt:001"
+            - "derived.channel.gt:000"
+            - "derived.channel.gt:001"
+            - "gw1.seasonal.storage.mode:000"
+            - "gw1.system.mode:000"
+            - "gw1.tank.temp.calibration.map:000"
+            - "ha1.params:004"
+            - "ha1.params:005"
+            - "ha1.params:006"
+            - "i2c.multichannel.dt.relay.component.gt:002"
+            - "left.right.dot"
+            - "pico.flow.module.component.gt:000"
+            - "pico.tank.module.component.gt:011"
+            - "positive.int"
+            - "sim.pico.tank.module.component.gt:000"
+            - "spaceheat.node.gt:300"
+            - "spaceheat.node.gt:301"
+            - "utc.milliseconds"
+            - "uuid4.str"
 
   machine.states:
     latest_version: "000"
@@ -932,7 +1052,7 @@ types:
     versions:
       "001":
         schema_url: "https://schemas.electricity.works/types/pico.flow.module.component.gt/001"
-        created: "2026-06-26T03:40:00Z"
+        created: "2026-09-18T00:35:00Z"
         status: "staging"
         summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component. - FlowMeterType: spaceheat.make.model enum value -> gw1.device.type value (pascal.case); the device-type enum is articulated by the hardware layout."
         direct_dependencies:
@@ -940,6 +1060,7 @@ types:
             - "gpm.from.hz.method:000"
             - "hz.calc.method:001"
             - "pascal.case"
+            - "pico.board.variant:000"
             - "spaceheat.name"
             - "uuid4.str"
       "000":
@@ -965,12 +1086,13 @@ types:
     versions:
       "012":
         schema_url: "https://schemas.electricity.works/types/pico.tank.module.component.gt/012"
-        created: "2026-06-26T03:40:00Z"
+        created: "2026-09-18T00:35:00Z"
         status: "staging"
         summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
         direct_dependencies:
           structural:
             - "pascal.case"
+            - "pico.board.variant:000"
             - "positive.int"
             - "temp.calc.method:000"
             - "uuid4.str"
@@ -1149,6 +1271,18 @@ types:
         direct_dependencies:
           structural:
             - "gw1.actor.class:011"
+            - "handle.name"
+            - "positive.int"
+            - "spaceheat.name"
+            - "uuid4.str"
+      "300":
+        schema_url: "https://schemas.electricity.works/types/spaceheat.node.gt/300"
+        created: "2026-01-15T18:00:00Z"
+        status: "published"
+        summary: "- ActorClass: string -> gw1.actor.class:009"
+        direct_dependencies:
+          structural:
+            - "gw1.actor.class:009"
             - "handle.name"
             - "positive.int"
             - "spaceheat.name"

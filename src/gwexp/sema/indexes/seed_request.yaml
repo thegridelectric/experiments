@@ -3,8 +3,8 @@
 # journal DB by the pico reproducers), plus the thermistor-reader
 # lineage the ads-noise harness decodes from box layouts (000-003; the
 # fleet's 000 records decode typed — no fallback needed), and the house
-# alert words the alerter witnesses decode (staging while the alerter is
-# dev-broker only). Formats and enums arrive via dependencies.
+# alert words the alerter witnesses decode. Formats and enums arrive via
+# dependencies.
 
 initial_targets:
   types:
@@ -19,8 +19,6 @@ initial_targets:
     report.event:
       versions: ["003", "004"]
     layout.lite:
-      versions: ["012", "013"]
-    gw.house.alert:
-      versions: ["000"]
-    gw.house.alert.cleared:
+      versions: ["011", "012", "013"]
+    gw.alert:
       versions: ["000"]

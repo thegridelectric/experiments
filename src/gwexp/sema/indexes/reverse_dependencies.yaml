@@ -11,11 +11,13 @@ types:
   channel.readings:
     '002':
       used_by:
-      - gw.house.alert.cleared:000
-      - gw.house.alert:000
+      - gw.alert:000
       - gw.readings:000
       - report:003
   data.channel.gt:
+    '001':
+      used_by:
+      - layout.lite:011
     '002':
       used_by:
       - layout.lite:012
@@ -24,8 +26,12 @@ types:
       - gw.readings:000
       - layout.lite:013
   derived.channel.gt:
+    '000':
+      used_by:
+      - layout.lite:011
     '001':
       used_by:
+      - layout.lite:011
       - layout.lite:012
       - layout.lite:013
     '002':
@@ -46,6 +52,7 @@ types:
   gw1.tank.temp.calibration.map:
     '000':
       used_by:
+      - layout.lite:011
       - layout.lite:012
       - layout.lite:013
   gw1.unit.quantity.projection:
@@ -53,11 +60,21 @@ types:
       used_by:
       - derived.channel.gt:002
   ha1.params:
+    '004':
+      used_by:
+      - layout.lite:011
+    '005':
+      used_by:
+      - layout.lite:011
     '006':
       used_by:
+      - layout.lite:011
       - layout.lite:012
       - layout.lite:013
   i2c.multichannel.dt.relay.component.gt:
+    '002':
+      used_by:
+      - layout.lite:011
     '003':
       used_by:
       - layout.lite:012
@@ -75,6 +92,7 @@ types:
   pico.flow.module.component.gt:
     '000':
       used_by:
+      - layout.lite:011
       - layout.lite:012
     '001':
       used_by:
@@ -82,6 +100,7 @@ types:
   pico.tank.module.component.gt:
     '011':
       used_by:
+      - layout.lite:011
       - layout.lite:012
     '012':
       used_by:
@@ -89,6 +108,7 @@ types:
   relay.actor.config:
     '002':
       used_by:
+      - i2c.multichannel.dt.relay.component.gt:002
       - i2c.multichannel.dt.relay.component.gt:003
     '003':
       used_by:
@@ -101,13 +121,18 @@ types:
   sim.pico.tank.module.component.gt:
     '000':
       used_by:
+      - layout.lite:011
       - layout.lite:012
     '001':
       used_by:
       - layout.lite:013
   spaceheat.node.gt:
+    '300':
+      used_by:
+      - layout.lite:011
     '301':
       used_by:
+      - layout.lite:011
       - layout.lite:012
     '303':
       used_by:
@@ -132,12 +157,30 @@ enums:
       used_by:
       - pico.flow.module.component.gt:000
       - pico.flow.module.component.gt:001
+  gw.alert.category:
+    '000':
+      used_by:
+      - gw.alert:000
+  gw.alert.state:
+    '000':
+      used_by:
+      - gw.alert:000
+  gw.fleet.alert.kind:
+    '000':
+      used_by:
+      - gw.alert:000
   gw.house.alert.kind:
     '000':
       used_by:
-      - gw.house.alert.cleared:000
-      - gw.house.alert:000
+      - gw.alert:000
+  gw.platform.alert.kind:
+    '000':
+      used_by:
+      - gw.alert:000
   gw1.actor.class:
+    009:
+      used_by:
+      - spaceheat.node.gt:300
     '011':
       used_by:
       - spaceheat.node.gt:301
@@ -169,6 +212,7 @@ enums:
   gw1.seasonal.storage.mode:
     '000':
       used_by:
+      - layout.lite:011
       - layout.lite:012
       - layout.lite:013
   gw1.service.mode:
@@ -178,10 +222,12 @@ enums:
   gw1.system.mode:
     '000':
       used_by:
+      - layout.lite:011
       - layout.lite:012
   gw1.unit:
     '000':
       used_by:
+      - derived.channel.gt:000
       - derived.channel.gt:001
     '001':
       used_by:
@@ -205,6 +251,11 @@ enums:
     '000':
       used_by:
       - glitch:000
+  pico.board.variant:
+    '000':
+      used_by:
+      - pico.flow.module.component.gt:001
+      - pico.tank.module.component.gt:012
   relay.closed.or.open:
     '000':
       used_by:
@@ -225,6 +276,9 @@ enums:
       used_by:
       - pico.flow.module.component.gt:000
   spaceheat.telemetry.name:
+    '006':
+      used_by:
+      - data.channel.gt:001
     '007':
       used_by:
       - data.channel.gt:002
@@ -248,25 +302,28 @@ formats:
     used_by:
     - fsm.atomic.report:001
     - machine.states:000
+    - spaceheat.node.gt:300
     - spaceheat.node.gt:301
     - spaceheat.node.gt:302
     - spaceheat.node.gt:303
   left.right.dot:
     used_by:
+    - data.channel.gt:001
     - data.channel.gt:002
     - data.channel.gt:003
+    - derived.channel.gt:000
     - derived.channel.gt:001
     - derived.channel.gt:002
     - fsm.atomic.report:001
     - glitch:000
     - gw.adc.waveform:000
+    - gw.alert:000
     - gw.channel.gap.stats:000
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
-    - gw.house.alert.cleared:000
-    - gw.house.alert:000
     - gw.readings:000
+    - layout.lite:011
     - layout.lite:012
     - layout.lite:013
     - machine.states:000
@@ -307,6 +364,7 @@ formats:
     - gw.channel.noise.stats:000
     - i2c.thermistor.channel.config:000
     - i2c.thermistor.reader.component.gt:000
+    - layout.lite:011
     - layout.lite:012
     - layout.lite:013
     - pico.tank.module.component.gt:011
@@ -316,6 +374,7 @@ formats:
     - report:003
     - sim.pico.tank.module.component.gt:000
     - sim.pico.tank.module.component.gt:001
+    - spaceheat.node.gt:300
     - spaceheat.node.gt:301
     - spaceheat.node.gt:302
     - spaceheat.node.gt:303
@@ -326,8 +385,10 @@ formats:
     used_by:
     - channel.config:000
     - channel.readings:002
+    - data.channel.gt:001
     - data.channel.gt:002
     - data.channel.gt:003
+    - derived.channel.gt:000
     - derived.channel.gt:001
     - derived.channel.gt:002
     - fsm.full.report:001
@@ -343,6 +404,7 @@ formats:
     - pico.flow.module.component.gt:001
     - relay.actor.config:002
     - relay.actor.config:003
+    - spaceheat.node.gt:300
     - spaceheat.node.gt:301
     - spaceheat.node.gt:302
     - spaceheat.node.gt:303
@@ -352,13 +414,13 @@ formats:
     - fsm.atomic.report:001
     - glitch:000
     - gw.adc.waveform:000
+    - gw.alert:000
     - gw.channel.gap.stats:000
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
-    - gw.house.alert.cleared:000
-    - gw.house.alert:000
     - gw.readings:000
+    - layout.lite:011
     - layout.lite:012
     - layout.lite:013
     - machine.states:000
@@ -367,23 +429,27 @@ formats:
     - report:003
   utc.seconds:
     used_by:
+    - data.channel.gt:001
     - data.channel.gt:002
     - data.channel.gt:003
     - report:003
   uuid4.str:
     used_by:
+    - data.channel.gt:001
     - data.channel.gt:002
     - data.channel.gt:003
+    - derived.channel.gt:000
     - derived.channel.gt:001
     - derived.channel.gt:002
     - fsm.atomic.report:001
     - fsm.full.report:001
     - gw.adc.waveform:000
-    - gw.house.alert.cleared:000
-    - gw.house.alert:000
+    - gw.alert:000
+    - i2c.multichannel.dt.relay.component.gt:002
     - i2c.multichannel.dt.relay.component.gt:003
     - i2c.multichannel.dt.relay.component.gt:004
     - i2c.thermistor.reader.component.gt:000
+    - layout.lite:011
     - layout.lite:012
     - layout.lite:013
     - pico.flow.module.component.gt:000
@@ -395,6 +461,7 @@ formats:
     - report:003
     - sim.pico.tank.module.component.gt:000
     - sim.pico.tank.module.component.gt:001
+    - spaceheat.node.gt:300
     - spaceheat.node.gt:301
     - spaceheat.node.gt:302
     - spaceheat.node.gt:303

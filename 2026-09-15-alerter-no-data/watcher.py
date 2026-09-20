@@ -20,16 +20,21 @@ import pika
 from gwbase.topology import EAR_EXCHANGE
 from gwbase.transport_encoding import parse_routing_key
 from gwexp.sema.codec import default_codec
-from gwexp.sema.types import GwHouseAlert, GwHouseAlertCleared
+from gwexp.sema.types import GwAlert
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
-ALERT_TYPES = {GwHouseAlert.type_name_value(), GwHouseAlertCleared.type_name_value()}
+ALERT_TYPE = GwAlert.type_name_value()
 
 
-def instance_path(out_dir: Path, word: GwHouseAlert | GwHouseAlertCleared) -> Path:
-    """`<subject>-<type.name>-<version>.json`, subject = the house alias."""
-    return out_dir / f"{word.about_g_node_alias}-{word.type_name}-{word.version}.json"
+def instance_path(out_dir: Path, word: GwAlert) -> Path:
+    """`<subject>-<condition>-<type.name>-<version>.json`: subject is the
+    house alias, condition the alert's state, so the firing and resolved
+    words of one alert are two files."""
+    return out_dir / (
+        f"{word.about_g_node_alias}-{word.state.value.lower()}"
+        f"-{word.type_name}-{word.version}.json"
+    )
 
 
 def main(out_dir: Path) -> None:
@@ -52,13 +57,14 @@ def main(out_dir: Path) -> None:
     ) -> None:
         routing_key = str(method.routing_key)
         envelope = parse_routing_key(routing_key)
-        if envelope.type_name not in ALERT_TYPES:
+        if envelope.type_name != ALERT_TYPE:
             return
         word = default_codec.from_bytes(body)
-        assert isinstance(word, GwHouseAlert | GwHouseAlertCleared)
+        assert isinstance(word, GwAlert)
         print(
             f"{time.strftime('%H:%M:%S')} {routing_key}\n  "
-            f"{word.type_name} {word.kind.value} about {word.about_g_node_alias} "
+            f"{word.type_name} {word.state.value} {word.kind.value} "
+            f"about {word.about_g_node_alias} "
             f"id {word.alert_id}",
             flush=True,
         )
