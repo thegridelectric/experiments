@@ -94,7 +94,7 @@ case "$HOUSE" in
     ;;
   spruce)
     SERVICES="spruce-winter-hack gwspaceheat gwspaceheat-restart.timer"
-    BOOT_ENV="SCADA_PICO_CYCLER_STATE_LOGGING=true"
+    BOOT_ENV="SCADA_PICO_CYCLER_STATE_LOGGING=true SCADA_UNKNOWN_CHANNEL_LOGGING=true"
     LTN_LAYOUT="$TLAYOUTS/output/spruce/gw.nolan.layout.json"
     LTN_OPS="$TLAYOUTS/output/spruce/gw.nolan.operational.params.json"
     # gw108 relay board 0x21, output register 3
@@ -102,7 +102,7 @@ case "$HOUSE" in
     ;;
   beech)
     SERVICES="gwspaceheat gwspaceheat-restart.timer"
-    BOOT_ENV=""
+    BOOT_ENV="SCADA_UNKNOWN_CHANNEL_LOGGING=true"
     LTN_LAYOUT="$TLAYOUTS/output/beech/hardware-layout.generated.json"
     LTN_OPS="$TLAYOUTS/output/beech/operational-params.generated.json"
     # PCF8575: one 16-bit port word per Krida, read as two bytes; a low bit is an energized relay
