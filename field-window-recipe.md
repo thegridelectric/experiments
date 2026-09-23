@@ -129,3 +129,19 @@ The production `hardware-layout.json` follows the ordinary scada deploy
 Window logs and the broker capture arrive in `../scratch/`; window layouts on
 the box pull read-only from
 `<house>:~/.config/gridworks/scada-experiment/`.
+
+## Records: only the last run is kept
+
+Unlike an ordinary experiment, the field-window practice does not archive
+every round. It keeps only the **most recent** run — its window log(s), any
+bus/port capture, and the `gw.experiment.run` instance that `emit_instances.py`
+builds from the log's first and last stamped lines. **Opening a new window
+deletes the previous run's artifacts first**; git history and the logbook line
+carry what a past round taught, so nothing durable is lost. `emit_instances.py`
+is the only code that persists between runs.
+
+## On Tap (for Jessica)
+
+- **Set up a local LTN as part of the beta field test** — this way we get all
+  the `report.event`s.
+- **Test that an incorrect ActuationAuthority results in no DispatchContract.**

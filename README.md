@@ -22,6 +22,11 @@ as validated Sema instances.
   become dots), ordered `<subject>-<condition?>-<type.name>-<version>.json`
   — the same grammar as the S3 eventstore keys, parsed by a bare
   split on dash.
+- `beta-field-windows/` — the one exception to one-folder-per-experiment:
+  an ongoing field-test *practice*, not a dated one-shot, so it carries no
+  date and keeps only the **last run** (a new window deletes the previous
+  run's data first). Its durable how-to is `field-window-recipe.md`; the
+  folder holds `emit_instances.py` and the current run. See its README.
 - `src/gwexp/sema/` — the vendored Sema snapshot runtime (GENERATED —
   never hand-edit). Experiment scripts construct result instances
   through its classes so schema and axioms validate at construction.
@@ -50,7 +55,9 @@ as validated Sema instances.
   bytes used.
 - Wire-encoded data files are the evidence and stay untouched;
   human-readable `-readable.csv` / `-display.csv` siblings are
-  regenerated, not edited. Every folder holding a `gw.readings`
+  regenerated, not edited. (The `beta-field-windows/` practice is the one
+  exception: it keeps only the last run and deletes prior evidence, since
+  each round re-generates its own dataset.) Every folder holding a `gw.readings`
   instance ends its README with the standard "From the instance to
   the display CSV" paragraph
   (`pull_readings.py --display-from <instance>.json` regenerates the

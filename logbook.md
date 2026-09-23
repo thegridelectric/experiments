@@ -30,7 +30,7 @@ first run dates them.
   different set each time); path, name and word are right whenever it is
   sent. The fix is firmware-side retry, or the scada noticing an unchecked
   pico.
-- **2026-09-19 · [beta-field-windows](2026-09-18-beta-field-windows/)** —
+- **2026-09-19 · [beta-field-windows](beta-field-windows/)** —
   round three (`jm/spruce-unlimbo` `dfc35644`), beech and spruce, `--debug`.
   PASS on both new commits: the startup announcement sends `layout.lite`
   then the `ta.deed` (spruce) or a `no-ta-deed` Warning glitch (beech), once
@@ -39,7 +39,7 @@ first run dates them.
   (the power meter never feeds the derived generator), a zone calling at
   boot is invisible until the 300 s GPIO capture boundary, five spruce
   picos reboot without posting params.
-- **2026-09-18 · [beta-field-windows](2026-09-18-beta-field-windows/)** —
+- **2026-09-18 · [beta-field-windows](beta-field-windows/)** —
   the closing rung of correct-house0: the unlimbo scada (`jm/spruce-unlimbo`
   `cd34f5ef`) in a bounded window on spruce (Nolan layout) and beech (House0,
   ops Standby) against the tlayouts-generated pairs, read through the log and
