@@ -13,6 +13,22 @@ artifacts are this file and `spot_check.py`; individual runs print to the
 terminal and stop there. A one-off analysis worth keeping is the signal that
 the question was really an experiment — promote it to a folder instead.
 
+The live counterpart — running new code on a house rather than reading what it
+already emitted — is `field-window-recipe.md`.
+
+## Spruce is special
+
+Most boxes run production off `main`. **Spruce does not**: its production plant
+control (`gwspaceheat`, and in season the `spruce-winter-hack`) runs the
+scada `actual-spruce` branch against the tlayouts `actual-spruce` layout — a
+different branch in both repos than the rest of the fleet. Its beta window
+runs the `jm/spruce-unlimbo` scada against the tlayouts `jm/spruce` layout.
+For a spot-check this matters two ways: the channels and pico ids in spruce's
+journal reflect the `actual-spruce` layout, not `jm/spruce`; and emissions
+under `hw1.isone.me.versant.keene.spruce.scada` come from whichever scada was
+running the window (see `field-window-recipe.md`). Nail the window in ET before
+trusting a spruce spot-check.
+
 ## The three things every spot-check assembles
 
 1. **House → scada alias.** The fleet has no single canonical lookup for this:

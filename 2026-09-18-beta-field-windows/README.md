@@ -33,6 +33,9 @@ So for example a Standby house cannot be dispatched.
 
 ## Process
 
+The operational how-to — the two window kinds, the box layouts, the scripts,
+and running a round — is `../field-window-recipe.md`. What stays below is the
+experiment-specific method for this round series.
 
 **A round** — bring up, collect, close.
 
