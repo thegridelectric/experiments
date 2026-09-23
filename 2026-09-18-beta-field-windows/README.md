@@ -1,143 +1,78 @@
 # beta-field-windows, since 2026-09-18
 
 > What this is: the recurring field test of the `jm/spruce-unlimbo` scada.
-> After roughly each spoke the branch runs in a bounded window on one house
-> of each layout family. This README states what the rounds have
-> established (**Known**) and what they have opened (**Mystery**, under
-> Process); each round rewrites it, and the per-round narrative lives in git
-> history and the logbook. Evidence files and `gw.experiment.run` instances
-> accumulate in the folder, named by house and window stamp.
 
-## Why
+## Systems with beta windows
 
-The unlimbo work rewrote how a layout is generated, decoded and acted on.
-The suite, the sim driver and the tlayouts twins all agree with a layout by
-construction, so none of them says a real house boots on the generated
-pair, that the actors needing hardware start, or that the control code the
-layout selects is the code the house should run this season. A window on a
-real house is the only check that does.
+The houses the branch runs against, and the mode each is in. A window is set
+up for spruce and beech; the rest are the layouts arriving this fall.
 
-One house per layout family per round: **spruce** for `gw.nolan.layout`
-(`ActuationAuthority` Active, the path that actuates), **beech** for
-`gw.house0.layout` (Standby, the shape the Millinocket installs arrive in),
-and one of **fir / elm / oak** for `gw.house0.no.sieg` once that layout
-ships. A round may skip a family the spoke could not have touched; the
-logbook line says which families ran.
+| System | Layout | ServiceMode | SeasonalStorageMode | LTN / LocalControl | Beta window up |
+|---|---|---|---|---|---|
+| spruce | `gw.nolan.layout` | Heating | AllTanks | LocalControl | yes |
+| beech | `gw.house0.layout` | Heating | AllTanks | LocalControl | yes |
+| maple | `gw.house0.layout` | Heating | AllTanks | LocalControl | no |
+| fir | `gw.house0.no.sieg.layout` | Heating | TBD | LocalControl | no |
+| oak | `gw.house0.no.sieg.layout` | Heating | TBD | LocalControl | no |
+| elm | `gw.house0.monoblock.layout` | Heating | — | LocalControl | no |
 
-## Known
+LTN dispatch requires:
+  - LTN's `.env` sets `monitor_only=False`
+  - the Scada's ops word has 
+     - ActuationAuthority Active
+     - ServiceMode Heating
+  - The Scada has a TaDeed
+     
+So for example a Standby house cannot be dispatched.
 
-What the rounds have established about the unlimbo scada.
+## Left to check or figure out
 
-- **The generated pairs boot clean and select the right control.** Spruce
-  boots the Nolan control (Active); beech boots House0 `StandbyLocalControl`
-  (Standby). Zero tracebacks, no decode failures on either.
-- **The Nolan control is unfit to run spruce in the heating season.** Its
-  TOU-cooling branch takes zones off their thermostats and shuts the heat
-  pump down while `ServiceMode` is Heating. The winter hack stays spruce's
-  plant controller; the Nolan seasonal branch must be settled before it
-  runs a real house.
-- **Standby is not "nothing actuated".** At boot the control energizes the
-  relays that hold the plant off and the sieg loop makes a move. Expect
-  relay motion at boot on an installed Standby house.
-- **The window's relay writes reach the Krida bus.** On beech the
-  `vdc-relay` bit on the port word toggles on the bus exactly against the
-  log's `OpenRelay` / `CloseRelay` pairs — the window drives real hardware,
-  not just the log.
-- **Relay state is carried in `StateList`, not as readings.** Relay-state
-  channels are absent from `ChannelReadingList` because a report carries
-  them in `StateList`; that absence is not missing data.
-- **The scada announces its layout and deed once per run, on a real box.**
-  When the upstream link first goes send-capable the scada sends its
-  `layout.lite` to the LTN, then either the `ta.deed` if one is configured
-  or a `no-ta-deed` Warning glitch naming the deed path if not. Both
-  branches are witnessed on real houses, each exactly once per run: spruce
-  sent its `ta.deed` (TaAlias `hw1.isone.me.versant.keene.spruce.ta`,
-  `ValidatedRealAssetAndGps`), beech with no deed sent the glitch
-  (`Details "No ta.deed at …/ta-deed.json"`).
-- **A matching pico reports its identity at DEBUG, and the glitch rides the
-  wire.** A pico posts its params to the scada at its own boot, and the
-  scada checks the board and MicroPython version against the layout only
-  inside that post; a match sends a Debug `pico-identity-matches` glitch
-  that reaches the LTN, not just the box log. Witnessed on spruce for the
-  four picos that posted (store-btu, buffer, tank1, secondary-btu), zero
-  "differs from the layout" Warnings. A pico that posts no params is never
-  checked.
-- **The boot params post is a race any pico can lose.** On a power cycle
-  some picos resume readings with no params post, a different set each
-  boot, and whenever the post is sent its path, name and word are right
-  (`../2026-09-19-spruce-pico-params/`). A pico that misses runs unchecked
-  until its next boot.
-- **The boot-time command tree matches each house's authority.** Both
-  houses set `auto.lc.n` at boot and the flat-declared actuators answer
-  under it (`auto.lc.n.hp-boss.hp-scada-ops-relay`); spruce then starts the
-  Nolan control, beech's Standby control drives everything off.
-- **A zone already calling at boot is invisible until the capture
-  boundary.** `GpioSensor` starts `latest_value` at 0 and publishes on
-  change or at the `CapturePeriodS` boundary (300 s). The spruce optos are
-  `DigitalZeroIsActive`, so a calling zone reads 0, equals the initial
-  value and publishes nothing: no `-opto-input` and no `-heat-call` for up
-  to five minutes after boot. Spruce zones 1 and 2 were calling through
-  both rounds' windows, which is why they reported nothing while the idle
-  zones 3–5 did.
-- **A whitewire house derives no heat calls.** The derived generator emits
-  a zone `heat-call` only when a reading for its input channel is sent to
-  it. Beech's inputs are the `-whitewire-pwr` channels the power meter
-  captures, and the power meter sends its readings to the scada only, so
-  beech's `heat-call` channels never get a value and `dist_pump_monitor`
-  reads nothing. The sim pairs feed heat calls through the sim sensor, so
-  the suite does not see it.
-- **The open-thermistor `ZeroDivisionError` channels feed nothing.** Spruce
-  `fancoil-depth3` and `pipes1-depth3` sit at the 3.3 V rail; neither is an
-  input to a derived channel, the store pass or the buffer predicates.
-- **Both real heat pumps have a defrost signature.** Spruce's hp-odu is
-  `SamsungAE055FCYDCG`, beech's `LGARUM048GSS5`; both are keys in
-  `DEFROST_SIGNATURES`.
+ - **Set up a local LTN as part of the beta field test** This way we get all the report.events 
+ - **Test that an incorrect ActuationAuthority results in no DispatchContract**.  
+
 
 ## Process
 
-Temporary while the branch is off `main`; removed when the deployment spoke
-completes. The window-open hook prints this section before any
-`_window.sh on`, so a round cannot start without reading it.
 
-**A round.**
+**A round** — bring up, collect, close.
 
-1. Read the current mysteries below. Pick the ones this round can shed
-   light on and decide what evidence would do it, before anything is
-   switched on.
-2. Pre-flight — `./<house>_window.sh status` on each house. Push the scada
-   head and pull it on the box; regenerate the window pair if the spoke
-   changed a gen and place it with `./put_layout.sh <house> <change>`. `on`
-   refuses when the box checkout or the window pair is behind — a refusal
-   is the pre-flight doing its job.
-3. Open the windows. `on` starts `capture_broker.py` on the laptop's dev
-   broker if none is running and refuses to open a window without a
-   proven capture; a bus-side capture (port samples, register reads) is
-   still started by hand, before `on`, and runs past the last expected
-   actuation. `--debug` puts the scada's loggers at DEBUG; `--ltn` runs
-   the LTN on the laptop against the target's layout. `dev` is the
-   laptop's scada checkout on its sim pair, the rehearsal for a house:
+1. **Bring up.** Status the house you are running:
+   `./<house>_window.sh status` (plant services, window, tunnel, relay
+   bits). Push the scada head and pull it on the box; if the spoke changed
+   a gen, regenerate the window pair and place it with
+   `./put_layout.sh <house> <change>`. Then open:
 
-        ./house_window.sh dev on 5 --debug --ltn
-        ./beech_window.sh on 30 --debug
-        ./spruce_window.sh on 30 --debug
+        ./<house>_window.sh on <minutes> [--debug] [--ltn]
         ../gridworks-scada/gw_spaceheat/venv/bin/gwa watch <house>
 
-4. Close with `off` if the bound has not already closed it; check `status`
-   shows the recorded plant services running again; stop the capture after
-   the last window:
+   `on` starts `capture_broker.py` on the laptop's dev broker if none is
+   running and refuses without a proven capture; it also refuses when the
+   box checkout or the window pair is behind the laptop. Start any bus-side
+   capture (port samples, register reads) by hand before `on`. `--debug`
+   sets the scada loggers to DEBUG; `--ltn` runs the LTN on the laptop
+   against the target's layout; `dev` runs the laptop's own scada on its
+   sim pair as a rehearsal.
 
-        ./spruce_window.sh off
-        ./beech_window.sh off
-        ./house_window.sh capture off
+2. **Collect.** The broker capture records everything published to the dev
+   broker. Snapshots, power, forecasts, glitches and the layout/deed
+   announcement publish with no LTN; **`report.event`s do not** — they ride
+   the acked path and, with no LTN as the peer, persist on the box instead.
+   Pull them after the window, read-only:
 
-5. Record in the same sitting: a `gw.experiment.run` instance per house
+        scp -r <house>:/home/pi/.local/share/gridworks/scada-experiment/event/ ./<house>-events/
+
+   Or open the window with `--ltn` to get the reports live on the capture.
+
+3. **Close.** `./<house>_window.sh off` if the bound has not already closed
+   it, then `status` to confirm the recorded plant services are running
+   again. Stop the capture after the last window:
+   `./house_window.sh capture off`.
+
+4. **Record** (same sitting): a `gw.experiment.run` instance
    (`uv run python emit_instances.py`), evidence files with provenance
-   headers, a logbook line, and this README brought current. Window logs,
-   the LTN log and the broker capture (`broker-capture-<stamp>.jsonl` with
-   its provenance sidecar) arrive in `../scratch/`; event files and window layouts are
-   pulled off the boxes read-only with `scp` from
-   `~/.local/share/gridworks/scada-experiment/event/` and
-   `~/.config/gridworks/scada-experiment/`.
+   headers, a logbook line, and this README brought current. Window logs
+   and the broker capture arrive in `../scratch/`; window layouts pull
+   read-only from `<house>:/home/pi/.config/gridworks/scada-experiment/`.
 
 **Distillation rule.** A mystery a round resolves leaves the list and its
 answer joins **Known**; how the understanding got there stays in git
@@ -145,36 +80,6 @@ history and the logbook. Route a defect to the spoke that owns the code, or
 to the odds-and-ends spoke when none does; an executor claim a round
 verifies gets its `Reviewed` pointer here.
 
-**Current mysteries.**
-
-- **The beech sieg loop's initialization.** It initializes Blind, assumes
-  `FullyKeep`, runs a 110 s full-send move that ends in `SteadyBlend`
-  reporting itself zero seconds long, then sits "Engaging brain, control
-  state Blind, hp boss HpOff". Must be understood before any actuating
-  (BufferOnly / TOU) run on beech.
-- **Pico ingestion on both boxes.** One dead pico (spruce floor1) triggers
-  a bank-wide vdc-cut reboot every ~65 s, so every healthy pico pays for
-  the dead one. On beech every pico flatlined in waves and none recovered
-  (`0/2 zone gw channels populated`); in a 70 s beech window only
-  `dist2-flow` delivered data, and store-flow, sieg-flow and dist2-flow were
-  reported `PicoMissing`. Why they flatline en masse, and whether the
-  bank-wide reboot is the right response, are both open.
-- **Beech's pico params are unwitnessed.** No beech pico posted params in
-  either round, so neither the identity check nor the older-firmware
-  `TankModuleParams` the current word is expected to reject has been seen.
-  Needs a beech window long enough to hold a pico-cycler reboot.
-- **A Warning glitch the scada sends is not in the box log.** Beech's
-  `no-ta-deed` shows only as an outbound `Glitch` line; the
-  `ShNodeActor` senders log `Warning Glitch: …` but the announcement builds
-  its `Glitch` directly. Someone reading the box log alone does not see it.
-- **Volts-to-temp divides by zero at the rail.** An open thermistor sits on
-  the 3.3 V rail and the conversion raises `ZeroDivisionError` (a
-  `gridworks.event.problem`) instead of refusing the reading. Seen on spruce
-  `fancoil-depth3` and `pipes1-depth3`, once each per window.
-- **Beech report starvation.** Only the eGauge power channels and the
-  0-10V readbacks reported; every thermistor, flow, BTU, water-temp and
-  zone channel was absent. Confirm this is all downstream of the pico
-  ingestion mystery.
 
 ## Folder contents & experimental method
 
