@@ -138,15 +138,16 @@ The production `hardware-layout.json` follows the ordinary scada deploy
         ssh <house> tail -f /tmp/<house>-window/boot.log
 
 2. **Collect.** The broker capture records everything published to the dev
-   broker. Snapshots, power, forecasts and the layout/deed announcement publish
-   with no LTN; `report.event`s do not — they ride the acked path and, with no
-   LTN peer, persist on the box. Pull them after the window, read-only:
-
-        scp -r <house>:/home/pi/.local/share/gridworks/scada-experiment/event/ ../scratch/<house>-events/
-
-   Or open with `--ltn` to get the reports live on the capture. The pulled
-   files sit in per-day folders and are named by a UTC ISO stamp, so filter
-   a window by its UTC clock, not by unix ms.
+   broker. Snapshots, power, forecasts, glitches and the layout/deed
+   announcement publish with no LTN. Events, `report.event` included, ride
+   the acked path: with no LTN peer the upstream link never goes active and
+   they persist on the box. `off` pulls the ones stamped since the window's
+   start into `../scratch/<house>-events-<stamp>/` and prints the
+   `report.event` count; open with `--ltn` to get them live on the capture
+   instead. Every round reads the reports as well as the snapshots: which
+   channels each slot carries and at what cadence (a first reading at boot,
+   one per change, one per 300 s boundary). A bounded window is at least
+   11 minutes so it saves the first full-slot report; `on` refuses shorter.
 
    A channel with no value whose capturing node is a pico is confirmed
    missing after the window, with the scada stopped, by dropping the 5V

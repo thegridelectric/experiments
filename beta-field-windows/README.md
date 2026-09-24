@@ -42,15 +42,26 @@ messages: spruce 10 snapshots, beech 10).
   2026-09-08, `…beech.ta` issued 2026-09-21, both
   `ValidatedRealAssetAndGps`).
 - **Round-four checklist from the spoke** — spruce zones publish
-  `-opto-input` and `-heat-call` in the first snapshot (19:43:42, ~80 s
-  after boot); one pico-cycler reboot at startup and none after;
+  `-opto-input` and `-heat-call` from the first poll: the persisted
+  report stamps all ten at 23:42:24Z, the second of
+  `gridworks.event.startup`, and the first snapshot carries them 9 s
+  later (19:43:42 on the laptop clock); one pico-cycler reboot at startup and none after;
   `fancoil-depth3` gave one `open-thermistor` Warning and `pipes1-depth3`
   none; beech `zone1-down-heat-call` / `zone2-up-heat-call` carry 0 from
   the power meter; beech no longer lacks a deed; the beech tank picos do
   post params and the older-firmware `TankModuleParams` is refused.
 
+- **Reports stayed on the boxes.** With no LTN the upstream link never
+  went active, so every event, `report.event` included, persisted on the
+  box and none reached the capture. Each house saved one report, the
+  partial slot 23:40–23:45Z (spruce 86 channels, beech 59); the windows
+  closed before the 23:50 boundary, so no full-slot report and no read of
+  the 300 s cadence. The rest are startup and comm events, and
+  beech's 16 `gridworks.event.problem`s.
+
 Files: `broker-capture-20260923-194329.jsonl`, `spruce-window-…195122.log`,
-`beech-window-…195134.log`, each with a provenance sidecar;
+`beech-window-…195134.log`, `spruce-events/`, `beech-events/` (the boxes'
+persisted events), each with a provenance sidecar;
 `instances/{beech,spruce}-gw.experiment.run-000.json`. Capture stamps are the
 laptop clock, ~70 s ahead of the boxes.
 

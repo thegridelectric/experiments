@@ -1,0 +1,10 @@
+Source: beech:/home/pi/.local/share/gridworks/scada-experiment/event/2026-09-23T00:00:00+00:00/,
+  the window scada's event persister. With no LTN the upstream link never
+  went active, so every generated event (report.event included) was saved
+  here instead of published; none of these are on the broker capture.
+Window: every file stamped 2026-09-23T23:4x/23:5x UTC (box clock), which is
+  all of that day's files from the round-four window; 24 files.
+Pulled: 2026-09-24 by scp, read-only; the box copies were left in place.
+Timestamps: file names and payload stamps are the box clock (UTC); the laptop
+  capture runs 69 s ahead of it.
+Regeneration: not possible. A new capture is a new run.

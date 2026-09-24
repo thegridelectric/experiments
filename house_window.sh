@@ -14,14 +14,19 @@
 #                                            laptop's gw-dev-rabbit, stop the house's
 #                                            running plant services, boot the window
 #                                            scada. No minutes = a standing window
-#                                            until `off`.
+#                                            until `off`. A bounded window is at
+#                                            least MIN_WINDOW_MIN minutes, so it
+#                                            crosses two report boundaries and
+#                                            saves the first full-slot report.
 #                                              --debug  scada (and LTN) loggers at DEBUG
 #                                              --ltn    run the LTN on the laptop against
 #                                                       the target's layout, as the
 #                                                       scada's upstream peer
 #   ./house_window.sh <target> off           kill the window scada (and the LTN), copy
-#                                            the logs to ../scratch/, confirm the
-#                                            stopped services are back
+#                                            the log and this window's persisted
+#                                            events to ../scratch/, count the
+#                                            report.events, confirm the stopped
+#                                            services are back
 #   ./house_window.sh <target> status        services, window scada, tunnel, relay bits
 #   ./house_window.sh capture off|status     stop / show the broker capture; it is
 #                                            shared by every open window, so it is
@@ -60,7 +65,11 @@ TLAYOUTS="$HERE/../tlayouts"
 WINDOW_BOOT="$HERE/2026-08-10-ads-declared-rate/window_boot.py"
 CAPTURE_PID="$HERE/.capture_broker.pid"
 CAPTURE_OUT="$SCRATCH/capture.out"
-usage() { sed -n 2,29p "$0"; exit 1; }
+usage() { sed -n 2,34p "$0"; exit 1; }
+# Reports go out on 300 s wall-clock boundaries; the first covers the partial
+# slot after boot, the second is the first full slot. 11 min crosses both with
+# a minute left for boot.
+MIN_WINDOW_MIN=11
 
 capture_up() { [ -f "$CAPTURE_PID" ] && kill -0 "$(cat "$CAPTURE_PID")" 2>/dev/null; }
 ensure_capture() {
@@ -122,6 +131,9 @@ if [ "${2:-}" = on ]; then
     esac
   done
 fi
+if [ "$MIN" -gt 0 ] && [ "$MIN" -lt "$MIN_WINDOW_MIN" ]; then
+  echo "refusing: a bounded window is at least $MIN_WINDOW_MIN min so it saves a full-slot report; no minutes = a standing window"; exit 1
+fi
 SECS=$((MIN * 60))
 DEBUG_ENV=""
 [ "$DEBUG" = 0 ] || DEBUG_ENV="SCADA_LOGGING__BASE_LOG_LEVEL=10 SCADA_LOGGING__LEVELS__MESSAGE_SUMMARY=10"
@@ -173,6 +185,9 @@ fi
 
 BOX_LOG_DIR="/tmp/$HOUSE-window"
 STOPPED="$BOX_LOG_DIR/stopped-services"
+# UTC start of the window; persisted event files are named by a UTC ISO stamp
+STARTED="$BOX_LOG_DIR/started-utc"
+BOX_EVENT_DIR="/home/pi/.local/share/gridworks/scada-experiment/event"
 
 tunnel_up() { pgrep -f "ssh -f -N.*-R 1885:localhost:1885 $HOUSE" >/dev/null; }
 window_up() { ssh "$HOUSE" 'pgrep -f "[w]indow_boot.py" >/dev/null'; }
@@ -200,6 +215,7 @@ case "${2:-}" in
     # SECS=0 is the standing window (window_boot.py runs until killed), so the
     # `timeout` wrapper is dropped in that case.
     ssh "$HOUSE" "mkdir -p $BOX_LOG_DIR
+      date -u +%Y-%m-%dT%H:%M:%S > $STARTED
       for s in $SERVICES; do systemctl is-active -q \$s && echo \$s; done > $STOPPED
       echo \"stopping: \$(paste -sd' ' $STOPPED)\"
       [ ! -s $STOPPED ] || sudo systemctl stop \$(cat $STOPPED)
@@ -222,6 +238,16 @@ case "${2:-}" in
     stop_ltn
     LOG="$SCRATCH/$HOUSE-window-$(date +%Y%m%d-%H%M%S).log"
     scp -q "$HOUSE:$BOX_LOG_DIR/boot.log" "$LOG" 2>/dev/null && echo "window log: $LOG" || echo "no boot.log to copy"
+    # Events the upstream link did not deliver (no LTN, or before it acked)
+    # persist on the box; pull the ones stamped at or after this window's start.
+    EVENTS="$SCRATCH/$HOUSE-events-$(date +%Y%m%d-%H%M%S)"
+    mkdir -p "$EVENTS"
+    ssh "$HOUSE" "[ -f $STARTED ] || exit 0; cd $BOX_EVENT_DIR 2>/dev/null || exit 0
+      start=\$(cat $STARTED); find . -type f -name '*.json' | while read f; do [[ \$(basename \"\$f\") > \$start ]] && echo \"\$f\"; done | tar -cf - -T - 2>/dev/null" | tar -xf - -C "$EVENTS" 2>/dev/null || true
+    N_EVENTS="$(find "$EVENTS" -type f -name '*.json' | wc -l | tr -d ' ')"
+    N_REPORTS="$(grep -l '"TypeName": *"report.event"' -r "$EVENTS" 2>/dev/null | wc -l | tr -d ' ')"
+    echo "events: $N_EVENTS persisted on the box, $N_REPORTS report.event -> $EVENTS"
+    [ "$N_REPORTS" -gt 0 ] || echo "WARNING: no report.event on the box; a window run with --ltn delivers them to the capture instead"
     # The box-side job starts the recorded services when the window scada
     # exits; start them here as well so `off` is the restore even when that job
     # is gone (a reboot mid-window clears /tmp; enabled services start at boot).
