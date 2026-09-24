@@ -2,8 +2,8 @@
 # Run a bounded window of the unlimbo scada, from the laptop, in one word each:
 # on a house (swapping it off its deployed plant control for the window) or in
 # dev (the laptop's scada checkout on its sim layout). Every window is recorded
-# by capture_broker.py on the laptop's gw-dev-rabbit. spruce_window.sh and
-# beech_window.sh call this with their house.
+# by capture_broker.py on the laptop's gw-dev-rabbit. spruce_window.sh,
+# beech_window.sh and maple_window.sh call this with their house.
 #
 #   ./house_window.sh <target> on [minutes] [--debug] [--ltn]
 #                                            start the broker capture if none is
@@ -32,7 +32,7 @@
 #                                            shared by every open window, so it is
 #                                            stopped by hand, after the last `off`
 #
-# <target> is dev, spruce or beech (a house is the ssh host of the same name).
+# <target> is dev, spruce, beech or maple (a house is the ssh host of the same name).
 #
 # `on` for a house refuses unless:
 #   - the box's window pair (~/.config/gridworks/scada-experiment/) is
@@ -115,6 +115,14 @@ case "$HOUSE" in
     LTN_LAYOUT="$TLAYOUTS/output/beech/hardware-layout.generated.json"
     LTN_OPS="$TLAYOUTS/output/beech/operational-params.generated.json"
     # PCF8575: one 16-bit port word per Krida, read as two bytes; a low bit is an energized relay
+    RELAYS="for a in 0x20 0x21; do echo -n \"\$a: \"; sudo i2ctransfer -y 1 r2@\$a; done"
+    ;;
+  maple)
+    SERVICES="gwspaceheat gwspaceheat-restart.timer"
+    BOOT_ENV="SCADA_UNKNOWN_CHANNEL_LOGGING=true"
+    LTN_LAYOUT="$TLAYOUTS/output/maple/hardware-layout.generated.json"
+    LTN_OPS="$TLAYOUTS/output/maple/operational-params.generated.json"
+    # the same two-Krida panel as beech
     RELAYS="for a in 0x20 0x21; do echo -n \"\$a: \"; sudo i2ctransfer -y 1 r2@\$a; done"
     ;;
   *) usage ;;

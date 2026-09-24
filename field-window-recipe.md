@@ -28,9 +28,9 @@ branch exception below.
 
 ## Houses
 
-`house_window.sh` targets `dev`, `spruce` and `beech` (a house target is the
-ssh host of the same name); `put_layout.sh` also handles `maple`. The rest are
-layouts arriving this fall, not yet windowed.
+`house_window.sh` and `put_layout.sh` target `spruce`, `beech` and `maple`
+(a house target is the ssh host of the same name); `house_window.sh` also
+takes `dev`. The rest are layouts arriving this fall, not yet windowed.
 
 The expected posture of each house's window pair, read from the gen's
 ops params before `on` and checked against the `layout.lite` the window
