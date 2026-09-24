@@ -23,7 +23,8 @@ messages: spruce 10 snapshots, beech 10).
 - **beech** — every tank-module pico (`tank1`, `tank2`, `tank3`, `buffer`)
   posts `tank.module.params` `110` and the scada accepts only `200`
   (`PicoBoardVariant`, `MicropythonVersion` required): one
-  `gridworks.event.problem` per pico per minute, 16 in the window; the
+  `gridworks.event.problem` per pico per boot, 16 in the window across
+  four cycler reboots; the
   readings still arrive. The two Hubitat zone channels never populated
   (`0/2 zone gw channels`; `zone1-down-temp`/`-set`, `zone2-up-temp`/`-set`
   had no value all window). The UnknownChannels logger lists the four
@@ -45,7 +46,10 @@ messages: spruce 10 snapshots, beech 10).
   `-opto-input` and `-heat-call` from the first poll: the persisted
   report stamps all ten at 23:42:24Z, the second of
   `gridworks.event.startup`, and the first snapshot carries them 9 s
-  later (19:43:42 on the laptop clock); one pico-cycler reboot at startup and none after;
+  later (19:43:42 on the laptop clock); spruce's pico cycler rebooted once at
+  startup and not after; beech's rebooted at startup and then about every
+  65 s (`dist2-flow pico_2a7e22 flatlined`, three more), and each reboot
+  brought the tank picos' params posts;
   `fancoil-depth3` gave one `open-thermistor` Warning and `pipes1-depth3`
   none; beech `zone1-down-heat-call` / `zone2-up-heat-call` carry 0 from
   the power meter; beech no longer lacks a deed; the beech tank picos do

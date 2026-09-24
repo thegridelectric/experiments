@@ -54,10 +54,11 @@ dispatched.
 
 Until the fleet's picos are reflashed (several weeks from 2026-09-24;
 spruce is already done) every tank-module pico except spruce's posts
-`tank.module.params` 110, and the window scada accepts only 200. Expect
-one `gridworks.event.problem` per pico per minute in the pulled events on
-beech and the House0 houses; the temperature readings still arrive. It is
-not a finding of the round.
+`tank.module.params` 110, and the window scada accepts only 200. A 110
+pico posts its params once per boot, so expect one refusal per tank pico
+at the window's startup reboot, and one more per pico cycler reboot after
+that; the temperature readings still arrive. The refusal is not a finding
+of the round; a run of cycler reboots is.
 
 ## The spruce branch exception
 
