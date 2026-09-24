@@ -25,16 +25,23 @@ from gwexp.sema.types import GwExperimentRun  # noqa: E402
 BOX_OFFSET = "-04:00"
 STAMP = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}\.\d{3})")
 
-WINDOWS = {
-    "spruce": (
-        "hw1.isone.me.versant.keene.spruce.scada",
-        "spruce-window-20260919-141515.excerpt.log",
-    ),
-    "beech": (
-        "hw1.isone.me.versant.keene.beech.scada",
-        "beech-window-20260919-141315.log",
-    ),
+ALIASES = {
+    "spruce": "hw1.isone.me.versant.keene.spruce.scada",
+    "beech": "hw1.isone.me.versant.keene.beech.scada",
 }
+
+
+def window_logs() -> dict[str, tuple[str, str]]:
+    """The last run's log per house: `<house>-window-*.log` in this folder."""
+    found = {}
+    for house, alias in ALIASES.items():
+        logs = sorted(HERE.glob(f"{house}-window-*.log"))
+        if logs:
+            found[house] = (alias, logs[-1].name)
+    return found
+
+
+WINDOWS = window_logs()
 
 
 def stamp_ms(line: str) -> int:

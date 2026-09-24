@@ -32,18 +32,32 @@ branch exception below.
 ssh host of the same name); `put_layout.sh` also handles `maple`. The rest are
 layouts arriving this fall, not yet windowed.
 
-| House | Window layout family | Beta window up |
-|---|---|---|
-| spruce | `gw.nolan.layout` | yes |
-| beech | `gw.house0.layout` | yes |
-| maple | `gw.house0.layout` | no |
-| fir / oak | `gw.house0.no.sieg.layout` | no |
-| elm | `gw.house0.monoblock.layout` | no |
+The expected posture of each house's window pair, read from the gen's
+ops params before `on` and checked against the `layout.lite` the window
+announces. Beech is Standby on purpose: its window runs the House0 code
+on a production house without letting a dispatch reach the equipment.
+
+| House | Window layout family | ServiceMode | ActuationAuthority | Beta window up |
+|---|---|---|---|---|
+| spruce | `gw.nolan.layout` | Heating | Active | yes |
+| beech | `gw.house0.layout` | Heating | Standby | yes |
+| maple | `gw.house0.layout` | Heating | — | no |
+| fir / oak | `gw.house0.no.sieg.layout` | Heating | — | no |
+| elm | `gw.house0.monoblock.layout` | Heating | — | no |
 
 LTN dispatch of a windowed house requires all of: the LTN `.env` sets
 `monitor_only=False`; the scada's ops word has `ActuationAuthority Active` and
 `ServiceMode Heating`; and the scada holds a TaDeed. A Standby house cannot be
 dispatched.
+
+## Picos on the 110 firmware
+
+Until the fleet's picos are reflashed (several weeks from 2026-09-24;
+spruce is already done) every tank-module pico except spruce's posts
+`tank.module.params` 110, and the window scada accepts only 200. Expect
+one `gridworks.event.problem` per pico per minute in the pulled events on
+beech and the House0 houses; the temperature readings still arrive. It is
+not a finding of the round.
 
 ## The spruce branch exception
 
@@ -93,9 +107,17 @@ The production `hardware-layout.json` follows the ordinary scada deploy
 ## A round
 
 1. **Bring up.** `./<house>_window.sh status` (plant services, window, tunnel,
-   relay bits). Push the scada head and pull it on the box; if a gen changed,
-   regenerate the window pair and place it with `./put_layout.sh <house>
-   <change>`. Then:
+   relay bits) and `./house_window.sh capture status`: a capture left
+   running from an earlier round is reused by `on`, so stop it first for a
+   clean file. Push the scada head and pull it on the box:
+
+        ssh <house> 'git -C ~/gridworks-scada-unlimbo pull --ff-only'
+
+   If a gen changed, regenerate the window pair and place it with
+   `./put_layout.sh <house> <change>` (each placement leaves a dated pre-copy
+   in the box's `scada-experiment/`; prune old ones by hand). Read
+   `ActuationAuthority` and `ServiceMode` from the gen's ops params and
+   check them against the Houses table. Then:
 
         ./<house>_window.sh on <minutes> [--debug] [--ltn]
         ../gridworks-scada/gw_spaceheat/venv/bin/gwa watch <house>
@@ -110,6 +132,11 @@ The production `hardware-layout.json` follows the ordinary scada deploy
    `--debug` sets scada loggers to DEBUG; `--ltn` runs the LTN on the laptop
    against the target's layout; `dev` rehearses on the laptop's own sim pair.
 
+   Watch the window scada live from the laptop (the box writes it to
+   `/tmp/<house>-window/boot.log`; `off` copies it to `../scratch/`):
+
+        ssh <house> tail -f /tmp/<house>-window/boot.log
+
 2. **Collect.** The broker capture records everything published to the dev
    broker. Snapshots, power, forecasts and the layout/deed announcement publish
    with no LTN; `report.event`s do not — they ride the acked path and, with no
@@ -117,7 +144,15 @@ The production `hardware-layout.json` follows the ordinary scada deploy
 
         scp -r <house>:/home/pi/.local/share/gridworks/scada-experiment/event/ ../scratch/<house>-events/
 
-   Or open with `--ltn` to get the reports live on the capture.
+   Or open with `--ltn` to get the reports live on the capture. The pulled
+   files sit in per-day folders and are named by a UTC ISO stamp, so filter
+   a window by its UTC clock, not by unix ms.
+
+   A channel with no value whose capturing node is a pico is confirmed
+   missing after the window, with the scada stopped, by dropping the 5V
+   bus and watching the bank re-post into the starter-scripts API: the
+   method and the scripts (`turn_off_5v.py` / `turn_on_5v.py`, keyed on the
+   pi's hostname, and `start_api.sh`) live in `starter-scripts/` on the box.
 
 3. **Close.** `./<house>_window.sh off` if the bound has not already closed it,
    then `status` to confirm the recorded plant services are running again. The

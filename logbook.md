@@ -30,6 +30,16 @@ first run dates them.
   different set each time); path, name and word are right whenever it is
   sent. The fix is firmware-side retry, or the scada noticing an unchecked
   pico.
+- **2026-09-23 · [beta-field-windows](beta-field-windows/)** —
+  round four (`jm/spruce-unlimbo` `847d9ca9`), spruce and beech, first run
+  on the axiom-table window pairs. PASS: both boot on the new layouts,
+  announce `layout.lite` + `ta.deed`, snapshot every 30 s with all state
+  machines, close on the bound and restore the plant services. Found: the
+  four beech tank picos post `tank.module.params` 110 against a scada that
+  accepts only 200 (one problem event per pico per minute); the store
+  pipe channels (both houses) and beech's buffer pipe and well never read
+  a value; beech's two Hubitat zone channels never populate; the
+  UnknownChannels logger reports beech's declared-disabled channels.
 - **2026-09-19 · [beta-field-windows](beta-field-windows/)** —
   round three (`jm/spruce-unlimbo` `dfc35644`), beech and spruce, `--debug`.
   PASS on both new commits: the startup announcement sends `layout.lite`
