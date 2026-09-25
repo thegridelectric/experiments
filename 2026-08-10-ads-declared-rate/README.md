@@ -178,7 +178,7 @@ nothing). A re-run produces a NEW dataset, never a regeneration.
 - `bench-boot-8sps.log` — pairing A's full boot log (stdout+stderr of
   the bounded run), copied verbatim from the pi.
 - `bench-boot-16sps.log` — pairing B's, same.
-- `window_boot.py` — the spruce-window harness: a bounded
+- `window_boot.py` (now `../window_boot.py`, shared by every window) — the spruce-window harness: a bounded
   real-hardware boot built through the BASE `App.make_app_for_cli`
   (the universe guardrail's designed test-boot exemption — an hw1
   identity on the localhost tunnel is the window arrangement, which

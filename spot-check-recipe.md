@@ -29,6 +29,18 @@ under `hw1.isone.me.versant.keene.spruce.scada` come from whichever scada was
 running the window (see `field-window-recipe.md`). Nail the window in ET before
 trusting a spruce spot-check.
 
+## Every other house has a second pi
+
+Maple, beech and the layouts arriving this fall run a second pi
+(`maple2`, `beech2`, …) whose `gwspaceheat2` captures the analog-temp
+channels and posts them to the first pi's broker. When code, hardware
+layout or ops params move for a house, they move on the second pi too,
+or the two pis decode the same channel by different encodings and the
+journal carries the mismatch under the first pi's alias (a maple window
+on 2026-09-25 read analog temps ten times hot this way). For a spot-check: know which
+layout each pi held for the window in question before trusting a
+temperature.
+
 ## The three things every spot-check assembles
 
 1. **House → scada alias.** The fleet has no single canonical lookup for this:

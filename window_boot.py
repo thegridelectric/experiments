@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Bounded real-hardware boot of the unlimbo scada — the spruce window rung.
+"""Bounded real-hardware boot of the unlimbo scada: what house_window.sh runs
+on a house pi (and on the laptop for a dev window).
 
-Runs ON THE SPRUCE PI with the unlimbo checkout's venv, everything else on
-the bus stopped (deployed scada + its restart watchdog + the winter hack):
+Runs on the pi with the unlimbo checkout's venv, the deployed services on the
+bus stopped by house_window.sh:
 
     cd ~/gridworks-scada-unlimbo/gw_spaceheat && \
-        venv/bin/python ~/window_boot.py [seconds] [env-file] [scada gw_spaceheat dir]
+        venv/bin/python ~/experiments/window_boot.py [seconds] [env-file] [scada gw_spaceheat dir]
 
-Environment comes from ~/envs/dev.env: real spruce (hw1) identity, dev
+Environment comes from ~/envs/dev.env: the house's real (hw1) identity, dev
 broker only via the laptop's ssh -R 1885 tunnel, experiment artifact paths
 (~/.config/gridworks/scada-experiment/). The app is built through the BASE
 `App.make_app_for_cli` (mkdirs + logging + TLS check + instantiate), not
@@ -15,6 +16,10 @@ ScadaApp's override — the override adds the universe guardrail, which
 rightly refuses an hw1 identity on a localhost broker at real boots; this
 bounded harness is the guardrail's designed test-boot exemption
 (credential-structural isolation: the env file carries no hw1 creds).
+
+WINDOW_SCADA2=1 in the environment boots the secondary scada (Scada2App)
+instead: a house's second pi runs its half of the window from the same
+checkout pattern, on the same layout pair, posting to the first pi's broker.
 
 The run is bounded by asyncio.wait_for, so the window self-terminates even
 on a dropped connection; seconds 0 means unbounded (a standing window, ended
@@ -25,6 +30,7 @@ capture).
 """
 
 import asyncio
+import os
 import sys
 from pathlib import Path
 
@@ -36,6 +42,7 @@ SCADA_GW = Path(
 sys.path.insert(0, str(SCADA_GW))
 
 from gwproactor.app import App  # noqa: E402
+from scada2_app import Scada2App  # noqa: E402
 from scada_app import ScadaApp  # noqa: E402
 
 DEFAULT_ENV = Path("~/envs/dev.env").expanduser()
@@ -50,6 +57,7 @@ DEFAULT_SECONDS = 420  # >= 5 min of 1 Hz reads inside the window, plus boot
 # override is the classmethod itself — hence the subclass — and the boot
 # ASSERTS the isolation on the app's own settings before running.
 PATHS_NAME = "scada-experiment"
+SCADA2 = os.environ.get("WINDOW_SCADA2") == "1"
 
 
 class WindowScadaApp(ScadaApp):
@@ -58,10 +66,17 @@ class WindowScadaApp(ScadaApp):
         return PATHS_NAME
 
 
-def build_app(env_file: Path) -> ScadaApp:
-    settings = WindowScadaApp.get_settings(env_file=env_file)
+class WindowScada2App(Scada2App):
+    @classmethod
+    def paths_name(cls) -> str:
+        return PATHS_NAME
+
+
+def build_app(env_file: Path) -> ScadaApp | Scada2App:
+    app_type = WindowScada2App if SCADA2 else WindowScadaApp
+    settings = app_type.get_settings(env_file=env_file)
     app = App.make_app_for_cli.__func__(  # base impl: no universe assert
-        WindowScadaApp, app_settings=settings, env_file=env_file
+        app_type, app_settings=settings, env_file=env_file
     )
     for isolated in (app.settings.paths.event_dir, app.settings.paths.log_dir):
         if PATHS_NAME not in str(isolated):
@@ -73,7 +88,7 @@ def build_app(env_file: Path) -> ScadaApp:
     return app
 
 
-async def _run_bounded(app: ScadaApp, seconds: int) -> None:
+async def _run_bounded(app: ScadaApp | Scada2App, seconds: int) -> None:
     """seconds 0: no bound, run until killed."""
     if seconds == 0:
         await app.proactor.run_forever()
@@ -91,13 +106,16 @@ def main(argv: list[str] | None = None) -> int:
     app = build_app(env_file)
     layout = app.hardware_layout
     print(
-        f"== window boot: {layout.scada_g_node_alias} for "
+        f"== window boot: {'scada2 of ' if SCADA2 else ''}{layout.scada_g_node_alias} for "
         f"{'ever (unbounded)' if seconds == 0 else f'{seconds}s'}, "
         f"broker {app.settings.gridworks_mqtt.host}:"
         f"{app.settings.gridworks_mqtt.port} ==",
         flush=True,  # stdout is block-buffered under redirection
     )
     asyncio.run(_run_bounded(app, seconds))
+    if SCADA2:
+        print("== window done (scada2) ==")
+        return 0
     vals = dict(app.scada._data.latest_channel_values)
     zone_gw = {
         k: v for k, v in vals.items()

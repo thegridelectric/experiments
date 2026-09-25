@@ -45,6 +45,21 @@ on a production house without letting a dispatch reach the equipment.
 | fir / oak | `gw.house0.no.sieg.layout` | Heating | — | no |
 | elm | `gw.house0.monoblock.layout` | Heating | — | no |
 
+**Maple has a second pi** (`maple2`) running `gwspaceheat2` from its own
+`~/gridworks-scada` checkout and `~/.config/gridworks/scada2/`. It captures
+the analog-temp channels (`hp-lwt`, `hp-ewt`, the pipe temperatures) and
+posts them to the first pi's broker, where the scada takes them under its
+own layout's encoding: a reading carries no unit on the wire, so **both
+pis must hold the same layout**. The window therefore reaches the second
+pi with the same kit as the first: `~/gridworks-scada-unlimbo` (the branch
+refuses the non-sema production layout, and `main` cannot load the sema
+one), `~/envs/dev.env`, and the window pair in
+`~/.config/gridworks/scada-experiment/`, placed and byte-checked by
+`put_layout.sh maple` on both boxes. `maple_window.sh on` stops
+`gwspaceheat2`, boots the branch scada2 (`window_boot.py` with
+`WINDOW_SCADA2=1`) on the window pair, and `off` restores it; nothing
+production reads is rewritten. Beech's second pi is not kitted yet.
+
 LTN dispatch of a windowed house requires all of: the LTN `.env` sets
 `monitor_only=False`; the scada's ops word has `ActuationAuthority Active` and
 `ServiceMode Heating`; and the scada holds a TaDeed. A Standby house cannot be

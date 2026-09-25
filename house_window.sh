@@ -33,13 +33,20 @@
 #                                            stopped by hand, after the last `off`
 #
 # <target> is dev, spruce, beech or maple (a house is the ssh host of the same name).
+# A house with a second pi (maple2) is windowed on both: the second pi's
+# deployed scada2 is stopped and the branch scada2 boots there from its own
+# ~/gridworks-scada-unlimbo on the same layout pair, posting to the first
+# pi's broker; `off` and `status` cover it. A reading carries no unit on the
+# wire, so a window never mixes one pi on the branch pair with the other on
+# production.
 #
 # `on` for a house refuses unless:
 #   - the box's window pair (~/.config/gridworks/scada-experiment/) is
 #     byte-identical to ../tlayouts/output/<house>/ (put_layout.sh <house> check).
 #     This script never writes a layout; put_layout.sh does.
 #   - the laptop's scada head is pushed and the box's ~/gridworks-scada-unlimbo
-#     checkout is at it (the box runs pushed SHAs only; pull on the box).
+#     checkout is at it (the box runs pushed SHAs only; pull on the box); the
+#     second pi's too.
 #   - no window scada is already running.
 #
 # The services running at `on` are recorded on the box and stopped. The box
@@ -47,7 +54,7 @@
 # minutes bound, a crash, or `off`. A service that was not running stays off.
 #
 # The window scada runs through
-# ~/experiments/2026-08-10-ads-declared-rate/window_boot.py from ~/envs/dev.env
+# ~/experiments/window_boot.py from ~/envs/dev.env
 # (dev-broker creds only; upstream through the tunnel, admin link on the box's
 # own mosquitto). A dev window runs the same boot from the laptop's scada
 # checkout and its .env. Then `gwa watch <house>` from the laptop.
@@ -62,7 +69,7 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 SCRATCH="$HERE/../scratch"
 SCADA="$HERE/../gridworks-scada"
 TLAYOUTS="$HERE/../tlayouts"
-WINDOW_BOOT="$HERE/2026-08-10-ads-declared-rate/window_boot.py"
+WINDOW_BOOT="$HERE/window_boot.py"
 CAPTURE_PID="$HERE/.capture_broker.pid"
 CAPTURE_OUT="$SCRATCH/capture.out"
 usage() { sed -n 2,34p "$0"; exit 1; }
@@ -88,6 +95,8 @@ note_window() {
 ltn_up() { pgrep -f "gws ltn run" >/dev/null; }
 stop_ltn() { if ltn_up; then pkill -f "gws ltn run" || true; echo "ltn stopped; log: $(ls -t "$SCRATCH"/*-ltn-*.log 2>/dev/null | head -1)"; fi; }
 
+SECOND_PI=""
+SECOND_SERVICES=""
 case "$HOUSE" in
   capture)
     case "${2:-}" in
@@ -120,6 +129,8 @@ case "$HOUSE" in
   maple)
     SERVICES="gwspaceheat gwspaceheat-restart.timer"
     BOOT_ENV="SCADA_UNKNOWN_CHANNEL_LOGGING=true"
+    SECOND_PI=maple2
+    SECOND_SERVICES="gwspaceheat2"
     LTN_LAYOUT="$TLAYOUTS/output/maple/hardware-layout.generated.json"
     LTN_OPS="$TLAYOUTS/output/maple/operational-params.generated.json"
     # the same two-Krida panel as beech
@@ -198,16 +209,50 @@ STARTED="$BOX_LOG_DIR/started-utc"
 BOX_EVENT_DIR="/home/pi/.local/share/gridworks/scada-experiment/event"
 
 tunnel_up() { pgrep -f "ssh -f -N.*-R 1885:localhost:1885 $HOUSE" >/dev/null; }
-window_up() { ssh "$HOUSE" 'pgrep -f "[w]indow_boot.py" >/dev/null'; }
+window_up() { ssh "${1:-$HOUSE}" 'pgrep -f "[w]indow_boot.py" >/dev/null'; }
+head_check() {  # $1 box: refuse unless its unlimbo checkout is at the laptop's head
+  local box_head; box_head="$(ssh "$1" 'git -C ~/gridworks-scada-unlimbo rev-parse HEAD')"
+  [ "$box_head" = "$HEAD" ] || { echo "refusing: $1 unlimbo checkout is at ${box_head:0:8}, the laptop's scada head is ${HEAD:0:8}; on the box: git -C ~/gridworks-scada-unlimbo pull --ff-only"; exit 1; }
+}
+# One box-side job on $1: stop the services in $2, run the window scada with
+# the env in $3, then start what was stopped. SECS=0 is the standing window
+# (window_boot.py runs until killed), so the `timeout` wrapper is dropped.
+box_start() {
+  ssh "$1" "mkdir -p $BOX_LOG_DIR
+    date -u +%Y-%m-%dT%H:%M:%S > $STARTED
+    for s in $2; do systemctl is-active -q \$s && echo \$s; done > $STOPPED
+    echo \"$1 stopping: \$(paste -sd' ' $STOPPED)\"
+    [ ! -s $STOPPED ] || sudo systemctl stop \$(cat $STOPPED)
+    SECS=$SECS
+    setsid nohup bash -c \"cd ~/gridworks-scada-unlimbo/gw_spaceheat && $3 \$([ \$SECS -gt 0 ] && echo timeout \$((SECS + 60))) venv/bin/python ~/experiments/window_boot.py \$SECS ~/envs/dev.env > $BOX_LOG_DIR/boot.log 2>&1; [ ! -s $STOPPED ] || sudo systemctl start \\\$(cat $STOPPED)\" > /dev/null 2>&1 < /dev/null &
+    sleep 20
+    git -C ~/gridworks-scada-unlimbo log --oneline -1
+    tail -3 $BOX_LOG_DIR/boot.log | cut -c1-140"
+}
+# Restore $1: kill its window scada, start the services in $2 (the box-side
+# job does this too; here as well so `off` restores even when that job is
+# gone: a reboot mid-window clears /tmp, and enabled services start at boot).
+box_restore() {
+  ssh "$1" "[ ! -s $STOPPED ] || sudo systemctl start \$(cat $STOPPED); sleep 3
+    for s in $2; do echo \"$1 \$s: \$(systemctl is-active \$s)\"; done
+    [ ! -f $STOPPED ] || echo \"$1 running before the window: \$(paste -sd' ' $STOPPED)\"
+    rm -rf $BOX_LOG_DIR"
+}
+box_status() {
+  ssh "$1" "for s in $2; do echo \"$1 \$s: \$(systemctl is-active \$s)\"; done
+    pgrep -f '[w]indow_boot.py' >/dev/null && echo '$1 window scada: RUNNING' || echo '$1 window scada: down'
+    [ ! -f $STOPPED ] || echo \"$1 stopped for the window: \$(paste -sd' ' $STOPPED)\""
+}
 
 case "${2:-}" in
   on)
     "$HERE/put_layout.sh" "$HOUSE" check || { echo "refusing: put the gen output first (./put_layout.sh $HOUSE <change>)"; exit 1; }
     HEAD="$(git -C "$SCADA" rev-parse HEAD)"
     [ -z "$(git -C "$SCADA" log --oneline '@{u}..')" ] || { echo "refusing: the laptop's scada head ${HEAD:0:8} is not pushed"; exit 1; }
-    BOX_HEAD="$(ssh "$HOUSE" 'git -C ~/gridworks-scada-unlimbo rev-parse HEAD')"
-    [ "$BOX_HEAD" = "$HEAD" ] || { echo "refusing: $HOUSE unlimbo checkout is at ${BOX_HEAD:0:8}, the laptop's scada head is ${HEAD:0:8}; on the box: git -C ~/gridworks-scada-unlimbo pull --ff-only"; exit 1; }
+    head_check "$HOUSE"
+    [ -z "$SECOND_PI" ] || head_check "$SECOND_PI"
     if window_up; then echo "refusing: a window scada is already running on $HOUSE"; exit 1; fi
+    if [ -n "$SECOND_PI" ] && window_up "$SECOND_PI"; then echo "refusing: a window scada2 is already running on $SECOND_PI"; exit 1; fi
     ensure_capture
     note_window "$HEAD"
     # The tunnel carries the upstream (LTN) link to the laptop's dev broker for
@@ -219,19 +264,11 @@ case "${2:-}" in
       echo "no tunnel: the window runs without the upstream link to the dev broker, and the capture will hold nothing from $HOUSE"
     fi
     start_ltn
-    # One box-side job: run the window scada, then start what was stopped.
-    # SECS=0 is the standing window (window_boot.py runs until killed), so the
-    # `timeout` wrapper is dropped in that case.
-    ssh "$HOUSE" "mkdir -p $BOX_LOG_DIR
-      date -u +%Y-%m-%dT%H:%M:%S > $STARTED
-      for s in $SERVICES; do systemctl is-active -q \$s && echo \$s; done > $STOPPED
-      echo \"stopping: \$(paste -sd' ' $STOPPED)\"
-      [ ! -s $STOPPED ] || sudo systemctl stop \$(cat $STOPPED)
-      SECS=$SECS
-      setsid nohup bash -c \"cd ~/gridworks-scada-unlimbo/gw_spaceheat && $BOOT_ENV $DEBUG_ENV \$([ \$SECS -gt 0 ] && echo timeout \$((SECS + 60))) venv/bin/python ~/experiments/2026-08-10-ads-declared-rate/window_boot.py \$SECS ~/envs/dev.env > $BOX_LOG_DIR/boot.log 2>&1; [ ! -s $STOPPED ] || sudo systemctl start \\\$(cat $STOPPED)\" > /dev/null 2>&1 < /dev/null &
-      sleep 20
-      git -C ~/gridworks-scada-unlimbo log --oneline -1
-      tail -3 $BOX_LOG_DIR/boot.log | cut -c1-140"
+    box_start "$HOUSE" "$SERVICES" "$BOOT_ENV $DEBUG_ENV"
+    if [ -n "$SECOND_PI" ]; then
+      box_start "$SECOND_PI" "$SECOND_SERVICES" "WINDOW_SCADA2=1 $DEBUG_ENV"
+      window_up "$SECOND_PI" && echo "$SECOND_PI window scada2 up" || echo "$SECOND_PI window scada2 is NOT running after boot; its stopped services restart on the box"
+    fi
     if window_up; then
       [ "$MIN" -gt 0 ] && echo "window scada up for $MIN min" || echo "window scada up, standing (until ./house_window.sh $HOUSE off)"
       echo "now: gridworks-scada/gw_spaceheat/venv/bin/gwa watch $HOUSE"
@@ -246,6 +283,12 @@ case "${2:-}" in
     stop_ltn
     LOG="$SCRATCH/$HOUSE-window-$(date +%Y%m%d-%H%M%S).log"
     scp -q "$HOUSE:$BOX_LOG_DIR/boot.log" "$LOG" 2>/dev/null && echo "window log: $LOG" || echo "no boot.log to copy"
+    if [ -n "$SECOND_PI" ]; then
+      ssh "$SECOND_PI" 'pkill -f "[w]indow_boot.py" || true; sleep 5'
+      LOG2="$SCRATCH/$SECOND_PI-window-$(date +%Y%m%d-%H%M%S).log"
+      scp -q "$SECOND_PI:$BOX_LOG_DIR/boot.log" "$LOG2" 2>/dev/null && echo "$SECOND_PI window log: $LOG2" || echo "no $SECOND_PI boot.log to copy"
+      box_restore "$SECOND_PI" "$SECOND_SERVICES"
+    fi
     # Events the upstream link did not deliver (no LTN, or before it acked)
     # persist on the box; pull the ones stamped at or after this window's start.
     EVENTS="$SCRATCH/$HOUSE-events-$(date +%Y%m%d-%H%M%S)"
@@ -256,23 +299,16 @@ case "${2:-}" in
     N_REPORTS="$(grep -l '"TypeName": *"report.event"' -r "$EVENTS" 2>/dev/null | wc -l | tr -d ' ')"
     echo "events: $N_EVENTS persisted on the box, $N_REPORTS report.event -> $EVENTS"
     [ "$N_REPORTS" -gt 0 ] || echo "WARNING: no report.event on the box; a window run with --ltn delivers them to the capture instead"
-    # The box-side job starts the recorded services when the window scada
-    # exits; start them here as well so `off` is the restore even when that job
-    # is gone (a reboot mid-window clears /tmp; enabled services start at boot).
-    ssh "$HOUSE" "[ ! -s $STOPPED ] || sudo systemctl start \$(cat $STOPPED); sleep 3
-      for s in $SERVICES; do echo \"\$s: \$(systemctl is-active \$s)\"; done
-      [ ! -f $STOPPED ] || echo \"running before the window: \$(paste -sd' ' $STOPPED)\"
-      rm -rf $BOX_LOG_DIR"
+    box_restore "$HOUSE" "$SERVICES"
     capture_up && echo "capture still running; after the last window: ./house_window.sh capture off"
     ;;
   status)
     tunnel_up && echo "tunnel: up" || echo "tunnel: down"
     ltn_up && echo "ltn: RUNNING" || echo "ltn: down"
     capture_up && grep -m1 '^capturing' "$CAPTURE_OUT" || echo "capture: not running"
-    ssh "$HOUSE" "for s in $SERVICES; do echo \"\$s: \$(systemctl is-active \$s)\"; done
-      pgrep -f '[w]indow_boot.py' >/dev/null && echo 'window scada: RUNNING' || echo 'window scada: down'
-      [ ! -f $STOPPED ] || echo \"stopped for the window: \$(paste -sd' ' $STOPPED)\"
-      $RELAYS"
+    box_status "$HOUSE" "$SERVICES"
+    ssh "$HOUSE" "$RELAYS"
+    [ -z "$SECOND_PI" ] || box_status "$SECOND_PI" "$SECOND_SERVICES"
     ;;
   *) usage ;;
 esac
