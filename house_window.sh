@@ -33,12 +33,15 @@
 #                                            stopped by hand, after the last `off`
 #
 # <target> is dev, spruce, beech or maple (a house is the ssh host of the same name).
-# A house with a second pi (maple2) is windowed on both: the second pi's
-# deployed scada2 is stopped and the branch scada2 boots there from its own
-# ~/gridworks-scada-unlimbo on the same layout pair, posting to the first
-# pi's broker; `off` and `status` cover it. A reading carries no unit on the
-# wire, so a window never mixes one pi on the branch pair with the other on
-# production.
+# Every house but spruce has a second pi (<house>2), and a window runs on both:
+# the second pi's deployed scada2 is stopped and the branch scada2 boots there
+# from its own ~/gridworks-scada-unlimbo on the same layout pair, posting to
+# the first pi's broker; `off` and `status` cover it. A reading carries no
+# unit on the wire, so a window never mixes one pi on the branch pair with the
+# other on production: both pis boot at once, `on` ends the window on both
+# unless both come up, and a watcher on the laptop ends it on both when it
+# ends on either (a bound, a crash). A laptop asleep or off the network
+# leaves each pi to its own bound.
 #
 # `on` for a house refuses unless:
 #   - the box's window pair (~/.config/gridworks/scada-experiment/) is
@@ -121,6 +124,8 @@ case "$HOUSE" in
   beech)
     SERVICES="gwspaceheat gwspaceheat-restart.timer"
     BOOT_ENV="SCADA_UNKNOWN_CHANNEL_LOGGING=true"
+    SECOND_PI=beech2
+    SECOND_SERVICES="gwspaceheat2 gwspaceheat2-restart.timer"
     LTN_LAYOUT="$TLAYOUTS/output/beech/hardware-layout.generated.json"
     LTN_OPS="$TLAYOUTS/output/beech/operational-params.generated.json"
     # PCF8575: one 16-bit port word per Krida, read as two bytes; a low bit is an energized relay
@@ -130,7 +135,7 @@ case "$HOUSE" in
     SERVICES="gwspaceheat gwspaceheat-restart.timer"
     BOOT_ENV="SCADA_UNKNOWN_CHANNEL_LOGGING=true"
     SECOND_PI=maple2
-    SECOND_SERVICES="gwspaceheat2"
+    SECOND_SERVICES="gwspaceheat2 gwspaceheat2-restart.timer"
     LTN_LAYOUT="$TLAYOUTS/output/maple/hardware-layout.generated.json"
     LTN_OPS="$TLAYOUTS/output/maple/operational-params.generated.json"
     # the same two-Krida panel as beech
@@ -210,6 +215,10 @@ BOX_EVENT_DIR="/home/pi/.local/share/gridworks/scada-experiment/event"
 
 tunnel_up() { pgrep -f "ssh -f -N.*-R 1885:localhost:1885 $HOUSE" >/dev/null; }
 window_up() { ssh "${1:-$HOUSE}" 'pgrep -f "[w]indow_boot.py" >/dev/null'; }
+# up, down, or unknown when the box cannot be reached
+window_state() { ssh -o ConnectTimeout=5 -o BatchMode=yes "$1" 'pgrep -f "[w]indow_boot.py" >/dev/null && echo up || echo down' 2>/dev/null || echo unknown; }
+PAIR_PID="$HERE/.pair_watch.$HOUSE.pid"
+pair_up() { [ -f "$PAIR_PID" ] && kill -0 "$(cat "$PAIR_PID")" 2>/dev/null; }
 head_check() {  # $1 box: refuse unless its unlimbo checkout is at the laptop's head
   local box_head; box_head="$(ssh "$1" 'git -C ~/gridworks-scada-unlimbo rev-parse HEAD')"
   [ "$box_head" = "$HEAD" ] || { echo "refusing: $1 unlimbo checkout is at ${box_head:0:8}, the laptop's scada head is ${HEAD:0:8}; on the box: git -C ~/gridworks-scada-unlimbo pull --ff-only"; exit 1; }
@@ -238,6 +247,27 @@ box_restore() {
     [ ! -f $STOPPED ] || echo \"$1 running before the window: \$(paste -sd' ' $STOPPED)\"
     rm -rf $BOX_LOG_DIR"
 }
+# End the window on $1 now: kill its window scada and start the services it
+# stopped. pkill takes the box-side job's wrapper with it, so the job's own
+# restart does not run; this does it. The log stays for `off` to copy.
+box_end() {
+  ssh "$1" "pkill -f '[w]indow_boot.py' || true; sleep 5
+    [ ! -s $STOPPED ] || sudo systemctl start \$(cat $STOPPED)"
+}
+# Every 10 s while the window runs on both pis: when it has ended on either,
+# end it on both (on the pi already down this restarts its services in case
+# its job did not), then exit.
+pair_watch() {
+  local a b
+  while sleep 10; do
+    a="$(window_state "$HOUSE")"; b="$(window_state "$SECOND_PI")"
+    if [ "$a" = up ] && [ "$b" = up ]; then continue; fi
+    if [ "$a" = unknown ] || [ "$b" = unknown ]; then continue; fi
+    echo "$(date '+%Y-%m-%d %H:%M:%S') $HOUSE window $a, $SECOND_PI window $b: ending both"
+    box_end "$HOUSE"; box_end "$SECOND_PI"
+    return
+  done
+}
 box_status() {
   ssh "$1" "for s in $2; do echo \"$1 \$s: \$(systemctl is-active \$s)\"; done
     pgrep -f '[w]indow_boot.py' >/dev/null && echo '$1 window scada: RUNNING' || echo '$1 window scada: down'
@@ -264,10 +294,26 @@ case "${2:-}" in
       echo "no tunnel: the window runs without the upstream link to the dev broker, and the capture will hold nothing from $HOUSE"
     fi
     start_ltn
-    box_start "$HOUSE" "$SERVICES" "$BOOT_ENV $DEBUG_ENV"
-    if [ -n "$SECOND_PI" ]; then
-      box_start "$SECOND_PI" "$SECOND_SERVICES" "WINDOW_SCADA2=1 $DEBUG_ENV"
-      window_up "$SECOND_PI" && echo "$SECOND_PI window scada2 up" || echo "$SECOND_PI window scada2 is NOT running after boot; its stopped services restart on the box"
+    if [ -z "$SECOND_PI" ]; then
+      box_start "$HOUSE" "$SERVICES" "$BOOT_ENV $DEBUG_ENV"
+    else
+      box_start "$HOUSE" "$SERVICES" "$BOOT_ENV $DEBUG_ENV" > "$SCRATCH/.$HOUSE-start.out" 2>&1 < /dev/null &
+      P1=$!
+      box_start "$SECOND_PI" "$SECOND_SERVICES" "WINDOW_SCADA2=1 $DEBUG_ENV" > "$SCRATCH/.$SECOND_PI-start.out" 2>&1 < /dev/null &
+      P2=$!
+      # the two boots only: the broker capture is a background job of this shell too
+      wait "$P1" "$P2"
+      cat "$SCRATCH/.$HOUSE-start.out" "$SCRATCH/.$SECOND_PI-start.out"
+      rm -f "$SCRATCH/.$HOUSE-start.out" "$SCRATCH/.$SECOND_PI-start.out"
+      if window_up && window_up "$SECOND_PI"; then
+        echo "$SECOND_PI window scada2 up"
+        ( trap '' HUP; pair_watch ) > "$SCRATCH/$HOUSE-pair-watch-$(date +%Y%m%d-%H%M%S).log" 2>&1 < /dev/null &
+        echo $! > "$PAIR_PID"
+      else
+        echo "the window did not come up on both $HOUSE and $SECOND_PI; ending it on both. See: ./house_window.sh $HOUSE off (copies the logs)"
+        box_end "$HOUSE"; box_end "$SECOND_PI"
+        exit 1
+      fi
     fi
     if window_up; then
       [ "$MIN" -gt 0 ] && echo "window scada up for $MIN min" || echo "window scada up, standing (until ./house_window.sh $HOUSE off)"
@@ -278,7 +324,11 @@ case "${2:-}" in
     fi
     ;;
   off)
+    # the first pi is restored on the way out whatever fails below
+    trap 'box_restore "$HOUSE" "$SERVICES"' EXIT
     mkdir -p "$SCRATCH"
+    if pair_up; then kill "$(cat "$PAIR_PID")"; fi
+    rm -f "$PAIR_PID"
     ssh "$HOUSE" 'pkill -f "[w]indow_boot.py" || true; sleep 5'
     stop_ltn
     LOG="$SCRATCH/$HOUSE-window-$(date +%Y%m%d-%H%M%S).log"
@@ -296,10 +346,9 @@ case "${2:-}" in
     ssh "$HOUSE" "[ -f $STARTED ] || exit 0; cd $BOX_EVENT_DIR 2>/dev/null || exit 0
       start=\$(cat $STARTED); find . -type f -name '*.json' | while read f; do [[ \$(basename \"\$f\") > \$start ]] && echo \"\$f\"; done | tar -cf - -T - 2>/dev/null" | tar -xf - -C "$EVENTS" 2>/dev/null || true
     N_EVENTS="$(find "$EVENTS" -type f -name '*.json' | wc -l | tr -d ' ')"
-    N_REPORTS="$(grep -l '"TypeName": *"report.event"' -r "$EVENTS" 2>/dev/null | wc -l | tr -d ' ')"
+    N_REPORTS="$({ grep -l '"TypeName": *"report.event"' -r "$EVENTS" 2>/dev/null || true; } | wc -l | tr -d ' ')"
     echo "events: $N_EVENTS persisted on the box, $N_REPORTS report.event -> $EVENTS"
     [ "$N_REPORTS" -gt 0 ] || echo "WARNING: no report.event on the box; a window run with --ltn delivers them to the capture instead"
-    box_restore "$HOUSE" "$SERVICES"
     capture_up && echo "capture still running; after the last window: ./house_window.sh capture off"
     ;;
   status)
@@ -308,7 +357,10 @@ case "${2:-}" in
     capture_up && grep -m1 '^capturing' "$CAPTURE_OUT" || echo "capture: not running"
     box_status "$HOUSE" "$SERVICES"
     ssh "$HOUSE" "$RELAYS"
-    [ -z "$SECOND_PI" ] || box_status "$SECOND_PI" "$SECOND_SERVICES"
+    if [ -n "$SECOND_PI" ]; then
+      box_status "$SECOND_PI" "$SECOND_SERVICES"
+      pair_up && echo "pair watch: RUNNING" || echo "pair watch: down"
+    fi
     ;;
   *) usage ;;
 esac

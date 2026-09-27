@@ -45,20 +45,31 @@ on a production house without letting a dispatch reach the equipment.
 | fir / oak | `gw.house0.no.sieg.layout` | Heating | — | no |
 | elm | `gw.house0.monoblock.layout` | Heating | — | no |
 
-**Maple has a second pi** (`maple2`) running `gwspaceheat2` from its own
-`~/gridworks-scada` checkout and `~/.config/gridworks/scada2/`. It captures
-the analog-temp channels (`hp-lwt`, `hp-ewt`, the pipe temperatures) and
-posts them to the first pi's broker, where the scada takes them under its
-own layout's encoding: a reading carries no unit on the wire, so **both
-pis must hold the same layout**. The window therefore reaches the second
-pi with the same kit as the first: `~/gridworks-scada-unlimbo` (the branch
-refuses the non-sema production layout, and `main` cannot load the sema
-one), `~/envs/dev.env`, and the window pair in
+**Every house but spruce has a second pi** (`maple2`, `beech2`) running
+`gwspaceheat2` from its own `~/gridworks-scada` checkout and
+`~/.config/gridworks/scada2/`. It captures the analog-temp channels
+(`hp-lwt`, `hp-ewt`, the pipe temperatures) and posts them to a mosquitto
+the scada also uses, where the scada takes them under its own layout's
+encoding: a reading carries no unit on the wire, so **both pis must hold
+the same layout**. The window therefore reaches the second pi with the
+same kit as the first: `~/gridworks-scada-unlimbo` (the branch refuses the
+non-sema production layout, and `main` cannot load the sema one),
+`~/envs/dev.env`, and the window pair in
 `~/.config/gridworks/scada-experiment/`, placed and byte-checked by
-`put_layout.sh maple` on both boxes. `maple_window.sh on` stops
-`gwspaceheat2`, boots the branch scada2 (`window_boot.py` with
-`WINDOW_SCADA2=1`) on the window pair, and `off` restores it; nothing
-production reads is rewritten. Beech's second pi is not kitted yet.
+`put_layout.sh <house>` on both boxes. `<house>_window.sh on` stops
+`gwspaceheat2` and its restart timer, boots the branch scada2
+(`window_boot.py` with `WINDOW_SCADA2=1`) on the window pair, and `off`
+restores them; nothing production reads is rewritten. The two pis boot at
+once, `on` ends the window on both unless both come up, and a watcher on
+the laptop ends it on both when it ends on either, so a bound or a crash
+never leaves one pi on the branch beside the other on production. A laptop
+asleep or off the network leaves each pi to its own bound.
+
+The shared mosquitto differs by house. At maple it is on the first pi, for
+production and window alike. At beech production uses the one on `beech2`
+(the deployed `.env` on beech names `beech2.local`), while the window scada
+listens on beech's own, so beech2's window env points its local link at
+`beech.local`.
 
 LTN dispatch of a windowed house requires all of: the LTN `.env` sets
 `monitor_only=False`; the scada's ops word has `ActuationAuthority Active` and

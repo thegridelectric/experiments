@@ -331,6 +331,30 @@ it is.
   under admin. The same boss rule bites local control: at the 14:58:59
   restart `auto.lc.n` sent to `auto.lc.n.sieg-loop.relay14` and got
   "FromHandle auto.lc.n must be immediate boss of ToHandle".
+- **Confirm at the next maple window: one folded full report per
+  command.** From `7c3b5531` and `e4bd4b77` every command node folds
+  its relays' full reports into its own, under the command's TriggerId,
+  and a relay whose commander does not fold (admin, local control)
+  reports to the scada. A dev run on a sim layout comes first; this is
+  the real-board check. Read, from the scada log and the journal's
+  `Report.FsmReportList`, one report per TriggerId and no report
+  addressed to the panel:
+  1. Each valve move, automatic or admin's `MoveSiegValve`: one report
+     from `sieg-loop` whose atomics name `hp-loop-keep-send-relay`,
+     `hp-loop-on-off-relay` (twice) and `sieg-loop` last; under admin
+     the TriggerId is the panel's.
+  2. Admin `TurnOff` / `TurnOn` through hp-boss: one report from
+     `hp-boss` with its own `HpBossState` atomic(s) then
+     `hp-scada-ops-relay`'s two; under `StratProtect` the TurnOn report
+     arrives only after `SiegLoopReady`, with `PreparingToTurnOn` and
+     `HpOn` atomics.
+  3. A relay the panel commands directly (any `admin.<relay>`): its
+     report appears in the journal under the panel's TriggerId.
+  4. No `relay_nack` or `relay_silent` glitch on any node across the
+     window; the boot's `hp-boss` report under a minted id shows the
+     call relay opening.
+  5. The motor clock: each `sieg-view` "Motor stopped" line's run time
+     matches the commanded travel, not that plus the report wait.
 - **Local-control state matches reality.** Decided: this changes on the
   branch. Finding 11: with no oil boiler, SystemCold leaves `HpOn` for
   `Dormant` and the backup node turns the heat pump on, so the reported

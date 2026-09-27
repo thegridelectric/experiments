@@ -13,9 +13,9 @@
 #
 # <house> is spruce, beech or maple (the ssh host of the same name). The
 # window scada reads ~/.config/gridworks/scada-experiment/hardware-layout.json
-# and the operational-params.json beside it. A house with a second pi
-# (maple2) gets the same pair in the same place there: a reading carries no
-# unit on the wire, so both pis must hold one layout. Run the house's gen first
+# and the operational-params.json beside it. Every house but spruce has a
+# second pi (<house>2), which gets the same pair in the same place: a reading
+# carries no unit on the wire, so both pis must hold one layout. Run the house's gen first
 # (../tlayouts/<house>_gen.py, from the scada venv); this script copies
 # bytes and does not regenerate. It refuses while a window scada is running.
 set -euo pipefail
@@ -24,7 +24,7 @@ HOUSE="${1:-}"
 CHANGE="${2:-}"
 case "$HOUSE" in
   spruce)      GEN_LAYOUT=gw.nolan.layout.json; GEN_OPS=gw.nolan.operational.params.json; BOXES=spruce ;;
-  beech)       GEN_LAYOUT=hardware-layout.generated.json; GEN_OPS=operational-params.generated.json; BOXES=beech ;;
+  beech)       GEN_LAYOUT=hardware-layout.generated.json; GEN_OPS=operational-params.generated.json; BOXES="beech beech2" ;;
   maple)       GEN_LAYOUT=hardware-layout.generated.json; GEN_OPS=operational-params.generated.json; BOXES="maple maple2" ;;
   *)           sed -n 2,22p "$0"; exit 1 ;;
 esac
