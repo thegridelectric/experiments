@@ -3,8 +3,8 @@
 > What this is: does the broker alerter's NoData rule send one `gw.alert`
 > in state `Firing` when a tracked house goes quiet past the threshold,
 > and one `gw.alert` in state `Resolved` with the same id when its data
-> resumes, on a real broker with real (sped-up) timing? Not yet run
-> against `gw.alert`; see Found.
+> resumes, on a real broker with real (sped-up) timing? PASS on
+> 2026-09-28; see Found.
 
 ## Why
 
@@ -58,7 +58,8 @@ are the ones in `src/gwexp/sema_seed_request.yaml`. Four processes from
   through the snapshot classes: one channel, one reading at the current
   time, in the current 5 min slot.
 
-Nothing deployed is touched. Logs go to the run dir, not the folder.
+Nothing deployed is touched. `run.sh` writes logs to a run dir under
+`$TMPDIR`; a run worth keeping copies them into `evidence/<run date>/`.
 
 ## Protocol
 
@@ -78,9 +79,36 @@ Nothing deployed is touched. Logs go to the run dir, not the folder.
 
 ## Found
 
-Not run against `gw.alert`. No verdict and no instances until it is.
-Before the run, confirm the alerter checkout under test sends `gw.alert`
-and record its branch and commit here as the code under test.
+**PASS** (2026-09-28). Code under test: `gridworks-alerter` `d29d9a6`
+on `jm/gw-alert`, whose vendored snapshot is a dev-only (`--allow-staged`)
+build from sema `3b4260d`; harness decoding through this repo's snapshot.
+
+- Exactly one `gw.alert` `Firing` `NoData` about
+  `d1.isone.me.versant.keene.spruce.ta`, `RaisedMs` 19:01:27.666Z: 30.7 s
+  after the last talking-phase report (19:00:57Z) and before the first
+  resume report (19:02:02Z).
+- The second alerter, started at 19:01:47Z on the same store with the
+  alert open, sent nothing until the resume, then exactly one `Resolved`
+  with the same `AlertId` and `RaisedMs`, `ResolvedMs` 19:02:02.403Z at
+  the first resume report, `Evidence` holding that report's readings.
+- No other word on the bus; both records broadcast with the house alias
+  as the radio channel (`rjb.d1-alerts.alerts.gw-alert.<house>.ta`).
+- Side finding: gwbase logs its broker URL, password included, on every
+  connect (`Connecting to amqp://user:pass@…`); the archived logs are
+  redacted by pattern.
+
+## Timeline
+
+2026-09-28, ET.
+
+- 15:00:35 watcher bound on `ear_tx`.
+- 15:00:37 alerter 1 up, tracking the spruce house from the dev registry.
+- 15:00:42–15:01:02 mock scada talks every 5 s (last report 15:00:57).
+- 15:01:27 alerter 1 sends `Firing`.
+- 15:01:47 alerter 1 stopped with the alert open; alerter 2 started on
+  the same store.
+- 15:02:02 mock resumes; alerter 2 sends `Resolved`.
+- 15:02:22 mock ends; everything stopped.
 
 ## Analysis notes
 
@@ -107,6 +135,16 @@ deployed service was touched.
   a run dir it prints.
 - `mock_scada.py`: the mocked scada (talk / quiet / resume phases).
 - `watcher.py`: the bus tap that writes the alert words to `instances/`.
+- `emit_instances.py`: writes `instances/gw.experiment.run-000.json`,
+  the run window read from the alerter file log.
+- `evidence/2026-09-28/provenance.txt`: where each log came from, the
+  clocks, and the redaction.
+- `evidence/2026-09-28/`: the run's logs as captured in the run dir
+  (`run.log` the runbook's output, `watcher.log`, `mock.log`,
+  `alerter-1.log` / `alerter-2.log` the two alerters' stdout,
+  `alerter-file.log` the gwbase file log both wrote), broker credentials
+  redacted by pattern and nothing else changed.
+- `instances/gw.experiment.run-000.json`: the run record.
 - `instances/<house>-firing-gw.alert-000.json` and
   `instances/<house>-resolved-gw.alert-000.json`: written by the run, the
   alert's two transitions as witnessed on the bus (sema instances;

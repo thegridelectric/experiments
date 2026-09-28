@@ -1,0 +1,20 @@
+Source: one ./run.sh on the laptop against gw-dev-rabbit (localhost:5672,
+  vhost d1__1) and the dev registry (gnr api on localhost:8000, gnr rabbit),
+  seeded d1 universe. Nothing deployed was touched.
+Window: 2026-09-28 15:00:34 to 15:02:26 EDT (laptop clock).
+Code under test: gridworks-alerter d29d9a6 (jm/gw-alert), vendored snapshot
+  a dev-only --allow-staged build from sema 3b4260d. Harness scripts decode
+  through experiments src/gwexp/sema.
+Files, copied from the run dir /var/folders/.../alerter-no-data.myFf6a:
+  run.log          stdout of ./run.sh
+  watcher.log      watcher.py: every gw.alert on ear_tx with its routing key
+  mock.log         mock_scada.py: phases and each report.event it published
+  alerter-1.log    stdout/stderr of the first gwalerter rabbit
+  alerter-2.log    stdout/stderr of the second, started on the same store
+  alerter-file.log the gwbase file log both alerters wrote
+                   (state/gridworks/alerter/log/d1.alerts.log)
+Timestamps: run.log, watcher.log, mock.log and alerter-N.log are laptop
+  local time (EDT); alerter-file.log is UTC (Z). One clock, the laptop's.
+Edits: broker credentials in URLs replaced by *** (pattern
+  amqp[s]://user:<secret>@); nothing else changed.
+Regeneration: not possible. A new run is a new dataset.

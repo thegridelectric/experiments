@@ -1,0 +1,19 @@
+run dir: /var/folders/mw/w215f_213m7clld4wtt1g9700000gn/T//alerter-no-data.myFf6a
+15:01:47 stopping alerter 1 with the alert open
+15:01:47 alerter 2 started
+--- mock
+15:00:42 phase talk for 20s
+15:01:02 phase quiet for 60s
+15:02:02 phase resume for 20s
+--- watcher
+15:00:35 watching ear_tx via amq.gen-6nGBqB-gKbroHWcM4CHG1Q
+15:01:27 rjb.d1-alerts.alerts.gw-alert.d1.isone.me.versant.keene.spruce.ta
+  gw.alert Firing NoData about d1.isone.me.versant.keene.spruce.ta id ad627820-0e24-4cf9-b6b0-097f367b4bc6
+15:02:02 rjb.d1-alerts.alerts.gw-alert.d1.isone.me.versant.keene.spruce.ta
+  gw.alert Resolved NoData about d1.isone.me.versant.keene.spruce.ta id ad627820-0e24-4cf9-b6b0-097f367b4bc6
+--- alerter logs
+2026-09-28T19:01:27.670Z INFO  d1.alerts > gw.alert Firing NoData on d1.isone.me.versant.keene.spruce.ta (ad627820-0e24-4cf9-b6b0-097f367b4bc6)
+2026-09-28T19:02:02.409Z INFO  d1.alerts > gw.alert Resolved NoData on d1.isone.me.versant.keene.spruce.ta (ad627820-0e24-4cf9-b6b0-097f367b4bc6)
+--- instances
+d1.isone.me.versant.keene.spruce.ta-firing-gw.alert-000.json
+d1.isone.me.versant.keene.spruce.ta-resolved-gw.alert-000.json

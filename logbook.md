@@ -13,8 +13,15 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **queued · [sieg-keep-ratio-map](future/sieg-keep-ratio-map/)** — maple's
+  own `keep_seconds` to kept-fraction map from the two flow meters:
+  26 timed stops across the 26 to 56 s span where the split changes,
+  from both directions, store relay alternating, the meters' lag from
+  the traverses.
 - **2026-09-28 · [maple-ecodan-start-in-full-keep](2026-09-28-maple-ecodan-start-in-full-keep/)** —
-  21 min window on `b9679d4e`, admin-driven: the Ecodan called with the
+  four windows in a day, admin-driven; the closed starts fit the sieg
+  loop at 0.8 gal of water, a 9.5 s turnover at 5 gpm, with the fitted
+  volume growing with temperature (losses still to model). First window: the Ecodan called with the
   sieg loop at full keep and 69 F water at its inlet starts 3 min 52 s
   after the call and reaches 1.5 kW at 6 min, on the signature medians;
   the kept loop climbs 56 F in 4 min with 1.5 to 2.6 F of lift; the

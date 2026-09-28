@@ -1,12 +1,14 @@
 # maple-ecodan-start-in-full-keep, 2026-09-28
 
-> What this is: a 21-minute beta field window on maple (scada `b9679d4e`,
-> the `jm/spruce-unlimbo` branch on both pis) driven by hand from the
-> admin panel to watch the Mitsubishi Ecodan start with the Siegenthaler
-> loop at full keep and cold water at its inlet: how long the call takes
-> to become power, how the kept loop heats, and how the Ecodan behaves
-> when the call is removed. Every reading below is from the window scada's
-> own log; the window's reports and the broker capture are in the folder.
+> What this is: four beta field windows on maple in one day (the first
+> on scada `b9679d4e`, the last two on `1287911f`, the `jm/spruce-unlimbo`
+> branch on both pis) driven by hand from the admin panel to watch the
+> Mitsubishi Ecodan start with the Siegenthaler loop at full keep: how
+> long the call takes to become power, how the kept loop heats, how the
+> Ecodan behaves when the call is removed, and, from the closed starts
+> of all four windows together, the water volume of the loop. Findings
+> 1 to 5 are from the first window's log; finding 6 is fit across the
+> four windows' persisted reports.
 
 ## Setup
 
@@ -66,6 +68,65 @@
    sieg-send-flow 0.02. primary = sieg + send held within 0.02 gpm at
    every reading.
 
+6. **The kept loop is about 0.8 gallons of water; the fit drifts up
+   with temperature.** The model is the simplest one that fits a closed
+   loop: no losses, no pipe or sensor mass, and one unknown, the volume
+   of water V in the loop. Then over any interval
+
+       V x (rise in hp-lwt) = integral of sieg-flow x (hp-lwt - hp-ewt) dt
+
+   with V in gallons, flow in gpm and temperatures in F. Solving for V
+   needs only the three channels the loop already reports. The
+   integral is a trapezoid sum over the hp-lwt readings in each
+   report.event, with hp-ewt interpolated to each hp-lwt stamp and
+   sieg-flow the last reading before it (`loop_volume.py`). The
+   intervals are disjoint one-minute chunks of compressor run into the
+   kept loop, each beginning where the lift is about 2 F, nine across
+   the four windows:
+
+   | Chunk | hp-lwt over the minute | Lift, mean | gpm | Integral (gal F) | Rise | V (gal) | Turnover at 5 gpm |
+   | --- | --- | --- | --- | --- | --- | --- | --- |
+   | 07:07:33 | 82.4 to 96.4 F | 2.06 F | 5.09 | 10.08 | 14.0 F | 0.72 | 8.5 s |
+   | 07:08:36 | 97.4 to 107.7 F | 1.61 F | 5.12 | 7.58 | 10.3 F | 0.74 | 8.6 s |
+   | 12:53:17 | 70.6 to 82.7 F | 1.63 F | 5.06 | 8.10 | 12.0 F | 0.67 | 8.0 s |
+   | 12:55:57 | 101.2 to 116.2 F | 2.49 F | 5.13 | 12.05 | 15.0 F | 0.80 | 9.4 s |
+   | 14:22:41 | 75.3 to 88.1 F | 1.99 F | 4.99 | 9.73 | 12.8 F | 0.76 | 9.2 s |
+   | 14:23:41 | 88.3 to 99.4 F | 1.85 F | 5.03 | 9.06 | 11.1 F | 0.82 | 9.7 s |
+   | 14:24:42 | 99.8 to 112.7 F | 2.41 F | 5.04 | 11.29 | 13.0 F | 0.87 | 10.4 s |
+   | 14:44:38 | 104.6 to 118.5 F | 2.67 F | 5.04 | 12.43 | 13.9 F | 0.89 | 10.6 s |
+   | 14:45:39 | 118.7 to 127.9 F | 1.88 F | 5.06 | 9.36 | 9.1 F | 1.03 | 12.2 s |
+
+   Median 0.80 gal, mean 0.81, range 0.67 to 1.03. Eight feet of 1"
+   type L copper holds 0.34 gal, so about 0.45 gal sits inside the heat
+   pump between the two sensors. At 5 gpm the loop turns over every 9
+   to 10 s.
+
+   The spread is the model's own signal that it is missing a term. V
+   climbs with loop temperature, 0.67 gal at 75 F to 1.03 gal at 125 F,
+   and does so in step within one run (14:22 to 14:24: 0.76, 0.82,
+   0.87). A lossless fixed volume gives the same V at every
+   temperature. Of the candidates, only heat leaving the loop grows
+   with temperature: loss to the room, and heat taken by the heat
+   pump's exchanger and refrigerant side while they warm. Pipe and
+   sensor mass add a fixed amount to V (the copper is about 0.2 gal of
+   water-equivalent) and sensor lag shifts both traces equally in time
+   and changes neither the lift nor the rise per minute, so neither
+   can make a trend. The 14:37 to 14:43 hold in the fourth window
+   (valve stopped at keep_seconds 81.1, heat pump idle at 54 W, hp-lwt
+   and hp-ewt on a 0.05 C async delta) measured the room loss
+   directly: 0.27 C a minute at 105 F, about 60 W, 3 percent of the
+   2 kW the lift represents, so room loss alone is too small for the
+   spread and the heat pump's own warming is the larger term. The same
+   hold read hp-ewt 0.35 to 0.38 C above hp-lwt on the same water;
+   adding that offset back to the lift (`--offset 0.65`) raises every V
+   by a quarter to a third, mean 1.07 gal, and leaves the spread, so
+   the offset is a calibration correction separate from the loss term.
+
+   The lift itself is the number to carry forward: about 2 F at 5 gpm
+   is 2 kW into the water against 1 to 3.5 kW of electricity at the
+   outdoor unit, so through these ramps most of the heat pump's output
+   is not reaching the water.
+
 ## What was lost
 
 The window was closed at about 07:14:40 box time, before the 07:15:00
@@ -100,5 +161,17 @@ by hand through the admin panel (`gwa watch maple`).
 - `broker-capture-20260928-065451.jsonl` + `.provenance.txt` — every
   message the laptop's dev broker saw through the tunnel: snapshots,
   power, the layout announcement. 100 messages.
-- `instances/gw.experiment.run-000.json` — the run record, emitted by
-  `emit_instances.py` from the window log's first and last stamps.
+- `instances/gw.experiment.run-000.json` — the run record of the first
+  window, emitted by `emit_instances.py` from the window log's first and
+  last stamps. The later windows have no run instance yet.
+- `maple-window-20260928-130220.log`, `-143026.log`, `-145019.log` and
+  `maple-events-130239/`, `-143041/`, `-145033/` — the second, third and
+  fourth windows of the day (12:41 to 13:02, 14:13 to 14:30, 14:33 to
+  14:50 ET), each the window scada's log and its persisted events as
+  `house_window.sh maple off` copied them; the suffix is the copy's
+  laptop stamp. The third window was the first with hp-lwt and hp-ewt
+  at a 0.1 C async delta, the fourth at 0.05 C. A 13:49 to 14:12 window
+  between them ran no start and is not kept here.
+- `loop_volume.py` — the finding-6 fit over the nine chunks named in it,
+  reading the `maple-events*` folders; `--offset` adds a same-water
+  sensor offset to the lift.
