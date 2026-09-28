@@ -1,0 +1,16 @@
+Source: the maple box's window scada stdout (~/gridworks-scada-unlimbo at
+  eae6078e, booted from ~/envs/dev.env by window_boot.py, snapshots every
+  2 s), copied off the box by `./maple_window.sh off` to ../scratch/ and
+  into this folder.
+Window: 2026-09-28, `./maple_window.sh on 30 --debug` opened 13:14 ET,
+  closed by `off` at 13:30 after the 13:30 report.event generated. Loggers
+  at DEBUG. No LTN. Admin drove the loop: MoveToFullKeep at 13:16:19
+  (FullyKeep 13:18:09), heat pump on; the admin hold timed out at 13:25:27
+  and HoldFullSend opened the valve on its own the same second the
+  compressor crossed 1500 W (hp-lwt 116.5 F); admin retaken 13:26:18 with
+  MoveToFullSend (cancelled the run at keep_seconds 49.1, fresh full run);
+  the Ecodan stopped itself about 13:27:57 (2.3 kW to 75 W) before the
+  admin TurnOff at 13:28:26.
+Stamps: box clock, local ET (laptop and box within 1 s this window).
+Regeneration: not possible. A new window is a new run.
+EXTERNAL EVIDENCE.

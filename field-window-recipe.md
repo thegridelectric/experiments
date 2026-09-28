@@ -195,15 +195,23 @@ Window logs and the broker capture arrive in `../scratch/`; window layouts on
 the box pull read-only from
 `<house>:~/.config/gridworks/scada-experiment/`.
 
-## Records: only the last run is kept
+## Records: every run is kept under `runs/`
 
-Unlike an ordinary experiment, the field-window practice does not archive
-every round. It keeps only the **most recent** run — its window log(s), any
-bus/port capture, and the `gw.experiment.run` instance that `emit_instances.py`
-builds from the log's first and last stamped lines. **Opening a new window
-deletes the previous run's artifacts first**; git history and the logbook line
-carry what a past round taught, so nothing durable is lost. `emit_instances.py`
-is the only code that persists between runs.
+Each window is one run folder,
+`beta-field-windows/runs/<YYYY-MM-DD>-<HHMM>-<house>-<label>/`: the window
+log(s) `off` copied to `../scratch/`, the pulled events folder
+(`<house>-events/`), the broker capture, a provenance sidecar per file, and
+`instances/`: the `gw.experiment.run` from `emit_instances.py` and the
+`gw.readings` that `emit_readings.py` folds out of the run's
+`report.event`s, both built through the vendored snapshot and read back
+through the codec. Readings are consulted from the `gw.readings` instance,
+never re-read off the strip or the log by hand. A run whose windows carry
+heat pump starts also holds `starts.md`, one row per start (the readings
+change 5 of the basic-sieg design names), hand-kept until the word for a
+start observation exists. `runs.md` at the folder top is the index, one
+line per run: date, house, scada SHA, strategy, label, starts, verdict.
+The folder top holds only the tools and the index; `../scratch/` is the
+landing zone and is pruned by hand.
 
 ## On Tap (for Jessica)
 

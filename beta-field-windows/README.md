@@ -1,15 +1,15 @@
 # beta-field-windows
 
-> Only the **last run** is kept. Opening a new window **deletes the previous
-> run's artifacts first** (logs, captures, pulled instances) — git history and
-> the logbook carry what a past round taught, so nothing durable is lost.
-> `emit_instances.py` is the only code that persists between runs.
+> Every run is kept: one folder per window under `runs/`, indexed in
+> `runs.md`. The folder top holds the tools (`emit_instances.py`,
+> `emit_readings.py`) and the index. The recipe's "Records" section says
+> what a run folder holds.
 
 The how-to for running a window — the two window kinds, the box layouts, the
 `put_layout.sh` gate, the tunnel, running a round, and the On Tap list — is
-`../field-window-recipe.md`. This folder is just the tool and the last run.
+`../field-window-recipe.md`. This folder is the tools, the index and the runs.
 
-## Last run — round five (2026-09-27, maple)
+## Round five (2026-09-27, maple), the last run filed at the folder top
 
 One 11-minute window at maple on scada `92b4e5d1` (`jm/spruce-unlimbo`),
 `--debug`, no LTN, sieg loop strategy `HoldFullSend`, `ActuationAuthority`

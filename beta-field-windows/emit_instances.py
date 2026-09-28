@@ -1,8 +1,12 @@
 """Emit the gw.experiment.run instances for a round's two windows.
 
 One instance per house. Start and end come from the window scada's own log
-(the file copied into this folder by `house_window.sh <house> off`): start is
-the first stamped line, end is the last. Those stamps are the box clock, local
+(the `<house>-window-*.log` the run folder holds, copied there from
+`house_window.sh <house> off`): start is the first stamped line, end is the
+last.
+
+    uv run python beta-field-windows/emit_instances.py <run folder> "<code ref>"
+ Those stamps are the box clock, local
 ET, which runs about 70 seconds behind the laptop clock.
 
 Each instance is constructed through the vendored gwexp snapshot class, written
@@ -32,17 +36,14 @@ ALIASES = {
 }
 
 
-def window_logs() -> dict[str, tuple[str, str]]:
-    """The last run's log per house: `<house>-window-*.log` in this folder."""
+def window_logs(folder: Path) -> dict[str, tuple[str, str]]:
+    """The run's log per house: `<house>-window-*.log` in the run folder."""
     found = {}
     for house, alias in ALIASES.items():
-        logs = sorted(HERE.glob(f"{house}-window-*.log"))
+        logs = sorted(folder.glob(f"{house}-window-*.log"))
         if logs:
             found[house] = (alias, logs[-1].name)
     return found
-
-
-WINDOWS = window_logs()
 
 
 def stamp_ms(line: str) -> int:
@@ -62,22 +63,19 @@ def bounds(path: Path) -> tuple[int, int]:
     return stamps[0], stamps[-1]
 
 
-def main() -> None:
+def main(folder: Path, code_ref: str) -> None:
     codec = SemaCodec()
-    for house, (alias, log_name) in WINDOWS.items():
-        log = HERE / log_name
-        if not log.exists():
-            print(f"skip {house}: {log_name} not in the folder")
-            continue
+    for house, (alias, log_name) in window_logs(folder).items():
+        log = folder / log_name
         start, end = bounds(log)
         run = GwExperimentRun(
             experiment_slug="beta-field-windows",
             host_g_node_alias=alias,
             start_unix_ms=start,
             end_unix_ms=end,
-            code_ref=f"gridworks-scada 92b4e5d1; experiments 65f0a25 house_window.sh {house}",
+            code_ref=f"{code_ref} house_window.sh {house}",
         )
-        out = HERE / f"instances/{house}-gw.experiment.run-000.json"
+        out = folder / f"instances/{house}-gw.experiment.run-000.json"
         out.parent.mkdir(exist_ok=True)
         out.write_text(json.dumps(run.to_dict(), indent=1) + "\n")
         back = codec.from_dict(json.loads(out.read_text()), expect=GwExperimentRun)
@@ -85,4 +83,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 3:
+        raise SystemExit(__doc__)
+    main(Path(sys.argv[1]), sys.argv[2])
