@@ -28,6 +28,7 @@ STAMP = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}\.\d{3})")
 ALIASES = {
     "spruce": "hw1.isone.me.versant.keene.spruce.scada",
     "beech": "hw1.isone.me.versant.keene.beech.scada",
+    "maple": "hw1.isone.me.versant.keene.maple.scada",
 }
 
 
@@ -74,9 +75,10 @@ def main() -> None:
             host_g_node_alias=alias,
             start_unix_ms=start,
             end_unix_ms=end,
-            code_ref=f"gridworks-scada dfc35644; experiments 299017f house_window.sh {house}",
+            code_ref=f"gridworks-scada 92b4e5d1; experiments 65f0a25 house_window.sh {house}",
         )
         out = HERE / f"instances/{house}-gw.experiment.run-000.json"
+        out.parent.mkdir(exist_ok=True)
         out.write_text(json.dumps(run.to_dict(), indent=1) + "\n")
         back = codec.from_dict(json.loads(out.read_text()), expect=GwExperimentRun)
         print(out.name, back.start_unix_ms, back.end_unix_ms)

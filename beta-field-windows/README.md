@@ -9,65 +9,54 @@ The how-to for running a window — the two window kinds, the box layouts, the
 `put_layout.sh` gate, the tunnel, running a round, and the On Tap list — is
 `../field-window-recipe.md`. This folder is just the tool and the last run.
 
-## Last run — round four (2026-09-23)
+## Last run — round five (2026-09-27, maple)
 
-Two 5-minute windows on scada `847d9ca9` (`jm/spruce-unlimbo`), the first
-run of the window pairs generated at the layout-word axiom tables
-(`gw.nolan.layout` for spruce, `gw.house0.layout` for beech, both with
-`DisabledChannelNames`); no `--debug`, no LTN; one broker capture (34
-messages: spruce 10 snapshots, beech 10).
+One 11-minute window at maple on scada `92b4e5d1` (`jm/spruce-unlimbo`),
+`--debug`, no LTN, sieg loop strategy `HoldFullSend`, `ActuationAuthority`
+Active, heat pump off (56 W). The window verifies basic-sieg change 4d
+(the send-line pico posts as `sieg-send`; `sieg-send-flow` is an identity
+over it and `primary-flow` the sum with `sieg-flow`) and re-checks 4ci
+(every direct boss commands its relays at boot). The full read is
+`maple-4d-window-analysis.md`.
 
-- **Both** booted on the new pairs and announced `layout.lite` then
-  `ta.deed` once; snapshots every 30 s with every state machine present;
-  both closed on their bound and the box restarted the recorded services.
-- **beech** — every tank-module pico (`tank1`, `tank2`, `tank3`, `buffer`)
-  posts `tank.module.params` `110` and the scada accepts only `200`
-  (`PicoBoardVariant`, `MicropythonVersion` required): one
-  `gridworks.event.problem` per pico per boot, 16 in the window across
-  four cycler reboots; the
-  readings still arrive. The two Hubitat zone channels never populated
-  (`0/2 zone gw channels`; `zone1-down-temp`/`-set`, `zone2-up-temp`/`-set`
-  had no value all window). The UnknownChannels logger lists the four
-  declared-disabled channels (`dist-flow`, `dist-swt`, `dist-rwt`,
-  `sieg-hot`) as having no value.
-- **spruce** — `8/8 zone gw channels`; one Warning glitch
-  (`fancoil` `open-thermistor`: `fancoil-depth3` at the 3.3 V rail); the
-  Nolan LocalControl left actuators at their adopted states and turned the
-  heat pump off; no problem events.
-- **Both** — `store-hot-pipe` / `store-cold-pipe` (spruce: `store-btu`;
-  beech: `analog-temp`) and beech `buffer-hot-pipe` / `buffer-well` never
-  read a value in the window. Relay channels sit in the UnknownChannels
-  list too, which is expected: relay state rides `StateList`, not a
-  reading. Beech `ActuationAuthority` is `Standby`, spruce `Active`; both
-  deeds on the boxes match the announced `ta.deed` (`…spruce.ta` issued
-  2026-09-08, `…beech.ta` issued 2026-09-21, both
-  `ValidatedRealAssetAndGps`).
-- **Round-four checklist from the spoke** — spruce zones publish
-  `-opto-input` and `-heat-call` from the first poll: the persisted
-  report stamps all ten at 23:42:24Z, the second of
-  `gridworks.event.startup`, and the first snapshot carries them 9 s
-  later (19:43:42 on the laptop clock); spruce's pico cycler rebooted once at
-  startup and not after; beech's rebooted at startup and then about every
-  65 s (`dist2-flow pico_2a7e22 flatlined`, three more), and each reboot
-  brought the tank picos' params posts;
-  `fancoil-depth3` gave one `open-thermistor` Warning and `pipes1-depth3`
-  none; beech `zone1-down-heat-call` / `zone2-up-heat-call` carry 0 from
-  the power meter; beech no longer lacks a deed; the beech tank picos do
-  post params and the older-firmware `TankModuleParams` is refused.
+- **4d verifies.** `sieg-send-flow` and `primary-flow` report through the
+  whole window; once flow was nonzero the `sieg-send-flow` age on the
+  strip stayed between 1 s and 20 s. On all 22 strip lines with values,
+  and on all 449 `primary-flow` readings in the two `report.event`s,
+  `primary-flow` = `sieg-flow` + `sieg-send-flow` within 0.01 gpm;
+  `sieg-send-flow` matches `sieg-send` exactly in values and stamps.
+- **The move to send.** `StartKeepingLess` at 18:32:56.096 to
+  `ResetToFullySend` at 18:34:46.368 (box clock), a travel of 110 s;
+  during it `sieg-flow` fell 4.85 → 0.00 gpm and `sieg-send` rose
+  0.00 → 4.13 gpm.
+- **4ci holds.** hp-boss, local control, sieg-loop and pico-cycler all
+  commanded their relays within 3.4 s of boot; every command acked; no
+  `relay_silent`, no `relay_nack`.
+- **Glitches: seven, all at boot, all known kinds.** Six `params-version`
+  Warnings: the four tank picos post `tank.module.params` 110 (scada
+  takes 200) and the two BTU picos post `async.btu.params` 000 (scada
+  takes 100, logged as "malformed BtuMeter parameters"); readings still
+  flowed from all six. One `disabled-roster` Warning for
+  `primary-pump-pwr`. None after 18:33:16.
+- **Ages and gaps.** `sieg-flow` reached 277 s while at 0 in FullySend
+  (the sieg-btu includes a zero every ~300 s); power and analog-temp
+  channels reach 300 s and never pass it; `dist-flow` had a boot
+  `PicoMissing` and then posts only when flow changes. Two things with no
+  cause in the log: `transactive-power` never had a value and is absent
+  from both reports; the zone heat-call periodic emission ran 176 s late
+  (`now=1790548676.2 next=1790548500`), which reads as the emission
+  firing only when a power-meter reading arrives.
+- **scada2** booted and linked; one 10 ms ack timeout at 18:33:00.964 on
+  its boot ping, before the primary had subscribed.
+- **Reports stayed on the box** (no LTN): 16 events, 2 `report.event`
+  (the boot partial and the 22:35-22:40Z slot). The report lists are in
+  arrival order, not time order.
 
-- **Reports stayed on the boxes.** With no LTN the upstream link never
-  went active, so every event, `report.event` included, persisted on the
-  box and none reached the capture. Each house saved one report, the
-  partial slot 23:40–23:45Z (spruce 86 channels, beech 59); the windows
-  closed before the 23:50 boundary, so no full-slot report and no read of
-  the 300 s cadence. The rest are startup and comm events, and
-  beech's 16 `gridworks.event.problem`s.
-
-Files: `broker-capture-20260923-194329.jsonl`, `spruce-window-…195122.log`,
-`beech-window-…195134.log`, `spruce-events/`, `beech-events/` (the boxes'
-persisted events), each with a provenance sidecar;
-`instances/{beech,spruce}-gw.experiment.run-000.json`. Capture stamps are the
-laptop clock, ~70 s ahead of the boxes.
+Files: `broker-capture-20260927-183402.jsonl` (35 messages),
+`maple-window-…184556.log`, `maple2-window-…184606.log`, `maple-events/`,
+`maple-4d-window-analysis.md`, each with a provenance sidecar;
+`instances/maple-gw.experiment.run-000.json`. Capture stamps are the laptop
+clock, ~70 s ahead of the box.
 
 ## emit_instances.py
 

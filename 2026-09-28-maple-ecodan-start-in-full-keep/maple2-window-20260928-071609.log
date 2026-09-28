@@ -1,0 +1,348 @@
+2026-09-28 06:53:43.979 
+2026-09-28 06:53:43.980 Env file: </home/pi/envs/dev.env>  exists: True
+2026-09-28 06:53:43.980 Settings:
+2026-09-28 06:53:43.981 {
+  "paths": {
+    "base": "gridworks",
+    "name": "scada-experiment",
+    "relative_path": "gridworks/scada-experiment",
+    "data_home": "/home/pi/.local/share",
+    "state_home": "/home/pi/.local/state",
+    "config_home": "/home/pi/.config",
+    "data_dir": "/home/pi/.local/share/gridworks/scada-experiment",
+    "config_dir": "/home/pi/.config/gridworks/scada-experiment",
+    "certs_dir": "/home/pi/.config/gridworks/scada-experiment/certs",
+    "event_dir": "/home/pi/.local/share/gridworks/scada-experiment/event",
+    "log_dir": "/home/pi/.local/state/gridworks/scada-experiment/log",
+    "hardware_layout": "/home/pi/.config/gridworks/scada-experiment/hardware-layout.json",
+    "operational_params": "/home/pi/.config/gridworks/scada-experiment/operational-params.json",
+    "tadeed": "/home/pi/.config/gridworks/scada-experiment/ta-deed.json"
+  },
+  "logging": {
+    "base_log_name": "gridworks",
+    "base_log_level": 30,
+    "levels": {
+      "message_summary": 30,
+      "lifecycle": 20,
+      "comm_event": 20,
+      "io_loop": 20
+    },
+    "formatter": {
+      "fmt": "%(asctime)s %(message)s",
+      "datefmt": "",
+      "default_msec_format": "%s.%03d",
+      "use_utc": false
+    },
+    "file_handler": {
+      "filename": "proactor.log",
+      "bytes_per_log_file": 2097152,
+      "num_log_files": 10,
+      "level": 0
+    },
+    "io_loop": {
+      "file_handler": {
+        "filename": "io_loop.log",
+        "bytes_per_log_file": 2097152,
+        "num_log_files": 2,
+        "level": 0
+      },
+      "on_screen": false
+    },
+    "aiohttp_logging": false,
+    "paho_logging": false
+  },
+  "proactor": {
+    "mqtt_link_poll_seconds": 60.0,
+    "ack_timeout_seconds": 5.0,
+    "num_initial_event_reuploads": 5,
+    "num_inflight_events": 50
+  },
+  "pico_cycler_state_logging": false,
+  "unknown_channel_logging": false,
+  "power_meter_logging_level": 30,
+  "contract_rep_logging_level": 20,
+  "paho_logging": false,
+  "local_mqtt": {
+    "host": "maple.local",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": "sara",
+    "password": "**********",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/local_mqtt.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/local_mqtt/private/local_mqtt.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    }
+  },
+  "gridworks_mqtt": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": null,
+    "password": "",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/gridworks_mqtt.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/gridworks_mqtt/private/gridworks_mqtt.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    }
+  },
+  "clock_source": "Wall",
+  "seconds_per_report": 300,
+  "seconds_per_snapshot": 30,
+  "async_power_reporting_threshold": 0.02,
+  "power_meter_lost_after_s": 10.0,
+  "persister": {
+    "max_bytes": 524288000
+  },
+  "admin": {
+    "host": "localhost",
+    "port": 1883,
+    "keepalive": 60,
+    "bind_address": "",
+    "bind_port": 0,
+    "username": null,
+    "password": "",
+    "tls": {
+      "use_tls": false,
+      "port": 8883,
+      "paths": {
+        "ca_cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/ca.crt",
+        "cert_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/admin.crt",
+        "private_key_path": "/home/pi/.config/gridworks/scada-experiment/certs/admin/private/admin.pem"
+      },
+      "cert_reqs": 2,
+      "ciphers": null,
+      "keyfile_password": ""
+    },
+    "enabled": false,
+    "name": "admin",
+    "max_timeout_seconds": 86400.0
+  },
+  "latitude": 45.6573,
+  "longitude": -68.7098,
+  "airtable_pat": "bogus_pat"
+}
+ScadaSettings(
+    paths=ScadaPaths(
+        base=PosixPath('gridworks'),
+        name=PosixPath('scada-experiment'),
+        relative_path=PosixPath('gridworks/scada-experiment'),
+        data_home=PosixPath('/home/pi/.local/share'),
+        state_home=PosixPath('/home/pi/.local/state'),
+        config_home=PosixPath('/home/pi/.config'),
+        data_dir=PosixPath('/home/pi/.local/share/gridworks/scada-experiment'),
+        config_dir=PosixPath('/home/pi/.config/gridworks/scada-experiment'),
+        certs_dir=PosixPath('/home/pi/.config/gridworks/scada-experiment/certs')
+,
+        event_dir=PosixPath('/home/pi/.local/share/gridworks/scada-experiment/ev
+ent'),
+        log_dir=PosixPath('/home/pi/.local/state/gridworks/scada-experiment/log'
+),
+        hardware_layout=PosixPath('/home/pi/.config/gridworks/scada-experiment/h
+ardware-layout.json'),
+        operational_params=PosixPath('/home/pi/.config/gridworks/scada-experimen
+t/operational-params.json'),
+        tadeed=PosixPath('/home/pi/.config/gridworks/scada-experiment/ta-deed.js
+on')
+    ),
+    logging=LoggingSettings(
+        base_log_name='gridworks',
+        base_log_level=30,
+        levels=LoggerLevels(
+            message_summary=30,
+            lifecycle=20,
+            comm_event=20,
+            io_loop=20
+        ),
+        formatter=FormatterSettings(
+            fmt='%(asctime)s %(message)s',
+            datefmt='',
+            default_msec_format='%s.%03d',
+            use_utc=False
+        ),
+        file_handler=RotatingFileHandlerSettings(
+            filename='proactor.log',
+            bytes_per_log_file=2097152,
+            num_log_files=10,
+            level=0
+        ),
+        io_loop=IOLoopLoggerSettings(
+            file_handler=RotatingFileHandlerSettings(
+                filename='io_loop.log',
+                bytes_per_log_file=2097152,
+                num_log_files=2,
+                level=0
+            ),
+            on_screen=False
+        ),
+        aiohttp_logging=False,
+        paho_logging=False
+    ),
+    proactor=ProactorSettings(
+        mqtt_link_poll_seconds=60.0,
+        ack_timeout_seconds=5.0,
+        num_initial_event_reuploads=5,
+        num_inflight_events=50
+    ),
+    pico_cycler_state_logging=False,
+    unknown_channel_logging=False,
+    power_meter_logging_level=30,
+    contract_rep_logging_level=20,
+    paho_logging=False,
+    local_mqtt=MQTTClient(
+        host='maple.local',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username='sara',
+        password=SecretStr('**********'),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/local_mqtt/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/local_mqtt/local_mqtt.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/local_mqtt/private/local_mqtt.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        )
+    ),
+    gridworks_mqtt=MQTTClient(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username=None,
+        password=SecretStr(''),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/gridworks_mqtt/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/gridworks_mqtt/gridworks_mqtt.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/gridworks_mqtt/private/gridworks_mqtt.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        )
+    ),
+    clock_source=<ClockSource.Wall: 'Wall'>,
+    seconds_per_report=300,
+    seconds_per_snapshot=30,
+    async_power_reporting_threshold=0.02,
+    power_meter_lost_after_s=10.0,
+    persister=PersisterSettings(max_bytes=524288000),
+    admin=AdminLinkSettings(
+        host='localhost',
+        port=1883,
+        keepalive=60,
+        bind_address='',
+        bind_port=0,
+        username=None,
+        password=SecretStr(''),
+        tls=TLSInfo(
+            use_tls=False,
+            port=8883,
+            paths=TLSPaths(
+                ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada-experim
+ent/certs/admin/ca.crt'),
+                cert_path=PosixPath('/home/pi/.config/gridworks/scada-experiment
+/certs/admin/admin.crt'),
+                private_key_path=PosixPath('/home/pi/.config/gridworks/scada-exp
+eriment/certs/admin/private/admin.pem')
+            ),
+            cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+            ciphers=None,
+            keyfile_password=SecretStr('')
+        ),
+        enabled=False,
+        name='admin',
+        max_timeout_seconds=86400
+    ),
+    latitude=45.6573,
+    longitude=-68.7098,
+    airtable_pat='bogus_pat'
+)
+2026-09-28 06:53:44.167 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.maple.scada.s2', short_name='s2')> reindexing events
+2026-09-28 06:53:44.168 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.maple.scada.s2', short_name='s2')> reindexing complete.
+  0 events present for upload, using approximately 0 KB / 0.0 MB storage space.
+2026-09-28 06:53:44.200 
+Subscription info for <hw1.isone.me.versant.keene.maple.scada.s2> [construction]
+  Client name: <local_mqtt>  topic_dst: <s>
+    Publish to: gw/hw1-isone-me-versant-keene-maple-scada-s2/to/s/SOME_MESSAGE_TYPE
+    Subscriptions:
+      [('gw/hw1-isone-me-versant-keene-maple-scada/to/s2/#', <QOS.AtMostOnce: 0>)]
+
+== window boot: scada2 of hw1.isone.me.versant.keene.maple.scada for 1800s, broker localhost:1883 ==
+2026-09-28 06:53:44.207 ++Proactor<s2>.join()
+2026-09-28 06:53:44.209 Tasks: 5  [Proactor.join() - all tasks]
+	1/5  Task-1                          done:False   exception: None  <coroutine object _run_bounded at 0x7f9f81a420>
+	2/5  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f9f77df20>
+	3/5  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f9f566d40>
+	4/5  pat_watchdog                    done:False   exception: None  <coroutine object WatchdogManager._check_pats at 0x7f9f77d5a0>
+	5/5  Task-2                          done:False   exception: None  <coroutine object Proactor.run_forever at 0x7f9f57ab00>
+
+2026-09-28 06:53:44.211 Tasks: 9  [WAITING FOR]
+	1/9  _WebManager.join                done:False   exception: None  <coroutine object _WebManager.join at 0x7f9f57b340>
+	2/9  analog-temp.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f9f57b940>
+	3/9  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f9f46d2a0>
+	4/9  io_loop_manager.join            done:False   exception: None  <coroutine object IOLoop.join at 0x7f9f57b1c0>
+	5/9  zone2-bedroom-stat.join         done:False   exception: None  <coroutine object HubitatPoller.join at 0x7f9f57b7c0>
+	6/9  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f9f77df20>
+	7/9  zone1-living-rm-stat.join       done:False   exception: None  <coroutine object HubitatPoller.join at 0x7f9f57b640>
+	8/9  s2.join                         done:False   exception: None  <coroutine object PrimeActor.join at 0x7f9f57b4c0>
+	9/9  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f9f566d40>
+
+2026-09-28 06:53:44.214 Tasks: 5  [DONE]
+	1/5  _WebManager.join                done:True   exception: None  <coroutine object _WebManager.join at 0x7f9f57b340>
+	2/5  io_loop_manager.join            done:True   exception: None  <coroutine object IOLoop.join at 0x7f9f57b1c0>
+	3/5  zone2-bedroom-stat.join         done:True   exception: None  <coroutine object HubitatPoller.join at 0x7f9f57b7c0>
+	4/5  zone1-living-rm-stat.join       done:True   exception: None  <coroutine object HubitatPoller.join at 0x7f9f57b640>
+	5/5  s2.join                         done:True   exception: None  <coroutine object PrimeActor.join at 0x7f9f57b4c0>
+
+2026-09-28 06:53:44.216 Tasks: 4  [PENDING]
+	1/4  analog-temp.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f9f57b940>
+	2/4  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f9f77df20>
+	3/4  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f9f46d2a0>
+	4/4  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f9f566d40>
+
+2026-09-28 06:53:44.216 Tasks: 4  [WAITING FOR]
+	1/4  analog-temp.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f9f57b940>
+	2/4  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f9f77df20>
+	3/4  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f9f46d2a0>
+	4/4  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f9f566d40>
+
+2026-09-28 06:53:44.365 local_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-09-28 06:53:44.368 local_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-09-28 06:53:44.378 local_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-09-28 06:53:44.378 start_reupload: sent 3 events. 0 reupload events pending. Total events in reupload: 3.  Reuploads started: 1  completed: 0.
+2026-09-28 06:53:44.434 Reupload completed. Reuploads started: 1  completed: 1.

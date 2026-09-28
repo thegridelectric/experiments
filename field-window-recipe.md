@@ -41,7 +41,7 @@ on a production house without letting a dispatch reach the equipment.
 |---|---|---|---|---|
 | spruce | `gw.nolan.layout` | Heating | Active | yes |
 | beech | `gw.house0.layout` | Heating | Standby | yes |
-| maple | `gw.house0.layout` | Heating | — | no |
+| maple | `gw.house0.layout` | Heating | Active | yes |
 | fir / oak | `gw.house0.no.sieg.layout` | Heating | — | no |
 | elm | `gw.house0.monoblock.layout` | Heating | — | no |
 
@@ -83,7 +83,9 @@ spruce is already done) every tank-module pico except spruce's posts
 `tank.module.params` 110, and the window scada accepts only 200. A 110
 pico posts its params once per boot, so expect one refusal per tank pico
 at the window's startup reboot, and one more per pico cycler reboot after
-that; the temperature readings still arrive. The refusal is not a finding
+that; the temperature readings still arrive. The BTU picos do the same
+with `async.btu.params` 000 against the scada's 100 (logged as "malformed
+BtuMeter parameters"); their readings arrive too. The refusal is not a finding
 of the round; a run of cycler reboots is.
 
 ## The spruce branch exception

@@ -13,6 +13,21 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-28 · [maple-ecodan-start-in-full-keep](2026-09-28-maple-ecodan-start-in-full-keep/)** —
+  21 min window on `b9679d4e`, admin-driven: the Ecodan called with the
+  sieg loop at full keep and 69 F water at its inlet starts 3 min 52 s
+  after the call and reaches 1.5 kW at 6 min, on the signature medians;
+  the kept loop climbs 56 F in 4 min with 1.5 to 2.6 F of lift; the
+  compressor runs 1 to 2.5 min past relay 6 opening (HpOff is the relay,
+  the power is the run-down). The 07:15 report was lost to closing on the
+  laptop clock.
+- **2026-09-27 · [beta-field-windows](beta-field-windows/)** — round five,
+  maple, 11 min on `92b4e5d1`: basic-sieg 4d VERIFIED. The send-line pico
+  keeps its `sieg-send` name, `sieg-send-flow` is an identity over it and
+  `primary-flow` the sum; all 22 strip lines and 449 report readings hold
+  primary = sieg + send within 0.01 gpm through a 110 s move to full send.
+  Boot relay posture (4ci) holds; seven boot glitches, all known
+  params-version / disabled-roster kinds.
 - **2026-09-20 · [maple-starts-heating](2026-09-20-maple-starts-heating/)** —
   field support bringing maple out of Standby into BufferOnly heating on
   scada `main`. With the sieg valve parked at full send the always-running

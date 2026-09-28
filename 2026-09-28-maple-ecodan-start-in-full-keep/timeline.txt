@@ -1,0 +1,42 @@
+483:2026-09-28 06:53:44.169 [sieg-loop] Just received state HpOff from HpBoss
+508:2026-09-28 06:53:44.200 [sieg-loop] StartKeepingLess: FullyKeep -> KeepingLess
+510:2026-09-28 06:53:44.201 [sieg-loop] Motor toward send for 110 s from keep_seconds 100
+795:2026-09-28 06:54:49.170 [lc] OffPeakBufferFullStorageNotReady: Initializing -> HpOnStoreOff
+802:2026-09-28 06:54:49.177 [sieg-loop] Just received state HpOn from HpBoss
+809:2026-09-28 06:55:11.114 [scada] AutoGoesDormant: LocalControl -> Dormant
+810:2026-09-28 06:55:11.119 [lc] Top State TopGoDormant: Normal -> Dormant
+812:2026-09-28 06:55:11.120 [lc] GoDormant: HpOnStoreOff -> Dormant
+813:2026-09-28 06:55:11.121 [scada] Admin Wakes Up
+814:2026-09-28 06:55:11.121 [scada] AdminDispatch TurnOff to admin.hp-boss
+816:2026-09-28 06:55:11.123 [hp-boss] admin.hp-boss sending OpenRelay to admin.hp-boss.hp-scada-ops-relay
+819:2026-09-28 06:55:11.126 [sieg-loop] Just received state HpOff from HpBoss
+825:2026-09-28 06:55:34.285 [sieg-loop] ResetToFullySend: KeepingLess -> FullySend
+827:2026-09-28 06:55:34.288 [sieg-loop] Motor stopped after 110.0 s: keep_seconds 0
+901:2026-09-28 06:58:19.983 [scada] AdminDispatch MoveToFullKeep to admin.sieg-loop
+906:2026-09-28 06:58:19.987 [sieg-loop] StartKeepingMore: FullySend -> KeepingMore
+908:2026-09-28 06:58:19.988 [sieg-loop] Motor toward keep for 110 s from keep_seconds 0
+910:2026-09-28 06:58:26.333 [scada] AdminDispatch MoveToFullSend to admin.sieg-loop
+914:2026-09-28 06:58:26.340 [sieg-loop] StopKeepingMore: KeepingMore -> SteadyBlend
+916:2026-09-28 06:58:26.344 [sieg-loop] Motor stopped after 6.3 s: keep_seconds 6.3
+919:2026-09-28 06:58:26.353 [sieg-loop] StartKeepingLess: SteadyBlend -> KeepingLess
+921:2026-09-28 06:58:26.356 [sieg-loop] Motor toward send for 110 s from keep_seconds 6.3
+927:2026-09-28 06:58:41.778 [scada] AdminDispatch ChargeStore to admin.charge-discharge-relay
+973:2026-09-28 07:00:16.391 [sieg-loop] ResetToFullySend: KeepingLess -> FullySend
+975:2026-09-28 07:00:16.394 [sieg-loop] Motor stopped after 110.0 s: keep_seconds 0
+980:2026-09-28 07:00:48.833 [scada] AdminDispatch MoveToFullKeep to admin.sieg-loop
+986:2026-09-28 07:00:48.837 [sieg-loop] StartKeepingMore: FullySend -> KeepingMore
+988:2026-09-28 07:00:48.838 [sieg-loop] Motor toward keep for 110 s from keep_seconds 0
+1005:2026-09-28 07:02:38.853 [sieg-loop] ResetToFullyKeep: KeepingMore -> FullyKeep
+1007:2026-09-28 07:02:38.856 [sieg-loop] Motor stopped after 110.0 s: keep_seconds 100
+1014:2026-09-28 07:03:07.877 [scada] AdminDispatch TurnOn to admin.hp-boss
+1016:2026-09-28 07:03:07.882 [hp-boss] admin.hp-boss sending CloseRelay to admin.hp-boss.hp-scada-ops-relay
+1018:2026-09-28 07:03:07.887 [sieg-loop] Just received state HpOn from HpBoss
+1077:2026-09-28 07:08:53.400 [scada] AdminDispatch DischargeStore to admin.charge-discharge-relay
+1102:2026-09-28 07:11:12.016 [scada] AdminDispatch MoveToFullSend to admin.sieg-loop
+1107:2026-09-28 07:11:12.023 [sieg-loop] StartKeepingLess: FullyKeep -> KeepingLess
+1109:2026-09-28 07:11:12.026 [sieg-loop] Motor toward send for 110 s from keep_seconds 100
+1113:2026-09-28 07:11:18.521 [scada] AdminDispatch TurnOff to admin.hp-boss
+1115:2026-09-28 07:11:18.523 [hp-boss] admin.hp-boss sending OpenRelay to admin.hp-boss.hp-scada-ops-relay
+1117:2026-09-28 07:11:18.525 [sieg-loop] Just received state HpOff from HpBoss
+1136:2026-09-28 07:13:02.054 [sieg-loop] ResetToFullySend: KeepingLess -> FullySend
+1138:2026-09-28 07:13:02.056 [sieg-loop] Motor stopped after 110.0 s: keep_seconds 0
