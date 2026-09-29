@@ -1,0 +1,620 @@
+AdminClient initialized for scada=maple
+MQTTClient: stopped -> started
+MQTTClient: started -> connecting
+MQTTClient: connecting -> subscribing
+MQTTClient: subscribing -> active
+ScadaControlCapabilities received: hw1.isone.me.versant.keene.maple.scada (channels=15)
+19:40:17.103 observed five-v-boss -> PicoCycler
+19:40:17.103 observed hp-boss -> HpOff
+19:40:17.104 observed sieg-loop -> KeepingLess
+19:40:17.104 observed charge-discharge-relay -> DischargingStore
+19:40:17.104 observed store-pump-relay -> RelayOpen
+19:40:17.104 observed tstat-common-relay -> RelayClosed
+19:40:17.104 observed zone1-living-rm-failsafe-relay -> WallThermostat
+19:40:17.104 observed zone1-living-rm-ops-relay -> RelayOpen
+19:40:17.104 observed zone2-bedroom-failsafe-relay -> WallThermostat
+19:40:17.104 observed zone2-bedroom-ops-relay -> RelayOpen
+19:40:17.105 observed hp-failsafe-relay -> Scada
+19:40:17.105 observed aquastat-ctrl-relay -> Scada
+19:40:17.105 observed hp-scada-ops-relay -> RelayOpen
+19:40:17.105 observed hp-loop-keep-send-relay -> SendMore
+19:40:17.105 observed hp-loop-on-off-relay -> RelayClosed
+19:40:17.105 observed pico-cycler -> PicosLive
+19:40:17.105 observed vdc-relay -> RelayClosed
+19:40:17.874 ready: maple
+19:40:17.876 keepalive 300s
+19:40:19.877 dispatch MoveToFullSend -> sieg-loop
+19:40:20.687 observed sieg-loop -> SteadyBlend
+19:40:20.687 observed sieg-loop -> KeepingLess
+19:40:20.744 observed hp-loop-keep-send-relay -> SendMore
+19:40:20.744 observed hp-loop-on-off-relay -> RelayClosed
+19:42:04.579 observed sieg-loop -> FullySend
+19:42:04.603 observed hp-loop-on-off-relay -> RelayOpen
+19:42:08.879 ---- run 1 of 14
+19:42:08.879 RUN from=send target=24.0 store=charge
+19:42:08.880 dispatch ChargeStore -> charge-discharge-relay
+19:42:08.956 observed charge-discharge-relay -> ChargingStore
+19:42:10.882 dispatch MoveToFullKeep -> sieg-loop
+19:42:10.934 observed sieg-loop -> KeepingMore
+19:42:10.934 observed hp-loop-keep-send-relay -> SendLess
+19:42:10.955 observed hp-loop-on-off-relay -> RelayClosed
+19:42:17.878 keepalive 300s
+19:42:34.885 dispatch StopValve -> sieg-loop
+19:42:34.886 stop sent 24.00 s after the move dispatch
+19:42:34.943 observed sieg-loop -> SteadyBlend
+19:42:34.943 observed hp-loop-on-off-relay -> RelayOpen
+19:44:17.880 keepalive 300s
+19:44:57.986 observed pico-cycler -> PicosLive
+19:44:58.003 observed hp-scada-ops-relay -> RelayOpen
+19:44:58.004 observed vdc-relay -> RelayClosed
+19:44:58.004 observed hp-loop-on-off-relay -> RelayOpen
+19:44:58.018 observed zone2-bedroom-ops-relay -> RelayOpen
+19:44:58.018 observed charge-discharge-relay -> ChargingStore
+19:44:58.024 observed hp-failsafe-relay -> Scada
+19:44:58.024 observed zone1-living-rm-failsafe-relay -> WallThermostat
+19:44:58.024 observed tstat-common-relay -> RelayClosed
+19:44:58.024 observed aquastat-ctrl-relay -> Scada
+19:44:58.024 observed zone2-bedroom-failsafe-relay -> WallThermostat
+19:44:58.025 observed store-pump-relay -> RelayOpen
+19:44:58.025 observed zone1-living-rm-ops-relay -> RelayOpen
+19:44:58.050 observed hp-loop-keep-send-relay -> SendLess
+19:45:04.888 dispatch MoveToFullSend -> sieg-loop
+19:45:04.952 observed sieg-loop -> KeepingLess
+19:45:04.958 observed hp-loop-keep-send-relay -> SendMore
+19:45:04.975 observed hp-loop-on-off-relay -> RelayClosed
+19:46:17.882 keepalive 300s
+19:46:48.975 observed sieg-loop -> FullySend
+19:46:49.013 observed hp-loop-on-off-relay -> RelayOpen
+19:46:53.889 ---- run 2 of 14
+19:46:53.889 RUN from=keep target=24.0 store=charge
+19:46:53.890 dispatch ChargeStore -> charge-discharge-relay
+19:46:53.959 observed charge-discharge-relay -> ChargingStore
+19:46:55.892 dispatch MoveToFullKeep -> sieg-loop
+19:46:56.009 observed sieg-loop -> KeepingMore
+19:46:56.009 observed hp-loop-keep-send-relay -> SendLess
+19:46:56.014 observed hp-loop-on-off-relay -> RelayClosed
+19:48:17.885 keepalive 300s
+19:48:39.985 observed sieg-loop -> FullyKeep
+19:48:40.053 observed hp-loop-on-off-relay -> RelayOpen
+19:48:44.893 dispatch MoveToFullSend -> sieg-loop
+19:48:44.965 observed sieg-loop -> KeepingLess
+19:48:44.965 observed hp-loop-keep-send-relay -> SendMore
+19:48:44.994 observed hp-loop-on-off-relay -> RelayClosed
+19:49:54.899 dispatch StopValve -> sieg-loop
+19:49:54.901 stop sent 70.01 s after the move dispatch
+19:49:54.969 observed sieg-loop -> SteadyBlend
+19:49:54.969 observed hp-loop-on-off-relay -> RelayOpen
+19:49:59.055 observed pico-cycler -> PicosLive
+19:49:59.056 observed zone1-living-rm-ops-relay -> RelayOpen
+19:49:59.056 observed zone1-living-rm-failsafe-relay -> WallThermostat
+19:49:59.057 observed store-pump-relay -> RelayOpen
+19:49:59.057 observed aquastat-ctrl-relay -> Scada
+19:49:59.057 observed tstat-common-relay -> RelayClosed
+19:49:59.057 observed charge-discharge-relay -> ChargingStore
+19:49:59.058 observed hp-loop-keep-send-relay -> SendMore
+19:49:59.058 observed zone2-bedroom-failsafe-relay -> WallThermostat
+19:49:59.058 observed vdc-relay -> RelayClosed
+19:49:59.058 observed hp-failsafe-relay -> Scada
+19:49:59.059 observed zone2-bedroom-ops-relay -> RelayOpen
+19:49:59.059 observed hp-loop-on-off-relay -> RelayOpen
+19:49:59.210 observed hp-scada-ops-relay -> RelayOpen
+19:50:17.889 keepalive 300s
+19:52:17.891 keepalive 300s
+19:52:24.902 dispatch MoveToFullSend -> sieg-loop
+19:52:25.267 observed sieg-loop -> KeepingLess
+19:52:25.268 observed hp-loop-keep-send-relay -> SendMore
+19:52:25.281 observed hp-loop-on-off-relay -> RelayClosed
+19:54:09.347 observed sieg-loop -> FullySend
+19:54:09.385 observed hp-loop-on-off-relay -> RelayOpen
+19:54:13.902 ---- run 3 of 14
+19:54:13.903 RUN from=send target=54.0 store=discharge
+19:54:13.904 dispatch DischargeStore -> charge-discharge-relay
+19:54:13.983 observed charge-discharge-relay -> DischargingStore
+19:54:15.907 dispatch MoveToFullKeep -> sieg-loop
+19:54:16.008 observed sieg-loop -> KeepingMore
+19:54:16.009 observed hp-loop-keep-send-relay -> SendLess
+19:54:16.010 observed hp-loop-on-off-relay -> RelayClosed
+19:54:17.892 keepalive 300s
+19:54:57.990 observed pico-cycler -> PicosLive
+19:54:57.991 observed hp-loop-on-off-relay -> RelayClosed
+19:54:58.017 observed hp-scada-ops-relay -> RelayOpen
+19:54:58.018 observed tstat-common-relay -> RelayClosed
+19:54:58.018 observed hp-failsafe-relay -> Scada
+19:54:58.018 observed vdc-relay -> RelayClosed
+19:54:58.018 observed zone2-bedroom-ops-relay -> RelayOpen
+19:54:58.018 observed zone2-bedroom-failsafe-relay -> WallThermostat
+19:54:58.018 observed charge-discharge-relay -> DischargingStore
+19:54:58.019 observed hp-loop-keep-send-relay -> SendLess
+19:54:58.019 observed zone1-living-rm-failsafe-relay -> WallThermostat
+19:54:58.019 observed store-pump-relay -> RelayOpen
+19:54:58.019 observed aquastat-ctrl-relay -> Scada
+19:54:58.043 observed zone1-living-rm-ops-relay -> RelayOpen
+19:55:09.909 dispatch StopValve -> sieg-loop
+19:55:09.909 stop sent 54.00 s after the move dispatch
+19:55:09.977 observed sieg-loop -> SteadyBlend
+19:55:09.994 observed hp-loop-on-off-relay -> RelayOpen
+19:56:17.893 keepalive 300s
+19:57:39.910 dispatch MoveToFullSend -> sieg-loop
+19:57:39.978 observed sieg-loop -> KeepingLess
+19:57:39.985 observed hp-loop-keep-send-relay -> SendMore
+19:57:40.008 observed hp-loop-on-off-relay -> RelayClosed
+19:58:17.894 keepalive 300s
+19:59:24.000 observed sieg-loop -> FullySend
+19:59:24.001 observed hp-loop-on-off-relay -> RelayOpen
+19:59:28.911 ---- run 4 of 14
+19:59:28.911 RUN from=keep target=54.0 store=discharge
+19:59:28.913 dispatch DischargeStore -> charge-discharge-relay
+19:59:28.996 observed charge-discharge-relay -> DischargingStore
+19:59:30.915 dispatch MoveToFullKeep -> sieg-loop
+19:59:31.102 observed sieg-loop -> KeepingMore
+19:59:31.103 observed hp-loop-keep-send-relay -> SendLess
+19:59:31.126 observed hp-loop-on-off-relay -> RelayClosed
+19:59:58.067 observed pico-cycler -> PicosLive
+19:59:58.067 observed zone1-living-rm-ops-relay -> RelayOpen
+19:59:58.068 observed charge-discharge-relay -> DischargingStore
+19:59:58.068 observed zone1-living-rm-failsafe-relay -> WallThermostat
+19:59:58.068 observed zone2-bedroom-ops-relay -> RelayOpen
+19:59:58.069 observed aquastat-ctrl-relay -> Scada
+19:59:58.069 observed hp-loop-keep-send-relay -> SendLess
+19:59:58.069 observed zone2-bedroom-failsafe-relay -> WallThermostat
+19:59:58.069 observed vdc-relay -> RelayClosed
+19:59:58.070 observed store-pump-relay -> RelayOpen
+19:59:58.070 observed tstat-common-relay -> RelayClosed
+19:59:58.070 observed hp-failsafe-relay -> Scada
+19:59:58.070 observed hp-scada-ops-relay -> RelayOpen
+19:59:58.090 observed hp-loop-on-off-relay -> RelayClosed
+20:00:17.896 keepalive 300s
+20:01:15.118 observed sieg-loop -> FullyKeep
+20:01:15.150 observed hp-loop-on-off-relay -> RelayOpen
+20:01:19.916 dispatch MoveToFullSend -> sieg-loop
+20:01:19.988 observed sieg-loop -> KeepingLess
+20:01:19.988 observed hp-loop-keep-send-relay -> SendMore
+20:01:19.999 observed hp-loop-on-off-relay -> RelayClosed
+20:01:59.919 dispatch StopValve -> sieg-loop
+20:01:59.920 stop sent 40.00 s after the move dispatch
+20:01:59.958 observed sieg-loop -> SteadyBlend
+20:01:59.966 observed hp-loop-on-off-relay -> RelayOpen
+20:02:17.897 keepalive 300s
+20:04:17.897 keepalive 300s
+20:04:29.922 dispatch MoveToFullSend -> sieg-loop
+20:04:29.968 observed sieg-loop -> KeepingLess
+20:04:30.023 observed hp-loop-keep-send-relay -> SendMore
+20:04:30.099 observed hp-loop-on-off-relay -> RelayClosed
+20:04:58.000 observed pico-cycler -> PicosLive
+20:04:58.001 observed hp-failsafe-relay -> Scada
+20:04:58.001 observed vdc-relay -> RelayClosed
+20:04:58.002 observed tstat-common-relay -> RelayClosed
+20:04:58.002 observed hp-loop-on-off-relay -> RelayClosed
+20:04:58.003 observed hp-scada-ops-relay -> RelayOpen
+20:04:58.003 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:04:58.003 observed hp-loop-keep-send-relay -> SendMore
+20:04:58.004 observed store-pump-relay -> RelayOpen
+20:04:58.004 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:04:58.004 observed charge-discharge-relay -> DischargingStore
+20:04:58.005 observed aquastat-ctrl-relay -> Scada
+20:04:58.005 observed zone2-bedroom-ops-relay -> RelayOpen
+20:04:58.024 observed zone1-living-rm-ops-relay -> RelayOpen
+20:06:13.903 observed sieg-loop -> FullySend
+20:06:13.903 observed hp-loop-on-off-relay -> RelayOpen
+20:06:17.808 keepalive 300s
+20:06:18.833 ---- run 5 of 14
+20:06:18.834 RUN from=send target=45.0 store=charge
+20:06:18.835 dispatch ChargeStore -> charge-discharge-relay
+20:06:18.903 observed charge-discharge-relay -> ChargingStore
+20:06:20.838 dispatch MoveToFullKeep -> sieg-loop
+20:06:20.924 observed sieg-loop -> KeepingMore
+20:06:20.925 observed hp-loop-keep-send-relay -> SendLess
+20:06:20.926 observed hp-loop-on-off-relay -> RelayClosed
+20:07:05.840 dispatch StopValve -> sieg-loop
+20:07:05.841 stop sent 45.00 s after the move dispatch
+20:07:06.016 observed sieg-loop -> SteadyBlend
+20:07:06.016 observed hp-loop-on-off-relay -> RelayOpen
+20:08:17.808 keepalive 300s
+20:09:35.838 dispatch MoveToFullSend -> sieg-loop
+20:09:35.953 observed sieg-loop -> KeepingLess
+20:09:35.954 observed hp-loop-keep-send-relay -> SendMore
+20:09:35.985 observed hp-loop-on-off-relay -> RelayClosed
+20:09:57.912 observed pico-cycler -> PicosLive
+20:09:57.913 observed charge-discharge-relay -> ChargingStore
+20:09:57.913 observed store-pump-relay -> RelayOpen
+20:09:57.914 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:09:57.914 observed zone2-bedroom-ops-relay -> RelayOpen
+20:09:57.914 observed hp-loop-on-off-relay -> RelayClosed
+20:09:57.915 observed hp-loop-keep-send-relay -> SendMore
+20:09:57.915 observed vdc-relay -> RelayClosed
+20:09:57.915 observed hp-scada-ops-relay -> RelayOpen
+20:09:57.915 observed zone1-living-rm-ops-relay -> RelayOpen
+20:09:57.916 observed tstat-common-relay -> RelayClosed
+20:09:57.916 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:09:57.916 observed aquastat-ctrl-relay -> Scada
+20:09:57.937 observed hp-failsafe-relay -> Scada
+20:10:17.807 keepalive 300s
+20:11:19.967 observed sieg-loop -> FullySend
+20:11:20.037 observed hp-loop-on-off-relay -> RelayOpen
+20:11:24.837 ---- run 6 of 14
+20:11:24.838 RUN from=keep target=57.0 store=charge
+20:11:24.839 dispatch ChargeStore -> charge-discharge-relay
+20:11:24.899 observed charge-discharge-relay -> ChargingStore
+20:11:26.841 dispatch MoveToFullKeep -> sieg-loop
+20:11:26.919 observed sieg-loop -> KeepingMore
+20:11:26.924 observed hp-loop-keep-send-relay -> SendLess
+20:11:26.947 observed hp-loop-on-off-relay -> RelayClosed
+20:12:17.806 keepalive 300s
+20:13:10.931 observed sieg-loop -> FullyKeep
+20:13:10.956 observed hp-loop-on-off-relay -> RelayOpen
+20:13:15.840 dispatch MoveToFullSend -> sieg-loop
+20:13:15.905 observed sieg-loop -> KeepingLess
+20:13:15.906 observed hp-loop-keep-send-relay -> SendMore
+20:13:15.911 observed hp-loop-on-off-relay -> RelayClosed
+20:13:52.849 dispatch StopValve -> sieg-loop
+20:13:52.849 stop sent 37.01 s after the move dispatch
+20:13:53.180 observed sieg-loop -> SteadyBlend
+20:13:53.182 observed hp-loop-on-off-relay -> RelayOpen
+20:14:17.837 keepalive 300s
+20:14:57.881 observed pico-cycler -> PicosLive
+20:14:57.882 observed tstat-common-relay -> RelayClosed
+20:14:57.882 observed vdc-relay -> RelayClosed
+20:14:57.883 observed hp-failsafe-relay -> Scada
+20:14:57.883 observed hp-loop-on-off-relay -> RelayOpen
+20:14:57.883 observed hp-scada-ops-relay -> RelayOpen
+20:14:57.883 observed aquastat-ctrl-relay -> Scada
+20:14:57.883 observed zone1-living-rm-ops-relay -> RelayOpen
+20:14:57.883 observed hp-loop-keep-send-relay -> SendMore
+20:14:57.883 observed zone2-bedroom-ops-relay -> RelayOpen
+20:14:57.883 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:14:57.883 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:14:57.883 observed store-pump-relay -> RelayOpen
+20:14:57.917 observed charge-discharge-relay -> ChargingStore
+20:16:17.843 keepalive 300s
+20:16:22.880 dispatch MoveToFullSend -> sieg-loop
+20:16:22.948 observed sieg-loop -> KeepingLess
+20:16:22.952 observed hp-loop-keep-send-relay -> SendMore
+20:16:22.973 observed hp-loop-on-off-relay -> RelayClosed
+20:18:07.029 observed sieg-loop -> FullySend
+20:18:07.062 observed hp-loop-on-off-relay -> RelayOpen
+20:18:11.880 ---- run 7 of 14
+20:18:11.880 RUN from=send target=27.0 store=discharge
+20:18:11.880 dispatch DischargeStore -> charge-discharge-relay
+20:18:11.944 observed charge-discharge-relay -> DischargingStore
+20:18:13.882 dispatch MoveToFullKeep -> sieg-loop
+20:18:13.952 observed sieg-loop -> KeepingMore
+20:18:13.952 observed hp-loop-keep-send-relay -> SendLess
+20:18:13.952 observed hp-loop-on-off-relay -> RelayClosed
+20:18:17.843 keepalive 300s
+20:18:40.883 dispatch StopValve -> sieg-loop
+20:18:40.883 stop sent 27.00 s after the move dispatch
+20:18:40.958 observed sieg-loop -> SteadyBlend
+20:18:40.959 observed hp-loop-on-off-relay -> RelayOpen
+20:19:57.864 observed pico-cycler -> PicosLive
+20:19:57.864 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:19:57.864 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:19:57.864 observed aquastat-ctrl-relay -> Scada
+20:19:57.864 observed hp-loop-keep-send-relay -> SendLess
+20:19:57.865 observed charge-discharge-relay -> DischargingStore
+20:19:57.865 observed zone2-bedroom-ops-relay -> RelayOpen
+20:19:57.870 observed hp-scada-ops-relay -> RelayOpen
+20:19:57.870 observed hp-failsafe-relay -> Scada
+20:19:57.870 observed store-pump-relay -> RelayOpen
+20:19:57.876 observed vdc-relay -> RelayClosed
+20:19:57.876 observed zone1-living-rm-ops-relay -> RelayOpen
+20:19:57.876 observed hp-loop-on-off-relay -> RelayOpen
+20:19:57.877 observed tstat-common-relay -> RelayClosed
+20:20:17.842 keepalive 300s
+20:21:10.881 dispatch MoveToFullSend -> sieg-loop
+20:21:10.966 observed sieg-loop -> KeepingLess
+20:21:10.967 observed hp-loop-keep-send-relay -> SendMore
+20:21:10.970 observed hp-loop-on-off-relay -> RelayClosed
+20:22:17.841 keepalive 300s
+20:22:54.938 observed sieg-loop -> FullySend
+20:22:54.962 observed hp-loop-on-off-relay -> RelayOpen
+20:22:59.881 ---- run 8 of 14
+20:22:59.881 RUN from=keep target=33.0 store=discharge
+20:22:59.882 dispatch DischargeStore -> charge-discharge-relay
+20:22:59.983 observed charge-discharge-relay -> DischargingStore
+20:23:01.884 dispatch MoveToFullKeep -> sieg-loop
+20:23:01.946 observed sieg-loop -> KeepingMore
+20:23:01.950 observed hp-loop-keep-send-relay -> SendLess
+20:23:01.974 observed hp-loop-on-off-relay -> RelayClosed
+20:24:17.840 keepalive 300s
+20:24:45.964 observed sieg-loop -> FullyKeep
+20:24:46.037 observed hp-loop-on-off-relay -> RelayOpen
+20:24:50.884 dispatch MoveToFullSend -> sieg-loop
+20:24:51.076 observed sieg-loop -> KeepingLess
+20:24:51.077 observed hp-loop-keep-send-relay -> SendMore
+20:24:51.098 observed hp-loop-on-off-relay -> RelayClosed
+20:24:57.958 observed pico-cycler -> PicosLive
+20:24:57.958 observed hp-loop-on-off-relay -> RelayClosed
+20:24:57.958 observed hp-loop-keep-send-relay -> SendMore
+20:24:57.959 observed hp-scada-ops-relay -> RelayOpen
+20:24:57.959 observed zone1-living-rm-ops-relay -> RelayOpen
+20:24:57.959 observed store-pump-relay -> RelayOpen
+20:24:57.959 observed zone2-bedroom-ops-relay -> RelayOpen
+20:24:57.959 observed aquastat-ctrl-relay -> Scada
+20:24:57.959 observed tstat-common-relay -> RelayClosed
+20:24:57.960 observed vdc-relay -> RelayClosed
+20:24:57.960 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:24:57.960 observed hp-failsafe-relay -> Scada
+20:24:57.960 observed charge-discharge-relay -> DischargingStore
+20:24:58.095 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:25:51.884 dispatch StopValve -> sieg-loop
+20:25:51.886 stop sent 61.00 s after the move dispatch
+20:25:51.959 observed sieg-loop -> SteadyBlend
+20:25:51.960 observed hp-loop-on-off-relay -> RelayOpen
+20:26:17.840 keepalive 300s
+20:28:17.838 keepalive 300s
+20:28:21.885 dispatch MoveToFullSend -> sieg-loop
+20:28:21.937 observed sieg-loop -> KeepingLess
+20:28:21.938 observed hp-loop-keep-send-relay -> SendMore
+20:28:21.940 observed hp-loop-on-off-relay -> RelayClosed
+20:29:58.103 observed pico-cycler -> PicosLive
+20:29:58.103 observed hp-failsafe-relay -> Scada
+20:29:58.103 observed charge-discharge-relay -> DischargingStore
+20:29:58.103 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:29:58.103 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:29:58.103 observed store-pump-relay -> RelayOpen
+20:29:58.103 observed tstat-common-relay -> RelayClosed
+20:29:58.104 observed hp-loop-keep-send-relay -> SendMore
+20:29:58.104 observed vdc-relay -> RelayClosed
+20:29:58.104 observed zone2-bedroom-ops-relay -> RelayOpen
+20:29:58.104 observed aquastat-ctrl-relay -> Scada
+20:29:58.104 observed zone1-living-rm-ops-relay -> RelayOpen
+20:29:58.104 observed hp-scada-ops-relay -> RelayOpen
+20:29:58.568 observed hp-loop-on-off-relay -> RelayClosed
+20:30:05.941 observed sieg-loop -> FullySend
+20:30:05.966 observed hp-loop-on-off-relay -> RelayOpen
+20:30:10.884 ---- run 9 of 14
+20:30:10.885 RUN from=send target=42.0 store=charge
+20:30:10.886 dispatch ChargeStore -> charge-discharge-relay
+20:30:10.947 observed charge-discharge-relay -> ChargingStore
+20:30:12.889 dispatch MoveToFullKeep -> sieg-loop
+20:30:12.951 observed sieg-loop -> KeepingMore
+20:30:12.963 observed hp-loop-keep-send-relay -> SendLess
+20:30:12.981 observed hp-loop-on-off-relay -> RelayClosed
+20:30:17.838 keepalive 300s
+20:30:54.890 dispatch StopValve -> sieg-loop
+20:30:54.891 stop sent 42.00 s after the move dispatch
+20:30:54.949 observed sieg-loop -> SteadyBlend
+20:30:54.949 observed hp-loop-on-off-relay -> RelayOpen
+20:32:17.838 keepalive 300s
+20:33:24.891 dispatch MoveToFullSend -> sieg-loop
+20:33:24.965 observed sieg-loop -> KeepingLess
+20:33:24.966 observed hp-loop-keep-send-relay -> SendMore
+20:33:24.967 observed hp-loop-on-off-relay -> RelayClosed
+20:34:17.839 keepalive 300s
+20:34:57.895 observed pico-cycler -> PicosLive
+20:34:57.895 observed hp-loop-keep-send-relay -> SendMore
+20:34:57.897 observed vdc-relay -> RelayClosed
+20:34:57.899 observed zone2-bedroom-ops-relay -> RelayOpen
+20:34:57.899 observed zone1-living-rm-ops-relay -> RelayOpen
+20:34:57.902 observed hp-loop-on-off-relay -> RelayClosed
+20:34:57.905 observed aquastat-ctrl-relay -> Scada
+20:34:57.906 observed store-pump-relay -> RelayOpen
+20:34:57.908 observed hp-scada-ops-relay -> RelayOpen
+20:34:57.914 observed tstat-common-relay -> RelayClosed
+20:34:57.914 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:34:57.915 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:34:57.919 observed charge-discharge-relay -> ChargingStore
+20:34:57.945 observed hp-failsafe-relay -> Scada
+20:35:08.972 observed sieg-loop -> FullySend
+20:35:09.002 observed hp-loop-on-off-relay -> RelayOpen
+20:35:13.894 ---- run 10 of 14
+20:35:13.895 RUN from=keep target=27.0 store=charge
+20:35:13.896 dispatch ChargeStore -> charge-discharge-relay
+20:35:13.950 observed charge-discharge-relay -> ChargingStore
+20:35:15.899 dispatch MoveToFullKeep -> sieg-loop
+20:35:15.946 observed sieg-loop -> KeepingMore
+20:35:15.946 observed hp-loop-keep-send-relay -> SendLess
+20:35:15.964 observed hp-loop-on-off-relay -> RelayClosed
+20:36:17.840 keepalive 300s
+20:37:00.071 observed sieg-loop -> FullyKeep
+20:37:00.104 observed hp-loop-on-off-relay -> RelayOpen
+20:37:05.017 dispatch MoveToFullSend -> sieg-loop
+20:37:05.702 observed sieg-loop -> KeepingLess
+20:37:05.703 observed hp-loop-keep-send-relay -> SendMore
+20:37:05.703 observed hp-loop-on-off-relay -> RelayClosed
+20:38:12.052 dispatch StopValve -> sieg-loop
+20:38:12.054 stop sent 67.03 s after the move dispatch
+20:38:12.184 observed sieg-loop -> SteadyBlend
+20:38:12.194 observed hp-loop-on-off-relay -> RelayOpen
+20:38:17.991 keepalive 300s
+20:39:58.383 observed pico-cycler -> PicosLive
+20:39:58.384 observed hp-failsafe-relay -> Scada
+20:39:58.384 observed hp-scada-ops-relay -> RelayOpen
+20:39:58.385 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:39:58.385 observed hp-loop-on-off-relay -> RelayOpen
+20:39:58.391 observed charge-discharge-relay -> ChargingStore
+20:39:58.391 observed zone2-bedroom-ops-relay -> RelayOpen
+20:39:58.391 observed aquastat-ctrl-relay -> Scada
+20:39:58.392 observed tstat-common-relay -> RelayClosed
+20:39:58.392 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:39:58.392 observed store-pump-relay -> RelayOpen
+20:39:58.392 observed zone1-living-rm-ops-relay -> RelayOpen
+20:39:58.392 observed vdc-relay -> RelayClosed
+20:39:58.417 observed hp-loop-keep-send-relay -> SendMore
+20:40:17.975 keepalive 300s
+20:40:42.036 dispatch MoveToFullSend -> sieg-loop
+20:40:42.100 observed sieg-loop -> KeepingLess
+20:40:42.101 observed hp-loop-keep-send-relay -> SendMore
+20:40:42.103 observed hp-loop-on-off-relay -> RelayClosed
+20:42:17.978 keepalive 300s
+20:42:26.110 observed sieg-loop -> FullySend
+20:42:26.135 observed hp-loop-on-off-relay -> RelayOpen
+20:42:31.039 ---- run 11 of 14
+20:42:31.039 RUN from=send target=51.0 store=discharge
+20:42:31.040 dispatch DischargeStore -> charge-discharge-relay
+20:42:31.111 observed charge-discharge-relay -> DischargingStore
+20:42:33.042 dispatch MoveToFullKeep -> sieg-loop
+20:42:33.161 observed sieg-loop -> KeepingMore
+20:42:33.167 observed hp-loop-keep-send-relay -> SendLess
+20:42:33.192 observed hp-loop-on-off-relay -> RelayClosed
+20:43:24.046 dispatch StopValve -> sieg-loop
+20:43:24.047 stop sent 51.00 s after the move dispatch
+20:43:24.091 observed sieg-loop -> SteadyBlend
+20:43:24.091 observed hp-loop-on-off-relay -> RelayOpen
+20:44:17.982 keepalive 300s
+20:44:57.963 observed pico-cycler -> PicosLive
+20:44:57.972 observed hp-loop-keep-send-relay -> SendLess
+20:44:57.972 observed vdc-relay -> RelayClosed
+20:44:57.972 observed store-pump-relay -> RelayOpen
+20:44:57.972 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:44:57.972 observed aquastat-ctrl-relay -> Scada
+20:44:57.973 observed hp-loop-on-off-relay -> RelayOpen
+20:44:57.973 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:44:57.978 observed zone2-bedroom-ops-relay -> RelayOpen
+20:44:57.978 observed tstat-common-relay -> RelayClosed
+20:44:57.978 observed zone1-living-rm-ops-relay -> RelayOpen
+20:44:57.979 observed hp-scada-ops-relay -> RelayOpen
+20:44:57.980 observed charge-discharge-relay -> DischargingStore
+20:44:57.989 observed hp-failsafe-relay -> Scada
+20:45:54.051 dispatch MoveToFullSend -> sieg-loop
+20:45:54.116 observed sieg-loop -> KeepingLess
+20:45:54.117 observed hp-loop-keep-send-relay -> SendMore
+20:45:54.119 observed hp-loop-on-off-relay -> RelayClosed
+20:46:17.985 keepalive 300s
+20:47:38.133 observed sieg-loop -> FullySend
+20:47:38.158 observed hp-loop-on-off-relay -> RelayOpen
+20:47:43.054 ---- run 12 of 14
+20:47:43.055 RUN from=keep target=48.0 store=discharge
+20:47:43.056 dispatch DischargeStore -> charge-discharge-relay
+20:47:43.150 observed charge-discharge-relay -> DischargingStore
+20:47:45.059 dispatch MoveToFullKeep -> sieg-loop
+20:47:45.160 observed sieg-loop -> KeepingMore
+20:47:45.160 observed hp-loop-keep-send-relay -> SendLess
+20:47:45.211 observed hp-loop-on-off-relay -> RelayClosed
+20:48:17.989 keepalive 300s
+20:49:29.148 observed sieg-loop -> FullyKeep
+20:49:29.174 observed hp-loop-on-off-relay -> RelayOpen
+20:49:34.062 dispatch MoveToFullSend -> sieg-loop
+20:49:34.113 observed sieg-loop -> KeepingLess
+20:49:34.114 observed hp-loop-keep-send-relay -> SendMore
+20:49:34.152 observed hp-loop-on-off-relay -> RelayClosed
+20:49:58.030 observed pico-cycler -> PicosLive
+20:49:58.031 observed charge-discharge-relay -> DischargingStore
+20:49:58.032 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:49:58.033 observed zone2-bedroom-ops-relay -> RelayOpen
+20:49:58.033 observed zone1-living-rm-ops-relay -> RelayOpen
+20:49:58.034 observed aquastat-ctrl-relay -> Scada
+20:49:58.034 observed hp-failsafe-relay -> Scada
+20:49:58.034 observed hp-scada-ops-relay -> RelayOpen
+20:49:58.035 observed tstat-common-relay -> RelayClosed
+20:49:58.035 observed vdc-relay -> RelayClosed
+20:49:58.035 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:49:58.036 observed hp-loop-on-off-relay -> RelayClosed
+20:49:58.036 observed store-pump-relay -> RelayOpen
+20:49:58.060 observed hp-loop-keep-send-relay -> SendMore
+20:50:17.992 keepalive 300s
+20:50:20.064 dispatch StopValve -> sieg-loop
+20:50:20.065 stop sent 46.00 s after the move dispatch
+20:50:20.131 observed sieg-loop -> SteadyBlend
+20:50:20.131 observed hp-loop-on-off-relay -> RelayOpen
+20:52:17.996 keepalive 300s
+20:52:50.070 dispatch MoveToFullSend -> sieg-loop
+20:52:50.127 observed sieg-loop -> KeepingLess
+20:52:50.128 observed hp-loop-keep-send-relay -> SendMore
+20:52:50.151 observed hp-loop-on-off-relay -> RelayClosed
+20:54:18.000 keepalive 300s
+20:54:34.127 observed sieg-loop -> FullySend
+20:54:34.150 observed hp-loop-on-off-relay -> RelayOpen
+20:54:39.073 ---- run 13 of 14
+20:54:39.073 RUN from=send target=36.0 store=charge
+20:54:39.074 dispatch ChargeStore -> charge-discharge-relay
+20:54:39.481 observed charge-discharge-relay -> ChargingStore
+20:54:41.076 dispatch MoveToFullKeep -> sieg-loop
+20:54:41.606 observed sieg-loop -> KeepingMore
+20:54:41.606 observed hp-loop-keep-send-relay -> SendLess
+20:54:41.872 observed hp-loop-on-off-relay -> RelayClosed
+20:54:58.020 observed pico-cycler -> PicosLive
+20:54:58.037 observed hp-loop-on-off-relay -> RelayClosed
+20:54:58.061 observed tstat-common-relay -> RelayClosed
+20:54:58.062 observed vdc-relay -> RelayClosed
+20:54:58.062 observed aquastat-ctrl-relay -> Scada
+20:54:58.062 observed hp-failsafe-relay -> Scada
+20:54:58.062 observed zone2-bedroom-ops-relay -> RelayOpen
+20:54:58.062 observed hp-loop-keep-send-relay -> SendLess
+20:54:58.063 observed store-pump-relay -> RelayOpen
+20:54:58.063 observed hp-scada-ops-relay -> RelayOpen
+20:54:58.063 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:54:58.063 observed zone1-living-rm-ops-relay -> RelayOpen
+20:54:58.064 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:54:58.093 observed charge-discharge-relay -> ChargingStore
+20:55:17.079 dispatch StopValve -> sieg-loop
+20:55:17.079 stop sent 36.00 s after the move dispatch
+20:55:17.201 observed sieg-loop -> SteadyBlend
+20:55:17.201 observed hp-loop-on-off-relay -> RelayOpen
+20:56:18.004 keepalive 300s
+20:57:47.083 dispatch MoveToFullSend -> sieg-loop
+20:57:47.151 observed sieg-loop -> KeepingLess
+20:57:47.158 observed hp-loop-keep-send-relay -> SendMore
+20:57:47.262 observed hp-loop-on-off-relay -> RelayClosed
+20:58:18.007 keepalive 300s
+20:59:31.181 observed sieg-loop -> FullySend
+20:59:31.241 observed hp-loop-on-off-relay -> RelayOpen
+20:59:36.085 ---- run 14 of 14
+20:59:36.086 RUN from=keep target=48.0 store=charge
+20:59:36.087 dispatch ChargeStore -> charge-discharge-relay
+20:59:36.145 observed charge-discharge-relay -> ChargingStore
+20:59:38.089 dispatch MoveToFullKeep -> sieg-loop
+20:59:38.133 observed sieg-loop -> KeepingMore
+20:59:38.134 observed hp-loop-keep-send-relay -> SendLess
+20:59:38.150 observed hp-loop-on-off-relay -> RelayClosed
+20:59:58.050 observed pico-cycler -> PicosLive
+20:59:58.051 observed store-pump-relay -> RelayOpen
+20:59:58.052 observed zone2-bedroom-failsafe-relay -> WallThermostat
+20:59:58.052 observed zone1-living-rm-ops-relay -> RelayOpen
+20:59:58.052 observed hp-loop-keep-send-relay -> SendLess
+20:59:58.053 observed zone2-bedroom-ops-relay -> RelayOpen
+20:59:58.053 observed hp-scada-ops-relay -> RelayOpen
+20:59:58.053 observed charge-discharge-relay -> ChargingStore
+20:59:58.054 observed zone1-living-rm-failsafe-relay -> WallThermostat
+20:59:58.054 observed aquastat-ctrl-relay -> Scada
+20:59:58.054 observed hp-failsafe-relay -> Scada
+20:59:58.054 observed vdc-relay -> RelayClosed
+20:59:58.055 observed tstat-common-relay -> RelayClosed
+20:59:58.084 observed hp-loop-on-off-relay -> RelayClosed
+21:00:18.011 keepalive 300s
+21:01:22.141 observed sieg-loop -> FullyKeep
+21:01:22.167 observed hp-loop-on-off-relay -> RelayOpen
+21:01:27.093 dispatch MoveToFullSend -> sieg-loop
+21:01:27.166 observed sieg-loop -> KeepingLess
+21:01:27.167 observed hp-loop-keep-send-relay -> SendMore
+21:01:27.185 observed hp-loop-on-off-relay -> RelayClosed
+21:02:13.096 dispatch StopValve -> sieg-loop
+21:02:13.096 stop sent 46.00 s after the move dispatch
+21:02:13.159 observed sieg-loop -> SteadyBlend
+21:02:13.160 observed hp-loop-on-off-relay -> RelayOpen
+21:02:18.015 keepalive 300s
+21:04:18.018 keepalive 300s
+21:04:43.100 dispatch MoveToFullSend -> sieg-loop
+21:04:43.193 observed sieg-loop -> KeepingLess
+21:04:43.193 observed hp-loop-keep-send-relay -> SendMore
+21:04:43.219 observed hp-loop-on-off-relay -> RelayClosed
+21:04:58.029 observed pico-cycler -> PicosLive
+21:04:58.029 observed tstat-common-relay -> RelayClosed
+21:04:58.034 observed charge-discharge-relay -> ChargingStore
+21:04:58.037 observed zone1-living-rm-ops-relay -> RelayOpen
+21:04:58.037 observed zone2-bedroom-failsafe-relay -> WallThermostat
+21:04:58.042 observed vdc-relay -> RelayClosed
+21:04:58.044 observed zone1-living-rm-failsafe-relay -> WallThermostat
+21:04:58.049 observed aquastat-ctrl-relay -> Scada
+21:04:58.049 observed hp-scada-ops-relay -> RelayOpen
+21:04:58.053 observed hp-failsafe-relay -> Scada
+21:04:58.054 observed hp-loop-keep-send-relay -> SendMore
+21:04:58.054 observed zone2-bedroom-ops-relay -> RelayOpen
+21:04:58.058 observed hp-loop-on-off-relay -> RelayClosed
+21:04:58.091 observed store-pump-relay -> RelayOpen
+21:06:18.021 keepalive 300s
+21:06:27.203 observed sieg-loop -> FullySend
+21:06:27.227 observed hp-loop-on-off-relay -> RelayOpen
+21:06:32.102 all runs done
+21:06:32.104 released control
+21:06:32.438 observed charge-discharge-relay -> DischargingStore
+21:06:32.440 observed store-pump-relay -> RelayOpen
+21:06:32.442 observed tstat-common-relay -> RelayClosed
+21:06:32.442 observed zone1-living-rm-failsafe-relay -> WallThermostat
+21:06:32.445 observed zone1-living-rm-ops-relay -> RelayOpen
+21:06:32.446 observed zone2-bedroom-failsafe-relay -> WallThermostat
+21:06:32.448 observed zone2-bedroom-ops-relay -> RelayOpen
+21:06:32.448 observed hp-failsafe-relay -> Scada
+21:06:32.467 observed aquastat-ctrl-relay -> Scada
+MQTTClient: active -> backing_off
+MQTTClient: backing_off -> stopped

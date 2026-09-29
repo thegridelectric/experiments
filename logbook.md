@@ -13,11 +13,13 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
-- **queued · [sieg-keep-ratio-map](future/sieg-keep-ratio-map/)** — maple's
-  own `keep_seconds` to kept-fraction map from the two flow meters:
-  26 timed stops across the 26 to 56 s span where the split changes,
-  from both directions, store relay alternating, the meters' lag from
-  the traverses.
+- **2026-09-28 · [sieg-keep-ratio-map](2026-09-28-sieg-keep-ratio-map/)** —
+  maple's valve mapped from 26 script-driven stops in two windows: keep
+  onset 27 to 30 s, half point 38 s, keep complete 54 to 57 s from the
+  send stop; a stop counted from the keep end lands 4 s further toward
+  keep than its count; the store relay does not enter; the meters' lag
+  in motion is about 1 s, the 4 s inferred earlier being that plus
+  the keep-side offset.
 - **2026-09-28 · [maple-ecodan-start-in-full-keep](2026-09-28-maple-ecodan-start-in-full-keep/)** —
   four windows in a day, admin-driven; the closed starts fit the sieg
   loop at 0.8 gal of water, a 9.5 s turnover at 5 gpm, with the fitted

@@ -1,15 +1,18 @@
 """Kept fraction of maple's primary flow per timed Siegenthaler valve stop.
 
-One row per StopValve in the window log: the seconds the motor ran, the
-actor's keep_seconds after the stop, and the median sieg-flow and
+One row per StopValve in the window log (a stop whose run was shorter
+than a full travel): the direction the motor was running, the seconds it
+ran, its position in seconds from the send stop (the seconds run toward
+keep, or KEEP_STOP_S minus the seconds run toward send), and the median sieg-flow and
 sieg-send-flow held-value sampled every 10 s from 60 to 150 s after the
 stop, from the persisted report.events, with r = sieg / (sieg + send).
 A steady flow posts no new reading (the picos report on change), so
 each sample is the last reading at or before it; a sample whose reading
 is older than MAX_AGE_MS is stale, and a run with any stale sample of
 either meter is listed and excluded.
-Rows are grouped by the actor's keep_seconds to the nearest ten and each
-group's mean and standard deviation of r and of keep_seconds are printed.
+Rows are grouped by position to the nearest three seconds and each
+group's mean and standard deviation of r are printed with the count from
+each direction.
 
     python keep_ratio.py maple-window-<stamp>.log maple-events-<stamp>/
 """
@@ -26,6 +29,9 @@ SPAN_MS = (60_000, 150_000)
 STEP_MS = 10_000
 MAX_AGE_MS = 300_000
 STOP = re.compile(r"^(\S+ \S+) \[sieg-loop\] Motor stopped after ([0-9.]+) s: keep_seconds ([0-9.]+)")
+START = re.compile(r"^\S+ \S+ \[sieg-loop\] Motor toward (keep|send) for")
+KEEP_STOP_S = 94.0
+FULL_RUN_S = 100.0
 ET = datetime.timezone(datetime.timedelta(hours=-4))
 
 
@@ -47,11 +53,19 @@ def load(folder):
 
 
 def stops(log):
+    """(stop ms, direction, seconds run, position from send) for each StopValve."""
+    direction = None
     for line in open(log):
-        m = STOP.match(line)
+        m = START.match(line)
         if m:
+            direction = m.group(1)
+            continue
+        m = STOP.match(line)
+        if m and direction and float(m.group(2)) < FULL_RUN_S:
             t = datetime.datetime.strptime(m.group(1), "%Y-%m-%d %H:%M:%S.%f").replace(tzinfo=ET)
-            yield int(t.timestamp() * 1000), float(m.group(2)), float(m.group(3))
+            ran = float(m.group(2))
+            pos = ran if direction == "keep" else KEEP_STOP_S - ran
+            yield int(t.timestamp() * 1000), direction, ran, pos
 
 
 def held(series, t0):
@@ -69,27 +83,28 @@ def held(series, t0):
 def main(log, folder):
     flows = load(folder)
     rows = []
-    print("stop (ET)            ran_s  keep_s  sieg_gpm  send_gpm  r")
-    for t0, ran, keep in stops(log):
+    print("stop (ET)        toward  ran_s  pos_s  sieg_gpm  send_gpm  r")
+    for t0, direction, ran, pos in stops(log):
         sieg, send = held(flows["sieg-flow"], t0), held(flows["sieg-send-flow"], t0)
         stamp = datetime.datetime.fromtimestamp(t0 / 1000, ET).strftime("%m-%d %H:%M:%S")
         if sieg is None or send is None:
             which = " ".join(n for n, v in (("sieg", sieg), ("send", send)) if v is None)
-            print(f"{stamp}  {ran:5.1f}  {keep:5.1f}  DISCARDED: stale {which} reading in span")
+            print(f"{stamp}  {direction:4s}   {ran:5.1f}  {pos:5.1f}  DISCARDED: stale {which} reading in span")
             continue
         s, d = statistics.median(sieg), statistics.median(send)
         r = s / (s + d) if s + d else float("nan")
-        rows.append((ran, keep, s, d, r))
-        print(f"{stamp}  {ran:5.1f}  {keep:5.1f}  {s:7.2f}  {d:7.2f}  {r:5.3f}")
+        rows.append((direction, pos, s, d, r))
+        print(f"{stamp}  {direction:4s}   {ran:5.1f}  {pos:5.1f}  {s:7.2f}  {d:7.2f}  {r:5.3f}")
     groups = {}
-    for ran, keep, s, d, r in rows:
-        groups.setdefault(round(keep / 10) * 10, []).append((keep, r))
-    print("\nkeep_s  n  keep_s mean/sd   r mean/sd")
-    for target in sorted(groups):
-        g = groups[target]
-        rs, ss = [x[1] for x in g], [x[0] for x in g]
-        sd = lambda v: statistics.stdev(v) if len(v) > 1 else 0.0
-        print(f"{target:5d}  {len(g):2d}  {statistics.mean(ss):5.1f} / {sd(ss):4.2f}   {statistics.mean(rs):5.3f} / {sd(rs):5.3f}")
+    for direction, pos, s, d, r in rows:
+        groups.setdefault(round(pos / 3) * 3, []).append((direction, r))
+    print("\npos_s  n  toward keep / send   r mean/sd")
+    for pos in sorted(groups):
+        g = groups[pos]
+        rs = [x[1] for x in g]
+        nk = sum(1 for x in g if x[0] == "keep")
+        sd = statistics.stdev(rs) if len(rs) > 1 else 0.0
+        print(f"{pos:5.0f}  {len(g):2d}  {nk:2d} / {len(g) - nk:2d}           {statistics.mean(rs):5.3f} / {sd:5.3f}")
 
 
 if __name__ == "__main__":

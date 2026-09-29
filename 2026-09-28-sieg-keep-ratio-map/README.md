@@ -1,11 +1,11 @@
-# sieg-keep-ratio-map, queued
+# sieg-keep-ratio-map, 2026-09-28
 
 > What this is: two hand-driven windows at maple that measure the kept
 > fraction of primary flow against the Siegenthaler valve's timed
 > position (`keep_seconds`) across the span where it changes, from
 > both directions and in both store relay states, and the meters'
-> answer lag from the traverses. Found is open; the logbook line dates
-> it on first run.
+> answer lag from the traverses. Ran 2026-09-28 in two windows,
+> 18:23 to 19:39 and 19:40 to 21:07 ET, 26 settled stops.
 
 ## Why
 
@@ -98,9 +98,11 @@ Runs alternate from-send and from-keep, and the store relay
 (ChargeStore / DischargeStore) alternates every two runs. Targets
 walk the span at 3 s steps, 24 to 60 s from send, in a shuffled order,
 twice through: 26 stops, 13 from each direction, with each relay state
-holding about half of each. About 130 minutes; two windows of `on 75`,
-closed on the box clock after a report boundary. Between the two
-windows nothing changes; the second continues the shuffled list.
+holding about half of each. A run from send takes five minutes and a
+run from keep seven, since it first makes a full travel to the keep
+stop, so 26 runs are about 160 minutes: two windows of `on 90`, closed
+on the box clock after a report boundary. Between the two windows
+nothing changes; the second continues the shuffled list.
 
 What the analysis reads out (`keep_ratio.py` for the at-rest rows,
 `half_point.py` for the traverses):
@@ -126,38 +128,132 @@ What the analysis reads out (`keep_ratio.py` for the at-rest rows,
 
 ## Found
 
-Open.
+All 26 stops settled and read (the 13th of window 1 was cut by the
+bound and repeated first in window 2). Positions are motor seconds
+from the send stop; for a stop approached from keep the position is
+the nominal one, 94 minus the seconds run toward send.
+
+1. **The map, approached from send.** r at rest:
+
+   | s from send | 24 | 27 | 30 | 33 | 36 | 42 | 45 | 51 | 54 | 57 | 60 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | r | 0.00 | 0.00 | 0.16 | 0.32 | 0.42 | 0.63 | 0.71 | 0.82 | 0.87 | 1.00 | 1.00 |
+
+   Keep onset is between 27 and 30 s, the half point about 38 s, keep
+   complete between 54 and 57 s. The split is steepest, about 0.04 per
+   second, from 30 to 42 s. Repeated positions agree to 0.02 or better
+   (30 s: 0.18 and 0.15; 42 s: 0.62 and 0.64; 51 s: 0.82 and 0.82), so
+   a timed move from the send stop repeats to about half a second of
+   motor.
+
+2. **Approached from keep, the same curve sits 4 s further toward
+   keep than its nominal position.** At rest by nominal position:
+
+   | nominal s from send | 24 | 27.5 | 33 | 36 | 39 | 45 | 48 | 54 | 57 | 60 |
+   | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+   | r | 0.03 | 0.21 | 0.45 | 0.56 | 0.65 | 0.78 | 0.83 | 0.92 | 1.00 | 0.99 |
+
+   Each of these reads what the from-send curve reads about 4 s
+   further along: the half point falls at nominal 34.5 s against 38 s
+   from send, 27.5 s reads 0.21 where from send 30 s reads 0.16, 54 s
+   reads 0.92 where from send 57 s reads 1.00. So a stop counted down
+   from the keep stop lands about 4 s toward keep of where the count
+   says: either the keep stop is near 98 s rather than 94, or the
+   drive takes about 4 s to reverse before the ball moves. The two
+   are the same to the loop, and it means a position reached from the
+   keep end is trusted only with this offset applied, or the loop
+   re-homes from send. Repeats from keep agree to 0.01 (39 s: 0.65 and
+   0.65; 48 s: 0.82 and 0.83).
+
+3. **The store relay does not enter the map.** Same position and
+   direction in the two relay states: 30 s from send 0.18 (charge) and
+   0.15 (discharge); 39 s from keep 0.65 and 0.65; 48 s from keep 0.82
+   and 0.83; 57 s from keep 1.00 and 1.00. Differences are at the
+   meters' step size.
+
+4. **The meters' answer lag is about 1 s, not 4.** In motion toward
+   keep, sieg-send-flow crossed half of the total 39 s after the
+   motor started in all thirteen full travels (twelve at 39, one at
+   40). At rest from send the half point is about 38 s, so a reading
+   in motion is about 1 s behind the water. In motion toward send, on
+   every re-home, the crossing came when the count stood at 33.0 s
+   nominal, whatever position the run began from; at rest from keep
+   the half point is at nominal 34.5 s, again about 1 to 1.5 s of
+   lag. The 4 s inferred from the 2026-09-28 traverses alone was this
+   1 s of lag plus the 4 s keep-side offset of finding 2, which those
+   traverses could not separate. One second is within a pico's
+   posting period; the concern about a 4 s lag in the flow reading is
+   answered by this, not by the pico firmware.
+
+5. **The loop's constants against this map** (`valve.py` at
+   `b347d2f0`: `t1 = 26`, `t2 = 56`, `FULL_RANGE_S = 94`): keep onset
+   is 2 to 3 s later than `t1`, keep complete 0 to 1 s later than
+   `t2`, and the keep stop reads 4 s beyond `FULL_RANGE_S` when
+   counted from the keep end. The half point for a start is 38 s from
+   send. These belong in the layout as the valve's own parameters.
 
 ## Timeline
 
-Open.
+- 18:23:30 box time: window 1 opened on `b347d2f0`, both pis; local
+  control opened the heat pump relay at boot. 18:24 driver took the
+  tree, homed to send. 18:26 to 19:34: runs 1 to 12, every StopValve
+  sent within 20 ms of its target, every `FullySend` / `FullyKeep`
+  observed. 19:38:10 run 13 began; 19:39 the bound closed the window
+  23 s into its settle.
+- 19:40 window 2 opened for 90 min. 19:42 to 21:06: run 13 again, then
+  runs 14 to 26; no missed state, no warning. 21:06:32 driver released
+  control; 21:07 window closed, plant services restored on both pis.
 
 ## Analysis notes
 
 - `r` uses the two measured meters only; the derived `primary-flow`
   adds nothing and is not read.
-- A `sieg-flow` reading whose age passes a capture period while the
-  pico is alive was seen once (399 s, 2026-09-27); the 300 s age cap
-  on every sample is there so such a run drops out rather than passing
-  on a stale value.
-- The window log's `keep_seconds` after a stop is the actor's own
-  count and carries its overshoot allowance; the seconds actually run
-  (`Motor stopped after X s`) is the independent variable.
+- The at-rest value of a run is the median of held readings sampled
+  every 10 s from 60 to 150 s after the stop, with a 300 s age cap on
+  every sample, since a settled flow posts nothing new. A full-run stop
+  followed within 5 s by the next move is not a run and `keep_ratio.py`
+  skips it.
+- A from-keep position is nominal (94 minus seconds run); finding 2 is
+  the correction. `half_point.py` reads the traverses; a crossing
+  reported 150 s or more after a stub move belongs to the next move
+  and is ignored.
+- Both flow picos posted on change through every traverse with 0 s
+  ages at the crossings, so the maps in motion are not limited by
+  capture cadence.
 
 ## Folder contents & experimental method
 
-All data is GENERATED by the window: the window scada's log on the box
-and the `report.event`s it persists (no LTN peer), copied by
-`house_window.sh maple off`. Nothing comes from the journal DB. The
-window stops the deployed plant services on both pis and restores
-them at close.
+All data is GENERATED by the two windows: the window scada's log on
+the box and the `report.event`s it persisted (no LTN peer), copied by
+`house_window.sh maple off`, the driver's own log, and the laptop's
+broker capture. Nothing comes from the journal DB. The windows stopped
+the deployed plant services on both pis and restored them at close;
+the heat pump was off throughout.
 
-- `keep_ratio.py` — reads the stops from the window log and the flows
-  from the persisted reports, one row per run: seconds run,
-  keep_seconds, median held sieg-flow and sieg-send-flow, r; groups by
-  target and prints mean and standard deviation.
+- `drive_keep_ratio.py` — the driver; `runs.txt` the shuffled list of
+  26, `runs-window1.txt` / `runs-window2.txt` as run (run 13 heads the
+  second after the bound cut it).
+- `drive-window1-20260928-182418.log`, `drive-window2-20260928-194016.log`
+  — the driver's dispatches, stop timings and observed states.
+- `maple-window-20260928-193926.log`, `maple-window-20260928-210651.log`
+  — the window scada's logs; the `Motor toward` / `Motor stopped` lines
+  are the positions.
+- `maple-events-20260928-193937/`, `maple-events-20260928-210702/` —
+  the persisted events, 15 and 18 `report.event`s, the flow readings.
+- `broker-capture-20260928-182337.jsonl` — everything the dev broker saw
+  through the tunnel across both windows.
+- `keep_ratio.py` — at-rest r per stop (findings 1 to 3, 5);
+  `half_point.py` — crossings in motion (finding 4).
+- `instances/gw.experiment.run-000.json`, `-001.json` — one run record
+  per window, from `emit_instances.py`.
 
-        python keep_ratio.py <window log> <events folder> [--from-keep]
+Regenerate everything from the logs and events:
 
-- Window logs, `maple-events-*/` folders and `instances/` arrive on
-  first run.
+    python keep_ratio.py maple-window-20260928-193926.log maple-events-20260928-193937
+    python keep_ratio.py maple-window-20260928-210651.log maple-events-20260928-210702
+    python half_point.py maple-window-20260928-193926.log maple-events-20260928-193937
+    python half_point.py maple-window-20260928-210651.log maple-events-20260928-210702
+    ../../gridworks-scada/gw_spaceheat/venv/bin/python emit_instances.py
+
+No `gw.readings` instance is in this folder; the readings are read
+from the persisted reports directly.
