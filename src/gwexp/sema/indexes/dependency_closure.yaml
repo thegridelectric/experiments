@@ -418,11 +418,8 @@ types:
       - change.relay.state:000
       - gpm.from.hz.method:000
       - gw1.actor.class:014
-      - gw1.actuation.authority:000
       - gw1.emission.method:000
       - gw1.quantity:000
-      - gw1.seasonal.storage.mode:000
-      - gw1.service.mode:000
       - gw1.unit:000
       - hz.calc.method:001
       - pico.board.variant:000
@@ -431,6 +428,7 @@ types:
       - spaceheat.telemetry.name:007
       - temp.calc.method:000
       formats:
+      - firmware.commit
       - handle.name
       - left.right.dot
       - non.empty.string
@@ -485,6 +483,7 @@ types:
       - hz.calc.method:001
       - pico.board.variant:000
       formats:
+      - firmware.commit
       - pascal.case
       - spaceheat.name
       - uuid4.str
@@ -507,6 +506,7 @@ types:
       - pico.board.variant:000
       - temp.calc.method:000
       formats:
+      - firmware.commit
       - pascal.case
       - positive.int
       - uuid4.str

@@ -225,11 +225,6 @@ enums:
       '013': definitions/enums/gw1.actor.class/013.yaml
       '011': definitions/enums/gw1.actor.class/011.yaml
       009: definitions/enums/gw1.actor.class/009.yaml
-  gw1.actuation.authority:
-    enum_type: versioned
-    latest_version: '000'
-    versions:
-      '000': definitions/enums/gw1.actuation.authority/000.yaml
   gw1.emission.method:
     enum_type: versioned
     latest_version: '000'
@@ -246,11 +241,6 @@ enums:
     latest_version: '000'
     versions:
       '000': definitions/enums/gw1.seasonal.storage.mode/000.yaml
-  gw1.service.mode:
-    enum_type: versioned
-    latest_version: '000'
-    versions:
-      '000': definitions/enums/gw1.service.mode/000.yaml
   gw1.system.mode:
     enum_type: versioned
     latest_version: '000'
@@ -316,6 +306,7 @@ enums:
     versions:
       '000': definitions/enums/temp.calc.method/000.yaml
 formats:
+  firmware.commit: definitions/formats/firmware.commit.yaml
   handle.name: definitions/formats/handle.name.yaml
   left.right.dot: definitions/formats/left.right.dot.yaml
   non.empty.string: definitions/formats/non.empty.string.yaml

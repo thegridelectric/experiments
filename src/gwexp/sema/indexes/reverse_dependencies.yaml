@@ -190,10 +190,6 @@ enums:
     '014':
       used_by:
       - spaceheat.node.gt:303
-  gw1.actuation.authority:
-    '000':
-      used_by:
-      - layout.lite:013
   gw1.emission.method:
     '000':
       used_by:
@@ -214,11 +210,6 @@ enums:
       used_by:
       - layout.lite:011
       - layout.lite:012
-      - layout.lite:013
-  gw1.service.mode:
-    '000':
-      used_by:
-      - layout.lite:013
   gw1.system.mode:
     '000':
       used_by:
@@ -298,6 +289,10 @@ enums:
       - sim.pico.tank.module.component.gt:000
       - sim.pico.tank.module.component.gt:001
 formats:
+  firmware.commit:
+    used_by:
+    - pico.flow.module.component.gt:001
+    - pico.tank.module.component.gt:012
   handle.name:
     used_by:
     - fsm.atomic.report:001

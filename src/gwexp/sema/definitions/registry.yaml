@@ -1,9 +1,16 @@
 metadata:
   registry_version: "1.0"
-  last_updated: "2026-09-20T13:20:00Z"
+  last_updated: "2026-09-30T18:35:00Z"
   maintainer: "gridworks-energy"
 
 formats:
+  firmware.commit:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/firmware.commit"
+    created: "2026-09-21T19:50:00Z"
+    status: "published"
+    description: "The gridworks-pico commit a board's firmware was generated from: a 40-character lowercase git hash, optionally suffixed -dirty, or the literal unstamped"
+
   handle.name:
     owner: gridworks-energy
     schema_url: "https://schemas.electricity.works/formats/handle.name"
@@ -204,18 +211,6 @@ enums:
         created: "2026-01-15T18:00:00Z"
         status: "published"
 
-  gw1.actuation.authority:
-    latest_version: "000"
-    owner: gridworks-energy
-    enum_type: "versioned"
-    description: "Degree of physical actuation authority SCADA exercises: Active / Standby / MonitorOnly. Dominates gw1.service.mode; default MonitorOnly so an unrecognized value degrades to non-actuation."
-
-    versions:
-      "000":
-        schema_url: "https://schemas.electricity.works/enums/gw1.actuation.authority/000"
-        created: "2026-08-13T11:55:00Z"
-        status: "staging"
-
   gw1.emission.method:
     latest_version: "000"
     owner: gridworks-energy
@@ -258,26 +253,14 @@ enums:
         created: "2026-01-14T18:04:00Z"
         status: "published"
 
-  gw1.service.mode:
-    latest_version: "000"
-    owner: gridworks-energy
-    enum_type: "versioned"
-    description: "Thermal service the system provides while actuation authority is Active: Heating / Cooling. Inert outside Active — gw1.actuation.authority dominates."
-
-    versions:
-      "000":
-        schema_url: "https://schemas.electricity.works/enums/gw1.service.mode/000"
-        created: "2026-08-13T11:55:00Z"
-        status: "staging"
-
   gw1.system.mode:
     latest_version: "000"
     owner: gridworks-energy
     enum_type: "versioned"
     description: "System operational mode for HVAC control. Conflated actuation authority with the thermal service (Heating doubled as full authority)."
     replaced_by:
-      - "gw1.actuation.authority"
       - "gw1.service.mode"
+      - "gw.operational.params"
 
     versions:
       "000":
@@ -953,16 +936,13 @@ types:
     versions:
       "013":
         schema_url: "https://schemas.electricity.works/types/layout.lite/013"
-        created: "2026-09-18T00:35:00Z"
+        created: "2026-09-30T18:35:00Z"
         status: "staging"
-        summary: "- ShNodes: spaceheat.node.gt:301 -> 303 - DataChannels: data.channel.gt:002 -> 003 - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component. - SystemMode -> ActuationAuthority x ServiceMode split (Heating -> Active/Heating, Standby -> Standby/Heating, MonitorOnly -> MonitorOnly/Heating; mechanical, not the blocking reason for context). - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status. - BufferShortCycling -> KeepBufferFull: the running scada's KeepBufferFull setting, named for what the flag does."
+        summary: "- ShNodes: spaceheat.node.gt:301 -> 303 - DataChannels: data.channel.gt:002 -> 003 - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component. - SystemMode and SeasonalStorageMode leave: the posture facts (Standby, StandbyPosture, SeasonalStorageMode, ServiceMode, AcceptsDispatch, DispatchRefusalReason) ride gw.house.operating.status, sent after the startup announcements and on change, so the LTN has one source for them. - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status. - BufferShortCycling -> KeepBufferFull: the running scada's KeepBufferFull setting, named for what the flag does."
         direct_dependencies:
           structural:
             - "data.channel.gt:003"
             - "derived.channel.gt:001"
-            - "gw1.actuation.authority:000"
-            - "gw1.seasonal.storage.mode:000"
-            - "gw1.service.mode:000"
             - "gw1.tank.temp.calibration.map:000"
             - "ha1.params:006"
             - "i2c.multichannel.dt.relay.component.gt:004"
@@ -1052,11 +1032,12 @@ types:
     versions:
       "001":
         schema_url: "https://schemas.electricity.works/types/pico.flow.module.component.gt/001"
-        created: "2026-09-18T00:35:00Z"
+        created: "2026-09-21T19:50:00Z"
         status: "staging"
         summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component. - FlowMeterType: spaceheat.make.model enum value -> gw1.device.type value (pascal.case); the device-type enum is articulated by the hardware layout."
         direct_dependencies:
           structural:
+            - "firmware.commit"
             - "gpm.from.hz.method:000"
             - "hz.calc.method:001"
             - "pascal.case"
@@ -1086,11 +1067,12 @@ types:
     versions:
       "012":
         schema_url: "https://schemas.electricity.works/types/pico.tank.module.component.gt/012"
-        created: "2026-09-18T00:35:00Z"
+        created: "2026-09-21T19:50:00Z"
         status: "staging"
         summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
         direct_dependencies:
           structural:
+            - "firmware.commit"
             - "pascal.case"
             - "pico.board.variant:000"
             - "positive.int"

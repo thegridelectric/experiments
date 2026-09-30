@@ -3,6 +3,7 @@ from pydantic import ConfigDict, StrictInt, model_validator
 from gwexp.sema.base import SemaType
 from gwexp.sema.enums import PicoBoardVariant
 from gwexp.sema.enums import TempCalcMethod
+from gwexp.sema.property_format import FirmwareCommit
 from gwexp.sema.property_format import PascalCase
 from gwexp.sema.property_format import PositiveInt
 from gwexp.sema.property_format import UUID4Str
@@ -15,7 +16,6 @@ class PicoTankModuleComponentGt(SemaType):
     device_type: PascalCase
     display_name: str | None = None
     hw_uid: str | None = None
-    enabled: bool
     pico_hw_uid: str | None = None
     pico_a_hw_uid: str | None = None
     pico_b_hw_uid: str | None = None
@@ -30,6 +30,7 @@ class PicoTankModuleComponentGt(SemaType):
     sensor_order: list[StrictInt] | None = None
     pico_board_variant: PicoBoardVariant
     micropython_version: str | None = None
+    firmware_commit: FirmwareCommit | None = None
     type_name: Literal["pico.tank.module.component.gt"] = (
         "pico.tank.module.component.gt"
     )

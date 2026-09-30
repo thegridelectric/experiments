@@ -1,9 +1,6 @@
 from typing import Literal
 from pydantic import model_validator
 from gwexp.sema.base import SemaType
-from gwexp.sema.enums import Gw1ActuationAuthority
-from gwexp.sema.enums import Gw1SeasonalStorageMode
-from gwexp.sema.enums import Gw1ServiceMode
 from gwexp.sema.property_format import LeftRightDot
 from gwexp.sema.property_format import PositiveInt
 from gwexp.sema.property_format import UTCMilliseconds
@@ -30,9 +27,6 @@ class LayoutLite(SemaType):
     message_created_ms: UTCMilliseconds
     message_id: UUID4Str
     hardware_layout_type_name: LeftRightDot
-    actuation_authority: Gw1ActuationAuthority
-    service_mode: Gw1ServiceMode
-    seasonal_storage_mode: Gw1SeasonalStorageMode
     keep_buffer_full: bool
     zone_list: list[str]
     critical_zone_list: list[str]

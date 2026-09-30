@@ -12,8 +12,6 @@ Staging words in this snapshot:
 - enum gw.fleet.alert.kind:000
 - enum gw.platform.alert.kind:000
 - enum gw1.actor.class:014
-- enum gw1.actuation.authority:000
-- enum gw1.service.mode:000
 - enum i2c.adc.channel
 - enum i2c.adc.type:000
 - type gw.adc.waveform:000

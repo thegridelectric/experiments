@@ -4,6 +4,7 @@ from gwexp.sema.base import SemaType
 from gwexp.sema.enums import GpmFromHzMethod
 from gwexp.sema.enums import HzCalcMethod
 from gwexp.sema.enums import PicoBoardVariant
+from gwexp.sema.property_format import FirmwareCommit
 from gwexp.sema.property_format import PascalCase
 from gwexp.sema.property_format import SpaceheatName
 from gwexp.sema.property_format import UUID4Str
@@ -16,7 +17,6 @@ class PicoFlowModuleComponentGt(SemaType):
     device_type: PascalCase
     display_name: str | None = None
     hw_uid: str | None = None
-    enabled: bool
     serial_number: str
     flow_node_name: SpaceheatName
     flow_meter_type: PascalCase
@@ -36,6 +36,7 @@ class PicoFlowModuleComponentGt(SemaType):
     cutoff_frequency: StrictFloat | None = None
     pico_board_variant: PicoBoardVariant
     micropython_version: str | None = None
+    firmware_commit: FirmwareCommit | None = None
     type_name: Literal["pico.flow.module.component.gt"] = (
         "pico.flow.module.component.gt"
     )

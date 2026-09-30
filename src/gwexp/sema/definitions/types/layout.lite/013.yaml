@@ -38,24 +38,6 @@ properties:
       gw.house0.layout or gw.nolan.layout): the layout family every consumer
       of this projection branches on.
 
-  ActuationAuthority:
-    $ref: "https://schemas.electricity.works/enums/gw1.actuation.authority/000"
-    description: >
-      The degree of physical actuation authority the running SCADA
-      deployment exercises. Authority dominates: ServiceMode is inert
-      unless ActuationAuthority is Active.
-
-  ServiceMode:
-    $ref: "https://schemas.electricity.works/enums/gw1.service.mode/000"
-    description: >
-      The thermal service provided while ActuationAuthority is Active;
-      inert otherwise.
-
-  SeasonalStorageMode:
-    $ref: "https://schemas.electricity.works/enums/gw1.seasonal.storage.mode/000"
-    description: >
-      Active seasonal storage mode for the running SCADA deployment.
-
   KeepBufferFull:
     type: boolean
     description: >
@@ -146,9 +128,6 @@ required:
   - MessageCreatedMs
   - MessageId
   - HardwareLayoutTypeName
-  - ActuationAuthority
-  - ServiceMode
-  - SeasonalStorageMode
   - KeepBufferFull
   - ZoneList
   - CriticalZoneList

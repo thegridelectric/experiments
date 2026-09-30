@@ -2,11 +2,9 @@ from gwexp.sema.enums.change_relay_state import ChangeRelayState
 from gwexp.sema.enums.fsm_report_type import FsmReportType
 from gwexp.sema.enums.gpm_from_hz_method import GpmFromHzMethod
 from gwexp.sema.enums.gw1_actor_class import Gw1ActorClass
-from gwexp.sema.enums.gw1_actuation_authority import Gw1ActuationAuthority
 from gwexp.sema.enums.gw1_emission_method import Gw1EmissionMethod
 from gwexp.sema.enums.gw1_quantity import Gw1Quantity
 from gwexp.sema.enums.gw1_seasonal_storage_mode import Gw1SeasonalStorageMode
-from gwexp.sema.enums.gw1_service_mode import Gw1ServiceMode
 from gwexp.sema.enums.gw1_system_mode import Gw1SystemMode
 from gwexp.sema.enums.gw1_unit import Gw1Unit
 from gwexp.sema.enums.gw_alert_category import GwAlertCategory
@@ -32,11 +30,9 @@ __all__ = [
     "FsmReportType",
     "GpmFromHzMethod",
     "Gw1ActorClass",
-    "Gw1ActuationAuthority",
     "Gw1EmissionMethod",
     "Gw1Quantity",
     "Gw1SeasonalStorageMode",
-    "Gw1ServiceMode",
     "Gw1SystemMode",
     "Gw1Unit",
     "GwAlertCategory",
