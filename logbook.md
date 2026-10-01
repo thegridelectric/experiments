@@ -13,6 +13,12 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-09-30 · [alerter-to-alertmanager](2026-09-30-alerter-to-alertmanager/)** —
+  the alerter's `gw.alert` through the new tap into a local Alertmanager:
+  a mocked spruce goes quiet, NoData fires and pages the receiver 35 s
+  after the last report, resumes and the Resolved closes it; the alerter
+  and tap restarted with the alert open re-page nothing and still
+  resolve. PASS.
 - **2026-09-28 · [sieg-keep-ratio-map](2026-09-28-sieg-keep-ratio-map/)** —
   maple's valve mapped from 26 script-driven stops in two windows: keep
   onset 27 to 30 s, half point 38 s, keep complete 54 to 57 s from the

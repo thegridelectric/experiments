@@ -1,0 +1,21 @@
+# Alertmanager for the alerter-to-alertmanager witness: the routing shape
+# the box will run (grouped by category and subject, one child route per
+# category, resolved notices on), with a loopback webhook as the receiver
+# so the run records what Alertmanager sent. run.sh appends a Telegram
+# receiver when TELEGRAM_CHAT_ID and TELEGRAM_TOKEN_FILE are set.
+global:
+  resolve_timeout: 1h
+route:
+  receiver: ops
+  group_by: [category, subject]
+  group_wait: 5s
+  group_interval: 10s
+  repeat_interval: 4h
+  routes:
+    - matchers: ['category="House"']
+      receiver: ops
+receivers:
+  - name: ops
+    webhook_configs:
+      - url: http://127.0.0.1:9094/
+        send_resolved: true

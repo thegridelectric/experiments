@@ -1,0 +1,35 @@
+run dir: /var/folders/mw/w215f_213m7clld4wtt1g9700000gn/T//alerter-to-alertmanager.RT3xPi
+Checking '/var/folders/mw/w215f_213m7clld4wtt1g9700000gn/T//alerter-to-alertmanager.RT3xPi/alertmanager.yml'  SUCCESS
+Found:
+ - global config
+ - route
+ - 0 inhibit rules
+ - 1 receivers
+ - 0 templates
+
+20:06:20 step 1: hand alert via amtool
+time=2026-09-30T20:06:20.100-04:00 level=WARN source=parse.go:136 msg="Alertmanager is moving to a new parser for labels and matchers, and this input is incompatible. Alertmanager has instead parsed the input using the classic matchers parser as a fallback. To make this input compatible with the UTF-8 matchers parser please make sure all regular expressions and values are double-quoted and backslashes are escaped. If you are still seeing this message please open an issue." input="summary=amtool hand alert" origin=cli err="15:19: unexpected hand: expected a comma or close brace" suggestion="summary=\"amtool hand alert\""
+20:06:34 step 2: alerter + tap up; mock scada starts
+20:07:34 step 3 check: alertmanager alerts while firing
+Labels                                                                                                                                             Annotations                                                                                                                                                                             Starts At                  Ends At                    Generator URL  State   
+alertname="HandCheck" category="Test" subject="run.sh"                                                                                             summary="amtool hand alert"                                                                                                                                                             2026-09-30 20:06:20 -0400  2026-09-30 21:06:20 -0400                 active  
+alert_id="9745d927-2e4d-4716-bb09-bfbbcb191931" alertname="NoData" category="House" src="d1.alerts" subject="d1.isone.me.versant.keene.spruce.ta"  about="d1.isone.me.versant.keene.spruce.ta (d1.isone.me.versant.keene.spruce.ta)" house="spruce" summary="No data from d1.isone.me.versant.keene.spruce.ta since 2026-10-01 00:06:49Z"  2026-10-01 00:07:19 UTC    2026-09-30 21:07:30 -0400                 active  
+20:07:34 step 5: restart alerter and tap with the alert open
+20:08:29 step 4 check: alertmanager alerts after resume
+Labels                                                  Annotations                  Starts At                  Ends At                    Generator URL  State   
+alertname="HandCheck" category="Test" subject="run.sh"  summary="amtool hand alert"  2026-09-30 20:06:20 -0400  2026-09-30 21:06:20 -0400                 active  
+--- receiver
+20:06:17 receiving on 127.0.0.1:9094
+20:06:25 firing   HandCheck Test run.sh starts 2026-09-30T20:06:20.107688-04:00 ends 0001-01-01T00:00:00Z | amtool hand alert
+20:07:24 firing   NoData House d1.isone.me.versant.keene.spruce.ta starts 2026-10-01T00:07:19.874Z ends 0001-01-01T00:00:00Z | No data from d1.isone.me.versant.keene.spruce.ta since 2026-10-01 00:06:49Z
+20:07:54 resolved NoData House d1.isone.me.versant.keene.spruce.ta starts 2026-10-01T00:07:19.874Z ends 2026-10-01T00:07:54.642Z | Data from d1.isone.me.versant.keene.spruce.ta again at 2026-10-01 00:07:54Z
+--- tap logs
+2026-09-30 20:06:30,492 INFO gwalerter.tap: Bound d1.alerts-tap to alertsmic_tx with rjb.*.*.gw-alert.#; posting to http://127.0.0.1:9093/api/v2/alerts
+2026-09-30 20:06:30,495 INFO gwalerter.tap: Open at boot: 0 alert(s)
+2026-09-30 20:07:19,885 INFO gwalerter.tap: Firing NoData on d1.isone.me.versant.keene.spruce.ta (9745d927-2e4d-4716-bb09-bfbbcb191931)
+2026-09-30 20:07:36,566 INFO gwalerter.tap: Bound d1.alerts-tap to alertsmic_tx with rjb.*.*.gw-alert.#; posting to http://127.0.0.1:9093/api/v2/alerts
+2026-09-30 20:07:36,568 INFO gwalerter.tap: Open at boot: 1 alert(s)
+2026-09-30 20:07:54,651 INFO gwalerter.tap: Resolved NoData on d1.isone.me.versant.keene.spruce.ta (9745d927-2e4d-4716-bb09-bfbbcb191931)
+--- alerter logs
+2026-10-01T00:07:19.880Z INFO  d1.alerts > gw.alert Firing NoData on d1.isone.me.versant.keene.spruce.ta (9745d927-2e4d-4716-bb09-bfbbcb191931)
+2026-10-01T00:07:54.649Z INFO  d1.alerts > gw.alert Resolved NoData on d1.isone.me.versant.keene.spruce.ta (9745d927-2e4d-4716-bb09-bfbbcb191931)

@@ -1,0 +1,15 @@
+2026-09-30 20:06:30,458 INFO alembic.runtime.migration: Context impl SQLiteImpl.
+2026-09-30 20:06:30,459 INFO alembic.runtime.migration: Will assume non-transactional DDL.
+2026-09-30 20:06:30,478 INFO pika.adapters.utils.connection_workflow: Pika version 1.4.4 connecting to ('::1', 5672, 0, 0)
+2026-09-30 20:06:30,478 INFO pika.adapters.utils.io_services_utils: Socket connected: <socket.socket fd=8, family=30, type=1, proto=6, laddr=('::1', 51098, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-09-30 20:06:30,479 INFO pika.adapters.utils.connection_workflow: Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x104225fd0>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x104225fd0> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>).
+2026-09-30 20:06:30,484 INFO pika.adapters.utils.connection_workflow: AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x104225fd0> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>
+2026-09-30 20:06:30,484 INFO pika.adapters.utils.connection_workflow: AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x104225fd0> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>
+2026-09-30 20:06:30,484 INFO pika.adapters.blocking_connection: Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x104225fd0> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>
+2026-09-30 20:06:30,484 INFO pika.adapters.blocking_connection: Created channel=1
+2026-09-30 20:06:30,492 INFO gwalerter.tap: Bound d1.alerts-tap to alertsmic_tx with rjb.*.*.gw-alert.#; posting to http://127.0.0.1:9093/api/v2/alerts
+2026-09-30 20:06:30,495 INFO gwalerter.tap: Open at boot: 0 alert(s)
+2026-09-30 20:06:30,497 INFO pika.adapters.blocking_connection: Created new queue consumer generator <_QueueConsumerGeneratorInfo params=('d1.alerts-tap', False, False) consumer_tag='ctag1.c659a913e29b4f11a31a3b9234de7c0a'>
+2026-09-30 20:07:19,885 INFO gwalerter.tap: Firing NoData on d1.isone.me.versant.keene.spruce.ta (9745d927-2e4d-4716-bb09-bfbbcb191931)
+2026-09-30 20:07:19,891 INFO httpx: HTTP Request: POST http://127.0.0.1:9093/api/v2/alerts "HTTP/1.1 200 OK"
+2026-09-30 20:07:30,906 INFO httpx: HTTP Request: POST http://127.0.0.1:9093/api/v2/alerts "HTTP/1.1 200 OK"

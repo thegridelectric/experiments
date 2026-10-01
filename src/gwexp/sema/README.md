@@ -7,15 +7,10 @@ brokers only. It MUST NOT be used against hybrid or production brokers.
 
 Staging words in this snapshot:
 
-- enum gw.alert.category:000
-- enum gw.alert.state
-- enum gw.fleet.alert.kind:000
-- enum gw.platform.alert.kind:000
 - enum gw1.actor.class:014
 - enum i2c.adc.channel
 - enum i2c.adc.type:000
 - type gw.adc.waveform:000
-- type gw.alert:000
 - type i2c.multichannel.dt.relay.component.gt:004
 - type i2c.thermistor.channel.config:000
 - type i2c.thermistor.reader.component.gt:000

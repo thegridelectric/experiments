@@ -1,0 +1,30 @@
+Source: one ./run.sh on the laptop against gw-dev-rabbit (localhost:5672,
+  vhost d1__1), the dev registry (gnr api on localhost:8000, gnr rabbit;
+  seeded d1 universe) and a local Alertmanager 0.34.1 (darwin-arm64 release
+  binary, intake on 127.0.0.1:9093, cluster off). Nothing deployed was touched.
+Window: 2026-09-30 20:06:16 to 20:08:29 EDT (laptop clock).
+Code under test: gridworks-alerter jm/gw-alert at bee0564 (the tap,
+  committed after the run from the same working tree, on top of f4d6893). Harness
+  scripts decode through experiments src/gwexp/sema (mock scada from
+  ../2026-09-15-alerter-no-data/mock_scada.py).
+Files, copied from the run dir /var/folders/.../alerter-to-alertmanager.RT3xPi:
+  run.log              stdout of ./run.sh (amtool check-config, step marks,
+                       both amtool alert queries, the receiver/tap/alerter greps)
+  alertmanager.yml     the config Alertmanager ran (webhook receiver only;
+                       no Telegram chat id was set for this run)
+  alertmanager.log     Alertmanager's own log
+  receiver.log         webhook_receiver.py: every notification Alertmanager
+                       delivered, one alert per line
+  amtool-firing.txt    `amtool alert query -o extended` while NoData fired
+  amtool-resolved.txt  the same after the resume
+  tap-1.log / tap-2.log      stdout of the two `gwalerter tap`
+  alerter-1.log / alerter-2.log  stdout of the two `gwalerter rabbit`
+  alerter-file.log     the gwbase file log both alerters wrote
+  alerter.sqlite       the alerter's store (data/gridworks/alerter/) as the run
+                       left it; emit_instances.py reads its alerts table
+Timestamps: run.log, receiver.log, mock.log, tap-N.log, alerter-N.log and
+  alertmanager.log are laptop local time (EDT); alerter-file.log and the
+  alert words' RaisedMs/ResolvedMs are UTC (Z). One clock, the laptop's.
+Edits: broker credentials in URLs replaced by *** (pattern
+  amqp[s]://user:<secret>@); nothing else changed.
+Regeneration: not possible. A new run is a new dataset.
