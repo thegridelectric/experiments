@@ -43,10 +43,13 @@
 # ends on either (a bound, a crash). A laptop asleep or off the network
 # leaves each pi to its own bound.
 #
-# `on` for a house refuses unless:
-#   - the box's window pair (~/.config/gridworks/scada-experiment/) is
-#     byte-identical to ../tlayouts/output/<house>/ (put_layout.sh <house> check).
-#     This script never writes a layout; put_layout.sh does.
+# `on` refuses unless the target's files are byte-identical to their source
+# (put_layout.sh <target> check): a box's window pair
+# (~/.config/gridworks/scada-experiment/) to ../tlayouts/output/<house>/, the
+# laptop's config folders to the scada checkout's sim fixtures. This script
+# never writes a layout; put_layout.sh does.
+#
+# `on` for a house also refuses unless:
 #   - the laptop's scada head is pushed and the box's ~/gridworks-scada-unlimbo
 #     checkout is at it (the box runs pushed SHAs only; pull on the box); the
 #     second pi's too.
@@ -60,11 +63,13 @@
 # ~/experiments/window_boot.py from ~/envs/dev.env
 # (dev-broker creds only; upstream through the tunnel, admin link on the box's
 # own mosquitto). A dev window runs the same boot from the laptop's scada
-# checkout and its .env. Then `gwa watch <house>` from the laptop.
+# checkout and its .env, which names no layout paths. Then `gwa watch <house>`
+# from the laptop.
 #
 # The LTN takes its identity and its peer from the layout it loads, so --ltn
-# loads the target's own pair: the scada .env's pair in dev, the tlayouts gen
-# output for a house. One LTN runs at a time (its paths root is shared).
+# loads the target's own pair: the laptop's ~/.config/gridworks/ltn/ pair in
+# dev, the tlayouts gen output for a house. One LTN runs at a time (its paths
+# root is shared).
 set -euo pipefail
 
 HOUSE="${1:-}"
@@ -109,9 +114,9 @@ case "$HOUSE" in
     esac
     exit 0 ;;
   dev)
-    # the pair the scada checkout's .env names, paths relative to the checkout
-    LTN_LAYOUT="$(sed -n 's/^LTN_PATHS__HARDWARE_LAYOUT *= *//p' "$SCADA/.env" | tr -d '"')"
-    LTN_OPS="$(sed -n 's/^SCADA_PATHS__OPERATIONAL_PARAMS *= *//p' "$SCADA/.env" | tr -d '"')"
+    # the pair put_layout.sh dev seeds
+    LTN_LAYOUT="$HOME/.config/gridworks/ltn/hardware-layout.json"
+    LTN_OPS="$HOME/.config/gridworks/ltn/operational-params.json"
     ;;
   spruce)
     SERVICES="spruce-winter-hack gwspaceheat gwspaceheat-restart.timer"
@@ -178,6 +183,7 @@ if [ "$HOUSE" = dev ]; then
   case "${2:-}" in
     on)
       if dev_up; then echo "refusing: a dev window scada is already running"; exit 1; fi
+      "$HERE/put_layout.sh" dev check || { echo "refusing: put the sim fixtures first (./put_layout.sh dev <change>)"; exit 1; }
       ensure_capture
       note_window "$(git -C "$SCADA" rev-parse HEAD)$([ -z "$(git -C "$SCADA" status --porcelain)" ] || echo ' (working tree dirty)')"
       start_ltn

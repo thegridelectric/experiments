@@ -130,6 +130,11 @@ hand-edit:
   (`../tlayouts/<house>_gen.py` from the scada venv); this script copies bytes
   and does not regenerate. `<change>` is a short dashed slug (e.g. `pi-ids`).
 
+`put_layout.sh dev` does the same for a dev window: it copies the scada
+checkout's Nolan sim fixtures (the pair and the deed) into the laptop's
+`~/.config/gridworks/` folders under the deployed names, and
+`house_window.sh dev on` refuses until `put_layout.sh dev check` passes.
+
 The production `hardware-layout.json` follows the ordinary scada deploy
 (land-in-git → push → pull on the box), not `put_layout.sh`.
 
