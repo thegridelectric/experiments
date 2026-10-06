@@ -26,6 +26,11 @@
 # scada/ (what `gws run` reads) and scada-experiment/ (what a dev window
 # reads) take the pair and the ta-deed.json; ltn/ takes the pair.
 #
+# A scada writes its own operational-params.json (the cold latch that
+# refuses dispatch), so a target's params can hold something the source
+# lacks. Where they differ, the script shows the difference and copies only
+# on an answer of y; any other answer leaves the target as it is and exits 1.
+#
 # It refuses while a window scada is running on the target.
 set -euo pipefail
 
@@ -87,6 +92,12 @@ for PLACE in $(echo "$PLACES" | sed 's# \.config#\n.config#g'); do
     fi
     if on_box "$BOX" 'pgrep -f "[w]indow_boot.py" >/dev/null'; then
       echo "a window scada is running on $BOX; stop it first"; exit 1
+    fi
+    if [ "$STEM" = operational-params ] && on_box "$BOX" "[ -f $BOX_DIR/$STEM.json ]"; then
+      echo "$AT: differs from the source; the target (-) against the source (+):"
+      diff -u <(on_box "$BOX" "cat $BOX_DIR/$STEM.json") "$GEN" | tail -n +3 || true
+      read -r -p "copy the source over the target's params? [y/N] " ANSWER || ANSWER=""
+      [ "$ANSWER" = y ] || { echo "$AT: left as it is"; exit 1; }
     fi
     KEPT="$(on_box "$BOX" "mkdir -p $BOX_DIR; [ ! -f $BOX_DIR/$STEM.json ] || { cp -p $BOX_DIR/$STEM.json $BOX_DIR/$STEM.$STAMP-pre-$CHANGE.json && echo $STEM.$STAMP-pre-$CHANGE.json; }")"
     to_box "$BOX" "$GEN" "$BOX_DIR/$STEM.json"
