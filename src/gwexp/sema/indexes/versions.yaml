@@ -165,6 +165,10 @@ types:
           - CopMinOatF: add as optional
       "004":
         summary: "Baseline runtime version (no prior version tracked)."
+      "003":
+        summary: "- StratBossDist010: add"
+      "002":
+        summary: "- LoadOverestimationPercent: add"
 
   i2c.multichannel.dt.relay.component.gt:
     latest_version: "004"
@@ -218,6 +222,29 @@ types:
         summary: >
           - Ha1Params: ha1.params:004 | 005 -> ha1.params:004 | 005 | 006
           - DerivedChannels[]: derived.channel.gt:000 -> 000 | 001
+      "010":
+        summary: >
+          - ShNodes[]: spaceheat.node.gt:300 -> 300 | 301
+          - I2cRelayComponent: required -> optional
+      "009":
+        summary: >
+          - BufferShortCycling: add
+          - Ha1Params: 004 -> 004 | 005
+      "008":
+        summary: >
+          - SystemMode: add
+          - SeasonalStorageMode: add
+          - ShNodes[]: spaceheat.node.gt:200 -> 300
+          - TankModuleComponents[]: pico.tank.module.component.gt only -> pico.tank.module.component.gt | sim.pico.tank.module.component.gt
+          - DerivedNodeConsistency axiom: add
+      "007":
+        summary: "Replace SynthChannels with DerivedChannels; add optional TMap."
+      "006":
+        summary: "Drop FromGNodeInstanceId; add CriticalZoneList."
+      "005":
+        summary: "Runtime layout carrying FromGNodeInstanceId; no CriticalZoneList (added in 006)."
+      "004":
+        summary: "Historical back-fill from S3 wire evidence. As v005 but Ha1Params and TankModuleComponents are deploy-lag unions: Ha1Params oneOf[002, 003]; TankModuleComponents.items oneOf[pico.tank 000, 010]."
 
   machine.states:
     latest_version: "000"
@@ -245,6 +272,12 @@ types:
         summary: "- ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case). Context-dependent: the device type lived on the referenced cac, not the component."
       "011":
         summary: "Baseline runtime version (no prior version tracked)."
+      "010":
+        summary: >
+          - SensorOrder: add as optional
+          - PicoKOhms: required -> optional
+      "000":
+        summary: "Historical version back-filled from S3 wire evidence; lowest tracked version. Dual-Pico hardware identity (PicoAHwUid + PicoBHwUid) with PicoKOhms and SimpleBetaForPico temp calc; no SensorOrder."
 
   relay.actor.config:
     latest_version: "003"
@@ -305,8 +338,17 @@ types:
           - ActorClass: gw1.actor.class:009 -> 011
       "300":
         summary: "- ActorClass: string -> gw1.actor.class:009"
+      "200":
+        summary: "Baseline runtime version (no prior version tracked)."
 
   spaceheat.telemetry.quantity.projection:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
+
+  synth.channel.gt:
     latest_version: "000"
     versioning_strategy: "literal"
     versions:
@@ -369,6 +411,8 @@ enums:
       "014":
         added_values:
           - "FiveVBoss"
+          - "HpWatch"
+          - "ColdWatch"
       "013":
         added_values:
           - "I2cDacWriter"

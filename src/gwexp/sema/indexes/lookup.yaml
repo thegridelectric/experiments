@@ -105,6 +105,8 @@ types:
       '006': definitions/types/ha1.params/006.yaml
       '005': definitions/types/ha1.params/005.yaml
       '004': definitions/types/ha1.params/004.yaml
+      '003': definitions/types/ha1.params/003.yaml
+      '002': definitions/types/ha1.params/002.yaml
   i2c.multichannel.dt.relay.component.gt:
     latest_version: '004'
     versioning_strategy: literal
@@ -129,6 +131,13 @@ types:
       '013': definitions/types/layout.lite/013.yaml
       '012': definitions/types/layout.lite/012.yaml
       '011': definitions/types/layout.lite/011.yaml
+      '010': definitions/types/layout.lite/010.yaml
+      009: definitions/types/layout.lite/009.yaml
+      008: definitions/types/layout.lite/008.yaml
+      '007': definitions/types/layout.lite/007.yaml
+      '006': definitions/types/layout.lite/006.yaml
+      '005': definitions/types/layout.lite/005.yaml
+      '004': definitions/types/layout.lite/004.yaml
   machine.states:
     latest_version: '000'
     versioning_strategy: literal
@@ -146,6 +155,8 @@ types:
     versions:
       '012': definitions/types/pico.tank.module.component.gt/012.yaml
       '011': definitions/types/pico.tank.module.component.gt/011.yaml
+      '010': definitions/types/pico.tank.module.component.gt/010.yaml
+      '000': definitions/types/pico.tank.module.component.gt/000.yaml
   relay.actor.config:
     latest_version: '003'
     versioning_strategy: literal
@@ -177,11 +188,17 @@ types:
       '302': definitions/types/spaceheat.node.gt/302.yaml
       '301': definitions/types/spaceheat.node.gt/301.yaml
       '300': definitions/types/spaceheat.node.gt/300.yaml
+      '200': definitions/types/spaceheat.node.gt/200.yaml
   spaceheat.telemetry.quantity.projection:
     latest_version: '000'
     versioning_strategy: literal
     versions:
       '000': definitions/types/spaceheat.telemetry.quantity.projection/000.yaml
+  synth.channel.gt:
+    latest_version: '000'
+    versioning_strategy: literal
+    versions:
+      '000': definitions/types/synth.channel.gt/000.yaml
 enums:
   change.relay.state:
     enum_type: literal

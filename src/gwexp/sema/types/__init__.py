@@ -37,6 +37,7 @@ from gwexp.sema.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwexp.sema.types.spaceheat_telemetry_quantity_projection import (
     SpaceheatTelemetryQuantityProjection,
 )
+from gwexp.sema.types.synth_channel_gt import SynthChannelGt
 
 __all__ = [
     "ChannelConfig",
@@ -70,4 +71,5 @@ __all__ = [
     "SimPicoTankModuleComponentGt",
     "SpaceheatNodeGt",
     "SpaceheatTelemetryQuantityProjection",
+    "SynthChannelGt",
 ]

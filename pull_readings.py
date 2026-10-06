@@ -58,12 +58,25 @@ from gwexp.sema.types import (  # noqa: E402
     GwReadings,
     LayoutLite,
 )
+from gwexp.sema.types.old_versions.layout_lite_004 import LayoutLite004  # noqa: E402
+from gwexp.sema.types.old_versions.layout_lite_005 import LayoutLite005  # noqa: E402
+from gwexp.sema.types.old_versions.layout_lite_006 import LayoutLite006  # noqa: E402
+from gwexp.sema.types.old_versions.layout_lite_007 import LayoutLite007  # noqa: E402
+from gwexp.sema.types.old_versions.layout_lite_008 import LayoutLite008  # noqa: E402
+from gwexp.sema.types.old_versions.layout_lite_009 import LayoutLite009  # noqa: E402
+from gwexp.sema.types.old_versions.layout_lite_010 import LayoutLite010  # noqa: E402
 from gwexp.sema.types.old_versions.layout_lite_011 import LayoutLite011  # noqa: E402
 from gwexp.sema.types.old_versions.layout_lite_012 import LayoutLite012  # noqa: E402
 from naming import validate_lrd  # noqa: E402
 from unit_encodings import word_encoding  # noqa: E402
 
 _SPACEHEAT = TypeAdapter(SpaceheatName)
+
+# layout.lite versions whose computed channels are synth.channel.gt, and
+# those whose computed channels are derived.channel.gt
+SYNTH_LAYOUTS = (LayoutLite004, LayoutLite005, LayoutLite006)
+DERIVED_LAYOUTS = (LayoutLite007, LayoutLite008, LayoutLite009, LayoutLite010,
+                   LayoutLite011, LayoutLite012, LayoutLite)
 
 HERE = Path(__file__).parent
 
@@ -114,9 +127,18 @@ def fetch_layout_channels(ta: LeftRightDot, end_ms: int, codec: SemaCodec):
         )
     payload, emitted_ms = row
     layout = codec.from_dict(payload, auto_upgrade=False)
-    assert isinstance(layout, (LayoutLite, LayoutLite011, LayoutLite012))
+    # gw.readings carries data.channel.gt and derived.channel.gt words only:
+    # a synth.channel.gt has no upgrade to either, so a synth-era layout
+    # yields its data channels and its synth channels are not pullable here.
+    if isinstance(layout, SYNTH_LAYOUTS):
+        emitted_channels = list(layout.data_channels)
+        not_carried = len(layout.synth_channels)
+    else:
+        assert isinstance(layout, DERIVED_LAYOUTS)
+        emitted_channels = list(layout.data_channels) + list(layout.derived_channels)
+        not_carried = 0
     words = {}
-    for ch in list(layout.data_channels) + list(layout.derived_channels):
+    for ch in emitted_channels:
         current = codec.from_dict(ch.to_dict())  # upgrade to latest version
         assert isinstance(current, (DataChannelGt, DerivedChannelGt))
         words[current.name] = current
@@ -127,6 +149,9 @@ def fetch_layout_channels(ta: LeftRightDot, end_ms: int, codec: SemaCodec):
         f"  ({payload['TypeName']}/{payload['Version']}, "
         f"{len(words)} channel words)"
     )
+    if not_carried:
+        print(f"  {not_carried} synth.channel.gt channels in this layout are "
+              f"not carried by gw.readings")
     return words
 
 

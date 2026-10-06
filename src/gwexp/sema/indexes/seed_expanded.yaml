@@ -1,6 +1,6 @@
 metadata:
   generated_from: indexes/public_registry.yaml
-  generated_at: '2026-10-01T00:46:33Z'
+  generated_at: '2026-10-06T18:29:10Z'
   note: Transitive closure of initial_targets
 initial_targets:
 - glitch:000
@@ -13,6 +13,13 @@ initial_targets:
 - i2c.thermistor.reader.component.gt:000
 - report.event:003
 - report.event:004
+- layout.lite:004
+- layout.lite:005
+- layout.lite:006
+- layout.lite:007
+- layout.lite:008
+- layout.lite:009
+- layout.lite:010
 - layout.lite:011
 - layout.lite:012
 - layout.lite:013
@@ -197,6 +204,10 @@ worklist:
       '000':
         path: definitions/types/gw1.unit.quantity.projection/000.yaml
     ha1.params:
+      '002':
+        path: definitions/types/ha1.params/002.yaml
+      '003':
+        path: definitions/types/ha1.params/003.yaml
       '004':
         path: definitions/types/ha1.params/004.yaml
       '005':
@@ -217,6 +228,20 @@ worklist:
       '000':
         path: definitions/types/i2c.thermistor.reader.component.gt/000.yaml
     layout.lite:
+      '004':
+        path: definitions/types/layout.lite/004.yaml
+      '005':
+        path: definitions/types/layout.lite/005.yaml
+      '006':
+        path: definitions/types/layout.lite/006.yaml
+      '007':
+        path: definitions/types/layout.lite/007.yaml
+      008:
+        path: definitions/types/layout.lite/008.yaml
+      009:
+        path: definitions/types/layout.lite/009.yaml
+      '010':
+        path: definitions/types/layout.lite/010.yaml
       '011':
         path: definitions/types/layout.lite/011.yaml
       '012':
@@ -232,6 +257,10 @@ worklist:
       '001':
         path: definitions/types/pico.flow.module.component.gt/001.yaml
     pico.tank.module.component.gt:
+      '000':
+        path: definitions/types/pico.tank.module.component.gt/000.yaml
+      '010':
+        path: definitions/types/pico.tank.module.component.gt/010.yaml
       '011':
         path: definitions/types/pico.tank.module.component.gt/011.yaml
       '012':
@@ -255,6 +284,8 @@ worklist:
       '001':
         path: definitions/types/sim.pico.tank.module.component.gt/001.yaml
     spaceheat.node.gt:
+      '200':
+        path: definitions/types/spaceheat.node.gt/200.yaml
       '300':
         path: definitions/types/spaceheat.node.gt/300.yaml
       '301':
@@ -266,3 +297,6 @@ worklist:
     spaceheat.telemetry.quantity.projection:
       '000':
         path: definitions/types/spaceheat.telemetry.quantity.projection/000.yaml
+    synth.channel.gt:
+      '000':
+        path: definitions/types/synth.channel.gt/000.yaml
