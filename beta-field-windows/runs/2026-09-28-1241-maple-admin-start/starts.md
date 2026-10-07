@@ -3,7 +3,7 @@
 Status: Draft · Pass 0 · Updated 2026-09-28
 
 Heat pump start during the 09-28 window, with the sieg valve held at FullyKeep. Times are box ET. Temperatures are °F, converted from CelsiusX100; depth channels are FahrenheitX100.
-Sources: **RE** = report.event (`maple-events-20260928-130239/`, readings through 13:00:00), **LOG** = `maple-window-20260928-130220.log`, **STRIP** = `sieg-view` line with age.
+Sources: **RE** = report.event (`maple-events-20260928-130239/`, readings through 13:00:00), **LOG** = `maple-window-20260928-130220.log.gz`, **STRIP** = `sieg-view` line with age.
 Script: `start_row.py` over `start-dump-0928.txt`.
 
 | field | value | source |

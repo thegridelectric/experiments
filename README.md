@@ -31,11 +31,11 @@ as validated Sema instances.
   is" line; "Found" holds one verdict per tested claim. The one so far
   is `dist-loop-experiments/`, the fleet's distribution loops over the
   2025–26 heating season.
-- `beta-field-windows/` — the one exception to one-folder-per-experiment
-  that is neither dated nor a dataset: an ongoing field-test *practice*,
-  which keeps only the **last run** (a new window deletes the previous
-  run's data first). Its durable how-to is `field-window-recipe.md`; the
-  folder holds `emit_instances.py` and the current run. See its README.
+- `beta-field-windows/` — the one folder that is neither dated nor a
+  dataset: an ongoing field-test *practice*. Every window is a run
+  folder under `runs/`, indexed in `runs.md`; the folder top holds the
+  tools and the latest round. Its durable how-to is
+  `field-window-recipe.md`. See its README.
 - `src/gwexp/sema/` — the vendored Sema snapshot runtime (GENERATED —
   never hand-edit). Experiment scripts construct result instances
   through its classes so schema and axioms validate at construction.
@@ -74,11 +74,11 @@ as validated Sema instances.
   capture or pull goes untouched to the immutable store, its key named
   in the folder's README, and the folder commits the reduced form the
   analysis reads (the lines the question needs, or one compact row
-  per message). `.pre-commit-config.yaml` holds the gate; install it
-  once per clone with `uvx pre-commit install` and it refuses the
-  commit that adds a larger file. (The `beta-field-windows/` practice is the one
-  exception: it keeps only the last run and deletes prior evidence, since
-  each round re-generates its own dataset.) Every folder holding a `gw.readings`
+  per message). A text file that gzips under the cap is committed
+  gzipped, the bytes intact; a reader script opens either form.
+  `.pre-commit-config.yaml` holds the gate; install it once per clone
+  with `uvx pre-commit install` and it refuses the commit that adds a
+  larger file. Every folder holding a `gw.readings`
   instance ends its README with the standard "From the instance to
   the display CSV" paragraph
   (`pull_readings.py --display-from <instance>.json` regenerates the

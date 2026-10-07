@@ -53,7 +53,7 @@ over it and `primary-flow` the sum with `sieg-flow`) and re-checks 4ci
   arrival order, not time order.
 
 Files: `broker-capture-20260927-183402.jsonl` (35 messages),
-`maple-window-…184556.log`, `maple2-window-…184606.log`, `maple-events/`,
+`maple-window-…184556.log.gz`, `maple2-window-…184606.log`, `maple-events/`,
 `maple-4d-window-analysis.md`, each with a provenance sidecar;
 `instances/maple-gw.experiment.run-000.json`. Capture stamps are the laptop
 clock, ~70 s ahead of the box.

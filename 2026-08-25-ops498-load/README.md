@@ -40,7 +40,7 @@ Dec 30 2024 – Jan 18 2025 problem-event flap is avoided on purpose.
 ## Logbook
 
 (append one line per run: date, windows, outcome, pointer to runs/…)
-- 2026-08-25 — run `runs/20260825T2008/`: windows Oct 13–15 2024, Dec 10–12
+- 2026-08-25 — run `runs/20260825T2008/` (the importer logs are gzipped; `zcat` reads them): windows Oct 13–15 2024, Dec 10–12
   2024, Feb 15–17 2025, Dec 20–22 2025 (pass 1 all five incl. Nov 28–30, which
   was empty: v001's wire birth is Dec 1). First two pass-2 windows unbatched
   (17 msg/s), rest with `--batch-size 500` (39 msg/s from the laptop; Dec 2025: 76,087 msgs in 44 min). All 7

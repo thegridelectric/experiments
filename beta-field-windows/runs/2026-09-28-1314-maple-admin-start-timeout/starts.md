@@ -3,7 +3,7 @@
 Status: Draft · Pass 0 · Updated 2026-09-28
 
 Heat pump start during the 13:14 maple window, with the sieg valve held at FullyKeep. The admin hold timed out mid-start, local control turned the HP off, and the valve opened to send. Times are box ET. Temperatures are °F, converted from CelsiusX100; depth channels are FahrenheitX100.
-Sources: **RI** = folded readings `instances/maple-gw.readings-000.json` (to 13:30:00), **RE** = report.event StateList / FsmReportList, **LOG** = `maple-window-20260928-133008.log`. Run folder: `experiments/beta-field-windows/runs/2026-09-28-1314-maple-admin-start-timeout/`.
+Sources: **RI** = folded readings `instances/maple-gw.readings-000.json` (to 13:30:00), **RE** = report.event StateList / FsmReportList, **LOG** = `maple-window-20260928-133008.log.gz`. Run folder: `experiments/beta-field-windows/runs/2026-09-28-1314-maple-admin-start-timeout/`.
 Script: `scratch/basic-sieg/start_row_run3.py` over `run3-start.txt`, which comes from `run3_dump.py`.
 
 | field | value | source |

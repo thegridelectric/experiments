@@ -14,6 +14,7 @@ as its dict form, then read back through the codec so the file on disk is what
 validates.
 """
 
+import gzip
 import json
 import re
 import sys
@@ -37,10 +38,10 @@ ALIASES = {
 
 
 def window_logs(folder: Path) -> dict[str, tuple[str, str]]:
-    """The run's log per house: `<house>-window-*.log` in the run folder."""
+    """The run's log per house: `<house>-window-*.log`, gzipped or not, in the run folder."""
     found = {}
     for house, alias in ALIASES.items():
-        logs = sorted(folder.glob(f"{house}-window-*.log"))
+        logs = sorted(folder.glob(f"{house}-window-*.log*"))  # .log or .log.gz
         if logs:
             found[house] = (alias, logs[-1].name)
     return found
@@ -57,7 +58,8 @@ def stamp_ms(line: str) -> int:
 
 
 def bounds(path: Path) -> tuple[int, int]:
-    stamps = [stamp_ms(x) for x in path.read_text().splitlines() if STAMP.match(x)]
+    text = gzip.decompress(path.read_bytes()).decode() if path.suffix == ".gz" else path.read_text()
+    stamps = [stamp_ms(x) for x in text.splitlines() if STAMP.match(x)]
     if not stamps:
         raise ValueError(f"{path}: no stamped lines")
     return stamps[0], stamps[-1]

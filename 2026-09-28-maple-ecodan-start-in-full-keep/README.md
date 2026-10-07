@@ -164,12 +164,14 @@ by hand through the admin panel (`gwa watch maple`).
 - `instances/gw.experiment.run-000.json` — the run record of the first
   window, emitted by `emit_instances.py` from the window log's first and
   last stamps. The later windows have no run instance yet.
-- `maple-window-20260928-130220.log`, `-143026.log`, `-145019.log` and
+- `maple-window-20260928-143026.log`, `-145019.log` and
   `maple-events-130239/`, `-143041/`, `-145033/` — the second, third and
   fourth windows of the day (12:41 to 13:02, 14:13 to 14:30, 14:33 to
   14:50 ET), each the window scada's log and its persisted events as
   `house_window.sh maple off` copied them; the suffix is the copy's
-  laptop stamp. The third window was the first with hp-lwt and hp-ewt
+  laptop stamp. The second window's log is
+  `../beta-field-windows/runs/2026-09-28-1241-maple-admin-start/maple-window-20260928-130220.log.gz`,
+  that run's own copy. The third window was the first with hp-lwt and hp-ewt
   at a 0.1 C async delta, the fourth at 0.05 C. A 13:49 to 14:12 window
   between them ran no start and is not kept here.
 - `loop_volume.py` — the finding-6 fit over the nine chunks named in it,
