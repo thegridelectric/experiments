@@ -247,18 +247,22 @@ From the minute file:
 
 For spreadsheet readers:
 
-- `sheets.py`, `dist-loop-experiments.xlsx`, `csv/`: every table above
-  as one workbook, a Summary tab in front naming each tab with what
-  its rows are, then one tab per table and the hourly records per
-  house, with one number per cell (a statistic with a spread is three
-  columns, a mean with a range is three); and the same tables plus
-  the minute grid as CSV files. Each script's `tables()` builds its
-  rows through the repo's `tables.py`, and its printed text or
-  markdown is a rendering of the same cells. The workbook and `csv/`
-  are gitignored and regenerate with one command. `--minute-tabs` adds
-  the minute grid to the workbook (about 300,000 rows a house);
-  `--no-db` leaves out the January 24 table, the one that reaches the
-  journal DB.
+- `sheets.py`, `<document>.xlsx`, `csv/`: one workbook per document
+  in the heating-system-design repo, holding only the tables that
+  document's text draws on: a Summary tab in front naming each tab
+  with what its rows are, then one tab per table and the records the
+  tables were made from, with one number per cell (a statistic with a
+  spread is three columns, a mean with a range is three). Each
+  script's `tables()` builds its rows through the repo's `tables.py`,
+  and its printed text or markdown is a rendering of the same cells.
+  `beech-emitter-physics-mystery.xlsx` carries the January 24 steps,
+  the minute trace under them (09:00 to 12:30 ET), beech's steady-hour
+  bins, beech's idle-zone calls with their recovery, and beech's hourly
+  records. `csv/` gets every table plus the minute grid. The workbooks
+  and `csv/` are gitignored and regenerate with one command.
+  `--minute-tabs` adds the season's minute grid to the workbook (about
+  300,000 rows); `--no-db` leaves out the tables that reach the
+  journal DB (the January 24 steps).
 
 Instances:
 
@@ -283,7 +287,7 @@ time (a season pull is 31 weekly queries per house):
     uv run python beech_jan24_steps.py > beech-2026-01-24-steps.txt
     uv run python bolus_recovery.py --house beech --plot
     uv run python emit_instances.py
-    uv run python sheets.py
+    uv run python sheets.py beech-emitter-physics-mystery
 
 The four tables and the instances regenerate from the committed
 hourly files alone. The bolus report needs the minute file, which only
