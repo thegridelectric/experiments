@@ -84,6 +84,15 @@ paper and the memos, the tables are in the output files named here.
   at beech, 45 events. `beech-bolus-recovery.txt`,
   `beech-bolus-recovery.png`;
   `heating-system-design/cold-zone-call-during-steady-heating-memo.md`.
+- **The drop is back near its pre-call value within five minutes and
+  nothing of the slug remains after that: PASS** at beech. Ten to
+  thirty minutes after a call the drop sits more than 3 °F from its
+  pre-call value in 56 to 80% of events, and in 69 to 84% of
+  steady-call minutes with no idle-zone call in the previous half
+  hour; the supply's own movement explains it (0.23 °F of drop per °F
+  of supply at beech), and with that removed the median residual is
+  within ±2 °F at every horizon, as at the control minutes.
+  `beech-bolus-recovery.txt`; the memo's "Across the season".
 
 ## Timeline
 
@@ -138,7 +147,13 @@ paper and the memos, the tables are in the output files named here.
   where the drop is within 5% of its pre-call mean for two minutes
   running. 28 of the 45 events never re-enter that band inside their
   window (a 5% band on a 19 °F drop is ±1 °F); the report also gives
-  10% and the median excess by minute.
+  10% and the median excess by minute. The 5% band assumes a supply
+  that holds, and beech's supply held within ±3 °F over minutes 3 to
+  10 after only 4 of the 45 calls; so the report also removes the
+  supply's share through the house's steady line (drop against supply
+  fitted to its steady hours) and compares the result with control
+  minutes: steady call, no idle-zone call for 30 minutes before, every
+  fifth eligible minute.
 - **Heat per hour** is 500 x gpm x drop BTU/h summed over the hour,
   for water with no glycol correction.
 
@@ -215,8 +230,9 @@ Tables from the hourly files (no DB):
 From the minute file:
 
 - `bolus_recovery.py`, `beech-bolus-recovery.txt`,
-  `beech-bolus-recovery.png`: the cold-zone-call events and the
-  recovery of the drop after each; the PNG is one representative
+  `beech-bolus-recovery.png`: the cold-zone-call events, the
+  recovery of the drop after each, and the drop's later movement
+  against control minutes with the supply's share removed; the PNG is one representative
   event (the recovered event at the median recovery time) with the
   buffer and heat pump temperatures pulled from the journal DB for
   that window. Reads the minute file, so the `pump_speed.py` pull
