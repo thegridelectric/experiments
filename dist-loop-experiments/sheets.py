@@ -15,15 +15,18 @@ workbooks and csv/ out of git; this script regenerates them.
 """
 
 import argparse
+import datetime
 import sys
 from pathlib import Path
 from typing import Callable, NamedTuple
+from zoneinfo import ZoneInfo
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent))
 
 import beech_jan24_steps  # noqa: E402
 import bolus_recovery  # noqa: E402
+import emitter_theory  # noqa: E402
 import steady_drop  # noqa: E402
 from houses import ZONE_PAIRS, hourly_files, minute_file  # noqa: E402
 from tables import Table, write_csv, write_workbook  # noqa: E402
@@ -50,6 +53,11 @@ def rows_where(table: Table, name: str, column: str, keep: Callable[[object], bo
     return table._replace(name=name, title=title, rows=[r for r in table.rows if keep(r[i])])
 
 
+def has_formulas(table: Table) -> bool:
+    """A table of live Excel formulas has no CSV form; its Python twin does."""
+    return any(isinstance(c, str) and c.startswith("=") for r in table.rows for c in r)
+
+
 def mystery_tables(opt: Options) -> list[Table]:
     house = "beech"
     out: list[Table] = []
@@ -65,7 +73,33 @@ def mystery_tables(opt: Options) -> list[Table]:
                           "Beech steady-circulation hours by source temperature bin: drop quartiles, median flow, median heat"))
     events, _, _ = bolus_recovery.tables(house)
     out.append(events)
+    out += emitter_theory.tables()
     out += [f.table() for f in hourly_files() if f.house == house]
+    if opt.minute_tabs:
+        out.append(minute)
+    return out
+
+
+ET = ZoneInfo("America/New_York")
+
+
+def et_s(day: datetime.date, hhmm: str) -> int:
+    h, m = (int(x) for x in hhmm.split(":"))
+    return int(datetime.datetime(day.year, day.month, day.day, h, m, tzinfo=ET).timestamp())
+
+
+def memo_tables(opt: Options) -> list[Table]:
+    house = "beech"
+    day = datetime.date(2026, 1, 26)
+    minute = minute_file(house).table()
+    start_s, end_s = et_s(day, "05:45"), et_s(day, "07:15")
+    out: list[Table] = [rows_where(minute, f"{house}-2026-01-26-minutes", "MinuteStartS",
+                                   lambda s: start_s <= s < end_s,  # type: ignore[operator]
+                                   f"Beech {day}, 05:45 to 07:15 ET: the minute trace around the 06:17 upstairs call")]
+    out += bolus_recovery.tables(house)
+    (steady,) = steady_drop.tables()
+    out.append(rows_where(steady, f"{house}-steady-drop", "System", lambda s: s == house,
+                          "Beech steady-circulation hours by source temperature bin: drop quartiles, median flow, median heat"))
     if opt.minute_tabs:
         out.append(minute)
     return out
@@ -78,6 +112,13 @@ DOCUMENTS = {d.slug: d for d in [
              "steady hours for comparison, the upstairs calls whose recovery sets the ten-minute exclusion, and the hourly "
              "records. Every cell is one number; the README in the experiments folder says how each table was made.",
              mystery_tables),
+    Document("cold-zone-call-during-steady-heating-memo",
+             "Beech's distribution loop when an idle zone calls inside a steady call: the minute trace around the "
+             "2026-01-26 06:17 call, the season's 45 such calls with their recovery and the cold water each returned, "
+             "the drop's later movement against control minutes, the slug as a volume, and the steady hours the "
+             "source-drop line comes from. Every cell is one number; the README in the experiments folder says how "
+             "each table was made.",
+             memo_tables),
 ]}
 
 
@@ -92,7 +133,8 @@ def main() -> None:
     tables = [t.check() for t in doc.tables(opt)]
     csv_dir = HERE / "csv"
     for t in tables + [minute_file(h).table() for h in sorted(ZONE_PAIRS)]:
-        write_csv(t.check(), csv_dir)
+        if not has_formulas(t):
+            write_csv(t.check(), csv_dir)
     book = write_workbook(tables, HERE / f"{doc.slug}.xlsx", doc.slug, doc.about)
     print(f"wrote {book.name} ({len(tables)} tabs) and {len(list(csv_dir.glob('*.csv')))} files in csv/")
 

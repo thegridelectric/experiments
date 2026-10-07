@@ -233,6 +233,17 @@ Tables from the hourly files (no DB):
   the same heat delivered before and after its panel heater, and the
   emitters' output per degree in each stretch.
 
+From the paper's own numbers:
+
+- `emitter_theory.py`, `emitter-theory.txt`: the emitter
+  characteristic's answer for the January 24 steps (the return each
+  flow settles to, the drop and heat that implies) and the two fast
+  steps' excess as heat stored in the iron with the thermal mass it
+  implies. Computed in Python, and built a second time as live Excel
+  formulas over a `theory-inputs` tab, so a reader can change the
+  room temperature, exponent or calibration row in the workbook and
+  compare the two forms.
+
 From the minute file:
 
 - `bolus_recovery.py`, `beech-bolus-recovery.txt`,
@@ -257,8 +268,14 @@ For spreadsheet readers:
   and its printed text or markdown is a rendering of the same cells.
   `beech-emitter-physics-mystery.xlsx` carries the January 24 steps,
   the minute trace under them (09:00 to 12:30 ET), beech's steady-hour
-  bins, beech's idle-zone calls with their recovery, and beech's hourly
-  records. `csv/` gets every table plus the minute grid. The workbooks
+  bins, beech's idle-zone calls with their recovery, the theory and
+  stored-heat tables in both forms, and beech's hourly records.
+  `cold-zone-call-during-steady-heating-memo.xlsx` carries the minute
+  trace around the January 26 06:17 call (05:45 to 07:15 ET), the 45
+  idle-zone calls, the drop's later movement against control minutes,
+  the slug volume and beech's steady-hour bins. `csv/` gets every
+  value table plus the minute grid; a formula table has no CSV, its
+  Python twin does. The workbooks
   and `csv/` are gitignored and regenerate with one command.
   `--minute-tabs` adds the season's minute grid to the workbook (about
   300,000 rows); `--no-db` leaves out the tables that reach the
@@ -287,7 +304,9 @@ time (a season pull is 31 weekly queries per house):
     uv run python beech_jan24_steps.py > beech-2026-01-24-steps.txt
     uv run python bolus_recovery.py --house beech --plot
     uv run python emit_instances.py
+    uv run python emitter_theory.py > emitter-theory.txt
     uv run python sheets.py beech-emitter-physics-mystery
+    uv run python sheets.py cold-zone-call-during-steady-heating-memo
 
 The four tables and the instances regenerate from the committed
 hourly files alone. The bolus report needs the minute file, which only
