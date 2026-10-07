@@ -12,7 +12,8 @@ is older than MAX_AGE_MS is stale, and a run with any stale sample of
 either meter is listed and excluded.
 Rows are grouped by position to the nearest three seconds and each
 group's mean and standard deviation of r are printed with the count from
-each direction.
+each direction. The same rows go to `keep-ratio-<stamp>.csv` beside the
+log, one number per cell, through the repo's tables.py.
 
     python keep_ratio.py maple-window-<stamp>.log maple-events-<stamp>/
 """
@@ -24,6 +25,11 @@ import re
 import statistics
 import sys
 from pathlib import Path
+from typing import NamedTuple
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from tables import Table, write_csv  # noqa: E402
 
 SPAN_MS = (60_000, 150_000)
 STEP_MS = 10_000
@@ -33,6 +39,19 @@ START = re.compile(r"^\S+ \S+ \[sieg-loop\] Motor toward (keep|send) for")
 KEEP_STOP_S = 94.0
 FULL_RUN_S = 100.0
 ET = datetime.timezone(datetime.timedelta(hours=-4))
+
+
+class StopRow(NamedTuple):
+    """One settled stop: where the valve was left and the kept fraction read there.
+    No sema word holds a valve-position map; a word for it retires this."""
+
+    stop_et: str
+    toward: str  # the direction the motor ran before the stop
+    ran_s: float
+    position_s: float  # seconds from the send stop, nominal when approached from keep
+    sieg_gpm: float
+    send_gpm: float
+    r: float
 
 
 def load(folder):
@@ -80,10 +99,10 @@ def held(series, t0):
     return out
 
 
-def main(log, folder):
+def settled(log, folder) -> list[StopRow]:
+    """Every settled stop with fresh readings; a stale run is printed and left out."""
     flows = load(folder)
     rows = []
-    print("stop (ET)        toward  ran_s  pos_s  sieg_gpm  send_gpm  r")
     for t0, direction, ran, pos in stops(log):
         sieg, send = held(flows["sieg-flow"], t0), held(flows["sieg-send-flow"], t0)
         stamp = datetime.datetime.fromtimestamp(t0 / 1000, ET).strftime("%m-%d %H:%M:%S")
@@ -93,11 +112,26 @@ def main(log, folder):
             continue
         s, d = statistics.median(sieg), statistics.median(send)
         r = s / (s + d) if s + d else float("nan")
-        rows.append((direction, pos, s, d, r))
-        print(f"{stamp}  {direction:4s}   {ran:5.1f}  {pos:5.1f}  {s:7.2f}  {d:7.2f}  {r:5.3f}")
+        rows.append(StopRow(stamp, direction, ran, pos, s, d, r))
+    return rows
+
+
+def table(log, rows: list[StopRow]) -> Table:
+    stamp = log.stem.rsplit("-", 2)[-2] + "-" + log.stem.rsplit("-", 1)[-1]
+    return Table(f"keep-ratio-{stamp}", f"Maple, window {stamp}: each settled Siegenthaler valve stop, its position from the send stop and the kept fraction r at rest",
+                 ("StopEt", "Toward", "RanS", "PositionS", "SiegGpm", "SendGpm", "R"),
+                 [(x.stop_et, x.toward, round(x.ran_s, 1), round(x.position_s, 1), round(x.sieg_gpm, 2),
+                   round(x.send_gpm, 2), round(x.r, 3)) for x in rows], "keep_ratio.py")
+
+
+def main(log, folder):
+    print("stop (ET)        toward  ran_s  pos_s  sieg_gpm  send_gpm  r")
+    rows = settled(log, folder)
+    for x in rows:
+        print(f"{x.stop_et}  {x.toward:4s}   {x.ran_s:5.1f}  {x.position_s:5.1f}  {x.sieg_gpm:7.2f}  {x.send_gpm:7.2f}  {x.r:5.3f}")
     groups = {}
-    for direction, pos, s, d, r in rows:
-        groups.setdefault(round(pos / 3) * 3, []).append((direction, r))
+    for x in rows:
+        groups.setdefault(round(x.position_s / 3) * 3, []).append((x.toward, x.r))
     print("\npos_s  n  toward keep / send   r mean/sd")
     for pos in sorted(groups):
         g = groups[pos]
@@ -105,6 +139,7 @@ def main(log, folder):
         nk = sum(1 for x in g if x[0] == "keep")
         sd = statistics.stdev(rs) if len(rs) > 1 else 0.0
         print(f"{pos:5.0f}  {len(g):2d}  {nk:2d} / {len(g) - nk:2d}           {statistics.mean(rs):5.3f} / {sd:5.3f}")
+    print(f"\nwrote {write_csv(table(log, rows).check(), log.parent).name}")
 
 
 if __name__ == "__main__":

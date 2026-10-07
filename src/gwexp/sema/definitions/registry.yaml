@@ -1,6 +1,6 @@
 metadata:
   registry_version: "1.0"
-  last_updated: "2026-10-07T13:00:00Z"
+  last_updated: "2026-10-07T15:05:00Z"
   maintainer: "gridworks-energy"
 
 formats:
@@ -1459,6 +1459,63 @@ types:
             - "channel.config:000"
             - "positive.int"
             - "temp.calc.method:000"
+            - "uuid4.str"
+
+  single.machine.state:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Latest known state for a single state machine at a specific timestamp."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/types/single.machine.state/000"
+        created: "2026-03-30T19:01:47Z"
+        status: "published"
+        summary: "Initial Sema version"
+        direct_dependencies:
+          structural:
+            - "handle.name"
+            - "left.right.dot"
+            - "utc.milliseconds"
+          axiom:
+            - "relay.closed.or.open:000"
+
+  single.reading:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Latest known reading for a single channel at a specific SCADA read time."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/types/single.reading/000"
+        created: "2024-11-08T00:00:00Z"
+        status: "published"
+        summary: "Initial Sema version"
+        direct_dependencies:
+          structural:
+            - "spaceheat.name"
+            - "utc.milliseconds"
+
+  snapshot.spaceheat:
+    latest_version: "003"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Point-in-time snapshot containing the latest known readings and machine states captured by a Spaceheat SCADA."
+
+    versions:
+      "003":
+        schema_url: "https://schemas.electricity.works/types/snapshot.spaceheat/003"
+        created: "2026-03-30T19:01:47Z"
+        status: "published"
+        summary: "LatestStateList element: machine.states -> single.machine.state (one state per entry, adds Cause; drops the parallel StateList/UnixMsList arrays). Type moved from gwproto to scada."
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+            - "single.machine.state:000"
+            - "single.reading:000"
+            - "utc.milliseconds"
             - "uuid4.str"
 
   spaceheat.node.gt:

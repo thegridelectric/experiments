@@ -34,6 +34,9 @@ from gwexp.sema.types.report_event import ReportEvent
 from gwexp.sema.types.sim_pico_tank_module_component_gt import (
     SimPicoTankModuleComponentGt,
 )
+from gwexp.sema.types.single_machine_state import SingleMachineState
+from gwexp.sema.types.single_reading import SingleReading
+from gwexp.sema.types.snapshot_spaceheat import SnapshotSpaceheat
 from gwexp.sema.types.spaceheat_node_gt import SpaceheatNodeGt
 from gwexp.sema.types.spaceheat_telemetry_quantity_projection import (
     SpaceheatTelemetryQuantityProjection,
@@ -71,6 +74,9 @@ __all__ = [
     "Report",
     "ReportEvent",
     "SimPicoTankModuleComponentGt",
+    "SingleMachineState",
+    "SingleReading",
+    "SnapshotSpaceheat",
     "SpaceheatNodeGt",
     "SpaceheatTelemetryQuantityProjection",
     "SynthChannelGt",

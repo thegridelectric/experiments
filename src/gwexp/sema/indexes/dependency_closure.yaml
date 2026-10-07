@@ -930,6 +930,38 @@ types:
       - uuid4.str
       types: []
       versionless_types: []
+  single.machine.state:
+    '000':
+      enums:
+      - relay.closed.or.open:000
+      formats:
+      - handle.name
+      - left.right.dot
+      - utc.milliseconds
+      types: []
+      versionless_types: []
+  single.reading:
+    '000':
+      enums: []
+      formats:
+      - spaceheat.name
+      - utc.milliseconds
+      types: []
+      versionless_types: []
+  snapshot.spaceheat:
+    '003':
+      enums:
+      - relay.closed.or.open:000
+      formats:
+      - handle.name
+      - left.right.dot
+      - spaceheat.name
+      - utc.milliseconds
+      - uuid4.str
+      types:
+      - single.machine.state:000
+      - single.reading:000
+      versionless_types: []
   spaceheat.node.gt:
     '200':
       enums: []

@@ -240,8 +240,18 @@ the heat pump was off throughout.
   are the positions.
 - `maple-events-20260928-193937/`, `maple-events-20260928-210702/` —
   the persisted events, 15 and 18 `report.event`s, the flow readings.
-- `broker-capture-20260928-182337.jsonl` — everything the dev broker saw
-  through the tunnel across both windows.
+- `broker-capture-20260928-182337.reduced.jsonl` — what the dev broker
+  saw through the tunnel across both windows, reduced by
+  `reduce_capture.py`: the 63 non-snapshot messages verbatim (layouts,
+  command trees, deeds, forecasts, power, glitches, pings) and the
+  4,857 `snapshot.spaceheat`s as 1,861 rows of the two meters, the
+  four relays the protocol sets and the sieg-loop machine states, a
+  row only when one of them changed. The full 91 MB capture is in the
+  immutable store at
+  `s3://gwdev/experiments/2026-09-28-sieg-keep-ratio-map/broker-capture-20260928-182337.jsonl`,
+  sha256 `9ce9bd8c7faa18daf222cc2855ede3ebd13a5f6c53d3c626c93085ed66132973`.
+- `keep-ratio-20260928-193926.csv`, `keep-ratio-20260928-210651.csv` —
+  the settled stops as rows, one number per cell, from `keep_ratio.py`.
 - `keep_ratio.py` — at-rest r per stop (findings 1 to 3, 5);
   `half_point.py` — crossings in motion (finding 4).
 - `instances/gw.experiment.run-000.json`, `-001.json` — one run record
@@ -249,11 +259,16 @@ the heat pump was off throughout.
 
 Regenerate everything from the logs and events:
 
-    python keep_ratio.py maple-window-20260928-193926.log maple-events-20260928-193937
-    python keep_ratio.py maple-window-20260928-210651.log maple-events-20260928-210702
+    uv run python keep_ratio.py maple-window-20260928-193926.log maple-events-20260928-193937
+    uv run python keep_ratio.py maple-window-20260928-210651.log maple-events-20260928-210702
     python half_point.py maple-window-20260928-193926.log maple-events-20260928-193937
     python half_point.py maple-window-20260928-210651.log maple-events-20260928-210702
     ../../gridworks-scada/gw_spaceheat/venv/bin/python emit_instances.py
+
+The reduced capture regenerates from the archived full one:
+
+    aws s3 cp s3://gwdev/experiments/2026-09-28-sieg-keep-ratio-map/broker-capture-20260928-182337.jsonl /tmp/
+    uv run python reduce_capture.py /tmp/broker-capture-20260928-182337.jsonl
 
 No `gw.readings` instance is in this folder; the readings are read
 from the persisted reports directly.
