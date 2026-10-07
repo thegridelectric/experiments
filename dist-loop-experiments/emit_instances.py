@@ -51,11 +51,11 @@ HOURLY_CLAIMS = [
 MINUTE_CLAIMS = [
     Tested("cold.zone.call", "heating-system-design/cold-zone-call-during-steady-heating-memo.md: "
                              "a call from an idle zone during a steady call puts the idle loop's "
-                             "cold water through the return, the heat pump and the supply "
+                             "cold water through the return, the heat pump and the source "
                              "(beech-bolus-recovery.txt)",
            "pump_speed.py; bolus_recovery.py", GwExperimentVerdict.Pass),
     Tested("cold.zone.call.recovery", "heating-system-design/cold-zone-call-during-steady-heating-memo.md: "
-                                      "the supply-to-return drop is back near its pre-call value within "
+                                      "the source-to-return drop is back near its pre-call value within "
                                       "five minutes of the call ending and its movement 10 to 30 minutes "
                                       "out matches steady-call minutes with no idle-zone call "
                                       "(beech-bolus-recovery.txt)",

@@ -1,6 +1,6 @@
 # Median return °F (hours)
 
-Rows: heat delivered to distribution in the hour. Columns: flow-weighted supply temperature.
+Rows: heat delivered to distribution in the hour. Columns: flow-weighted source temperature.
 
 **beech**
 
@@ -71,7 +71,7 @@ Rows: heat delivered to distribution in the hour. Columns: flow-weighted supply 
 
 # Median share of the hour the loop circulated
 
-Rows: heat delivered to distribution in the hour. Columns: flow-weighted supply temperature.
+Rows: heat delivered to distribution in the hour. Columns: flow-weighted source temperature.
 
 **beech**
 

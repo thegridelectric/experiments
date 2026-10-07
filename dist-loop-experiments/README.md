@@ -3,7 +3,7 @@
 > What this is: the distribution loop of every house over the 2025–26
 > heating season, reduced from the journal DB to hours and to minutes,
 > and the analyses that read it: what comes back from the emitters at
-> a given supply temperature and call pattern, what the pump's speed
+> a given source temperature and call pattern, what the pump's speed
 > does to it, and what a seldom-calling zone does when it joins. The
 > first consumer is the mix-or-not whitepaper
 > (`heating-system-design/mix-or-not.md`) and its three memos; each
@@ -29,7 +29,7 @@ the fleet's own reporting in the journal DB.
 
 **Houses and window.** Beech, elm, fir, maple and oak, 2025-10-01 to
 2026-05-01 Eastern (end exclusive). Spruce is left out: it has a
-mixing valve, so its distribution supply is not what the store holds.
+mixing valve, so its distribution source is not what the store holds.
 Maple is treated as two distribution systems, `maple1` before its
 panel heater and `maple2` after (dates in `houses.py`).
 
@@ -52,11 +52,11 @@ week; a month-long query hits the DB's statement timeout.
 
 **Reductions.** The hourly file keeps every hour with at least 95%
 valid samples: the share of the hour the loop circulated (flow at or
-above 0.5 gpm), the flow-weighted supply and return over the
+above 0.5 gpm), the flow-weighted source and return over the
 circulating samples, the mean flow and the heat delivered (500 x gpm
 x drop BTU/h, water, summed over the hour, in kWh). The minute file
 keeps every minute whose six samples are all valid: minute means of
-flow, pump power, pump volts, supply and return, the age of the oldest
+flow, pump power, pump volts, source and return, the age of the oldest
 temperature reading any of its samples used, and each zone's call
 fraction (share of samples with the white wire above 10 W).
 
@@ -67,20 +67,20 @@ paper and the memos, the tables are in the output files named here.
 
 - **Claim 2, a steady-state emitter drop of about 20 °F: FAIL as
   stated** at every house. In steady circulation (loop on 95% of the
-  hour or more) the drop rises with supply temperature and differs
-  between houses by a factor of two at the same supply; 20 °F is one
+  hour or more) the drop rises with source temperature and differs
+  between houses by a factor of two at the same source; 20 °F is one
   point on each house's line. `steady-drop.txt`; the paper's claim 2.
 - **Claim 3, shorter heat calls return colder water: PASS** at every
-  house, 12 to 44 °F colder at a fixed supply between hours with the
+  house, 12 to 44 °F colder at a fixed source between hours with the
   loop on under 20% of the hour and steady hours. `return-temp.md`,
   `return-by-heat.md`, `maple-panel-heater.md`; the paper's claim 3
   and `heating-system-design/return-water-temperature-memo.md`.
 - **Distribution pump speed against return at beech:** one speed per
   zone pattern all season, so the only within-pattern comparison is
   the 2026-01-24 hand test. `beech-2026-01-24-steps.txt`;
-  `heating-system-design/distribution-flow-and-return-memo.md`.
+  `heating-system-design/beech-emitter-physics-mystery.md`.
 - **A call from the idle zone during a steady call puts its loop's
-  cold water through the return, the heat pump and the supply: PASS**
+  cold water through the return, the heat pump and the source: PASS**
   at beech, 45 events. `beech-bolus-recovery.txt`,
   `beech-bolus-recovery.png`;
   `heating-system-design/cold-zone-call-during-steady-heating-memo.md`.
@@ -89,8 +89,8 @@ paper and the memos, the tables are in the output files named here.
   thirty minutes after a call the drop sits more than 3 °F from its
   pre-call value in 56 to 80% of events, and in 69 to 84% of
   steady-call minutes with no idle-zone call in the previous half
-  hour; the supply's own movement explains it (0.23 °F of drop per °F
-  of supply at beech), and with that removed the median residual is
+  hour; the source's own movement explains it (0.23 °F of drop per °F
+  of source at beech), and with that removed the median residual is
   within ±2 °F at every horizon, as at the control minutes.
   `beech-bolus-recovery.txt`; the memo's "Across the season".
 - **Beech's upstairs loop comes back as about 4 gallons of
@@ -103,7 +103,7 @@ paper and the memos, the tables are in the output files named here.
 ## Timeline
 
 - 2026-10-06 14:35 ET: one-day check on beech 2026-01-05 reproduces
-  the paper's first look (16–17 °F at 130–138 °F supply), decoded
+  the paper's first look (16–17 °F at 130–138 °F source), decoded
   through sema.
 - 14:36: six houses (spruce included) pulled in parallel with
   month-long queries; five hit the journal DB's statement timeout.
@@ -131,7 +131,7 @@ paper and the memos, the tables are in the output files named here.
   Pulling elm a month per query against a week per query moved 3 of
   4,872 hours and one steady hour.
 - **Temperatures are flow-weighted over circulating samples.** An hour
-  with no circulation has no supply or return temperature (`null`).
+  with no circulation has no source or return temperature (`null`).
 - **Layouts 004 to 006 (through 2026-01-08) carry their computed
   channels as `synth.channel.gt`**, which `gw.readings` does not
   hold, so those channels are not pullable for that period; data
@@ -153,10 +153,10 @@ paper and the memos, the tables are in the output files named here.
   where the drop is within 5% of its pre-call mean for two minutes
   running. 28 of the 45 events never re-enter that band inside their
   window (a 5% band on a 19 °F drop is ±1 °F); the report also gives
-  10% and the median excess by minute. The 5% band assumes a supply
-  that holds, and beech's supply held within ±3 °F over minutes 3 to
+  10% and the median excess by minute. The 5% band assumes a source
+  that holds, and beech's source held within ±3 °F over minutes 3 to
   10 after only 4 of the 45 calls; so the report also removes the
-  supply's share through the house's steady line (drop against supply
+  source's share through the house's steady line (drop against source
   fitted to its steady hours) and compares the result with control
   minutes: steady call, no idle-zone call for 30 minutes before, every
   fifth eligible minute.
@@ -221,13 +221,13 @@ Pulls (journal DB):
 
 Tables from the hourly files (no DB):
 
-- `steady_drop.py`, `steady-drop.txt`: drop by supply temperature in
+- `steady_drop.py`, `steady-drop.txt`: drop by source temperature in
   steady hours, quartiles and counts, per system.
 - `return_temp.py`, `return-temp.md`: per system, return temperature
-  with supply temperature in rows and circulation fraction in columns;
+  with source temperature in rows and circulation fraction in columns;
   medians with hour counts, then quartiles.
 - `return_by_heat.py`, `return-by-heat.md`: per system, return
-  temperature with heat delivered in rows and supply temperature in
+  temperature with heat delivered in rows and source temperature in
   columns, then the circulation share in the same cells.
 - `maple_panel_heater.py`, `maple-panel-heater.md`: maple's return at
   the same heat delivered before and after its panel heater, and the
@@ -238,12 +238,27 @@ From the minute file:
 - `bolus_recovery.py`, `beech-bolus-recovery.txt`,
   `beech-bolus-recovery.png`: the cold-zone-call events, the
   recovery of the drop after each, and the drop's later movement
-  against control minutes with the supply's share removed, and the
+  against control minutes with the source's share removed, and the
   idle loop's cold water as a volume from the return's heat deficit; the PNG is one representative
   event (the recovered event at the median recovery time) with the
   buffer and heat pump temperatures pulled from the journal DB for
   that window. Reads the minute file, so the `pump_speed.py` pull
   comes first; `--plot` reaches the DB again for the event's window.
+
+For spreadsheet readers:
+
+- `sheets.py`, `dist-loop-experiments.xlsx`, `csv/`: every table above
+  as one workbook, a Summary tab in front naming each tab with what
+  its rows are, then one tab per table and the hourly records per
+  house, with one number per cell (a statistic with a spread is three
+  columns, a mean with a range is three); and the same tables plus
+  the minute grid as CSV files. Each script's `tables()` builds its
+  rows through the repo's `tables.py`, and its printed text or
+  markdown is a rendering of the same cells. The workbook and `csv/`
+  are gitignored and regenerate with one command. `--minute-tabs` adds
+  the minute grid to the workbook (about 300,000 rows a house);
+  `--no-db` leaves out the January 24 table, the one that reaches the
+  journal DB.
 
 Instances:
 
@@ -268,6 +283,7 @@ time (a season pull is 31 weekly queries per house):
     uv run python beech_jan24_steps.py > beech-2026-01-24-steps.txt
     uv run python bolus_recovery.py --house beech --plot
     uv run python emit_instances.py
+    uv run python sheets.py
 
 The four tables and the instances regenerate from the committed
 hourly files alone. The bolus report needs the minute file, which only

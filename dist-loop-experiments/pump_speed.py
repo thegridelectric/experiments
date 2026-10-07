@@ -9,7 +9,7 @@ grid a sample is valid while both temperature channels have reported
 within STALE_S; the other channels are forward-filled without a limit
 inside that validity (a steady value reports rarely). A minute whose
 six samples are all valid becomes one entry: the minute means of flow,
-pump power, pump volts, supply and return, the age of the oldest
+pump power, pump volts, source and return, the age of the oldest
 temperature reading any of its samples used (STALE_S is generous, so
 an analysis that needs fresher data filters on this), and each zone's
 call fraction.
@@ -47,7 +47,7 @@ from gwexp.sema.property_format import LeftRightDot, SpaceheatName, UTCMilliseco
 from houses import ta_alias  # noqa: E402
 from records import MinuteColumns, MinuteFile  # noqa: E402
 
-SUPPLY: SpaceheatName = "dist-swt"
+SOURCE: SpaceheatName = "dist-swt"
 RETURN: SpaceheatName = "dist-rwt"
 FLOW: SpaceheatName = "dist-flow"
 PUMP_PWR: SpaceheatName = "dist-pump-pwr"
@@ -79,15 +79,15 @@ def rounded_or_none(x: np.ndarray, digits: int) -> list[float | None]:
 
 def minutes_of(ta: LeftRightDot, start_ms: UTCMilliseconds, end_ms: UTCMilliseconds,
                codec: SemaCodec) -> MinuteColumns | None:
-    p = pull(ta, [SUPPLY, RETURN, FLOW, PUMP_PWR, PUMP_010V], [WHITEWIRE_LIKE],
+    p = pull(ta, [SOURCE, RETURN, FLOW, PUMP_PWR, PUMP_010V], [WHITEWIRE_LIKE],
              start_ms, end_ms, codec)
-    missing = [n for n in (SUPPLY, RETURN, FLOW) if n not in p.rows or n not in p.words]
+    missing = [n for n in (SOURCE, RETURN, FLOW) if n not in p.rows or n not in p.words]
     if missing:
         print(f"  no readings or no channel word for {missing}; week skipped")
         return None
     value: dict[SpaceheatName, np.ndarray] = {}
     age: dict[SpaceheatName, np.ndarray] = {}
-    for name in (SUPPLY, RETURN, FLOW):
+    for name in (SOURCE, RETURN, FLOW):
         raw, age[name] = on_grid(p.rows[name], p.grid_ms)
         value[name] = natural(p.words[name], raw)
     for name in (PUMP_PWR, PUMP_010V):
@@ -101,7 +101,7 @@ def minutes_of(ta: LeftRightDot, start_ms: UTCMilliseconds, end_ms: UTCMilliseco
     for name in sorted(n for n in p.rows if n.endswith(WHITEWIRE_SUFFIX)):
         raw, _ = on_grid(p.rows[name], p.grid_ms)
         calling[name] = (natural(p.words[name], raw) > CALLING_W).astype(np.float64)
-    valid = (age[SUPPLY] <= STALE_S) & (age[RETURN] <= STALE_S) & np.isfinite(age[FLOW])
+    valid = (age[SOURCE] <= STALE_S) & (age[RETURN] <= STALE_S) & np.isfinite(age[FLOW])
     ok = minute_mean(valid.astype(np.float64)) == 1.0
     starts = p.grid_ms[: len(p.grid_ms) // PER_MINUTE * PER_MINUTE : PER_MINUTE] // 1000
     return MinuteColumns(
@@ -109,9 +109,9 @@ def minutes_of(ta: LeftRightDot, start_ms: UTCMilliseconds, end_ms: UTCMilliseco
         gpm=rounded(minute_mean(value[FLOW])[ok], 3),
         pump_w=rounded_or_none(minute_mean(value[PUMP_PWR])[ok], 1),
         pump_v=rounded_or_none(minute_mean(value[PUMP_010V])[ok], 2),
-        supply_f=rounded(minute_mean(value[SUPPLY])[ok], 2),
+        source_f=rounded(minute_mean(value[SOURCE])[ok], 2),
         return_f=rounded(minute_mean(value[RETURN])[ok], 2),
-        temp_age_s=rounded(by_minute(np.maximum(age[SUPPLY], age[RETURN])).max(axis=1)[ok], 0),
+        temp_age_s=rounded(by_minute(np.maximum(age[SOURCE], age[RETURN])).max(axis=1)[ok], 0),
         calls={n: rounded_or_none(minute_mean(c)[ok], 3) for n, c in calling.items()},
     )
 

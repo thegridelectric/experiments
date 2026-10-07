@@ -1,10 +1,10 @@
 # Median return °F (hours)
 
-Rows: flow-weighted supply temperature. Columns: share of the hour the distribution loop circulated.
+Rows: flow-weighted source temperature. Columns: share of the hour the distribution loop circulated.
 
 **beech**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 100–110 | 76 (15) | 89 (10) |  |  |  |  |
 | 110–120 | 79 (53) | 95 (25) | 101 (10) | 102 (12) |  |  |
@@ -17,7 +17,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **elm**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 110–120 | 88 (24) | 96 (28) | 101 (23) | 104 (15) |  | 107 (11) |
 | 120–130 | 90 (107) | 99 (110) | 104 (116) | 107 (50) | 109 (24) | 112 (35) |
@@ -28,7 +28,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **fir**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 100–110 | 90 (23) | 98 (19) | 99 (16) |  |  | 102 (18) |
 | 110–120 | 97 (76) | 103 (57) | 105 (42) | 107 (41) | 108 (14) | 106 (20) |
@@ -40,7 +40,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **maple1**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 120–130 |  |  |  |  |  | 118 (12) |
 | 130–140 | 105 (21) |  |  |  |  | 126 (17) |
@@ -51,7 +51,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **maple2**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 100–110 | 77 (30) | 90 (12) |  |  |  | 99 (10) |
 | 110–120 | 82 (65) | 94 (43) | 100 (20) |  |  |  |
@@ -63,7 +63,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **oak**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 100–110 | 89 (38) | 95 (15) |  |  |  |  |
 | 110–120 | 94 (125) | 99 (54) | 100 (21) | 103 (11) | 103 (11) |  |
@@ -76,11 +76,11 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 # Return °F, p25 / median / p75
 
-Rows: flow-weighted supply temperature. Columns: share of the hour the distribution loop circulated.
+Rows: flow-weighted source temperature. Columns: share of the hour the distribution loop circulated.
 
 **beech**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 100–110 | 73 / 76 / 83 | 86 / 89 / 91 |  |  |  |  |
 | 110–120 | 76 / 79 / 84 | 92 / 95 / 96 | 97 / 101 / 103 | 101 / 102 / 104 |  |  |
@@ -93,7 +93,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **elm**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 110–120 | 84 / 88 / 92 | 91 / 96 / 98 | 98 / 101 / 104 | 100 / 104 / 106 |  | 105 / 107 / 108 |
 | 120–130 | 82 / 90 / 96 | 95 / 99 / 104 | 101 / 104 / 108 | 105 / 107 / 109 | 107 / 109 / 111 | 110 / 112 / 113 |
@@ -104,7 +104,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **fir**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 100–110 | 88 / 90 / 93 | 96 / 98 / 100 | 97 / 99 / 103 |  |  | 99 / 102 / 104 |
 | 110–120 | 93 / 97 / 100 | 98 / 103 / 107 | 103 / 105 / 108 | 104 / 107 / 108 | 104 / 108 / 108 | 105 / 106 / 109 |
@@ -116,7 +116,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **maple1**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 120–130 |  |  |  |  |  | 117 / 118 / 119 |
 | 130–140 | 84 / 105 / 109 |  |  |  |  | 125 / 126 / 128 |
@@ -127,7 +127,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **maple2**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 100–110 | 68 / 77 / 81 | 83 / 90 / 92 |  |  |  | 97 / 99 / 100 |
 | 110–120 | 75 / 82 / 86 | 89 / 94 / 97 | 96 / 100 / 103 |  |  |  |
@@ -139,7 +139,7 @@ Rows: flow-weighted supply temperature. Columns: share of the hour the distribut
 
 **oak**
 
-| Supply °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
+| Source °F | under 20% | 20–40% | 40–60% | 60–80% | 80–95% | 95–100% |
 |---|---|---|---|---|---|---|
 | 100–110 | 86 / 89 / 92 | 92 / 95 / 97 |  |  |  |  |
 | 110–120 | 90 / 94 / 97 | 95 / 99 / 102 | 98 / 100 / 102 | 100 / 103 / 105 | 102 / 103 / 104 |  |

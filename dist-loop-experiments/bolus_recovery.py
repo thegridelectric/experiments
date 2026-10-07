@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """What a call from a seldom-calling zone does to the distribution
 return while another zone is in steady call, and how long the
-supply-to-return drop takes to come back: from the minute file
+source-to-return drop takes to come back: from the minute file
 pump_speed.py writes, for a house in houses.ZONE_PAIRS.
 
 An event is a call from the idle zone (its white wire on in one or
@@ -39,6 +39,7 @@ from gwexp.sema.property_format import SpaceheatName, UTCSeconds  # noqa: E402
 from houses import ZONE_PAIRS, hourly_files, minute_file, ta_alias  # noqa: E402
 from pull_readings import ET  # noqa: E402
 from records import HourRecord, MinuteArrays  # noqa: E402
+from tables import Table  # noqa: E402
 
 PRE_MIN = 10
 POST_MIN = 10
@@ -47,8 +48,8 @@ RECOVER_FRAC = 0.05
 FRESH_S = 120
 FLOWING_GPM = 0.5
 STEADY_HOUR = 0.95  # an hourly record with FlowingFraction at or above this fits the steady line
-HELD_F = 3.0  # the supply held when it stayed within this of its pre-call mean over HELD_FROM..POST_MIN after the call
-HELD_FROM_MIN = 3  # the slug's own pass through the heat pump dips the supply; the held test starts after it
+HELD_F = 3.0  # the source held when it stayed within this of its pre-call mean over HELD_FROM..POST_MIN after the call
+HELD_FROM_MIN = 3  # the slug's own pass through the heat pump dips the source; the held test starts after it
 CONTROL_CLEAR_MIN = 30  # a control minute has no idle-zone call this long before it
 CONTROL_STRIDE = 5  # minutes between control samples
 SLUG_F = 65.0  # the idle loop's water is taken to be at room temperature when the call starts
@@ -64,8 +65,8 @@ class Event(NamedTuple):
 
     call_start_s: UTCSeconds  # first minute the idle zone's wire was on
     call_minutes: int  # minutes the wire was on
-    pre_drop_f: float  # mean supply-to-return drop over PRE_MIN before the call
-    pre_supply_f: float
+    pre_drop_f: float  # mean source-to-return drop over PRE_MIN before the call
+    pre_source_f: float
     post_minutes: int  # minutes of steady call after the call, up to POST_MAX
     recovery_min: int | None  # minutes after the call ended; None if censored
     peak_excess_f: float  # most the drop exceeded its pre-call value, from the call start to recovery or window end
@@ -86,8 +87,8 @@ class Minutes(NamedTuple):
     @classmethod
     def of(cls, m: MinuteArrays, house: str) -> "Minutes":
         zones = ZONE_PAIRS[house]
-        return cls(t=m.minute_start_s, gpm=m.gpm, swt=m.supply_f, rwt=m.return_f,
-                   drop=m.supply_f - m.return_f, age=m.temp_age_s,
+        return cls(t=m.minute_start_s, gpm=m.gpm, swt=m.source_f, rwt=m.return_f,
+                   drop=m.source_f - m.return_f, age=m.temp_age_s,
                    steady_call=m.calls[zones.steady], idle_call=m.calls[zones.idle])
 
     def at(self, start_s: UTCSeconds) -> int:
@@ -123,7 +124,7 @@ def events(m: Minutes) -> list[Event]:
         end = j + 1 + recovery if recovery is not None else k
         out.append(Event(
             call_start_s=int(m.t[i]), call_minutes=j - i + 1, pre_drop_f=pre_drop,
-            pre_supply_f=float(m.swt[pre].mean()), post_minutes=post_minutes,
+            pre_source_f=float(m.swt[pre].mean()), post_minutes=post_minutes,
             recovery_min=recovery, peak_excess_f=float(m.drop[i:end + 1].max() - pre_drop),
         ))
         i = j + 1
@@ -161,31 +162,31 @@ def excess_by_minute(m: Minutes, evs: list[Event]) -> list[tuple[int, float, int
 
 
 class SteadyLine(NamedTuple):
-    """The house's steady-circulation drop as a line in supply
+    """The house's steady-circulation drop as a line in source
     temperature, fitted to its steady hours. No sema word holds a
     fitted relation; a word for a channel-derived fit retires this."""
 
     intercept_f: float
-    slope: float  # °F of drop per °F of supply
+    slope: float  # °F of drop per °F of source
     hours: int
 
-    def drop_at(self, supply_f: float) -> float:
-        return self.intercept_f + self.slope * supply_f
+    def drop_at(self, source_f: float) -> float:
+        return self.intercept_f + self.slope * source_f
 
 
 def steady_line(house: str) -> SteadyLine:
     hours: list[HourRecord] = [h for f in hourly_files() if f.ta_alias == ta_alias(house)
                                for h in f.hours if h.flowing_fraction >= STEADY_HOUR]
-    supply = np.array([h.supply_f for h in hours], float)
+    source = np.array([h.source_f for h in hours], float)
     drop = np.array([h.drop_f for h in hours], float)
-    slope, intercept = np.polyfit(supply, drop, 1)
+    slope, intercept = np.polyfit(source, drop, 1)
     return SteadyLine(intercept_f=float(intercept), slope=float(slope), hours=len(hours))
 
 
 def detrended_excess(m: Minutes, e: Event, line: SteadyLine, r: int) -> float:
     """The drop's excess over its pre-call value at row r, less the part
-    the steady line assigns to the supply's own move since the call."""
-    return float(m.drop[r] - e.pre_drop_f - line.slope * (m.swt[r] - e.pre_supply_f))
+    the steady line assigns to the source's own move since the call."""
+    return float(m.drop[r] - e.pre_drop_f - line.slope * (m.swt[r] - e.pre_source_f))
 
 
 def first_within_detrended(m: Minutes, e: Event, line: SteadyLine, frac: float) -> int | None:
@@ -199,18 +200,18 @@ def first_within_detrended(m: Minutes, e: Event, line: SteadyLine, frac: float) 
     return None
 
 
-def supply_held(m: Minutes, e: Event) -> bool:
-    """True when the supply stayed within HELD_F of its pre-call mean
+def source_held(m: Minutes, e: Event) -> bool:
+    """True when the source stayed within HELD_F of its pre-call mean
     from HELD_FROM_MIN through POST_MIN after the call ended (the
-    slug's own pass through a running heat pump dips the supply for
+    slug's own pass through a running heat pump dips the source for
     the first minutes, so those are not the test)."""
     j1 = m.at(e.call_start_s) + e.call_minutes
-    return bool(np.all(np.abs(m.swt[j1 + HELD_FROM_MIN:j1 + POST_MIN + 1] - e.pre_supply_f) <= HELD_F))
+    return bool(np.all(np.abs(m.swt[j1 + HELD_FROM_MIN:j1 + POST_MIN + 1] - e.pre_source_f) <= HELD_F))
 
 
 def control_excess(m: Minutes, line: SteadyLine, lags: tuple[int, ...]) -> dict[int, tuple[np.ndarray, np.ndarray]]:
     """The drop's excess over the preceding PRE_MIN mean at each lag, raw
-    and less the steady line's share of the supply's move, at
+    and less the steady line's share of the source's move, at
     minutes of steady call with no idle-zone call from CONTROL_CLEAR_MIN
     before to the last lag after; every CONTROL_STRIDE-th such minute."""
     contiguous = np.diff(m.t) == 60
@@ -265,13 +266,13 @@ def volume_lines(m: Minutes, evs: list[Event]) -> list[str]:
 
 def excess_lines(m: Minutes, evs: list[Event], line: SteadyLine) -> list[str]:
     """The report's second half: what the drop did 10 to 30 minutes
-    after the call and how much of it the supply explains."""
-    lines = [f"\nsteady line, {line.hours} steady hours: drop = {line.intercept_f:+.1f} {line.slope:+.3f} x supply (°F)"]
+    after the call and how much of it the source explains."""
+    lines = [f"\nsteady line, {line.hours} steady hours: drop = {line.intercept_f:+.1f} {line.slope:+.3f} x source (°F)"]
     lags = (10, 15, 20, 30)
     ctrl = control_excess(m, line, lags)
     lines.append(f"excess of the drop over its pre-call value by minute after the call ended, °F "
                  f"(events whose window reaches that minute): share beyond ±{HELD_F:.0f}, median, "
-                 f"median supply move, detrended (the supply's share removed by the steady line) q25/median/q75; "
+                 f"median source move, detrended (the source's share removed by the steady line) q25/median/q75; "
                  f"then control minutes (steady call, no idle call for {CONTROL_CLEAR_MIN} min before): "
                  f"share beyond ±{HELD_F:.0f}, detrended q25/median/q75, n")
     q = lambda a: "/".join(f"{v:+.1f}" for v in np.percentile(a, [25, 50, 75]))  # noqa: E731
@@ -281,15 +282,15 @@ def excess_lines(m: Minutes, evs: list[Event], line: SteadyLine) -> list[str]:
             continue
         rows = [(m.at(e.call_start_s) + e.call_minutes + x, e) for e in sel]
         ex = np.array([m.drop[r] - e.pre_drop_f for r, e in rows])
-        ds = np.array([m.swt[r] - e.pre_supply_f for r, e in rows])
+        ds = np.array([m.swt[r] - e.pre_source_f for r, e in rows])
         det = np.array([detrended_excess(m, e, line, r) for r, e in rows])
         c, cd = ctrl[x]
         lines.append(f"  +{x:2d}: n={len(sel):2d}  beyond ±{HELD_F:.0f}: {100 * np.mean(np.abs(ex) > HELD_F):3.0f}%  "
-                     f"median {np.median(ex):+.1f}  supply {np.median(ds):+.1f}  detrended {q(det)}  "
+                     f"median {np.median(ex):+.1f}  source {np.median(ds):+.1f}  detrended {q(det)}  "
                      f"| control: {100 * np.mean(np.abs(c) > HELD_F):3.0f}%  detrended {q(cd)}  n={len(c)}")
-    held = [e for e in evs if supply_held(m, e)]
-    moved = [e for e in evs if not supply_held(m, e)]
-    lines.append(f"supply held within ±{HELD_F:.0f} °F of its pre-call mean over minutes {HELD_FROM_MIN} to {POST_MIN} after the call: {len(held)} of {len(evs)} events")
+    held = [e for e in evs if source_held(m, e)]
+    moved = [e for e in evs if not source_held(m, e)]
+    lines.append(f"source held within ±{HELD_F:.0f} °F of its pre-call mean over minutes {HELD_FROM_MIN} to {POST_MIN} after the call: {len(held)} of {len(evs)} events")
     if held:
         rec = [e.recovery_min for e in held if e.recovery_min is not None]
         w10 = sum(1 for r in rec if r <= POST_MIN)
@@ -302,7 +303,7 @@ def excess_lines(m: Minutes, evs: list[Event], line: SteadyLine) -> list[str]:
     if moved:
         det_rec = [first_within_detrended(m, e, line, RECOVER_FRAC) for e in moved]
         got = [r for r in det_rec if r is not None]
-        lines.append(f"  supply moved in the other {len(moved)}: against the steady line, "
+        lines.append(f"  source moved in the other {len(moved)}: against the steady line, "
                      f"{len(got)} recovered (median {np.median(got) if got else float('nan'):.0f} min); "
                      f"{len(moved) - len(got)} did not inside their window")
     return lines
@@ -348,7 +349,7 @@ def report(m: Minutes, evs: list[Event], house: str) -> str:
 
 
 PLOT_TEMPS: list[tuple[SpaceheatName, str, str]] = [  # (channel, label, color)
-    ("dist-swt", "dist supply", "#eb6834"),
+    ("dist-swt", "dist source", "#eb6834"),
     ("dist-rwt", "dist return", "#2a78d6"),
     ("buffer-hot-pipe", "buffer hot pipe", "#1baf7a"),
     ("buffer-depth1", "buffer depth 1", "#eda100"),
@@ -422,6 +423,50 @@ def plot(house: str, evs: list[Event], path: Path) -> Event:
     fig.tight_layout()
     fig.savefig(path)
     return pick
+
+
+def tables(house: str) -> list[Table]:
+    m = Minutes.of(minute_file(house).minutes.arrays(), house)
+    evs = events(m)
+    line = steady_line(house)
+    lags = (10, 15, 20, 30)
+    ctrl = control_excess(m, line, lags)
+    event_rows = []
+    for e in evs:
+        event_rows.append((
+            datetime.datetime.fromtimestamp(e.call_start_s, ET).strftime("%Y-%m-%d %H:%M"), e.call_minutes,
+            round(e.pre_drop_f, 1), round(e.pre_source_f, 1), e.post_minutes, e.recovery_min,
+            recovery_at(m, e, 0.10), round(e.peak_excess_f, 1), source_held(m, e),
+            round(slug_volume_gal(m, e, SLUG_F), 1)))
+    excess_rows = []
+    for x in lags:
+        sel = [e for e in evs if e.post_minutes > x]
+        rows = [(m.at(e.call_start_s) + e.call_minutes + x, e) for e in sel]
+        ex = np.array([m.drop[r] - e.pre_drop_f for r, e in rows])
+        ds = np.array([m.swt[r] - e.pre_source_f for r, e in rows])
+        det = np.array([detrended_excess(m, e, line, r) for r, e in rows])
+        c, cd = ctrl[x]
+        q = lambda a: tuple(round(float(v), 1) for v in np.percentile(a, [25, 50, 75]))  # noqa: E731
+        excess_rows.append((x, len(sel), round(float(np.mean(np.abs(ex) > HELD_F)), 2), round(float(np.median(ex)), 1),
+                            round(float(np.median(ds)), 1), *q(det), len(c),
+                            round(float(np.mean(np.abs(c) > HELD_F)), 2), *q(cd)))
+    volume_rows = []
+    for slug in (SLUG_F - 5, SLUG_F, SLUG_F + 5):
+        v = np.array([slug_volume_gal(m, e, slug) for e in evs])
+        q25, q50, q75 = np.percentile(v, [25, 50, 75])
+        volume_rows.append((slug, round(float(q25), 1), round(float(q50), 1), round(float(q75), 1)))
+    tag = f"{house}-cold-zone"
+    return [
+        Table(f"{tag}-events", f"{house}: each idle-zone call inside a steady call, its recovery and the cold water it returned",
+              ("CallStartEt", "CallMinutes", "PreDropF", "PreSourceF", "PostMinutes", "RecoveryMin5Pct", "RecoveryMin10Pct",
+               "PeakExcessF", "SourceHeld", "SlugGal"), event_rows, "bolus_recovery.py"),
+        Table(f"{tag}-excess", f"{house}: the drop's excess over its pre-call value by minute after the call, against control minutes; detrended = the steady line's share of the source's move removed (slope {line.slope:.3f} F per F)",
+              ("MinutesAfter", "Events", "ShareBeyond3F", "MedianExcessF", "MedianSourceMoveF", "DetrendedQ25F", "DetrendedMedianF",
+               "DetrendedQ75F", "ControlMinutes", "ControlShareBeyond3F", "ControlDetrendedQ25F", "ControlDetrendedMedianF",
+               "ControlDetrendedQ75F"), excess_rows, "bolus_recovery.py"),
+        Table(f"{tag}-slug-volume", f"{house}: the idle loop's cold water as a volume at the slug temperature, quartiles over the calls",
+              ("SlugF", "GalQ25", "GalMedian", "GalQ75"), volume_rows, "bolus_recovery.py"),
+    ]
 
 
 def main() -> None:

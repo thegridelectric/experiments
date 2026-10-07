@@ -17,6 +17,8 @@ from typing import NamedTuple
 import numpy as np
 
 from gwexp.sema.property_format import LeftRightDot, SpaceheatName, UTCSeconds
+from pull_readings import ET
+from tables import Table
 
 
 class HourRecord(NamedTuple):
@@ -27,7 +29,7 @@ class HourRecord(NamedTuple):
     valid_fraction: float  # share of the hour with fresh temperature readings
     flowing_fraction: float  # share of valid samples with the loop circulating
     mean_gpm: float  # mean flow over valid samples, zero-flow samples included
-    supply_f: float | None  # flow-weighted supply temperature; None with no flow
+    source_f: float | None  # flow-weighted source temperature; None with no flow
     return_f: float | None  # flow-weighted return temperature; None with no flow
     heat_kwh: float  # heat delivered to distribution in the hour
 
@@ -37,7 +39,7 @@ class HourRecord(NamedTuple):
             "ValidFraction": round(self.valid_fraction, 4),
             "FlowingFraction": round(self.flowing_fraction, 4),
             "MeanGpm": round(self.mean_gpm, 3),
-            "SupplyF": None if self.supply_f is None else round(self.supply_f, 2),
+            "SourceF": None if self.source_f is None else round(self.source_f, 2),
             "ReturnF": None if self.return_f is None else round(self.return_f, 2),
             "HeatKwh": round(self.heat_kwh, 3),
         }
@@ -49,16 +51,16 @@ class HourRecord(NamedTuple):
             valid_fraction=float(d["ValidFraction"]),
             flowing_fraction=float(d["FlowingFraction"]),
             mean_gpm=float(d["MeanGpm"]),
-            supply_f=None if d["SupplyF"] is None else float(d["SupplyF"]),
+            source_f=None if d["SourceF"] is None else float(d["SourceF"]),
             return_f=None if d["ReturnF"] is None else float(d["ReturnF"]),
             heat_kwh=float(d["HeatKwh"]),
         )
 
     @property
     def drop_f(self) -> float:
-        """Supply minus return; only for an hour with flow."""
-        assert self.supply_f is not None and self.return_f is not None
-        return self.supply_f - self.return_f
+        """Source minus return; only for an hour with flow."""
+        assert self.source_f is not None and self.return_f is not None
+        return self.source_f - self.return_f
 
 
 class HourlyFile(NamedTuple):
@@ -106,6 +108,18 @@ class HourlyFile(NamedTuple):
     def read(cls, path: Path) -> "HourlyFile":
         return cls.from_jsonable(json.loads(path.read_text()))
 
+    def table(self) -> Table:
+        """The hours as rows, one per HourRecord, with the hour's start in ET."""
+        rows = []
+        for h in self.hours:
+            d = h.to_jsonable()
+            rows.append((datetime.datetime.fromtimestamp(h.hour_start_s, ET).strftime("%Y-%m-%d %H:%M"),
+                         h.hour_start_s, d["ValidFraction"], d["FlowingFraction"], d["MeanGpm"],
+                         d["SourceF"], d["ReturnF"], d["HeatKwh"]))
+        return Table(f"{self.house}-hourly", f"{self.ta_alias}: one row per hour with enough valid samples, {self.start_day_et} to {self.end_day_et}",
+                     ("HourStartEt", "HourStartS", "ValidFraction", "FlowingFraction", "MeanGpm", "SourceF", "ReturnF", "HeatKwh"),
+                     rows, "emitter_drop.py")
+
 
 class MinuteColumns(NamedTuple):
     """One house's distribution loop on a minute grid, as columns of
@@ -116,9 +130,9 @@ class MinuteColumns(NamedTuple):
     gpm: list[float]  # mean distribution flow
     pump_w: list[float | None]  # mean distribution pump power
     pump_v: list[float | None]  # mean commanded pump speed, volts on the 0-10 V output
-    supply_f: list[float]  # mean supply temperature
+    source_f: list[float]  # mean source temperature
     return_f: list[float]  # mean return temperature
-    temp_age_s: list[float]  # oldest supply or return reading used in the minute, seconds
+    temp_age_s: list[float]  # oldest source or return reading used in the minute, seconds
     calls: dict[SpaceheatName, list[float | None]]  # zone white-wire channel -> share of the minute calling
 
     def to_jsonable(self) -> dict:
@@ -127,7 +141,7 @@ class MinuteColumns(NamedTuple):
             "Gpm": self.gpm,
             "PumpW": self.pump_w,
             "Pump010V": self.pump_v,
-            "SupplyF": self.supply_f,
+            "SourceF": self.source_f,
             "ReturnF": self.return_f,
             "TempAgeS": self.temp_age_s,
             "Calls": self.calls,
@@ -140,7 +154,7 @@ class MinuteColumns(NamedTuple):
             gpm=d["Gpm"],
             pump_w=d["PumpW"],
             pump_v=d["Pump010V"],
-            supply_f=d["SupplyF"],
+            source_f=d["SourceF"],
             return_f=d["ReturnF"],
             temp_age_s=d["TempAgeS"],
             calls=d["Calls"],
@@ -156,7 +170,7 @@ class MinuteColumns(NamedTuple):
             gpm=[v for p in parts for v in p.gpm],
             pump_w=[v for p in parts for v in p.pump_w],
             pump_v=[v for p in parts for v in p.pump_v],
-            supply_f=[v for p in parts for v in p.supply_f],
+            source_f=[v for p in parts for v in p.source_f],
             return_f=[v for p in parts for v in p.return_f],
             temp_age_s=[v for p in parts for v in p.temp_age_s],
             calls={
@@ -174,7 +188,7 @@ class MinuteColumns(NamedTuple):
             gpm=floats(self.gpm),
             pump_w=floats(self.pump_w),
             pump_v=floats(self.pump_v),
-            supply_f=floats(self.supply_f),
+            source_f=floats(self.source_f),
             return_f=floats(self.return_f),
             temp_age_s=floats(self.temp_age_s),
             calls={n: floats(c) for n, c in self.calls.items()},
@@ -189,7 +203,7 @@ class MinuteArrays(NamedTuple):
     gpm: np.ndarray
     pump_w: np.ndarray
     pump_v: np.ndarray
-    supply_f: np.ndarray
+    source_f: np.ndarray
     return_f: np.ndarray
     temp_age_s: np.ndarray
     calls: dict[SpaceheatName, np.ndarray]
@@ -203,6 +217,11 @@ class MinuteFile(NamedTuple):
     start_day_et: datetime.date
     end_day_et: datetime.date
     minutes: MinuteColumns
+
+    @property
+    def house(self) -> str:
+        """The house segment of the alias (`beech`)."""
+        return self.ta_alias.split(".")[-2]
 
     def to_jsonable(self) -> dict:
         return {
@@ -233,3 +252,15 @@ class MinuteFile(NamedTuple):
     @classmethod
     def read(cls, path: Path) -> "MinuteFile":
         return cls.from_jsonable(json.loads(path.read_text()))
+
+    def table(self) -> Table:
+        """The minutes as rows, one per valid minute, a column per zone wire."""
+        m = self.minutes
+        wires = sorted(m.calls)
+        rows = []
+        for i, t in enumerate(m.minute_start_s):
+            rows.append((datetime.datetime.fromtimestamp(t, ET).strftime("%Y-%m-%d %H:%M"), t, m.gpm[i], m.pump_w[i],
+                         m.pump_v[i], m.source_f[i], m.return_f[i], m.temp_age_s[i], *(m.calls[w][i] for w in wires)))
+        return Table(f"{self.house}-minute", f"{self.ta_alias}: one row per valid minute, {self.start_day_et} to {self.end_day_et}; the last columns are each zone wire's share of the minute calling",
+                     ("MinuteStartEt", "MinuteStartS", "Gpm", "PumpW", "Pump010V", "SourceF", "ReturnF", "TempAgeS", *wires),
+                     rows, "pump_speed.py")

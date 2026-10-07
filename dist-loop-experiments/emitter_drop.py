@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hourly distribution supply, return and flow for one house over a
+"""Hourly distribution source, return and flow for one house over a
 window, from the journal DB as sema: the hourly file every table in
 this folder reads.
 
@@ -9,7 +9,7 @@ within STALE_S; flow is forward-filled without a limit inside that
 validity, because a steady flow reports rarely. An hour with at least
 MIN_VALID of its samples valid becomes one HourRecord: the share of
 the hour the loop circulated (flow at or above FLOWING_GPM), the
-flow-weighted supply and return over the circulating samples, the mean
+flow-weighted source and return over the circulating samples, the mean
 flow, and the heat delivered (500 x gpm x drop BTU/h, water, summed
 over the hour).
 
@@ -41,7 +41,7 @@ from gwexp.sema.property_format import LeftRightDot, SpaceheatName, UTCMilliseco
 from houses import ta_alias  # noqa: E402
 from records import HourlyFile, HourRecord  # noqa: E402
 
-SUPPLY: SpaceheatName = "dist-swt"
+SOURCE: SpaceheatName = "dist-swt"
 RETURN: SpaceheatName = "dist-rwt"
 FLOW: SpaceheatName = "dist-flow"
 
@@ -53,17 +53,17 @@ BTU_PER_HR_PER_KW = 3412.14
 
 def hours_of(ta: LeftRightDot, start_ms: UTCMilliseconds, end_ms: UTCMilliseconds,
              codec: SemaCodec) -> list[HourRecord]:
-    p = pull(ta, [SUPPLY, RETURN, FLOW], [], start_ms, end_ms, codec)
-    missing = [n for n in (SUPPLY, RETURN, FLOW) if n not in p.rows or n not in p.words]
+    p = pull(ta, [SOURCE, RETURN, FLOW], [], start_ms, end_ms, codec)
+    missing = [n for n in (SOURCE, RETURN, FLOW) if n not in p.rows or n not in p.words]
     if missing:
         print(f"  no readings or no channel word for {missing}; week skipped")
         return []
     value: dict[SpaceheatName, np.ndarray] = {}
     age: dict[SpaceheatName, np.ndarray] = {}
-    for name in (SUPPLY, RETURN, FLOW):
+    for name in (SOURCE, RETURN, FLOW):
         raw, age[name] = on_grid(p.rows[name], p.grid_ms)
         value[name] = natural(p.words[name], raw)
-    valid = (age[SUPPLY] <= STALE_S) & (age[RETURN] <= STALE_S) & np.isfinite(age[FLOW])
+    valid = (age[SOURCE] <= STALE_S) & (age[RETURN] <= STALE_S) & np.isfinite(age[FLOW])
     per_hour = 3600 // GRID_S
     out: list[HourRecord] = []
     for i in range(0, len(p.grid_ms) - per_hour + 1, per_hour):
@@ -71,7 +71,7 @@ def hours_of(ta: LeftRightDot, start_ms: UTCMilliseconds, end_ms: UTCMillisecond
         if ok.mean() < MIN_VALID:
             continue
         gpm = value[FLOW][i:i + per_hour][ok]
-        swt = value[SUPPLY][i:i + per_hour][ok]
+        swt = value[SOURCE][i:i + per_hour][ok]
         rwt = value[RETURN][i:i + per_hour][ok]
         flowing = gpm >= FLOWING_GPM
         weight = gpm[flowing].sum()
@@ -81,7 +81,7 @@ def hours_of(ta: LeftRightDot, start_ms: UTCMilliseconds, end_ms: UTCMillisecond
             valid_fraction=float(ok.mean()),
             flowing_fraction=float(flowing.mean()),
             mean_gpm=float(gpm.mean()),
-            supply_f=float((swt[flowing] * gpm[flowing]).sum() / weight) if weight else None,
+            source_f=float((swt[flowing] * gpm[flowing]).sum() / weight) if weight else None,
             return_f=float((rwt[flowing] * gpm[flowing]).sum() / weight) if weight else None,
             heat_kwh=float(heat_btu / BTU_PER_HR_PER_KW),
         ))
