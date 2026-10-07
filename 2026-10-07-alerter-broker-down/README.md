@@ -4,7 +4,7 @@
 > `BrokerUnreachable` through the tap with no broker involved, does the
 > alerter hold its `NoData` pages while the broker is down, and do both
 > doors resolve when the broker returns with no `NoData` afterwards?
-> PASS on the 2026-10-07 re-run (`e36f6b8`): both pages within 36 s of
+> PASS on the 2026-10-07 re-run (`7e8c646`): both pages within 36 s of
 > the stop with the broker down, both closed 14 s after its return, no
 > `NoData`. The first run that morning was a FAIL (the tap paged four
 > minutes late and a `NoData` fired on reconnect); both records under
@@ -67,7 +67,8 @@ PASS is all four. A `NoData` at any point is FAIL.
 ## Found
 
 **PASS** (2026-10-07, second run, 10:17 to 10:27), all four steps. Code
-under test: `gridworks-alerter` `jm/gw-alert` `e36f6b8`, the tap a
+under test: `gridworks-alerter` `jm/gw-alert` `7e8c646` (run as
+`e36f6b8`, squashed into it the same morning), the tap a
 poller of the store with no broker connection and the actor re-flooring
 `NoData` at each `local_rabbit_startup`. Evidence `evidence/2026-10-07-pass/`;
 `instances/` is built from it.

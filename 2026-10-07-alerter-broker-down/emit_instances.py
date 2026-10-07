@@ -36,7 +36,7 @@ STAMP = re.compile(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)")
 INSTANCES = HERE / "instances"
 CLAIM = 'wiki/gridworks-alerter/executor/gwalerter.md "The prober"'
 # The code under test in the evidence folder the instances are built from.
-CODE_REF = "gridworks-alerter jm/gw-alert e36f6b8; run.sh"
+CODE_REF = "gridworks-alerter jm/gw-alert 7e8c646; run.sh"
 
 
 def stamp_ms(line: str) -> int:
