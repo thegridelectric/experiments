@@ -51,6 +51,8 @@ HELD_F = 3.0  # the supply held when it stayed within this of its pre-call mean 
 HELD_FROM_MIN = 3  # the slug's own pass through the heat pump dips the supply; the held test starts after it
 CONTROL_CLEAR_MIN = 30  # a control minute has no idle-zone call this long before it
 CONTROL_STRIDE = 5  # minutes between control samples
+SLUG_F = 65.0  # the idle loop's water is taken to be at room temperature when the call starts
+DEFICIT_AFTER_MIN = 5  # the return deficit is summed from the call's start to this long after it ends
 
 
 class Event(NamedTuple):
@@ -233,6 +235,34 @@ def control_excess(m: Minutes, line: SteadyLine, lags: tuple[int, ...]) -> dict[
     return {x: (np.array(v), np.array(d)) for x, (v, d) in out.items()}
 
 
+def slug_volume_gal(m: Minutes, e: Event, slug_f: float) -> float:
+    """The idle loop's cold water as the volume at slug_f that carries
+    the return's heat deficit over the event: sum of flow x (pre-call
+    return - return) over the minutes from the call's start to
+    DEFICIT_AFTER_MIN after it ends, over (pre-call return - slug_f).
+    The emitter's iron takes heat from the water that fills it, so this
+    is a cold-water equivalent, not the pipe and radiator volume."""
+    i = m.at(e.call_start_s)
+    pre_ret = float(m.rwt[i - PRE_MIN:i].mean())
+    end = i + e.call_minutes + DEFICIT_AFTER_MIN
+    deficit = np.clip(pre_ret - m.rwt[i:end], 0, None)
+    return float(np.sum(m.gpm[i:end] * deficit) / (pre_ret - slug_f))
+
+
+def volume_lines(m: Minutes, evs: list[Event]) -> list[str]:
+    lines = [f"\nthe idle loop's cold water, as the volume at {SLUG_F:.0f} °F carrying the return's heat deficit "
+             f"from the call's start to {DEFICIT_AFTER_MIN} min after it ended (gal): q25 / median / q75, "
+             f"and the same with the slug 5 °F colder and warmer"]
+    for slug in (SLUG_F, SLUG_F - 5, SLUG_F + 5):
+        v = np.array([slug_volume_gal(m, e, slug) for e in evs])
+        q = np.percentile(v, [25, 50, 75])
+        lines.append(f"  slug {slug:.0f} °F: {q[0]:.1f} / {q[1]:.1f} / {q[2]:.1f}")
+    extra = [float(m.gpm[m.at(e.call_start_s):m.at(e.call_start_s) + e.call_minutes].mean()
+                   - m.gpm[m.at(e.call_start_s) - PRE_MIN:m.at(e.call_start_s)].mean()) for e in evs]
+    lines.append(f"  flow added by the idle zone's valve during the call: median {np.median(extra):.2f} gpm")
+    return lines
+
+
 def excess_lines(m: Minutes, evs: list[Event], line: SteadyLine) -> list[str]:
     """The report's second half: what the drop did 10 to 30 minutes
     after the call and how much of it the supply explains."""
@@ -313,6 +343,7 @@ def report(m: Minutes, evs: list[Event], house: str) -> str:
     if cen:
         lines.append(f"censored events' post windows (min): median {np.median([e.post_minutes for e in cen]):.0f}, max {max(e.post_minutes for e in cen)}")
     lines.extend(excess_lines(m, evs, steady_line(house)))
+    lines.extend(volume_lines(m, evs))
     return "\n".join(lines)
 
 

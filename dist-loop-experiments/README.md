@@ -93,6 +93,12 @@ paper and the memos, the tables are in the output files named here.
   of supply at beech), and with that removed the median residual is
   within ±2 °F at every horizon, as at the control minutes.
   `beech-bolus-recovery.txt`; the memo's "Across the season".
+- **Beech's upstairs loop comes back as about 4 gallons of
+  room-temperature water:** the return's heat deficit over each call,
+  as a volume at 65 °F, median 4.4 gal across the 45 calls, quartiles
+  3.2 to 6.3; the valve adds a median 0.95 gpm while open.
+  `beech-bolus-recovery.txt`; the memo's "How much water the upstairs
+  loop holds".
 
 ## Timeline
 
@@ -232,7 +238,8 @@ From the minute file:
 - `bolus_recovery.py`, `beech-bolus-recovery.txt`,
   `beech-bolus-recovery.png`: the cold-zone-call events, the
   recovery of the drop after each, and the drop's later movement
-  against control minutes with the supply's share removed; the PNG is one representative
+  against control minutes with the supply's share removed, and the
+  idle loop's cold water as a volume from the return's heat deficit; the PNG is one representative
   event (the recovered event at the median recovery time) with the
   buffer and heat pump temperatures pulled from the journal DB for
   that window. Reads the minute file, so the `pump_speed.py` pull
