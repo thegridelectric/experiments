@@ -1,0 +1,10 @@
+# Installed into the clone with `uvx pre-commit install`; runs on every
+# `git commit`. A file over 2 MB does not belong in this repo: the
+# untouched bytes go to the immutable store and a reduced form is
+# committed (README "Conventions").
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=2048]

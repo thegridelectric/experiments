@@ -70,7 +70,13 @@ as validated Sema instances.
   bytes used.
 - Wire-encoded data files are the evidence and stay untouched;
   human-readable `-readable.csv` / `-display.csv` siblings are
-  regenerated, not edited. (The `beta-field-windows/` practice is the one
+  regenerated, not edited. No committed file exceeds 2 MB: a larger
+  capture or pull goes untouched to the immutable store, its key named
+  in the folder's README, and the folder commits the reduced form the
+  analysis reads (the lines the question needs, or one compact row
+  per message). `.pre-commit-config.yaml` holds the gate; install it
+  once per clone with `uvx pre-commit install` and it refuses the
+  commit that adds a larger file. (The `beta-field-windows/` practice is the one
   exception: it keeps only the last run and deletes prior evidence, since
   each round re-generates its own dataset.) Every folder holding a `gw.readings`
   instance ends its README with the standard "From the instance to
