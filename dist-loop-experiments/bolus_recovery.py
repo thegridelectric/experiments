@@ -70,6 +70,7 @@ class Event(NamedTuple):
     post_minutes: int  # minutes of steady call after the call, up to POST_MAX
     recovery_min: int | None  # minutes after the call ended; None if censored
     peak_excess_f: float  # most the drop exceeded its pre-call value, from the call start to recovery or window end
+    added_gpm: float  # mean flow during the call less the mean over PRE_MIN before it: the idle zone's valve
 
 
 class Minutes(NamedTuple):
@@ -126,6 +127,7 @@ def events(m: Minutes) -> list[Event]:
             call_start_s=int(m.t[i]), call_minutes=j - i + 1, pre_drop_f=pre_drop,
             pre_source_f=float(m.swt[pre].mean()), post_minutes=post_minutes,
             recovery_min=recovery, peak_excess_f=float(m.drop[i:end + 1].max() - pre_drop),
+            added_gpm=float(m.gpm[i:j + 1].mean() - m.gpm[pre].mean()),
         ))
         i = j + 1
     return out
@@ -258,9 +260,7 @@ def volume_lines(m: Minutes, evs: list[Event]) -> list[str]:
         v = np.array([slug_volume_gal(m, e, slug) for e in evs])
         q = np.percentile(v, [25, 50, 75])
         lines.append(f"  slug {slug:.0f} °F: {q[0]:.1f} / {q[1]:.1f} / {q[2]:.1f}")
-    extra = [float(m.gpm[m.at(e.call_start_s):m.at(e.call_start_s) + e.call_minutes].mean()
-                   - m.gpm[m.at(e.call_start_s) - PRE_MIN:m.at(e.call_start_s)].mean()) for e in evs]
-    lines.append(f"  flow added by the idle zone's valve during the call: median {np.median(extra):.2f} gpm")
+    lines.append(f"  flow added by the idle zone's valve during the call: median {np.median([e.added_gpm for e in evs]):.2f} gpm")
     return lines
 
 
@@ -437,7 +437,7 @@ def tables(house: str) -> list[Table]:
             datetime.datetime.fromtimestamp(e.call_start_s, ET).strftime("%Y-%m-%d %H:%M"), e.call_minutes,
             round(e.pre_drop_f, 1), round(e.pre_source_f, 1), e.post_minutes, e.recovery_min,
             recovery_at(m, e, 0.10), round(e.peak_excess_f, 1), source_held(m, e),
-            round(slug_volume_gal(m, e, SLUG_F), 1)))
+            round(e.added_gpm, 2), round(slug_volume_gal(m, e, SLUG_F), 1)))
     excess_rows = []
     for x in lags:
         sel = [e for e in evs if e.post_minutes > x]
@@ -459,7 +459,7 @@ def tables(house: str) -> list[Table]:
     return [
         Table(f"{tag}-events", f"{house}: each idle-zone call inside a steady call, its recovery and the cold water it returned",
               ("CallStartEt", "CallMinutes", "PreDropF", "PreSourceF", "PostMinutes", "RecoveryMin5Pct", "RecoveryMin10Pct",
-               "PeakExcessF", "SourceHeld", "SlugGal"), event_rows, "bolus_recovery.py"),
+               "PeakExcessF", "SourceHeld", "AddedGpm", "SlugGal"), event_rows, "bolus_recovery.py"),
         Table(f"{tag}-excess", f"{house}: the drop's excess over its pre-call value by minute after the call, against control minutes; detrended = the steady line's share of the source's move removed (slope {line.slope:.3f} F per F)",
               ("MinutesAfter", "Events", "ShareBeyond3F", "MedianExcessF", "MedianSourceMoveF", "DetrendedQ25F", "DetrendedMedianF",
                "DetrendedQ75F", "ControlMinutes", "ControlShareBeyond3F", "ControlDetrendedQ25F", "ControlDetrendedMedianF",
