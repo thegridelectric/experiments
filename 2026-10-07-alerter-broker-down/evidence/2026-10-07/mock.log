@@ -1,0 +1,1072 @@
+09:47:02 phase talk for 900s
+09:47:02 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:07 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:12 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:17 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:22 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:27 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:32 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:37 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:42 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:47 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:52 report.event from d1.isone.me.versant.keene.spruce.scada
+09:47:57 report.event from d1.isone.me.versant.keene.spruce.scada
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 115, in main
+    phase(channel, "talk", args.talk, args.cadence, True)
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 99, in phase
+    publish(channel)
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 88, in publish
+    channel.basic_publish("amq.topic", envelope.routing_key, body)
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 2376, in basic_publish
+    self._flush_output()
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 1422, in _flush_output
+    self._connection._flush_output(lambda: self.is_closed, *waiters)
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 551, in _flush_output
+    raise self._closed_result.value.error
+pika.exceptions.ConnectionClosedByBroker: (320, "CONNECTION_FORCED - broker forced connection closure with reason 'shutdown'")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 119, in main
+    conn.close()
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 853, in close
+    raise exceptions.ConnectionWrongStateError(msg)
+pika.exceptions.ConnectionWrongStateError: BlockingConnection.close(200, 'Normal shutdown') called on closed connection.
+09:48:02 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:06 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:09 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:12 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:15 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:19 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:22 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:25 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:28 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:31 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:35 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:38 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:41 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:44 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:48 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:51 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:54 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:48:57 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:00 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:04 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:07 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:10 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:13 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:17 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:20 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:23 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:26 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:30 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:33 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:36 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:39 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:43 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:46 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:49 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:52 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:56 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:49:59 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:02 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:05 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:08 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:12 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:15 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:18 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:21 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:25 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:28 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:31 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:34 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:38 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:41 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:44 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:47 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:51 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:54 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:50:57 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:00 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:03 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:07 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:10 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:13 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:16 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:20 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:23 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:26 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:29 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:32 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:36 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:39 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:42 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:45 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:49 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:52 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:55 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:51:58 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:52:02 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+09:52:05 mock exited 0; restarting in 3 s
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 123, in <module>
+    main()
+  File "/Users/jessica/GridWorks/experiments/2026-10-07-alerter-broker-down/../2026-09-15-alerter-no-data/mock_scada.py", line 110, in main
+    conn = pika.BlockingConnection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 381, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/gridworks-alerter/.venv/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 478, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.IncompatibleProtocolError: StreamLostError: ('Transport indicated EOF',)
+09:52:08 mock exited 0; restarting in 3 s
+09:52:11 phase talk for 900s
+09:52:11 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:16 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:21 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:26 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:31 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:36 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:41 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:46 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:51 report.event from d1.isone.me.versant.keene.spruce.scada
+09:52:56 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:01 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:06 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:11 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:16 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:21 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:26 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:31 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:36 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:41 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:46 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:51 report.event from d1.isone.me.versant.keene.spruce.scada
+09:53:56 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:01 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:06 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:11 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:16 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:21 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:26 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:31 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:36 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:41 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:46 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:51 report.event from d1.isone.me.versant.keene.spruce.scada
+09:54:56 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:01 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:06 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:11 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:16 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:21 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:26 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:31 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:36 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:41 report.event from d1.isone.me.versant.keene.spruce.scada
+09:55:46 report.event from d1.isone.me.versant.keene.spruce.scada

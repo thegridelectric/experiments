@@ -8,12 +8,15 @@
 # Needs: gw-dev-rabbit, the dev registry (gnr api + gnr rabbit), the
 # alerter's .env, and the Opsgenie credentials to page with:
 # OPSGENIE_API_KEY (an Alert API integration key) and OPSGENIE_TEAM_ID
-# (the team the run pages; pick one that does not wake the on-call).
+# (the one team, GridWorks Dev; the run pages whoever is on call).
 # Optional OPSGENIE_URL for an EU account.
 set -euo pipefail
 cd "$(dirname "$0")"
 ALERTER=../../gridworks-alerter
 NO_DATA=../2026-09-15-alerter-no-data
+# The Opsgenie credentials come from the experiments .env (gitignored,
+# `OPSGENIE_API_KEY`, `OPSGENIE_TEAM_ID`) or the environment.
+[ -f ../.env ] && { set -a; source ../.env; set +a; }
 : "${OPSGENIE_API_KEY:?set OPSGENIE_API_KEY}" "${OPSGENIE_TEAM_ID:?set OPSGENIE_TEAM_ID}"
 OG_URL=${OPSGENIE_URL:-https://api.opsgenie.com}
 RUN=$(mktemp -d "${TMPDIR:-/tmp}/alerter-to-opsgenie.XXXXXX")
@@ -32,12 +35,12 @@ alerter() { (cd "$ALERTER" && exec uv run gwalerter rabbit > "$RUN/$1.log" 2>&1)
 tap()     { (cd "$ALERTER" && exec uv run gwalerter tap    > "$RUN/$1.log" 2>&1) & echo $!; }
 # Opsgenie's view of the run's alerts: every alert the alerter's source
 # raised, open or closed, newest first. The raw listing is the evidence
-# ($1.json); the typed view printed beside it is derived (notifier_view.py).
+# ($1.json); the typed view printed beside it is derived (../opsgenie_listing.py).
 og_query() {
   curl -s -H "Authorization: GenieKey $OPSGENIE_API_KEY" \
     "$OG_URL/v2/alerts?query=source%3A${GWALERTER_SERVICE_ALIAS}&limit=10&sort=createdAt&order=desc" \
     > "$RUN/$1.json"
-  uv run --project "$ALERTER" python notifier_view.py "$RUN/$1.json" | tee "$RUN/$1.txt"
+  uv run --project "$ALERTER" python ../opsgenie_listing.py "$RUN/$1.json" | tee "$RUN/$1.txt"
 }
 
 A1=$(alerter alerter-1); sleep 3

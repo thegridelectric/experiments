@@ -111,7 +111,7 @@ hours later).
   404 for a closed alert (`opsgenie-alert-3f449ad4.json`); the alias is
   an open-alert identity. The listing by `source` finds closed ones.
 - The notifier's view of each alert (open or closed, count, closed by)
-  is read off Opsgenie's listing through `notifier_view.py` into
+  is read off Opsgenie's listing through `../opsgenie_listing.py` into
   `gw.opsgenie.alert` words, one per alert the run touched. The
   verdict's facts are in those three instances and in the two
   `gw.alert` instances; the README states them.
@@ -146,9 +146,6 @@ dataset and pages the team again. No deployed service was touched.
   `evidence/2026-10-07/provenance.txt` describes (the day's script
   exited early and the mock was started by hand), not from this fixed
   script in one pass.
-- `notifier_view.py`: reads an Opsgenie listing into `gw.opsgenie.alert`
-  words (alias, status, count, created, closed by, message, …) and
-  prints one line each; what `opsgenie-*.txt` is derived from.
 - `emit_instances.py`: writes `instances/` from the evidence: the two
   `gw.alert` records out of the archived store, the `gw.opsgenie.alert`
   words out of the saved listing, and the run record from the alerter
@@ -188,7 +185,7 @@ Run (gw-dev-rabbit, the dev registry and the alerter's `.env` in place):
 
 The notifier's view from a saved listing (no Opsgenie access needed):
 
-    uv run python notifier_view.py evidence/2026-10-07/opsgenie-resolved.json
+    uv run python ../opsgenie_listing.py evidence/2026-10-07/opsgenie-resolved.json
 
 Read an instance back through the snapshot (no broker needed; prints
 the word's fields, evidence included):

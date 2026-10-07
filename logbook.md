@@ -13,6 +13,13 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-10-07 · [alerter-broker-down](2026-10-07-alerter-broker-down/)** —
+  FAIL: with the dev broker stopped for four minutes the prober raised
+  `BrokerUnreachable` per door in 29 s and resolved both 6 s after the
+  start, but the tap paged only once the broker was back (it connects
+  before it reconciles) and `NoData` fired on reconnect (the detector
+  loop skips every tick while the actor is not consuming, so the hold
+  never ran). Two fixes with tests first, then re-run.
 - **2026-10-07 · [alerter-to-opsgenie](2026-10-07-alerter-to-opsgenie/)** —
   PASS: a `gw.alert` `Firing` opens an Opsgenie alert aliased by its
   `AlertId` through the tap, the `Resolved` closes it, and a tap restart

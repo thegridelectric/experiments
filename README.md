@@ -41,6 +41,10 @@ as validated Sema instances.
   through its classes so schema and axioms validate at construction.
   Regenerate with `./regen_sema_snapshot.sh` (expects a sibling `sema`
   checkout; the seed is `src/gwexp/sema_seed_request.yaml`).
+- `opsgenie_listing.py` — reads an Opsgenie alert listing (the Alert
+  API's `GET /v2/alerts` response, saved as JSON) into `gw.opsgenie.alert`
+  words and prints one line each; the alerter witnesses' typed view of
+  what the notifier holds.
 - `display.py` — interim wire-encoding → human-readable conversion for
   CSVs (temperatures to °F floats, flows to gpm). Goes away when unit
   harmonization ships.
@@ -52,8 +56,10 @@ as validated Sema instances.
 - `.env` (gitignored, never committed) — `GJK_DB_URL`, the journal-DB
   connection string `pull_readings.py` and the per-experiment analysis
   scripts read, and `GWEXP_RABBIT__URL`, the dev broker's AMQP URL for
-  `capture_broker.py`. This is the one place journal-DB credentials live
-  on a laptop.
+  `capture_broker.py`; and `OPSGENIE_API_KEY` / `OPSGENIE_TEAM_ID`, the
+  Opsgenie Alert API integration key and the GridWorks Dev team id the
+  alerter witnesses page with. This is the one place these credentials
+  live on a laptop.
 
 ## Conventions
 
