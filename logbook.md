@@ -13,6 +13,17 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-10-07 · [alerter-to-opsgenie](2026-10-07-alerter-to-opsgenie/)** —
+  PASS: a `gw.alert` `Firing` opens an Opsgenie alert aliased by its
+  `AlertId` through the tap, the `Resolved` closes it, and a tap restart
+  re-creates by reconcile (count 2, no second page). Two stale test words
+  in the dev broker's durable tap queue paged and were closed by the same
+  reconcile.
+- **2026-10-06 · [mix-or-not](2026-10-06-mix-or-not/)** —
+  the emitter temperature drop in steady circulation, five houses over the
+  2025–26 season from the journal DB: not a constant 20 °F. It rises with
+  supply temperature at every house (beech 17 °F at 130–140 °F supply,
+  25 °F at 160–170 °F) and maple stays under 15 °F up to 180 °F.
 - **2026-09-30 · [alerter-to-alertmanager](2026-09-30-alerter-to-alertmanager/)** —
   the alerter's `gw.alert` through the new tap into a local Alertmanager:
   a mocked spruce goes quiet, NoData fires and pages the receiver 35 s

@@ -1,0 +1,22 @@
+2026-10-07 07:01:51,103 INFO alembic.runtime.migration: Context impl SQLiteImpl.
+2026-10-07 07:01:51,103 INFO alembic.runtime.migration: Will assume non-transactional DDL.
+2026-10-07 07:01:51,127 INFO httpx: HTTP Request: POST http://localhost:8000/gnr/g-node-forest-request "HTTP/1.1 200 OK"
+2026-10-07 07:01:51,132 INFO gwalerter.cli: Tracking ['d1.isone.me.versant.keene.spruce.ta'] under ['d1.isone.me.versant.keene.spruce']
+2026-10-07 07:01:51,133 INFO gwbase.actor_base: Connecting to localhost:5672 vhost=d1__1
+2026-10-07 07:01:51,134 INFO pika.adapters.utils.connection_workflow: Pika version 1.4.4 connecting to ('::1', 5672, 0, 0)
+2026-10-07 07:01:51,134 INFO pika.adapters.utils.io_services_utils: Socket connected: <socket.socket fd=10, family=30, type=1, proto=6, laddr=('::1', 64092, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-10-07 07:01:51,134 INFO pika.adapters.utils.connection_workflow: Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x105fb8230>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x105fb8230> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>).
+2026-10-07 07:01:51,139 INFO gwbase.actor_base: Connection opened
+2026-10-07 07:01:51,139 INFO gwbase.actor_base: Creating a new channel
+2026-10-07 07:01:51,139 INFO pika.adapters.utils.connection_workflow: AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x105fb8230> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>
+2026-10-07 07:01:51,139 INFO pika.adapters.utils.connection_workflow: AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x105fb8230> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>
+2026-10-07 07:01:51,140 INFO gwbase.actor_base: Channel opened
+2026-10-07 07:01:51,140 INFO gwbase.actor_base: Adding consumer channel close callback
+2026-10-07 07:01:51,140 INFO gwbase.actor_base: Asserting consume exchange exists: alerts_tx
+2026-10-07 07:01:51,141 INFO gwbase.actor_base: Consume exchange present: alerts_tx
+2026-10-07 07:01:51,141 INFO gwbase.actor_base: Declaring queue d1.alerts-F327
+2026-10-07 07:01:51,143 INFO gwbase.orchestrator: Binding alerts_tx to d1.alerts-F327 with rj.*.*.*.*.d1-alerts
+2026-10-07 07:01:51,144 INFO gwbase.actor_base: Queue d1.alerts-F327 bound with rj.*.*.*.*.d1-alerts
+2026-10-07 07:01:51,145 INFO gwbase.actor_base: QOS set to: 1
+2026-10-07 07:01:51,145 INFO gwbase.actor_base: Start consuming
+2026-10-07 07:01:51,145 INFO gwbase.actor_base: Adding consumer cancellation callback

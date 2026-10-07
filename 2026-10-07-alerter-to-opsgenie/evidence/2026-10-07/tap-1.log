@@ -1,0 +1,21 @@
+2026-10-07 07:00:46,847 INFO alembic.runtime.migration: Context impl SQLiteImpl.
+2026-10-07 07:00:46,847 INFO alembic.runtime.migration: Will assume non-transactional DDL.
+2026-10-07 07:00:46,866 INFO pika.adapters.utils.connection_workflow: Pika version 1.4.4 connecting to ('::1', 5672, 0, 0)
+2026-10-07 07:00:46,866 INFO pika.adapters.utils.io_services_utils: Socket connected: <socket.socket fd=8, family=30, type=1, proto=6, laddr=('::1', 64082, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-10-07 07:00:46,866 INFO pika.adapters.utils.connection_workflow: Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x1062c8350>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x1062c8350> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>).
+2026-10-07 07:00:46,873 INFO pika.adapters.utils.connection_workflow: AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x1062c8350> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>
+2026-10-07 07:00:46,873 INFO pika.adapters.utils.connection_workflow: AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x1062c8350> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>
+2026-10-07 07:00:46,873 INFO pika.adapters.blocking_connection: Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x1062c8350> params=<URLParameters host=localhost port=5672 virtual_host=d1__1 ssl=False>>
+2026-10-07 07:00:46,873 INFO pika.adapters.blocking_connection: Created channel=1
+2026-10-07 07:00:46,876 INFO gwalerter.tap: Bound d1.alerts-tap to alertsmic_tx with rjb.*.*.gw-alert.#; posting to https://api.opsgenie.com/v2/alerts
+2026-10-07 07:00:46,879 INFO pika.adapters.blocking_connection: Created new queue consumer generator <_QueueConsumerGeneratorInfo params=('d1.alerts-tap', False, False) consumer_tag='ctag1.6a3c3b91259640869143c11c4d42e849'>
+2026-10-07 07:00:46,879 INFO gwalerter.tap: Firing NoData on d1.isone.me.versant.keene.spruce.ta (0b5e5600-f023-4b9d-b8ed-d7f71c79599f)
+2026-10-07 07:00:47,121 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts "HTTP/1.1 202 Accepted"
+2026-10-07 07:00:47,123 INFO gwalerter.tap: Firing NoData on d1.isone.me.versant.keene.spruce.ta (94588fe9-d69f-468b-a19c-899ae4e77543)
+2026-10-07 07:00:47,240 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts "HTTP/1.1 202 Accepted"
+2026-10-07 07:01:07,267 INFO gwalerter.tap: Reconcile: closing 0b5e5600-f023-4b9d-b8ed-d7f71c79599f
+2026-10-07 07:01:07,421 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts/0b5e5600-f023-4b9d-b8ed-d7f71c79599f/close?identifierType=alias "HTTP/1.1 202 Accepted"
+2026-10-07 07:01:07,422 INFO gwalerter.tap: Reconcile: closing 94588fe9-d69f-468b-a19c-899ae4e77543
+2026-10-07 07:01:07,539 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts/94588fe9-d69f-468b-a19c-899ae4e77543/close?identifierType=alias "HTTP/1.1 202 Accepted"
+2026-10-07 07:01:14,373 INFO gwalerter.tap: Firing NoData on d1.isone.me.versant.keene.spruce.ta (3f449ad4-e3db-4c87-8e67-49cd6edde833)
+2026-10-07 07:01:14,535 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts "HTTP/1.1 202 Accepted"

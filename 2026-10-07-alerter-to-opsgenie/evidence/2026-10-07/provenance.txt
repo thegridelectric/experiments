@@ -1,0 +1,46 @@
+Source: one ./run.sh on the laptop against gw-dev-rabbit (localhost:5672,
+  vhost d1__1) and the dev registry (gnr api on localhost:8000, gnr rabbit;
+  seeded d1 universe), posting to the Opsgenie account the fleet pages
+  through (api.opsgenie.com, gwalert's integration key and team, held in
+  the alerts box's gwalert .env and never in this folder). Nothing
+  deployed was touched; the pages were real.
+Window: 2026-10-07 07:00:44 to 07:03 EDT (laptop clock).
+Sequence as run: run.sh started the alerter, tap and mock; the mock failed
+  at import (run.sh lacked PYTHONPATH=../src; fixed in the file since) and
+  the script exited at the mock's exit after the restart step, leaving
+  alerter 2 and tap 2 running; the mock was then started by hand
+  (`mock_scada.py --cadence 5 --talk 20 --quiet 0 --resume 0`, mock-2.log),
+  the second Opsgenie listing was taken by hand with the same query, and
+  the processes were stopped. A re-run of the fixed run.sh does all of
+  this in one pass.
+Code under test: gridworks-alerter jm/gw-alert working tree on f0064a6
+  (the Opsgenie tap in src/gwalerter/tap.py, Store.resolved_record, the
+  three Opsgenie settings; committed after the run from the same working
+  tree). Harness scripts decode through experiments src/gwexp/sema (mock
+  scada from ../2026-09-15-alerter-no-data/mock_scada.py).
+Files, copied from the run dir /var/folders/.../alerter-to-opsgenie.FksFID:
+  run-stdout.log       stdout of ./run.sh up to its exit (step marks, the
+                       firing listing as printed)
+  tap-1.log / tap-2.log          stdout of the two `gwalerter tap`
+  alerter-1.log / alerter-2.log  stdout of the two `gwalerter rabbit`
+  d1.alerts.log        the gwbase file log both alerters wrote
+  mock.log             the first mock's import failure
+  mock-2.log           the hand-started mock (talk 20 s)
+  opsgenie-firing.txt  the firing-state listing as run.sh printed it then
+                       (status, alias, message, count per alert); the raw
+                       JSON of that listing was NOT saved by the run.sh of
+                       the day (it is now)
+  opsgenie-resolved.json  Opsgenie's listing by source after the resume,
+                       as returned (`GET /v2/alerts?query=source:d1.alerts`)
+  opsgenie-resolved.txt   derived from that JSON by notifier_view.py
+  opsgenie-alert-3f449ad4.json  `GET /v2/alerts/<alias>?identifierType=alias`
+                       after the close: Opsgenie's 404 for a closed alias
+  alerter.sqlite       the alerter's store (data/gridworks/alerter/) as the
+                       run left it; emit_instances.py reads its alerts table
+Timestamps: run-stdout.log, mock*.log, tap-N.log, alerter-N.log are laptop
+  local time (EDT); d1.alerts.log, the alert words' RaisedMs/ResolvedMs
+  and Opsgenie's createdAt are UTC (Z). One clock, the laptop's, except
+  Opsgenie's own createdAt.
+Edits: broker credentials in URLs replaced by <user>:<redacted> (pattern
+  amqp[s]://user:secret@); nothing else changed.
+Regeneration: not possible. A new run is a new dataset and pages again.
