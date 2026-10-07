@@ -1,0 +1,15 @@
+upstairs calls with a steady downstairs-only call 10 min before and >= 10 min after: 45
+recovered to within 5% of the pre-call drop: 17; not recovered inside the post window: 28
+recovery minutes after the call ended, recovered events: q25 4  median 5  q75 7  q90 9  max 10
+within 10% of the pre-call drop instead: recovered 23, median 3 min
+  recovered within  5 min: 11 of the 45 events whose window reaches 5 min (24%)
+  recovered within 10 min: 17 of the 45 events whose window reaches 10 min (38%)
+  recovered within 15 min: 17 of the 40 events whose window reaches 15 min (42%)
+  recovered within 20 min: 17 of the 34 events whose window reaches 20 min (50%)
+  recovered within 30 min: 17 of the 22 events whose window reaches 30 min (77%)
+by upstairs call length (min): n, median recovery, share recovered within 10 min, median pre-call drop, median peak excess of the drop
+   6- 10 : n= 45  median    5  within 10:  38%  pre drop 19.4  peak 18.4
+median excess of the drop over its pre-call value, °F, by minute after the call ended (events whose window reaches that minute):
+  +0: +1.9 (45)  +1: +4.6 (45)  +2: +4.7 (45)  +3: +4.0 (45)  +5: +2.5 (45)  +7: +2.0 (45)  +10: +3.5 (41)  +15: +5.6 (26)  +20: +3.5 (20)  +30: +4.8 (5)
+censored events' post windows (min): median 21, max 48
+plotted: beech-bolus-recovery.png, the upstairs call at 2026-01-26 06:17 ET (6 min, recovered 5 min after)

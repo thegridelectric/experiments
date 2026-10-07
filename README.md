@@ -22,9 +22,18 @@ as validated Sema instances.
   become dots), ordered `<subject>-<condition?>-<type.name>-<version>.json`
   — the same grammar as the S3 eventstore keys, parsed by a bare
   split on dash.
-- `beta-field-windows/` — the one exception to one-folder-per-experiment:
-  an ongoing field-test *practice*, not a dated one-shot, so it carries no
-  date and keeps only the **last run** (a new window deletes the previous
+- `<slug>/` (no date) — a **dataset** folder: one pull from the immutable
+  store, reduced and committed once, with the analyses that read it.
+  Undated because questions keep arriving on the same data; a new
+  question on the pull goes in the folder, a pull of other channels or
+  another window gets its own folder. The README follows the template
+  with the header `<slug>` and names the first pull in its "what this
+  is" line; "Found" holds one verdict per tested claim. The one so far
+  is `dist-loop-experiments/`, the fleet's distribution loops over the
+  2025–26 heating season.
+- `beta-field-windows/` — the one exception to one-folder-per-experiment
+  that is neither dated nor a dataset: an ongoing field-test *practice*,
+  which keeps only the **last run** (a new window deletes the previous
   run's data first). Its durable how-to is `field-window-recipe.md`; the
   folder holds `emit_instances.py` and the current run. See its README.
 - `src/gwexp/sema/` — the vendored Sema snapshot runtime (GENERATED —

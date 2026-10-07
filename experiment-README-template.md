@@ -1,4 +1,4 @@
-# <slug>, <date or date-range>
+# <slug>, <date or date-range>   (a dataset folder: `# <slug>`, first pull named below)
 
 > What this is: one line — the question asked or the incident
 > investigated, and where the verdict lives (the logbook entry is the
