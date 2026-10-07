@@ -1,0 +1,26 @@
+alerter-broker-down, second run of 2026-10-07 (EDT; the alerter's file
+log and the alert words are UTC, four hours later). The first run of the
+day is evidence/2026-10-07 (FAIL); this one is the re-run on the fixed
+code.
+
+Sequence as run: run.sh in one pass from the laptop, started 10:17:48,
+run dir alerter-broker-down.kCZgxP. Processes: gwalerter rabbit, tap and
+probe from gridworks-alerter jm/gw-alert at e36f6b8 (the store-only tap
+and the re-floor on resume), each under run.sh's restart loop; the mock
+scada from ../2026-09-15-alerter-no-data/mock_scada.py under the same.
+gw-dev-rabbit stopped 10:18:55, started 10:22:58.
+
+Files: alerter.log, tap.log, prober.log, mock.log are each process's
+stdout+stderr across restarts; d1.alerts.log is the alerter's gwbase file
+log. run.sh's own output was not captured (run without tee); its step
+stamps are recoverable from the listing times. opsgenie-{down,back,final}.json
+are Opsgenie's listing responses as returned at 10:20:26, 10:24:12 and
+10:26:42; the .txt beside each is the typed view (../opsgenie_listing.py).
+alerter.sqlite is the store as the run left it.
+
+Edits: broker credentials in URLs, had any been logged, replaced by
+<user>:<redacted> (pattern substitution on the log files; none matched);
+nothing else changed. The Opsgenie key and team id were read from the
+experiments .env and appear in no file.
+
+Clocks: all laptop; no box involved.

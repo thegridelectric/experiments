@@ -7,8 +7,8 @@
 #
 # Each long-lived process runs under a restart loop, which is what
 # systemd's Restart=always does on the box: the alerter's gwbase actor
-# reconnects by itself, but the tap's consumer and the mock's pika
-# channel die with the broker and come back when it does.
+# reconnects by itself, the tap never touches the broker, and the mock's
+# pika channel dies with the broker and comes back when it does.
 #
 # Needs: gw-dev-rabbit (docker), the dev registry (gnr api + gnr rabbit),
 # the alerter's .env, and the Opsgenie credentials to page with:

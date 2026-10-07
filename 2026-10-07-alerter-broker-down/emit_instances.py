@@ -13,7 +13,7 @@
 - `instances/gw.experiment.run-001.json`: the run window from the
   alerter file log, the verdict and the claim it stamps.
 
-    uv run python emit_instances.py [evidence/2026-10-07]
+    uv run python emit_instances.py [evidence/2026-10-07-pass] [Pass|Fail|Inconclusive]
 """
 
 import json
@@ -35,6 +35,8 @@ from opsgenie_listing import from_listing  # noqa: E402
 STAMP = re.compile(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)")
 INSTANCES = HERE / "instances"
 CLAIM = 'wiki/gridworks-alerter/executor/gwalerter.md "The prober"'
+# The code under test in the evidence folder the instances are built from.
+CODE_REF = "gridworks-alerter jm/gw-alert e36f6b8; run.sh"
 
 
 def stamp_ms(line: str) -> int:
@@ -89,7 +91,7 @@ def main(evidence: Path, verdict: GwExperimentVerdict) -> None:
             host_g_node_alias="d1.alerts",
             start_unix_ms=stamp_ms(lines[0]),
             end_unix_ms=stamp_ms(lines[-1]),
-            code_ref="gridworks-alerter jm/gw-alert working tree (the prober, uncommitted at run time); run.sh",
+            code_ref=CODE_REF,
             verdict=verdict,
             claim=CLAIM,
         ),
@@ -98,6 +100,6 @@ def main(evidence: Path, verdict: GwExperimentVerdict) -> None:
 
 if __name__ == "__main__":
     main(
-        Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "evidence/2026-10-07",
+        Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "evidence/2026-10-07-pass",
         GwExperimentVerdict(sys.argv[2]) if len(sys.argv) > 2 else GwExperimentVerdict.Pass,
     )

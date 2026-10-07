@@ -1,0 +1,11 @@
+2026-10-07 10:17:51,443 INFO alembic.runtime.migration: Context impl SQLiteImpl.
+2026-10-07 10:17:51,444 INFO alembic.runtime.migration: Will assume non-transactional DDL.
+2026-10-07 10:17:51,463 INFO gwalerter.tap: Paging the store's open alerts to https://api.opsgenie.com/v2/alerts every 20 s
+2026-10-07 10:19:31,490 INFO gwalerter.tap: Reconcile: creating 9924715b-1761-4b8b-816d-02f1d5792ef0
+2026-10-07 10:19:31,686 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts "HTTP/1.1 202 Accepted"
+2026-10-07 10:19:31,686 INFO gwalerter.tap: Reconcile: creating 476df8a9-d19d-46ef-8e95-c9e31e90e07c
+2026-10-07 10:19:31,803 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts "HTTP/1.1 202 Accepted"
+2026-10-07 10:23:11,862 INFO gwalerter.tap: Reconcile: closing 9924715b-1761-4b8b-816d-02f1d5792ef0
+2026-10-07 10:23:12,064 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts/9924715b-1761-4b8b-816d-02f1d5792ef0/close?identifierType=alias "HTTP/1.1 202 Accepted"
+2026-10-07 10:23:12,065 INFO gwalerter.tap: Reconcile: closing 476df8a9-d19d-46ef-8e95-c9e31e90e07c
+2026-10-07 10:23:12,186 INFO httpx: HTTP Request: POST https://api.opsgenie.com/v2/alerts/476df8a9-d19d-46ef-8e95-c9e31e90e07c/close?identifierType=alias "HTTP/1.1 202 Accepted"

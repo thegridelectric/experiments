@@ -4,8 +4,11 @@
 > `BrokerUnreachable` through the tap with no broker involved, does the
 > alerter hold its `NoData` pages while the broker is down, and do both
 > doors resolve when the broker returns with no `NoData` afterwards?
-> FAIL on 2026-10-07: the prober passed, the tap paged four minutes
-> late, and a `NoData` fired on reconnect; see Found.
+> PASS on the 2026-10-07 re-run (`e36f6b8`): both pages within 36 s of
+> the stop with the broker down, both closed 14 s after its return, no
+> `NoData`. The first run that morning was a FAIL (the tap paged four
+> minutes late and a `NoData` fired on reconnect); both records under
+> Found.
 
 ## Why
 
@@ -63,9 +66,30 @@ PASS is all four. A `NoData` at any point is FAIL.
 
 ## Found
 
-**FAIL** (2026-10-07), steps 1 and 3 met, steps 2 and 4 not. Code under
-test: `gridworks-alerter` `jm/gw-alert` working tree (the prober,
-uncommitted at run time).
+**PASS** (2026-10-07, second run, 10:17 to 10:27), all four steps. Code
+under test: `gridworks-alerter` `jm/gw-alert` `e36f6b8`, the tap a
+poller of the store with no broker connection and the actor re-flooring
+`NoData` at each `local_rabbit_startup`. Evidence `evidence/2026-10-07-pass/`;
+`instances/` is built from it.
+
+- Step 1: both doors answering, spruce tracked, no alert.
+- Step 2: `docker stop` at 10:18:55; the prober raised `BrokerUnreachable`
+  on both doors at 10:19:23 (28 s); the tap's next pass created both in
+  Opsgenie at 10:19:31 (tiny ids 1254, 1255), 36 s after the stop and
+  with the broker still down for another three and a half minutes. The
+  10:20:26 listing shows the two open and nothing else new. The tap
+  process never exited (the morning's run: 80 restarts).
+- Step 3: `docker start` at 10:22:58; the prober resolved both at
+  10:23:04; the alerter rebound its queue at 10:23:08; the tap closed
+  both at 10:23:12. The 10:24:12 listing shows both closed.
+- Step 4: through 10:26:42, 224 s after the broker's return and past
+  the 120 s threshold, no `NoData` in the alerter's file log, in the
+  store, or in Opsgenie. The mock restarted 76 times across the outage,
+  as its pika channel does.
+
+**FAIL** (2026-10-07, first run), steps 1 and 3 met, steps 2 and 4 not.
+Code under test: `gridworks-alerter` `jm/gw-alert` working tree (the
+prober, uncommitted at run time). Evidence `evidence/2026-10-07/`.
 
 - The prober did its part. Both doors answered through step 1. 29 s
   after the stop (09:48:31) it raised `BrokerUnreachable` on
@@ -94,7 +118,22 @@ uncommitted at run time).
 
 ## Timeline
 
-2026-10-07, EDT.
+2026-10-07, EDT. Second run (PASS):
+
+- 10:17:48 alerter up; 10:17:51 tap paging the store every 20 s;
+  10:17:53 prober up, both doors answering; mock talking.
+- 10:18:55 `docker stop gw-dev-rabbit`; the alerter's consumer drops;
+  the mock dies and its restart loop begins; the tap runs on.
+- 10:19:23 prober raises `BrokerUnreachable` on both doors.
+- 10:19:31 tap creates both in Opsgenie.
+- 10:20:26 listing: both open.
+- 10:22:58 `docker start gw-dev-rabbit`.
+- 10:23:04 prober resolves both; 10:23:08 alerter rebinds its queue
+  and re-floors; 10:23:12 tap closes both.
+- 10:24:12 and 10:26:42 listings: both closed, no `NoData`; everything
+  stopped.
+
+First run (FAIL):
 
 - 09:46:55 alerter up, tracking spruce; 09:47:00 prober up, both doors
   answering; tap bound; mock talking.
@@ -114,11 +153,17 @@ uncommitted at run time).
 
 ## Analysis notes
 
-- Step 4 is moot as run: the `NoData` fired at reconnect, not after the
-  threshold, and nothing fired in the 150 s after; the hold's claim is
-  still untested until the detector loop runs during an outage.
-- The tap's restart loop is systemd's `Restart=always` at 3 s; on the
-  box the same crash loop would run at `RestartSec=5`.
+- What the FAIL run taught: both failures were the alerter routing
+  around its own deafness (the tap exiting at connect, the detector
+  thread skipping ticks) rather than holding in it. The fix removed the
+  tap's broker connection rather than retrying it, and re-floors the
+  rule on reconnect rather than threading the actor's state into it;
+  the re-run is the evidence that the smaller fixes are enough.
+- The re-run leaves one claim still unexercised: the rule's hold on an
+  open `BrokerUnreachable` while the actor itself hears (the MQTT door
+  down, AMQPS up). This run takes the whole broker down, so the actor's
+  own re-floor would mask that hold; a one-door outage is a separate
+  run.
 
 - The run's Opsgenie listing by `source` also shows alerts earlier runs
   left closed (the 2026-10-07 alerter-to-opsgenie run's three); the
@@ -146,13 +191,15 @@ dev broker container; no deployed service is touched.
   `gw.opsgenie.alert` words out of the final listing, and the run
   record. Takes the evidence folder and the verdict (`Pass`, `Fail`,
   `Inconclusive`).
-- `evidence/<date>/`: the run's logs as captured (`alerter.log`,
-  `tap.log`, `prober.log`, `mock.log`, `run-stdout.log`, the alerter's
-  file log `d1.alerts.log`), broker credentials redacted by pattern and
-  nothing else changed; `opsgenie-{down,back,final}.json` the listings
-  as Opsgenie returned them and `.txt` their typed views;
-  `alerter.sqlite` the store as the run left it; `provenance.txt`.
-- `instances/`: see `emit_instances.py`.
+- `evidence/<date>[-pass]/`: one folder per run, the logs as captured
+  (`alerter.log`, `tap.log`, `prober.log`, `mock.log`, `run-stdout.log`
+  where tee'd, the alerter's file log `d1.alerts.log`), broker
+  credentials redacted by pattern and nothing else changed;
+  `opsgenie-{down,back,final}.json` the listings as Opsgenie returned
+  them and `.txt` their typed views; `alerter.sqlite` the store as the
+  run left it; `provenance.txt`. `2026-10-07/` is the FAIL run,
+  `2026-10-07-pass/` the re-run on the fixed code.
+- `instances/`: see `emit_instances.py`; built from the PASS evidence.
 
 Run (gw-dev-rabbit, the dev registry and the alerter's `.env` in place):
 
