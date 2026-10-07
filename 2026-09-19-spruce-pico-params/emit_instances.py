@@ -18,7 +18,7 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent / "src"))
 
 from gwexp.sema.codec import SemaCodec  # noqa: E402
-from gwexp.sema.types import GwExperimentRun  # noqa: E402
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 
 BOX_OFFSET = "-04:00"
 START = "2026-09-19T17:35:24"
@@ -30,7 +30,7 @@ def unix_ms(stamp: str) -> int:
 
 
 def main() -> None:
-    run = GwExperimentRun(
+    run = GwExperimentRun000(
         experiment_slug="spruce-pico-params",
         host_g_node_alias="hw1.isone.me.versant.keene.spruce.scada",
         start_unix_ms=unix_ms(START),
@@ -39,7 +39,7 @@ def main() -> None:
     )
     out = HERE / "instances/spruce-gw.experiment.run-000.json"
     out.write_text(json.dumps(run.to_dict(), indent=1) + "\n")
-    back = SemaCodec().from_dict(json.loads(out.read_text()), expect=GwExperimentRun)
+    back = SemaCodec().from_dict(json.loads(out.read_text()), auto_upgrade=False, expect=GwExperimentRun000)
     print(out.name, back.start_unix_ms, back.end_unix_ms)
 
 

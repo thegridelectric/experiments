@@ -15,7 +15,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent / "src"))
 
-from gwexp.sema.types import GwExperimentRun  # noqa: E402
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 
 STAMP = re.compile(r"^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:?\d{2})")
 
@@ -40,7 +40,7 @@ def first_line(path: Path, pattern: str) -> str:
 def main() -> None:
     start = stamp_ms(first_line(HERE / "evidence/spruce-journal.log", r"Stopping gwspaceheat"))
     end = stamp_ms(first_line(HERE / "evidence/alerts-journal.log", r"spruce: Found data up to 0\.\d minutes"))
-    run = GwExperimentRun(
+    run = GwExperimentRun000(
         experiment_slug="gwalert-no-data-page",
         host_g_node_alias="hw1.alerts",
         start_unix_ms=start,

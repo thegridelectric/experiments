@@ -1,14 +1,9 @@
 """What the notifier holds for the alerts an alerter raised, read off an
-Opsgenie listing (`GET /v2/alerts?query=source:<alias>`), as typed
-records: the facts the protocol checks (open or closed, how many times
-Opsgenie folded a create into the same alias, who closed it), not
-Opsgenie's intake shape.
-
-No sema word yet carries Opsgenie's alert as its API returns it; the
-`NotifierAlertView` record stands in and retires when that word exists
-(candidate `atl.opsgenie.alert`, GridWorks-owned under the vendor's
-prefix like `hubitat.*`, versioned by us as their API moves). Dict form
-appears once, at the boundary.
+Opsgenie listing (`GET /v2/alerts?query=source:<alias>`) into
+`gw.opsgenie.alert` words: the facts the protocol checks (open or
+closed, how many times Opsgenie folded a create into the same alias,
+who closed it), not Opsgenie's intake shape. The dict form of Opsgenie's
+response appears once, here, at the boundary.
 
     uv run python notifier_view.py evidence/<date>/opsgenie-resolved.json
 """
@@ -19,60 +14,54 @@ import json
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import NamedTuple
-
-from pydantic import TypeAdapter
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from gwexp.sema.property_format import UTCMilliseconds, UUID4Str  # noqa: E402
+from gwexp.sema.enums import GwOpsgenieAlertStatus, GwOpsgeniePriority  # noqa: E402
+from gwexp.sema.types import GwOpsgenieAlert  # noqa: E402
 
-UTC_MS = TypeAdapter(UTCMilliseconds)
-ALERT_ID = TypeAdapter(UUID4Str)
-
-
-class NotifierAlertView(NamedTuple):
-    """One alert as the notifier holds it. `alert_id` is the alias the tap
-    gave it (the `gw.alert` `AlertId`); `status` is the notifier's `open`
-    or `closed`; `count` how many creates the notifier folded into this
-    alias; `created_ms` when the notifier first took it; `closed_by` who
-    closed it, None while open; `message` the headline the tap sent."""
-
-    alert_id: UUID4Str
-    status: str
-    count: int
-    created_ms: UTCMilliseconds
-    closed_by: str | None
-    message: str
+STATUS = {"open": GwOpsgenieAlertStatus.Open, "closed": GwOpsgenieAlertStatus.Closed}
 
 
-def from_listing(listing: dict) -> list[NotifierAlertView]:
-    """The views in an Opsgenie listing response, in its order."""
-    views: list[NotifierAlertView] = []
+def stamp_ms(iso: str) -> int:
+    return int(datetime.fromisoformat(iso.replace("Z", "+00:00")).timestamp() * 1000)
+
+
+def from_listing(listing: dict) -> list[GwOpsgenieAlert]:
+    """The words in an Opsgenie listing response, in its order."""
+    words: list[GwOpsgenieAlert] = []
     for alert in listing["data"]:
-        created = datetime.fromisoformat(alert["createdAt"].replace("Z", "+00:00"))
-        views.append(
-            NotifierAlertView(
-                alert_id=ALERT_ID.validate_python(alert["alias"]),
-                status=alert["status"],
-                count=int(alert["count"]),
-                created_ms=UTC_MS.validate_python(int(created.timestamp() * 1000)),
-                closed_by=alert.get("report", {}).get("closedBy"),
+        report = alert.get("report", {})
+        words.append(
+            GwOpsgenieAlert(
+                alias=alert["alias"],
+                opsgenie_id=alert["id"],
+                tiny_id=alert["tinyId"],
                 message=alert["message"],
+                status=STATUS[alert["status"]],
+                acknowledged=bool(alert["acknowledged"]),
+                count=int(alert["count"]),
+                priority=GwOpsgeniePriority(alert["priority"]),
+                source=alert["source"],
+                tags=list(alert["tags"]),
+                created_ms=stamp_ms(alert["createdAt"]),
+                last_occurred_ms=stamp_ms(alert["lastOccurredAt"]),
+                acknowledged_by=report.get("acknowledgedBy"),
+                closed_by=report.get("closedBy"),
             )
         )
-    return views
+    return words
 
 
-def line(view: NotifierAlertView) -> str:
-    closed = f" closed by {view.closed_by}" if view.closed_by else ""
+def line(word: GwOpsgenieAlert) -> str:
+    closed = f" closed by {word.closed_by}" if word.closed_by else ""
+    created = datetime.fromtimestamp(word.created_ms / 1000).astimezone()
     return (
-        f"{view.status} {view.alert_id} count={view.count} "
-        f"created={datetime.fromtimestamp(view.created_ms / 1000).astimezone().isoformat(timespec='seconds')}"
-        f"{closed} | {view.message}"
+        f"{word.status.value.lower()} {word.alias} count={word.count} "
+        f"created={created.isoformat(timespec='seconds')}{closed} | {word.message}"
     )
 
 
 if __name__ == "__main__":
-    for view in from_listing(json.loads(Path(sys.argv[1]).read_text())):
-        print(line(view))
+    for word in from_listing(json.loads(Path(sys.argv[1]).read_text())):
+        print(line(word))

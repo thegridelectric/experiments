@@ -94,7 +94,7 @@ git diff --exit-code -- '*/instances' \
 
 echo "==> sema validate every instance"
 fail=0
-for f in */instances/*-000.json */instances/*/*-000.json */*-gw.readings-000.json \
+for f in */instances/*-00[0-9].json */instances/*/*-00[0-9].json */*-gw.readings-000.json \
          */defrost-signatures/*-gw.readings-000.json; do
     case "$f" in */instances/beech-window-gw.house0.*-000.json) continue ;; esac
     out=$(cd "$SEMA_REPO" && uv run sema validate "$(pwd)/../experiments/$f" 2>&1 | tail -1)

@@ -43,10 +43,10 @@ from gwexp.sema.codec import SemaCodec  # noqa: E402
 from gwexp.sema.types import (  # noqa: E402
     GwChannelJumpStats,
     GwChannelNoiseStats,
-    GwExperimentRun,
     GwReadings,
     LayoutLite,
 )
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 from gwexp.sema.types.old_versions.layout_lite_012 import LayoutLite012  # noqa: E402
 from naming import spaceheat_name_to_lrd_token  # noqa: E402
 
@@ -100,10 +100,10 @@ def load_pull() -> GwReadings:
                                  expect=GwReadings)
 
 
-def clean_harness_run(layout) -> GwExperimentRun:
+def clean_harness_run(layout) -> GwExperimentRun000:
     ts = [json.loads(line)["t"]
           for line in open(HERE / "raw-samples-2026-08-06-clean.jsonl")]
-    return GwExperimentRun(
+    return GwExperimentRun000(
         experiment_slug="ads-noise",
         host_g_node_alias=host_gnode_alias(layout),
         start_unix_ms=int(min(ts) * 1000),

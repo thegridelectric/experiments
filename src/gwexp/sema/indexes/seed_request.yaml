@@ -2,16 +2,18 @@
 # The experiment words, glitch (scada glitch messages decoded from the
 # journal DB by the pico reproducers), plus the thermistor-reader
 # lineage the ads-noise harness decodes from box layouts (000-003; the
-# fleet's 000 records decode typed — no fallback needed), and the house
-# alert words the alerter witnesses decode. Formats and enums arrive via
-# dependencies.
+# fleet's 000 records decode typed — no fallback needed), the house
+# alert words the alerter witnesses decode, and gw.opsgenie.alert, the
+# notifier's record of each alert read back from Opsgenie. Formats and
+# enums arrive via dependencies.
 
 initial_targets:
   types:
     glitch: {}
     gw.adc.waveform: {}
     gw.channel.gap.stats: {}
-    gw.experiment.run: {}
+    gw.experiment.run:
+      versions: ["000", "001"]
     gw.channel.jump.stats: {}
     gw.channel.noise.stats: {}
     gw.readings: {}
@@ -21,4 +23,6 @@ initial_targets:
     layout.lite:
       versions: ["004", "005", "006", "007", "008", "009", "010", "011", "012", "013"]
     gw.alert:
+      versions: ["000"]
+    gw.opsgenie.alert:
       versions: ["000"]

@@ -24,9 +24,9 @@ sys.path.insert(0, str(HERE.parent))
 from gwexp.sema.codec import SemaCodec  # noqa: E402
 from gwexp.sema.types import (  # noqa: E402
     GwChannelJumpStats,
-    GwExperimentRun,
     GwReadings,
 )
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 from naming import spaceheat_name_to_lrd_token  # noqa: E402
 
 PULL_PATH = HERE / "hw1.isone.me.versant.keene.spruce.ta-gw.readings-000.json"
@@ -52,8 +52,8 @@ def load_pull() -> GwReadings:
                                  expect=GwReadings)
 
 
-def run_instance(pull: GwReadings) -> GwExperimentRun:
-    return GwExperimentRun(
+def run_instance(pull: GwReadings) -> GwExperimentRun000:
+    return GwExperimentRun000(
         experiment_slug="spruce-no-cool-postmortem",
         host_g_node_alias=pull.ta_alias.removesuffix(".ta") + ".scada",
         start_unix_ms=pull.start_unix_ms,

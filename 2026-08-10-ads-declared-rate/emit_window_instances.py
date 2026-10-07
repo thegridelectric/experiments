@@ -27,7 +27,8 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent / "src"))
 sys.path.insert(0, str(HERE.parent))
 
-from gwexp.sema.types import GwChannelNoiseStats, GwExperimentRun  # noqa: E402
+from gwexp.sema.types import GwChannelNoiseStats  # noqa: E402
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 from naming import spaceheat_name_to_lrd_token  # noqa: E402
 
 EVENTS = HERE / "events-2026-08-11"
@@ -74,7 +75,7 @@ def write(path: Path, obj) -> None:
 def main() -> None:
     events = load_events()
     start, end = window_bounds(events)
-    run = GwExperimentRun(
+    run = GwExperimentRun000(
         experiment_slug="ads-declared-rate",
         host_g_node_alias="hw1.isone.me.versant.keene.spruce.scada",
         start_unix_ms=start,

@@ -74,10 +74,16 @@ types:
     versions:
       '000': definitions/types/gw.channel.noise.stats/000.yaml
   gw.experiment.run:
+    latest_version: '001'
+    versioning_strategy: literal
+    versions:
+      '001': definitions/types/gw.experiment.run/001.yaml
+      '000': definitions/types/gw.experiment.run/000.yaml
+  gw.opsgenie.alert:
     latest_version: '000'
     versioning_strategy: literal
     versions:
-      '000': definitions/types/gw.experiment.run/000.yaml
+      '000': definitions/types/gw.opsgenie.alert/000.yaml
   gw.readings:
     latest_version: '000'
     versioning_strategy: literal
@@ -219,6 +225,11 @@ enums:
   gw.alert.state:
     enum_type: literal
     schema: definitions/enums/gw.alert.state/000.yaml
+  gw.experiment.verdict:
+    enum_type: versioned
+    latest_version: '000'
+    versions:
+      '000': definitions/enums/gw.experiment.verdict/000.yaml
   gw.fleet.alert.kind:
     enum_type: versioned
     latest_version: '000'
@@ -229,6 +240,12 @@ enums:
     latest_version: '000'
     versions:
       '000': definitions/enums/gw.house.alert.kind/000.yaml
+  gw.opsgenie.alert.status:
+    enum_type: literal
+    schema: definitions/enums/gw.opsgenie.alert.status/000.yaml
+  gw.opsgenie.priority:
+    enum_type: literal
+    schema: definitions/enums/gw.opsgenie.priority/000.yaml
   gw.platform.alert.kind:
     enum_type: versioned
     latest_version: '000'

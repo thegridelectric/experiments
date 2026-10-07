@@ -12,13 +12,14 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent / "src"))
 
 from gwexp.sema.codec import SemaCodec  # noqa: E402
-from gwexp.sema.types import GwExperimentRun, GwReadings  # noqa: E402
+from gwexp.sema.types import GwReadings  # noqa: E402
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 
 
 def main() -> None:
     pull_path = HERE / "hw1.isone.me.versant.keene.maple.ta-gw.readings-000.json"
     pull = SemaCodec().from_dict(json.loads(pull_path.read_text()), expect=GwReadings)
-    inst = GwExperimentRun(
+    inst = GwExperimentRun000(
         experiment_slug="maple-starts-heating",
         host_g_node_alias="hw1.isone.me.versant.keene.maple.scada",
         start_unix_ms=pull.start_unix_ms,

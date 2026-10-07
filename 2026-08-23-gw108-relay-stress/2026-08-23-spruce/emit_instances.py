@@ -17,7 +17,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent.parent / "src"))
 
-from gwexp.sema.types import GwExperimentRun  # noqa: E402
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 
 # The spruce scada GNode (the box the harness ran on). Hand-coded: the
 # harness runs on the pi without the snapshot and the deployed layout is not
@@ -26,9 +26,9 @@ HOST_G_NODE_ALIAS = "hw1.isone.me.versant.keene.spruce.scada"
 SLUG = "spruce-relay-stress"
 
 
-def run_instance(results_path: Path, code_ref: str) -> GwExperimentRun:
+def run_instance(results_path: Path, code_ref: str) -> GwExperimentRun000:
     r = json.loads(results_path.read_text())
-    return GwExperimentRun(
+    return GwExperimentRun000(
         experiment_slug=SLUG,
         host_g_node_alias=HOST_G_NODE_ALIAS,
         start_unix_ms=r["StartUnixMs"],

@@ -32,9 +32,9 @@ from gwexp.sema.codec import SemaCodec  # noqa: E402
 from gwexp.sema.types import (  # noqa: E402
     ChannelReadings,
     DataChannelGt,
-    GwExperimentRun,
     GwReadings,
 )
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 from naming import validate_lrd  # noqa: E402
 from pull_readings import write_display_csv  # noqa: E402
 
@@ -83,8 +83,8 @@ def readings_instance(results: dict, ta: str, words: dict[str, DataChannelGt]) -
     )
 
 
-def run_instance(results: dict, scada: str) -> GwExperimentRun:
-    return GwExperimentRun(
+def run_instance(results: dict, scada: str) -> GwExperimentRun000:
+    return GwExperimentRun000(
         experiment_slug=SLUG,
         host_g_node_alias=scada,
         start_unix_ms=results["StartUnixMs"],

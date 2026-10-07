@@ -20,7 +20,7 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent / "src"))
 
 from gwexp.sema.codec import SemaCodec  # noqa: E402
-from gwexp.sema.types import GwExperimentRun  # noqa: E402
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 
 BOX_OFFSET = "-04:00"
 STAMP = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}\.\d{3})")
@@ -49,7 +49,7 @@ def bounds(path: Path) -> tuple[int, int]:
 def main() -> None:
     codec = SemaCodec()
     start, end = bounds(HERE / LOG)
-    run = GwExperimentRun(
+    run = GwExperimentRun000(
         experiment_slug="maple-ecodan-start-in-full-keep",
         host_g_node_alias=ALIAS,
         start_unix_ms=start,
@@ -59,7 +59,7 @@ def main() -> None:
     out = HERE / "instances/gw.experiment.run-000.json"
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(run.to_dict(), indent=1) + "\n")
-    back = codec.from_dict(json.loads(out.read_text()), expect=GwExperimentRun)
+    back = codec.from_dict(json.loads(out.read_text()), auto_upgrade=False, expect=GwExperimentRun000)
     print(out.name, back.start_unix_ms, back.end_unix_ms)
 
 

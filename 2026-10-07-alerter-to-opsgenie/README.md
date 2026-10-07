@@ -111,10 +111,10 @@ hours later).
   404 for a closed alert (`opsgenie-alert-3f449ad4.json`); the alias is
   an open-alert identity. The listing by `source` finds closed ones.
 - The notifier's view of each alert (open or closed, count, closed by)
-  is read off Opsgenie's listing through `notifier_view.py`, a typed
-  record standing in for a sema word that does not exist yet (the
-  script's docstring names the candidate). The verdict's facts are in
-  that view and in the two `gw.alert` instances; the README states them.
+  is read off Opsgenie's listing through `notifier_view.py` into
+  `gw.opsgenie.alert` words, one per alert the run touched. The
+  verdict's facts are in those three instances and in the two
+  `gw.alert` instances; the README states them.
 - The reconcile pass is the tap's only memory across a restart, and
   it both re-creates and closes: an alert Opsgenie holds that the
   store does not is closed, which is right for a missed `Resolved` and
@@ -146,13 +146,13 @@ dataset and pages the team again. No deployed service was touched.
   `evidence/2026-10-07/provenance.txt` describes (the day's script
   exited early and the mock was started by hand), not from this fixed
   script in one pass.
-- `notifier_view.py`: reads an Opsgenie listing into typed
-  `NotifierAlertView` records (alert id, status, count, created,
-  closed by, message) and prints one line each; what
-  `opsgenie-*.txt` is derived from.
+- `notifier_view.py`: reads an Opsgenie listing into `gw.opsgenie.alert`
+  words (alias, status, count, created, closed by, message, …) and
+  prints one line each; what `opsgenie-*.txt` is derived from.
 - `emit_instances.py`: writes `instances/` from the evidence: the two
-  `gw.alert` records out of the archived store, and the run record
-  from the alerter file log's window.
+  `gw.alert` records out of the archived store, the `gw.opsgenie.alert`
+  words out of the saved listing, and the run record from the alerter
+  file log's window.
 - `evidence/2026-10-07/provenance.txt`: where each file came from, the
   sequence as run, the clocks, the redaction.
 - `evidence/2026-10-07/`: the run's logs as captured (`run-stdout.log`,
@@ -169,7 +169,14 @@ dataset and pages the team again. No deployed service was touched.
 - `instances/<house>-firing-gw.alert-000.json` and
   `instances/<house>-resolved-gw.alert-000.json`: the alert's two
   transitions, as the alerter recorded them.
-- `instances/gw.experiment.run-000.json`: the run record.
+- `instances/d1.alerts-tiny<N>-gw.opsgenie.alert-000.json`: each alert
+  the run touched as Opsgenie listed it after the resume (the witnessed
+  alert, tiny id 1250, `Closed`, count 2, closed by `Alert API`; the
+  two stale test alerts, 1248 and 1249, count 1). Subject is the
+  alerter's alias the listing was queried by, condition Opsgenie's tiny
+  id, the number its console shows.
+- `instances/gw.experiment.run-001.json`: the run record, `Verdict`
+  Pass, `Claim` the executor's "The tap" section.
 
 Run (gw-dev-rabbit, the dev registry and the alerter's `.env` in place):
 

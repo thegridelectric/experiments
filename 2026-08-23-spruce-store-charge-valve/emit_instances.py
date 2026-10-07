@@ -11,12 +11,12 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent / "src"))
 
-from gwexp.sema.types import GwExperimentRun  # noqa: E402
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 
 
 def main() -> None:
     r = json.loads((HERE / "charge-valve-polarity-results.json").read_text())
-    inst = GwExperimentRun(
+    inst = GwExperimentRun000(
         experiment_slug="spruce-store-charge-valve",
         host_g_node_alias="hw1.isone.me.versant.keene.spruce.scada",
         start_unix_ms=r["StartUnixMs"],

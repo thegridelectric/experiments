@@ -16,7 +16,7 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent / "src"))
 
 from gwexp.sema.codec import default_codec  # noqa: E402
-from gwexp.sema.types import GwExperimentRun  # noqa: E402
+from gwexp.sema.types.old_versions.gw_experiment_run_000 import GwExperimentRun000  # noqa: E402
 
 EVIDENCE = HERE / "evidence/2026-09-28/alerter-file.log"
 STAMP = re.compile(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)")
@@ -31,7 +31,7 @@ def stamp_ms(line: str) -> int:
 
 def main() -> None:
     lines = EVIDENCE.read_text().splitlines()
-    run = GwExperimentRun(
+    run = GwExperimentRun000(
         experiment_slug="alerter-no-data",
         host_g_node_alias="d1.alerts",
         start_unix_ms=stamp_ms(lines[0]),
@@ -40,8 +40,8 @@ def main() -> None:
     )
     out = HERE / "instances/gw.experiment.run-000.json"
     out.write_text(json.dumps(run.to_dict(), indent=1) + "\n")
-    back = default_codec.from_bytes(out.read_bytes())
-    assert isinstance(back, GwExperimentRun) and back == run
+    back = default_codec.from_dict(json.loads(out.read_text()), auto_upgrade=False)
+    assert isinstance(back, GwExperimentRun000) and back == run
     print(out, run.start_unix_ms, run.end_unix_ms)
 
 

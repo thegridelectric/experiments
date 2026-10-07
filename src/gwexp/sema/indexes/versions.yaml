@@ -113,11 +113,20 @@ types:
         summary: "Initial version."
 
   gw.experiment.run:
+    latest_version: "001"
+    versioning_strategy: "literal"
+    versions:
+      "001":
+        summary: "Adds required Verdict (gw.experiment.verdict) and optional Claim naming the executor claim the run verifies; upgrade from 000 sets Verdict Unknown."
+      "000":
+        summary: "Initial version."
+
+  gw.opsgenie.alert:
     latest_version: "000"
     versioning_strategy: "literal"
     versions:
       "000":
-        summary: "Initial version."
+        summary: "Initial Sema version. ClosedBy present iff Status is Closed (axiom 1)."
 
   gw.readings:
     latest_version: "000"
@@ -386,6 +395,12 @@ enums:
     versions:
       "000": {}
 
+  gw.experiment.verdict:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
   gw.fleet.alert.kind:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
@@ -395,6 +410,18 @@ enums:
   gw.house.alert.kind:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw.opsgenie.alert.status:
+    enum_type: "literal"
+    note: "This enum is literal; version 000 is immutable and exclusive."
+    versions:
+      "000": {}
+
+  gw.opsgenie.priority:
+    enum_type: "literal"
+    note: "This enum is literal; version 000 is immutable and exclusive."
     versions:
       "000": {}
 

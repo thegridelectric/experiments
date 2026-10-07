@@ -243,6 +243,10 @@ enums:
     '000':
       used_by:
       - gw.alert:000
+  gw.experiment.verdict:
+    '000':
+      used_by:
+      - gw.experiment.run:001
   gw.fleet.alert.kind:
     '000':
       used_by:
@@ -251,6 +255,14 @@ enums:
     '000':
       used_by:
       - gw.alert:000
+  gw.opsgenie.alert.status:
+    '000':
+      used_by:
+      - gw.opsgenie.alert:000
+  gw.opsgenie.priority:
+    '000':
+      used_by:
+      - gw.opsgenie.alert:000
   gw.platform.alert.kind:
     '000':
       used_by:
@@ -406,6 +418,7 @@ formats:
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
+    - gw.experiment.run:001
     - gw.readings:000
     - layout.lite:004
     - layout.lite:005
@@ -428,6 +441,8 @@ formats:
     used_by:
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
+    - gw.experiment.run:001
+    - gw.opsgenie.alert:000
     - relay.actor.config:002
     - relay.actor.config:003
   non.negative.int:
@@ -454,6 +469,7 @@ formats:
     - gw.channel.gap.stats:000
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
+    - gw.opsgenie.alert:000
     - i2c.thermistor.channel.config:000
     - i2c.thermistor.reader.component.gt:000
     - layout.lite:004
@@ -500,6 +516,7 @@ formats:
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
+    - gw.experiment.run:001
     - i2c.multichannel.dt.relay.component.gt:003
     - i2c.multichannel.dt.relay.component.gt:004
     - i2c.thermistor.channel.config:000
@@ -524,6 +541,8 @@ formats:
     - gw.channel.jump.stats:000
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
+    - gw.experiment.run:001
+    - gw.opsgenie.alert:000
     - gw.readings:000
     - layout.lite:004
     - layout.lite:005
@@ -557,6 +576,7 @@ formats:
     - fsm.full.report:001
     - gw.adc.waveform:000
     - gw.alert:000
+    - gw.opsgenie.alert:000
     - i2c.multichannel.dt.relay.component.gt:002
     - i2c.multichannel.dt.relay.component.gt:003
     - i2c.multichannel.dt.relay.component.gt:004
