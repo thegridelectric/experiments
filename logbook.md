@@ -13,6 +13,13 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-10-08 · [beech-missing-store-heat-analysis](2026-10-08-beech-missing-store-heat-analysis/)** —
+  beech's store did not charge on the coldest night (2026-01-04/05):
+  Local Control's buffer-full test compared the buffer with an uncapped
+  forecast RSWT the heat pump could not reach and held it on the buffer
+  for six hours. The rule had to be read from a guessed commit, since
+  neither the running code nor the RSWT as used is in the store; OPS-7
+  closes the first gap.
 - **2026-10-07 · [alerter-broker-down](2026-10-07-alerter-broker-down/)** —
   FAIL: with the dev broker stopped for four minutes the prober raised
   `BrokerUnreachable` per door in 29 s and resolved both 6 s after the

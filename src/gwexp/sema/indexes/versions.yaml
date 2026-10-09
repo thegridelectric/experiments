@@ -62,6 +62,8 @@ types:
         summary: >
           - ActionType: remove
           - Action: scalar -> unconstrained object payload
+      "000":
+        summary: "Initial Sema version"
 
   fsm.full.report:
     latest_version: "001"
@@ -69,6 +71,8 @@ types:
     versions:
       "001":
         summary: "- AtomicList[]: fsm.atomic.report:000 -> 001"
+      "000":
+        summary: "Initial Sema version"
 
   glitch:
     latest_version: "000"
@@ -178,6 +182,13 @@ types:
         summary: "- StratBossDist010: add"
       "002":
         summary: "- LoadOverestimationPercent: add"
+
+  heating.forecast:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial Sema version"
 
   i2c.multichannel.dt.relay.component.gt:
     latest_version: "004"
@@ -309,6 +320,11 @@ types:
     versions:
       "003":
         summary: "- FsmReportList[]: fsm.full.report:000 -> 001"
+      "002":
+        summary: >
+          - StateList: add (machine.states:000)
+          - FsmActionList: remove
+          - FsmReportList[]: fsm.full.report:000 -> oneOf[000, 001]
 
   report.event:
     latest_version: "004"
@@ -320,6 +336,8 @@ types:
         summary: >
           - Report: report:002 -> 003
           - Axioms: remove former ReportIdentityPropagation and ReportCreatedTimePropagation
+      "002":
+        summary: "- Report: report:001 -> 002"
 
   sim.pico.tank.module.component.gt:
     latest_version: "001"

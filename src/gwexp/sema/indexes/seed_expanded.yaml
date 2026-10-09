@@ -1,6 +1,6 @@
 metadata:
   generated_from: indexes/public_registry.yaml
-  generated_at: '2026-10-07T19:33:08Z'
+  generated_at: '2026-10-08T21:44:38Z'
   note: Transitive closure of initial_targets
 initial_targets:
 - glitch:000
@@ -13,8 +13,10 @@ initial_targets:
 - gw.channel.noise.stats:000
 - gw.readings:000
 - i2c.thermistor.reader.component.gt:000
+- report.event:002
 - report.event:003
 - report.event:004
+- heating.forecast:000
 - layout.lite:004
 - layout.lite:005
 - layout.lite:006
@@ -177,9 +179,13 @@ worklist:
       '002':
         path: definitions/types/derived.channel.gt/002.yaml
     fsm.atomic.report:
+      '000':
+        path: definitions/types/fsm.atomic.report/000.yaml
       '001':
         path: definitions/types/fsm.atomic.report/001.yaml
     fsm.full.report:
+      '000':
+        path: definitions/types/fsm.full.report/000.yaml
       '001':
         path: definitions/types/fsm.full.report/001.yaml
     glitch:
@@ -231,6 +237,9 @@ worklist:
         path: definitions/types/ha1.params/005.yaml
       '006':
         path: definitions/types/ha1.params/006.yaml
+    heating.forecast:
+      '000':
+        path: definitions/types/heating.forecast/000.yaml
     i2c.multichannel.dt.relay.component.gt:
       '002':
         path: definitions/types/i2c.multichannel.dt.relay.component.gt/002.yaml
@@ -288,9 +297,13 @@ worklist:
       '003':
         path: definitions/types/relay.actor.config/003.yaml
     report:
+      '002':
+        path: definitions/types/report/002.yaml
       '003':
         path: definitions/types/report/003.yaml
     report.event:
+      '002':
+        path: definitions/types/report.event/002.yaml
       '003':
         path: definitions/types/report.event/003.yaml
       '004':

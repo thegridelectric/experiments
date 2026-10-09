@@ -17,6 +17,7 @@ from gwexp.sema.types.gw_experiment_run import GwExperimentRun
 from gwexp.sema.types.gw_opsgenie_alert import GwOpsgenieAlert
 from gwexp.sema.types.gw_readings import GwReadings
 from gwexp.sema.types.ha1_params import Ha1Params
+from gwexp.sema.types.heating_forecast import HeatingForecast
 from gwexp.sema.types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGt,
 )
@@ -63,6 +64,7 @@ __all__ = [
     "GwOpsgenieAlert",
     "GwReadings",
     "Ha1Params",
+    "HeatingForecast",
     "I2cMultichannelDtRelayComponentGt",
     "I2cThermistorChannelConfig",
     "I2cThermistorReaderComponentGt",

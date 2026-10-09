@@ -4,8 +4,10 @@
 # lineage the ads-noise harness decodes from box layouts (000-003; the
 # fleet's 000 records decode typed — no fallback needed), the house
 # alert words the alerter witnesses decode, and gw.opsgenie.alert, the
-# notifier's record of each alert read back from Opsgenie. Formats and
-# enums arrive via dependencies.
+# notifier's record of each alert read back from Opsgenie, and the scada
+# boot and hourly messages the beech store-heat analysis decodes
+# (report.event 002, heating.forecast 000). Formats and enums arrive via
+# dependencies.
 
 initial_targets:
   types:
@@ -20,7 +22,9 @@ initial_targets:
     gw.readings: {}
     i2c.thermistor.reader.component.gt: {}
     report.event:
-      versions: ["003", "004"]
+      versions: ["002", "003", "004"]
+    heating.forecast:
+      versions: ["000"]
     layout.lite:
       versions: ["004", "005", "006", "007", "008", "009", "010", "011", "012", "013"]
     gw.alert:

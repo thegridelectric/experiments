@@ -1,6 +1,6 @@
 metadata:
   registry_version: "1.0"
-  last_updated: "2026-10-07T15:05:00Z"
+  last_updated: "2026-10-08T21:00:00Z"
   maintainer: "gridworks-energy"
 
 formats:
@@ -616,6 +616,18 @@ types:
             - "uuid4.str"
           axiom:
             - "relay.energization.state:000"
+      "000":
+        schema_url: "https://schemas.electricity.works/types/fsm.atomic.report/000"
+        created: "2024-10-08T17:17:00Z"
+        status: "published"
+        summary: "Initial Sema version"
+        direct_dependencies:
+          structural:
+            - "fsm.report.type:000"
+            - "handle.name"
+            - "left.right.dot"
+            - "utc.milliseconds"
+            - "uuid4.str"
 
   fsm.full.report:
     latest_version: "001"
@@ -632,6 +644,16 @@ types:
         direct_dependencies:
           structural:
             - "fsm.atomic.report:001"
+            - "spaceheat.name"
+            - "uuid4.str"
+      "000":
+        schema_url: "https://schemas.electricity.works/types/fsm.full.report/000"
+        created: "2024-10-08T17:41:00Z"
+        status: "published"
+        summary: "Initial Sema version"
+        direct_dependencies:
+          structural:
+            - "fsm.atomic.report:000"
             - "spaceheat.name"
             - "uuid4.str"
 
@@ -924,6 +946,24 @@ types:
         summary: "- LoadOverestimationPercent: add"
         direct_dependencies:
           structural: []
+
+  heating.forecast:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "Heating demand forecast providing projected average power, required source water temperature, and delta T per interval."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/types/heating.forecast/000"
+        created: "2026-05-13T00:00:00Z"
+        status: "published"
+        summary: "Initial Sema version"
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+            - "utc.seconds"
+            - "uuid4.str"
 
   i2c.multichannel.dt.relay.component.gt:
     latest_version: "004"
@@ -1400,6 +1440,22 @@ types:
             - "utc.milliseconds"
             - "utc.seconds"
             - "uuid4.str"
+      "002":
+        schema_url: "https://schemas.electricity.works/types/report/002"
+        created: "2025-04-23T18:03:00Z"
+        status: "published"
+        summary: "- StateList: add (machine.states:000) - FsmActionList: remove - FsmReportList[]: fsm.full.report:000 -> oneOf[000, 001]"
+        direct_dependencies:
+          structural:
+            - "channel.readings:002"
+            - "fsm.full.report:000"
+            - "fsm.full.report:001"
+            - "left.right.dot"
+            - "machine.states:000"
+            - "positive.int"
+            - "utc.milliseconds"
+            - "utc.seconds"
+            - "uuid4.str"
 
   report.event:
     latest_version: "004"
@@ -1428,6 +1484,17 @@ types:
           structural:
             - "left.right.dot"
             - "report:003"
+            - "utc.milliseconds"
+            - "uuid4.str"
+      "002":
+        schema_url: "https://schemas.electricity.works/types/report.event/002"
+        created: "2025-04-23T18:03:00Z"
+        status: "published"
+        summary: "- Report: report:001 -> 002"
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+            - "report:002"
             - "utc.milliseconds"
             - "uuid4.str"
 

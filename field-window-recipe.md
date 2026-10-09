@@ -135,6 +135,20 @@ checkout's Nolan sim fixtures (the pair and the deed) into the laptop's
 `~/.config/gridworks/` folders under the deployed names, and
 `house_window.sh dev on` refuses until `put_layout.sh dev check` passes.
 
+A dev window also needs weather. At boot the scada provisions its
+location's forecast bundle and seasonal template: each is read from the
+config folder, pulled from the weather service when missing, and the
+scada refuses to start when a record is neither stored nor obtainable.
+The laptop's `.env` points at the hw1 weather facade, which does not
+serve the sim location's seasonal template, so a dev window boots only
+when both records sit in `~/.config/gridworks/scada-experiment/`
+(`us.me.millinocket-gw.weather.seasonal.template.gt-000.json` and the
+bundle). `put_layout.sh dev` does not copy them yet; copy the template
+from `gridworks-scada/tests/config/` by hand. The pull path itself is
+exercised only with a weather service on the dev broker (`d1.weather`),
+which no dev window runs today; see the simulated-test-environment
+design's gleanings for a full dev simulation.
+
 The production `hardware-layout.json` follows the ordinary scada deploy
 (land-in-git → push → pull on the box), not `put_layout.sh`.
 

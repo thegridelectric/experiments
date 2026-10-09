@@ -38,11 +38,13 @@ types:
     versioning_strategy: literal
     versions:
       '001': definitions/types/fsm.atomic.report/001.yaml
+      '000': definitions/types/fsm.atomic.report/000.yaml
   fsm.full.report:
     latest_version: '001'
     versioning_strategy: literal
     versions:
       '001': definitions/types/fsm.full.report/001.yaml
+      '000': definitions/types/fsm.full.report/000.yaml
   glitch:
     latest_version: '000'
     versioning_strategy: literal
@@ -113,6 +115,11 @@ types:
       '004': definitions/types/ha1.params/004.yaml
       '003': definitions/types/ha1.params/003.yaml
       '002': definitions/types/ha1.params/002.yaml
+  heating.forecast:
+    latest_version: '000'
+    versioning_strategy: literal
+    versions:
+      '000': definitions/types/heating.forecast/000.yaml
   i2c.multichannel.dt.relay.component.gt:
     latest_version: '004'
     versioning_strategy: literal
@@ -174,12 +181,14 @@ types:
     versioning_strategy: literal
     versions:
       '003': definitions/types/report/003.yaml
+      '002': definitions/types/report/002.yaml
   report.event:
     latest_version: '004'
     versioning_strategy: literal
     versions:
       '004': definitions/types/report.event/004.yaml
       '003': definitions/types/report.event/003.yaml
+      '002': definitions/types/report.event/002.yaml
   sim.pico.tank.module.component.gt:
     latest_version: '001'
     versioning_strategy: literal

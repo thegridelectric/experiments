@@ -15,6 +15,7 @@ types:
       used_by:
       - gw.alert:000
       - gw.readings:000
+      - report:002
       - report:003
   data.channel.gt:
     '001':
@@ -51,12 +52,19 @@ types:
       used_by:
       - gw.readings:000
   fsm.atomic.report:
+    '000':
+      used_by:
+      - fsm.full.report:000
     '001':
       used_by:
       - fsm.full.report:001
   fsm.full.report:
+    '000':
+      used_by:
+      - report:002
     '001':
       used_by:
+      - report:002
       - report:003
   gw1.tank.temp.calibration:
     '000':
@@ -126,6 +134,7 @@ types:
   machine.states:
     '000':
       used_by:
+      - report:002
       - report:003
   pico.flow.module.component.gt:
     '000':
@@ -173,6 +182,9 @@ types:
       used_by:
       - i2c.multichannel.dt.relay.component.gt:004
   report:
+    '002':
+      used_by:
+      - report.event:002
     '003':
       used_by:
       - report.event:003
@@ -237,6 +249,7 @@ enums:
   fsm.report.type:
     '000':
       used_by:
+      - fsm.atomic.report:000
       - fsm.atomic.report:001
   gpm.from.hz.method:
     '000':
@@ -404,6 +417,7 @@ formats:
     - pico.tank.module.component.gt:012
   handle.name:
     used_by:
+    - fsm.atomic.report:000
     - fsm.atomic.report:001
     - machine.states:000
     - single.machine.state:000
@@ -420,6 +434,7 @@ formats:
     - derived.channel.gt:000
     - derived.channel.gt:001
     - derived.channel.gt:002
+    - fsm.atomic.report:000
     - fsm.atomic.report:001
     - glitch:000
     - gw.adc.waveform:000
@@ -430,6 +445,7 @@ formats:
     - gw.experiment.run:000
     - gw.experiment.run:001
     - gw.readings:000
+    - heating.forecast:000
     - layout.lite:004
     - layout.lite:005
     - layout.lite:006
@@ -443,8 +459,10 @@ formats:
     - machine.states:000
     - relay.actor.config:002
     - relay.actor.config:003
+    - report.event:002
     - report.event:003
     - report.event:004
+    - report:002
     - report:003
     - single.machine.state:000
     - snapshot.spaceheat:003
@@ -500,6 +518,7 @@ formats:
     - pico.tank.module.component.gt:012
     - relay.actor.config:002
     - relay.actor.config:003
+    - report:002
     - report:003
     - sim.pico.tank.module.component.gt:000
     - sim.pico.tank.module.component.gt:001
@@ -522,6 +541,7 @@ formats:
     - derived.channel.gt:000
     - derived.channel.gt:001
     - derived.channel.gt:002
+    - fsm.full.report:000
     - fsm.full.report:001
     - glitch:000
     - gw.channel.gap.stats:000
@@ -546,6 +566,7 @@ formats:
   utc.milliseconds:
     used_by:
     - channel.readings:002
+    - fsm.atomic.report:000
     - fsm.atomic.report:001
     - glitch:000
     - gw.adc.waveform:000
@@ -568,8 +589,10 @@ formats:
     - layout.lite:012
     - layout.lite:013
     - machine.states:000
+    - report.event:002
     - report.event:003
     - report.event:004
+    - report:002
     - report:003
     - single.machine.state:000
     - single.reading:000
@@ -579,6 +602,8 @@ formats:
     - data.channel.gt:001
     - data.channel.gt:002
     - data.channel.gt:003
+    - heating.forecast:000
+    - report:002
     - report:003
   uuid4.str:
     used_by:
@@ -588,11 +613,14 @@ formats:
     - derived.channel.gt:000
     - derived.channel.gt:001
     - derived.channel.gt:002
+    - fsm.atomic.report:000
     - fsm.atomic.report:001
+    - fsm.full.report:000
     - fsm.full.report:001
     - gw.adc.waveform:000
     - gw.alert:000
     - gw.opsgenie.alert:000
+    - heating.forecast:000
     - i2c.multichannel.dt.relay.component.gt:002
     - i2c.multichannel.dt.relay.component.gt:003
     - i2c.multichannel.dt.relay.component.gt:004
@@ -613,8 +641,10 @@ formats:
     - pico.tank.module.component.gt:010
     - pico.tank.module.component.gt:011
     - pico.tank.module.component.gt:012
+    - report.event:002
     - report.event:003
     - report.event:004
+    - report:002
     - report:003
     - sim.pico.tank.module.component.gt:000
     - sim.pico.tank.module.component.gt:001
