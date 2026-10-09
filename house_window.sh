@@ -5,7 +5,7 @@
 # by capture_broker.py on the laptop's gw-dev-rabbit. spruce_window.sh,
 # beech_window.sh and maple_window.sh call this with their house.
 #
-#   ./house_window.sh <target> on [minutes] [--debug] [--ltn]
+#   ./house_window.sh <target> on [minutes] [--debug] [--ltn] [--cert]
 #                                            start the broker capture if none is
 #                                            running (refuses if it cannot prove
 #                                            itself), then open the window. On a
@@ -22,6 +22,13 @@
 #                                              --ltn    run the LTN on the laptop against
 #                                                       the target's layout, as the
 #                                                       scada's upstream peer
+#                                              --cert   the upstream link on the PROD broker,
+#                                                       logged in by the house's own client
+#                                                       cert (~/envs/cert.env on the box): no
+#                                                       tunnel, no laptop capture; the window
+#                                                       scada is the house on the bus, its
+#                                                       events reach the journal, and FIS
+#                                                       auth_events hold the lease
 #   ./house_window.sh <target> off           kill the window scada (and the LTN), copy
 #                                            the log and this window's persisted
 #                                            events to ../scratch/, count the
@@ -62,7 +69,8 @@
 # The window scada runs through
 # ~/experiments/window_boot.py from ~/envs/dev.env
 # (dev-broker creds only; upstream through the tunnel, admin link on the box's
-# own mosquitto). A dev window runs the same boot from the laptop's scada
+# own mosquitto), or from ~/envs/cert.env with --cert (the prod broker on the
+# house's cert; the same local and admin links). A dev window runs the same boot from the laptop's scada
 # checkout and its .env, which names no layout paths. Then `gwa watch <house>`
 # from the laptop.
 #
@@ -149,14 +157,15 @@ case "$HOUSE" in
   *) usage ;;
 esac
 
-# on [minutes] [--debug] [--ltn]
-MIN=0; DEBUG=0; LTN=0
+# on [minutes] [--debug] [--ltn] [--cert]
+MIN=0; DEBUG=0; LTN=0; CERT=0
 if [ "${2:-}" = on ]; then
   for a in "${@:3}"; do
     case "$a" in
       --debug) DEBUG=1 ;;
       --ltn) LTN=1 ;;
-      *) [[ "$a" =~ ^[0-9]+$ ]] || { echo "minutes must be a whole number; flags are --debug and --ltn"; exit 1; }; MIN="$a" ;;
+      --cert) CERT=1 ;;
+      *) [[ "$a" =~ ^[0-9]+$ ]] || { echo "minutes must be a whole number; flags are --debug, --ltn and --cert"; exit 1; }; MIN="$a" ;;
     esac
   done
 fi
@@ -164,6 +173,10 @@ if [ "$MIN" -gt 0 ] && [ "$MIN" -lt "$MIN_WINDOW_MIN" ]; then
   echo "refusing: a bounded window is at least $MIN_WINDOW_MIN min so it saves a full-slot report; no minutes = a standing window"; exit 1
 fi
 SECS=$((MIN * 60))
+# the env file the window scada boots from on the box
+ENV_FILE="~/envs/dev.env"
+[ "$CERT" = 0 ] || ENV_FILE="~/envs/cert.env"
+[ "$CERT" = 0 ] || [ "$LTN" = 0 ] || { echo "refusing: --cert puts the window on the prod broker, where the house's own LTN is its peer; --ltn runs a second one on the laptop"; exit 1; }
 DEBUG_ENV=""
 [ "$DEBUG" = 0 ] || DEBUG_ENV="SCADA_LOGGING__BASE_LOG_LEVEL=10 SCADA_LOGGING__LEVELS__MESSAGE_SUMMARY=10"
 
@@ -239,7 +252,7 @@ box_start() {
     echo \"$1 stopping: \$(paste -sd' ' $STOPPED)\"
     [ ! -s $STOPPED ] || sudo systemctl stop \$(cat $STOPPED)
     SECS=$SECS
-    setsid nohup bash -c \"cd ~/gridworks-scada-unlimbo/gw_spaceheat && $3 \$([ \$SECS -gt 0 ] && echo timeout \$((SECS + 60))) venv/bin/python ~/experiments/window_boot.py \$SECS ~/envs/dev.env > $BOX_LOG_DIR/boot.log 2>&1; [ ! -s $STOPPED ] || sudo systemctl start \\\$(cat $STOPPED)\" > /dev/null 2>&1 < /dev/null &
+    setsid nohup bash -c \"cd ~/gridworks-scada-unlimbo/gw_spaceheat && $3 \$([ \$SECS -gt 0 ] && echo timeout \$((SECS + 60))) venv/bin/python ~/experiments/window_boot.py \$SECS $ENV_FILE > $BOX_LOG_DIR/boot.log 2>&1; [ ! -s $STOPPED ] || sudo systemctl start \\\$(cat $STOPPED)\" > /dev/null 2>&1 < /dev/null &
     sleep 20
     git -C ~/gridworks-scada-unlimbo log --oneline -1
     tail -3 $BOX_LOG_DIR/boot.log | cut -c1-140"
@@ -289,15 +302,22 @@ case "${2:-}" in
     [ -z "$SECOND_PI" ] || head_check "$SECOND_PI"
     if window_up; then echo "refusing: a window scada is already running on $HOUSE"; exit 1; fi
     if [ -n "$SECOND_PI" ] && window_up "$SECOND_PI"; then echo "refusing: a window scada2 is already running on $SECOND_PI"; exit 1; fi
-    ensure_capture
-    note_window "$HEAD"
-    # The tunnel carries the upstream (LTN) link to the laptop's dev broker for
-    # observation only; commands ride the box's own mosquitto. Without it the
-    # upstream link waits for its peer and the window's events stay on the box.
-    if tunnel_up || ssh -f -N -o ExitOnForwardFailure=yes -R 1885:localhost:1885 "$HOUSE"; then
-      echo "tunnel up"
+    if [ "$CERT" = 1 ]; then
+      # The prod broker is the upstream peer: nothing to capture on the laptop,
+      # no tunnel. The record is the journal and FIS auth_events.
+      ssh "$HOUSE" "test -s $ENV_FILE" || { echo "refusing: $HOUSE has no $ENV_FILE (the cert-window env; see the box README)"; exit 1; }
+      echo "cert window: $HOUSE upstream on the prod broker from $ENV_FILE; no tunnel, no capture"
     else
-      echo "no tunnel: the window runs without the upstream link to the dev broker, and the capture will hold nothing from $HOUSE"
+      ensure_capture
+      note_window "$HEAD"
+      # The tunnel carries the upstream (LTN) link to the laptop's dev broker for
+      # observation only; commands ride the box's own mosquitto. Without it the
+      # upstream link waits for its peer and the window's events stay on the box.
+      if tunnel_up || ssh -f -N -o ExitOnForwardFailure=yes -R 1885:localhost:1885 "$HOUSE"; then
+        echo "tunnel up"
+      else
+        echo "no tunnel: the window runs without the upstream link to the dev broker, and the capture will hold nothing from $HOUSE"
+      fi
     fi
     start_ltn
     if [ -z "$SECOND_PI" ]; then
@@ -354,7 +374,7 @@ case "${2:-}" in
     N_EVENTS="$(find "$EVENTS" -type f -name '*.json' | wc -l | tr -d ' ')"
     N_REPORTS="$({ grep -l '"TypeName": *"report.event"' -r "$EVENTS" 2>/dev/null || true; } | wc -l | tr -d ' ')"
     echo "events: $N_EVENTS persisted on the box, $N_REPORTS report.event -> $EVENTS"
-    [ "$N_REPORTS" -gt 0 ] || echo "WARNING: no report.event on the box; a window run with --ltn delivers them to the capture instead"
+    [ "$N_REPORTS" -gt 0 ] || echo "WARNING: no report.event on the box; a window run with --ltn delivers them to the capture, one with --cert to the journal"
     capture_up && echo "capture still running; after the last window: ./house_window.sh capture off"
     ;;
   status)

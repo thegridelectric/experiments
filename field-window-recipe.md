@@ -76,6 +76,27 @@ LTN dispatch of a windowed house requires all of: the LTN `.env` sets
 `ServiceMode Heating`; and the scada holds a TaDeed. A Standby house cannot be
 dispatched.
 
+## A cert window
+
+`<house>_window.sh on <minutes> --cert` puts the window scada's upstream
+link on the prod broker, logged in by the house's own client cert: the box
+boots from `~/envs/cert.env` (dev.env with the upstream block swapped:
+hw1-1 on 8883 over TLS, no username or password, the deployed scada's
+certs under `~/.config/gridworks/scada/certs` named explicitly) and
+`on` opens no tunnel and starts no laptop capture. On the bus the window
+scada IS the house: the deployed services are stopped first so the cert's
+CN is never held twice, the house's own LTN is its upstream peer (so
+`--ltn` is refused), its events reach the journal, and FIS `auth_events`
+records the lease on the per-process instance id. The record of a cert
+window is the journal DB (`spot-check-recipe.md`) and that FIS row, not a
+capture file. The box's window venv must carry proactor `v4.1.13+jm3`
+(the `client_id` FIS accepts); `pip install` the pin line from
+`requirements/drivers.txt` into `~/gridworks-scada-unlimbo/gw_spaceheat/venv`
+after a pull that moves it. Spruce holds a `cert.env` (2026-10-09); the
+other houses get one when they first run a cert window.
+A cert window is a production act: the window announces its layout to
+the fleet, so it waits on a layout word the fleet reads.
+
 ## Picos on the 110 firmware
 
 Until the fleet's picos are reflashed (several weeks from 2026-09-24;

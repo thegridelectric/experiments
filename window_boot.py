@@ -8,14 +8,16 @@ bus stopped by house_window.sh:
     cd ~/gridworks-scada-unlimbo/gw_spaceheat && \
         venv/bin/python ~/experiments/window_boot.py [seconds] [env-file] [scada gw_spaceheat dir]
 
-Environment comes from ~/envs/dev.env: the house's real (hw1) identity, dev
-broker only via the laptop's ssh -R 1885 tunnel, experiment artifact paths
+Environment comes from the env file house_window.sh names: ~/envs/dev.env
+(the house's real hw1 identity, dev broker only via the laptop's ssh -R 1885
+tunnel) or ~/envs/cert.env (the prod broker, logged in by the house's own
+client cert); both use the experiment artifact paths
 (~/.config/gridworks/scada-experiment/). The app is built through the BASE
 `App.make_app_for_cli` (mkdirs + logging + TLS check + instantiate), not
 ScadaApp's override — the override adds the universe guardrail, which
-rightly refuses an hw1 identity on a localhost broker at real boots; this
-bounded harness is the guardrail's designed test-boot exemption
-(credential-structural isolation: the env file carries no hw1 creds).
+rightly refuses an hw1 identity on a localhost broker at real boots; the
+dev-broker window is the guardrail's designed test-boot exemption
+(credential-structural isolation: dev.env carries no hw1 creds).
 
 WINDOW_SCADA2=1 in the environment boots the secondary scada (Scada2App)
 instead: a house's second pi runs its half of the window from the same
