@@ -75,24 +75,38 @@ def tap_url() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Listen to the fleet stream on the analytics tap broker.")
-    parser.add_argument("-k", "--key", action="append", help="binding pattern on ear_tx (default '#')")
-    parser.add_argument("--out", type=Path, help="also write a JSONL capture into this directory")
-    parser.add_argument("--seconds", type=int, default=0, help="stop after N seconds (0 = until Ctrl-C)")
+    parser = argparse.ArgumentParser(
+        description="Listen to the fleet stream on the analytics tap broker."
+    )
+    parser.add_argument(
+        "-k", "--key", action="append", help="binding pattern on ear_tx (default '#')"
+    )
+    parser.add_argument(
+        "--out", type=Path, help="also write a JSONL capture into this directory"
+    )
+    parser.add_argument(
+        "--seconds", type=int, default=0, help="stop after N seconds (0 = until Ctrl-C)"
+    )
     args = parser.parse_args()
 
     connection = pika.BlockingConnection(pika.URLParameters(tap_url()))
     channel = connection.channel()
-    queue = channel.queue_declare(queue=f"{QUEUE_PREFIX}{uuid.uuid4().hex[:8]}", exclusive=True).method.queue
+    queue = channel.queue_declare(
+        queue=f"{QUEUE_PREFIX}{uuid.uuid4().hex[:8]}", exclusive=True
+    ).method.queue
     for key in args.key or ["#"]:
         channel.queue_bind(queue=queue, exchange=EXCHANGE, routing_key=key)
 
     out_file = None
     if args.out:
         args.out.mkdir(parents=True, exist_ok=True)
-        out_file = (args.out / f"tap-capture-{datetime.now():%Y%m%d-%H%M%S}.jsonl").open("w")
+        out_file = (
+            args.out / f"tap-capture-{datetime.now():%Y%m%d-%H%M%S}.jsonl"
+        ).open("w")
 
-    def on_message(ch: BlockingChannel, method: Basic.Deliver, _props: BasicProperties, body: bytes) -> None:
+    def on_message(
+        ch: BlockingChannel, method: Basic.Deliver, _props: BasicProperties, body: bytes
+    ) -> None:
         try:
             text, b64 = body.decode("utf-8"), None
         except UnicodeDecodeError:
@@ -103,7 +117,9 @@ def main() -> int:
             payload_text=text,
             payload_b64=b64,
         )
-        print(f"{datetime.now():%H:%M:%S}  {len(body):>7}  {msg.routing_key}", flush=True)
+        print(
+            f"{datetime.now():%H:%M:%S}  {len(body):>7}  {msg.routing_key}", flush=True
+        )
         if out_file:
             out_file.write(json.dumps(msg.to_dict()) + "\n")
             out_file.flush()
@@ -112,7 +128,11 @@ def main() -> int:
     if args.seconds:
         connection.call_later(args.seconds, channel.stop_consuming)
     signal.signal(signal.SIGTERM, lambda *_: channel.stop_consuming())
-    print(f"listening on the tap's {EXCHANGE} ({', '.join(args.key or ['#'])})", file=sys.stderr, flush=True)
+    print(
+        f"listening on the tap's {EXCHANGE} ({', '.join(args.key or ['#'])})",
+        file=sys.stderr,
+        flush=True,
+    )
     try:
         channel.start_consuming()
     except KeyboardInterrupt:

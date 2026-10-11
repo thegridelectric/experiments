@@ -53,10 +53,18 @@ as validated Sema instances.
   broker's firehose, so MQTT and AMQP traffic are both in it. It proves
   its own connection with a probe before it prints `capturing`; start it
   before the thing under observation. One capture at a time.
+- `tap_listen.py` — **the go-to for watching live fleet traffic.** Binds
+  an exclusive queue to `ear_tx` on the analytics tap broker
+  (`hw1-tap.electricity.works`), which has a one-way copy of prod's
+  `ear_tx`, and prints one line per message; `-k` narrows by binding
+  pattern, `--out` also writes a JSONL capture. It logs in as
+  `gw.analyst`, which may publish nowhere, so nothing done here reaches
+  the fleet. Never listen on prod.
 - `.env` (gitignored, never committed) — `GJK_DB_URL`, the journal-DB
   connection string `pull_readings.py` and the per-experiment analysis
   scripts read, and `GWEXP_RABBIT__URL`, the dev broker's AMQP URL for
-  `capture_broker.py`; and `OPSGENIE_API_KEY` / `OPSGENIE_TEAM_ID`, the
+  `capture_broker.py`; `GWEXP_TAP__URL`, the tap broker's AMQPS URL as
+  `gw.analyst`, for `tap_listen.py`; and `OPSGENIE_API_KEY` / `OPSGENIE_TEAM_ID`, the
   Opsgenie Alert API integration key and the GridWorks Dev team id the
   alerter witnesses page with. This is the one place these credentials
   live on a laptop.

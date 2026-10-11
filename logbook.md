@@ -13,6 +13,22 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-10-11 · [prod-broker-outage-drill](2026-10-11-prod-broker-outage-drill/)** —
+  the prod broker (hw1-1) stopped on purpose, listeners down 9 min 20 s:
+  PASS, the alerter's prober raised `BrokerUnreachable` on both doors
+  3 min 36 s after the stop and resolved 17 s after startup, no `NoData`.
+  AMQP clients were back within 30 s; the MQTT fleet waited 46–49 s
+  after a broker that was already up and arrived in lockstep, which fits
+  paho's default 1 s → 120 s reconnect backoff with every client in phase.
+- **2026-10-09 · [nolan-local-control-windows](2026-10-09-nolan-local-control-windows/)** —
+  first beta window of Nolan local control on spruce (scada `97ea5806`,
+  dev broker, 15 min): the sema weather path provisions from the facade
+  at first boot (bundle record, seasonal template, Live forecast) and
+  Nolan boots Initializing → HpCallOff with the pump on the hp watch.
+  Afternoon run 2 (spruce 25 min off-peak, beech 20 min Standby on both
+  pis): the spruce call cycles on and off against the band with the pump
+  following the heat pump both ways; beech holds the standby posture with
+  the sieg loop at full send; verdicts under each run's Found.
 - **2026-10-08 · [beech-missing-store-heat-analysis](2026-10-08-beech-missing-store-heat-analysis/)** —
   beech's store did not charge on the coldest night (2026-01-04/05):
   Local Control's buffer-full test compared the buffer with an uncapped

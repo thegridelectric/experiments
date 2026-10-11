@@ -1,0 +1,46 @@
+# EXTERNAL EVIDENCE: `docker logs rmq1` on the prod broker box hw1-1, 2026-10-11 18:17:30Z-18:29:30Z,
+# reduced to stop/start, listener and connection-accept lines; ANSI colour stripped; public IPs replaced
+# by stable tokens (ip-A, ip-B, ...) because this repo is public. Captured by hand over ssh, 2026-10-11.
+2026-10-11 18:17:39.363422+00:00 [info] <0.179098.0> accepting AMQP connection ip-A:33230 -> 172.30.1.71:5671
+2026-10-11 18:17:40.471609+00:00 [info] <0.179123.0> Accepted MQTT connection ip-A:37716 -> 172.30.1.71:8883 for client ID 4bb675c0-ed75-44c9-ae27-2c8d2e263f38
+2026-10-11 18:17:40.569570+00:00 [info] <0.179123.0> MQTT connection <<"ip-A:37716 -> 172.30.1.71:8883">> will terminate because peer closed TCP connection
+2026-10-11 18:18:04.875055+00:00 [notice] <0.64.0> SIGTERM received - shutting down
+2026-10-11 18:18:04.877609+00:00 [info] <0.738.0> stopped MQTT TLS listener on [::]:8883
+2026-10-11 18:18:04.894423+00:00 [info] <0.718.0> stopped MQTT TCP listener on [::]:1883
+2026-10-11 18:18:04.898016+00:00 [info] <0.678.0> stopped STOMP TCP listener on [::]:61613
+2026-10-11 18:18:04.908205+00:00 [info] <0.843.0> stopped TLS (SSL) listener on [::]:5671
+2026-10-11 18:18:05.187987+00:00 [info] <0.823.0> stopped TCP listener on [::]:5672
+2026-10-11 18:18:05.203304+00:00 [info] <0.762.0> Message store for directory '/var/lib/rabbitmq/mnesia/rabbit@rmqbot/msg_stores/vhosts/4BPPX109PMKRT7MOL8H2A7PX2/msg_store_persistent' is stopped
+2026-10-11 18:18:05.208849+00:00 [info] <0.758.0> Message store for directory '/var/lib/rabbitmq/mnesia/rabbit@rmqbot/msg_stores/vhosts/4BPPX109PMKRT7MOL8H2A7PX2/msg_store_transient' is stopped
+2026-10-11 18:27:24.548175+00:00 [notice] <0.45.0> Application syslog exited with reason: stopped
+2026-10-11 18:27:25.593721+00:00 [info] <0.665.0> started STOMP TCP listener on [::]:61613
+2026-10-11 18:27:25.597454+00:00 [info] <0.708.0> started MQTT TCP listener on [::]:1883
+2026-10-11 18:27:25.598694+00:00 [info] <0.728.0> started MQTT TLS listener on [::]:8883
+2026-10-11 18:27:25.626561+00:00 [info] <0.769.0> started TCP listener on [::]:5672
+2026-10-11 18:27:25.628592+00:00 [info] <0.789.0> started TLS (SSL) listener on [::]:5671
+2026-10-11 18:27:25.667212+00:00 [info] <0.525.0> Server startup complete; 8 plugins started.
+2026-10-11 18:27:25.967369+00:00 [info] <0.797.0> accepting AMQP connection ip-B:43060 -> 172.30.1.71:5671
+2026-10-11 18:27:26.334514+00:00 [info] <0.807.0> accepting AMQP connection ip-C:35566 -> 172.30.1.71:5671
+2026-10-11 18:27:26.336742+00:00 [info] <0.814.0> accepting AMQP connection ip-C:35582 -> 172.30.1.71:5671
+2026-10-11 18:27:27.369883+00:00 [info] <0.870.0> accepting AMQP connection ip-D:55564 -> 172.30.1.71:5671
+2026-10-11 18:27:30.536891+00:00 [info] <0.890.0> accepting AMQP connection ip-E:39748 -> 172.30.1.71:5672
+2026-10-11 18:27:43.035941+00:00 [info] <0.913.0> accepting AMQP connection ip-A:40816 -> 172.30.1.71:5671
+2026-10-11 18:27:44.234002+00:00 [info] <0.938.0> Accepted MQTT connection ip-A:43042 -> 172.30.1.71:8883 for client ID 4bb675c0-ed75-44c9-ae27-2c8d2e263f38
+2026-10-11 18:27:44.339885+00:00 [info] <0.938.0> MQTT connection <<"ip-A:43042 -> 172.30.1.71:8883">> will terminate because peer closed TCP connection
+2026-10-11 18:27:51.206701+00:00 [info] <0.949.0> accepting AMQP connection ip-F:55952 -> 172.30.1.71:5671
+2026-10-11 18:27:54.956825+00:00 [info] <0.973.0> accepting AMQP connection ip-A:51680 -> 172.30.1.71:5671
+2026-10-11 18:27:55.336901+00:00 [info] <0.985.0> accepting AMQP connection ip-G:59366 -> 172.30.1.71:5671
+2026-10-11 18:28:11.972688+00:00 [info] <0.1050.0> Accepted MQTT connection ip-H:33557 -> 172.30.1.71:8883 for client ID 95bc3b2c-8def-4701-ac0d-1699f1fbf6cf
+2026-10-11 18:28:11.992858+00:00 [info] <0.1058.0> Accepted MQTT connection ip-H:43767 -> 172.30.1.71:8883 for client ID d3720552-d1b4-42f7-876f-6748e756a539
+2026-10-11 18:28:11.998023+00:00 [info] <0.1054.0> Accepted MQTT connection ip-H:37237 -> 172.30.1.71:8883 for client ID cafcfbd9-cd9f-4302-8ec0-a600cc2f42fa
+2026-10-11 18:28:11.998183+00:00 [info] <0.1062.0> Accepted MQTT connection ip-H:43791 -> 172.30.1.71:8883 for client ID 5228a039-e969-42f5-b3a0-a2b253b7ecc6
+2026-10-11 18:28:12.006969+00:00 [info] <0.1072.0> Accepted MQTT connection ip-I:58713 -> 172.30.1.71:8883 for client ID 575b2719-57e6-4945-8214-e94dd1a11d27
+2026-10-11 18:28:12.014972+00:00 [info] <0.1071.0> Accepted MQTT connection ip-I:60809 -> 172.30.1.71:8883 for client ID 59254db4-cd5c-45f5-b4ad-f8038e2f6ecf
+2026-10-11 18:28:12.638386+00:00 [info] <0.1107.0> Accepted MQTT connection ip-J:52897 -> 172.30.1.71:8883 for client ID 18817ed5-5e23-4204-ad1a-1b2cc67fee3b
+2026-10-11 18:28:12.759632+00:00 [info] <0.1114.0> Accepted MQTT connection ip-K:55285 -> 172.30.1.71:8883 for client ID b579a01d-55e6-4966-97bf-f74ee6d8f0d6
+2026-10-11 18:28:13.592709+00:00 [info] <0.1125.0> Accepted MQTT connection ip-L:51175 -> 172.30.1.71:8883 for client ID d14e600e-7240-4107-85e5-246788362095
+2026-10-11 18:28:14.164799+00:00 [info] <0.1134.0> Accepted MQTT connection ip-M:43566 -> 172.30.1.71:8883 for client ID b3e780a9-4fc9-43b8-b3ca-84cc72545398
+2026-10-11 18:28:44.614276+00:00 [info] <0.1191.0> accepting AMQP connection ip-A:60472 -> 172.30.1.71:5671
+2026-10-11 18:28:45.729711+00:00 [info] <0.1216.0> Accepted MQTT connection ip-A:55830 -> 172.30.1.71:8883 for client ID 4bb675c0-ed75-44c9-ae27-2c8d2e263f38
+2026-10-11 18:28:45.827803+00:00 [info] <0.1216.0> MQTT connection <<"ip-A:55830 -> 172.30.1.71:8883">> will terminate because peer closed TCP connection
+2026-10-11 18:29:04.389006+00:00 [info] <0.1261.0> Accepted MQTT connection ip-N:63332 -> 172.30.1.71:8883 for client ID 06f0fc46-3334-4501-998e-f87cc747213b
