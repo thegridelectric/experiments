@@ -1,0 +1,56 @@
+# EXTERNAL EVIDENCE: read-only ssh listing of oak2 taken 2026-10-14 ~08:30 ET
+# (ls of ~/starter-scripts/code_uploaded, git log of the box checkouts, systemd timestamps).
+# Not regenerable: the box state moves on. Re-take with the commands in ../README.md.
+=== LS_HOME
+correct_ch.json
+dotenv
+egauge.py
+gridworks-scada
+gridworks-scada-unlimbo
+honey.py
+i2c.sh
+mkenv.log
+open_voltage_data.py
+README.md
+snap_ads.py
+snap_w_volts.py
+starter-scripts
+temp_data.csv
+venv
+=== CU_DIRS
+/home/pi/starter-scripts/code_uploaded
+=== LS /home/pi/starter-scripts/code_uploaded
+total 8
+drwxr-xr-x  2 pi pi 4096 2024-10-21 23:28:10.106210770 -0400 .
+drwxr-xr-x 16 pi pi 4096 2024-11-01 14:11:50.552772357 -0400 ..
+-rw-r--r--  1 pi pi    0 2024-10-21 23:28:10.106210770 -0400 empty.txt
+--- FILE /home/pi/starter-scripts/code_uploaded/empty.txt 0 d41d8cd98f00b204e9800998ecf8427e
+=== SS_LOG
+3f37090 2024-11-01 14:07:04 -0400 Set Store to default speed
+fa8360c 2024-10-26 22:18:43 -0400 Increased no_flow_ms for reed
+b61bcec 2024-10-26 09:12:22 -0400 ignore code_uploaded dir
+694fa5c 2024-10-26 09:11:34 -0400 ActorNodeName = FlowNodeName
+80067d5 2024-10-25 18:47:19 -0400 Saving CSVs
+cba0911 2024-10-23 08:54:39 -0700 Minor edits
+ccae354 2024-10-23 08:37:17 -0700 Ticklist processing done
+87414b1 2024-10-22 18:12:49 -0700 Solved minor bug
+=== SS_BRANCH
+dev
+=== SS_STATUS
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada-unlimbo
+2c2350f6 2026-09-25 15:13:15 -0400 Add some debug logging
+jm/spruce-unlimbo
+=== OUTPUT
+=== UPTIME
+ 08:06:16 up 11 days, 14:29,  2 users,  load average: 0.28, 0.68, 0.60
+=== USERJ
+=== UNITS
+  gwspaceheat2.service                                        loaded    active   running GridWorks scada 2 service
+=== USERUNITS
+EXIT 1

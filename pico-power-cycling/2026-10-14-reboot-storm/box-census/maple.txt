@@ -1,0 +1,116 @@
+# EXTERNAL EVIDENCE: read-only ssh listing of maple taken 2026-10-14 ~08:30 ET
+# (ls of ~/starter-scripts/code_uploaded, git log of the box checkouts, systemd timestamps).
+# Not regenerable: the box state moves on. Re-take with the commands in ../README.md.
+=== LS_HOME
+Desktop
+egauge.py
+envs
+experiments
+gridworks-scada
+gridworks-scada-unlimbo
+hardware-layout.json
+i2c.sh
+maple.json
+mkenv.log
+proactor.log
+README.md
+snap_ads.py
+starter-scripts
+=== CU_DIRS
+/home/pi/starter-scripts/code_uploaded
+=== LS /home/pi/starter-scripts/code_uploaded
+total 296
+drwxr-xr-x  2 pi pi  4096 2026-10-02 10:11:39.236111551 -0400 .
+drwxr-xr-x 18 pi pi  4096 2026-10-02 10:11:39.236111551 -0400 ..
+-rw-r--r--  1 pi pi     0 2025-01-20 16:51:56.137752923 -0500 empty.txt
+-rw-r--r--  1 pi pi 33274 2026-09-30 10:53:04.585948653 -0400 new_code_pico_0d5b31-uploaded-1790780020.py
+-rw-r--r--  1 pi pi 33885 2026-10-02 10:02:40.236532166 -0400 new_code_pico_0d5b31-uploaded-1790949799.py
+-rw-r--r--  1 pi pi 33274 2026-09-30 10:55:44.484210052 -0400 new_code_pico_18a132-uploaded-1790780180.py
+-rw-r--r--  1 pi pi 33885 2026-10-02 10:11:00.012442167 -0400 new_code_pico_18a132-uploaded-1790950299.py
+-rw-r--r--  1 pi pi 15823 2026-09-30 10:44:04.411869107 -0400 new_code_pico_219430-uploaded-1790779466.py
+-rw-r--r--  1 pi pi 16500 2026-10-02 10:02:40.232532197 -0400 new_code_pico_219430-uploaded-1790949786.py
+-rw-r--r--  1 pi pi 15823 2026-09-30 10:43:09.404478587 -0400 new_code_pico_219530-uploaded-1790779405.py
+-rw-r--r--  1 pi pi 16500 2026-10-02 10:02:40.228532229 -0400 new_code_pico_219530-uploaded-1790949783.py
+-rw-r--r--  1 pi pi 15823 2026-09-30 10:42:00.273247138 -0400 new_code_pico_8a2a21-uploaded-1790779340.py
+-rw-r--r--  1 pi pi 16500 2026-10-02 10:02:40.224532260 -0400 new_code_pico_8a2a21-uploaded-1790949782.py
+-rw-r--r--  1 pi pi 15823 2026-09-30 10:45:03.595215158 -0400 new_code_pico_8f5530-uploaded-1790779594.py
+-rw-r--r--  1 pi pi 16500 2026-10-02 10:02:40.220532292 -0400 new_code_pico_8f5530-uploaded-1790949783.py
+--- FILE /home/pi/starter-scripts/code_uploaded/empty.txt 0 d41d8cd98f00b204e9800998ecf8427e
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_0d5b31-uploaded-1790780020.py 33274 bf8a7a9dcafe28f89d563af6c2433581
+380:            "TypeName": "async.btu.params",
+439:            "TypeName": "new.code",
+805:                "TypeName": "multichannel.snapshot",
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_0d5b31-uploaded-1790949799.py 33885 6db14a82f15f0babfe59181f0577c4a4
+381:            "TypeName": "async.btu.params",
+448:            "TypeName": "new.code",
+814:                "TypeName": "multichannel.snapshot",
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_18a132-uploaded-1790780180.py 33274 bf8a7a9dcafe28f89d563af6c2433581
+380:            "TypeName": "async.btu.params",
+439:            "TypeName": "new.code",
+805:                "TypeName": "multichannel.snapshot",
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_18a132-uploaded-1790950299.py 33885 6db14a82f15f0babfe59181f0577c4a4
+381:            "TypeName": "async.btu.params",
+448:            "TypeName": "new.code",
+814:                "TypeName": "multichannel.snapshot",
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_219430-uploaded-1790779466.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_219430-uploaded-1790949786.py 16500 e9ab9a28529a627692ad19f9169317e1
+328:            "TypeName": "tank.module.params",
+388:            "TypeName": "new.code",
+449:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_219530-uploaded-1790779405.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_219530-uploaded-1790949783.py 16500 e9ab9a28529a627692ad19f9169317e1
+328:            "TypeName": "tank.module.params",
+388:            "TypeName": "new.code",
+449:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_8a2a21-uploaded-1790779340.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_8a2a21-uploaded-1790949782.py 16500 e9ab9a28529a627692ad19f9169317e1
+328:            "TypeName": "tank.module.params",
+388:            "TypeName": "new.code",
+449:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_8f5530-uploaded-1790779594.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_8f5530-uploaded-1790949783.py 16500 e9ab9a28529a627692ad19f9169317e1
+328:            "TypeName": "tank.module.params",
+388:            "TypeName": "new.code",
+449:            "TypeName": "microvolts", 
+=== SS_LOG
+9358f3b 2026-10-02 08:56:12 -0400 Merge branch 'dev' of github.com:thegridelectric/starter-scripts into dev
+401e3b8 2026-10-02 08:54:16 -0400 Merge branch 'jm/spruce' into dev
+1da8a3d 2026-10-02 08:52:13 -0400 note about stopping scada first when starting the api
+e46bcb7 2026-09-28 12:44:58 -0400 minor adjustment to maple_snap; remove the temporary spruce_store_fill
+c1ab3c8 2026-09-28 07:02:49 -0400 tweak maple snapshot
+2f8117b 2026-09-27 16:21:54 -0400 adding temp_spruce_store_fill
+e059967 2026-09-27 14:50:48 -0400 winter hack: iso valve closes with the secondary pump
+03bde17 2026-09-25 16:43:23 -0400 tweaking maple snap
+=== SS_BRANCH
+dev
+=== SS_STATUS
+?? firmware/
+?? new_code_btu.py
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada-unlimbo
+97ea5806 2026-10-08 17:36:58 -0400 Proactor pin to v4.1.13+jm3
+jm/spruce-unlimbo
+=== OUTPUT
+=== UPTIME
+ 08:06:15 up 22 days, 22:28,  2 users,  load average: 0.05, 0.04, 0.00
+=== USERJ
+=== UNITS
+=== USERUNITS
+EXIT 1

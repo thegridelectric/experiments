@@ -31,6 +31,10 @@ as validated Sema instances.
   is" line; "Found" holds one verdict per tested claim. The one so far
   is `dist-loop-experiments/`, the fleet's distribution loops over the
   2025–26 heating season.
+- `pico-power-cycling/` — the fleet's pico reliability runs, dated
+  folders under one undated parent, with the firmware track record at
+  the top. Same shape as `beta-field-windows/`: a practice, not one
+  experiment.
 - `beta-field-windows/` — the one folder that is neither dated nor a
   dataset: an ongoing field-test *practice*. Every window is a run
   folder under `runs/`, indexed in `runs.md`; the folder top holds the
@@ -121,3 +125,12 @@ as validated Sema instances.
   install) is recorded in the box's `~/README.md` (the instance README)
   in the same window, or it does not stay. Spruce's `~/README.md`
   carries the inventory of what accumulated before this rule.
+- The laptop keeps port 8000 free for scada live tests. The Nolan
+  fixture layout (`gridworks-scada/tests/config/gw.nolan.layout.json`)
+  declares the scada's web server on 8000, and a test scada that cannot
+  bind it shuts itself down half a second after boot: every live test
+  on that layout then times out with links `stopped`, with no bind
+  error in the pytest dump. Anything else that serves on all
+  interfaces at 8000 (`pico_testapi --port 8000`) runs on another port.
+  A loopback-only listener (the local `gnr api` dev server on
+  127.0.0.1:8000) does not block the scada's wildcard bind.

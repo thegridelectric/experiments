@@ -13,6 +13,18 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-10-14 · [pico-power-cycling/reboot-storm](pico-power-cycling/2026-10-14-reboot-storm/)**
+  — analysis: bus reboots per house per day (journal DB, 09-01 to
+  10-14) against the boxes' firmware upload history, then the
+  mechanism from the journal's post times. The storm at maple, oak, fir
+  and beech starts the day each house's tank picos received the
+  2026-09-15 inline-net build (`cd8483c2`). Cause: the scada on `main`
+  declares a tank pico missing after exactly its 60 s post period, and
+  the new firmware posts from the main loop instead of the timer
+  callback, so one post in five arrives ~1 s late; every reboot, old
+  firmware included, fires at 60.0x s since one pico's last post.
+  Folder `pico-power-cycling/` now groups the pico runs (gap-analysis,
+  link-census moved in).
 - **2026-10-11 · [prod-broker-outage-drill](2026-10-11-prod-broker-outage-drill/)** —
   the prod broker (hw1-1) stopped on purpose, listeners down 9 min 20 s:
   PASS, the alerter's prober raised `BrokerUnreachable` on both doors
@@ -412,11 +424,11 @@ first run dates them.
   re-alias + full ear slice capture (cmd/ack/forest, SendTimeMs →
   created_at), snapshot heals a corrupted row. Edge projection not
   wire-exercised (no seeded edge).
-- **2026-08-05 · [pico-link-census](2026-08-05-pico-link-census/)** —
+- **2026-08-05 · [pico-link-census](pico-power-cycling/2026-08-05-link-census/)** —
   analysis, NEGATIVE result: MAC OUI cannot discriminate wired vs wifi
   picos (ethernet firmware sets no WIZnet MAC). Ground truth is each
   pico's comms_config.json; right fix is firmware self-report.
-- **2026-08-03 · [pico-gap-analysis](2026-08-03-pico-gap-analysis/)** —
+- **2026-08-03 · [pico-gap-analysis](pico-power-cycling/2026-08-03-gap-analysis/)** —
   gaps + glitches + their Venn, 56 d: fir/oak/maple tied clean (router
   pick free to rest on other criteria); spruce's "flaky pico" is a
   FEEDBACK LOOP (permanent zombie → half-hourly VDC shakes → one

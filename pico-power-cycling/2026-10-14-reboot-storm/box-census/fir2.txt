@@ -1,0 +1,118 @@
+# EXTERNAL EVIDENCE: read-only ssh listing of fir2 taken 2026-10-14 ~08:30 ET
+# (ls of ~/starter-scripts/code_uploaded, git log of the box checkouts, systemd timestamps).
+# Not regenerable: the box state moves on. Re-take with the commands in ../README.md.
+=== LS_HOME
+Desktop
+egauge.py
+gridworks-scada
+gridworks-scada-unlimbo
+honey.py
+i2c.sh
+mkenv.log
+pulse.py
+README.md
+snap_ads.py
+snap_w_volts.py
+starter-scripts
+=== CU_DIRS
+/home/pi/starter-scripts/code_uploaded
+=== LS /home/pi/starter-scripts/code_uploaded
+total 140
+drwxr-xr-x  2 pi pi  4096 2024-10-22 11:08:39.812995054 -0400 .
+drwxr-xr-x 16 pi pi  4096 2024-10-22 11:08:39.812995054 -0400 ..
+-rw-r--r--  1 pi pi     0 2024-10-22 08:31:31.157640806 -0400 empty.txt
+-rw-r--r--  1 pi pi 11435 2024-10-22 10:52:32.506410836 -0400 new_code_pico_1b5636-uploaded-1729608813.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:05:32.958717901 -0400 new_code_pico_315939.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:07:40.801543382 -0400 new_code_pico_315939-uploaded-1729609718.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:06:19.702290781 -0400 new_code_pico_487a22.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:08:06.369306242 -0400 new_code_pico_487a22-uploaded-1729609716.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:06:00.294468467 -0400 new_code_pico_4c1a21.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:07:58.085383149 -0400 new_code_pico_4c1a21-uploaded-1729609719.py
+-rw-r--r--  1 pi pi  9226 2024-10-22 10:48:05.337056187 -0400 new_code_pico_4e3332-uploaded-1729608811.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:05:45.142606848 -0400 new_code_pico_5c8c25.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:07:47.493481381 -0400 new_code_pico_5c8c25-uploaded-1729609717.py
+-rw-r--r--  1 pi pi  9226 2024-10-22 10:51:59.450738147 -0400 new_code_pico_9b5127-uploaded-1729608814.py
+--- FILE /home/pi/starter-scripts/code_uploaded/empty.txt 0 d41d8cd98f00b204e9800998ecf8427e
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_1b5636-uploaded-1729608813.py 11435 280d5e4820578d7aa43b3a4ba071414c
+142:            "TypeName": "flow.reed.params",
+174:            "TypeName": "new.code",
+201:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_315939.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_315939-uploaded-1729609718.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_487a22.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_487a22-uploaded-1729609716.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_4c1a21.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_4c1a21-uploaded-1729609719.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_4e3332-uploaded-1729608811.py 9226 ddc6a8bd9fa5eebecc3041bc826b28f9
+122:            "TypeName": "flow.hall.params",
+153:            "TypeName": "new.code",
+194:            "TypeName": "ticklist.hall", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_5c8c25.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_5c8c25-uploaded-1729609717.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_9b5127-uploaded-1729608814.py 9226 ddc6a8bd9fa5eebecc3041bc826b28f9
+122:            "TypeName": "flow.hall.params",
+153:            "TypeName": "new.code",
+194:            "TypeName": "ticklist.hall", 
+=== SS_LOG
+8dca2c4 2024-10-21 16:40:23 -0700 Prints
+faf65c4 2024-10-21 16:27:16 -0700 Undo temporary change
+38942e4 2024-10-21 16:24:28 -0700 Saving pico-flow-reed in beech
+a81705f 2024-10-21 12:31:49 -0700 code_uploaded directory in starter_scripts
+4b8dd14 2024-10-21 12:14:35 -0700 Improved parameters in types
+631e124 2024-10-21 11:42:38 -0700 Getting rid of CaptureOffsetS in flowmeters
+8749ac7 2024-10-21 11:34:47 -0700 Make first tick optional
+e80b44e 2024-10-21 09:58:23 -0700 Prints
+=== SS_BRANCH
+dev
+=== SS_STATUS
+?? code_uploaded/new_code_pico_1b5636-uploaded-1729608813.py
+?? code_uploaded/new_code_pico_315939-uploaded-1729609718.py
+?? code_uploaded/new_code_pico_315939.py
+?? code_uploaded/new_code_pico_487a22-uploaded-1729609716.py
+?? code_uploaded/new_code_pico_487a22.py
+?? code_uploaded/new_code_pico_4c1a21-uploaded-1729609719.py
+?? code_uploaded/new_code_pico_4c1a21.py
+?? code_uploaded/new_code_pico_4e3332-uploaded-1729608811.py
+?? code_uploaded/new_code_pico_5c8c25-uploaded-1729609717.py
+?? code_uploaded/new_code_pico_5c8c25.py
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada-unlimbo
+2c2350f6 2026-09-25 15:13:15 -0400 Add some debug logging
+jm/spruce-unlimbo
+=== OUTPUT
+=== UPTIME
+ 08:06:15 up 12 days, 19:24,  2 users,  load average: 0.57, 0.43, 0.56
+=== USERJ
+=== UNITS
+  gwspaceheat2.service                                        loaded    active   running GridWorks scada 2 service
+=== USERUNITS
+EXIT 1

@@ -19,7 +19,7 @@ import psycopg
 from pydantic import TypeAdapter
 
 HERE = Path(__file__).parent
-sys.path.insert(0, str(HERE.parent / "src"))
+sys.path.insert(0, str(HERE.parents[1] / "src"))
 
 from gwexp.sema.codec import SemaCodec  # noqa: E402
 from gwexp.sema.property_format import (  # noqa: E402

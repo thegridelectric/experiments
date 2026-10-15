@@ -263,7 +263,7 @@ discriminator used throughout.
 **Diagnostic muddiness.** Two gaps make the record harder to read than
 it should be: the secondary-BTU pico cuts out a fair amount (its
 dropouts manufactured one false CRITICAL and hid one real heat-pump
-start — the 2026-08-03 pico-gap-analysis has the fleet statistics), and
+start — `pico-power-cycling/2026-08-03-gap-analysis/` has the fleet statistics), and
 the power metering wasn't all in place — the hp-ctrl-box-pwr and
 hp-odu-pwr channels entered the layout only with the 08-03 deploy, so
 no reports carried them during the incident (verified against the S3

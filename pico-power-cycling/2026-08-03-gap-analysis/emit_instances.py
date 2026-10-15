@@ -28,8 +28,8 @@ from pathlib import Path
 from typing import NamedTuple
 
 HERE = Path(__file__).parent
-sys.path.insert(0, str(HERE.parent / "src"))
-sys.path.insert(0, str(HERE.parent))
+sys.path.insert(0, str(HERE.parents[1] / "src"))
+sys.path.insert(0, str(HERE.parents[1]))
 
 from pydantic import TypeAdapter  # noqa: E402
 

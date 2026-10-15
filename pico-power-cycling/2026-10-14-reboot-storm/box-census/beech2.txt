@@ -1,0 +1,75 @@
+# EXTERNAL EVIDENCE: read-only ssh listing of beech2 taken 2026-10-14 ~08:30 ET
+# (ls of ~/starter-scripts/code_uploaded, git log of the box checkouts, systemd timestamps).
+# Not regenerable: the box state moves on. Re-take with the commands in ../README.md.
+=== LS_HOME
+egauge.py
+envs
+experiments
+ezflo.py
+gridworks-scada
+gridworks-scada-unlimbo
+i2c.sh
+mkenv.log
+open_voltage_data.py
+README.md
+snap_ads.py
+snap_w_volts.py
+starter-scripts
+test.py
+=== CU_DIRS
+/home/pi/starter-scripts/code_uploaded
+=== LS /home/pi/starter-scripts/code_uploaded
+total 56
+drwxr-xr-x  2 pi pi  4096 2024-10-21 20:04:14.194417615 -0400 .
+drwxr-xr-x 17 pi pi  4096 2026-10-02 11:21:55.423408883 -0400 ..
+-rw-r--r--  1 pi pi     0 2024-10-21 16:01:00.894066320 -0400 empty.txt
+-rw-r--r--  1 pi pi 11247 2024-10-21 20:03:23.291162868 -0400 new_code_pico_1d3b35-uploaded-1729555452.py
+-rw-r--r--  1 pi pi 11435 2024-10-21 20:02:40.583787418 -0400 new_code_pico_2a7e22-uploaded-1729555454.py
+-rw-r--r--  1 pi pi 11247 2024-10-21 20:03:04.827432964 -0400 new_code_pico_43a532-uploaded-1729555453.py
+-rw-r--r--  1 pi pi  9226 2024-10-21 20:00:55.821316332 -0400 new_code_pico_976836-uploaded-1729555319.py
+--- FILE /home/pi/starter-scripts/code_uploaded/empty.txt 0 d41d8cd98f00b204e9800998ecf8427e
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_1d3b35-uploaded-1729555452.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_2a7e22-uploaded-1729555454.py 11435 280d5e4820578d7aa43b3a4ba071414c
+142:            "TypeName": "flow.reed.params",
+174:            "TypeName": "new.code",
+201:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_43a532-uploaded-1729555453.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_976836-uploaded-1729555319.py 9226 ddc6a8bd9fa5eebecc3041bc826b28f9
+122:            "TypeName": "flow.hall.params",
+153:            "TypeName": "new.code",
+194:            "TypeName": "ticklist.hall", 
+=== SS_LOG
+f3c9f29 2026-10-02 11:21:28 -0400 Merge branch 'jm/snap-ads' into dev
+b42c41e 2026-10-02 11:21:24 -0400 snap_ads.py reads the 12 multipurpose channels by terminal number
+920e597 2026-10-02 11:20:24 -0400 various
+9358f3b 2026-10-02 08:56:12 -0400 Merge branch 'dev' of github.com:thegridelectric/starter-scripts into dev
+401e3b8 2026-10-02 08:54:16 -0400 Merge branch 'jm/spruce' into dev
+1da8a3d 2026-10-02 08:52:13 -0400 note about stopping scada first when starting the api
+e46bcb7 2026-09-28 12:44:58 -0400 minor adjustment to maple_snap; remove the temporary spruce_store_fill
+c1ab3c8 2026-09-28 07:02:49 -0400 tweak maple snapshot
+=== SS_BRANCH
+dev
+=== SS_STATUS
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada-unlimbo
+97ea5806 2026-10-08 17:36:58 -0400 Proactor pin to v4.1.13+jm3
+jm/spruce-unlimbo
+=== OUTPUT
+=== UPTIME
+ 08:06:16 up 19 days, 10:45,  2 users,  load average: 0.22, 0.40, 0.42
+=== USERJ
+=== UNITS
+  gwspaceheat2.service                                        loaded    active   running GridWorks scada 2 service
+=== USERUNITS
+EXIT 1

@@ -31,7 +31,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
-    def log_message(self, *_args: object) -> None:
+    def log_message(self, format: str, *args: object) -> None:  # noqa: A002
         return
 
 

@@ -34,13 +34,14 @@ takes `dev`. The rest are layouts arriving this fall, not yet windowed.
 
 The expected posture of each house's window pair, read from the gen's
 ops params before `on` and checked against the `layout.lite` the window
-announces. Beech is Standby on purpose: its window runs the House0 code
-on a production house without letting a dispatch reach the equipment.
+announces. Every house is held out of dispatch (`OperatorHold`) until an
+LTN runs FLOs; a window's local control runs the heat, a dispatch does
+not.
 
 | House | Window layout family | ServiceMode | ActuationAuthority | Beta window up |
 |---|---|---|---|---|
 | spruce | `gw.nolan.layout` | Heating | Active | yes |
-| beech | `gw.house0.layout` | Heating | Standby | yes |
+| beech | `gw.house0.layout` | Heating | Active | yes |
 | maple | `gw.house0.layout` | Heating | Active | yes |
 | fir / oak | `gw.house0.no.sieg.layout` | Heating | — | no |
 | elm | `gw.house0.monoblock.layout` | Heating | — | no |

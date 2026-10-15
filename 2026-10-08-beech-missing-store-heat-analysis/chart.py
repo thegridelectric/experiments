@@ -191,11 +191,15 @@ def main() -> None:
 
     def heat_kw(flow: str, hot: str, cold: str, i: int) -> float | None:
         a, b, c = F[flow][i], F[hot][i], F[cold][i]
-        return None if None in (a, b, c) else 500 * a * (b - c) / 3412
+        if a is None or b is None or c is None:
+            return None
+        return 500 * a * (b - c) / 3412
 
     def elec_kw(i: int) -> float | None:
         a, b = F["hp-odu-pwr"][i], F["hp-idu-pwr"][i]
-        return None if None in (a, b) else (a + b) / 1000
+        if a is None or b is None:
+            return None
+        return (a + b) / 1000
 
     series = {"HP heat out": (ORANGE, 6, lambda i: heat_kw("primary-flow", "hp-lwt", "hp-ewt", i)),
               "HP electric": (YELLOW, -5, elec_kw),

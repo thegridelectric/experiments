@@ -33,6 +33,7 @@ future/pico-rejoin/rejoin_trace.py
 2026-09-12-beech-dist-010v-sweep/dist_sweep.py
 2026-09-10-beech-krida-witness/heat_call.py
 2026-09-10-pico-state-reported/read_pico_states.py
+2026-09-28-sieg-keep-ratio-map/drive_keep_ratio.py
 2026-06-11-sim-sensor/sim_sensor_experiment.py
 2026-06-11-sim-time-bridge/harness.py
 2026-06-11-stale-layout-migration/layout_roundtrip_check.py
@@ -86,7 +87,10 @@ uvx pyright@latest --pythonpath .venv/bin/python $FILES
 echo "==> emitters reproduce committed instances"
 # Every folder's emitter is named emit_instances.py — the glob means a
 # new folder's emitter is exercised without editing this file.
-for e in */emit_instances.py; do
+# beta-field-windows/emit_instances.py takes a run folder and a code ref
+# (one record per window); its run instances are validated below.
+for e in */emit_instances.py */*/emit_instances.py; do
+    case "$e" in beta-field-windows/emit_instances.py) continue ;; esac
     (cd "$(dirname "$e")" && uv run python emit_instances.py >/dev/null)
 done
 git diff --exit-code -- '*/instances' \
@@ -95,6 +99,8 @@ git diff --exit-code -- '*/instances' \
 echo "==> sema validate every instance"
 fail=0
 for f in */instances/*-00[0-9].json */instances/*/*-00[0-9].json */*-gw.readings-000.json \
+         */*/instances/*-00[0-9].json */*/instances/*/*-00[0-9].json */*/*-gw.readings-000.json \
+         */runs/*/instances/*-00[0-9].json \
          */defrost-signatures/*-gw.readings-000.json; do
     case "$f" in */instances/beech-window-gw.house0.*-000.json) continue ;; esac
     out=$(cd "$SEMA_REPO" && uv run sema validate "$(pwd)/../experiments/$f" 2>&1 | tail -1)

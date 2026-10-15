@@ -1,0 +1,319 @@
+# EXTERNAL EVIDENCE: read-only ssh listing of oak taken 2026-10-14 ~08:30 ET
+# (ls of ~/starter-scripts/code_uploaded, git log of the box checkouts, systemd timestamps).
+# Not regenerable: the box state moves on. Re-take with the commands in ../README.md.
+=== LS_HOME
+dfr.json
+egauge.py
+gridworks-scada
+gridworks-scada-unlimbo
+honey.py
+i2c.sh
+mkenv.log
+oak.proactor.20260202.log
+pico_files
+README.md
+snap_ads.py
+starter-scripts
+=== CU_DIRS
+/home/pi/starter-scripts/code_uploaded
+=== LS /home/pi/starter-scripts/code_uploaded
+total 704
+drwxr-xr-x  2 pi pi  4096 2026-10-02 10:03:11.094604829 -0400 .
+drwxr-xr-x 18 pi pi  4096 2026-10-02 10:03:11.094604829 -0400 ..
+-rw-r--r--  1 pi pi     0 2024-10-21 17:36:52.813563363 -0400 empty.txt
+-rw-r--r--  1 pi pi 11291 2024-10-23 11:02:36.782288181 -0400 new_code_pico_0d5b31-uploaded-1729696004.py
+-rw-r--r--  1 pi pi 11223 2024-10-23 12:21:46.565588669 -0400 new_code_pico_0d5b31-uploaded-1729703871.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:02:21.056223682 -0500 new_code_pico_0d5b31-uploaded-1735423486.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:09:30.586762717 -0500 new_code_pico_0d5b31-uploaded-1735423829.py
+-rw-r--r--  1 pi pi 15823 2026-10-01 16:10:06.902337376 -0400 new_code_pico_16a321-uploaded-1790885436.py
+-rw-r--r--  1 pi pi 16500 2026-10-02 10:02:44.922961503 -0400 new_code_pico_16a321-uploaded-1790949788.py
+-rw-r--r--  1 pi pi 11291 2024-10-23 11:03:00.926022476 -0400 new_code_pico_1d2c34-uploaded-1729696003.py
+-rw-r--r--  1 pi pi 11223 2024-10-23 12:22:00.441337819 -0400 new_code_pico_1d2c34-uploaded-1729703870.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:02:31.512091039 -0500 new_code_pico_1d2c34-uploaded-1735423486.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:09:41.502623693 -0500 new_code_pico_1d2c34-uploaded-1735423828.py
+-rw-r--r--  1 pi pi 11291 2024-10-23 11:03:15.973854614 -0400 new_code_pico_2b8d36-uploaded-1729695996.py
+-rw-r--r--  1 pi pi 11223 2024-10-23 12:22:12.681117359 -0400 new_code_pico_2b8d36-uploaded-1729700574.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:02:45.607912191 -0500 new_code_pico_2b8d36-uploaded-1735423487.py
+-rw-r--r--  1 pi pi 15823 2026-09-29 17:20:40.295793957 -0400 new_code_pico_31ac21-uploaded-1790716901.py
+-rw-r--r--  1 pi pi 15823 2026-10-01 16:09:07.482969830 -0400 new_code_pico_31ac21-uploaded-1790885376.py
+-rw-r--r--  1 pi pi 16500 2026-10-02 10:02:44.918961557 -0400 new_code_pico_31ac21-uploaded-1790949791.py
+-rw-r--r--  1 pi pi 11223 2024-10-23 12:19:22.496258039 -0400 new_code_pico_322a34-uploaded-1729700384.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:02:07.736392629 -0500 new_code_pico_322a34-uploaded-1735423486.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:09:20.142895721 -0500 new_code_pico_322a34-uploaded-1735423828.py
+-rw-r--r--  1 pi pi 13290 2025-07-23 08:26:54.216199854 -0400 new_code_pico_322a34-uploaded-1756393677.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:34:32.866990852 -0400 new_code_pico_328036-uploaded-1729611356.py
+-rw-r--r--  1 pi pi 11059 2024-10-23 10:25:54.780175023 -0400 new_code_pico_328036-uploaded-1729693641.py
+-rw-r--r--  1 pi pi 11187 2024-10-23 10:38:13.387009829 -0400 new_code_pico_328036-uploaded-1729694411.py
+-rw-r--r--  1 pi pi 11292 2024-10-23 10:58:35.640645760 -0400 new_code_pico_328036-uploaded-1729695558.py
+-rw-r--r--  1 pi pi 11223 2024-10-23 11:43:33.422546484 -0400 new_code_pico_328036-uploaded-1729698483.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:00:55.385309747 -0500 new_code_pico_328036-uploaded-1735423484.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:08:39.427414158 -0500 new_code_pico_328036-uploaded-1735423829.py
+-rw-r--r--  1 pi pi 11855 2024-10-31 12:24:33.508579114 -0400 new_code_pico_436531-uploaded-1730392201.py
+-rw-r--r--  1 pi pi 11647 2024-12-28 16:59:16.818557409 -0500 new_code_pico_436531-uploaded-1735423485.py
+-rw-r--r--  1 pi pi 11647 2024-12-28 17:07:57.671945695 -0500 new_code_pico_436531-uploaded-1735423829.py
+-rw-r--r--  1 pi pi 15823 2026-10-01 16:08:07.515599081 -0400 new_code_pico_62ab21-uploaded-1790885316.py
+-rw-r--r--  1 pi pi 16500 2026-10-02 10:02:44.918961557 -0400 new_code_pico_62ab21-uploaded-1790949788.py
+-rw-r--r--  1 pi pi 15823 2026-10-01 16:06:38.068518336 -0400 new_code_pico_64ac21-uploaded-1790885227.py
+-rw-r--r--  1 pi pi 16500 2026-10-02 10:02:44.914961612 -0400 new_code_pico_64ac21-uploaded-1790949786.py
+-rw-r--r--  1 pi pi 11223 2024-10-23 12:22:28.540832800 -0400 new_code_pico_72a634-uploaded-1729700573.py
+-rw-r--r--  1 pi pi 11024 2024-12-28 17:02:58.863743970 -0500 new_code_pico_72a634-uploaded-1735423573.py
+-rw-r--r--  1 pi pi 11223 2024-10-23 12:19:08.836517996 -0400 new_code_pico_835b34-uploaded-1729700384.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:01:39.232754058 -0500 new_code_pico_835b34-uploaded-1735423486.py
+-rw-r--r--  1 pi pi 11024 2024-12-28 17:09:02.439121163 -0500 new_code_pico_835b34-uploaded-1735423828.py
+-rw-r--r--  1 pi pi 12759 2025-07-23 08:12:30.127111261 -0400 new_code_pico_835b34-uploaded-1756394367.py
+-rw-r--r--  1 pi pi 11855 2024-10-31 12:25:17.320145741 -0400 new_code_pico_836d31-uploaded-1730392010.py
+-rw-r--r--  1 pi pi 11647 2024-12-28 16:59:59.938011873 -0500 new_code_pico_836d31-uploaded-1735423484.py
+-rw-r--r--  1 pi pi 11647 2024-12-28 17:08:08.483808077 -0500 new_code_pico_836d31-uploaded-1735423829.py
+-rw-r--r--  1 pi pi 11855 2024-10-31 12:25:36.691949526 -0400 new_code_pico_974532-uploaded-1730392205.py
+-rw-r--r--  1 pi pi 11647 2024-12-28 17:00:15.013821036 -0500 new_code_pico_974532-uploaded-1735423577.py
+-rw-r--r--  1 pi pi 11647 2024-12-28 17:08:19.347669787 -0500 new_code_pico_974532-uploaded-1735423829.py
+-rw-r--r--  1 pi pi 11247 2024-10-22 11:34:43.470817655 -0400 new_code_pico_994b32-uploaded-1729611355.py
+-rw-r--r--  1 pi pi 11060 2024-10-23 10:25:44.344376642 -0400 new_code_pico_994b32-uploaded-1729693641.py
+-rw-r--r--  1 pi pi 11188 2024-10-23 10:38:24.898815221 -0400 new_code_pico_994b32-uploaded-1729694411.py
+-rw-r--r--  1 pi pi 11292 2024-10-23 10:58:50.076522447 -0400 new_code_pico_994b32-uploaded-1729695557.py
+-rw-r--r--  1 pi pi 11223 2024-10-23 11:43:25.226630335 -0400 new_code_pico_994b32-uploaded-1729698484.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:01:19.852999709 -0500 new_code_pico_994b32-uploaded-1735423485.py
+-rw-r--r--  1 pi pi 11023 2024-12-28 17:08:49.851281442 -0500 new_code_pico_994b32-uploaded-1735423828.py
+--- FILE /home/pi/starter-scripts/code_uploaded/empty.txt 0 d41d8cd98f00b204e9800998ecf8427e
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_0d5b31-uploaded-1729696004.py 11291 3ca29c7977f60e5b142c78a81b9203d0
+149:            "TypeName": "tank.module.params",
+183:            "TypeName": "new.code",
+243:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_0d5b31-uploaded-1729703871.py 11223 d1e06eab69ac744fb11366ab6bbc8c9e
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_0d5b31-uploaded-1735423486.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_0d5b31-uploaded-1735423829.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_16a321-uploaded-1790885436.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_16a321-uploaded-1790949788.py 16500 e9ab9a28529a627692ad19f9169317e1
+328:            "TypeName": "tank.module.params",
+388:            "TypeName": "new.code",
+449:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_1d2c34-uploaded-1729696003.py 11291 3ca29c7977f60e5b142c78a81b9203d0
+149:            "TypeName": "tank.module.params",
+183:            "TypeName": "new.code",
+243:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_1d2c34-uploaded-1729703870.py 11223 d1e06eab69ac744fb11366ab6bbc8c9e
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_1d2c34-uploaded-1735423486.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_1d2c34-uploaded-1735423828.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_2b8d36-uploaded-1729695996.py 11291 3ca29c7977f60e5b142c78a81b9203d0
+149:            "TypeName": "tank.module.params",
+183:            "TypeName": "new.code",
+243:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_2b8d36-uploaded-1729700574.py 11223 d1e06eab69ac744fb11366ab6bbc8c9e
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_2b8d36-uploaded-1735423487.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_31ac21-uploaded-1790716901.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_31ac21-uploaded-1790885376.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_31ac21-uploaded-1790949791.py 16500 e9ab9a28529a627692ad19f9169317e1
+328:            "TypeName": "tank.module.params",
+388:            "TypeName": "new.code",
+449:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_322a34-uploaded-1729700384.py 11223 d1e06eab69ac744fb11366ab6bbc8c9e
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_322a34-uploaded-1735423486.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_322a34-uploaded-1735423828.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_322a34-uploaded-1756393677.py 13290 12d7c49c3f62b6b018f0a029127ee3bb
+170:            "TypeName": "tank.module.params",
+199:            "TypeName": "new.code",
+274:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_328036-uploaded-1729611356.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_328036-uploaded-1729693641.py 11059 09ce2878c87d10f53243c9d580648585
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_328036-uploaded-1729694411.py 11187 b404436aac9de143de4536367900cca1
+149:            "TypeName": "tank.module.params",
+183:            "TypeName": "new.code",
+243:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_328036-uploaded-1729695558.py 11292 39fdce9cb9c3e1da6064457a5fa2c720
+150:            "TypeName": "tank.module.params",
+184:            "TypeName": "new.code",
+244:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_328036-uploaded-1729698483.py 11223 d1e06eab69ac744fb11366ab6bbc8c9e
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_328036-uploaded-1735423484.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_328036-uploaded-1735423829.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_436531-uploaded-1730392201.py 11855 e0350fecf5eb39a9cf534e2594406b3f
+149:            "TypeName": "flow.reed.params",
+181:            "TypeName": "new.code",
+208:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_436531-uploaded-1735423485.py 11647 dddf9b1a4a0c799986db779181770026
+149:            "TypeName": "flow.reed.params",
+177:            "TypeName": "new.code",
+204:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_436531-uploaded-1735423829.py 11647 dddf9b1a4a0c799986db779181770026
+149:            "TypeName": "flow.reed.params",
+177:            "TypeName": "new.code",
+204:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_62ab21-uploaded-1790885316.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_62ab21-uploaded-1790949788.py 16500 e9ab9a28529a627692ad19f9169317e1
+328:            "TypeName": "tank.module.params",
+388:            "TypeName": "new.code",
+449:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_64ac21-uploaded-1790885227.py 15823 cd8483c2399cf02d280f208cb2df4474
+327:            "TypeName": "tank.module.params",
+378:            "TypeName": "new.code",
+439:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_64ac21-uploaded-1790949786.py 16500 e9ab9a28529a627692ad19f9169317e1
+328:            "TypeName": "tank.module.params",
+388:            "TypeName": "new.code",
+449:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_72a634-uploaded-1729700573.py 11223 d1e06eab69ac744fb11366ab6bbc8c9e
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_72a634-uploaded-1735423573.py 11024 692bd33db21dbf4f09ac82df546d5738
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_835b34-uploaded-1729700384.py 11223 d1e06eab69ac744fb11366ab6bbc8c9e
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_835b34-uploaded-1735423486.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_835b34-uploaded-1735423828.py 11024 692bd33db21dbf4f09ac82df546d5738
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_835b34-uploaded-1756394367.py 12759 7e9b4d369c4357cc3429c688aaafd6db
+176:            "TypeName": "tank.module.params",
+206:            "TypeName": "new.code",
+267:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_836d31-uploaded-1730392010.py 11855 e0350fecf5eb39a9cf534e2594406b3f
+149:            "TypeName": "flow.reed.params",
+181:            "TypeName": "new.code",
+208:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_836d31-uploaded-1735423484.py 11647 dddf9b1a4a0c799986db779181770026
+149:            "TypeName": "flow.reed.params",
+177:            "TypeName": "new.code",
+204:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_836d31-uploaded-1735423829.py 11647 dddf9b1a4a0c799986db779181770026
+149:            "TypeName": "flow.reed.params",
+177:            "TypeName": "new.code",
+204:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_974532-uploaded-1730392205.py 11855 e0350fecf5eb39a9cf534e2594406b3f
+149:            "TypeName": "flow.reed.params",
+181:            "TypeName": "new.code",
+208:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_974532-uploaded-1735423577.py 11647 dddf9b1a4a0c799986db779181770026
+149:            "TypeName": "flow.reed.params",
+177:            "TypeName": "new.code",
+204:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_974532-uploaded-1735423829.py 11647 dddf9b1a4a0c799986db779181770026
+149:            "TypeName": "flow.reed.params",
+177:            "TypeName": "new.code",
+204:            "TypeName": "ticklist.reed", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_994b32-uploaded-1729611355.py 11247 3127e5bb7ee82f779703311e74e190db
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_994b32-uploaded-1729693641.py 11060 abf40c43939764222c880b15c2d3fdfb
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_994b32-uploaded-1729694411.py 11188 776d20fa8494511eb4bd39edf025973f
+150:            "TypeName": "tank.module.params",
+184:            "TypeName": "new.code",
+244:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_994b32-uploaded-1729695557.py 11292 39fdce9cb9c3e1da6064457a5fa2c720
+150:            "TypeName": "tank.module.params",
+184:            "TypeName": "new.code",
+244:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_994b32-uploaded-1729698484.py 11223 d1e06eab69ac744fb11366ab6bbc8c9e
+148:            "TypeName": "tank.module.params",
+182:            "TypeName": "new.code",
+242:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_994b32-uploaded-1735423485.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+--- FILE /home/pi/starter-scripts/code_uploaded/new_code_pico_994b32-uploaded-1735423828.py 11023 ee2d49ea8a46f9af8f3db14cb70d9732
+148:            "TypeName": "tank.module.params",
+178:            "TypeName": "new.code",
+238:            "TypeName": "microvolts", 
+=== SS_LOG
+9358f3b 2026-10-02 08:56:12 -0400 Merge branch 'dev' of github.com:thegridelectric/starter-scripts into dev
+401e3b8 2026-10-02 08:54:16 -0400 Merge branch 'jm/spruce' into dev
+1da8a3d 2026-10-02 08:52:13 -0400 note about stopping scada first when starting the api
+e46bcb7 2026-09-28 12:44:58 -0400 minor adjustment to maple_snap; remove the temporary spruce_store_fill
+c1ab3c8 2026-09-28 07:02:49 -0400 tweak maple snapshot
+2f8117b 2026-09-27 16:21:54 -0400 adding temp_spruce_store_fill
+e059967 2026-09-27 14:50:48 -0400 winter hack: iso valve closes with the secondary pump
+03bde17 2026-09-25 16:43:23 -0400 tweaking maple snap
+=== SS_BRANCH
+dev
+=== SS_STATUS
+?? firmware/
+?? new_code_tm3.py
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada
+a70c10ea 2026-10-08 21:47:23 -0400 Merge pull request #582 from thegridelectric/jm/proactor-jm3
+main
+=== SCADA /home/pi/gridworks-scada-unlimbo
+97ea5806 2026-10-08 17:36:58 -0400 Proactor pin to v4.1.13+jm3
+jm/spruce-unlimbo
+=== OUTPUT
+=== UPTIME
+ 08:06:16 up 11 days, 14:29,  2 users,  load average: 0.14, 0.06, 0.01
+=== USERJ
+=== UNITS
+=== USERUNITS
+EXIT 1

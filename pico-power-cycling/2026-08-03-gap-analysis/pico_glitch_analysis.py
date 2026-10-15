@@ -21,7 +21,7 @@ from pathlib import Path
 import psycopg
 
 HERE = Path(__file__).parent
-sys.path.insert(0, str(HERE.parent / "src"))
+sys.path.insert(0, str(HERE.parents[1] / "src"))
 
 from gwexp.sema.codec import SemaCodec  # noqa: E402
 from gwexp.sema.property_format import LeftRightDot, SpaceheatName  # noqa: E402
