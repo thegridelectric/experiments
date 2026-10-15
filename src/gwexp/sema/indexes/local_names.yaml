@@ -1,6 +1,9 @@
 enums:
+  base.g.node.class: base.g.node.class
   change.relay.state: change.relay.state
   fsm.report.type: fsm.report.type
+  g.node.status: g.node.status
+  gpio.sense.mode: gpio.sense.mode
   gpm.from.hz.method: gpm.from.hz.method
   gw.alert.category: gw.alert.category
   gw.alert.state: gw.alert.state
@@ -10,15 +13,24 @@ enums:
   gw.opsgenie.alert.status: gw.opsgenie.alert.status
   gw.opsgenie.priority: gw.opsgenie.priority
   gw.platform.alert.kind: gw.platform.alert.kind
+  gw.primary.flow.source: gw.primary.flow.source
+  gw.primary.pump.owner: gw.primary.pump.owner
+  gw.refrigerant.cycle: gw.refrigerant.cycle
+  gw.zone.emitter.type: gw.zone.emitter.type
   gw1.actor.class: gw1.actor.class
   gw1.emission.method: gw1.emission.method
   gw1.quantity: gw1.quantity
   gw1.seasonal.storage.mode: gw1.seasonal.storage.mode
   gw1.system.mode: gw1.system.mode
   gw1.unit: gw1.unit
+  gw2.lc.top.state: gw2.lc.top.state
   hz.calc.method: hz.calc.method
   i2c.adc.channel: i2c.adc.channel
   i2c.adc.type: i2c.adc.type
+  i2c.dac.channel: i2c.dac.channel
+  i2c.dac.type: i2c.dac.type
+  i2c.expander.type: i2c.expander.type
+  i2c.mux.type: i2c.mux.type
   log.level: log.level
   pico.board.variant: pico.board.variant
   relay.closed.or.open: relay.closed.or.open
@@ -28,41 +40,81 @@ enums:
   spaceheat.telemetry.name: spaceheat.telemetry.name
   spaceheat.unit: spaceheat.unit
   temp.calc.method: temp.calc.method
+  thermostat.kind: thermostat.kind
+  zone.setpoint.source: zone.setpoint.source
 types:
+  ads111x.based.device.type.gt: ads111x.based.device.type.gt
   channel.config: channel.config
   channel.readings: channel.readings
+  dac.output.config: dac.output.config
   data.channel.gt: data.channel.gt
   derived.channel.gt: derived.channel.gt
+  device.component.gt: device.component.gt
+  egauge.register.config: egauge.register.config
+  electric.meter.channel.config: electric.meter.channel.config
+  electric.meter.component.gt: electric.meter.component.gt
+  electric.meter.device.type.gt: electric.meter.device.type.gt
   fsm.atomic.report: fsm.atomic.report
   fsm.full.report: fsm.full.report
+  g.node.gt: g.node.gt
   glitch: glitch
+  gpio.relay.component.gt: gpio.relay.component.gt
+  gpio.sensor.component.gt: gpio.sensor.component.gt
   gw.adc.waveform: gw.adc.waveform
   gw.alert: gw.alert
+  gw.boiler.backup: gw.boiler.backup
   gw.channel.gap.stats: gw.channel.gap.stats
   gw.channel.jump.stats: gw.channel.jump.stats
   gw.channel.noise.stats: gw.channel.noise.stats
+  gw.element.backup: gw.element.backup
   gw.experiment.run: gw.experiment.run
+  gw.hydronic: gw.hydronic
+  gw.native.gpio.pin: gw.native.gpio.pin
+  gw.nolan.layout: gw.nolan.layout
   gw.opsgenie.alert: gw.opsgenie.alert
   gw.readings: gw.readings
+  gw.water.store: gw.water.store
+  gw1.hvac.zone: gw1.hvac.zone
+  gw1.scada.device.type.gt: gw1.scada.device.type.gt
   gw1.tank.temp.calibration: gw1.tank.temp.calibration
   gw1.tank.temp.calibration.map: gw1.tank.temp.calibration.map
   gw1.unit.quantity.projection: gw1.unit.quantity.projection
+  gw1.zone.call.circuit: gw1.zone.call.circuit
+  gw1.zone.thermostat: gw1.zone.thermostat
   ha1.params: ha1.params
   heating.forecast: heating.forecast
+  hp.control.box.device.type.gt: hp.control.box.device.type.gt
+  hp.device.type.gt: hp.device.type.gt
+  i2c.bus: i2c.bus
+  i2c.ct.interface.capability: i2c.ct.interface.capability
+  i2c.dac.capability: i2c.dac.capability
+  i2c.dac.output.component.gt: i2c.dac.output.component.gt
+  i2c.expander: i2c.expander
   i2c.multichannel.dt.relay.component.gt: i2c.multichannel.dt.relay.component.gt
+  i2c.mux: i2c.mux
+  i2c.relay.capability: i2c.relay.capability
+  i2c.relay.component.gt: i2c.relay.component.gt
   i2c.thermistor.channel.config: i2c.thermistor.channel.config
+  i2c.thermistor.interface.capability: i2c.thermistor.interface.capability
   i2c.thermistor.reader.component.gt: i2c.thermistor.reader.component.gt
   layout.lite: layout.lite
   machine.states: machine.states
+  pico.btu.meter.component.gt: pico.btu.meter.component.gt
   pico.flow.module.component.gt: pico.flow.module.component.gt
   pico.tank.module.component.gt: pico.tank.module.component.gt
   relay.actor.config: relay.actor.config
+  relay.control.config: relay.control.config
   report: report
   report.event: report.event
+  scada.board.component.gt: scada.board.component.gt
+  sim.pico.btu.meter.component.gt: sim.pico.btu.meter.component.gt
+  sim.pico.flow.module.component.gt: sim.pico.flow.module.component.gt
   sim.pico.tank.module.component.gt: sim.pico.tank.module.component.gt
+  sim.sensor.component.gt: sim.sensor.component.gt
   single.machine.state: single.machine.state
   single.reading: single.reading
   snapshot.spaceheat: snapshot.spaceheat
   spaceheat.node.gt: spaceheat.node.gt
   spaceheat.telemetry.quantity.projection: spaceheat.telemetry.quantity.projection
   synth.channel.gt: synth.channel.gt
+  web.server.component.gt: web.server.component.gt

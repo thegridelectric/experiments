@@ -6,7 +6,9 @@
 # alert words the alerter witnesses decode, and gw.opsgenie.alert, the
 # notifier's record of each alert read back from Opsgenie, and the scada
 # boot and hourly messages the beech store-heat analysis decodes
-# (report.event 002, heating.forecast 000). Formats and enums arrive via
+# (report.event 002, heating.forecast 000), and gw.nolan.layout, the
+# layout word the spruce radiant-slab fit reads its zone circuits from.
+# Formats and enums arrive via
 # dependencies.
 
 initial_targets:
@@ -19,7 +21,10 @@ initial_targets:
       versions: ["000", "001"]
     gw.channel.jump.stats: {}
     gw.channel.noise.stats: {}
-    gw.readings: {}
+    gw.readings:
+      versions: ["000", "001"]
+    gw.nolan.layout:
+      versions: ["000"]
     i2c.thermistor.reader.component.gt: {}
     report.event:
       versions: ["002", "003", "004"]

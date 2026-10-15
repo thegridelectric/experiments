@@ -1,6 +1,6 @@
 metadata:
   generated_from: indexes/public_registry.yaml
-  generated_at: '2026-10-08T21:44:38Z'
+  generated_at: '2026-10-15T19:25:07Z'
   note: Transitive closure of initial_targets
 initial_targets:
 - glitch:000
@@ -12,6 +12,8 @@ initial_targets:
 - gw.channel.jump.stats:000
 - gw.channel.noise.stats:000
 - gw.readings:000
+- gw.readings:001
+- gw.nolan.layout:000
 - i2c.thermistor.reader.component.gt:000
 - report.event:002
 - report.event:003
@@ -31,8 +33,6 @@ initial_targets:
 - gw.opsgenie.alert:000
 worklist:
   formats:
-    firmware.commit:
-      path: definitions/formats/firmware.commit.yaml
     handle.name:
       path: definitions/formats/handle.name.yaml
     left.right.dot:
@@ -58,12 +58,21 @@ worklist:
     uuid4.str:
       path: definitions/formats/uuid4.str.yaml
   enums:
+    base.g.node.class:
+      '000':
+        path: definitions/enums/base.g.node.class/000.yaml
     change.relay.state:
       '000':
         path: definitions/enums/change.relay.state/000.yaml
     fsm.report.type:
       '000':
         path: definitions/enums/fsm.report.type/000.yaml
+    g.node.status:
+      '000':
+        path: definitions/enums/g.node.status/000.yaml
+    gpio.sense.mode:
+      '000':
+        path: definitions/enums/gpio.sense.mode/000.yaml
     gpm.from.hz.method:
       '000':
         path: definitions/enums/gpm.from.hz.method/000.yaml
@@ -91,6 +100,18 @@ worklist:
     gw.platform.alert.kind:
       '000':
         path: definitions/enums/gw.platform.alert.kind/000.yaml
+    gw.primary.flow.source:
+      '000':
+        path: definitions/enums/gw.primary.flow.source/000.yaml
+    gw.primary.pump.owner:
+      '000':
+        path: definitions/enums/gw.primary.pump.owner/000.yaml
+    gw.refrigerant.cycle:
+      '000':
+        path: definitions/enums/gw.refrigerant.cycle/000.yaml
+    gw.zone.emitter.type:
+      '000':
+        path: definitions/enums/gw.zone.emitter.type/000.yaml
     gw1.actor.class:
       009:
         path: definitions/enums/gw1.actor.class/009.yaml
@@ -108,6 +129,8 @@ worklist:
         path: definitions/enums/gw1.quantity/000.yaml
       '001':
         path: definitions/enums/gw1.quantity/001.yaml
+      '003':
+        path: definitions/enums/gw1.quantity/003.yaml
     gw1.seasonal.storage.mode:
       '000':
         path: definitions/enums/gw1.seasonal.storage.mode/000.yaml
@@ -119,6 +142,11 @@ worklist:
         path: definitions/enums/gw1.unit/000.yaml
       '001':
         path: definitions/enums/gw1.unit/001.yaml
+      '003':
+        path: definitions/enums/gw1.unit/003.yaml
+    gw2.lc.top.state:
+      '000':
+        path: definitions/enums/gw2.lc.top.state/000.yaml
     hz.calc.method:
       '001':
         path: definitions/enums/hz.calc.method/001.yaml
@@ -128,6 +156,18 @@ worklist:
     i2c.adc.type:
       '000':
         path: definitions/enums/i2c.adc.type/000.yaml
+    i2c.dac.channel:
+      '000':
+        path: definitions/enums/i2c.dac.channel/000.yaml
+    i2c.dac.type:
+      '000':
+        path: definitions/enums/i2c.dac.type/000.yaml
+    i2c.expander.type:
+      '000':
+        path: definitions/enums/i2c.expander.type/000.yaml
+    i2c.mux.type:
+      '000':
+        path: definitions/enums/i2c.mux.type/000.yaml
     log.level:
       '000':
         path: definitions/enums/log.level/000.yaml
@@ -157,13 +197,25 @@ worklist:
     temp.calc.method:
       '000':
         path: definitions/enums/temp.calc.method/000.yaml
+    thermostat.kind:
+      '000':
+        path: definitions/enums/thermostat.kind/000.yaml
+    zone.setpoint.source:
+      '000':
+        path: definitions/enums/zone.setpoint.source/000.yaml
   types:
+    ads111x.based.device.type.gt:
+      '000':
+        path: definitions/types/ads111x.based.device.type.gt/000.yaml
     channel.config:
       '000':
         path: definitions/types/channel.config/000.yaml
     channel.readings:
       '002':
         path: definitions/types/channel.readings/002.yaml
+    dac.output.config:
+      '000':
+        path: definitions/types/dac.output.config/000.yaml
     data.channel.gt:
       '001':
         path: definitions/types/data.channel.gt/001.yaml
@@ -171,6 +223,8 @@ worklist:
         path: definitions/types/data.channel.gt/002.yaml
       '003':
         path: definitions/types/data.channel.gt/003.yaml
+      '004':
+        path: definitions/types/data.channel.gt/004.yaml
     derived.channel.gt:
       '000':
         path: definitions/types/derived.channel.gt/000.yaml
@@ -178,6 +232,23 @@ worklist:
         path: definitions/types/derived.channel.gt/001.yaml
       '002':
         path: definitions/types/derived.channel.gt/002.yaml
+      '003':
+        path: definitions/types/derived.channel.gt/003.yaml
+    device.component.gt:
+      '000':
+        path: definitions/types/device.component.gt/000.yaml
+    egauge.register.config:
+      '000':
+        path: definitions/types/egauge.register.config/000.yaml
+    electric.meter.channel.config:
+      '000':
+        path: definitions/types/electric.meter.channel.config/000.yaml
+    electric.meter.component.gt:
+      '001':
+        path: definitions/types/electric.meter.component.gt/001.yaml
+    electric.meter.device.type.gt:
+      '000':
+        path: definitions/types/electric.meter.device.type.gt/000.yaml
     fsm.atomic.report:
       '000':
         path: definitions/types/fsm.atomic.report/000.yaml
@@ -188,15 +259,27 @@ worklist:
         path: definitions/types/fsm.full.report/000.yaml
       '001':
         path: definitions/types/fsm.full.report/001.yaml
+    g.node.gt:
+      '006':
+        path: definitions/types/g.node.gt/006.yaml
     glitch:
       '000':
         path: definitions/types/glitch/000.yaml
+    gpio.relay.component.gt:
+      '000':
+        path: definitions/types/gpio.relay.component.gt/000.yaml
+    gpio.sensor.component.gt:
+      '000':
+        path: definitions/types/gpio.sensor.component.gt/000.yaml
     gw.adc.waveform:
       '000':
         path: definitions/types/gw.adc.waveform/000.yaml
     gw.alert:
       '000':
         path: definitions/types/gw.alert/000.yaml
+    gw.boiler.backup:
+      '000':
+        path: definitions/types/gw.boiler.backup/000.yaml
     gw.channel.gap.stats:
       '000':
         path: definitions/types/gw.channel.gap.stats/000.yaml
@@ -206,26 +289,61 @@ worklist:
     gw.channel.noise.stats:
       '000':
         path: definitions/types/gw.channel.noise.stats/000.yaml
+    gw.element.backup:
+      '000':
+        path: definitions/types/gw.element.backup/000.yaml
     gw.experiment.run:
       '000':
         path: definitions/types/gw.experiment.run/000.yaml
       '001':
         path: definitions/types/gw.experiment.run/001.yaml
+    gw.hydronic:
+      '000':
+        path: definitions/types/gw.hydronic/000.yaml
+    gw.native.gpio.pin:
+      '000':
+        path: definitions/types/gw.native.gpio.pin/000.yaml
+    gw.nolan.layout:
+      '000':
+        path: definitions/types/gw.nolan.layout/000.yaml
     gw.opsgenie.alert:
       '000':
         path: definitions/types/gw.opsgenie.alert/000.yaml
     gw.readings:
       '000':
         path: definitions/types/gw.readings/000.yaml
+      '001':
+        path: definitions/types/gw.readings/001.yaml
+    gw.water.store:
+      '000':
+        path: definitions/types/gw.water.store/000.yaml
+    gw1.hvac.zone:
+      '000':
+        path: definitions/types/gw1.hvac.zone/000.yaml
+    gw1.scada.device.type.gt:
+      '000':
+        path: definitions/types/gw1.scada.device.type.gt/000.yaml
     gw1.tank.temp.calibration:
       '000':
         path: definitions/types/gw1.tank.temp.calibration/000.yaml
+      '001':
+        path: definitions/types/gw1.tank.temp.calibration/001.yaml
     gw1.tank.temp.calibration.map:
       '000':
         path: definitions/types/gw1.tank.temp.calibration.map/000.yaml
+      '001':
+        path: definitions/types/gw1.tank.temp.calibration.map/001.yaml
     gw1.unit.quantity.projection:
       '000':
         path: definitions/types/gw1.unit.quantity.projection/000.yaml
+      '001':
+        path: definitions/types/gw1.unit.quantity.projection/001.yaml
+    gw1.zone.call.circuit:
+      '000':
+        path: definitions/types/gw1.zone.call.circuit/000.yaml
+    gw1.zone.thermostat:
+      '000':
+        path: definitions/types/gw1.zone.thermostat/000.yaml
     ha1.params:
       '002':
         path: definitions/types/ha1.params/002.yaml
@@ -240,6 +358,27 @@ worklist:
     heating.forecast:
       '000':
         path: definitions/types/heating.forecast/000.yaml
+    hp.control.box.device.type.gt:
+      '000':
+        path: definitions/types/hp.control.box.device.type.gt/000.yaml
+    hp.device.type.gt:
+      '000':
+        path: definitions/types/hp.device.type.gt/000.yaml
+    i2c.bus:
+      '000':
+        path: definitions/types/i2c.bus/000.yaml
+    i2c.ct.interface.capability:
+      '000':
+        path: definitions/types/i2c.ct.interface.capability/000.yaml
+    i2c.dac.capability:
+      '000':
+        path: definitions/types/i2c.dac.capability/000.yaml
+    i2c.dac.output.component.gt:
+      '000':
+        path: definitions/types/i2c.dac.output.component.gt/000.yaml
+    i2c.expander:
+      '000':
+        path: definitions/types/i2c.expander/000.yaml
     i2c.multichannel.dt.relay.component.gt:
       '002':
         path: definitions/types/i2c.multichannel.dt.relay.component.gt/002.yaml
@@ -247,9 +386,21 @@ worklist:
         path: definitions/types/i2c.multichannel.dt.relay.component.gt/003.yaml
       '004':
         path: definitions/types/i2c.multichannel.dt.relay.component.gt/004.yaml
+    i2c.mux:
+      '000':
+        path: definitions/types/i2c.mux/000.yaml
+    i2c.relay.capability:
+      '000':
+        path: definitions/types/i2c.relay.capability/000.yaml
+    i2c.relay.component.gt:
+      '000':
+        path: definitions/types/i2c.relay.component.gt/000.yaml
     i2c.thermistor.channel.config:
       '000':
         path: definitions/types/i2c.thermistor.channel.config/000.yaml
+    i2c.thermistor.interface.capability:
+      '000':
+        path: definitions/types/i2c.thermistor.interface.capability/000.yaml
     i2c.thermistor.reader.component.gt:
       '000':
         path: definitions/types/i2c.thermistor.reader.component.gt/000.yaml
@@ -277,6 +428,9 @@ worklist:
     machine.states:
       '000':
         path: definitions/types/machine.states/000.yaml
+    pico.btu.meter.component.gt:
+      '000':
+        path: definitions/types/pico.btu.meter.component.gt/000.yaml
     pico.flow.module.component.gt:
       '000':
         path: definitions/types/pico.flow.module.component.gt/000.yaml
@@ -296,6 +450,9 @@ worklist:
         path: definitions/types/relay.actor.config/002.yaml
       '003':
         path: definitions/types/relay.actor.config/003.yaml
+    relay.control.config:
+      '000':
+        path: definitions/types/relay.control.config/000.yaml
     report:
       '002':
         path: definitions/types/report/002.yaml
@@ -308,11 +465,23 @@ worklist:
         path: definitions/types/report.event/003.yaml
       '004':
         path: definitions/types/report.event/004.yaml
+    scada.board.component.gt:
+      '000':
+        path: definitions/types/scada.board.component.gt/000.yaml
+    sim.pico.btu.meter.component.gt:
+      '000':
+        path: definitions/types/sim.pico.btu.meter.component.gt/000.yaml
+    sim.pico.flow.module.component.gt:
+      '000':
+        path: definitions/types/sim.pico.flow.module.component.gt/000.yaml
     sim.pico.tank.module.component.gt:
       '000':
         path: definitions/types/sim.pico.tank.module.component.gt/000.yaml
       '001':
         path: definitions/types/sim.pico.tank.module.component.gt/001.yaml
+    sim.sensor.component.gt:
+      '000':
+        path: definitions/types/sim.sensor.component.gt/000.yaml
     single.machine.state:
       '000':
         path: definitions/types/single.machine.state/000.yaml
@@ -336,6 +505,11 @@ worklist:
     spaceheat.telemetry.quantity.projection:
       '000':
         path: definitions/types/spaceheat.telemetry.quantity.projection/000.yaml
+      '001':
+        path: definitions/types/spaceheat.telemetry.quantity.projection/001.yaml
     synth.channel.gt:
       '000':
         path: definitions/types/synth.channel.gt/000.yaml
+    web.server.component.gt:
+      '001':
+        path: definitions/types/web.server.component.gt/001.yaml

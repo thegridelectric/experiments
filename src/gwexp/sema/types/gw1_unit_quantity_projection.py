@@ -16,16 +16,22 @@ _PROJECTION = {
     Gw1Unit.Seconds: Gw1Quantity.Time,
     Gw1Unit.SecondsX10: Gw1Quantity.Time,
     Gw1Unit.Milliseconds: Gw1Quantity.Time,
+    Gw1Unit.DollarsX1000: Gw1Quantity.Currency,
+    Gw1Unit.MilesPerHourX1000: Gw1Quantity.WindSpeed,
+    Gw1Unit.KilowattHoursX1000: Gw1Quantity.Energy,
+    Gw1Unit.WattsPerSquareMeter: Gw1Quantity.Irradiance,
+    Gw1Unit.MilesPerHourX10: Gw1Quantity.WindSpeed,
+    Gw1Unit.FahrenheitX10: Gw1Quantity.Temperature,
 }
 
 
 class Gw1UnitQuantityProjection(SemaType):
-    """Sema: https://schemas.electricity.works/types/gw1.unit.quantity.projection/000"""
+    """Sema: https://schemas.electricity.works/types/gw1.unit.quantity.projection/001"""
 
     unit: Gw1Unit
     quantity: Gw1Quantity
     type_name: Literal["gw1.unit.quantity.projection"] = "gw1.unit.quantity.projection"
-    version: Literal["000"] = "000"
+    version: Literal["001"] = "001"
 
     @classmethod
     def project(cls, unit: Gw1Unit) -> Gw1Quantity:

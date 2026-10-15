@@ -7,11 +7,13 @@ from gwexp.sema.property_format import LeftRightDot
 from gwexp.sema.property_format import PositiveInt
 from gwexp.sema.property_format import UTCMilliseconds
 from gwexp.sema.property_format import UUID4Str
-from gwexp.sema.types.gw1_tank_temp_calibration_map import Gw1TankTempCalibrationMap
 from gwexp.sema.types.ha1_params import Ha1Params
 from gwexp.sema.types.layout_lite import LayoutLite
 from gwexp.sema.types.old_versions.data_channel_gt_002 import DataChannelGt002
 from gwexp.sema.types.old_versions.derived_channel_gt_001 import DerivedChannelGt001
+from gwexp.sema.types.old_versions.gw1_tank_temp_calibration_map_000 import (
+    Gw1TankTempCalibrationMap000,
+)
 from gwexp.sema.types.old_versions.i2c_multichannel_dt_relay_component_gt_003 import (
     I2cMultichannelDtRelayComponentGt003,
 )
@@ -49,7 +51,7 @@ class LayoutLite012(SemaType):
     flow_module_components: list[PicoFlowModuleComponentGt000]
     ha1_params: Ha1Params
     i2c_relay_component: I2cMultichannelDtRelayComponentGt003 | None = None
-    t_map: Gw1TankTempCalibrationMap | None = None
+    t_map: Gw1TankTempCalibrationMap000 | None = None
     type_name: Literal["layout.lite"] = "layout.lite"
     version: Literal["012"] = "012"
 
@@ -129,7 +131,7 @@ class LayoutLite012(SemaType):
     def upgrade(self) -> "LayoutLite":
         """
         - ShNodes: spaceheat.node.gt:301 -> 303
-        - DataChannels: data.channel.gt:002 -> 003
+        - DataChannels: data.channel.gt:002 -> 004
         - TankModuleComponents / FlowModuleComponents / I2cRelayComponent: cac-carrying component versions -> cac-free DeviceType versions (pico.tank.module 011->012, sim.pico.tank.module 000->001, pico.flow.module 000->001, i2c.multichannel.dt.relay 003->004). Context-dependent: the embedded components' DeviceType lives on their cac, not the component.
         - SystemMode and SeasonalStorageMode leave: the posture facts (Standby, StandbyPosture, SeasonalStorageMode, ServiceMode, AcceptsDispatch, DispatchRefusalReason) ride gw.house.operating.status, sent after the startup announcements and on change, so the LTN has one source for them.
         - Strategy (free manifold-variant string) -> HardwareLayoutTypeName (left.right.dot): the loaded layout word's TypeName is the family; a format, not an enum of layout words, so this word publishes independently of the layout words' status.

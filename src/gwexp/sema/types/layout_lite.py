@@ -6,12 +6,12 @@ from gwexp.sema.property_format import PositiveInt
 from gwexp.sema.property_format import UTCMilliseconds
 from gwexp.sema.property_format import UUID4Str
 from gwexp.sema.types.data_channel_gt import DataChannelGt
+from gwexp.sema.types.derived_channel_gt import DerivedChannelGt
 from gwexp.sema.types.gw1_tank_temp_calibration_map import Gw1TankTempCalibrationMap
 from gwexp.sema.types.ha1_params import Ha1Params
 from gwexp.sema.types.i2c_multichannel_dt_relay_component_gt import (
     I2cMultichannelDtRelayComponentGt,
 )
-from gwexp.sema.types.old_versions.derived_channel_gt_001 import DerivedChannelGt001
 from gwexp.sema.types.pico_flow_module_component_gt import PicoFlowModuleComponentGt
 from gwexp.sema.types.pico_tank_module_component_gt import PicoTankModuleComponentGt
 from gwexp.sema.types.sim_pico_tank_module_component_gt import (
@@ -33,7 +33,7 @@ class LayoutLite(SemaType):
     total_store_tanks: PositiveInt
     sh_nodes: list[SpaceheatNodeGt]
     data_channels: list[DataChannelGt]
-    derived_channels: list[DerivedChannelGt001]
+    derived_channels: list[DerivedChannelGt]
     tank_module_components: list[
         PicoTankModuleComponentGt | SimPicoTankModuleComponentGt
     ]

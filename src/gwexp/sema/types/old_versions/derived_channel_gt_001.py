@@ -2,15 +2,17 @@ from typing import Any, Literal
 from pydantic import model_validator
 from gwexp.sema.base import SemaType
 from gwexp.sema.enums import Gw1EmissionMethod
-from gwexp.sema.enums import Gw1Quantity
-from gwexp.sema.enums import Gw1Unit
+from gwexp.sema.enums.old_versions.gw1_quantity_001 import Gw1Quantity001
 from gwexp.sema.enums.old_versions.gw1_unit_000 import Gw1Unit000
+from gwexp.sema.enums.old_versions.gw1_unit_001 import Gw1Unit001
 from gwexp.sema.property_format import LeftRightDot
 from gwexp.sema.property_format import PositiveInt
 from gwexp.sema.property_format import SpaceheatName
 from gwexp.sema.property_format import UUID4Str
-from gwexp.sema.types.derived_channel_gt import DerivedChannelGt
-from gwexp.sema.types.gw1_unit_quantity_projection import Gw1UnitQuantityProjection
+from gwexp.sema.types.old_versions.derived_channel_gt_002 import DerivedChannelGt002
+from gwexp.sema.types.old_versions.gw1_unit_quantity_projection_000 import (
+    Gw1UnitQuantityProjection000,
+)
 
 
 class DerivedChannelGt001(SemaType):
@@ -59,7 +61,7 @@ class DerivedChannelGt001(SemaType):
                 )
         return self
 
-    def upgrade(self) -> DerivedChannelGt:
+    def upgrade(self) -> DerivedChannelGt002:
         """
         - OutputUnit: gw1.unit 000 -> 001
         - OutputUnit: required
@@ -71,12 +73,12 @@ class DerivedChannelGt001(SemaType):
 
         if self.output_unit is None:
             data["output_unit"] = "Unknown"
-            data["output_quantity"] = Gw1Quantity.Unknown
+            data["output_quantity"] = Gw1Quantity001.Unknown
         else:
             data["output_unit"] = self.output_unit.value
-            data["output_quantity"] = Gw1UnitQuantityProjection.project(
-                Gw1Unit(self.output_unit.value)
+            data["output_quantity"] = Gw1UnitQuantityProjection000.project(
+                Gw1Unit001(self.output_unit.value)
             )
 
         data["version"] = "002"
-        return DerivedChannelGt.model_validate(data)
+        return DerivedChannelGt002.model_validate(data)

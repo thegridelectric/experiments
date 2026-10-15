@@ -33,6 +33,7 @@ Usage:
 import argparse
 import csv
 import datetime
+import gzip
 import json
 import sys
 from pathlib import Path
@@ -223,8 +224,12 @@ def main() -> None:
 
     if args.display_from:
         inst_path = Path(args.display_from)
-        pull = SemaCodec().from_dict(json.loads(inst_path.read_text()),
-                                     expect=GwReadings)
+        if inst_path.suffix == ".gz":  # an instance committed gzipped under the 2 MB cap
+            text = gzip.decompress(inst_path.read_bytes()).decode()
+            inst_path = inst_path.with_suffix("")
+        else:
+            text = inst_path.read_text()
+        pull = SemaCodec().from_dict(json.loads(text), expect=GwReadings)
         write_display_csv(pull, inst_path.with_name(inst_path.stem + "-display.csv"))
         return
     for req in ("ta", "start", "end", "out"):

@@ -12,7 +12,7 @@ from gwexp.sema.types.gw1_unit_quantity_projection import Gw1UnitQuantityProject
 
 
 class DerivedChannelGt(SemaType):
-    """Sema: https://schemas.electricity.works/types/derived.channel.gt/002"""
+    """Sema: https://schemas.electricity.works/types/derived.channel.gt/003"""
 
     id: UUID4Str
     name: SpaceheatName
@@ -28,7 +28,7 @@ class DerivedChannelGt(SemaType):
     display_name: str
     terminal_asset_alias: LeftRightDot
     type_name: Literal["derived.channel.gt"] = "derived.channel.gt"
-    version: Literal["002"] = "002"
+    version: Literal["003"] = "003"
 
     @model_validator(mode="after")
     def check_axiom_1(self) -> "DerivedChannelGt":
@@ -63,7 +63,7 @@ class DerivedChannelGt(SemaType):
         """
         Axiom 2: OutputUnitQuantityConsistency
         OutputQuantity SHALL equal the Quantity defined by the canonical
-        gw1.unit.quantity.projection:000 instance for the specified OutputUnit.
+        gw1.unit.quantity.projection:001 instance for the specified OutputUnit.
         """
         expected = Gw1UnitQuantityProjection.project(Gw1Unit(self.output_unit.value))
         if self.output_quantity != expected:
