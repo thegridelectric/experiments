@@ -24,6 +24,7 @@ echo "==> pyright (zero errors, all repo scripts)"
 PYRIGHT_EXCLUDE='2026-08-06-ads-noise/ads_noise_experiment.py
 2026-08-05-registry-projection-rig/rig_reparent.py
 window_boot.py
+offer_contract.py
 2026-08-10-ads-declared-rate/capture_window.py
 future/pico-rejoin/rejoin_trace.py
 2026-08-15-spruce-fancoil-dist-test/spruce_fancoil_dist_test.py
