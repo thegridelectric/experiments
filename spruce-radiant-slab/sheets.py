@@ -8,9 +8,13 @@ floor is the hot-side BTU meter (flow times distribution supply minus
 return) shared among the slab zones calling. The workbook states the
 model in cells, puts each zone's measured floor and air temperatures
 beside the heat in, predicts the floor temperature step by step, and
-compares actual with predicted over any window. The garage is left out
-for now: its columns are not written and its calls do not enter the
-share rule.
+compares actual with predicted over any window. G and C are fitted in
+two stages, each a least-squares slope through the origin: the free
+float (no heat in, no slab zone and no fan coil calling) gives G over C
+from the floor's fall against floor minus air; the charge gives C from
+the metered heat in against the floor's rise plus what left for the
+room at that ratio. The garage is left out for now: its columns are not
+written and its calls do not enter the share rule.
 
 Inputs, all sema instances in this folder: the `gw.nolan.layout` word
 (which zones are radiant slabs, and each one's floor, air and heat-call
@@ -83,22 +87,24 @@ FIT_ZONE = MODELLED_ZONES[0]
 
 class Window(NamedTuple):
     """One pulled window: sheet name, the pull's condition field, the
-    free-float span for the Calibration sheet and the fit span (ET,
-    inclusive start, exclusive end), or None when the window has none."""
+    charge span (one slab zone charging alone, through its settle) and
+    the free-float span that follows (ET, inclusive start, exclusive
+    end), or None when the window has neither."""
 
     sheet: str
     condition: LeftRightDot
-    calib_start: str | None
-    calib_end: str | None
-    fit_start: str | None
-    fit_end: str | None
+    charge_start: str | None
+    charge_end: str | None
+    float_start: str | None
+    float_end: str | None
 
 
 WINDOWS = [
-    Window("Oct", validate_lrd("first.heat.oct"), "2026-10-07 19:00", "2026-10-08 02:00",
-           "2026-10-07 02:00", "2026-10-08 12:00"),
+    Window("Oct", validate_lrd("first.heat.oct"), "2026-10-07 02:00", "2026-10-07 19:00",
+           "2026-10-07 19:00", "2026-10-08 02:00"),
     Window("Sep", validate_lrd("first.heat.sep"), None, None, None, None),
 ]
+FREE_FLOAT_KWH = 0.015  # heat in per step below this counts as none
 
 
 class SlabZone(NamedTuple):
@@ -134,6 +140,32 @@ class SlabFit(NamedTuple):
     zone: SpaceheatName
     g_kw_per_f: float
     c_kwh_per_f: float
+
+
+class StageRow(NamedTuple):
+    """One row of a least-squares stage: the bin, its regressor x and
+    its response y; the stage's slope is sum(xy) over sum(xx)."""
+
+    time: dt.datetime
+    x: float
+    y: float
+
+
+class TwoStageFit(NamedTuple):
+    """How a SlabFit was reached. Stage 1, over the free float: x is
+    floor minus air (F), y the floor's fall per hour (F/h); the slope is
+    G over C (per hour). Stage 2, over the charge: x is the floor's rise
+    since the span start plus (G over C) times the accumulated floor
+    minus air hours, y the accumulated heat in to the zone (kWh); the
+    slope is C. G is the product. The RMS is predicted minus actual
+    floor F over charge and float together, re-seeded at the span's
+    first reading."""
+
+    fit: SlabFit
+    g_over_c_per_h: float
+    stage1: list[StageRow]
+    stage2: list[StageRow]
+    rms_f: float
 
 
 class Roles(NamedTuple):
@@ -283,34 +315,65 @@ def simulate(grid: Grid, roles: Roles, zone: SpaceheatName, g_kw_per_f: float, c
     return pred
 
 
-def sse_of(grid: Grid, roles: Roles, zone: SpaceheatName, gk: float, ck: float) -> float:
-    pred = simulate(grid, roles, zone, gk, ck)
-    actual = grid.cols[roles.by_zone(zone).floor]
-    return sum((p - a) ** 2 for p, a in zip(pred, actual) if not math.isnan(a))
+def slope(rows: list[StageRow]) -> float:
+    """Least squares through the origin."""
+    return sum(r.x * r.y for r in rows) / sum(r.x * r.x for r in rows)
 
 
-def fit_zone(grid: Grid, roles: Roles, zone: SpaceheatName, start: str, end: str) -> tuple[SlabFit, list[tuple[float, float, float]]]:
-    """Joint grid search on G and C over a span with both a metered
-    single-zone charge (fixes C) and a free float (fixes G over C); the
-    prediction is re-seeded at the span's first actual. Returns the fit
-    and its profile: the best G and RMS at each C, to show how sharply C
-    is determined."""
-    span = grid.loc(start, end)
-    n = sum(1 for a in span.cols[roles.by_zone(zone).floor] if not math.isnan(a))
-    profile = []
-    best = (math.inf, 0.0, 0.0)
-    for c10 in range(5, 61, 2):
-        ck = c10 / 10
-        best_c = (math.inf, 0.0)
-        for g1000 in range(20, 801, 5):
-            gk = g1000 / 1000
-            sse = sse_of(span, roles, zone, gk, ck)
-            if sse < best_c[0]:
-                best_c = (sse, gk)
-        profile.append((ck, best_c[1], math.sqrt(best_c[0] / n)))
-        if best_c[0] < best[0]:
-            best = (best_c[0], best_c[1], ck)
-    return SlabFit(zone, best[1], best[2]), profile
+def heat_in_kwh(grid: Grid, i: int) -> float:
+    step_h = STEP_MIN / 60
+    g = grid.cols
+    return 500 * nz(g[DIST_FLOW][i]) * nz(g[DIST_SWT][i] - g[DIST_RWT][i]) * step_h / BTU_PER_KWH
+
+
+def calling(grid: Grid, chans: list[SpaceheatName], i: int) -> int:
+    return sum(nz(grid.cols[ch][i]) >= 0.5 for ch in chans)
+
+
+def fit_two_stage(grid: Grid, roles: Roles, zone: SpaceheatName, w: Window) -> TwoStageFit:
+    """The two-stage least-squares fit of G and C for one zone; see
+    TwoStageFit. The free float is taken row by row: a row with heat in,
+    a slab zone calling or a fan coil calling is left out of stage 1.
+    The charge span must have no fan coil calling, because the 1/n share
+    of the metered heat among the slab zones calling does not know what
+    a fan coil took."""
+    assert w.charge_start and w.charge_end and w.float_start and w.float_end
+    step_h = STEP_MIN / 60
+    s = roles.by_zone(zone)
+    slab_calls = [z.call for z in roles.slabs]
+    fan_calls = [o.call for o in roles.others]
+    fl = grid.loc(w.float_start, w.float_end)
+    stage1: list[StageRow] = []
+    for i in range(len(fl.times) - 1):
+        t0, t1, a = fl.cols[s.floor][i], fl.cols[s.floor][i + 1], fl.cols[s.air][i]
+        if any(math.isnan(v) for v in (t0, t1, a)):
+            continue
+        if heat_in_kwh(fl, i) >= FREE_FLOAT_KWH or calling(fl, slab_calls, i) or calling(fl, fan_calls, i):
+            continue
+        stage1.append(StageRow(fl.times[i], t0 - a, -(t1 - t0) / step_h))
+    k = slope(stage1)
+    ch = grid.loc(w.charge_start, w.charge_end)
+    assert not any(calling(ch, fan_calls, i) for i in range(len(ch.times))), "a fan coil called during the charge span"
+    first = next(i for i, v in enumerate(ch.cols[s.floor]) if not math.isnan(v))
+    t_start = ch.cols[s.floor][first]
+    loss_fh, q_kwh = 0.0, 0.0
+    stage2: list[StageRow] = []
+    for i in range(first, len(ch.times)):
+        t, a = ch.cols[s.floor][i], ch.cols[s.air][i]
+        n = calling(ch, slab_calls, i)
+        share = (1 / n) if (n and nz(ch.cols[s.call][i]) >= 0.5) else 0.0
+        if not math.isnan(t):
+            stage2.append(StageRow(ch.times[i], (t - t_start) + k * loss_fh, q_kwh))
+        q_kwh += heat_in_kwh(ch, i) * share
+        if not (math.isnan(t) or math.isnan(a)):
+            loss_fh += (t - a) * step_h
+    c = slope(stage2)
+    fit = SlabFit(zone, k * c, c)
+    span = grid.loc(w.charge_start, w.float_end)
+    pred = simulate(span, roles, zone, fit.g_kw_per_f, fit.c_kwh_per_f)
+    pairs = [(p, a) for p, a in zip(pred, span.cols[s.floor]) if not math.isnan(a)]
+    rms = math.sqrt(sum((p - a) ** 2 for p, a in pairs) / len(pairs))
+    return TwoStageFit(fit, k, stage1, stage2, rms)
 
 
 def model_sheet(wb: Workbook, roles: Roles, fit: SlabFit) -> dict[str, dict[str, str]]:
@@ -329,7 +392,7 @@ def model_sheet(wb: Workbook, roles: Roles, fit: SlabFit) -> dict[str, dict[str,
                 "its zone air sensor. Heat floor to room = G x (floor - air). Floor heat content = C x floor "
                 "temperature. Heat in = the hot-side BTU meter before the mixing valve, flow x (dist supply - "
                 "dist return) x 500 BTU/h per gpm per F, shared 1/n among the slab zones calling. Neither slab "
-                "area nor thickness enters; both only translate G and C to per-square-foot numbers below.")
+                "area nor thickness enters.")
     ws["A2"].alignment = Alignment(wrap_text=True, vertical="top")
     ws.merge_cells("A2:D2")
     ws.row_dimensions[2].height = 80
@@ -349,7 +412,7 @@ def model_sheet(wb: Workbook, roles: Roles, fit: SlabFit) -> dict[str, dict[str,
         if s.zone == fit.zone:
             ws[f"{col}6"].fill = YELLOW
             ws[f"{col}7"].fill = YELLOW
-            ws[f"{col}6"].comment = Comment("Fitted jointly with C by least squares over Oct 7 02:00 to Oct 8 12:00: the living room charging alone, then the free float (sheets.py; the Fit sheet has the profile)", "sheets.py")
+            ws[f"{col}6"].comment = Comment("Fitted in two stages (sheets.py; the Fit sheet has both): G over C from the Oct 7 night free float, C from the Oct 7 charge", "sheets.py")
         else:
             ws[f"{col}6"].comment = Comment("Not yet fitted: no window with the bedrooms charging alone. The living room's values stand in", "sheets.py")
         for r in (6, 7):
@@ -367,22 +430,6 @@ def model_sheet(wb: Workbook, roles: Roles, fit: SlabFit) -> dict[str, dict[str,
     ws["D13"] = "Rows are 10-minute bin means of the journal readings"
     for a in ("B13", "B14"):
         ws[a].font = BLUE
-    ws["A17"] = "Translation to per square foot (reference only; assumptions in blue)"
-    ws["A17"].font = BOLD
-    ws["A18"], ws["B18"], ws["D18"] = "Assumed living rm slab area (sq ft)", 650, "Paced out 2026-10-15"
-    ws["A19"], ws["B19"], ws["D19"] = "Concrete density (lb per cu ft)", 149.5, "From the whiteboard model"
-    ws["A20"], ws["B20"], ws["D20"] = "Concrete specific heat (kWh per lb per F)", 0.0000631, "From the whiteboard model"
-    for a in ("B18", "B19", "B20"):
-        ws[a].font = BLUE
-    ws["B20"].number_format = "0.0000000"
-    ws["A21"], ws["B21"] = "U floor to room at that area (BTU/h per sq ft per F)", "=B8/B18"
-    ws["A22"], ws["B22"] = "Participating concrete at that area (inches)", "=B7/(B18*B19*B20)*12"
-    ws["D22"] = "The thickness whose heat content is C; a thicker pour whose lower part does not take part on a one-day timescale reads the same"
-    ws["B21"].number_format = "0.00"
-    ws["B22"].number_format = "0.0"
-    for r in range(13, 23):
-        if ws[f"D{r}"].value:
-            ws[f"D{r}"].font = ITALIC
     refs["shared"] = {"step": "Model!$B$13", "kwh": "Model!$B$14"}
     return refs
 
@@ -395,12 +442,12 @@ def headers(roles: Roles, cols: dict[SpaceheatName, str]) -> list[str]:
           cols[FLOOR_SWT], cols[FLOOR_RWT]]
     hs += [cols[s.call] for s in sorted(roles.slabs, key=lambda s: s.circuit)]
     hs += [cols[o.call] for o in roles.others]
-    hs.append("slab zones calling")
+    hs += ["slab zones calling", "fan coils calling"]
     for s in roles.slabs:
         hs += [f"{s.label} share", f"{s.label} heat in kWh (step)", f"{s.label} heat in kWh (cum)",
                cols[s.floor], cols[s.air], f"{s.label} floor F (predicted)",
                f"{s.label} heat to room kW (predicted)", f"{s.label} predicted minus actual F"]
-    hs.append("free float (no heat in, no slab call)")
+    hs.append("free float (no heat in, no slab or fan coil call)")
     hs += [h for ch, h in cols.items() if h not in hs]
     return hs
 
@@ -441,6 +488,7 @@ def window_sheet(wb: Workbook, w: Window, grid: Grid, roles: Roles, cols: dict[S
         put("heat in kWh (step)", f"={C('heat in kW')}*{step}", "0.000")
         put("heat in kWh (cum)", f"={C('heat in kWh (step)')}" if r == 2 else f"={P('heat in kWh (cum)')}+{C('heat in kWh (step)')}", "0.00")
         put("slab zones calling", "=" + "+".join(f"({C(cols[s.call])}>=0.5)" for s in roles.slabs), "0")
+        put("fan coils calling", "=" + "+".join(f"({C(cols[o.call])}>=0.5)" for o in roles.others), "0")
         for s in roles.slabs:
             label = s.label
             g, c = refs[s.zone]["g"], refs[s.zone]["c"]
@@ -459,82 +507,77 @@ def window_sheet(wb: Workbook, w: Window, grid: Grid, roles: Roles, cols: dict[S
                 put(pred, f"={P(pred)}+({P(qin)}-{g}*({P(pred)}-{air_prev})*{step})/{c}", "0.00")
             put(f"{label} heat to room kW (predicted)", f"=IF({C(air)}=\"\",\"\",{g}*({C(pred)}-{C(air)}))", "0.00")
             put(f"{label} predicted minus actual F", f"=IF({C(act)}=\"\",\"\",{C(pred)}-{C(act)})", "0.00")
-        put("free float (no heat in, no slab call)", f"=IF(AND({C('heat in kWh (step)')}<0.015,{C('slab zones calling')}=0),1,0)", "0")
+        put("free float (no heat in, no slab or fan coil call)", f"=IF(AND({C('heat in kWh (step)')}<{FREE_FLOAT_KWH},{C('slab zones calling')}=0,{C('fan coils calling')}=0),1,0)", "0")
     ws.auto_filter.ref = f"A1:{get_column_letter(len(hs))}{n + 1}"
     return col
 
 
-def calibration_sheet(wb: Workbook, w: Window, roles: Roles, cols: dict[SpaceheatName, str],
-                      col: dict[str, str], refs: dict[str, dict[str, str]]) -> None:
-    assert w.calib_start and w.calib_end
-    s = roles.by_zone(FIT_ZONE)
-    ws = wb.create_sheet("Calibration")
-    ws.column_dimensions["A"].width = 56
-    ws.column_dimensions["B"].width = 22
-    ws.column_dimensions["C"].width = 62
+def fit_sheet(wb: Workbook, w: Window, roles: Roles, cols: dict[SpaceheatName, str],
+              col: dict[str, str], two: TwoStageFit) -> None:
+    """Both stages as tables with their slopes computed in cells, then
+    the fit quality against the window sheet."""
+    s = roles.by_zone(two.fit.zone)
+    ws = wb.create_sheet("Fit")
+    for c, width in (("A", 60), ("B", 24), ("C", 26), ("E", 20), ("F", 30), ("G", 28)):
+        ws.column_dimensions[c].width = width
+    ws["A1"] = f"Two-stage least-squares fit of G and C, {s.label}"
+    ws["A1"].font = BOLD
+    ws["A2"] = (f"Stage 1, the free float {w.float_start} to {w.float_end} ET, rows with no heat in, no slab zone and no "
+                "fan coil calling: the floor's fall per hour against floor minus air; the slope through the origin is "
+                f"G over C (per hour). Stage 2, the charge {w.charge_start} to {w.charge_end} ET: the heat in to the zone, "
+                "accumulated, against the floor's rise since the start plus G over C times the accumulated floor-minus-air "
+                "hours; the slope is C. G is the product. Rows are from the window sheet; slopes are formulas.")
+    ws["A2"].alignment = Alignment(wrap_text=True, vertical="top")
+    ws.merge_cells("A2:G2")
+    ws.row_dimensions[2].height = 90
+    tables = (("A", "Stage 1: free float", "floor minus air (F)", "floor fall (F per hour)", two.stage1),
+              ("E", "Stage 2: charge", "rise + (G/C) x loss hours (F)", "heat in to zone (kWh)", two.stage2))
+    n: dict[str, int] = {}
+    for c0, title, xh, yh, rows in tables:
+        c1, c2 = get_column_letter(ord(c0) - 64 + 1), get_column_letter(ord(c0) - 64 + 2)
+        ws[f"{c0}4"] = title
+        ws[f"{c0}4"].font = BOLD
+        for cc, h in ((c0, "time (ET)"), (c1, xh), (c2, yh)):
+            ws[f"{cc}5"] = h
+            ws[f"{cc}5"].font = BOLD
+        for i, r in enumerate(rows, start=6):
+            ws[f"{c0}{i}"] = r.time
+            ws[f"{c0}{i}"].number_format = "yyyy-mm-dd hh:mm"
+            ws[f"{c1}{i}"], ws[f"{c2}{i}"] = r.x, r.y
+            for cc in (c1, c2):
+                ws[f"{cc}{i}"].font = BLUE
+                ws[f"{cc}{i}"].number_format = "0.000"
+        n[c0] = len(rows)
+
+    def rng(c0: str, off: int) -> str:
+        cc = get_column_letter(ord(c0) - 64 + off)
+        return f"${cc}$6:${cc}${5 + n[c0]}"
+
+    r1 = 6 + max(n.values()) + 1
+    ws[f"A{r1}"], ws[f"B{r1}"] = "G over C (per hour) = sum(xy) / sum(xx)", f"=SUMPRODUCT({rng('A', 1)},{rng('A', 2)})/SUMSQ({rng('A', 1)})"
+    ws[f"A{r1 + 1}"], ws[f"B{r1 + 1}"] = "rows", n["A"]
+    ws[f"E{r1}"], ws[f"F{r1}"] = "C (kWh per F) = sum(xy) / sum(xx)", f"=SUMPRODUCT({rng('E', 1)},{rng('E', 2)})/SUMSQ({rng('E', 1)})"
+    ws[f"E{r1 + 1}"], ws[f"F{r1 + 1}"] = "G (kW per F) = (G over C) x C", f"=B{r1}*F{r1}"
+    for a in (f"B{r1}", f"F{r1}", f"F{r1 + 1}"):
+        ws[a].number_format = "0.000"
+        ws[a].fill = YELLOW
+    ws[f"A{r1 + 2}"] = (f"sheets.py: G over C {two.g_over_c_per_h:.4f} per hour, C {two.fit.c_kwh_per_f:.3f} kWh per F, "
+                        f"G {two.fit.g_kw_per_f:.3f} kW per F")
+    ws[f"A{r1 + 2}"].font = ITALIC
     sheet = w.sheet
     last = wb[sheet].max_row
-    rng = lambda h: f"{sheet}!${col[h]}$2:${col[h]}${last}"  # noqa: E731
-    fl, air = rng(cols[s.floor]), rng(cols[s.air])
-    pred, ff, qin = rng(f"{s.label} floor F (predicted)"), rng("free float (no heat in, no slab call)"), rng(f"{s.label} heat in kWh (step)")
-    tm = f"{sheet}!$A$2:$A${last}"
-    g, c = refs[FIT_ZONE]["g"], refs[FIT_ZONE]["c"]
-    rows = [
-        (f"Calibration catch: the Oct 7 night free float, {s.label}", None, None, BOLD),
-        ("No heat into the slab and no slab zone calling, so the floor's fall is heat leaving it: "
-         "G = C x (floor drop per hour) / mean(floor - air). This fixes only G/C; the Fit sheet's "
-         "joint fit over the charge as well is what separates them.", None, None, BLACK),
-        ("Start (ET)", dt.datetime.fromisoformat(w.calib_start), "Inputs: move the span and the numbers below follow", BLUE),
-        ("End (ET, exclusive)", dt.datetime.fromisoformat(w.calib_end), None, BLUE),
-        ("Hours in span", "=(B4-B3)*24", None, BLACK),
-        ("Floor F at start", f"=INDEX({fl},MATCH(B3,{tm},0))", None, BLACK),
-        ("Floor F at end", f"=INDEX({fl},MATCH(B4,{tm},0))", None, BLACK),
-        ("Mean (floor - air) F over span", f"=AVERAGEIFS({fl},{tm},\">=\"&B3,{tm},\"<\"&B4)-AVERAGEIFS({air},{tm},\">=\"&B3,{tm},\"<\"&B4)", None, BLACK),
-        ("G from the decay at the Model's C (kW per F)", f"={c}*(B6-B7)/B5/B8", f"Hand check of the {s.label} G on Model", BLACK),
-        (f"Heat into the {s.label} slab over span (kWh)", f"=SUMIFS({qin},{tm},\">=\"&B3,{tm},\"<\"&B4)", "Should be near zero for a clean free float", BLACK),
-        ("Heat from slab to room over span (kWh)", f"={c}*(B6-B7)", "What the slab gave the room overnight", BLACK),
-        (None, None, None, BLACK),
-        (f"Fit quality with the current Model inputs, {s.label}", None, None, BOLD),
-        ("RMS (predicted - actual) F, free-float rows", f"=SQRT(SUMPRODUCT(({ff}=1)*({fl}<>\"\")*({pred}-{fl})^2)/MAX(1,SUMPRODUCT(({ff}=1)*({fl}<>\"\"))))", "Over the whole Oct sheet, prediction run continuously from its first row", BLACK),
-        ("RMS (predicted - actual) F, all rows with an actual", f"=SQRT(SUMPRODUCT(({fl}<>\"\")*({pred}-{fl})^2)/MAX(1,SUMPRODUCT(({fl}<>\"\")*1)))", "Includes the Oct 6 evening when both slabs charged and the 1/n share rule decides the split", BLACK),
-    ]
-    for i, (a, b, cmt, font) in enumerate(rows, start=1):
-        ws.cell(row=i, column=1, value=a).font = font
-        if b is not None:
-            cell = ws.cell(row=i, column=2, value=b)
-            cell.font = font if not isinstance(b, str) else BLACK
-            if isinstance(b, dt.datetime):
-                cell.number_format = "yyyy-mm-dd hh:mm"
-        if cmt:
-            ws.cell(row=i, column=3, value=cmt).font = ITALIC
-    for addr in ("B5", "B6", "B7", "B8", "B10", "B11", "B14", "B15"):
-        ws[addr].number_format = "0.00"
-    ws["B9"].number_format = "0.000"
-    ws["B9"].fill = YELLOW
-
-
-def fit_sheet(wb: Workbook, w: Window, roles: Roles, profile: list[tuple[float, float, float]]) -> None:
-    s = roles.by_zone(FIT_ZONE)
-    ws = wb.create_sheet("Fit")
-    for c, width in (("A", 26), ("B", 30), ("C", 28)):
-        ws.column_dimensions[c].width = width
-    ws["A1"] = f"Joint fit of G and C, {s.label}"
-    ws["A1"].font = BOLD
-    ws["A2"] = (f"Span {w.fit_start} to {w.fit_end} ET: the {s.label} charging alone, then the free float. "
-                "For each C, the best G and the RMS of predicted minus actual floor F over the span (prediction "
-                "re-seeded at the span's first reading). The lowest RMS is the fit; how fast the RMS rises either "
-                "side is how well the data pin C. Values from sheets.py.")
-    ws["A2"].alignment = Alignment(wrap_text=True, vertical="top")
-    ws.merge_cells("A2:C2")
-    ws.row_dimensions[2].height = 75
-    for j, h in enumerate(("C (kWh per F)", "best G (kW per F)", "RMS predicted - actual (F)"), start=1):
-        ws.cell(row=4, column=j, value=h).font = BOLD
-    for i, (ck, gk, rms) in enumerate(profile, start=5):
-        ws.cell(row=i, column=1, value=ck).font = BLUE
-        ws.cell(row=i, column=2, value=gk).font = BLUE
-        ws.cell(row=i, column=3, value=round(rms, 3)).font = BLUE
-    best = min(profile, key=lambda p: p[2])
-    ws.cell(row=5 + profile.index(best), column=3).fill = YELLOW
+    fl = f"{sheet}!${col[cols[s.floor]]}$2:${col[cols[s.floor]]}${last}"
+    pred_h, ff_h = f"{s.label} floor F (predicted)", "free float (no heat in, no slab or fan coil call)"
+    pred = f"{sheet}!${col[pred_h]}$2:${col[pred_h]}${last}"
+    ff = f"{sheet}!${col[ff_h]}$2:${col[ff_h]}${last}"
+    r = r1 + 4
+    ws[f"A{r}"] = f"Fit quality with the Model inputs, {s.label}, over the whole {sheet} sheet"
+    ws[f"A{r}"].font = BOLD
+    ws[f"A{r + 1}"], ws[f"B{r + 1}"] = "RMS (predicted - actual) F, free-float rows", f"=SQRT(SUMPRODUCT(({ff}=1)*({fl}<>\"\")*({pred}-{fl})^2)/MAX(1,SUMPRODUCT(({ff}=1)*({fl}<>\"\"))))"
+    ws[f"A{r + 2}"], ws[f"B{r + 2}"] = "RMS (predicted - actual) F, all rows with an actual", f"=SQRT(SUMPRODUCT(({fl}<>\"\")*({pred}-{fl})^2)/MAX(1,SUMPRODUCT(({fl}<>\"\")*1)))"
+    ws[f"A{r + 3}"], ws[f"B{r + 3}"] = "sheets.py RMS over charge and float, re-seeded at the span start (F)", round(two.rms_f, 3)
+    for a in (f"B{r + 1}", f"B{r + 2}", f"B{r + 3}"):
+        ws[a].number_format = "0.00"
 
 
 def main() -> None:
@@ -544,19 +587,17 @@ def main() -> None:
     wanted = list(cols)
     grids = {w.sheet: load_grid(codec, w.condition, wanted) for w in WINDOWS}
     cal = WINDOWS[0]
-    assert cal.fit_start and cal.fit_end
-    fit, profile = fit_zone(grids[cal.sheet], roles, FIT_ZONE, cal.fit_start, cal.fit_end)
-    print(f"{roles.by_zone(FIT_ZONE).label} joint fit over {cal.fit_start} to {cal.fit_end}: "
-          f"G = {fit.g_kw_per_f:.3f} kW/F, C = {fit.c_kwh_per_f:.1f} kWh/F")
-    for c_, g_, rms in profile:
-        print(f"  C {c_:4.1f}  G {g_:.3f}  RMS {rms:.3f}")
+    two = fit_two_stage(grids[cal.sheet], roles, FIT_ZONE, cal)
+    print(f"{roles.by_zone(FIT_ZONE).label}: stage 1 (free float {cal.float_start} to {cal.float_end}, {len(two.stage1)} rows) "
+          f"G/C = {two.g_over_c_per_h:.4f} per hour; stage 2 (charge {cal.charge_start} to {cal.charge_end}, "
+          f"{len(two.stage2)} rows) C = {two.fit.c_kwh_per_f:.3f} kWh/F; G = {two.fit.g_kw_per_f:.3f} kW/F; "
+          f"RMS over both {two.rms_f:.2f} F")
     wb = Workbook()
-    refs = model_sheet(wb, roles, fit)
+    refs = model_sheet(wb, roles, two.fit)
     col: dict[str, str] = {}
     for w in WINDOWS:
         col = window_sheet(wb, w, grids[w.sheet], roles, cols, refs)
-    calibration_sheet(wb, cal, roles, cols, col, refs)
-    fit_sheet(wb, cal, roles, profile)
+    fit_sheet(wb, cal, roles, cols, col, two)
     out = HERE / "spruce-radiant-slab.xlsx"
     wb.save(out)
     print("wrote", out)

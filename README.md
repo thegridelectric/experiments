@@ -86,8 +86,15 @@ as validated Sema instances.
   capture or pull goes untouched to the immutable store, its key named
   in the folder's README, and the folder commits the reduced form the
   analysis reads (the lines the question needs, or one compact row
-  per message). A text file that gzips under the cap is committed
-  gzipped, the bytes intact; a reader script opens either form.
+  per message). A file a folder script regenerates from our own
+  immutable store (the journal DB, the eventstore, a committed
+  instance) is named with the tail `-regen` before its extension and
+  is gitignored; the script, its command in the README and its log
+  are the record. External bytes that may not come back (an
+  unofficial API, a vendor page) are the record themselves: a text
+  file that gzips under the cap is committed gzipped, the bytes
+  intact, with a provenance header, and a reader script opens either
+  form.
   `.pre-commit-config.yaml` holds the gate; install it once per clone
   with `uvx pre-commit install` and it refuses the commit that adds a
   larger file. Every folder holding a `gw.readings`

@@ -43,10 +43,10 @@ class Tested(NamedTuple):
 CLAIMS = [
     Tested("floor.to.room.coefficient",
            "The living room slab's floor-to-room conductance G, referenced to the floor "
-           "sensor at tubing depth, is 0.220 kW per F with a floor heat capacity C of "
-           "2.3 kWh per F, fitted jointly by least squares over the living-room-only "
-           "charge and the free float, RMS 0.45 F; at an assumed 650 sq ft that is "
-           "1.15 BTU/h per sq ft per F, inside the whiteboard prior of 2 (or 1) "
+           "sensor at tubing depth, is 0.191 kW per F with a floor heat capacity C of "
+           "2.59 kWh per F, fitted in two least-squares stages: G over C 0.0735 per hour "
+           "from the Oct 7 night free float (no heat in, no slab zone or fan coil calling), "
+           "then C from the Oct 7 living-room-only charge; RMS 0.42 F over charge and float "
            "(spruce-radiant-slab.xlsx, Fit)",
            "2026-10-07 02:00", "2026-10-08 12:00", "sheets.py", GwExperimentVerdict.Pass),
 ]

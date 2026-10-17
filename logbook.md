@@ -16,11 +16,12 @@ first run dates them.
 - **2026-10-15 · [spruce-radiant-slab](spruce-radiant-slab/)** — dataset
   folder for the Knife's Edge slab question: what the journal holds for
   spruce and from when, two pulls (Sep 21 to 25, Oct 6 to 8), and a
-  two-lump floor-and-room workbook fitted on the Oct 7 night free float.
-  Per zone, needing neither area nor thickness: living room G 0.220 kW
-  per °F of floor minus air and C 2.3 kWh per °F, fitted jointly, RMS
-  0.45 °F (1.15 BTU/h per sq ft per °F at an assumed 650 sq ft). The flow meter is on the hot side of a 108 °F mixing
-  valve, so heat in is hot flow times the distribution drop.
+  two-lump floor-and-room workbook fitted in two least-squares stages on
+  Oct 7: G over C from the night free float, C from the living-room-only
+  charge. Per zone, needing neither area nor thickness: living room G
+  0.191 kW per °F of floor minus air and C 2.59 kWh per °F, RMS 0.42 °F
+  over charge and float. The flow meter is on the hot side of a 108 °F
+  mixing valve, so heat in is hot flow times the distribution drop.
 - **2026-10-14 · [pico-power-cycling/reboot-storm](pico-power-cycling/2026-10-14-reboot-storm/)**
   — analysis: bus reboots per house per day (journal DB, 09-01 to
   10-14) against the boxes' firmware upload history, then the
