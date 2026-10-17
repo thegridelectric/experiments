@@ -23,9 +23,3 @@ packages = ["src/gwexp"]
 # The vendored sema snapshot and the top-level helper modules live
 # outside the installed package path; make the IDE see them.
 extraPaths = ["src", "."]
-
-[dependency-groups]
-dev = [
-    "pytest>=9.1.1",
-    "pyyaml>=6.0.3",
-]

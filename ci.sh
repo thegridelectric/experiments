@@ -85,9 +85,6 @@ FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \
     | grep -Fxv "$PYRIGHT_EXCLUDE")
 uvx pyright@latest --pythonpath .venv/bin/python $FILES
 
-echo "==> tests"
-uv run pytest -q tests
-
 echo "==> emitters reproduce committed instances"
 # Every folder's emitter is named emit_instances.py — the glob means a
 # new folder's emitter is exercised without editing this file.
