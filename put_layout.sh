@@ -11,7 +11,7 @@
 #                                      sha256. <change> is a short dashed slug naming
 #                                      what the new layout brings (pi-ids).
 #
-# <target> is spruce, beech or maple (the ssh host of the same name), or dev.
+# <target> is spruce, beech, maple or oak (the ssh host of the same name), or dev.
 #
 # A house: the source is ../tlayouts/output/<house>/, and the window scada
 # reads ~/.config/gridworks/scada-experiment/hardware-layout.json and the
@@ -42,6 +42,7 @@ case "$HOUSE" in
   spruce)      GEN_LAYOUT=gw.nolan.layout.json; GEN_OPS=gw.nolan.operational.params.json; BOXES=spruce ;;
   beech)       GEN_LAYOUT=hardware-layout.generated.json; GEN_OPS=operational-params.generated.json; BOXES="beech beech2" ;;
   maple)       GEN_LAYOUT=hardware-layout.generated.json; GEN_OPS=operational-params.generated.json; BOXES="maple maple2" ;;
+  oak)         GEN_LAYOUT=gw.house0.layout.json; GEN_OPS=gw.house0.operational.params.json; BOXES="oak oak2" ;;
   dev)         GEN_LAYOUT=gw.nolan.layout.json; GEN_OPS=gw.nolan.operational.params.json; GEN_DEED=gw.nolan.ta.deed.json; BOXES=laptop ;;
   *)           sed -n 2,30p "$0"; exit 1 ;;
 esac

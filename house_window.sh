@@ -3,7 +3,7 @@
 # on a house (swapping it off its deployed plant control for the window) or in
 # dev (the laptop's scada checkout on its sim layout). Every window is recorded
 # by capture_broker.py on the laptop's gw-dev-rabbit. spruce_window.sh,
-# beech_window.sh and maple_window.sh call this with their house.
+# beech_window.sh, maple_window.sh and oak_window.sh call this with their house.
 #
 #   ./house_window.sh <target> on [minutes] [--debug] [--ltn] [--cert]
 #                                            start the broker capture if none is
@@ -39,7 +39,7 @@
 #                                            shared by every open window, so it is
 #                                            stopped by hand, after the last `off`
 #
-# <target> is dev, spruce, beech or maple (a house is the ssh host of the same name).
+# <target> is dev, spruce, beech, maple or oak (a house is the ssh host of the same name).
 # Every house but spruce has a second pi (<house>2), and a window runs on both:
 # the second pi's deployed scada2 is stopped and the branch scada2 boots there
 # from its own ~/gridworks-scada-unlimbo on the same layout pair, posting to
@@ -153,6 +153,16 @@ case "$HOUSE" in
     LTN_OPS="$TLAYOUTS/output/maple/operational-params.generated.json"
     # the same two-Krida panel as beech
     RELAYS="for a in 0x20 0x21; do echo -n \"\$a: \"; sudo i2ctransfer -y 1 r2@\$a; done"
+    ;;
+  oak)
+    SERVICES="gwspaceheat gwspaceheat-restart.timer"
+    BOOT_ENV="SCADA_UNKNOWN_CHANNEL_LOGGING=true"
+    SECOND_PI=oak2
+    SECOND_SERVICES="gwspaceheat2 gwspaceheat2-restart.timer"
+    LTN_LAYOUT="$TLAYOUTS/output/oak/gw.house0.layout.json"
+    LTN_OPS="$TLAYOUTS/output/oak/gw.house0.operational.params.json"
+    # two Kridas at 0x20 and 0x23 (oak_gen.py); relays 14 and 15 are the fake sieg loop, wired to nothing
+    RELAYS="for a in 0x20 0x23; do echo -n \"\$a: \"; sudo i2ctransfer -y 1 r2@\$a; done"
     ;;
   *) usage ;;
 esac

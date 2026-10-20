@@ -28,9 +28,10 @@ branch exception below.
 
 ## Houses
 
-`house_window.sh` and `put_layout.sh` target `spruce`, `beech` and `maple`
-(a house target is the ssh host of the same name); `house_window.sh` also
-takes `dev`. The rest are layouts arriving this fall, not yet windowed.
+`house_window.sh` and `put_layout.sh` target `spruce`, `beech`, `maple`
+and `oak` (a house target is the ssh host of the same name);
+`house_window.sh` also takes `dev`. The rest are layouts arriving this
+fall, not yet windowed.
 
 The expected posture of each house's window pair, read from the gen's
 ops params before `on` and checked against the `layout.lite` the window
@@ -43,7 +44,8 @@ not.
 | spruce | `gw.nolan.layout` | Heating | Active | yes |
 | beech | `gw.house0.layout` | Heating | Active | yes |
 | maple | `gw.house0.layout` | Heating | Active | yes |
-| fir / oak | `gw.house0.no.sieg.layout` | Heating | — | no |
+| oak | `gw.house0.layout` (fake sieg surface: BTU pico disabled, loop on relays 14 and 15, wired to nothing) | Heating | not in the gen output; read it off the first window's `layout.lite` | yes |
+| fir | `gw.house0.no.sieg.layout` | Heating | — | no |
 | elm | `gw.house0.monoblock.layout` | Heating | — | no |
 
 **Every house but spruce has a second pi** (`maple2`, `beech2`) running
