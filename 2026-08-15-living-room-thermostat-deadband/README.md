@@ -49,7 +49,7 @@ failure to the evening of **2026-08-11** (consistent with George's "~3 days").
 
 ## Reproduce
 
-    # pull (read-only) — GJK_DB_URL in ../.env:
+    # pull (read-only) — DB_ANALYST_URL in ../.env:
     psql "$GJK_URL" -tA -F',' -c "select extract(epoch from r.timestamp)::bigint,
       rc.name, r.value from gridworks.reading_channels rc
       join gridworks.readings r on r.channel_id=rc.id

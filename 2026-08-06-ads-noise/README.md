@@ -268,7 +268,7 @@ Then from the laptop, bring the new dataset home (date the filenames):
 **Pull additional archive data (different days):** the committed
 `gw.readings` instance covers 07-14 → 08-06; to extend the canary view
 to newer days, re-pull with a wider window — same command, new
-`--end` (needs `GJK_DB_URL` in `experiments/.env` and AWS credentials
+`--end` (needs `DB_ANALYST_URL` in `experiments/.env` and AWS credentials
 for the eventstore; from the repo top):
 
     uv run python pull_readings.py \

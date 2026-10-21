@@ -1,0 +1,17 @@
+harness start 2026-10-21T14:50:45-0400
+PASS  step 3: layouts row keyed by the registry's TA GNodeId
+PASS  step 3: layouts row sent_at is the word's MessageCreatedMs and from_alias the scada
+PASS  step 3: the layout.lite is journaled in messages
+PASS  step 3: derived house_operating_status row from layout + snapshot
+PASS  step 4: summary: TaGNodeId is the registry's, Layout 012 present, no person field
+PASS  step 4: summary: OperatingStatus nested (derived), word verbatim
+PASS  step 3: scada status word replaces the derived row
+PASS  step 4: summary: OperatingStatus is the scada's word, CreatedMs intact
+PASS  step 3: an older status word does not regress the row
+PASS  step 6: layout change: row has the new SystemMode and sent_at
+PASS  step 6: summary Layout follows the change
+PASS  step 7: replayed older layout leaves the row unchanged
+PASS  step 10: journal DB: no scrambled name or street in any gw_data table
+PASS  step 10: API summaries: no scrambled name or street
+PASS  step 10: broker capture: no scrambled name or street on the bus
+PASS 15/15 2026-10-21-disentangle-dev-run/logs/harness.json

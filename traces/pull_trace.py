@@ -22,7 +22,7 @@ as a refusal; a refusal is wire behaviour the replay must reproduce.
 Usage (from experiments/):
   uv run traces/pull_trace.py ../wiki/gridworks-alerter/executor/traces/2026-10-15-oak-ltn-stop/trace.yaml
 
-Env: GJK_DB_URL in experiments/.env; SEMA_REPO (default: sibling ../sema,
+Env: DB_ANALYST_URL in experiments/.env; SEMA_REPO (default: sibling ../sema,
 clean worktree, the sema CLI refuses a dirty one).
 """
 

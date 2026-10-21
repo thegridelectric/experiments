@@ -160,6 +160,13 @@ types:
       "000":
         summary: "- Initial version. Board-resident per-sensor GPIO component, the input sibling of gpio.relay.component.gt: required BoardComponentId (-> scada.board.component.gt), GpioName (-> the board record's NativeGpioInputs), SenseMode; binary 1/0 sense; no DeviceType (TypeName is the kind, the board component carries the board identity); no SendToDerived (derived routing is computed from DerivedChannel InputChannelNames); no ConfigList (channel binds via DataChannel, capture tuning in operational params). Replaces gw108.gpio.sensor.component.gt."
 
+  gridworks.header:
+    latest_version: "001"
+    versioning_strategy: "literal"
+    versions:
+      "001":
+        summary: "Initial published version, matching the gwproto Header wire format deployed in the field."
+
   gw.adc.waveform:
     latest_version: "000"
     versioning_strategy: "literal"
@@ -217,6 +224,20 @@ types:
         summary: "Adds required Verdict (gw.experiment.verdict) and optional Claim naming the executor claim the run verifies; upgrade from 000 sets Verdict Unknown."
       "000":
         summary: "Initial version."
+
+  gw.house.operating.status:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial version. ScadaAlias + ValidationState (from the deed) + Standby x StandbyPosture + SeasonalStorageMode + ServiceMode + AcceptsDispatch x DispatchRefusalReason (the derived answer, present iff refusing, axiom 1; Standby refuses as OperatorHold, axiom 2) + TopState + ScadaBlind + LtnDispatching + CreatedMs. The slow facts of the LTN-scada agreement; nothing that cycles inside a healthy hour."
+
+  gw.house.summary:
+    latest_version: "000"
+    versioning_strategy: "literal"
+    versions:
+      "000":
+        summary: "Initial version. Role (gw.dashboard.role) + TaGNodeId + GNodeAlias + DisplayName + Layout (a union of layout.lite 011 and 012) + OperatingStatus (gw.house.operating.status) + LatestSnapshotTime + the longest-running zone pair (axiom 1: together or not at all) + SendTimeMs (the sender-time standard: a reassembled read response)."
 
   gw.hydronic:
     latest_version: "000"
@@ -701,6 +722,10 @@ types:
       "001":
         summary: "Initial Sema version (flattened from the scada WebServerComponentGt runtime; WebServer is an inline object). ComponentAttributeClassId (cac UUID) -> DeviceType (gw1.device.type value, pascal.case): the device type lived on the referenced cac, not the component. ConfigList dropped."
 
+  gw:
+    versioning_strategy: "none"
+    summary: "Versionless GridWorks message envelope (gwproto Message wire format)."
+
 enums:
   base.g.node.class:
     enum_type: "versioned"
@@ -747,6 +772,18 @@ enums:
   gw.alert.state:
     enum_type: "literal"
     note: "This enum is literal; version 000 is immutable and exclusive."
+    versions:
+      "000": {}
+
+  gw.dashboard.role:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw.dispatch.refusal.reason:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
     versions:
       "000": {}
 
@@ -804,6 +841,18 @@ enums:
     versions:
       "000": {}
 
+  gw.standby.posture:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw.top.state:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
   gw.zone.emitter.type:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
@@ -848,6 +897,12 @@ enums:
       "000": {}
 
   gw1.seasonal.storage.mode:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
+
+  gw1.service.mode:
     enum_type: "versioned"
     note: "This enum is versioned; new versions are additive only."
     versions:
@@ -978,6 +1033,12 @@ enums:
     note: "This enum is versioned; new versions are additive only."
     versions:
       "001": {}
+
+  ta.validation.state:
+    enum_type: "versioned"
+    note: "This enum is versioned; new versions are additive only."
+    versions:
+      "000": {}
 
   temp.calc.method:
     enum_type: "versioned"

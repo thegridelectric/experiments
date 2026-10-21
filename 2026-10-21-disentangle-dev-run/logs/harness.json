@@ -1,0 +1,97 @@
+{
+ "started": "2026-10-21T18:50:46.234213+00:00",
+ "ended": "2026-10-21T18:51:14.216122+00:00",
+ "checks": [
+  {
+   "step": "3",
+   "name": "layouts row keyed by the registry's TA GNodeId",
+   "passed": true,
+   "detail": "row=('1f1a7314-026b-4a25-a0fc-2cef257671f1', 'd1.isone.me.versant.keene.cedar.scada', '012', 'Heating', Decimal('1792608646265.000000'), '333cea07-50a6-4eb3-82f4-1b65ad20556d') ta_id=1f1a7314-026b-4a25-a0fc-2cef257671f1"
+  },
+  {
+   "step": "3",
+   "name": "layouts row sent_at is the word's MessageCreatedMs and from_alias the scada",
+   "passed": true,
+   "detail": "row=('1f1a7314-026b-4a25-a0fc-2cef257671f1', 'd1.isone.me.versant.keene.cedar.scada', '012', 'Heating', Decimal('1792608646265.000000'), '333cea07-50a6-4eb3-82f4-1b65ad20556d')"
+  },
+  {
+   "step": "3",
+   "name": "the layout.lite is journaled in messages",
+   "passed": true,
+   "detail": "messages=('layout.lite', 'd1.isone.me.versant.keene.cedar.scada', Decimal('1792608646265.000000'))"
+  },
+  {
+   "step": "3",
+   "name": "derived house_operating_status row from layout + snapshot",
+   "passed": true,
+   "detail": "status=('1f1a7314-026b-4a25-a0fc-2cef257671f1', 'derived', 'Auto', Decimal('1792608646265.000000'))"
+  },
+  {
+   "step": "4",
+   "name": "summary: TaGNodeId is the registry's, Layout 012 present, no person field",
+   "passed": true,
+   "detail": "{\"TypeName\": \"gw.house.summary\", \"Version\": \"000\", \"Role\": \"Admin\", \"TaGNodeId\": \"1f1a7314-026b-4a25-a0fc-2cef257671f1\", \"GNodeAlias\": \"d1.isone.me.versant.keene.cedar\", \"DisplayName\": \"Cedar\", \"OperatingStatus\": {\"TypeName\": \"gw.house.operating.status\", \"Version\": \"000\", \"ScadaAlias\": \"d1.isone.me.versant.keene.cedar.scada\", \"ValidationState\": \"UnValidated\", \"Standby\": false, \"StandbyPosture\": \"NoHeatingOrCooling\", \"SeasonalStorageMode\": \"AllTanks\", \"ServiceMode\": \"Heating\", \"AcceptsDispatch\": true, \"TopState\": \"Auto\", \"ScadaBlind\": false, \"LtnDispatching\": false, \"CreatedMs\": 1792608646265}, \"LatestSnapshotTime\": \"2026-10-21T18:50:30Z\", \"SendTimeMs\": 1792608647584}"
+  },
+  {
+   "step": "4",
+   "name": "summary: OperatingStatus nested (derived), word verbatim",
+   "passed": true,
+   "detail": "{\"TypeName\": \"gw.house.operating.status\", \"Version\": \"000\", \"ScadaAlias\": \"d1.isone.me.versant.keene.cedar.scada\", \"ValidationState\": \"UnValidated\", \"Standby\": false, \"StandbyPosture\": \"NoHeatingOrCooling\", \"SeasonalStorageMode\": \"AllTanks\", \"ServiceMode\": \"Heating\", \"AcceptsDispatch\": true, \"TopState\": \"Auto\", \"ScadaBlind\": false, \"LtnDispatching\": false, \"CreatedMs\": 1792608646265}"
+  },
+  {
+   "step": "3",
+   "name": "scada status word replaces the derived row",
+   "passed": true,
+   "detail": "status=('1f1a7314-026b-4a25-a0fc-2cef257671f1', 'scada', 'Auto', Decimal('1792608647587.000000'))"
+  },
+  {
+   "step": "4",
+   "name": "summary: OperatingStatus is the scada's word, CreatedMs intact",
+   "passed": true,
+   "detail": "{\"TypeName\": \"gw.house.operating.status\", \"Version\": \"000\", \"ScadaAlias\": \"d1.isone.me.versant.keene.cedar.scada\", \"ValidationState\": \"ValidatedSimulatedAsset\", \"Standby\": false, \"StandbyPosture\": \"NoHeatingOrCooling\", \"SeasonalStorageMode\": \"BufferOnly\", \"ServiceMode\": \"Heating\", \"AcceptsDispatch\": true, \"TopState\": \"Auto\", \"ScadaBlind\": false, \"LtnDispatching\": true, \"CreatedMs\": 1792608647587}"
+  },
+  {
+   "step": "3",
+   "name": "an older status word does not regress the row",
+   "passed": true,
+   "detail": "status=('1f1a7314-026b-4a25-a0fc-2cef257671f1', 'scada', 'Auto', Decimal('1792608647587.000000'))"
+  },
+  {
+   "step": "6",
+   "name": "layout change: row has the new SystemMode and sent_at",
+   "passed": true,
+   "detail": "row=('1f1a7314-026b-4a25-a0fc-2cef257671f1', 'd1.isone.me.versant.keene.cedar.scada', '012', 'Standby', Decimal('1792608651909.000000'), '4f24a206-9a1f-4f9d-aebf-a131642a1289')"
+  },
+  {
+   "step": "6",
+   "name": "summary Layout follows the change",
+   "passed": true,
+   "detail": "\"Standby\""
+  },
+  {
+   "step": "7",
+   "name": "replayed older layout leaves the row unchanged",
+   "passed": true,
+   "detail": "row=('1f1a7314-026b-4a25-a0fc-2cef257671f1', 'd1.isone.me.versant.keene.cedar.scada', '012', 'Standby', Decimal('1792608651909.000000'), '4f24a206-9a1f-4f9d-aebf-a131642a1289')"
+  },
+  {
+   "step": "10",
+   "name": "journal DB: no scrambled name or street in any gw_data table",
+   "passed": true,
+   "detail": "hits=[]"
+  },
+  {
+   "step": "10",
+   "name": "API summaries: no scrambled name or street",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "step": "10",
+   "name": "broker capture: no scrambled name or street on the bus",
+   "passed": true,
+   "detail": "files=['broker-capture-20261021-144514.jsonl'] hits=[]"
+  }
+ ],
+ "verdict": "PASS"
+}

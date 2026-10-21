@@ -19,8 +19,7 @@ THE DATABASE IS STORAGE, NOT TRUTH. Three stages:
     LeftRightDot), plus a human CSV derived from the instance with
     natural-unit floats via display.py's single conversion mechanism.
 
-Env: GJK_DB_URL in experiments/.env (use read-only credentials when
-available).
+Env: DB_ANALYST_URL in experiments/.env, the read-only `gw_analyst` login.
 
 Usage:
   uv run python pull_readings.py \
@@ -86,11 +85,11 @@ ET = ZoneInfo("America/New_York")
 
 def db_url() -> str:
     for line in (HERE / ".env").read_text().splitlines():
-        if line.startswith("GJK_DB_URL="):
+        if line.startswith("DB_ANALYST_URL="):
             return line.split("=", 1)[1].strip().strip("'\"").replace(
                 "postgresql+psycopg://", "postgresql://"
             )
-    raise SystemExit("GJK_DB_URL not found in experiments/.env")
+    raise SystemExit("DB_ANALYST_URL not found in experiments/.env")
 
 
 def et_ms(s: str) -> UTCMilliseconds:

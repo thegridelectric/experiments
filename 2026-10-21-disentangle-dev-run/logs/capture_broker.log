@@ -1,0 +1,28 @@
+capturing vhost d1__1 -> 2026-10-21-disentangle-dev-run/captures/broker-capture-20261021-144514.jsonl
+Traceback (most recent call last):
+  File "/Users/jessica/GridWorks/experiments/capture_broker.py", line 218, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/jessica/GridWorks/experiments/capture_broker.py", line 189, in main
+    set_tracing(vhost, on=False)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/jessica/GridWorks/experiments/capture_broker.py", line 97, in set_tracing
+    subprocess.run(
+    ~~~~~~~~~~~~~~^
+        ["docker", "exec", BROKER_CONTAINER, "rabbitmqctl", "trace_on" if on else "trace_off", "-p", vhost],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        check=True,
+        ^^^^^^^^^^^
+        capture_output=True,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 555, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 817, in __init__
+    def __init__(self, args, bufsize=-1, executable=None,
+    
+  File "/Users/jessica/GridWorks/experiments/capture_broker.py", line 167, in stop
+    raise KeyboardInterrupt
+KeyboardInterrupt

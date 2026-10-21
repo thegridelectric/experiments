@@ -8,7 +8,7 @@ summaries — `pico-just-zombied` (a pico flatlined through the VDC reboot
 cycles) and `pico-zombies` (the periodic zombie roster; pico ids in
 Details).
 
-Run with GJK_DB_URL set to the analytics postgres URL (psycopg).
+Run with DB_ANALYST_URL set to the analytics postgres URL (psycopg).
   WINDOW_DAYS=56 ./pico_glitch_analysis.py
 """
 
@@ -38,7 +38,7 @@ def house(alias: LeftRightDot) -> str:
 
 
 def main() -> int:
-    url = os.environ["GJK_DB_URL"].replace("postgresql+psycopg://", "postgresql://")
+    url = os.environ["DB_ANALYST_URL"].replace("postgresql+psycopg://", "postgresql://")
     codec = SemaCodec()
     with psycopg.connect(url) as conn:
         conn.read_only = True

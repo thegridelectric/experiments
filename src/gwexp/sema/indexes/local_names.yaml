@@ -7,6 +7,8 @@ enums:
   gpm.from.hz.method: gpm.from.hz.method
   gw.alert.category: gw.alert.category
   gw.alert.state: gw.alert.state
+  gw.dashboard.role: gw.dashboard.role
+  gw.dispatch.refusal.reason: gw.dispatch.refusal.reason
   gw.experiment.verdict: gw.experiment.verdict
   gw.fleet.alert.kind: gw.fleet.alert.kind
   gw.house.alert.kind: gw.house.alert.kind
@@ -16,11 +18,14 @@ enums:
   gw.primary.flow.source: gw.primary.flow.source
   gw.primary.pump.owner: gw.primary.pump.owner
   gw.refrigerant.cycle: gw.refrigerant.cycle
+  gw.standby.posture: gw.standby.posture
+  gw.top.state: gw.top.state
   gw.zone.emitter.type: gw.zone.emitter.type
   gw1.actor.class: gw1.actor.class
   gw1.emission.method: gw1.emission.method
   gw1.quantity: gw1.quantity
   gw1.seasonal.storage.mode: gw1.seasonal.storage.mode
+  gw1.service.mode: gw1.service.mode
   gw1.system.mode: gw1.system.mode
   gw1.unit: gw1.unit
   gw2.lc.top.state: gw2.lc.top.state
@@ -39,6 +44,7 @@ enums:
   spaceheat.make.model: spaceheat.make.model
   spaceheat.telemetry.name: spaceheat.telemetry.name
   spaceheat.unit: spaceheat.unit
+  ta.validation.state: ta.validation.state
   temp.calc.method: temp.calc.method
   thermostat.kind: thermostat.kind
   zone.setpoint.source: zone.setpoint.source
@@ -60,6 +66,8 @@ types:
   glitch: glitch
   gpio.relay.component.gt: gpio.relay.component.gt
   gpio.sensor.component.gt: gpio.sensor.component.gt
+  gridworks.header: gridworks.header
+  gw: gw
   gw.adc.waveform: gw.adc.waveform
   gw.alert: gw.alert
   gw.boiler.backup: gw.boiler.backup
@@ -68,6 +76,8 @@ types:
   gw.channel.noise.stats: gw.channel.noise.stats
   gw.element.backup: gw.element.backup
   gw.experiment.run: gw.experiment.run
+  gw.house.operating.status: gw.house.operating.status
+  gw.house.summary: gw.house.summary
   gw.hydronic: gw.hydronic
   gw.native.gpio.pin: gw.native.gpio.pin
   gw.nolan.layout: gw.nolan.layout

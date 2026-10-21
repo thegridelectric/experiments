@@ -125,6 +125,10 @@ types:
       used_by:
       - gw.hydronic:000
       - gw.nolan.layout:000
+  gw.house.operating.status:
+    '000':
+      used_by:
+      - gw.house.summary:000
   gw.hydronic:
     '000':
       used_by:
@@ -274,6 +278,13 @@ types:
     '000':
       used_by:
       - gw.nolan.layout:000
+  layout.lite:
+    '011':
+      used_by:
+      - gw.house.summary:000
+    '012':
+      used_by:
+      - gw.house.summary:000
   machine.states:
     '000':
       used_by:
@@ -458,6 +469,14 @@ enums:
     '000':
       used_by:
       - gw.alert:000
+  gw.dashboard.role:
+    '000':
+      used_by:
+      - gw.house.summary:000
+  gw.dispatch.refusal.reason:
+    '000':
+      used_by:
+      - gw.house.operating.status:000
   gw.experiment.verdict:
     '000':
       used_by:
@@ -494,6 +513,14 @@ enums:
     '000':
       used_by:
       - gw.hydronic:000
+  gw.standby.posture:
+    '000':
+      used_by:
+      - gw.house.operating.status:000
+  gw.top.state:
+    '000':
+      used_by:
+      - gw.house.operating.status:000
   gw.zone.emitter.type:
     '000':
       used_by:
@@ -540,11 +567,16 @@ enums:
   gw1.seasonal.storage.mode:
     '000':
       used_by:
+      - gw.house.operating.status:000
       - layout.lite:008
       - layout.lite:009
       - layout.lite:010
       - layout.lite:011
       - layout.lite:012
+  gw1.service.mode:
+    '000':
+      used_by:
+      - gw.house.operating.status:000
   gw1.system.mode:
     '000':
       used_by:
@@ -658,6 +690,10 @@ enums:
       used_by:
       - channel.config:000
       - relay.actor.config:002
+  ta.validation.state:
+    '000':
+      used_by:
+      - gw.house.operating.status:000
   temp.calc.method:
     '000':
       used_by:
@@ -706,6 +742,7 @@ formats:
     - fsm.atomic.report:001
     - g.node.gt:006
     - glitch:000
+    - gridworks.header:001
     - gw.adc.waveform:000
     - gw.alert:000
     - gw.channel.gap.stats:000
@@ -713,6 +750,8 @@ formats:
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
     - gw.experiment.run:001
+    - gw.house.operating.status:000
+    - gw.house.summary:000
     - gw.readings:000
     - gw.readings:001
     - heating.forecast:000
@@ -887,6 +926,7 @@ formats:
     - gw.element.backup:000
     - gw.experiment.run:000
     - gw.experiment.run:001
+    - gw.house.summary:000
     - gw.hydronic:000
     - gw.nolan.layout:000
     - gw1.hvac.zone:000
@@ -909,6 +949,9 @@ formats:
     - spaceheat.node.gt:302
     - spaceheat.node.gt:303
     - synth.channel.gt:000
+  utc.iso8601.seconds:
+    used_by:
+    - gw.house.summary:000
   utc.milliseconds:
     used_by:
     - channel.readings:002
@@ -922,6 +965,8 @@ formats:
     - gw.channel.noise.stats:000
     - gw.experiment.run:000
     - gw.experiment.run:001
+    - gw.house.operating.status:000
+    - gw.house.summary:000
     - gw.opsgenie.alert:000
     - gw.readings:000
     - gw.readings:001
@@ -974,6 +1019,7 @@ formats:
     - gpio.sensor.component.gt:000
     - gw.adc.waveform:000
     - gw.alert:000
+    - gw.house.summary:000
     - gw.opsgenie.alert:000
     - gw1.zone.thermostat:000
     - heating.forecast:000

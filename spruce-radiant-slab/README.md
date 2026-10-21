@@ -57,7 +57,7 @@ placeholder `zone_kwh_per_deg_f_list` is the room-side analogue.
 ## Setup
 
 Observational: nothing was run on the house; every number is read from
-spruce's own reporting in the journal DB (`GJK_DB_URL` in `../.env`), the
+spruce's own reporting in the journal DB (`DB_ANALYST_URL` in `../.env`), the
 scada alias `hw1.isone.me.versant.keene.spruce.scada`, terminal asset
 `hw1.isone.me.versant.keene.spruce.ta`.
 

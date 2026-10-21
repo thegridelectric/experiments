@@ -13,11 +13,11 @@ journalkeeper's own enum. The journal stores a state as the value's
 index in the enum word's value list (`report_event_persistor.py`
 `get_sema_enum_value`), so `SinglePicoState.values()[value]` is the
 name. Run it from the journalkeeper repo as a sibling, whose env has the
-vendored enum; `GJK_DB_URL` comes from `experiments/.env`:
+vendored enum; `DB_ANALYST_URL` comes from `experiments/.env`:
 
 ```sh
 cd gridworks-journalkeeper
-set -a; . ../experiments/.env; set +a    # exports GJK_DB_URL (the script also reads that file itself)
+set -a; . ../experiments/.env; set +a    # exports DB_ANALYST_URL (the script also reads that file itself)
 uv run python ../experiments/2026-09-10-pico-state-reported/read_pico_states.py 20
 ```
 
@@ -82,11 +82,11 @@ time order. What it settled for the plan:
 
 Spruce is the only house that reports `single.pico.state` (scada
 `69d5d6ec` on `actual-spruce`, journalkeeper `4f0a932` on `main`, both
-deployed 2026-09-10). With `GJK_DB_URL` from `experiments/.env`:
+deployed 2026-09-10). With `DB_ANALYST_URL` from `experiments/.env`:
 
 ```sh
 set -a; . experiments/.env; set +a
-psql "$GJK_DB_URL" -At -F' ' -c "
+psql "$DB_ANALYST_URL" -At -F' ' -c "
   select to_char(r.timestamp at time zone 'UTC','HH24:MI:SS') utc, c.name, r.value
   from gridworks.readings r
   join gridworks.reading_channels c on c.id = r.channel_id

@@ -13,7 +13,7 @@ python only sees one row per channel (with gap-duration / gap-start arrays,
 which are small because gaps are rare).
 
 Run anywhere with network reach to the GridWorks analytics database and
-GJK_DB_URL set to its postgres URL (psycopg required).
+DB_ANALYST_URL set to its postgres URL (psycopg required).
 """
 
 import os
@@ -244,7 +244,7 @@ def fetch(cur: psycopg.Cursor, t0: datetime,
 
 
 def main() -> None:
-    url = os.environ["GJK_DB_URL"].replace("postgresql+psycopg://", "postgresql://")
+    url = os.environ["DB_ANALYST_URL"].replace("postgresql+psycopg://", "postgresql://")
     with psycopg.connect(url) as conn:
         conn.read_only = True
         with conn.cursor() as cur:

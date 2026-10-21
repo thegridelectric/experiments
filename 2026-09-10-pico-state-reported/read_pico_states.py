@@ -5,7 +5,7 @@ get_sema_enum_value), so the same list turns it back into the name.
 
 Run from the journalkeeper checkout, whose env has the vendored enum:
     cd gridworks-journalkeeper && uv run python ../experiments/2026-09-10-pico-state-reported/read_pico_states.py [N]
-GJK_DB_URL comes from experiments/.env.
+DB_ANALYST_URL comes from experiments/.env.
 """
 import os
 import sys
@@ -28,7 +28,7 @@ query = text("""
     order by r.timestamp desc, c.name
     limit :n
 """)
-with create_engine(os.environ["GJK_DB_URL"]).connect() as conn:
+with create_engine(os.environ["DB_ANALYST_URL"]).connect() as conn:
     rows = conn.execute(
         query, {"ta": ta, "unit_type": SinglePicoState.enum_name(), "n": n}
     ).all()

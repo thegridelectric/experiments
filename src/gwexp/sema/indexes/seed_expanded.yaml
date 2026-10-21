@@ -1,6 +1,6 @@
 metadata:
   generated_from: indexes/public_registry.yaml
-  generated_at: '2026-10-15T19:25:07Z'
+  generated_at: '2026-10-21T19:34:18Z'
   note: Transitive closure of initial_targets
 initial_targets:
 - glitch:000
@@ -31,6 +31,10 @@ initial_targets:
 - layout.lite:013
 - gw.alert:000
 - gw.opsgenie.alert:000
+- gw
+- gridworks.header:001
+- gw.house.operating.status:000
+- gw.house.summary:000
 worklist:
   formats:
     handle.name:
@@ -51,6 +55,8 @@ worklist:
       path: definitions/formats/positive.int.as.str.yaml
     spaceheat.name:
       path: definitions/formats/spaceheat.name.yaml
+    utc.iso8601.seconds:
+      path: definitions/formats/utc.iso8601.seconds.yaml
     utc.milliseconds:
       path: definitions/formats/utc.milliseconds.yaml
     utc.seconds:
@@ -82,6 +88,12 @@ worklist:
     gw.alert.state:
       '000':
         path: definitions/enums/gw.alert.state/000.yaml
+    gw.dashboard.role:
+      '000':
+        path: definitions/enums/gw.dashboard.role/000.yaml
+    gw.dispatch.refusal.reason:
+      '000':
+        path: definitions/enums/gw.dispatch.refusal.reason/000.yaml
     gw.experiment.verdict:
       '000':
         path: definitions/enums/gw.experiment.verdict/000.yaml
@@ -109,6 +121,12 @@ worklist:
     gw.refrigerant.cycle:
       '000':
         path: definitions/enums/gw.refrigerant.cycle/000.yaml
+    gw.standby.posture:
+      '000':
+        path: definitions/enums/gw.standby.posture/000.yaml
+    gw.top.state:
+      '000':
+        path: definitions/enums/gw.top.state/000.yaml
     gw.zone.emitter.type:
       '000':
         path: definitions/enums/gw.zone.emitter.type/000.yaml
@@ -134,6 +152,9 @@ worklist:
     gw1.seasonal.storage.mode:
       '000':
         path: definitions/enums/gw1.seasonal.storage.mode/000.yaml
+    gw1.service.mode:
+      '000':
+        path: definitions/enums/gw1.service.mode/000.yaml
     gw1.system.mode:
       '000':
         path: definitions/enums/gw1.system.mode/000.yaml
@@ -194,6 +215,9 @@ worklist:
     spaceheat.unit:
       '001':
         path: definitions/enums/spaceheat.unit/001.yaml
+    ta.validation.state:
+      '000':
+        path: definitions/enums/ta.validation.state/000.yaml
     temp.calc.method:
       '000':
         path: definitions/enums/temp.calc.method/000.yaml
@@ -271,6 +295,9 @@ worklist:
     gpio.sensor.component.gt:
       '000':
         path: definitions/types/gpio.sensor.component.gt/000.yaml
+    gridworks.header:
+      '001':
+        path: definitions/types/gridworks.header/001.yaml
     gw.adc.waveform:
       '000':
         path: definitions/types/gw.adc.waveform/000.yaml
@@ -297,6 +324,12 @@ worklist:
         path: definitions/types/gw.experiment.run/000.yaml
       '001':
         path: definitions/types/gw.experiment.run/001.yaml
+    gw.house.operating.status:
+      '000':
+        path: definitions/types/gw.house.operating.status/000.yaml
+    gw.house.summary:
+      '000':
+        path: definitions/types/gw.house.summary/000.yaml
     gw.hydronic:
       '000':
         path: definitions/types/gw.hydronic/000.yaml
@@ -513,3 +546,6 @@ worklist:
     web.server.component.gt:
       '001':
         path: definitions/types/web.server.component.gt/001.yaml
+    gw:
+      versioning_strategy: none
+      path: definitions/types/gw.yaml

@@ -1,6 +1,6 @@
 metadata:
   registry_version: "1.0"
-  last_updated: "2026-10-15T16:00:00Z"
+  last_updated: "2026-10-21T17:40:00Z"
   maintainer: "gridworks-energy"
 
 formats:
@@ -66,6 +66,13 @@ formats:
     created: "2024-09-02T15:00:00Z"
     status: "published"
     description: "Single-segment lowercase identifier with optional internal hyphen-separated words"
+
+  utc.iso8601.seconds:
+    owner: gridworks-energy
+    schema_url: "https://schemas.electricity.works/formats/utc.iso8601.seconds"
+    created: "2026-02-22T16:43:00Z"
+    status: "published"
+    description: "UTC timestamp in ISO 8601 format with second precision and Z suffix"
 
   utc.milliseconds:
     owner: gridworks-energy
@@ -173,6 +180,30 @@ enums:
     created: "2026-09-16T17:45:00Z"
     status: "published"
 
+  gw.dashboard.role:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "What a dashboard login may do with a house: Admin, Owner or Viewer. Default Viewer so an unknown role grants the least."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw.dashboard.role/000"
+        created: "2026-10-21T17:40:00Z"
+        status: "staging"
+
+  gw.dispatch.refusal.reason:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "The scada's one vocabulary for declining or ending dispatch: NoTaDeed, OperatorHold, ServiceContractBroken, ScadaBlind, InAdmin. Default OperatorHold so an unknown reason reads as the house held out."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw.dispatch.refusal.reason/000"
+        created: "2026-09-30T18:35:00Z"
+        status: "staging"
+
   gw.experiment.verdict:
     latest_version: "000"
     owner: gridworks-energy
@@ -273,6 +304,30 @@ enums:
         created: "2026-09-24T17:50:00Z"
         status: "staging"
 
+  gw.standby.posture:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "What a scada in Standby does to the plant: MonitorOnly (energizes nothing) or NoHeatingOrCooling (holds every heat source off); the intent behind the house's EnergizedStandbyRelays list. Default MonitorOnly so an unknown posture touches nothing."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw.standby.posture/000"
+        created: "2026-09-30T18:35:00Z"
+        status: "staging"
+
+  gw.top.state:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "Who holds the scada's command tree: Auto (the scada's own control) or Admin (an admin session)."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw.top.state/000"
+        created: "2026-09-29T22:05:00Z"
+        status: "staging"
+
   gw.zone.emitter.type:
     latest_version: "000"
     owner: gridworks-energy
@@ -366,6 +421,18 @@ enums:
         schema_url: "https://schemas.electricity.works/enums/gw1.seasonal.storage.mode/000"
         created: "2026-01-14T18:04:00Z"
         status: "published"
+
+  gw1.service.mode:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "Thermal service the system provides: Heating / Cooling. Selects the local control machine on a plant that can do both, and gates heating contracts at the LTN."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/gw1.service.mode/000"
+        created: "2026-08-13T11:55:00Z"
+        status: "staging"
 
   gw1.system.mode:
     latest_version: "000"
@@ -600,6 +667,18 @@ enums:
         schema_url: "https://schemas.electricity.works/enums/spaceheat.unit/001"
         created: "2024-09-02T15:00:00Z"
         status: "published"
+
+  ta.validation.state:
+    latest_version: "000"
+    owner: gridworks-energy
+    enum_type: "versioned"
+    description: "What a TaValidator has vouched for about a terminal asset; carried by ta.deed, UnValidated with no deed."
+
+    versions:
+      "000":
+        schema_url: "https://schemas.electricity.works/enums/ta.validation.state/000"
+        created: "2026-09-09T02:05:00Z"
+        status: "staging"
 
   temp.calc.method:
     latest_version: "000"
@@ -1059,6 +1138,22 @@ types:
             - "pascal.case"
             - "uuid4.str"
 
+  gridworks.header:
+    latest_version: "001"
+    owner: smoothstone-computing
+    versioning_strategy: "literal"
+    description: "Delivery-layer metadata carried inside a gw envelope: Src, Dst, MessageType, MessageId, AckRequired."
+
+    versions:
+      "001":
+        schema_url: "https://schemas.electricity.works/types/gridworks.header/001"
+        created: "2022-10-17T16:55:39Z"
+        status: "published"
+        summary: "Initial published version, matching the gwproto Header wire format deployed in the field."
+        direct_dependencies:
+          structural:
+            - "left.right.dot"
+
   gw.adc.waveform:
     latest_version: "000"
     owner: gridworks-energy
@@ -1228,6 +1323,53 @@ types:
             - "non.empty.string"
             - "spaceheat.name"
             - "utc.milliseconds"
+
+  gw.house.operating.status:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "How a house is operating in one record: validation state, standby and its posture, storage mode, service mode, whether it accepts dispatch and why not, who holds the command tree, whether the scada is blind, and whether the LTN is dispatching. Sent once at startup and on change."
+
+    versions:
+      "000":
+        status: "staging"
+        schema_url: "https://schemas.electricity.works/types/gw.house.operating.status/000"
+        created: "2026-09-30T18:35:00Z"
+        summary: "Initial version. ScadaAlias + ValidationState (from the deed) + Standby x StandbyPosture + SeasonalStorageMode + ServiceMode + AcceptsDispatch x DispatchRefusalReason (the derived answer, present iff refusing, axiom 1; Standby refuses as OperatorHold, axiom 2) + TopState + ScadaBlind + LtnDispatching + CreatedMs. The slow facts of the LTN-scada agreement; nothing that cycles inside a healthy hour."
+        direct_dependencies:
+          structural:
+            - "gw.dispatch.refusal.reason:000"
+            - "gw.standby.posture:000"
+            - "gw.top.state:000"
+            - "gw1.seasonal.storage.mode:000"
+            - "gw1.service.mode:000"
+            - "left.right.dot"
+            - "ta.validation.state:000"
+            - "utc.milliseconds"
+
+  gw.house.summary:
+    latest_version: "000"
+    owner: gridworks-energy
+    versioning_strategy: "literal"
+    description: "One house as a dashboard login sees it: role, registry identity, current layout, operating status and the latest snapshot's facts; reassembled per request, nothing about a person."
+
+    versions:
+      "000":
+        status: "staging"
+        schema_url: "https://schemas.electricity.works/types/gw.house.summary/000"
+        created: "2026-10-21T17:40:00Z"
+        summary: "Initial version. Role (gw.dashboard.role) + TaGNodeId + GNodeAlias + DisplayName + Layout (a union of layout.lite 011 and 012) + OperatingStatus (gw.house.operating.status) + LatestSnapshotTime + the longest-running zone pair (axiom 1: together or not at all) + SendTimeMs (the sender-time standard: a reassembled read response)."
+        direct_dependencies:
+          structural:
+            - "gw.dashboard.role:000"
+            - "gw.house.operating.status:000"
+            - "layout.lite:011"
+            - "layout.lite:012"
+            - "left.right.dot"
+            - "spaceheat.name"
+            - "utc.iso8601.seconds"
+            - "utc.milliseconds"
+            - "uuid4.str"
 
   gw.hydronic:
     latest_version: "000"
@@ -2683,3 +2825,15 @@ types:
           structural:
             - "pascal.case"
             - "uuid4.str"
+
+  gw:
+    owner: smoothstone-computing
+    versioning_strategy: "none"
+    description: "GridWorks message envelope: a gridworks.header plus a Payload of any registered Sema type."
+    schema_url: "https://schemas.electricity.works/types/gw"
+    created: "2022-10-17T16:55:39Z"
+    status: "published"
+    summary: "Versionless GridWorks message envelope (gwproto Message wire format)."
+    direct_dependencies:
+      structural:
+        - "gridworks.header:001"

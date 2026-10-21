@@ -5,7 +5,7 @@ Genre: observational analysis. First run 2026-08-03; extended 08-05
 verification re-run 2026-08-10, semafied (archive pull → `gw.readings`
 instances → `emit_instances.py`, no DB access — see "Floor2 removal" and
 "Folder contents"). First-run reproducers, all read-only against the
-analytics DB (`GJK_DB_URL`; `WINDOW_DAYS` env knob; pre-date the
+analytics DB (`DB_ANALYST_URL`; `WINDOW_DAYS` env knob; pre-date the
 experiment vocabulary):
 
 - `pico_gap_analysis.py` — reporting-gap statistics per channel,

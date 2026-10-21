@@ -64,7 +64,7 @@ as validated Sema instances.
   pattern, `--out` also writes a JSONL capture. It logs in as
   `gw.analyst`, which may publish nowhere, so nothing done here reaches
   the fleet. Never listen on prod.
-- `.env` (gitignored, never committed) — `GJK_DB_URL`, the journal-DB
+- `.env` (gitignored, never committed) — `DB_ANALYST_URL`, the journal-DB
   connection string `pull_readings.py` and the per-experiment analysis
   scripts read, and `GWEXP_RABBIT__URL`, the dev broker's AMQP URL for
   `capture_broker.py`; `GWEXP_TAP__URL`, the tap broker's AMQPS URL as

@@ -8,11 +8,14 @@ from gwexp.sema.enums.gw1_actor_class import Gw1ActorClass
 from gwexp.sema.enums.gw1_emission_method import Gw1EmissionMethod
 from gwexp.sema.enums.gw1_quantity import Gw1Quantity
 from gwexp.sema.enums.gw1_seasonal_storage_mode import Gw1SeasonalStorageMode
+from gwexp.sema.enums.gw1_service_mode import Gw1ServiceMode
 from gwexp.sema.enums.gw1_system_mode import Gw1SystemMode
 from gwexp.sema.enums.gw1_unit import Gw1Unit
 from gwexp.sema.enums.gw2_lc_top_state import Gw2LcTopState
 from gwexp.sema.enums.gw_alert_category import GwAlertCategory
 from gwexp.sema.enums.gw_alert_state import GwAlertState
+from gwexp.sema.enums.gw_dashboard_role import GwDashboardRole
+from gwexp.sema.enums.gw_dispatch_refusal_reason import GwDispatchRefusalReason
 from gwexp.sema.enums.gw_experiment_verdict import GwExperimentVerdict
 from gwexp.sema.enums.gw_fleet_alert_kind import GwFleetAlertKind
 from gwexp.sema.enums.gw_house_alert_kind import GwHouseAlertKind
@@ -22,6 +25,8 @@ from gwexp.sema.enums.gw_platform_alert_kind import GwPlatformAlertKind
 from gwexp.sema.enums.gw_primary_flow_source import GwPrimaryFlowSource
 from gwexp.sema.enums.gw_primary_pump_owner import GwPrimaryPumpOwner
 from gwexp.sema.enums.gw_refrigerant_cycle import GwRefrigerantCycle
+from gwexp.sema.enums.gw_standby_posture import GwStandbyPosture
+from gwexp.sema.enums.gw_top_state import GwTopState
 from gwexp.sema.enums.gw_zone_emitter_type import GwZoneEmitterType
 from gwexp.sema.enums.hz_calc_method import HzCalcMethod
 from gwexp.sema.enums.i2c_adc_channel import I2cAdcChannel
@@ -38,6 +43,7 @@ from gwexp.sema.enums.relay_wiring_config import RelayWiringConfig
 from gwexp.sema.enums.spaceheat_make_model import SpaceheatMakeModel
 from gwexp.sema.enums.spaceheat_telemetry_name import SpaceheatTelemetryName
 from gwexp.sema.enums.spaceheat_unit import SpaceheatUnit
+from gwexp.sema.enums.ta_validation_state import TaValidationState
 from gwexp.sema.enums.temp_calc_method import TempCalcMethod
 from gwexp.sema.enums.thermostat_kind import ThermostatKind
 from gwexp.sema.enums.zone_setpoint_source import ZoneSetpointSource
@@ -53,11 +59,14 @@ __all__ = [
     "Gw1EmissionMethod",
     "Gw1Quantity",
     "Gw1SeasonalStorageMode",
+    "Gw1ServiceMode",
     "Gw1SystemMode",
     "Gw1Unit",
     "Gw2LcTopState",
     "GwAlertCategory",
     "GwAlertState",
+    "GwDashboardRole",
+    "GwDispatchRefusalReason",
     "GwExperimentVerdict",
     "GwFleetAlertKind",
     "GwHouseAlertKind",
@@ -67,6 +76,8 @@ __all__ = [
     "GwPrimaryFlowSource",
     "GwPrimaryPumpOwner",
     "GwRefrigerantCycle",
+    "GwStandbyPosture",
+    "GwTopState",
     "GwZoneEmitterType",
     "HzCalcMethod",
     "I2cAdcChannel",
@@ -83,6 +94,7 @@ __all__ = [
     "SpaceheatMakeModel",
     "SpaceheatTelemetryName",
     "SpaceheatUnit",
+    "TaValidationState",
     "TempCalcMethod",
     "ThermostatKind",
     "ZoneSetpointSource",

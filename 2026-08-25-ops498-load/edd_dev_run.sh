@@ -10,7 +10,6 @@ export DEV_DB_URL="${DEV_DB_URL:-postgresql+psycopg2://gw_journalkeeper:changeme
 DEV_ADMIN_URL="${DEV_ADMIN_URL:-postgresql://postgres:changeme@localhost:5433/tsdb}"
 # shellcheck disable=SC1091
 set -a; . "$HERE/../.env"; set +a
-export GJK_DB_URL_PROD="$GJK_DB_URL"
 PY="uv run --project $JK python"
 IMPORT="$PY -m gjk.s3_message_importer --workers ${WORKERS:-8} --batch-size ${BATCH:-500}"
 
@@ -21,7 +20,7 @@ LAYOUT_ONLY="2024-12-01 2024-12-03"
 echo "== reset dev DB"
 psql "$DEV_ADMIN_URL" -q -v ON_ERROR_STOP=1 -f "$HERE/reset_dev.sql"
 echo "== seed current era from prod"
-GJK_DB_URL="$GJK_DB_URL_PROD" $PY "$HERE/seed_current_era.py"
+$PY "$HERE/seed_current_era.py"
 echo "== snapshot"
 $PY "$HERE/assert_dev_run.py" snapshot "$RUN"
 

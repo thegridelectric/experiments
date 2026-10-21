@@ -22,7 +22,7 @@ started with the reflash, and on which picos.
 
 Observational, read-only. Two pulls, no service touched:
 
-- Journal DB (`GJK_DB_URL`): every `report.event` per scada from
+- Journal DB (`DB_ANALYST_URL`): every `report.event` per scada from
   2026-09-01 to 10-14, the `pico.cycler.state` series collapsed to
   change-points, one bus reboot = one transition into `RelayOpening`.
   The `single.pico.state` series counted the same way into `Flatlined`

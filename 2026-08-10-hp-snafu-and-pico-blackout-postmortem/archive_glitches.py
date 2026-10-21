@@ -11,7 +11,7 @@ The glitches live in the immutable store (gridworks.messages); this
 archive makes the incident's subset citable from the folder with no DB
 access.
 
-Run with GJK_DB_URL in experiments/.env:
+Run with DB_ANALYST_URL in experiments/.env:
   uv run python archive_glitches.py
 """
 
@@ -43,10 +43,10 @@ CONDITION: LeftRightDot = _LRD.validate_python("pico.blackout")
 
 def db_url() -> str:
     for line in (HERE.parent / ".env").read_text().splitlines():
-        if line.startswith("GJK_DB_URL="):
+        if line.startswith("DB_ANALYST_URL="):
             return line.split("=", 1)[1].strip().strip("'\"").replace(
                 "postgresql+psycopg://", "postgresql://")
-    raise SystemExit("GJK_DB_URL not found in experiments/.env")
+    raise SystemExit("DB_ANALYST_URL not found in experiments/.env")
 
 
 def instance_filename(g: Glitch) -> str:

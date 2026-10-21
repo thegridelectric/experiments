@@ -2,8 +2,8 @@
 
 Every `reading_channels` row (active and retired) and, per house, the newest
 `layout.lite` messages row — the two things the layout sync guard and the
-era lookup compare against. Prod is read through the read-only visualizer
-URL (`GJK_DB_URL` in experiments/.env); dev through `DEV_DB_URL`.
+era lookup compare against. Prod is read through the read-only analyst
+URL (`DB_ANALYST_URL` in experiments/.env); dev through `DEV_DB_URL`.
 """
 
 import os
@@ -12,7 +12,7 @@ from gw_data.db.models import MessageSql, ReadingChannelSql
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import Session
 
-PROD_URL = os.environ["GJK_DB_URL"]
+PROD_URL = os.environ["DB_ANALYST_URL"]
 DEV_URL = os.environ["DEV_DB_URL"]
 LAYOUT_LITE = "layout.lite"
 

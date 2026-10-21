@@ -8,12 +8,17 @@ brokers only. It MUST NOT be used against hybrid or production brokers.
 Staging words in this snapshot:
 
 - enum gpio.sense.mode:000
+- enum gw.dashboard.role:000
+- enum gw.dispatch.refusal.reason:000
 - enum gw.experiment.verdict:000
 - enum gw.primary.flow.source:000
 - enum gw.primary.pump.owner:000
 - enum gw.refrigerant.cycle:000
+- enum gw.standby.posture:000
+- enum gw.top.state:000
 - enum gw.zone.emitter.type:000
 - enum gw1.actor.class:014
+- enum gw1.service.mode:000
 - enum gw2.lc.top.state:000
 - enum i2c.adc.channel
 - enum i2c.adc.type:000
@@ -21,6 +26,7 @@ Staging words in this snapshot:
 - enum i2c.dac.type:000
 - enum i2c.expander.type:000
 - enum i2c.mux.type:000
+- enum ta.validation.state:000
 - enum thermostat.kind:000
 - enum zone.setpoint.source:000
 - type ads111x.based.device.type.gt:000
@@ -38,6 +44,8 @@ Staging words in this snapshot:
 - type gw.boiler.backup:000
 - type gw.element.backup:000
 - type gw.experiment.run:001
+- type gw.house.operating.status:000
+- type gw.house.summary:000
 - type gw.hydronic:000
 - type gw.native.gpio.pin:000
 - type gw.nolan.layout:000

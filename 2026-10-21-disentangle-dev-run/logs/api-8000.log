@@ -1,0 +1,719 @@
+INFO:     Started server process [25884]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+Starting API...
+Running API locally
+INFO:     127.0.0.1:52893 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52903 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 401 Unauthorized
+2026-10-21 14:56:23,741 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2026-10-21 14:56:23,741 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-10-21 14:56:23,746 INFO sqlalchemy.engine.Engine select current_schema()
+2026-10-21 14:56:23,746 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-10-21 14:56:23,748 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2026-10-21 14:56:23,748 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-10-21 14:56:23,749 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 14:56:23,750 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 14:56:23,750 INFO sqlalchemy.engine.Engine [generated in 0.00007s] ('devrun-admin',)
+2026-10-21 14:56:23,753 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 14:56:23,753 INFO sqlalchemy.engine.Engine [generated in 0.00009s] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 14:56:23,969 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 14:56:23,969 INFO sqlalchemy.engine.Engine [generated in 0.00009s] (datetime.datetime(2026, 10, 21, 18, 56, 23, 968485, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 14:56:23,973 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52940 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:37:02,582 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:02,583 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 15:37:02,583 INFO sqlalchemy.engine.Engine [cached since 2439s ago] ('devrun-admin',)
+2026-10-21 15:37:02,587 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 15:37:02,587 INFO sqlalchemy.engine.Engine [cached since 2439s ago] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 15:37:02,818 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 15:37:02,818 INFO sqlalchemy.engine.Engine [cached since 2439s ago] (datetime.datetime(2026, 10, 21, 19, 37, 2, 818012, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 15:37:02,820 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53596 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:37:02,827 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:02,827 INFO sqlalchemy.engine.Engine 
+        SELECT
+            ta.id,
+            left(ta.alias, -3) AS house_alias,
+            role,
+            ta.display_name,
+            layouts.payload AS layout,
+            house_operating_status.payload AS operating_status,
+            latest_snapshot.payload AS snapshot,
+            heat_calls.name,
+            heat_calls.latest_off_time
+        FROM gridworks.user_installation_roles
+        JOIN gridworks.users on users.id = user_installation_roles.user_id
+        JOIN gridworks.g_nodes ta
+            ON (ta.id = user_installation_roles.ta_g_node_id OR user_installation_roles.ta_g_node_id IS NULL)
+            AND ta.g_node_class = 'TerminalAsset'
+        LEFT OUTER JOIN gridworks.layouts ON layouts.ta_g_node_id = ta.id
+        LEFT OUTER JOIN gridworks.house_operating_status ON house_operating_status.ta_g_node_id = ta.id
+        LEFT OUTER JOIN (
+            SELECT from_alias, payload
+            FROM (
+                SELECT
+                    from_alias,
+                    payload,
+                    row_number() OVER (PARTITION BY from_alias ORDER BY timestamp DESC) AS row_number
+                FROM gridworks.messages
+                WHERE message_type_name = 'snapshot.spaceheat'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+            ) AS recent_snapshots
+            WHERE row_number = 1
+        ) AS latest_snapshot on latest_snapshot.from_alias LIKE (left(ta.alias, -3) || '%')
+        LEFT OUTER JOIN (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY terminal_asset_alias ORDER by latest_off_time
+                ) AS row_number
+            FROM (
+                WITH latest_readings AS (
+                    SELECT
+                        reading_channels.id,
+                        value,
+                        ROW_NUMBER() OVER (PARTITION BY reading_channels.id ORDER BY timestamp DESC) AS row_number
+                    FROM gridworks.readings
+                    JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                    WHERE reading_channels.name like '%heat-call%'
+                    AND timestamp >= NOW() - INTERVAL '24 hours'
+                )
+                SELECT id, value
+                FROM latest_readings
+                WHERE row_number = 1 and value = 1
+            ) AS active_heat_calls
+            JOIN (
+                SELECT
+        			reading_channels.id,
+                    terminal_asset_alias,
+                    name,
+                    MAX(timestamp) as latest_off_time
+                FROM gridworks.readings
+                JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                WHERE reading_channels.name like '%heat-call%'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+                AND value=0
+                GROUP BY reading_channels.id,terminal_asset_alias
+            ) AS last_inactive_times
+            ON active_heat_calls.id = last_inactive_times.id
+        ) AS heat_calls on heat_calls.terminal_asset_alias = ta.alias AND heat_calls.row_number = 1
+        WHERE gridworks.users.username = $1
+    
+2026-10-21 15:37:02,827 INFO sqlalchemy.engine.Engine [generated in 0.00008s] ('devrun-admin',)
+INFO:     127.0.0.1:53597 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 200 OK
+2026-10-21 15:37:02,841 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-10-21 15:37:02,851 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:02,851 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 15:37:02,851 INFO sqlalchemy.engine.Engine [cached since 2439s ago] ('devrun-admin',)
+2026-10-21 15:37:02,852 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 15:37:02,852 INFO sqlalchemy.engine.Engine [cached since 2439s ago] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 15:37:03,072 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 15:37:03,072 INFO sqlalchemy.engine.Engine [cached since 2439s ago] (datetime.datetime(2026, 10, 21, 19, 37, 3, 72170, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 15:37:03,073 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53601 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:37:03,077 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:03,077 INFO sqlalchemy.engine.Engine 
+        SELECT
+            ta.id,
+            left(ta.alias, -3) AS house_alias,
+            role,
+            ta.display_name,
+            layouts.payload AS layout,
+            house_operating_status.payload AS operating_status,
+            latest_snapshot.payload AS snapshot,
+            heat_calls.name,
+            heat_calls.latest_off_time
+        FROM gridworks.user_installation_roles
+        JOIN gridworks.users on users.id = user_installation_roles.user_id
+        JOIN gridworks.g_nodes ta
+            ON (ta.id = user_installation_roles.ta_g_node_id OR user_installation_roles.ta_g_node_id IS NULL)
+            AND ta.g_node_class = 'TerminalAsset'
+        LEFT OUTER JOIN gridworks.layouts ON layouts.ta_g_node_id = ta.id
+        LEFT OUTER JOIN gridworks.house_operating_status ON house_operating_status.ta_g_node_id = ta.id
+        LEFT OUTER JOIN (
+            SELECT from_alias, payload
+            FROM (
+                SELECT
+                    from_alias,
+                    payload,
+                    row_number() OVER (PARTITION BY from_alias ORDER BY timestamp DESC) AS row_number
+                FROM gridworks.messages
+                WHERE message_type_name = 'snapshot.spaceheat'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+            ) AS recent_snapshots
+            WHERE row_number = 1
+        ) AS latest_snapshot on latest_snapshot.from_alias LIKE (left(ta.alias, -3) || '%')
+        LEFT OUTER JOIN (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY terminal_asset_alias ORDER by latest_off_time
+                ) AS row_number
+            FROM (
+                WITH latest_readings AS (
+                    SELECT
+                        reading_channels.id,
+                        value,
+                        ROW_NUMBER() OVER (PARTITION BY reading_channels.id ORDER BY timestamp DESC) AS row_number
+                    FROM gridworks.readings
+                    JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                    WHERE reading_channels.name like '%heat-call%'
+                    AND timestamp >= NOW() - INTERVAL '24 hours'
+                )
+                SELECT id, value
+                FROM latest_readings
+                WHERE row_number = 1 and value = 1
+            ) AS active_heat_calls
+            JOIN (
+                SELECT
+        			reading_channels.id,
+                    terminal_asset_alias,
+                    name,
+                    MAX(timestamp) as latest_off_time
+                FROM gridworks.readings
+                JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                WHERE reading_channels.name like '%heat-call%'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+                AND value=0
+                GROUP BY reading_channels.id,terminal_asset_alias
+            ) AS last_inactive_times
+            ON active_heat_calls.id = last_inactive_times.id
+        ) AS heat_calls on heat_calls.terminal_asset_alias = ta.alias AND heat_calls.row_number = 1
+        WHERE gridworks.users.username = $1
+    
+2026-10-21 15:37:03,077 INFO sqlalchemy.engine.Engine [cached since 0.2503s ago] ('devrun-admin',)
+INFO:     127.0.0.1:53602 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 200 OK
+2026-10-21 15:37:03,082 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-10-21 15:37:07,139 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:07,139 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 15:37:07,139 INFO sqlalchemy.engine.Engine [cached since 2443s ago] ('devrun-admin',)
+2026-10-21 15:37:07,142 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 15:37:07,142 INFO sqlalchemy.engine.Engine [cached since 2443s ago] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 15:37:07,384 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 15:37:07,384 INFO sqlalchemy.engine.Engine [cached since 2444s ago] (datetime.datetime(2026, 10, 21, 19, 37, 7, 384260, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 15:37:07,386 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53609 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:37:07,392 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:07,392 INFO sqlalchemy.engine.Engine 
+        SELECT
+            ta.id,
+            left(ta.alias, -3) AS house_alias,
+            role,
+            ta.display_name,
+            layouts.payload AS layout,
+            house_operating_status.payload AS operating_status,
+            latest_snapshot.payload AS snapshot,
+            heat_calls.name,
+            heat_calls.latest_off_time
+        FROM gridworks.user_installation_roles
+        JOIN gridworks.users on users.id = user_installation_roles.user_id
+        JOIN gridworks.g_nodes ta
+            ON (ta.id = user_installation_roles.ta_g_node_id OR user_installation_roles.ta_g_node_id IS NULL)
+            AND ta.g_node_class = 'TerminalAsset'
+        LEFT OUTER JOIN gridworks.layouts ON layouts.ta_g_node_id = ta.id
+        LEFT OUTER JOIN gridworks.house_operating_status ON house_operating_status.ta_g_node_id = ta.id
+        LEFT OUTER JOIN (
+            SELECT from_alias, payload
+            FROM (
+                SELECT
+                    from_alias,
+                    payload,
+                    row_number() OVER (PARTITION BY from_alias ORDER BY timestamp DESC) AS row_number
+                FROM gridworks.messages
+                WHERE message_type_name = 'snapshot.spaceheat'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+            ) AS recent_snapshots
+            WHERE row_number = 1
+        ) AS latest_snapshot on latest_snapshot.from_alias LIKE (left(ta.alias, -3) || '%')
+        LEFT OUTER JOIN (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY terminal_asset_alias ORDER by latest_off_time
+                ) AS row_number
+            FROM (
+                WITH latest_readings AS (
+                    SELECT
+                        reading_channels.id,
+                        value,
+                        ROW_NUMBER() OVER (PARTITION BY reading_channels.id ORDER BY timestamp DESC) AS row_number
+                    FROM gridworks.readings
+                    JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                    WHERE reading_channels.name like '%heat-call%'
+                    AND timestamp >= NOW() - INTERVAL '24 hours'
+                )
+                SELECT id, value
+                FROM latest_readings
+                WHERE row_number = 1 and value = 1
+            ) AS active_heat_calls
+            JOIN (
+                SELECT
+        			reading_channels.id,
+                    terminal_asset_alias,
+                    name,
+                    MAX(timestamp) as latest_off_time
+                FROM gridworks.readings
+                JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                WHERE reading_channels.name like '%heat-call%'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+                AND value=0
+                GROUP BY reading_channels.id,terminal_asset_alias
+            ) AS last_inactive_times
+            ON active_heat_calls.id = last_inactive_times.id
+        ) AS heat_calls on heat_calls.terminal_asset_alias = ta.alias AND heat_calls.row_number = 1
+        WHERE gridworks.users.username = $1
+    
+2026-10-21 15:37:07,392 INFO sqlalchemy.engine.Engine [cached since 4.565s ago] ('devrun-admin',)
+INFO:     127.0.0.1:53610 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 200 OK
+2026-10-21 15:37:07,398 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-10-21 15:37:26,960 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:26,960 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 15:37:26,960 INFO sqlalchemy.engine.Engine [cached since 2463s ago] ('devrun-admin',)
+2026-10-21 15:37:26,962 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 15:37:26,962 INFO sqlalchemy.engine.Engine [cached since 2463s ago] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 15:37:27,198 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 15:37:27,198 INFO sqlalchemy.engine.Engine [cached since 2463s ago] (datetime.datetime(2026, 10, 21, 19, 37, 27, 198139, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 15:37:27,200 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53615 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:37:27,205 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:27,206 INFO sqlalchemy.engine.Engine 
+        SELECT
+            ta.id,
+            left(ta.alias, -3) AS house_alias,
+            role,
+            ta.display_name,
+            layouts.payload AS layout,
+            house_operating_status.payload AS operating_status,
+            latest_snapshot.payload AS snapshot,
+            heat_calls.name,
+            heat_calls.latest_off_time
+        FROM gridworks.user_installation_roles
+        JOIN gridworks.users on users.id = user_installation_roles.user_id
+        JOIN gridworks.g_nodes ta
+            ON (ta.id = user_installation_roles.ta_g_node_id OR user_installation_roles.ta_g_node_id IS NULL)
+            AND ta.g_node_class = 'TerminalAsset'
+        LEFT OUTER JOIN gridworks.layouts ON layouts.ta_g_node_id = ta.id
+        LEFT OUTER JOIN gridworks.house_operating_status ON house_operating_status.ta_g_node_id = ta.id
+        LEFT OUTER JOIN (
+            SELECT from_alias, payload
+            FROM (
+                SELECT
+                    from_alias,
+                    payload,
+                    row_number() OVER (PARTITION BY from_alias ORDER BY timestamp DESC) AS row_number
+                FROM gridworks.messages
+                WHERE message_type_name = 'snapshot.spaceheat'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+            ) AS recent_snapshots
+            WHERE row_number = 1
+        ) AS latest_snapshot on latest_snapshot.from_alias LIKE (left(ta.alias, -3) || '%')
+        LEFT OUTER JOIN (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY terminal_asset_alias ORDER by latest_off_time
+                ) AS row_number
+            FROM (
+                WITH latest_readings AS (
+                    SELECT
+                        reading_channels.id,
+                        value,
+                        ROW_NUMBER() OVER (PARTITION BY reading_channels.id ORDER BY timestamp DESC) AS row_number
+                    FROM gridworks.readings
+                    JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                    WHERE reading_channels.name like '%heat-call%'
+                    AND timestamp >= NOW() - INTERVAL '24 hours'
+                )
+                SELECT id, value
+                FROM latest_readings
+                WHERE row_number = 1 and value = 1
+            ) AS active_heat_calls
+            JOIN (
+                SELECT
+        			reading_channels.id,
+                    terminal_asset_alias,
+                    name,
+                    MAX(timestamp) as latest_off_time
+                FROM gridworks.readings
+                JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                WHERE reading_channels.name like '%heat-call%'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+                AND value=0
+                GROUP BY reading_channels.id,terminal_asset_alias
+            ) AS last_inactive_times
+            ON active_heat_calls.id = last_inactive_times.id
+        ) AS heat_calls on heat_calls.terminal_asset_alias = ta.alias AND heat_calls.row_number = 1
+        WHERE gridworks.users.username = $1
+    
+2026-10-21 15:37:27,206 INFO sqlalchemy.engine.Engine [cached since 24.38s ago] ('devrun-admin',)
+INFO:     127.0.0.1:53616 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 200 OK
+2026-10-21 15:37:27,212 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-10-21 15:37:49,849 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:49,849 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 15:37:49,849 INFO sqlalchemy.engine.Engine [cached since 2486s ago] ('devrun-admin',)
+2026-10-21 15:37:49,851 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 15:37:49,851 INFO sqlalchemy.engine.Engine [cached since 2486s ago] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 15:37:50,090 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 15:37:50,090 INFO sqlalchemy.engine.Engine [cached since 2486s ago] (datetime.datetime(2026, 10, 21, 19, 37, 50, 90393, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 15:37:50,092 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53627 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:37:50,099 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:50,099 INFO sqlalchemy.engine.Engine 
+        SELECT
+            ta.id,
+            left(ta.alias, -3) AS house_alias,
+            role,
+            ta.display_name,
+            layouts.payload AS layout,
+            house_operating_status.payload AS operating_status,
+            latest_snapshot.payload AS snapshot,
+            heat_calls.name,
+            heat_calls.latest_off_time
+        FROM gridworks.user_installation_roles
+        JOIN gridworks.users on users.id = user_installation_roles.user_id
+        JOIN gridworks.g_nodes ta
+            ON (ta.id = user_installation_roles.ta_g_node_id OR user_installation_roles.ta_g_node_id IS NULL)
+            AND ta.g_node_class = 'TerminalAsset'
+        LEFT OUTER JOIN gridworks.layouts ON layouts.ta_g_node_id = ta.id
+        LEFT OUTER JOIN gridworks.house_operating_status ON house_operating_status.ta_g_node_id = ta.id
+        LEFT OUTER JOIN (
+            SELECT from_alias, payload
+            FROM (
+                SELECT
+                    from_alias,
+                    payload,
+                    row_number() OVER (PARTITION BY from_alias ORDER BY timestamp DESC) AS row_number
+                FROM gridworks.messages
+                WHERE message_type_name = 'snapshot.spaceheat'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+            ) AS recent_snapshots
+            WHERE row_number = 1
+        ) AS latest_snapshot on latest_snapshot.from_alias LIKE (left(ta.alias, -3) || '%')
+        LEFT OUTER JOIN (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY terminal_asset_alias ORDER by latest_off_time
+                ) AS row_number
+            FROM (
+                WITH latest_readings AS (
+                    SELECT
+                        reading_channels.id,
+                        value,
+                        ROW_NUMBER() OVER (PARTITION BY reading_channels.id ORDER BY timestamp DESC) AS row_number
+                    FROM gridworks.readings
+                    JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                    WHERE reading_channels.name like '%heat-call%'
+                    AND timestamp >= NOW() - INTERVAL '24 hours'
+                )
+                SELECT id, value
+                FROM latest_readings
+                WHERE row_number = 1 and value = 1
+            ) AS active_heat_calls
+            JOIN (
+                SELECT
+        			reading_channels.id,
+                    terminal_asset_alias,
+                    name,
+                    MAX(timestamp) as latest_off_time
+                FROM gridworks.readings
+                JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                WHERE reading_channels.name like '%heat-call%'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+                AND value=0
+                GROUP BY reading_channels.id,terminal_asset_alias
+            ) AS last_inactive_times
+            ON active_heat_calls.id = last_inactive_times.id
+        ) AS heat_calls on heat_calls.terminal_asset_alias = ta.alias AND heat_calls.row_number = 1
+        WHERE gridworks.users.username = $1
+    
+2026-10-21 15:37:50,099 INFO sqlalchemy.engine.Engine [cached since 47.27s ago] ('devrun-admin',)
+INFO:     127.0.0.1:53628 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 200 OK
+2026-10-21 15:37:50,105 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-10-21 15:37:51,133 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:51,133 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 15:37:51,133 INFO sqlalchemy.engine.Engine [cached since 2487s ago] ('devrun-admin',)
+2026-10-21 15:37:51,137 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 15:37:51,137 INFO sqlalchemy.engine.Engine [cached since 2487s ago] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 15:37:51,377 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 15:37:51,377 INFO sqlalchemy.engine.Engine [cached since 2488s ago] (datetime.datetime(2026, 10, 21, 19, 37, 51, 377425, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 15:37:51,379 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53632 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:37:51,383 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:51,383 INFO sqlalchemy.engine.Engine 
+        SELECT
+            ta.id,
+            left(ta.alias, -3) AS house_alias,
+            role,
+            ta.display_name,
+            layouts.payload AS layout,
+            house_operating_status.payload AS operating_status,
+            latest_snapshot.payload AS snapshot,
+            heat_calls.name,
+            heat_calls.latest_off_time
+        FROM gridworks.user_installation_roles
+        JOIN gridworks.users on users.id = user_installation_roles.user_id
+        JOIN gridworks.g_nodes ta
+            ON (ta.id = user_installation_roles.ta_g_node_id OR user_installation_roles.ta_g_node_id IS NULL)
+            AND ta.g_node_class = 'TerminalAsset'
+        LEFT OUTER JOIN gridworks.layouts ON layouts.ta_g_node_id = ta.id
+        LEFT OUTER JOIN gridworks.house_operating_status ON house_operating_status.ta_g_node_id = ta.id
+        LEFT OUTER JOIN (
+            SELECT from_alias, payload
+            FROM (
+                SELECT
+                    from_alias,
+                    payload,
+                    row_number() OVER (PARTITION BY from_alias ORDER BY timestamp DESC) AS row_number
+                FROM gridworks.messages
+                WHERE message_type_name = 'snapshot.spaceheat'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+            ) AS recent_snapshots
+            WHERE row_number = 1
+        ) AS latest_snapshot on latest_snapshot.from_alias LIKE (left(ta.alias, -3) || '%')
+        LEFT OUTER JOIN (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY terminal_asset_alias ORDER by latest_off_time
+                ) AS row_number
+            FROM (
+                WITH latest_readings AS (
+                    SELECT
+                        reading_channels.id,
+                        value,
+                        ROW_NUMBER() OVER (PARTITION BY reading_channels.id ORDER BY timestamp DESC) AS row_number
+                    FROM gridworks.readings
+                    JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                    WHERE reading_channels.name like '%heat-call%'
+                    AND timestamp >= NOW() - INTERVAL '24 hours'
+                )
+                SELECT id, value
+                FROM latest_readings
+                WHERE row_number = 1 and value = 1
+            ) AS active_heat_calls
+            JOIN (
+                SELECT
+        			reading_channels.id,
+                    terminal_asset_alias,
+                    name,
+                    MAX(timestamp) as latest_off_time
+                FROM gridworks.readings
+                JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                WHERE reading_channels.name like '%heat-call%'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+                AND value=0
+                GROUP BY reading_channels.id,terminal_asset_alias
+            ) AS last_inactive_times
+            ON active_heat_calls.id = last_inactive_times.id
+        ) AS heat_calls on heat_calls.terminal_asset_alias = ta.alias AND heat_calls.row_number = 1
+        WHERE gridworks.users.username = $1
+    
+2026-10-21 15:37:51,383 INFO sqlalchemy.engine.Engine [cached since 48.56s ago] ('devrun-admin',)
+INFO:     127.0.0.1:53633 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 200 OK
+2026-10-21 15:37:51,388 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-10-21 15:37:55,431 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:55,432 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 15:37:55,432 INFO sqlalchemy.engine.Engine [cached since 2492s ago] ('devrun-admin',)
+2026-10-21 15:37:55,434 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 15:37:55,434 INFO sqlalchemy.engine.Engine [cached since 2492s ago] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 15:37:55,676 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 15:37:55,676 INFO sqlalchemy.engine.Engine [cached since 2492s ago] (datetime.datetime(2026, 10, 21, 19, 37, 55, 676355, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 15:37:55,680 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53640 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:37:55,686 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:37:55,686 INFO sqlalchemy.engine.Engine 
+        SELECT
+            ta.id,
+            left(ta.alias, -3) AS house_alias,
+            role,
+            ta.display_name,
+            layouts.payload AS layout,
+            house_operating_status.payload AS operating_status,
+            latest_snapshot.payload AS snapshot,
+            heat_calls.name,
+            heat_calls.latest_off_time
+        FROM gridworks.user_installation_roles
+        JOIN gridworks.users on users.id = user_installation_roles.user_id
+        JOIN gridworks.g_nodes ta
+            ON (ta.id = user_installation_roles.ta_g_node_id OR user_installation_roles.ta_g_node_id IS NULL)
+            AND ta.g_node_class = 'TerminalAsset'
+        LEFT OUTER JOIN gridworks.layouts ON layouts.ta_g_node_id = ta.id
+        LEFT OUTER JOIN gridworks.house_operating_status ON house_operating_status.ta_g_node_id = ta.id
+        LEFT OUTER JOIN (
+            SELECT from_alias, payload
+            FROM (
+                SELECT
+                    from_alias,
+                    payload,
+                    row_number() OVER (PARTITION BY from_alias ORDER BY timestamp DESC) AS row_number
+                FROM gridworks.messages
+                WHERE message_type_name = 'snapshot.spaceheat'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+            ) AS recent_snapshots
+            WHERE row_number = 1
+        ) AS latest_snapshot on latest_snapshot.from_alias LIKE (left(ta.alias, -3) || '%')
+        LEFT OUTER JOIN (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY terminal_asset_alias ORDER by latest_off_time
+                ) AS row_number
+            FROM (
+                WITH latest_readings AS (
+                    SELECT
+                        reading_channels.id,
+                        value,
+                        ROW_NUMBER() OVER (PARTITION BY reading_channels.id ORDER BY timestamp DESC) AS row_number
+                    FROM gridworks.readings
+                    JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                    WHERE reading_channels.name like '%heat-call%'
+                    AND timestamp >= NOW() - INTERVAL '24 hours'
+                )
+                SELECT id, value
+                FROM latest_readings
+                WHERE row_number = 1 and value = 1
+            ) AS active_heat_calls
+            JOIN (
+                SELECT
+        			reading_channels.id,
+                    terminal_asset_alias,
+                    name,
+                    MAX(timestamp) as latest_off_time
+                FROM gridworks.readings
+                JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                WHERE reading_channels.name like '%heat-call%'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+                AND value=0
+                GROUP BY reading_channels.id,terminal_asset_alias
+            ) AS last_inactive_times
+            ON active_heat_calls.id = last_inactive_times.id
+        ) AS heat_calls on heat_calls.terminal_asset_alias = ta.alias AND heat_calls.row_number = 1
+        WHERE gridworks.users.username = $1
+    
+2026-10-21 15:37:55,686 INFO sqlalchemy.engine.Engine [cached since 52.86s ago] ('devrun-admin',)
+INFO:     127.0.0.1:53641 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 200 OK
+2026-10-21 15:37:55,691 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-10-21 15:38:15,206 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:38:15,206 INFO sqlalchemy.engine.Engine SELECT gridworks.users.id, gridworks.users.username, gridworks.users.hashed_password, gridworks.users.is_active, gridworks.users.last_login, gridworks.users.created_at, gridworks.users.updated_at 
+FROM gridworks.users 
+WHERE gridworks.users.username = $1::VARCHAR
+2026-10-21 15:38:15,206 INFO sqlalchemy.engine.Engine [cached since 2512s ago] ('devrun-admin',)
+2026-10-21 15:38:15,208 INFO sqlalchemy.engine.Engine SELECT gridworks.user_installation_roles.user_id AS gridworks_user_installation_roles_user_id, gridworks.user_installation_roles.role AS gridworks_user_installation_roles_role, gridworks.user_installation_roles.ta_g_node_id AS gridworks_user_installation_roles_ta_g_node_id 
+FROM gridworks.user_installation_roles 
+WHERE gridworks.user_installation_roles.user_id IN ($1::UUID)
+2026-10-21 15:38:15,208 INFO sqlalchemy.engine.Engine [cached since 2512s ago] (UUID('461a9f4a-2d7a-4067-b812-80690dafe0e7'),)
+2026-10-21 15:38:15,450 INFO sqlalchemy.engine.Engine UPDATE gridworks.users SET last_login=$1::TIMESTAMP WITH TIME ZONE, updated_at=$2::TIMESTAMP WITH TIME ZONE
+2026-10-21 15:38:15,450 INFO sqlalchemy.engine.Engine [cached since 2512s ago] (datetime.datetime(2026, 10, 21, 19, 38, 15, 450232, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 21, 18, 46, 28, 490184, tzinfo=datetime.timezone.utc))
+2026-10-21 15:38:15,453 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53649 - "POST /api/v2/sessions HTTP/1.1" 200 OK
+2026-10-21 15:38:15,457 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-10-21 15:38:15,457 INFO sqlalchemy.engine.Engine 
+        SELECT
+            ta.id,
+            left(ta.alias, -3) AS house_alias,
+            role,
+            ta.display_name,
+            layouts.payload AS layout,
+            house_operating_status.payload AS operating_status,
+            latest_snapshot.payload AS snapshot,
+            heat_calls.name,
+            heat_calls.latest_off_time
+        FROM gridworks.user_installation_roles
+        JOIN gridworks.users on users.id = user_installation_roles.user_id
+        JOIN gridworks.g_nodes ta
+            ON (ta.id = user_installation_roles.ta_g_node_id OR user_installation_roles.ta_g_node_id IS NULL)
+            AND ta.g_node_class = 'TerminalAsset'
+        LEFT OUTER JOIN gridworks.layouts ON layouts.ta_g_node_id = ta.id
+        LEFT OUTER JOIN gridworks.house_operating_status ON house_operating_status.ta_g_node_id = ta.id
+        LEFT OUTER JOIN (
+            SELECT from_alias, payload
+            FROM (
+                SELECT
+                    from_alias,
+                    payload,
+                    row_number() OVER (PARTITION BY from_alias ORDER BY timestamp DESC) AS row_number
+                FROM gridworks.messages
+                WHERE message_type_name = 'snapshot.spaceheat'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+            ) AS recent_snapshots
+            WHERE row_number = 1
+        ) AS latest_snapshot on latest_snapshot.from_alias LIKE (left(ta.alias, -3) || '%')
+        LEFT OUTER JOIN (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY terminal_asset_alias ORDER by latest_off_time
+                ) AS row_number
+            FROM (
+                WITH latest_readings AS (
+                    SELECT
+                        reading_channels.id,
+                        value,
+                        ROW_NUMBER() OVER (PARTITION BY reading_channels.id ORDER BY timestamp DESC) AS row_number
+                    FROM gridworks.readings
+                    JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                    WHERE reading_channels.name like '%heat-call%'
+                    AND timestamp >= NOW() - INTERVAL '24 hours'
+                )
+                SELECT id, value
+                FROM latest_readings
+                WHERE row_number = 1 and value = 1
+            ) AS active_heat_calls
+            JOIN (
+                SELECT
+        			reading_channels.id,
+                    terminal_asset_alias,
+                    name,
+                    MAX(timestamp) as latest_off_time
+                FROM gridworks.readings
+                JOIN gridworks.reading_channels on reading_channels.id = readings.channel_id
+                WHERE reading_channels.name like '%heat-call%'
+                AND timestamp >= NOW() - INTERVAL '24 hours'
+                AND value=0
+                GROUP BY reading_channels.id,terminal_asset_alias
+            ) AS last_inactive_times
+            ON active_heat_calls.id = last_inactive_times.id
+        ) AS heat_calls on heat_calls.terminal_asset_alias = ta.alias AND heat_calls.row_number = 1
+        WHERE gridworks.users.username = $1
+    
+2026-10-21 15:38:15,457 INFO sqlalchemy.engine.Engine [cached since 72.63s ago] ('devrun-admin',)
+INFO:     127.0.0.1:53650 - "GET /api/v2/installations/%2A/summaries HTTP/1.1" 200 OK
+2026-10-21 15:38:15,460 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25884]

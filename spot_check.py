@@ -16,7 +16,7 @@ payloads (Report.StateList), alongside the numeric channels
 gridworks.readings (numeric), and applies natural-unit conversion; use it when
 you want calibrated °F / gpm. This tool reports RAW wire-encoded values.
 
-Env: GJK_DB_URL in experiments/.env (read-only credentials preferred).
+Env: DB_ANALYST_URL in experiments/.env, the read-only `gw_analyst` login.
 
 Usage:
   # what states and channels exist in the window (default when neither
@@ -71,10 +71,10 @@ KNOWN_HOUSES = {
 
 def db_url() -> str:
     for line in (HERE / ".env").read_text().splitlines():
-        if line.startswith("GJK_DB_URL="):
+        if line.startswith("DB_ANALYST_URL="):
             return (line.split("=", 1)[1].strip().strip("'\"")
                     .replace("postgresql+psycopg://", "postgresql://"))
-    raise SystemExit("GJK_DB_URL not found in experiments/.env")
+    raise SystemExit("DB_ANALYST_URL not found in experiments/.env")
 
 
 def et_ms(s: str) -> int:

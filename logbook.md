@@ -13,6 +13,11 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-10-21 · [disentangle-dev-run](2026-10-21-disentangle-dev-run/)**
+  — PASS: cedar from the d1 registry and a dev PII store to
+  `gw.house.summary` over the dev broker, 15/15 harness checks, gateway
+  seed, not-reporting; dashboard step open; the spruce-unlimbo scada's
+  013 layout and `UnixMs` status are refused by the current snapshots.
 - **2026-10-15 · [spruce-radiant-slab](spruce-radiant-slab/)** — dataset
   folder for the Knife's Edge slab question: what the journal holds for
   spruce and from when, two pulls (Sep 21 to 25, Oct 6 to 8), and a

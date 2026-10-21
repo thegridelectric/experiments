@@ -11,8 +11,8 @@ channel sync, the era-row lookup, or the hourly refresh fails here first.
     ./edd_dev_run.sh            # full: reset → seed → snapshot → pass 1 → pass 2 → check
 
 Needs: docker with `gw-data-pg` (port 5433, role `gw_journalkeeper`), AWS
-credentials that can read `s3://gwdev`, `GJK_DB_URL` in `experiments/.env`
-(prod, read-only `gw_visualizer`) for the seed. Override the dev URL with
+credentials that can read `s3://gwdev`, `DB_ANALYST_URL` in `experiments/.env`
+(prod, read-only `gw_analyst`) for the seed. Override the dev URL with
 `DEV_DB_URL`. Each run writes its importer summaries and check output under
 `runs/<UTC stamp>/`.
 

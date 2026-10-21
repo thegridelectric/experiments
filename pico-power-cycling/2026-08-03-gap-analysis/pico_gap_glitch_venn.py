@@ -4,7 +4,7 @@ were never tagged by a zombie GLITCH, and which zombie glitches have no
 corresponding gap. Matching: same house, glitch declaration within
 [gap_start - 10 min, gap_end + 10 min]; node identity shown for reading.
 
-WINDOW_DAYS=56 ./pico_gap_glitch_venn.py   (GJK_DB_URL required)
+WINDOW_DAYS=56 ./pico_gap_glitch_venn.py   (DB_ANALYST_URL required)
 """
 
 import os
@@ -126,7 +126,7 @@ def house_of(alias: LeftRightDot) -> str:
 
 
 def main() -> int:
-    url = os.environ["GJK_DB_URL"].replace("postgresql+psycopg://", "postgresql://")
+    url = os.environ["DB_ANALYST_URL"].replace("postgresql+psycopg://", "postgresql://")
     codec = SemaCodec()
     with psycopg.connect(url) as conn:
         conn.read_only = True
