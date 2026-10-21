@@ -124,6 +124,11 @@ cd gridworks-web-backend && BACKEND_API_PORT=8000 uv run python -m api
 cd gridworks-web-frontend && node_modules/.bin/vite --port 5173
 ```
 
+The real-time page opens its websocket at the browser's own origin
+unless `VITE_GRIDWORKS_WS_BASE_URL` is set, and vite proxies only
+`/api`, so the frontend needs a gitignored `.env` with
+`VITE_GRIDWORKS_WS_BASE_URL=ws://localhost:8100` before vite starts.
+
 Open the URL vite prints, log in with the dev-run login in `experiments/.env` (`DEVRUN_API_USER`,
 `DEVRUN_API_PASSWORD`).
 

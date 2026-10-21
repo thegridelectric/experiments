@@ -4,10 +4,9 @@
 > house (cedar) enters the dev registry and a dev PII store with scrambled
 > person data, its layout and operating status travel the dev broker into
 > journalkeeper's projections, and web-backend serves them to the
-> dashboard as `gw.house.summary`. Verdict: PASS for every unattended step
-> and the two operator steps that ran here; the dashboard screenshots
-> (step 8) are the one step still open. The logbook entry is the index
-> record.
+> dashboard as `gw.house.summary`. Verdict: PASS on every step; the
+> dashboard step (8) by a person at 16:17 to 16:25 ET, screenshots in
+> `captures/step8-*.png`. The logbook entry is the index record.
 
 ## Why
 
@@ -28,11 +27,11 @@ All on the laptop, nothing on a deployed box. Code under test:
 | sema | `dev` @ `65f489b` | worktree in the session scratchpad |
 | gridworks-data | `main` @ `32c8164` | 0.7.0; local `tsdb` migrated to `d4a7c9e1b2f3` |
 | journalkeeper | `jm/house-status-projection` @ `b49c94e` | snapshot from sema `f8a5e50`, `--allow-staged` |
-| web-backend | `jm/retire-installations`, uncommitted | summaries through the codec, `gw.house.summary`; API port and broker TLS settings added for this run |
+| web-backend | `jm/retire-installations` @ `98df82a` + uncommitted | summaries through the codec, `gw.house.summary`; API port and broker TLS settings added for this run |
 | web-frontend | `jm/retire-installations`, uncommitted | `src/sema` mirrors of the two words |
-| grid-node-registry | `main` | the `d1` instance already running (`gnr rabbit` since 2026-10-07), `gnr api` on 127.0.0.1:8000 for the bootstrap |
+| grid-node-registry | `main` | the `d1` instance already running (`gnr rabbit` since 2026-10-07), `gnr api` on 127.0.0.1:8000 for the bootstrap, on 8002 for the 16:35 resync |
 | gridworks-pii | `main` | dev store on `localhost:5441`, fresh migration |
-| gridworks-scada | `jm/spruce-unlimbo` | the Nolan sim fixtures with the alias and TA id changed to cedar's, in a scratch config home |
+| gridworks-scada | `jm/spruce-unlimbo`, before `a9acd401` | the Nolan sim fixtures with the alias and TA id changed to cedar's, in a scratch config home |
 
 Broker `gw-dev-rabbit`, vhost `d1__1`, as `smqPublic`; database the local
 `gw-data-pg` on 5433. Journalkeeper and the backend used the creds in the
@@ -97,13 +96,27 @@ Two gaps the run uncovered, both on the scada side of the status word:
 2. **The scada sends `gw.house.operating.status` with `UnixMs`.** The
    word's field is `CreatedMs` since sema `f8a5e50`; journalkeeper logged
    "Validation failed … CreatedMs Field required" on the scada's own status
-   at boot. The scada's snapshot regen is what makes the scada-sent path
-   live; until then every house gets a derived row.
+   at boot. The scada's `gwsproto` twin and its sema snapshot carry
+   `CreatedMs` since `a9acd401`, committed at 16:19 the same day; the
+   scada-sent path is live when that reaches the boxes, and until then
+   every house gets a derived row.
 
-Step 8, the dashboard against the API, was left for a person: the dev
-server is at `http://localhost:5174/gridworks-web-frontend/` with the dev-run login in `experiments/.env` (`DEVRUN_API_USER`,
-`DEVRUN_API_PASSWORD`)
-while the stack is up; the runbook restarts it.
+Step 8, the dashboard against the API, ran by a person against the
+runbook's stack (API on 8000, vite on 5173 with the gateway websocket
+base in the frontend `.env`): Cedar listed by display name and red for
+no snapshot within the bound; Hardware from the `layouts` row; Status
+from the harness's operating status; Address and Contact dark; the
+real-time page connected to the gateway, drawn from the layout with
+every reading a dash and the spinner waiting for a snapshot; Parameters
+on the model's defaults. The sieg default was not exercised: the sample
+layout has no data channels. Captures: `captures/step8-*.png`. Two
+things seen on the way are not this run's: the real-time page spins for
+any house with a silent scada, though the gateway's status frame says no
+snapshot is loaded; and the seven older `d1` TA rows showed their alias
+as the name because the dev universe seed sets `display_name` to the
+alias. The rows were renamed in the dev registry at 16:35 and resynced
+into `g_nodes` through the forest bootstrap, so the list now reads Elm,
+Fir, Maple, Oak, Spruce, Beech, Willow.
 
 ## Timeline
 
@@ -122,6 +135,14 @@ All ET, 2026-10-21.
 - 14:52 not-reporting step; API moved to 8000, frontend dev server up.
 - 15:38 sema-typed harness against the API on 8000, after clearing
   cedar's `house_operating_status` row so step 3 starts from none: 15/15.
+- 16:12 API restarted on 8000 for step 8 (it had been stopped).
+- 16:17 to 16:25 step 8 by a person: house list, Information
+  (Hardware, Status, Contact, Address), real-time, Parameters. The
+  real-time page first failed to connect: vite proxies only `/api`, so
+  the websocket needs `VITE_GRIDWORKS_WS_BASE_URL=ws://localhost:8100`
+  in the frontend `.env`; set, vite restarted, connected.
+- 16:35 the seven dev TA display names set to the house names in the
+  dev registry; `gnr api` on 8002, forest bootstrap, `g_nodes` updated.
 
 ## Analysis notes
 
@@ -135,6 +156,14 @@ All ET, 2026-10-21.
 - `BACKEND_API_PORT` and `BACKEND_RABBIT_TLS` are the two settings the
   run needed in web-backend: the laptop keeps 8000 for the scada, and the
   dev broker speaks plain AMQP.
+- The dev-run login's password is the same six-letter token that names
+  the run's admin user, the store operator and the scrambled email
+  domain, so the token is in these logs in the clear. It opens only the
+  laptop's local `tsdb` roles table; nothing deployed knows it.
+- The screenshots are of the frontend as served by vite from the
+  uncommitted `jm/retire-installations` tree; the numbers on the
+  Parameters page are the frontend model's defaults, not the layout's
+  `Ha1Params`.
 
 ## Folder contents & experimental method
 
@@ -150,12 +179,18 @@ rerun produces a new dataset.
 - `captures/broker-capture-20261021-144514.jsonl` — every message on the
   dev broker from 14:45 to the scada's stop, from `capture_broker.py`.
   The evidence for step 10 and for the envelope the harness mirrors.
+- `captures/step8-*.png` — seven screenshots of the dashboard taken by a
+  person at 16:17 to 16:25 ET, the record of step 8: the Information
+  page's Hardware, Status, Contact and Address tabs for Cedar, the
+  real-time page connected with no readings, and the Parameters page in
+  two halves. Taken by hand, so a rerun gives new ones; 28 to 80 KB each.
 - `logs/` — one file per step and per service: the registry creates, the
   store record, the scada, journalkeeper, API, gateway and frontend
   stdout, the summaries before any layout, the gateway health, the
   journalkeeper skip line, the not-reporting check, the harness run.
 - `instances/disentangle.dev.run-gw.experiment.run-001.json` — the run's
-  verdict as a sema instance.
+  verdict as a `gw.experiment.run` instance, window 14:44 to 16:25 ET,
+  written and rewritten through the vendored runtime.
 
 Regenerate from scratch: the runbook, top to bottom; the harness alone,
 with the stack up:

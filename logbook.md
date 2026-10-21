@@ -16,8 +16,14 @@ first run dates them.
 - **2026-10-21 · [disentangle-dev-run](2026-10-21-disentangle-dev-run/)**
   — PASS: cedar from the d1 registry and a dev PII store to
   `gw.house.summary` over the dev broker, 15/15 harness checks, gateway
-  seed, not-reporting; dashboard step open; the spruce-unlimbo scada's
+  seed, not-reporting, dashboard by a person; the spruce-unlimbo scada's
   013 layout and `UnixMs` status are refused by the current snapshots.
+- **2026-10-21 · [spruce-pump-on-power-window](2026-10-21-spruce-pump-on-power-window/)**
+  — 11 minute spruce window of `a9acd401`: under admin the secondary
+  pump followed hp-watch alone, closing 4 ms after the unit was sensed
+  on and opening 5 ms after it was sensed off, the call relay moving
+  nothing. PASS. The Samsung's wind-down below the off line took 4 min
+  28 s with the pump running throughout.
 - **2026-10-18 · spruce-upstairs-fancoil-window** —
   the owner asked for the upstairs fan coil; zone 3's thermostat has not
   called since 09-25 and nothing in our code holds it, so a six-hour
