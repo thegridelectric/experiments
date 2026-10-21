@@ -117,7 +117,7 @@ class Span(NamedTuple):
 class Fit(NamedTuple):
     """The fitted one-lump star: a shared, b and solar gain s per zone, T_ground per zone/season."""
 
-    a: float
+    a: float | dict[str, float]  # shared across zones, or one per zone
     b: dict[str, float]
     t_ground: dict[tuple[str, str], float]
     s: dict[str, float]  # F per (W h / m2) of horizontal irradiance
@@ -236,7 +236,7 @@ def fit(spans: list[Span], shared_a: bool = True) -> Fit:
     """OLS on the integrated model over all spans at once."""
     zones = sorted({s.zone for s in spans})
     seasons = sorted({(s.zone, s.season) for s in spans})
-    a_cols = [None] if shared_a else zones
+    a_cols: list[str | None] = [None] if shared_a else list(zones)
     nb, ntg = len(a_cols), len(a_cols) + len(zones)
     ns = ntg + len(seasons)
     ncol = ns + len(zones)
@@ -259,11 +259,11 @@ def fit(spans: list[Span], shared_a: bool = True) -> Fit:
     b = {z: beta[nb + zones.index(z)] for z in zones}
     tg = {zs: beta[ntg + seasons.index(zs)] / b[zs[0]] for zs in seasons}
     sg = {z: beta[ns + zones.index(z)] for z in zones}
-    return Fit(a[zones[0]] if shared_a else a, b, tg, sg)  # type: ignore[arg-type]
+    return Fit(a[zones[0]] if shared_a else a, b, tg, sg)
 
 
 def simulate(s: Span, f: Fit) -> np.ndarray:
-    a = f.a if isinstance(f.a, float) else f.a[s.zone]
+    a = f.a[s.zone] if isinstance(f.a, dict) else f.a
     b = f.b[s.zone]
     tg = f.t_ground[(s.zone, s.season)]
     k = a + b
@@ -283,11 +283,12 @@ def rms(x: np.ndarray) -> float:
 
 def write_workbook(spans: list[Span], f: Fit, path: Path) -> None:
     wb = Workbook()
-    ws = wb.active
+    ws = wb.worksheets[0]
     ws.title = "Summary"
     ws.append(["One-lump star fitted on no-charge spans by cumulative-integral least squares; see star-model.md"])
     ws.append([])
     ws.append(["parameter", "zone", "season", "value", "unit"])
+    assert isinstance(f.a, float), "the workbook reports the shared-a fit"
     ws.append(["a = 1/(R_room C)", "shared", "", round(float(f.a), 5), "per hour"])
     for z, b in f.b.items():
         ws.append(["b = 1/(R_ground C)", z, "", round(float(b), 5), "per hour"])
@@ -358,8 +359,9 @@ def main() -> None:
     res = np.concatenate([simulate(s, f) - s.floor for s in spans])
     print(f"forward-simulation RMS over all spans {rms(res):.2f} F; wrote {out}")
     f2 = fit(spans, shared_a=False)
+    assert isinstance(f2.a, dict)
     res2 = np.concatenate([simulate(s, f2) - s.floor for s in spans])
-    print("per-zone a: " + ", ".join(f"{z} {a:.4f}" for z, a in f2.a.items()) + f"; RMS {rms(res2):.2f} F")  # type: ignore[union-attr]
+    print("per-zone a: " + ", ".join(f"{z} {a:.4f}" for z, a in f2.a.items()) + f"; RMS {rms(res2):.2f} F")
 
 
 if __name__ == "__main__":

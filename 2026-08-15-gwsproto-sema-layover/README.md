@@ -60,7 +60,7 @@ class GwsprotoSemaType(BaseModel):
 
 Carrying no `TypeName` field is what makes the base itself invisible to
 discovery; carrying no `model_config` is what keeps 145 words unchanged.
-Inheriting no fields is also why the `GridWorks_CLAUDE.md` FLAT note does
+Inheriting no fields is also why the `base-CLAUDE.md` FLAT note does
 not bite — this is not a schema hierarchy, it is an accessor.
 
 ## Setup

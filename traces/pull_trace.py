@@ -17,7 +17,11 @@ names. The forest is a declared input, so it lives with the spec and is
 never overwritten.
 
 Every body either decodes through the snapshot or is recorded on its row
-as a refusal; a refusal is wire behaviour the replay must reproduce.
+as a refusal; a refusal is wire behaviour the replay must reproduce. The
+spec's `decode` line says how the domain reads each body, and the puller
+decodes the same way: `as-sent` (the instance stays at the version it
+was sent) or `latest` (the snapshot upgrades it to the latest version).
+There is no default; a spec without the line does not pull.
 
 Usage (from experiments/):
   uv run traces/pull_trace.py ../wiki/gridworks-alerter/executor/traces/2026-10-15-oak-ltn-stop/trace.yaml
@@ -45,6 +49,7 @@ from spot_check import db_url  # noqa: E402
 EXPERIMENTS = Path(__file__).resolve().parents[1]
 UMBRELLA = EXPERIMENTS.parent
 FOREST_TYPE = "g.node.forest"
+DECODE_STANCES = {"as-sent": False, "latest": True}
 
 
 def parse_args() -> argparse.Namespace:
@@ -122,13 +127,18 @@ def main() -> None:
     subtree = spec["tracked_set"]["subtree"]
     forest_path = spec_path.parent / spec["tracked_set"]["forest"]
 
+    decode_stance = spec.get("decode")
+    if decode_stance not in DECODE_STANCES:
+        raise SystemExit(f"trace.yaml needs `decode:` as one of {sorted(DECODE_STANCES)}, got {decode_stance!r}")
+    auto_upgrade = DECODE_STANCES[decode_stance]
+
     sys.path.insert(0, str(build_snapshot(seed, out, f"trace_{domain.replace('-', '_')}")))
     codec_mod = importlib.import_module(f"trace_{domain.replace('-', '_')}.sema.codec")
     codec = codec_mod.SemaCodec()
 
     def decode(body: dict) -> str | None:
         try:
-            codec.from_dict(body)
+            codec.from_dict(body, auto_upgrade=auto_upgrade)
             return None
         except Exception as e:  # noqa: BLE001 - the refusal text is the record
             return str(e).splitlines()[0][:200]

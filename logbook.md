@@ -18,6 +18,28 @@ first run dates them.
   `gw.house.summary` over the dev broker, 15/15 harness checks, gateway
   seed, not-reporting; dashboard step open; the spruce-unlimbo scada's
   013 layout and `UnixMs` status are refused by the current snapshots.
+- **2026-10-18 · spruce-upstairs-fancoil-window** —
+  the owner asked for the upstairs fan coil; zone 3's thermostat has not
+  called since 09-25 and nothing in our code holds it, so a six-hour
+  field-support window of the unlimbo scada (`eb73e305`) was opened for
+  the operator to call zone 3 from the admin panel. First boot refused:
+  the scada wants the weather bundle word at 001, the facade serves 000;
+  the stored record re-versioned through the twin booted it. PASS: two
+  panel clicks drove the 0x20 zone 3 relay pair, 2.2 gpm of 125 F water
+  reached the fan coil; round 1 inferred the fan did not run (return
+  within 3 F). The Briza manual says 125 F water on a 67 F room is well
+  past its heating threshold; a second window (11:20 to 12:46) with Matt
+  at the unit: the fan IS on. Zone 3's thermostat set to 80 F raised no
+  call: the fault is the thermostat or its wire. The hack now runs zone 3
+  thermostatic at 68 F from its gw-temp and holds zone 5 off
+  (`starter-scripts` `9824509`). Also found: an admin takeover froze
+  local control's parked secondary loop (pump off, iso closed) under a
+  running heat pump.
+- **2026-10-17 · [oak-starts-heating](2026-10-17-oak-starts-heating/)**
+  — three real-time dashboard screenshots of oak's first heating
+  morning. Found: with the distribution pump faster than the primary
+  (4.6 against 4.3 gpm), the view animates water out of the buffer
+  bottom where it flows in.
 - **2026-10-15 · [spruce-radiant-slab](spruce-radiant-slab/)** — dataset
   folder for the Knife's Edge slab question: what the journal holds for
   spruce and from when, two pulls (Sep 21 to 25, Oct 6 to 8), and a
