@@ -35,6 +35,9 @@ as validated Sema instances.
   folders under one undated parent, with the firmware track record at
   the top. Same shape as `beta-field-windows/`: a practice, not one
   experiment.
+- `dev-stack-recipe.md` — how to stand up more than one service on the
+  laptop for a dev run, in start order, with the ports and the things
+  that bit; the hand version of what OPS-614 turns into a tool.
 - `beta-field-windows/` — the one folder that is neither dated nor a
   dataset: an ongoing field-test *practice*. Every window is a run
   folder under `runs/`, indexed in `runs.md`; the folder top holds the
