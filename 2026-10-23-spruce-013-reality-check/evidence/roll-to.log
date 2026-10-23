@@ -1,0 +1,168 @@
+# PROVENANCE: scripts/roll.sh spruce to jm/spruce-unlimbo run from the laptop 2026-10-23 (laptop clock, ET), three attempts: 00:51:19 refused on the unit-file glob, 00:52:42 stopped at the layout prompt (no tty), 00:53:43 with yes piped; stdout verbatim, the service stopped by hand at 00:54:21
+start 00:51:19 ET
+== ltn (spruce)
+== spruce
+spruce: service unit files differ between cda464ba and origin/jm/spruce-unlimbo; root must reinstall them (service/install) after the checkout, by hand, then re-run
+roll rc=1 00:51:28 ET
+start 00:52:42 ET
+== ltn (spruce)
+== spruce
+spruce: ~/gridworks-scada on jm/spruce-unlimbo @ 044b0eef (was cda464ba)
+  spruce hardware-layout: DIFFERS from tlayouts jm/spruce output/spruce/gw.nolan.layout.json
+      Components
+      CriticalZoneList
+      DataChannels
+      DerivedChannels
+      DeviceTypes
+      DisabledChannelNames
+      DisabledNodeNames
+      ElectricMeterCacs
+      ElectricMeterComponents
+      FlowManifoldVariant
+      GNodes
+      Hydronic.Backup.ElementRelayNames
+      Hydronic.Backup.InService
+      Hydronic.Backup.TypeName
+      Hydronic.Backup.Version
+      Hydronic.PrimaryFlowSource
+      Hydronic.PrimaryPumpOwner
+      Hydronic.RefrigerantCycle
+      Hydronic.TypeName
+      Hydronic.Version
+      Hydronic.WaterStore.TotalStoreTanks
+      Hydronic.WaterStore.TypeName
+      Hydronic.WaterStore.Version
+      Hydronic.ZoneCallCircuits
+      Hydronic.Zones
+      MyLeafTransactiveNodeGNode.Alias
+      MyLeafTransactiveNodeGNode.DisplayName
+      MyLeafTransactiveNodeGNode.GNodeClass
+      MyLeafTransactiveNodeGNode.GNodeId
+      MyLeafTransactiveNodeGNode.GNodeStatus
+      MyScadaGNode.Alias
+      MyScadaGNode.DisplayName
+      MyScadaGNode.GNodeClass
+      MyScadaGNode.GNodeId
+      MyScadaGNode.GNodeStatus
+      MyTerminalAssetGNode.Alias
+      MyTerminalAssetGNode.DisplayName
+      MyTerminalAssetGNode.GNodeClass
+      MyTerminalAssetGNode.GNodeId
+      MyTerminalAssetGNode.GNodeStatus
+      OtherCacs
+      OtherComponents
+      ShNodes
+      Strategy
+      SynthChannels
+      TankTempCalibrationMap.Buffer.Depth1B
+      TankTempCalibrationMap.Buffer.Depth1M
+      TankTempCalibrationMap.Buffer.Depth2B
+      TankTempCalibrationMap.Buffer.Depth2M
+      TankTempCalibrationMap.Buffer.Depth3B
+      TankTempCalibrationMap.Buffer.Depth3M
+      TankTempCalibrationMap.Buffer.TypeName
+      TankTempCalibrationMap.Buffer.Version
+      TankTempCalibrationMap.Tank.1.Depth1B
+      TankTempCalibrationMap.Tank.1.Depth1M
+      TankTempCalibrationMap.Tank.1.Depth2B
+      TankTempCalibrationMap.Tank.1.Depth2M
+      TankTempCalibrationMap.Tank.1.Depth3B
+      TankTempCalibrationMap.Tank.1.Depth3M
+      TankTempCalibrationMap.Tank.1.TypeName
+      TankTempCalibrationMap.Tank.1.Version
+      TankTempCalibrationMap.TypeName
+      TankTempCalibrationMap.Version
+      TotalStoreTanks
+      TypeName
+      UseSiegLoop
+      Version
+      ZoneKwhPerDegFList
+      ZoneList
+  spruce operational-params: matches tlayouts jm/spruce output/spruce/gw.nolan.operational.params.json
+spruce: pair not verified; service NOT restarted. Fix the pair and re-run.
+roll rc=1 00:52:56 ET
+start 00:53:43 ET
+== ltn (spruce)
+== spruce
+spruce: ~/gridworks-scada on jm/spruce-unlimbo @ 044b0eef (was 044b0eef)
+  spruce hardware-layout: DIFFERS from tlayouts jm/spruce output/spruce/gw.nolan.layout.json
+      Components
+      CriticalZoneList
+      DataChannels
+      DerivedChannels
+      DeviceTypes
+      DisabledChannelNames
+      DisabledNodeNames
+      ElectricMeterCacs
+      ElectricMeterComponents
+      FlowManifoldVariant
+      GNodes
+      Hydronic.Backup.ElementRelayNames
+      Hydronic.Backup.InService
+      Hydronic.Backup.TypeName
+      Hydronic.Backup.Version
+      Hydronic.PrimaryFlowSource
+      Hydronic.PrimaryPumpOwner
+      Hydronic.RefrigerantCycle
+      Hydronic.TypeName
+      Hydronic.Version
+      Hydronic.WaterStore.TotalStoreTanks
+      Hydronic.WaterStore.TypeName
+      Hydronic.WaterStore.Version
+      Hydronic.ZoneCallCircuits
+      Hydronic.Zones
+      MyLeafTransactiveNodeGNode.Alias
+      MyLeafTransactiveNodeGNode.DisplayName
+      MyLeafTransactiveNodeGNode.GNodeClass
+      MyLeafTransactiveNodeGNode.GNodeId
+      MyLeafTransactiveNodeGNode.GNodeStatus
+      MyScadaGNode.Alias
+      MyScadaGNode.DisplayName
+      MyScadaGNode.GNodeClass
+      MyScadaGNode.GNodeId
+      MyScadaGNode.GNodeStatus
+      MyTerminalAssetGNode.Alias
+      MyTerminalAssetGNode.DisplayName
+      MyTerminalAssetGNode.GNodeClass
+      MyTerminalAssetGNode.GNodeId
+      MyTerminalAssetGNode.GNodeStatus
+      OtherCacs
+      OtherComponents
+      ShNodes
+      Strategy
+      SynthChannels
+      TankTempCalibrationMap.Buffer.Depth1B
+      TankTempCalibrationMap.Buffer.Depth1M
+      TankTempCalibrationMap.Buffer.Depth2B
+      TankTempCalibrationMap.Buffer.Depth2M
+      TankTempCalibrationMap.Buffer.Depth3B
+      TankTempCalibrationMap.Buffer.Depth3M
+      TankTempCalibrationMap.Buffer.TypeName
+      TankTempCalibrationMap.Buffer.Version
+      TankTempCalibrationMap.Tank.1.Depth1B
+      TankTempCalibrationMap.Tank.1.Depth1M
+      TankTempCalibrationMap.Tank.1.Depth2B
+      TankTempCalibrationMap.Tank.1.Depth2M
+      TankTempCalibrationMap.Tank.1.Depth3B
+      TankTempCalibrationMap.Tank.1.Depth3M
+      TankTempCalibrationMap.Tank.1.TypeName
+      TankTempCalibrationMap.Tank.1.Version
+      TankTempCalibrationMap.TypeName
+      TankTempCalibrationMap.Version
+      TotalStoreTanks
+      TypeName
+      UseSiegLoop
+      Version
+      ZoneKwhPerDegFList
+      ZoneList
+  spruce hardware-layout: installed
+  spruce operational-params: matches tlayouts jm/spruce output/spruce/gw.nolan.operational.params.json
+ltn: ~/ltn-spruce/gridworks-scada on jm/spruce-unlimbo @ 044b0eef (was cda464ba)
+ltn: ~/ltn-spruce/gridworks-scada on jm/spruce-unlimbo @ 044b0eef; gwltn@spruce activating
+spruce: winter hack stopped and disabled
+spruce: 1 stored events set aside in ~/.local/share/gridworks/scada/event.2026-10-23-pre-roll-to-jm-spruce-unlimbo
+spruce: gwspaceheat active on jm/spruce-unlimbo @ 044b0eef
+watch with: gwa watch spruce
+roll rc=0 00:54:20 ET
+scada stopped: inactive
+stopped 00:54:21 ET

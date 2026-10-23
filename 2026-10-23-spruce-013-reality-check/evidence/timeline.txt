@@ -1,0 +1,14 @@
+# PROVENANCE: hand-kept marks from the session, laptop and box clocks agreeing to the second (ET, 2026-10-23)
+T0 00:51:02 roll.sh spruce check: clean on actual-spruce, both halves at cda464ba
+T1 00:51:19 roll to jm/spruce-unlimbo refused: service unit files differ (the new gwltn@.service matched the pi check's glob)
+T2 00:52:42 roll re-run with the glob fixed: pi checked out 044b0eef, layout prompt answered No by the missing tty, stopped
+T3 00:53:43 roll with yes piped: pi layout installed, LTN moved to 044b0eef and restarted, winter hack disabled, 1 stored event set aside, service started 00:54:17
+T4 00:54:21 service stopped by hand; no message from the four-second run reached the journal
+T5 00:54:46 LTN found crash-looping: its own hardware-layout.json has no TypeName; unit stopped
+T6 00:55:30 committed jm/spruce pair copied to ~/ltn-spruce/.config/gridworks/ltn/ (old layout kept as hardware-layout.2026-10-23-pre-roll.json); unit started, awaiting peer
+T7 00:57:39 scada started by hand; link to the LTN active 00:57:45
+T8 00:57:45 journal: layout.lite 013 (two messages), gw.scada.commit, gw.house.operating.status, heating.forecast, power.watts; layouts projection 013; reading_channels rekeyed
+T9 00:58:24 scada stopped before the 01:00 mark; no report.event sent
+T10 00:59:32 scada started for good
+T11 01:00:00 report.event 004, 79 channels, 38 states
+T12 01:01:20 276 readings over 119 channels digested; roll.sh spruce check clean on jm/spruce-unlimbo both halves
