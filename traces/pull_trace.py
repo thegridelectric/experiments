@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
-"""Materialise an executor trace's input from the journal DB.
+"""Materialise an executor trace's input from the S3 eventstore.
 
 A trace spec (`wiki/<domain>/executor/traces/<name>/trace.yaml`) names a
 window, the senders, which types keep their bodies, and the tracked set as
-a forest fixture. This script writes, under `experiments/traces/<domain>/
-<name>/` (gitignored):
+a forest fixture. The messages come from the eventstore (the ear's archive
+of everything on the broker: pings, acks and every other word a consumer's
+snapshot may not take), keyed `<world>/eventstore/<YYYYMMDD>/<from_alias>-
+<type>-<persisted_ms>-<ear>.json`; the key alone gives a message's arrival,
+sender and type, and the body is fetched only for the types the spec keeps.
+The forest comes from the journal DB. This script writes, under
+`experiments/traces/<domain>/<name>/` (gitignored):
 
-  messages.jsonl   one message per line, ordered by arrival (persisted_at):
-                   {"t", "from", "type", "body" | null, "refused"?}
+  messages.jsonl   one message per line, ordered by arrival (the ear's
+                   persisted_ms): {"t", "from", "type", "body" | null,
+                   "refused"?}
   .snapshot/       a sema snapshot built from the executor's seed copy, the
                    codec every body is decoded through
+
+It also prints every `gw.alert` the alerter broadcast inside the window, so
+the spec's `expected_out` is copied from the archive rather than recalled.
 
 and, once, `forest.json` beside the spec: the latest journaled
 `g.node.forest` before the window, restricted to the subtree the spec
@@ -26,8 +35,9 @@ There is no default; a spec without the line does not pull.
 Usage (from experiments/):
   uv run traces/pull_trace.py ../wiki/gridworks-alerter/executor/traces/2026-10-15-oak-ltn-stop/trace.yaml
 
-Env: DB_ANALYST_URL in experiments/.env; SEMA_REPO (default: sibling ../sema,
-clean worktree, the sema CLI refuses a dirty one).
+Env: DB_ANALYST_URL in experiments/.env; the default AWS profile reads the
+`gwdev` bucket; SEMA_REPO (default: sibling ../sema, clean worktree, the
+sema CLI refuses a dirty one).
 """
 
 import argparse
@@ -39,7 +49,9 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import NamedTuple
 
+import boto3
 import psycopg
 import yaml
 
@@ -49,7 +61,10 @@ from spot_check import db_url  # noqa: E402
 EXPERIMENTS = Path(__file__).resolve().parents[1]
 UMBRELLA = EXPERIMENTS.parent
 FOREST_TYPE = "g.node.forest"
+ALERT_TYPE = "gw.alert"
 DECODE_STANCES = {"as-sent": False, "latest": True}
+EVENTSTORE_BUCKET = "gwdev"
+EVENTSTORE_WORLD = "hw1__1"  # the ear's world instance; the universe's run on the hw1 broker
 
 
 def parse_args() -> argparse.Namespace:
@@ -93,6 +108,49 @@ def build_snapshot(seed: Path, out: Path, package: str) -> Path:
     shutil.copytree(sema_repo / "output" / "sema", pkg_dir / "sema")
     (pkg_dir / "__init__.py").touch()
     return out / ".snapshot"
+
+
+class StoredMessage(NamedTuple):
+    """One eventstore key, parsed: the message's arrival at the ear, sender and type.
+    Missing word: the ear's key grammar as a sema word."""
+
+    key: str
+    persisted_ms: int
+    from_alias: str
+    type_name: str
+
+
+def parse_key(key: str) -> StoredMessage:
+    from_alias, type_name, ms, _ear = key.rsplit("/", 1)[-1].removesuffix(".json").split("-")
+    return StoredMessage(key, int(ms), from_alias, type_name)
+
+
+def list_window(s3, start: datetime.datetime, end: datetime.datetime) -> list[StoredMessage]:
+    """Every eventstore key whose arrival is inside [start, end), ordered by arrival.
+    Day prefixes are UTC dates; a window may span several."""
+    start_ms, end_ms = (int(t.timestamp() * 1000) for t in (start, end))
+    found: list[StoredMessage] = []
+    day = start.date()
+    while day <= end.date():
+        prefix = f"{EVENTSTORE_WORLD}/eventstore/{day.strftime('%Y%m%d')}/"
+        for page in s3.get_paginator("list_objects_v2").paginate(Bucket=EVENTSTORE_BUCKET, Prefix=prefix):
+            for obj in page.get("Contents", []):
+                m = parse_key(obj["Key"])
+                if start_ms <= m.persisted_ms < end_ms:
+                    found.append(m)
+        day += datetime.timedelta(days=1)
+    found.sort(key=lambda m: (m.persisted_ms, m.key))
+    return found
+
+
+def fetch_body(s3, m: StoredMessage) -> dict:
+    """The stored envelope's Payload: the body as the sender put it on the wire."""
+    stored = json.loads(s3.get_object(Bucket=EVENTSTORE_BUCKET, Key=m.key)["Body"].read())
+    return stored["Payload"] if "Payload" in stored else stored
+
+
+def ms_iso(ms: int) -> str:
+    return iso(datetime.datetime.fromtimestamp(ms / 1000, tz=datetime.timezone.utc))
 
 
 def restrict_forest(forest: dict, subtree: str) -> dict:
@@ -162,19 +220,19 @@ def main() -> None:
         else:
             print(f"forest: kept {forest_path.relative_to(UMBRELLA)}")
 
-        cur.execute(
-            "select persisted_at, from_alias, message_type_name, payload from gridworks.messages "
-            "where persisted_at >= %s and persisted_at < %s and from_alias = any(%s) order by persisted_at, id",
-            (start, end, senders))
-        rows = cur.fetchall()
+    s3 = boto3.client("s3")
+    window = list_window(s3, start, end)
+    rows = [m for m in window if m.from_alias in senders]
+    alerts = [m for m in window if m.type_name == ALERT_TYPE]
 
     counts: dict[tuple[str, str | None], int] = {}
     refusals: dict[tuple[str, str | None], int] = {}
     n_body = 0
     with (out / "messages.jsonl").open("w") as w:
-        for persisted_at, frm, typ, payload in rows:
-            rec: dict = {"t": iso(persisted_at), "from": frm, "type": typ, "body": None}
-            if typ in bodies_for:
+        for m in rows:
+            rec: dict = {"t": ms_iso(m.persisted_ms), "from": m.from_alias, "type": m.type_name, "body": None}
+            if m.type_name in bodies_for:
+                payload = fetch_body(s3, m)
                 rec["body"] = payload
                 n_body += 1
                 key = (typ, payload.get("Version"))
@@ -189,6 +247,16 @@ def main() -> None:
     print(f"messages: {len(rows)} rows, {n_body} with bodies, {size_kb} kB -> {out.relative_to(UMBRELLA)}/messages.jsonl")
     for key, n in sorted(counts.items()):
         print(f"  {key[0]}/{key[1]}: {n} decoded" + (f", {refusals[key]} refused" if key in refusals else ""))
+    types: dict[str, int] = {}
+    for m in rows:
+        types[m.type_name] = types.get(m.type_name, 0) + 1
+    print("  by type: " + ", ".join(f"{t} {n}" for t, n in sorted(types.items(), key=lambda kv: -kv[1])))
+
+    print(f"alerts in the window ({ALERT_TYPE} from any sender): {len(alerts)}")
+    for m in alerts:
+        a = fetch_body(s3, m)
+        print(f"  {ms_iso(m.persisted_ms)} {a.get('State')} {a.get('Kind')} {a.get('AboutGNodeAlias')} "
+              f"AlertId={a.get('AlertId')} Summary={a.get('Summary')!r}")
 
 
 if __name__ == "__main__":

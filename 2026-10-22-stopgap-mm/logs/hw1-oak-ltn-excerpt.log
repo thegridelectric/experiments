@@ -1,0 +1,18 @@
+1012:2026-10-22 16:00:00.241 [ltn] Received latest price
+	3/5  send_ping<scada_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x75dd47928040>
+	4/5  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x75dd47b6e500>
+	5/5  ltn-main                        done:False   exception: None  <coroutine object Ltn.main at 0x75dd47928130>
+
+2026-10-22 15:46:58.410 scada_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-10-22 15:46:58.428 scada_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-10-22 15:46:58.490 scada_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22 15:47:00.386 Loaded completed contract
+2026-10-22 15:47:03.388 [ltn] Requesting layout
+2026-10-22 15:47:03.786 [ltn] Processing layout lite
+2026-10-22 15:47:03.788 [ltn] FLO seasonal storage mode: BufferOnly
+2026-10-22 15:47:03.788 [ltn] Received layout data - LTN now ready for contract operations
+2026-10-22 16:00:00.241 [ltn] Received latest price
+2026-10-22 16:00:00.241 [ltn] Ignoring - no bid exists
+== subscribe lines
+963-      [('gw/hw1-isone-me-versant-keene-oak-scada/to/ltn/#', <QOS.AtMostOnce: 0>)]
+964:      [('rjb/hw1-isone-me-versant-keene/mm/latest-price', <QOS.AtMostOnce: 0>)]

@@ -13,21 +13,23 @@ artifacts are this file and `spot_check.py`; individual runs print to the
 terminal and stop there. A one-off analysis worth keeping is the signal that
 the question was really an experiment — promote it to a folder instead.
 
-The live counterpart — running new code on a house rather than reading what it
-already emitted — is `field-window-recipe.md`.
+The live counterpart, running new code on a house rather than reading what it
+already emitted, is a roll of the house to the branch
+(`gridworks-scada/scripts/roll.sh`; its header is the how-to).
 
 ## Spruce is special
 
 Most boxes run production off `main`. **Spruce does not**: its production plant
 control (`gwspaceheat`, and in season the `spruce-winter-hack`) runs the
-scada `actual-spruce` branch against the tlayouts `actual-spruce` layout — a
-different branch in both repos than the rest of the fleet. Its beta window
-runs the `jm/spruce-unlimbo` scada against the tlayouts `jm/spruce` layout.
-For a spot-check this matters two ways: the channels and pico ids in spruce's
-journal reflect the `actual-spruce` layout, not `jm/spruce`; and emissions
-under `hw1.isone.me.versant.keene.spruce.scada` come from whichever scada was
-running the window (see `field-window-recipe.md`). Nail the window in ET before
-trusting a spruce spot-check.
+scada `actual-spruce` branch against the tlayouts `actual-spruce` layout, a
+different branch in both repos than the rest of the fleet, and it rolls to
+the `jm/spruce-unlimbo` scada with the tlayouts `jm/spruce` layout
+(`roll.sh spruce check` says which line it is on). For a spot-check this
+matters two ways: the channels and pico ids in spruce's journal reflect the
+layout of the line that was running; and emissions under
+`hw1.isone.me.versant.keene.spruce.scada` come from whichever line was
+running at the time. Nail the roll times in ET before trusting a spruce
+spot-check.
 
 ## Every other house has a second pi
 

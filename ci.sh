@@ -21,9 +21,9 @@ echo "==> uv sync"
 uv sync -q
 
 echo "==> pyright (zero errors, all repo scripts)"
-PYRIGHT_EXCLUDE='2026-08-06-ads-noise/ads_noise_experiment.py
+PYRIGHT_EXCLUDE='admin_drive.py
+2026-08-06-ads-noise/ads_noise_experiment.py
 2026-08-05-registry-projection-rig/rig_reparent.py
-window_boot.py
 offer_contract.py
 2026-08-10-ads-declared-rate/capture_window.py
 future/pico-rejoin/rejoin_trace.py
@@ -67,7 +67,7 @@ future/pico-rejoin/rejoin_trace.py
 2026-09-15-alerter-no-data/mock_scada.py
 2026-09-15-alerter-no-data/watcher.py'
 # Top five: environments this repo lacks (smbus2 pi-only · gnr env ·
-# the pi scada checkout's venv · the laptop scada venv ·
+# the pi scada checkout's venv · the laptop scada venv (admin_drive) ·
 # MicroPython on-pico); next four: spruce on-box harnesses (smbus2 /
 # blinka / starter_settings — the pi's starter-scripts venv). June five:
 # archived records of runs that no longer reproduce (June-era APIs),

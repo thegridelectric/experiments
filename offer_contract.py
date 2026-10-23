@@ -3,9 +3,10 @@
 
     ../gridworks-scada/gw_spaceheat/venv/bin/python offer_contract.py <target> [--watts N] [--minutes M]
 
-<target> is dev, spruce, beech or maple: the layout pair the laptop LTN
-loads for that target (house_window.sh --ltn), so the offer names the
-target's scada and comes from the alias the scada expects upstream.
+<target> is dev, spruce, beech or maple: the layout pair a laptop LTN
+loads for that target (the laptop's ~/.config/gridworks/ltn/ pair in dev,
+the tlayouts gen output for a house), so the offer names the target's
+scada and comes from the alias the scada expects upstream.
 
 The LTN offers only in the ten seconds after the top of the hour. This
 script publishes one Created slow.contract.heartbeat on the laptop's

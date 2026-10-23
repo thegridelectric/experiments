@@ -1,88 +1,56 @@
 #!/usr/bin/env bash
-# Put a house's authored files where its scada reads them, from the laptop:
-# the tlayouts gen output onto a house's box, or the scada repo's sim
-# fixtures into the laptop's own config folders.
+# Seed the laptop's config folders with the scada repo's Nolan sim fixtures,
+# under the deployed names a scada and an LTN read:
 #
-#   ./put_layout.sh <target> check     compare the target's files to the source
-#                                      (sha256); exit 1 when any differs
-#   ./put_layout.sh <target> <change>  for each file that differs: leave a dated
-#                                      <file>.<date>-pre-<change>.json copy beside
-#                                      it, copy the source over it, verify the
-#                                      sha256. <change> is a short dashed slug naming
-#                                      what the new layout brings (pi-ids).
+#   ./put_layout.sh dev check     compare each folder's files to the source
+#                                 (sha256); exit 1 when any differs
+#   ./put_layout.sh dev <change>  for each file that differs: leave a dated
+#                                 <file>.<date>-pre-<change>.json copy beside
+#                                 it, copy the source over it, verify the
+#                                 sha256. <change> is a short dashed slug naming
+#                                 what the new layout brings (pi-ids).
 #
-# <target> is spruce, beech, maple or oak (the ssh host of the same name), or dev.
-#
-# A house: the source is ../tlayouts/output/<house>/, and the window scada
-# reads ~/.config/gridworks/scada-experiment/hardware-layout.json and the
-# operational-params.json beside it. Every house but spruce has a second pi
-# (<house>2), which gets the same pair in the same place: a reading carries
-# no unit on the wire, so both pis must hold one layout. Run the house's gen
-# first (../tlayouts/<house>_gen.py, from the scada venv); this script copies
-# bytes and does not regenerate.
-#
-# dev: the source is the Nolan sim fixtures in ../gridworks-scada/tests/config/,
-# and the laptop gets them under the deployed names in ~/.config/gridworks/:
-# scada/ (what `gws run` reads) and scada-experiment/ (what a dev window
-# reads) take the pair and the ta-deed.json; ltn/ takes the pair.
+# The source is ../gridworks-scada/tests/config/ (gw.nolan.*); the laptop gets
+# the files in ~/.config/gridworks/: scada/ (what `gws run` reads) takes the
+# layout, the operational params and the ta-deed; ltn/ takes the layout and
+# the params. A house's box takes its files from the committed tlayouts JSON
+# through ../gridworks-scada/scripts/roll.sh.
 #
 # A scada writes its own operational-params.json (the cold latch that
-# refuses dispatch), so a target's params can hold something the source
+# refuses dispatch), so the folder's params can hold something the source
 # lacks. Where they differ, the script shows the difference and copies only
-# on an answer of y; any other answer leaves the target as it is and exits 1.
-#
-# It refuses while a window scada is running on the target.
+# on an answer of y; any other answer leaves the file as it is and exits 1.
 set -euo pipefail
-
-HOUSE="${1:-}"
+TARGET="${1:-}"
 CHANGE="${2:-}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
-PAIR="hardware-layout operational-params"
-case "$HOUSE" in
-  spruce)      GEN_LAYOUT=gw.nolan.layout.json; GEN_OPS=gw.nolan.operational.params.json; BOXES=spruce ;;
-  beech)       GEN_LAYOUT=hardware-layout.generated.json; GEN_OPS=operational-params.generated.json; BOXES="beech beech2" ;;
-  maple)       GEN_LAYOUT=hardware-layout.generated.json; GEN_OPS=operational-params.generated.json; BOXES="maple maple2" ;;
-  oak)         GEN_LAYOUT=gw.house0.layout.json; GEN_OPS=gw.house0.operational.params.json; BOXES="oak oak2" ;;
-  dev)         GEN_LAYOUT=gw.nolan.layout.json; GEN_OPS=gw.nolan.operational.params.json; GEN_DEED=gw.nolan.ta.deed.json; BOXES=laptop ;;
-  *)           sed -n 2,30p "$0"; exit 1 ;;
-esac
-[[ "$CHANGE" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || { sed -n 2,30p "$0"; exit 1; }
-
-if [ "$HOUSE" = dev ]; then
-  GEN_DIR="$HERE/../gridworks-scada/tests/config"
-  # folder:files, files as deployed stems
-  PLACES=".config/gridworks/scada:$PAIR ta-deed .config/gridworks/scada-experiment:$PAIR ta-deed .config/gridworks/ltn:$PAIR"
-else
-  GEN_DIR="$HERE/../tlayouts/output/$HOUSE"
-  PLACES=".config/gridworks/scada-experiment:$PAIR"
-fi
+[ "$TARGET" = dev ] || { sed -n 2,22p "$0"; exit 1; }
+[[ "$CHANGE" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || { sed -n 2,22p "$0"; exit 1; }
+GEN_DIR="$HERE/../gridworks-scada/tests/config"
+# folder:stems, stems as deployed
+PLACES=".config/gridworks/scada:hardware-layout operational-params ta-deed
+.config/gridworks/ltn:hardware-layout operational-params"
 STAMP="$(date +%Y-%m-%d)"
-
-# run a command in the home directory of a box, or of the laptop
-on_box() { if [ "$1" = laptop ]; then (cd "$HOME" && bash -c "$2"); else ssh "$1" "$2"; fi; }
-to_box() { if [ "$1" = laptop ]; then cp "$2" "$HOME/$3"; else scp -q "$2" "$1:$3"; fi; }
-# the source file a deployed stem is copied from
 source_of() {
   case "$1" in
-    hardware-layout) echo "$GEN_DIR/$GEN_LAYOUT" ;;
-    operational-params) echo "$GEN_DIR/$GEN_OPS" ;;
-    ta-deed) echo "$GEN_DIR/$GEN_DEED" ;;
+    hardware-layout) echo "$GEN_DIR/gw.nolan.layout.json" ;;
+    operational-params) echo "$GEN_DIR/gw.nolan.operational.params.json" ;;
+    ta-deed) echo "$GEN_DIR/gw.nolan.ta.deed.json" ;;
   esac
 }
-# the hash of a file on a box, empty when the file does not exist
-box_sha() { on_box "$1" "{ sha256sum $2 2>/dev/null || shasum -a 256 $2 2>/dev/null; } | cut -d' ' -f1"; }
+# the hash of a file, empty when it does not exist
+sha_of() { if [ -f "$1" ]; then shasum -a 256 "$1" | cut -d' ' -f1; fi; }
 
 DIFFERS=0
-IFS=$'\n'
-for BOX in ${BOXES// /$'\n'}; do
-for PLACE in $(echo "$PLACES" | sed 's# \.config#\n.config#g'); do
-  BOX_DIR="${PLACE%%:*}"
-  for STEM in $(echo "${PLACE#*:}" | tr ' ' '\n'); do
+while IFS= read -r PLACE; do
+  DIR="$HOME/${PLACE%%:*}"
+  for STEM in ${PLACE#*:}; do
     GEN="$(source_of "$STEM")"
-    AT="$BOX $BOX_DIR/$STEM.json"
+    FILE="$DIR/$STEM.json"
+    AT="laptop ${PLACE%%:*}/$STEM.json"
     [ -f "$GEN" ] || { echo "no source file $GEN"; exit 1; }
-    WANT="$(shasum -a 256 "$GEN" | cut -d' ' -f1)"
-    if [ "$(box_sha "$BOX" "$BOX_DIR/$STEM.json")" = "$WANT" ]; then
+    WANT="$(sha_of "$GEN")"
+    if [ "$(sha_of "$FILE")" = "$WANT" ]; then
       echo "$AT: identical to the source (${WANT:0:12})"
       continue
     fi
@@ -91,20 +59,21 @@ for PLACE in $(echo "$PLACES" | sed 's# \.config#\n.config#g'); do
       echo "$AT: DIFFERS from the source (${WANT:0:12})"
       continue
     fi
-    if on_box "$BOX" 'pgrep -f "[w]indow_boot.py" >/dev/null'; then
-      echo "a window scada is running on $BOX; stop it first"; exit 1
-    fi
-    if [ "$STEM" = operational-params ] && on_box "$BOX" "[ -f $BOX_DIR/$STEM.json ]"; then
-      echo "$AT: differs from the source; the target (-) against the source (+):"
-      diff -u <(on_box "$BOX" "cat $BOX_DIR/$STEM.json") "$GEN" | tail -n +3 || true
-      read -r -p "copy the source over the target's params? [y/N] " ANSWER || ANSWER=""
+    if [ "$STEM" = operational-params ] && [ -f "$FILE" ]; then
+      echo "$AT: differs from the source; the file (-) against the source (+):"
+      diff -u "$FILE" "$GEN" | tail -n +3 || true
+      read -r -p "copy the source over the laptop's params? [y/N] " ANSWER || ANSWER=""
       [ "$ANSWER" = y ] || { echo "$AT: left as it is"; exit 1; }
     fi
-    KEPT="$(on_box "$BOX" "mkdir -p $BOX_DIR; [ ! -f $BOX_DIR/$STEM.json ] || { cp -p $BOX_DIR/$STEM.json $BOX_DIR/$STEM.$STAMP-pre-$CHANGE.json && echo $STEM.$STAMP-pre-$CHANGE.json; }")"
-    to_box "$BOX" "$GEN" "$BOX_DIR/$STEM.json"
-    [ "$(box_sha "$BOX" "$BOX_DIR/$STEM.json")" = "$WANT" ] || { echo "$AT: sha256 MISMATCH after the copy"; exit 1; }
-    echo "$AT: put (${WANT:0:12}); previous file: ${KEPT:-none}"
+    mkdir -p "$DIR"
+    KEPT=none
+    if [ -f "$FILE" ]; then
+      cp -p "$FILE" "$DIR/$STEM.$STAMP-pre-$CHANGE.json"
+      KEPT="$STEM.$STAMP-pre-$CHANGE.json"
+    fi
+    cp "$GEN" "$FILE"
+    [ "$(sha_of "$FILE")" = "$WANT" ] || { echo "$AT: sha256 MISMATCH after the copy"; exit 1; }
+    echo "$AT: put (${WANT:0:12}); previous file: $KEPT"
   done
-done
-done
+done <<< "$PLACES"
 [ "$CHANGE" = check ] && exit $DIFFERS || exit 0

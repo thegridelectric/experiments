@@ -1,0 +1,1041 @@
+# PROVENANCE: journalctl -u gwspaceheat -f on spruce (box clock, ET) from 10:53:09 to 10:55:45 ET, covering the actual-spruce stop and the jm/spruce-unlimbo boot at aa3b0709; verbatim
+2026-10-22T10:53:09-0400 spruce python[24226]: 2026-10-22 10:53:09.576 [lc] Top state: Monitor
+2026-10-22T10:53:09-0400 spruce python[24226]: 2026-10-22 10:53:09.576 [lc] LocalControl: AllTanks  |  State: Initializing
+2026-10-22T10:53:33-0400 spruce systemd[1]: Stopping gwspaceheat.service - GridWorks spaceheat service...
+2026-10-22T10:53:33-0400 spruce python[24226]: 2026-10-22 10:53:33.888 Shutting down due to ShutdownMessage, [Signal received: SIGTERM (15)  Service stopped]
+2026-10-22T10:53:33-0400 spruce python[24226]: 2026-10-22 10:53:33.949 Tasks: 28  [DONE]
+2026-10-22T10:53:33-0400 spruce python[24226]:         1/28  LocalControl keepalive          done:True   (cancelled)  <coroutine object LocalControlTouBase.main at 0x7f72fac5e0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         2/28  zone5-living-rm-fancoil-opto-main  done:True   (cancelled)  <coroutine object GpioSensor.main at 0x7f72facf40>
+2026-10-22T10:53:33-0400 spruce python[24226]:         3/28  zone1-bedrooms-opto-main        done:True   (cancelled)  <coroutine object GpioSensor.main at 0x7f72fac130>
+2026-10-22T10:53:33-0400 spruce python[24226]:         4/28  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f72fac6d0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         5/28  zone2-living-rm-opto-main       done:True   (cancelled)  <coroutine object GpioSensor.main at 0x7f72facc70>
+2026-10-22T10:53:33-0400 spruce python[24226]:         6/28  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f72f43440>
+2026-10-22T10:53:33-0400 spruce python[24226]:         7/28  process_messages                done:True   (cancelled)  <coroutine object Proactor.process_messages at 0x7f7308a680>
+2026-10-22T10:53:33-0400 spruce python[24226]:         8/28  zone3-upstairs-opto-main        done:True   (cancelled)  <coroutine object GpioSensor.main at 0x7f72facd60>
+2026-10-22T10:53:33-0400 spruce python[24226]:         9/28  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f72f43510>
+2026-10-22T10:53:33-0400 spruce python[24226]:         10/28  send_ping<gridworks_mqtt>       done:True   (cancelled)  <coroutine object LinkManager.send_ping at 0x7f72fad030>
+2026-10-22T10:53:33-0400 spruce python[24226]:         11/28  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f72f435e0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         12/28  send_ping<local_mqtt>           done:True   (cancelled)  <coroutine object LinkManager.send_ping at 0x7f72fad120>
+2026-10-22T10:53:33-0400 spruce python[24226]:         13/28  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f72f436b0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         14/28  send_ping<admin>                done:True   (cancelled)  <coroutine object LinkManager.send_ping at 0x7f72fad210>
+2026-10-22T10:53:33-0400 spruce python[24226]:         15/28  LeafAlly keepalive              done:True   (cancelled)  <coroutine object AllTanksLeafAlly.main at 0x7f72f47760>
+2026-10-22T10:53:33-0400 spruce python[24226]:         16/28  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f72f43780>
+2026-10-22T10:53:33-0400 spruce python[24226]:         17/28  report_sender                   done:True   (cancelled)  <coroutine object Scada.report_sending_task at 0x7f73138fb0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         18/28  ApiBtuMeter keepalive           done:True   (cancelled)  <coroutine object ApiBtuMeter.main at 0x7f72fb5a80>
+2026-10-22T10:53:33-0400 spruce python[24226]:         19/28  snap_sender                     done:True   (cancelled)  <coroutine object Scada.snap_sending_task at 0x7f72f41cb0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         20/28  watchdog_manager.join           done:True   exception: None  <coroutine object WatchdogManager.join at 0x7f72fb5d20>
+2026-10-22T10:53:33-0400 spruce python[24226]:         21/28  picocycler keepalive            done:True   (cancelled)  <coroutine object PicoCycler.main at 0x7f73466d40>
+2026-10-22T10:53:33-0400 spruce python[24226]:         22/28  ApiBtuMeter keepalive           done:True   (cancelled)  <coroutine object ApiBtuMeter.main at 0x7f72fb58c0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         23/28  scada top_state_tracker         done:True   (cancelled)  <coroutine object Scada.state_tracker at 0x7f7308a7a0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         24/28  gw108-thermistor-reader-main    done:True   (cancelled)  <coroutine object I2cThermistorReader.main at 0x7f73466fc0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         25/28  ApiBtuMeter keepalive           done:True   (cancelled)  <coroutine object ApiBtuMeter.main at 0x7f72fb59a0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         26/28  zone4-garage-opto-main          done:True   (cancelled)  <coroutine object GpioSensor.main at 0x7f72face50>
+2026-10-22T10:53:33-0400 spruce python[24226]:         27/28  Derived Generator keepalive     done:True   (cancelled)  <coroutine object DerivedGenerator.main at 0x7f72fac4f0>
+2026-10-22T10:53:33-0400 spruce python[24226]:         28/28  ApiBtuMeter keepalive           done:True   (cancelled)  <coroutine object ApiBtuMeter.main at 0x7f72fb5b60>
+2026-10-22T10:53:33-0400 spruce python[24226]: 2026-10-22 10:53:33.951 Tasks: 1  [PENDING]
+2026-10-22T10:53:33-0400 spruce python[24226]:         1/1  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f72fc2200>
+2026-10-22T10:53:33-0400 spruce python[24226]: 2026-10-22 10:53:33.951 Tasks: 1  [WAITING FOR]
+2026-10-22T10:53:33-0400 spruce python[24226]:         1/1  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f72fc2200>
+2026-10-22T10:53:34-0400 spruce python[24226]: 2026-10-22 10:53:34.454 Tasks: 1  [DONE]
+2026-10-22T10:53:34-0400 spruce python[24226]:         1/1  power-meter.join                done:True   exception: None  <coroutine object SyncThreadActor.join at 0x7f72fc2200>
+2026-10-22T10:53:34-0400 spruce python[24226]: 2026-10-22 10:53:34.455 Tasks: 0  [PENDING]
+2026-10-22T10:53:34-0400 spruce python[24226]: 2026-10-22 10:53:34.455 --Proactor<s>.join()
+2026-10-22T10:53:34-0400 spruce python[24226]: PrimeActor slots: ()
+2026-10-22T10:53:34-0400 spruce python[24226]: Scada slots: ()
+2026-10-22T10:53:34-0400 spruce python[24226]: MRO: (<class 'actors.scada.Scada'>, <class 'gwproactor.actors.actor.PrimeActor'>, <class 'gwproactor.callbacks.ProactorCallbackInterface'>, <class 'gwproactor.actors.actor.Actor'>, <class 'actors.scada_interface.ScadaInterface'>, <class 'gwproactor.proactor_interface.ActorInterface'>, <class 'gwproactor.proactor_interface.Communicator'>, <class 'gwproactor.proactor_interface.CommunicatorInterface'>, <class 'gwproactor.proactor_interface.Runnable'>, <class 'abc.ABC'>, <class 'object'>)
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 111.05116248130798
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7893786430359
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7897300720215
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79098439216614
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79006123542786
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79057025909424
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7904152870178
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7905855178833
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7910785675049
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79063272476196
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7905788421631
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7907271385193
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.78997468948364
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79033637046814
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7906837463379
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7904624938965
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7905538082123
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79059529304504
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7902612686157
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7910873889923
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7906594276428
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7900605201721
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79069328308105
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7900779247284
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79148840904236
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79110050201416
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7898986339569
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.79362535476685
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7915153503418
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.7913031578064
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 2.2
+2026-10-22T10:53:34-0400 spruce python[24226]: [pico-cycler] Sleeping for 297.791286945343
+2026-10-22T10:53:35-0400 spruce systemd[1]: gwspaceheat.service: Deactivated successfully.
+2026-10-22T10:53:35-0400 spruce systemd[1]: Stopped gwspaceheat.service - GridWorks spaceheat service.
+2026-10-22T10:53:35-0400 spruce systemd[1]: gwspaceheat.service: Consumed 4min 24.198s CPU time.
+2026-10-22T10:53:35-0400 spruce systemd[1]: Started gwspaceheat.service - GridWorks spaceheat service.
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.607
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.607 Env file: </home/pi/gridworks-scada/.env>  exists: True
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.607 Settings:
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.609 {
+2026-10-22T10:53:42-0400 spruce python[26921]:   "paths": {
+2026-10-22T10:53:42-0400 spruce python[26921]:     "base": "gridworks",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "name": "scada",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "relative_path": "gridworks/scada",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "data_home": "/home/pi/.local/share",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "state_home": "/home/pi/.local/state",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "config_home": "/home/pi/.config",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "data_dir": "/home/pi/.local/share/gridworks/scada",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "config_dir": "/home/pi/.config/gridworks/scada",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "certs_dir": "/home/pi/.config/gridworks/scada/certs",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "event_dir": "/home/pi/.local/share/gridworks/scada/event",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "log_dir": "/home/pi/.local/state/gridworks/scada/log",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "hardware_layout": "/home/pi/.config/gridworks/scada/hardware-layout.json",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "operational_params": "/home/pi/.config/gridworks/scada/operational-params.json",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "tadeed": "/home/pi/.config/gridworks/scada/ta-deed.json"
+2026-10-22T10:53:42-0400 spruce python[26921]:   },
+2026-10-22T10:53:42-0400 spruce python[26921]:   "logging": {
+2026-10-22T10:53:42-0400 spruce python[26921]:     "base_log_name": "gridworks",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "base_log_level": 30,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "levels": {
+2026-10-22T10:53:42-0400 spruce python[26921]:       "message_summary": 30,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "lifecycle": 20,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "comm_event": 20,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "io_loop": 20
+2026-10-22T10:53:42-0400 spruce python[26921]:     },
+2026-10-22T10:53:42-0400 spruce python[26921]:     "formatter": {
+2026-10-22T10:53:42-0400 spruce python[26921]:       "fmt": "%(asctime)s %(message)s",
+2026-10-22T10:53:42-0400 spruce python[26921]:       "datefmt": "",
+2026-10-22T10:53:42-0400 spruce python[26921]:       "default_msec_format": "%s.%03d",
+2026-10-22T10:53:42-0400 spruce python[26921]:       "use_utc": false
+2026-10-22T10:53:42-0400 spruce python[26921]:     },
+2026-10-22T10:53:42-0400 spruce python[26921]:     "file_handler": {
+2026-10-22T10:53:42-0400 spruce python[26921]:       "filename": "proactor.log",
+2026-10-22T10:53:42-0400 spruce python[26921]:       "bytes_per_log_file": 2097152,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "num_log_files": 10,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "level": 0
+2026-10-22T10:53:42-0400 spruce python[26921]:     },
+2026-10-22T10:53:42-0400 spruce python[26921]:     "io_loop": {
+2026-10-22T10:53:42-0400 spruce python[26921]:       "file_handler": {
+2026-10-22T10:53:42-0400 spruce python[26921]:         "filename": "io_loop.log",
+2026-10-22T10:53:42-0400 spruce python[26921]:         "bytes_per_log_file": 2097152,
+2026-10-22T10:53:42-0400 spruce python[26921]:         "num_log_files": 2,
+2026-10-22T10:53:42-0400 spruce python[26921]:         "level": 0
+2026-10-22T10:53:42-0400 spruce python[26921]:       },
+2026-10-22T10:53:42-0400 spruce python[26921]:       "on_screen": false
+2026-10-22T10:53:42-0400 spruce python[26921]:     },
+2026-10-22T10:53:42-0400 spruce python[26921]:     "aiohttp_logging": false,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "paho_logging": false
+2026-10-22T10:53:42-0400 spruce python[26921]:   },
+2026-10-22T10:53:42-0400 spruce python[26921]:   "proactor": {
+2026-10-22T10:53:42-0400 spruce python[26921]:     "mqtt_link_poll_seconds": 60.0,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "ack_timeout_seconds": 5.0,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "num_initial_event_reuploads": 5,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "num_inflight_events": 50
+2026-10-22T10:53:42-0400 spruce python[26921]:   },
+2026-10-22T10:53:42-0400 spruce python[26921]:   "pico_cycler_state_logging": false,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "unknown_channel_logging": false,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "power_meter_logging_level": 20,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "contract_rep_logging_level": 20,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "paho_logging": false,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "local_mqtt": {
+2026-10-22T10:53:42-0400 spruce python[26921]:     "host": "spruce.local",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "port": 1883,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "keepalive": 60,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "bind_address": "",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "bind_port": 0,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "username": "sara",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "password": "**********",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "tls": {
+2026-10-22T10:53:42-0400 spruce python[26921]:       "use_tls": false,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "port": 8883,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "paths": {
+2026-10-22T10:53:42-0400 spruce python[26921]:         "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/ca.crt",
+2026-10-22T10:53:42-0400 spruce python[26921]:         "cert_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/local_mqtt.crt",
+2026-10-22T10:53:42-0400 spruce python[26921]:         "private_key_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/private/local_mqtt.pem"
+2026-10-22T10:53:42-0400 spruce python[26921]:       },
+2026-10-22T10:53:42-0400 spruce python[26921]:       "cert_reqs": 2,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "ciphers": null,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "keyfile_password": ""
+2026-10-22T10:53:42-0400 spruce python[26921]:     }
+2026-10-22T10:53:42-0400 spruce python[26921]:   },
+2026-10-22T10:53:42-0400 spruce python[26921]:   "gridworks_mqtt": {
+2026-10-22T10:53:42-0400 spruce python[26921]:     "host": "hw1-1.electricity.works",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "port": 1883,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "keepalive": 60,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "bind_address": "",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "bind_port": 0,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "username": null,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "password": "",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "tls": {
+2026-10-22T10:53:42-0400 spruce python[26921]:       "use_tls": true,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "port": 8883,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "paths": {
+2026-10-22T10:53:42-0400 spruce python[26921]:         "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/ca.crt",
+2026-10-22T10:53:42-0400 spruce python[26921]:         "cert_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/gridworks_mqtt.crt",
+2026-10-22T10:53:42-0400 spruce python[26921]:         "private_key_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/private/gridworks_mqtt.pem"
+2026-10-22T10:53:42-0400 spruce python[26921]:       },
+2026-10-22T10:53:42-0400 spruce python[26921]:       "cert_reqs": 2,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "ciphers": null,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "keyfile_password": ""
+2026-10-22T10:53:42-0400 spruce python[26921]:     }
+2026-10-22T10:53:42-0400 spruce python[26921]:   },
+2026-10-22T10:53:42-0400 spruce python[26921]:   "clock_source": "Wall",
+2026-10-22T10:53:42-0400 spruce python[26921]:   "weather_source": "Gwwf",
+2026-10-22T10:53:42-0400 spruce python[26921]:   "weather_api_url": "https://forecast.electricity.works/hw1-isone-weather",
+2026-10-22T10:53:42-0400 spruce python[26921]:   "weather_pull_timeout_s": 20.0,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "seconds_per_report": 300,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "seconds_per_snapshot": 30,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "async_power_reporting_threshold": 0.02,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "power_meter_lost_after_s": 10.0,
+2026-10-22T10:53:42-0400 spruce python[26921]:   "persister": {
+2026-10-22T10:53:42-0400 spruce python[26921]:     "max_bytes": 524288000
+2026-10-22T10:53:42-0400 spruce python[26921]:   },
+2026-10-22T10:53:42-0400 spruce python[26921]:   "admin": {
+2026-10-22T10:53:42-0400 spruce python[26921]:     "host": "localhost",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "port": 1883,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "keepalive": 60,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "bind_address": "",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "bind_port": 0,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "username": "sara",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "password": "**********",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "tls": {
+2026-10-22T10:53:42-0400 spruce python[26921]:       "use_tls": false,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "port": 8883,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "paths": {
+2026-10-22T10:53:42-0400 spruce python[26921]:         "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/admin/ca.crt",
+2026-10-22T10:53:42-0400 spruce python[26921]:         "cert_path": "/home/pi/.config/gridworks/scada/certs/admin/admin.crt",
+2026-10-22T10:53:42-0400 spruce python[26921]:         "private_key_path": "/home/pi/.config/gridworks/scada/certs/admin/private/admin.pem"
+2026-10-22T10:53:42-0400 spruce python[26921]:       },
+2026-10-22T10:53:42-0400 spruce python[26921]:       "cert_reqs": 2,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "ciphers": null,
+2026-10-22T10:53:42-0400 spruce python[26921]:       "keyfile_password": ""
+2026-10-22T10:53:42-0400 spruce python[26921]:     },
+2026-10-22T10:53:42-0400 spruce python[26921]:     "enabled": true,
+2026-10-22T10:53:42-0400 spruce python[26921]:     "name": "admin",
+2026-10-22T10:53:42-0400 spruce python[26921]:     "max_timeout_seconds": 86400.0
+2026-10-22T10:53:42-0400 spruce python[26921]:   },
+2026-10-22T10:53:42-0400 spruce python[26921]:   "airtable_pat": "bogus_pat"
+2026-10-22T10:53:42-0400 spruce python[26921]: }
+2026-10-22T10:53:42-0400 spruce python[26921]: ScadaSettings(
+2026-10-22T10:53:42-0400 spruce python[26921]:     paths=ScadaPaths(
+2026-10-22T10:53:42-0400 spruce python[26921]:         base=PosixPath('gridworks'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         name=PosixPath('scada'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         relative_path=PosixPath('gridworks/scada'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         data_home=PosixPath('/home/pi/.local/share'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         state_home=PosixPath('/home/pi/.local/state'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         config_home=PosixPath('/home/pi/.config'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         data_dir=PosixPath('/home/pi/.local/share/gridworks/scada'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         config_dir=PosixPath('/home/pi/.config/gridworks/scada'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         certs_dir=PosixPath('/home/pi/.config/gridworks/scada/certs'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         event_dir=PosixPath('/home/pi/.local/share/gridworks/scada/event'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         log_dir=PosixPath('/home/pi/.local/state/gridworks/scada/log'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         hardware_layout=PosixPath('/home/pi/.config/gridworks/scada/hardware-lay
+2026-10-22T10:53:42-0400 spruce python[26921]: out.json'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         operational_params=PosixPath('/home/pi/.config/gridworks/scada/operation
+2026-10-22T10:53:42-0400 spruce python[26921]: al-params.json'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         tadeed=PosixPath('/home/pi/.config/gridworks/scada/ta-deed.json')
+2026-10-22T10:53:42-0400 spruce python[26921]:     ),
+2026-10-22T10:53:42-0400 spruce python[26921]:     logging=LoggingSettings(
+2026-10-22T10:53:42-0400 spruce python[26921]:         base_log_name='gridworks',
+2026-10-22T10:53:42-0400 spruce python[26921]:         base_log_level=30,
+2026-10-22T10:53:42-0400 spruce python[26921]:         levels=LoggerLevels(
+2026-10-22T10:53:42-0400 spruce python[26921]:             message_summary=30,
+2026-10-22T10:53:42-0400 spruce python[26921]:             lifecycle=20,
+2026-10-22T10:53:42-0400 spruce python[26921]:             comm_event=20,
+2026-10-22T10:53:42-0400 spruce python[26921]:             io_loop=20
+2026-10-22T10:53:42-0400 spruce python[26921]:         ),
+2026-10-22T10:53:42-0400 spruce python[26921]:         formatter=FormatterSettings(
+2026-10-22T10:53:42-0400 spruce python[26921]:             fmt='%(asctime)s %(message)s',
+2026-10-22T10:53:42-0400 spruce python[26921]:             datefmt='',
+2026-10-22T10:53:42-0400 spruce python[26921]:             default_msec_format='%s.%03d',
+2026-10-22T10:53:42-0400 spruce python[26921]:             use_utc=False
+2026-10-22T10:53:42-0400 spruce python[26921]:         ),
+2026-10-22T10:53:42-0400 spruce python[26921]:         file_handler=RotatingFileHandlerSettings(
+2026-10-22T10:53:42-0400 spruce python[26921]:             filename='proactor.log',
+2026-10-22T10:53:42-0400 spruce python[26921]:             bytes_per_log_file=2097152,
+2026-10-22T10:53:42-0400 spruce python[26921]:             num_log_files=10,
+2026-10-22T10:53:42-0400 spruce python[26921]:             level=0
+2026-10-22T10:53:42-0400 spruce python[26921]:         ),
+2026-10-22T10:53:42-0400 spruce python[26921]:         io_loop=IOLoopLoggerSettings(
+2026-10-22T10:53:42-0400 spruce python[26921]:             file_handler=RotatingFileHandlerSettings(
+2026-10-22T10:53:42-0400 spruce python[26921]:                 filename='io_loop.log',
+2026-10-22T10:53:42-0400 spruce python[26921]:                 bytes_per_log_file=2097152,
+2026-10-22T10:53:42-0400 spruce python[26921]:                 num_log_files=2,
+2026-10-22T10:53:42-0400 spruce python[26921]:                 level=0
+2026-10-22T10:53:42-0400 spruce python[26921]:             ),
+2026-10-22T10:53:42-0400 spruce python[26921]:             on_screen=False
+2026-10-22T10:53:42-0400 spruce python[26921]:         ),
+2026-10-22T10:53:42-0400 spruce python[26921]:         aiohttp_logging=False,
+2026-10-22T10:53:42-0400 spruce python[26921]:         paho_logging=False
+2026-10-22T10:53:42-0400 spruce python[26921]:     ),
+2026-10-22T10:53:42-0400 spruce python[26921]:     proactor=ProactorSettings(
+2026-10-22T10:53:42-0400 spruce python[26921]:         mqtt_link_poll_seconds=60.0,
+2026-10-22T10:53:42-0400 spruce python[26921]:         ack_timeout_seconds=5.0,
+2026-10-22T10:53:42-0400 spruce python[26921]:         num_initial_event_reuploads=5,
+2026-10-22T10:53:42-0400 spruce python[26921]:         num_inflight_events=50
+2026-10-22T10:53:42-0400 spruce python[26921]:     ),
+2026-10-22T10:53:42-0400 spruce python[26921]:     pico_cycler_state_logging=False,
+2026-10-22T10:53:42-0400 spruce python[26921]:     unknown_channel_logging=False,
+2026-10-22T10:53:42-0400 spruce python[26921]:     power_meter_logging_level=20,
+2026-10-22T10:53:42-0400 spruce python[26921]:     contract_rep_logging_level=20,
+2026-10-22T10:53:42-0400 spruce python[26921]:     paho_logging=False,
+2026-10-22T10:53:42-0400 spruce python[26921]:     local_mqtt=MQTTClient(
+2026-10-22T10:53:42-0400 spruce python[26921]:         host='spruce.local',
+2026-10-22T10:53:42-0400 spruce python[26921]:         port=1883,
+2026-10-22T10:53:42-0400 spruce python[26921]:         keepalive=60,
+2026-10-22T10:53:42-0400 spruce python[26921]:         bind_address='',
+2026-10-22T10:53:42-0400 spruce python[26921]:         bind_port=0,
+2026-10-22T10:53:42-0400 spruce python[26921]:         username='sara',
+2026-10-22T10:53:42-0400 spruce python[26921]:         password=SecretStr('**********'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         tls=TLSInfo(
+2026-10-22T10:53:42-0400 spruce python[26921]:             use_tls=False,
+2026-10-22T10:53:42-0400 spruce python[26921]:             port=8883,
+2026-10-22T10:53:42-0400 spruce python[26921]:             paths=TLSPaths(
+2026-10-22T10:53:42-0400 spruce python[26921]:                 ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/l
+2026-10-22T10:53:42-0400 spruce python[26921]: ocal_mqtt/ca.crt'),
+2026-10-22T10:53:42-0400 spruce python[26921]:                 cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/loca
+2026-10-22T10:53:42-0400 spruce python[26921]: l_mqtt/local_mqtt.crt'),
+2026-10-22T10:53:42-0400 spruce python[26921]:                 private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+2026-10-22T10:53:42-0400 spruce python[26921]: ts/local_mqtt/private/local_mqtt.pem')
+2026-10-22T10:53:42-0400 spruce python[26921]:             ),
+2026-10-22T10:53:42-0400 spruce python[26921]:             cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+2026-10-22T10:53:42-0400 spruce python[26921]:             ciphers=None,
+2026-10-22T10:53:42-0400 spruce python[26921]:             keyfile_password=SecretStr('')
+2026-10-22T10:53:42-0400 spruce python[26921]:         )
+2026-10-22T10:53:42-0400 spruce python[26921]:     ),
+2026-10-22T10:53:42-0400 spruce python[26921]:     gridworks_mqtt=MQTTClient(
+2026-10-22T10:53:42-0400 spruce python[26921]:         host='hw1-1.electricity.works',
+2026-10-22T10:53:42-0400 spruce python[26921]:         port=1883,
+2026-10-22T10:53:42-0400 spruce python[26921]:         keepalive=60,
+2026-10-22T10:53:42-0400 spruce python[26921]:         bind_address='',
+2026-10-22T10:53:42-0400 spruce python[26921]:         bind_port=0,
+2026-10-22T10:53:42-0400 spruce python[26921]:         username=None,
+2026-10-22T10:53:42-0400 spruce python[26921]:         password=SecretStr(''),
+2026-10-22T10:53:42-0400 spruce python[26921]:         tls=TLSInfo(
+2026-10-22T10:53:42-0400 spruce python[26921]:             use_tls=True,
+2026-10-22T10:53:42-0400 spruce python[26921]:             port=8883,
+2026-10-22T10:53:42-0400 spruce python[26921]:             paths=TLSPaths(
+2026-10-22T10:53:42-0400 spruce python[26921]:                 ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/g
+2026-10-22T10:53:42-0400 spruce python[26921]: ridworks_mqtt/ca.crt'),
+2026-10-22T10:53:42-0400 spruce python[26921]:                 cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/grid
+2026-10-22T10:53:42-0400 spruce python[26921]: works_mqtt/gridworks_mqtt.crt'),
+2026-10-22T10:53:42-0400 spruce python[26921]:                 private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+2026-10-22T10:53:42-0400 spruce python[26921]: ts/gridworks_mqtt/private/gridworks_mqtt.pem')
+2026-10-22T10:53:42-0400 spruce python[26921]:             ),
+2026-10-22T10:53:42-0400 spruce python[26921]:             cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+2026-10-22T10:53:42-0400 spruce python[26921]:             ciphers=None,
+2026-10-22T10:53:42-0400 spruce python[26921]:             keyfile_password=SecretStr('')
+2026-10-22T10:53:42-0400 spruce python[26921]:         )
+2026-10-22T10:53:42-0400 spruce python[26921]:     ),
+2026-10-22T10:53:42-0400 spruce python[26921]:     clock_source=<ClockSource.Wall: 'Wall'>,
+2026-10-22T10:53:42-0400 spruce python[26921]:     weather_source=<WeatherSourceKind.Gwwf: 'Gwwf'>,
+2026-10-22T10:53:42-0400 spruce python[26921]:     weather_api_url='https://forecast.electricity.works/hw1-isone-weather',
+2026-10-22T10:53:42-0400 spruce python[26921]:     weather_pull_timeout_s=20.0,
+2026-10-22T10:53:42-0400 spruce python[26921]:     seconds_per_report=300,
+2026-10-22T10:53:42-0400 spruce python[26921]:     seconds_per_snapshot=30,
+2026-10-22T10:53:42-0400 spruce python[26921]:     async_power_reporting_threshold=0.02,
+2026-10-22T10:53:42-0400 spruce python[26921]:     power_meter_lost_after_s=10.0,
+2026-10-22T10:53:42-0400 spruce python[26921]:     persister=PersisterSettings(max_bytes=524288000),
+2026-10-22T10:53:42-0400 spruce python[26921]:     admin=AdminLinkSettings(
+2026-10-22T10:53:42-0400 spruce python[26921]:         host='localhost',
+2026-10-22T10:53:42-0400 spruce python[26921]:         port=1883,
+2026-10-22T10:53:42-0400 spruce python[26921]:         keepalive=60,
+2026-10-22T10:53:42-0400 spruce python[26921]:         bind_address='',
+2026-10-22T10:53:42-0400 spruce python[26921]:         bind_port=0,
+2026-10-22T10:53:42-0400 spruce python[26921]:         username='sara',
+2026-10-22T10:53:42-0400 spruce python[26921]:         password=SecretStr('**********'),
+2026-10-22T10:53:42-0400 spruce python[26921]:         tls=TLSInfo(
+2026-10-22T10:53:42-0400 spruce python[26921]:             use_tls=False,
+2026-10-22T10:53:42-0400 spruce python[26921]:             port=8883,
+2026-10-22T10:53:42-0400 spruce python[26921]:             paths=TLSPaths(
+2026-10-22T10:53:42-0400 spruce python[26921]:                 ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/a
+2026-10-22T10:53:42-0400 spruce python[26921]: dmin/ca.crt'),
+2026-10-22T10:53:42-0400 spruce python[26921]:                 cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/admi
+2026-10-22T10:53:42-0400 spruce python[26921]: n/admin.crt'),
+2026-10-22T10:53:42-0400 spruce python[26921]:                 private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+2026-10-22T10:53:42-0400 spruce python[26921]: ts/admin/private/admin.pem')
+2026-10-22T10:53:42-0400 spruce python[26921]:             ),
+2026-10-22T10:53:42-0400 spruce python[26921]:             cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+2026-10-22T10:53:42-0400 spruce python[26921]:             ciphers=None,
+2026-10-22T10:53:42-0400 spruce python[26921]:             keyfile_password=SecretStr('')
+2026-10-22T10:53:42-0400 spruce python[26921]:         ),
+2026-10-22T10:53:42-0400 spruce python[26921]:         enabled=True,
+2026-10-22T10:53:42-0400 spruce python[26921]:         name='admin',
+2026-10-22T10:53:42-0400 spruce python[26921]:         max_timeout_seconds=86400.0
+2026-10-22T10:53:42-0400 spruce python[26921]:     ),
+2026-10-22T10:53:42-0400 spruce python[26921]:     airtable_pat='bogus_pat'
+2026-10-22T10:53:42-0400 spruce python[26921]: )
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.688 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.spruce.scada', short_name='s')> reindexing events
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.689 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.spruce.scada', short_name='s')> reindexing complete.
+2026-10-22T10:53:42-0400 spruce python[26921]:   1 events present for upload, using approximately 0 KB / 0.0 MB storage space.
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.700 [scada] clock: WallClock
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.713 Skip binding of 'trigger' to model due to model override policy.
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.714 Skip binding of 'may_trigger' to model due to model override policy.
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.771 Creating LeafAlly with strategy BufferOnly, using actors.leaf_ally.nolan.NolanLeafAlly
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.773 Skip binding of 'WakeUp' to model due to model override policy.
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.774 [derived-generator] self.timezone: America/New_York
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.775 [derived-generator] Params: AlphaTimes10=55 BetaTimes100=-10 GammaEx6=0 IntermediatePowerKw=1.5 IntermediateRswtF=100 DdPowerKw=5.5 DdRswtF=150 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=170 LoadOverestimationPercent=0 CopIntercept=1.02 CopOatCoeff=0.0257 CopLwtCoeff=0.0 CopMin=1.4 CopMinOatF=15.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.775 [derived-generator] Initialized simple falling-edge setpoint channel 'zone1-bedrooms-set'
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.776 [derived-generator] Initialized simple falling-edge setpoint channel 'zone2-living-rm-set'
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.776 [derived-generator] Initialized simple falling-edge setpoint channel 'zone3-upstairs-set'
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.776 [derived-generator] Initialized simple falling-edge setpoint channel 'zone4-garage-set'
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.795 Skip binding of 'trigger' to model due to model override policy.
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.796 Skip binding of 'may_trigger' to model due to model override policy.
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.803 [lc] Set auto.lc.n command tree
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.803 [lc] Starting NolanBufferOnlyTou in Normal (band 90-130 F, call opens 120 s before on-peak, for SamsungAE055FCYDCG)
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.803 Creating LocalControl (Standby False, gw.nolan.layout, SeasonalStorageMode BufferOnly, ServiceMode Heating), using actors.local_control.nolan.buffer_only_tou.NolanBufferOnlyTou
+2026-10-22T10:53:42-0400 spruce python[26921]: /home/pi/gridworks-scada/gw_spaceheat/actors/relay.py:216: RuntimeWarning: This channel is already in use, continuing anyway.  Use GPIO.setwarnings(False) to disable warnings.
+2026-10-22T10:53:42-0400 spruce python[26921]:   self.GPIO.setup(self._gpio_pin, GPIO.OUT)
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.829
+2026-10-22T10:53:42-0400 spruce python[26921]: Subscription info for <hw1.isone.me.versant.keene.spruce.scada> [construction]
+2026-10-22T10:53:42-0400 spruce python[26921]:   Client name: <gridworks_mqtt>  topic_dst: <ltn>
+2026-10-22T10:53:42-0400 spruce python[26921]:     Publish to: gw/hw1-isone-me-versant-keene-spruce-scada/to/ltn/SOME_MESSAGE_TYPE
+2026-10-22T10:53:42-0400 spruce python[26921]:     Subscriptions:
+2026-10-22T10:53:42-0400 spruce python[26921]:       [('gw/hw1-isone-me-versant-keene-spruce/to/s/#', <QOS.AtMostOnce: 0>)]
+2026-10-22T10:53:42-0400 spruce python[26921]:   Client name: <local_mqtt>  topic_dst: <s2>
+2026-10-22T10:53:42-0400 spruce python[26921]:     Publish to: gw/hw1-isone-me-versant-keene-spruce-scada/to/s2/SOME_MESSAGE_TYPE
+2026-10-22T10:53:42-0400 spruce python[26921]:     Subscriptions:
+2026-10-22T10:53:42-0400 spruce python[26921]:       [('gw/hw1-isone-me-versant-keene-spruce-scada-s2/to/s/#', <QOS.AtMostOnce: 0>)]
+2026-10-22T10:53:42-0400 spruce python[26921]:   Client name: <admin>  topic_dst: <admin>
+2026-10-22T10:53:42-0400 spruce python[26921]:     Publish to: gw/hw1-isone-me-versant-keene-spruce-scada/to/admin/SOME_MESSAGE_TYPE
+2026-10-22T10:53:42-0400 spruce python[26921]:     Subscriptions:
+2026-10-22T10:53:42-0400 spruce python[26921]:       [('gw/admin/to/hw1-isone-me-versant-keene-spruce-scada/#', <QOS.AtMostOnce: 0>)]
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.845 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.852 [hp-boss] auto.lc.n.hp-boss sending CloseRelay to auto.lc.n.hp-boss.secondary-pump-relay (call HpOff, sensed Unknown)
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.861 [zone1-bedrooms-opto] GpioSensor started on GPIO 17
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.861 [zone2-living-rm-opto] GpioSensor started on GPIO 27
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.862 [zone3-upstairs-opto] GpioSensor started on GPIO 22
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.862 [zone4-garage-opto] GpioSensor started on GPIO 10
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.888 [zone5-living-rm-fancoil-opto] GpioSensor started on GPIO 9
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.889 [gw108-thermistor-reader] I2cThermistorReader started at address 73
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.890 No contract
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.890 Starting with no contract
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.890 ++Proactor<s>.join()
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.892 Tasks: 75  [Proactor.join() - all tasks]
+2026-10-22T10:53:42-0400 spruce python[26921]:         1/75  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e020>
+2026-10-22T10:53:42-0400 spruce python[26921]:         2/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cf40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         3/75  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f7e93c5e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         4/75  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f780>
+2026-10-22T10:53:42-0400 spruce python[26921]:         5/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d4e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         6/75  buffer-bottom-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974140>
+2026-10-22T10:53:42-0400 spruce python[26921]:         7/75  zone1-bedrooms-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47040>
+2026-10-22T10:53:42-0400 spruce python[26921]:         8/75  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e110>
+2026-10-22T10:53:42-0400 spruce python[26921]:         9/75  zone3-upstairs-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47540>
+2026-10-22T10:53:42-0400 spruce python[26921]:         10/75  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7f7e96c900>
+2026-10-22T10:53:42-0400 spruce python[26921]:         11/75  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f7ea9dd80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         12/75  secondary-pump-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47c40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         13/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93da80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         14/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cb80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         15/75  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7e94f880>
+2026-10-22T10:53:42-0400 spruce python[26921]:         16/75  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f7e8c82c0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         17/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d030>
+2026-10-22T10:53:42-0400 spruce python[26921]:         18/75  NolanBufferOnlyTou keepalive    done:False   exception: None  <coroutine object NolanBufferOnlyTou.main at 0x7f7ea3ecf0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         19/75  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e200>
+2026-10-22T10:53:42-0400 spruce python[26921]:         20/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d5d0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         21/75  tank1-top-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974240>
+2026-10-22T10:53:42-0400 spruce python[26921]:         22/75  zone1-bedrooms-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47140>
+2026-10-22T10:53:42-0400 spruce python[26921]:         23/75  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f030>
+2026-10-22T10:53:42-0400 spruce python[26921]:         24/75  zone4-garage-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47640>
+2026-10-22T10:53:42-0400 spruce python[26921]:         25/75  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e2f0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         26/75  iso-valve-relay-boot-adopt      done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47d40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         27/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93db70>
+2026-10-22T10:53:42-0400 spruce python[26921]:         28/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cc70>
+2026-10-22T10:53:42-0400 spruce python[26921]:         29/75  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f1d0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         30/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d120>
+2026-10-22T10:53:42-0400 spruce python[26921]:         31/75  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e3e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         32/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d6c0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         33/75  tank1-bottom-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974340>
+2026-10-22T10:53:42-0400 spruce python[26921]:         34/75  zone2-living-rm-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47240>
+2026-10-22T10:53:42-0400 spruce python[26921]:         35/75  Task-1                          done:False   exception: None  <coroutine object Proactor.run_forever at 0x7f7ef1e800>
+2026-10-22T10:53:42-0400 spruce python[26921]:         36/75  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f2a0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         37/75  zone4-garage-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47740>
+2026-10-22T10:53:42-0400 spruce python[26921]:         38/75  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f7ea3f850>
+2026-10-22T10:53:42-0400 spruce python[26921]:         39/75  charge-valve-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47940>
+2026-10-22T10:53:42-0400 spruce python[26921]:         40/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93dc60>
+2026-10-22T10:53:42-0400 spruce python[26921]:         41/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cd60>
+2026-10-22T10:53:42-0400 spruce python[26921]:         42/75  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47b40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         43/75  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f370>
+2026-10-22T10:53:42-0400 spruce python[26921]:         44/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d210>
+2026-10-22T10:53:42-0400 spruce python[26921]:         45/75  contract_resumer                done:False   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7f7ea3f920>
+2026-10-22T10:53:42-0400 spruce python[26921]:         46/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d7b0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         47/75  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f7ea3ef60>
+2026-10-22T10:53:42-0400 spruce python[26921]:         48/75  zone2-living-rm-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47340>
+2026-10-22T10:53:42-0400 spruce python[26921]:         49/75  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f440>
+2026-10-22T10:53:42-0400 spruce python[26921]:         50/75  zone5-living-rm-fancoil-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47840>
+2026-10-22T10:53:42-0400 spruce python[26921]:         51/75  NolanBufferOnlyTou tou          done:False   exception: None  <coroutine object NolanBufferOnlyTou.tou_loop at 0x7f7e96cc80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         52/75  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f7ea3f9f0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         53/75  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47e40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         54/75  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93dd50>
+2026-10-22T10:53:42-0400 spruce python[26921]:         55/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ce50>
+2026-10-22T10:53:42-0400 spruce python[26921]:         56/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d990>
+2026-10-22T10:53:42-0400 spruce python[26921]:         57/75  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f510>
+2026-10-22T10:53:42-0400 spruce python[26921]:         58/75  zone5-living-rm-fancoil-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47a40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         59/75  i2c-bus-init-guard              done:False   exception: None  <coroutine object I2cBus._init_expanders at 0x7f7ea9e0e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         60/75  unknown_channel_logger          done:False   exception: None  <coroutine object Scada.unknown_channel_logging_task at 0x7f7e93e4d0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         61/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d8a0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         62/75  pat_watchdog                    done:False   exception: None  <coroutine object WatchdogManager._check_pats at 0x7f7eeff6e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         63/75  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93de40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         64/75  zone3-upstairs-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47440>
+2026-10-22T10:53:42-0400 spruce python[26921]:         65/75  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f7ea9e440>
+2026-10-22T10:53:42-0400 spruce python[26921]:         66/75  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f5e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         67/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d3f0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         68/75  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f7ea3ee90>
+2026-10-22T10:53:42-0400 spruce python[26921]:         69/75  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7f7ea3fac0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         70/75  buffer-top-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974040>
+2026-10-22T10:53:42-0400 spruce python[26921]:         71/75  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93df30>
+2026-10-22T10:53:42-0400 spruce python[26921]:         72/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d300>
+2026-10-22T10:53:42-0400 spruce python[26921]:         73/75  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f7eec7d80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         74/75  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f6b0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         75/75  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ca90>
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.895 Tasks: 123  [WAITING FOR]
+2026-10-22T10:53:42-0400 spruce python[26921]:         1/123  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f7e93c5e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         2/123  la.join                         done:False   exception: None  <coroutine object LeafAlly.join at 0x7f7e94ff40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         3/123  buffer-bottom-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974140>
+2026-10-22T10:53:42-0400 spruce python[26921]:         4/123  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7f7e96c900>
+2026-10-22T10:53:42-0400 spruce python[26921]:         5/123  secondary-btu.join              done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f67f14040>
+2026-10-22T10:53:42-0400 spruce python[26921]:         6/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93da80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         7/123  secondary-pump-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7f67f0e080>
+2026-10-22T10:53:42-0400 spruce python[26921]:         8/123  NolanBufferOnlyTou keepalive    done:False   exception: None  <coroutine object NolanBufferOnlyTou.main at 0x7f7ea3ecf0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         9/123  five-v-boss.join                done:False   exception: None  <coroutine object FiveVBoss.join at 0x7f67f0c100>
+2026-10-22T10:53:42-0400 spruce python[26921]:         10/123  tank1-top-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974240>
+2026-10-22T10:53:42-0400 spruce python[26921]:         11/123  store-btu.join                  done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f67f141c0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         12/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93db70>
+2026-10-22T10:53:42-0400 spruce python[26921]:         13/123  iso-valve-relay.join            done:False   exception: None  <coroutine object Relay.join at 0x7f67f0e200>
+2026-10-22T10:53:42-0400 spruce python[26921]:         14/123  pico-cycler.join                done:False   exception: None  <coroutine object PicoCycler.join at 0x7f67f0c280>
+2026-10-22T10:53:42-0400 spruce python[26921]:         15/123  tank1-bottom-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974340>
+2026-10-22T10:53:42-0400 spruce python[26921]:         16/123  dist-btu.join                   done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f67f14340>
+2026-10-22T10:53:42-0400 spruce python[26921]:         17/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93dc60>
+2026-10-22T10:53:42-0400 spruce python[26921]:         18/123  charge-valve-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7f67f0e380>
+2026-10-22T10:53:42-0400 spruce python[26921]:         19/123  derived-generator.join          done:False   exception: None  <coroutine object DerivedGenerator.join at 0x7f67f0c400>
+2026-10-22T10:53:42-0400 spruce python[26921]:         20/123  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f7ea3ef60>
+2026-10-22T10:53:42-0400 spruce python[26921]:         21/123  NolanBufferOnlyTou tou          done:False   exception: None  <coroutine object NolanBufferOnlyTou.tou_loop at 0x7f7e96cc80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         22/123  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93dd50>
+2026-10-22T10:53:42-0400 spruce python[26921]:         23/123  hp-scada-ops-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7f67f0df00>
+2026-10-22T10:53:42-0400 spruce python[26921]:         24/123  store-pump-relay.join           done:False   exception: None  <coroutine object Relay.join at 0x7f67f0e500>
+2026-10-22T10:53:42-0400 spruce python[26921]:         25/123  i2c-bus-init-guard              done:False   exception: None  <coroutine object I2cBus._init_expanders at 0x7f7ea9e0e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         26/123  hp-boss.join                    done:False   exception: None  <coroutine object HpBoss.join at 0x7f67f0c580>
+2026-10-22T10:53:42-0400 spruce python[26921]:         27/123  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93de40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         28/123  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f7ea3ee90>
+2026-10-22T10:53:42-0400 spruce python[26921]:         29/123  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93df30>
+2026-10-22T10:53:42-0400 spruce python[26921]:         30/123  buffer-top-elt-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7f67f0e680>
+2026-10-22T10:53:42-0400 spruce python[26921]:         31/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ca90>
+2026-10-22T10:53:42-0400 spruce python[26921]:         32/123  hp-watch.join                   done:False   exception: None  <coroutine object HpWatch.join at 0x7f67f0c700>
+2026-10-22T10:53:42-0400 spruce python[26921]:         33/123  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e020>
+2026-10-22T10:53:42-0400 spruce python[26921]:         34/123  zone1-bedrooms-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47040>
+2026-10-22T10:53:42-0400 spruce python[26921]:         35/123  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e110>
+2026-10-22T10:53:42-0400 spruce python[26921]:         36/123  buffer-bottom-elt-relay.join    done:False   exception: None  <coroutine object Relay.join at 0x7f67f0e800>
+2026-10-22T10:53:42-0400 spruce python[26921]:         37/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cb80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         38/123  cold-watch.join                 done:False   exception: None  <coroutine object ColdWatch.join at 0x7f67f0c880>
+2026-10-22T10:53:42-0400 spruce python[26921]:         39/123  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f7e8c82c0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         40/123  zone1-bedrooms-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47140>
+2026-10-22T10:53:42-0400 spruce python[26921]:         41/123  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f030>
+2026-10-22T10:53:42-0400 spruce python[26921]:         42/123  tank1-top-elt-relay.join        done:False   exception: None  <coroutine object Relay.join at 0x7f67f0e980>
+2026-10-22T10:53:42-0400 spruce python[26921]:         43/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cc70>
+2026-10-22T10:53:42-0400 spruce python[26921]:         44/123  lc.join                         done:False   exception: None  <coroutine object LocalControl.join at 0x7f67f0ca00>
+2026-10-22T10:53:42-0400 spruce python[26921]:         45/123  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f1d0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         46/123  zone2-living-rm-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47240>
+2026-10-22T10:53:42-0400 spruce python[26921]:         47/123  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f2a0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         48/123  tank1-bottom-elt-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7f67f0eb00>
+2026-10-22T10:53:42-0400 spruce python[26921]:         49/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cd60>
+2026-10-22T10:53:42-0400 spruce python[26921]:         50/123  i2c-bus.join                    done:False   exception: None  <coroutine object I2cBus.join at 0x7f67f0cb80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         51/123  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f370>
+2026-10-22T10:53:42-0400 spruce python[26921]:         52/123  zone2-living-rm-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47340>
+2026-10-22T10:53:42-0400 spruce python[26921]:         53/123  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f440>
+2026-10-22T10:53:42-0400 spruce python[26921]:         54/123  secondary-010v.join             done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f67f0ec80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         55/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ce50>
+2026-10-22T10:53:42-0400 spruce python[26921]:         56/123  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f67f0cd00>
+2026-10-22T10:53:42-0400 spruce python[26921]:         57/123  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f510>
+2026-10-22T10:53:42-0400 spruce python[26921]:         58/123  zone3-upstairs-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47440>
+2026-10-22T10:53:42-0400 spruce python[26921]:         59/123  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f5e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         60/123  zone1-bedrooms-opto.join        done:False   exception: None  <coroutine object GpioSensor.join at 0x7f67f0ee00>
+2026-10-22T10:53:42-0400 spruce python[26921]:         61/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d300>
+2026-10-22T10:53:42-0400 spruce python[26921]:         62/123  vdc-relay.join                  done:False   exception: None  <coroutine object Relay.join at 0x7f67f0ce80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         63/123  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f6b0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         64/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cf40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         65/123  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f780>
+2026-10-22T10:53:42-0400 spruce python[26921]:         66/123  zone2-living-rm-opto.join       done:False   exception: None  <coroutine object GpioSensor.join at 0x7f67f0ef80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         67/123  zone3-upstairs-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47540>
+2026-10-22T10:53:42-0400 spruce python[26921]:         68/123  zone1-bedrooms-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f67f0d000>
+2026-10-22T10:53:42-0400 spruce python[26921]:         69/123  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f7ea9dd80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         70/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d030>
+2026-10-22T10:53:42-0400 spruce python[26921]:         71/123  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e200>
+2026-10-22T10:53:42-0400 spruce python[26921]:         72/123  zone3-upstairs-opto.join        done:False   exception: None  <coroutine object GpioSensor.join at 0x7f67f0f100>
+2026-10-22T10:53:42-0400 spruce python[26921]:         73/123  zone4-garage-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47640>
+2026-10-22T10:53:42-0400 spruce python[26921]:         74/123  zone1-bedrooms-ops-relay.join   done:False   exception: None  <coroutine object Relay.join at 0x7f67f0d180>
+2026-10-22T10:53:42-0400 spruce python[26921]:         75/123  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e2f0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         76/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d120>
+2026-10-22T10:53:42-0400 spruce python[26921]:         77/123  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e3e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         78/123  zone4-garage-opto.join          done:False   exception: None  <coroutine object GpioSensor.join at 0x7f67f0f280>
+2026-10-22T10:53:42-0400 spruce python[26921]:         79/123  zone4-garage-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47740>
+2026-10-22T10:53:42-0400 spruce python[26921]:         80/123  zone2-living-rm-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f67f0d300>
+2026-10-22T10:53:42-0400 spruce python[26921]:         81/123  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f7ea3f850>
+2026-10-22T10:53:42-0400 spruce python[26921]:         82/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d210>
+2026-10-22T10:53:42-0400 spruce python[26921]:         83/123  contract_resumer                done:False   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7f7ea3f920>
+2026-10-22T10:53:42-0400 spruce python[26921]:         84/123  zone5-living-rm-fancoil-opto.join  done:False   exception: None  <coroutine object GpioSensor.join at 0x7f67f0f400>
+2026-10-22T10:53:42-0400 spruce python[26921]:         85/123  zone5-living-rm-fancoil-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47840>
+2026-10-22T10:53:42-0400 spruce python[26921]:         86/123  zone2-living-rm-ops-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f67f0d480>
+2026-10-22T10:53:42-0400 spruce python[26921]:         87/123  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f7ea3f9f0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         88/123  zone5-living-rm-fancoil-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47a40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         89/123  unknown_channel_logger          done:False   exception: None  <coroutine object Scada.unknown_channel_logging_task at 0x7f7e93e4d0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         90/123  gw108-thermistor-reader.join    done:False   exception: None  <coroutine object I2cThermistorReader.join at 0x7f67f0f580>
+2026-10-22T10:53:42-0400 spruce python[26921]:         91/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d3f0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         92/123  zone3-upstairs-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f67f0d600>
+2026-10-22T10:53:42-0400 spruce python[26921]:         93/123  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7f7ea3fac0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         94/123  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47b40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         95/123  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f7ea9e440>
+2026-10-22T10:53:42-0400 spruce python[26921]:         96/123  buffer.join                     done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0f700>
+2026-10-22T10:53:42-0400 spruce python[26921]:         97/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d4e0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         98/123  zone3-upstairs-ops-relay.join   done:False   exception: None  <coroutine object Relay.join at 0x7f67f0d780>
+2026-10-22T10:53:42-0400 spruce python[26921]:         99/123  secondary-pump-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47c40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         100/123  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7e94f880>
+2026-10-22T10:53:42-0400 spruce python[26921]:         101/123  tank1.join                      done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0f880>
+2026-10-22T10:53:42-0400 spruce python[26921]:         102/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d5d0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         103/123  zone4-garage-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f67f0d900>
+2026-10-22T10:53:42-0400 spruce python[26921]:         104/123  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f7e96ce40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         105/123  iso-valve-relay-boot-adopt      done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47d40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         106/123  fancoil.join                    done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0fa00>
+2026-10-22T10:53:42-0400 spruce python[26921]:         107/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d6c0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         108/123  zone4-garage-ops-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7f67f0da80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         109/123  io_loop_manager.join            done:False   exception: None  <coroutine object IOLoop.join at 0x7f7e94fac0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         110/123  charge-valve-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47940>
+2026-10-22T10:53:42-0400 spruce python[26921]:         111/123  floor1.join                     done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0fb80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         112/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d7b0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         113/123  zone5-living-rm-fancoil-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f67f0dc00>
+2026-10-22T10:53:42-0400 spruce python[26921]:         114/123  _WebManager.join                done:False   exception: None  <coroutine object _WebManager.join at 0x7f7e94fc40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         115/123  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47e40>
+2026-10-22T10:53:42-0400 spruce python[26921]:         116/123  pipes1.join                     done:False   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0fd00>
+2026-10-22T10:53:42-0400 spruce python[26921]:         117/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d8a0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         118/123  zone5-living-rm-fancoil-ops-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7f67f0dd80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         119/123  s.join                          done:False   exception: None  <coroutine object PrimeActor.join at 0x7f7e94fdc0>
+2026-10-22T10:53:42-0400 spruce python[26921]:         120/123  buffer-top-elt-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974040>
+2026-10-22T10:53:42-0400 spruce python[26921]:         121/123  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f7eec7d80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         122/123  primary-btu.join                done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7f67f0fe80>
+2026-10-22T10:53:42-0400 spruce python[26921]:         123/123  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d990>
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.897 [derived-generator] SynthGen about to get forecasts
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.902 [cold-watch] Could not find latest temperature for bedrooms!
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.903 [cold-watch] Could not find latest temperature for living-rm!
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.903 [cold-watch] Could not find latest temperature for upstairs!
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.905 [i2c-bus] expander 0x20: already configured — warm takeover, outputs left driving
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.906 [i2c-bus] expander 0x21: already configured — warm takeover, outputs left driving
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.934 [scada] Actuator secondary-010v is ready. 1/1
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.934 [scada] All actuators are ready!
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.935 [lc] SwitchToWallThermostat to zone1-bedrooms-failsafe-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.936 [lc] OpenRelay to zone1-bedrooms-ops-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.937 [lc] SwitchToWallThermostat to zone2-living-rm-failsafe-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.938 [lc] OpenRelay to zone2-living-rm-ops-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.938 [lc] SwitchToWallThermostat to zone3-upstairs-failsafe-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.939 [lc] OpenRelay to zone3-upstairs-ops-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.940 [lc] SwitchToWallThermostat to zone4-garage-failsafe-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.940 [lc] OpenRelay to zone4-garage-ops-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.941 [lc] SwitchToWallThermostat to zone5-living-rm-fancoil-failsafe-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.942 [lc] OpenRelay to zone5-living-rm-fancoil-ops-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.942 [lc] CloseValve to charge-valve-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.943 [lc] OpenRelay to store-pump-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.944 [lc] OpenRelay to buffer-top-elt-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.944 [lc] OpenRelay to buffer-bottom-elt-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.945 [lc] TurnOff to hp-boss
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.946 [lc] OpenValve to iso-valve-relay
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.947 [lc] Boot: Initializing -> HpCallOff
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.960 admin:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.988 [derived-generator] Setpoint zone1-bedrooms-set: phase=Unknown
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.989 [derived-generator] Setpoint zone2-living-rm-set: phase=Unknown
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.991 [derived-generator] Setpoint zone3-upstairs-set: phase=Unknown
+2026-10-22T10:53:42-0400 spruce python[26921]: 2026-10-22 10:53:42.992 [derived-generator] Setpoint zone4-garage-set: phase=Unknown
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.005 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='cd8ced82-801f-44b7-b111-4bd126a486f9' SendTimeUnixMs=1792680822945 TypeName='fsm.event' Version='000'
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.006 [hp-boss] Command ec789bae-e876-4711-ae3d-675da47e8605 superseded by cd8ced82-801f-44b7-b111-4bd126a486f9 before its relay reported
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.008 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.038 Tasks: 70  [DONE]
+2026-10-22T10:53:43-0400 spruce python[26921]:         1/70  la.join                         done:True   exception: None  <coroutine object LeafAlly.join at 0x7f7e94ff40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         2/70  zone2-living-rm-opto.join       done:True   exception: None  <coroutine object GpioSensor.join at 0x7f67f0ef80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         3/70  zone3-upstairs-ops-relay.join   done:True   exception: None  <coroutine object Relay.join at 0x7f67f0d780>
+2026-10-22T10:53:43-0400 spruce python[26921]:         4/70  buffer-bottom-elt-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974140>
+2026-10-22T10:53:43-0400 spruce python[26921]:         5/70  zone1-bedrooms-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47040>
+2026-10-22T10:53:43-0400 spruce python[26921]:         6/70  zone1-bedrooms-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f67f0d000>
+2026-10-22T10:53:43-0400 spruce python[26921]:         7/70  zone3-upstairs-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47540>
+2026-10-22T10:53:43-0400 spruce python[26921]:         8/70  buffer-bottom-elt-relay.join    done:True   exception: None  <coroutine object Relay.join at 0x7f67f0e800>
+2026-10-22T10:53:43-0400 spruce python[26921]:         9/70  secondary-btu.join              done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f67f14040>
+2026-10-22T10:53:43-0400 spruce python[26921]:         10/70  secondary-pump-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47c40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         11/70  secondary-pump-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7f67f0e080>
+2026-10-22T10:53:43-0400 spruce python[26921]:         12/70  cold-watch.join                 done:True   exception: None  <coroutine object ColdWatch.join at 0x7f67f0c880>
+2026-10-22T10:53:43-0400 spruce python[26921]:         13/70  tank1.join                      done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0f880>
+2026-10-22T10:53:43-0400 spruce python[26921]:         14/70  zone3-upstairs-opto.join        done:True   exception: None  <coroutine object GpioSensor.join at 0x7f67f0f100>
+2026-10-22T10:53:43-0400 spruce python[26921]:         15/70  five-v-boss.join                done:True   exception: None  <coroutine object FiveVBoss.join at 0x7f67f0c100>
+2026-10-22T10:53:43-0400 spruce python[26921]:         16/70  zone4-garage-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f67f0d900>
+2026-10-22T10:53:43-0400 spruce python[26921]:         17/70  tank1-top-elt-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974240>
+2026-10-22T10:53:43-0400 spruce python[26921]:         18/70  zone1-bedrooms-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47140>
+2026-10-22T10:53:43-0400 spruce python[26921]:         19/70  zone4-garage-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47640>
+2026-10-22T10:53:43-0400 spruce python[26921]:         20/70  zone1-bedrooms-ops-relay.join   done:True   exception: None  <coroutine object Relay.join at 0x7f67f0d180>
+2026-10-22T10:53:43-0400 spruce python[26921]:         21/70  tank1-top-elt-relay.join        done:True   exception: None  <coroutine object Relay.join at 0x7f67f0e980>
+2026-10-22T10:53:43-0400 spruce python[26921]:         22/70  store-btu.join                  done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f67f141c0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         23/70  iso-valve-relay-boot-adopt      done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47d40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         24/70  iso-valve-relay.join            done:True   exception: None  <coroutine object Relay.join at 0x7f67f0e200>
+2026-10-22T10:53:43-0400 spruce python[26921]:         25/70  lc.join                         done:True   exception: None  <coroutine object LocalControl.join at 0x7f67f0ca00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         26/70  fancoil.join                    done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0fa00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         27/70  pico-cycler.join                done:True   exception: None  <coroutine object PicoCycler.join at 0x7f67f0c280>
+2026-10-22T10:53:43-0400 spruce python[26921]:         28/70  zone4-garage-opto.join          done:True   exception: None  <coroutine object GpioSensor.join at 0x7f67f0f280>
+2026-10-22T10:53:43-0400 spruce python[26921]:         29/70  zone4-garage-ops-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7f67f0da80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         30/70  tank1-bottom-elt-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974340>
+2026-10-22T10:53:43-0400 spruce python[26921]:         31/70  zone2-living-rm-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47240>
+2026-10-22T10:53:43-0400 spruce python[26921]:         32/70  io_loop_manager.join            done:True   exception: None  <coroutine object IOLoop.join at 0x7f7e94fac0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         33/70  zone4-garage-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47740>
+2026-10-22T10:53:43-0400 spruce python[26921]:         34/70  zone2-living-rm-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f67f0d300>
+2026-10-22T10:53:43-0400 spruce python[26921]:         35/70  tank1-bottom-elt-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7f67f0eb00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         36/70  dist-btu.join                   done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f67f14340>
+2026-10-22T10:53:43-0400 spruce python[26921]:         37/70  charge-valve-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47940>
+2026-10-22T10:53:43-0400 spruce python[26921]:         38/70  charge-valve-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7f67f0e380>
+2026-10-22T10:53:43-0400 spruce python[26921]:         39/70  i2c-bus.join                    done:True   exception: None  <coroutine object I2cBus.join at 0x7f67f0cb80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         40/70  floor1.join                     done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0fb80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         41/70  derived-generator.join          done:True   exception: None  <coroutine object DerivedGenerator.join at 0x7f67f0c400>
+2026-10-22T10:53:43-0400 spruce python[26921]:         42/70  contract_resumer                done:True   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7f7ea3f920>
+2026-10-22T10:53:43-0400 spruce python[26921]:         43/70  zone5-living-rm-fancoil-opto.join  done:True   exception: None  <coroutine object GpioSensor.join at 0x7f67f0f400>
+2026-10-22T10:53:43-0400 spruce python[26921]:         44/70  zone5-living-rm-fancoil-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f67f0dc00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         45/70  zone2-living-rm-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47340>
+2026-10-22T10:53:43-0400 spruce python[26921]:         46/70  _WebManager.join                done:True   exception: None  <coroutine object _WebManager.join at 0x7f7e94fc40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         47/70  zone5-living-rm-fancoil-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47840>
+2026-10-22T10:53:43-0400 spruce python[26921]:         48/70  zone2-living-rm-ops-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f67f0d480>
+2026-10-22T10:53:43-0400 spruce python[26921]:         49/70  secondary-010v.join             done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7f67f0ec80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         50/70  store-pump-relay-boot-adopt     done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47e40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         51/70  store-pump-relay.join           done:True   exception: None  <coroutine object Relay.join at 0x7f67f0e500>
+2026-10-22T10:53:43-0400 spruce python[26921]:         52/70  pipes1.join                     done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0fd00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         53/70  hp-scada-ops-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7f67f0df00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         54/70  zone5-living-rm-fancoil-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47a40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         55/70  i2c-bus-init-guard              done:True   exception: None  <coroutine object I2cBus._init_expanders at 0x7f7ea9e0e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         56/70  hp-boss.join                    done:True   exception: None  <coroutine object HpBoss.join at 0x7f67f0c580>
+2026-10-22T10:53:43-0400 spruce python[26921]:         57/70  unknown_channel_logger          done:True   exception: None  <coroutine object Scada.unknown_channel_logging_task at 0x7f7e93e4d0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         58/70  gw108-thermistor-reader.join    done:True   exception: None  <coroutine object I2cThermistorReader.join at 0x7f67f0f580>
+2026-10-22T10:53:43-0400 spruce python[26921]:         59/70  buffer.join                     done:True   exception: None  <coroutine object ApiTankModule.join at 0x7f67f0f700>
+2026-10-22T10:53:43-0400 spruce python[26921]:         60/70  zone5-living-rm-fancoil-ops-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f67f0dd80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         61/70  zone3-upstairs-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47440>
+2026-10-22T10:53:43-0400 spruce python[26921]:         62/70  s.join                          done:True   exception: None  <coroutine object PrimeActor.join at 0x7f7e94fdc0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         63/70  zone3-upstairs-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7f67f0d600>
+2026-10-22T10:53:43-0400 spruce python[26921]:         64/70  zone1-bedrooms-opto.join        done:True   exception: None  <coroutine object GpioSensor.join at 0x7f67f0ee00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         65/70  buffer-top-elt-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7e974040>
+2026-10-22T10:53:43-0400 spruce python[26921]:         66/70  buffer-top-elt-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7f67f0e680>
+2026-10-22T10:53:43-0400 spruce python[26921]:         67/70  vdc-relay.join                  done:True   exception: None  <coroutine object Relay.join at 0x7f67f0ce80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         68/70  primary-btu.join                done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7f67f0fe80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         69/70  hp-scada-ops-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7f7ea47b40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         70/70  hp-watch.join                   done:True   exception: None  <coroutine object HpWatch.join at 0x7f67f0c700>
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.039 Tasks: 53  [PENDING]
+2026-10-22T10:53:43-0400 spruce python[26921]:         1/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cf40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         2/53  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e020>
+2026-10-22T10:53:43-0400 spruce python[26921]:         3/53  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f7e93c5e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         4/53  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f780>
+2026-10-22T10:53:43-0400 spruce python[26921]:         5/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d4e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         6/53  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e110>
+2026-10-22T10:53:43-0400 spruce python[26921]:         7/53  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7f7e96c900>
+2026-10-22T10:53:43-0400 spruce python[26921]:         8/53  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f7ea9dd80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         9/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93da80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         10/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cb80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         11/53  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7e94f880>
+2026-10-22T10:53:43-0400 spruce python[26921]:         12/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d030>
+2026-10-22T10:53:43-0400 spruce python[26921]:         13/53  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f7e8c82c0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         14/53  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e200>
+2026-10-22T10:53:43-0400 spruce python[26921]:         15/53  NolanBufferOnlyTou keepalive    done:False   exception: None  <coroutine object NolanBufferOnlyTou.main at 0x7f7ea3ecf0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         16/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d5d0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         17/53  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f7e96ce40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         18/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f030>
+2026-10-22T10:53:43-0400 spruce python[26921]:         19/53  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e2f0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         20/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93db70>
+2026-10-22T10:53:43-0400 spruce python[26921]:         21/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cc70>
+2026-10-22T10:53:43-0400 spruce python[26921]:         22/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d120>
+2026-10-22T10:53:43-0400 spruce python[26921]:         23/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f1d0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         24/53  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e3e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         25/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d6c0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         26/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f2a0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         27/53  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f7ea3f850>
+2026-10-22T10:53:43-0400 spruce python[26921]:         28/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93dc60>
+2026-10-22T10:53:43-0400 spruce python[26921]:         29/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cd60>
+2026-10-22T10:53:43-0400 spruce python[26921]:         30/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d210>
+2026-10-22T10:53:43-0400 spruce python[26921]:         31/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f370>
+2026-10-22T10:53:43-0400 spruce python[26921]:         32/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d7b0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         33/53  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f7ea3ef60>
+2026-10-22T10:53:43-0400 spruce python[26921]:         34/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ca90>
+2026-10-22T10:53:43-0400 spruce python[26921]:         35/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f440>
+2026-10-22T10:53:43-0400 spruce python[26921]:         36/53  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f7ea3f9f0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         37/53  NolanBufferOnlyTou tou          done:False   exception: None  <coroutine object NolanBufferOnlyTou.tou_loop at 0x7f7e96cc80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         38/53  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93dd50>
+2026-10-22T10:53:43-0400 spruce python[26921]:         39/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ce50>
+2026-10-22T10:53:43-0400 spruce python[26921]:         40/53  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f67f0cd00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         41/53  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f510>
+2026-10-22T10:53:43-0400 spruce python[26921]:         42/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d8a0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         43/53  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93de40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         44/53  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f7ea9e440>
+2026-10-22T10:53:43-0400 spruce python[26921]:         45/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d3f0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         46/53  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f5e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         47/53  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f7ea3ee90>
+2026-10-22T10:53:43-0400 spruce python[26921]:         48/53  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7f7ea3fac0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         49/53  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93df30>
+2026-10-22T10:53:43-0400 spruce python[26921]:         50/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d300>
+2026-10-22T10:53:43-0400 spruce python[26921]:         51/53  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f7eec7d80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         52/53  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f6b0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         53/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d990>
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.040 Tasks: 53  [WAITING FOR]
+2026-10-22T10:53:43-0400 spruce python[26921]:         1/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cf40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         2/53  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e020>
+2026-10-22T10:53:43-0400 spruce python[26921]:         3/53  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f7e93c5e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         4/53  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f780>
+2026-10-22T10:53:43-0400 spruce python[26921]:         5/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d4e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         6/53  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e110>
+2026-10-22T10:53:43-0400 spruce python[26921]:         7/53  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7f7e96c900>
+2026-10-22T10:53:43-0400 spruce python[26921]:         8/53  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f7ea9dd80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         9/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93da80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         10/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cb80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         11/53  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7e94f880>
+2026-10-22T10:53:43-0400 spruce python[26921]:         12/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d030>
+2026-10-22T10:53:43-0400 spruce python[26921]:         13/53  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f7e8c82c0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         14/53  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e200>
+2026-10-22T10:53:43-0400 spruce python[26921]:         15/53  NolanBufferOnlyTou keepalive    done:False   exception: None  <coroutine object NolanBufferOnlyTou.main at 0x7f7ea3ecf0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         16/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d5d0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         17/53  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f7e96ce40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         18/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f030>
+2026-10-22T10:53:43-0400 spruce python[26921]:         19/53  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e2f0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         20/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93db70>
+2026-10-22T10:53:43-0400 spruce python[26921]:         21/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cc70>
+2026-10-22T10:53:43-0400 spruce python[26921]:         22/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d120>
+2026-10-22T10:53:43-0400 spruce python[26921]:         23/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f1d0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         24/53  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e3e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         25/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d6c0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         26/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f2a0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         27/53  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f7ea3f850>
+2026-10-22T10:53:43-0400 spruce python[26921]:         28/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93dc60>
+2026-10-22T10:53:43-0400 spruce python[26921]:         29/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cd60>
+2026-10-22T10:53:43-0400 spruce python[26921]:         30/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d210>
+2026-10-22T10:53:43-0400 spruce python[26921]:         31/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f370>
+2026-10-22T10:53:43-0400 spruce python[26921]:         32/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d7b0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         33/53  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f7ea3ef60>
+2026-10-22T10:53:43-0400 spruce python[26921]:         34/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ca90>
+2026-10-22T10:53:43-0400 spruce python[26921]:         35/53  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f440>
+2026-10-22T10:53:43-0400 spruce python[26921]:         36/53  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f7ea3f9f0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         37/53  NolanBufferOnlyTou tou          done:False   exception: None  <coroutine object NolanBufferOnlyTou.tou_loop at 0x7f7e96cc80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         38/53  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93dd50>
+2026-10-22T10:53:43-0400 spruce python[26921]:         39/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ce50>
+2026-10-22T10:53:43-0400 spruce python[26921]:         40/53  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f67f0cd00>
+2026-10-22T10:53:43-0400 spruce python[26921]:         41/53  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f510>
+2026-10-22T10:53:43-0400 spruce python[26921]:         42/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d8a0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         43/53  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93de40>
+2026-10-22T10:53:43-0400 spruce python[26921]:         44/53  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f7ea9e440>
+2026-10-22T10:53:43-0400 spruce python[26921]:         45/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d3f0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         46/53  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f5e0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         47/53  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f7ea3ee90>
+2026-10-22T10:53:43-0400 spruce python[26921]:         48/53  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7f7ea3fac0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         49/53  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93df30>
+2026-10-22T10:53:43-0400 spruce python[26921]:         50/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d300>
+2026-10-22T10:53:43-0400 spruce python[26921]:         51/53  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f7eec7d80>
+2026-10-22T10:53:43-0400 spruce python[26921]:         52/53  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f6b0>
+2026-10-22T10:53:43-0400 spruce python[26921]:         53/53  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d990>
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.040 admin:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.044 local_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.095 [secondary-010v] secondary-010v: EEPROM verified against the ops power-on level
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.118 local_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.123 [hp-watch] Unknown -> HpDetectedOff
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.130 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.secondary-pump-relay (call HpOff, sensed HpDetectedOff)
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.182 gridworks_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.223 [derived-generator] Setpoint zone1-bedrooms-set: phase=SuspectZoneAboveSetpoint
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.280 gridworks_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.332 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.332 start_reupload: sent 5 events. 3 reupload events pending. Total events in reupload: 8.  Reuploads started: 1  completed: 0.
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.376 [derived-generator] Setpoint zone2-living-rm-set: phase=SuspectZoneAboveSetpoint
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.514 [derived-generator] Setpoint zone3-upstairs-set: phase=SuspectZoneAboveSetpoint
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.543 Reupload completed. Reuploads started: 1  completed: 1.
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.579 [derived-generator] Calculating rswt_quadratic_params: [ 4.91228070e-04 -4.28070175e-02  8.68421053e-01]
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.587 [derived-generator] Got a Live forecast starting 2026-10-22 11:00:00
+2026-10-22T10:53:43-0400 spruce python[26921]: 2026-10-22 10:53:43.650 [derived-generator] Setpoint zone4-garage-set: phase=SuspectZoneAboveSetpoint
+2026-10-22T10:53:44-0400 spruce python[26921]: 2026-10-22 10:53:44.082 Tasks: 1  [DONE]
+2026-10-22T10:53:44-0400 spruce python[26921]:         1/1  startup_announcer               done:True   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7f7e94f880>
+2026-10-22T10:53:44-0400 spruce python[26921]: 2026-10-22 10:53:44.083 Tasks: 52  [PENDING]
+2026-10-22T10:53:44-0400 spruce python[26921]:         1/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cf40>
+2026-10-22T10:53:44-0400 spruce python[26921]:         2/52  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e020>
+2026-10-22T10:53:44-0400 spruce python[26921]:         3/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d4e0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         4/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f780>
+2026-10-22T10:53:44-0400 spruce python[26921]:         5/52  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f7e93c5e0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         6/52  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e110>
+2026-10-22T10:53:44-0400 spruce python[26921]:         7/52  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7f7e96c900>
+2026-10-22T10:53:44-0400 spruce python[26921]:         8/52  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f7ea9dd80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         9/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93da80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         10/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cb80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         11/52  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f7e8c82c0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         12/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d030>
+2026-10-22T10:53:44-0400 spruce python[26921]:         13/52  NolanBufferOnlyTou keepalive    done:False   exception: None  <coroutine object NolanBufferOnlyTou.main at 0x7f7ea3ecf0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         14/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d5d0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         15/52  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e200>
+2026-10-22T10:53:44-0400 spruce python[26921]:         16/52  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f7e96ce40>
+2026-10-22T10:53:44-0400 spruce python[26921]:         17/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f030>
+2026-10-22T10:53:44-0400 spruce python[26921]:         18/52  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e2f0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         19/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93db70>
+2026-10-22T10:53:44-0400 spruce python[26921]:         20/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cc70>
+2026-10-22T10:53:44-0400 spruce python[26921]:         21/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d120>
+2026-10-22T10:53:44-0400 spruce python[26921]:         22/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f1d0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         23/52  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e3e0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         24/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d6c0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         25/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f2a0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         26/52  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f7ea3f850>
+2026-10-22T10:53:44-0400 spruce python[26921]:         27/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93dc60>
+2026-10-22T10:53:44-0400 spruce python[26921]:         28/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cd60>
+2026-10-22T10:53:44-0400 spruce python[26921]:         29/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d210>
+2026-10-22T10:53:44-0400 spruce python[26921]:         30/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f370>
+2026-10-22T10:53:44-0400 spruce python[26921]:         31/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d7b0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         32/52  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f7ea3ef60>
+2026-10-22T10:53:44-0400 spruce python[26921]:         33/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f440>
+2026-10-22T10:53:44-0400 spruce python[26921]:         34/52  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f7ea3f9f0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         35/52  NolanBufferOnlyTou tou          done:False   exception: None  <coroutine object NolanBufferOnlyTou.tou_loop at 0x7f7e96cc80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         36/52  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93dd50>
+2026-10-22T10:53:44-0400 spruce python[26921]:         37/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ce50>
+2026-10-22T10:53:44-0400 spruce python[26921]:         38/52  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f67f0cd00>
+2026-10-22T10:53:44-0400 spruce python[26921]:         39/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d990>
+2026-10-22T10:53:44-0400 spruce python[26921]:         40/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f510>
+2026-10-22T10:53:44-0400 spruce python[26921]:         41/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d8a0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         42/52  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93de40>
+2026-10-22T10:53:44-0400 spruce python[26921]:         43/52  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f7ea9e440>
+2026-10-22T10:53:44-0400 spruce python[26921]:         44/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d3f0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         45/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f5e0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         46/52  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f7ea3ee90>
+2026-10-22T10:53:44-0400 spruce python[26921]:         47/52  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7f7ea3fac0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         48/52  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93df30>
+2026-10-22T10:53:44-0400 spruce python[26921]:         49/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d300>
+2026-10-22T10:53:44-0400 spruce python[26921]:         50/52  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f7eec7d80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         51/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f6b0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         52/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ca90>
+2026-10-22T10:53:44-0400 spruce python[26921]: 2026-10-22 10:53:44.084 Tasks: 52  [WAITING FOR]
+2026-10-22T10:53:44-0400 spruce python[26921]:         1/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cf40>
+2026-10-22T10:53:44-0400 spruce python[26921]:         2/52  zone4-garage-opto-main          done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e020>
+2026-10-22T10:53:44-0400 spruce python[26921]:         3/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d4e0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         4/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f780>
+2026-10-22T10:53:44-0400 spruce python[26921]:         5/52  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7f7e93c5e0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         6/52  zone5-living-rm-fancoil-opto-main  done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93e110>
+2026-10-22T10:53:44-0400 spruce python[26921]:         7/52  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7f7e96c900>
+2026-10-22T10:53:44-0400 spruce python[26921]:         8/52  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7f7ea9dd80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         9/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93da80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         10/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cb80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         11/52  gw108-thermistor-reader-main    done:False   exception: None  <coroutine object I2cThermistorReader.main at 0x7f7e8c82c0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         12/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d030>
+2026-10-22T10:53:44-0400 spruce python[26921]:         13/52  NolanBufferOnlyTou keepalive    done:False   exception: None  <coroutine object NolanBufferOnlyTou.main at 0x7f7ea3ecf0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         14/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d5d0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         15/52  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e200>
+2026-10-22T10:53:44-0400 spruce python[26921]:         16/52  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7f7e96ce40>
+2026-10-22T10:53:44-0400 spruce python[26921]:         17/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f030>
+2026-10-22T10:53:44-0400 spruce python[26921]:         18/52  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e2f0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         19/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93db70>
+2026-10-22T10:53:44-0400 spruce python[26921]:         20/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cc70>
+2026-10-22T10:53:44-0400 spruce python[26921]:         21/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d120>
+2026-10-22T10:53:44-0400 spruce python[26921]:         22/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f1d0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         23/52  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7f7e93e3e0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         24/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d6c0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         25/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f2a0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         26/52  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7f7ea3f850>
+2026-10-22T10:53:44-0400 spruce python[26921]:         27/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93dc60>
+2026-10-22T10:53:44-0400 spruce python[26921]:         28/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93cd60>
+2026-10-22T10:53:44-0400 spruce python[26921]:         29/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d210>
+2026-10-22T10:53:44-0400 spruce python[26921]:         30/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f370>
+2026-10-22T10:53:44-0400 spruce python[26921]:         31/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d7b0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         32/52  secondary-010v-main             done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7f7ea3ef60>
+2026-10-22T10:53:44-0400 spruce python[26921]:         33/52  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7f7ea3f440>
+2026-10-22T10:53:44-0400 spruce python[26921]:         34/52  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7f7ea3f9f0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         35/52  NolanBufferOnlyTou tou          done:False   exception: None  <coroutine object NolanBufferOnlyTou.tou_loop at 0x7f7e96cc80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         36/52  zone1-bedrooms-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93dd50>
+2026-10-22T10:53:44-0400 spruce python[26921]:         37/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ce50>
+2026-10-22T10:53:44-0400 spruce python[26921]:         38/52  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f67f0cd00>
+2026-10-22T10:53:44-0400 spruce python[26921]:         39/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d990>
+2026-10-22T10:53:44-0400 spruce python[26921]:         40/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f510>
+2026-10-22T10:53:44-0400 spruce python[26921]:         41/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d8a0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         42/52  zone2-living-rm-opto-main       done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93de40>
+2026-10-22T10:53:44-0400 spruce python[26921]:         43/52  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7f7ea9e440>
+2026-10-22T10:53:44-0400 spruce python[26921]:         44/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d3f0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         45/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f5e0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         46/52  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7f7ea3ee90>
+2026-10-22T10:53:44-0400 spruce python[26921]:         47/52  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7f7ea3fac0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         48/52  zone3-upstairs-opto-main        done:False   exception: None  <coroutine object GpioSensor.main at 0x7f7e93df30>
+2026-10-22T10:53:44-0400 spruce python[26921]:         49/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93d300>
+2026-10-22T10:53:44-0400 spruce python[26921]:         50/52  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7f7eec7d80>
+2026-10-22T10:53:44-0400 spruce python[26921]:         51/52  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7f7ea3f6b0>
+2026-10-22T10:53:44-0400 spruce python[26921]:         52/52  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7f7e93ca90>
+2026-10-22T10:53:45-0400 spruce python[26921]: 2026-10-22 10:53:45.899 [pico-cycler] TRIGGERING PICO REBOOT! startup
+2026-10-22T10:53:45-0400 spruce python[26921]: 2026-10-22 10:53:45.900 [pico-cycler] OpenRelay to vdc-relay
+2026-10-22T10:53:45-0400 spruce python[26921]: 2026-10-22 10:53:45.902 [vdc-relay] Energizing: Setting pin 23 to High
+2026-10-22T10:53:50-0400 spruce python[26921]: 2026-10-22 10:53:50.911 [pico-cycler] CloseRelay to vdc-relay
+2026-10-22T10:53:50-0400 spruce python[26921]: 2026-10-22 10:53:50.917 [vdc-relay] De-energizing: Setting pin 23 to Low
+2026-10-22T10:54:01-0400 spruce python[26921]: 2026-10-22 10:54:01.721 POST /pipes1/code-update is served by no actor; the post says pico_672531 new.code 100
+2026-10-22T10:54:02-0400 spruce python[26921]: 2026-10-22 10:54:02.240 POST /fancoil/code-update is served by no actor; the post says pico_239531 new.code 100
+2026-10-22T10:54:03-0400 spruce python[26921]: 2026-10-22 10:54:03.248 POST /buffer/code-update is served by no actor; the post says pico_206032 new.code 100
+2026-10-22T10:54:04-0400 spruce python[26921]: 2026-10-22 10:54:04.271 [scada] First Buffer temps arrived! Sending to LocalControl
+2026-10-22T10:54:34-0400 spruce python[26921]: 2026-10-22 10:54:34.012 [primary-btu] btu report period of 300s. seconds_to_next_top is 26.0
+2026-10-22T10:54:34-0400 spruce python[26921]: 2026-10-22 10:54:34.022 [secondary-btu] btu report period of 300s. seconds_to_next_top is 26.0
+2026-10-22T10:54:34-0400 spruce python[26921]: 2026-10-22 10:54:34.054 [store-btu] btu report period of 300s. seconds_to_next_top is 25.9
+2026-10-22T10:54:42-0400 spruce python[26921]: 2026-10-22 10:54:42.906 [cold-watch] No recorded setpoint for bedrooms!
+2026-10-22T10:54:42-0400 spruce python[26921]: 2026-10-22 10:54:42.907 [cold-watch] No recorded setpoint for living-rm!
+2026-10-22T10:54:42-0400 spruce python[26921]: 2026-10-22 10:54:42.907 [cold-watch] No recorded setpoint for upstairs!
+2026-10-22T10:54:58-0400 spruce python[26921]: 2026-10-22 10:54:58.802 Top state: Auto
+2026-10-22T10:54:58-0400 spruce python[26921]: 2026-10-22 10:54:58.802 Auto state: LocalControl
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.171 [derived-generator] [HeatCall periodic] zone1-bedrooms-heat-call now=1792680900.2 next=1792680900 period=300
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.172 [derived-generator] Setpoint zone1-bedrooms-set: phase=SuspectZoneAboveSetpoint
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.213 [derived-generator] [HeatCall periodic] zone2-living-rm-heat-call now=1792680900.2 next=1792680900 period=300
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.213 [derived-generator] Setpoint zone2-living-rm-set: phase=SuspectZoneAboveSetpoint
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.214 [derived-generator] [HeatCall periodic] zone3-upstairs-heat-call now=1792680900.2 next=1792680900 period=300
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.215 [derived-generator] Setpoint zone3-upstairs-set: phase=SuspectZoneAboveSetpoint
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.216 [derived-generator] [HeatCall periodic] zone4-garage-heat-call now=1792680900.2 next=1792680900 period=300
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.216 [derived-generator] Setpoint zone4-garage-set: phase=SuspectZoneAboveSetpoint
+2026-10-22T10:55:00-0400 spruce python[26921]: 2026-10-22 10:55:00.217 [derived-generator] [HeatCall periodic] zone5-living-rm-fancoil-heat-call now=1792680900.2 next=1792680900 period=300
+2026-10-22T10:55:05-0400 spruce python[26921]: 2026-10-22 10:55:05.061 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:05-0400 spruce python[26921]: 2026-10-22 10:55:05.111 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:05-0400 spruce python[26921]: 2026-10-22 10:55:05.112 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 2  completed: 1.
+2026-10-22T10:55:10-0400 spruce python[26921]: 2026-10-22 10:55:10.121 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:10-0400 spruce python[26921]: 2026-10-22 10:55:10.181 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:10-0400 spruce python[26921]: 2026-10-22 10:55:10.182 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 3  completed: 1.
+2026-10-22T10:55:15-0400 spruce python[26921]: 2026-10-22 10:55:15.193 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:15-0400 spruce python[26921]: 2026-10-22 10:55:15.249 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:15-0400 spruce python[26921]: 2026-10-22 10:55:15.250 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 4  completed: 1.
+2026-10-22T10:55:20-0400 spruce python[26921]: 2026-10-22 10:55:20.254 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:20-0400 spruce python[26921]: 2026-10-22 10:55:20.305 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:20-0400 spruce python[26921]: 2026-10-22 10:55:20.306 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 5  completed: 1.
+2026-10-22T10:55:25-0400 spruce python[26921]: 2026-10-22 10:55:25.311 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:25-0400 spruce python[26921]: 2026-10-22 10:55:25.369 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:25-0400 spruce python[26921]: 2026-10-22 10:55:25.370 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 6  completed: 1.
+2026-10-22T10:55:30-0400 spruce python[26921]: 2026-10-22 10:55:30.378 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:30-0400 spruce python[26921]: 2026-10-22 10:55:30.431 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:30-0400 spruce python[26921]: 2026-10-22 10:55:30.431 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 7  completed: 1.
+2026-10-22T10:55:35-0400 spruce python[26921]: 2026-10-22 10:55:35.443 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:35-0400 spruce python[26921]: 2026-10-22 10:55:35.495 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:35-0400 spruce python[26921]: 2026-10-22 10:55:35.496 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 8  completed: 1.
+2026-10-22T10:55:40-0400 spruce python[26921]: 2026-10-22 10:55:40.506 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:40-0400 spruce python[26921]: 2026-10-22 10:55:40.566 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:40-0400 spruce python[26921]: 2026-10-22 10:55:40.567 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 9  completed: 1.
+2026-10-22T10:55:42-0400 spruce python[26921]: 2026-10-22 10:55:42.909 [cold-watch] No recorded setpoint for bedrooms!
+2026-10-22T10:55:42-0400 spruce python[26921]: 2026-10-22 10:55:42.910 [cold-watch] No recorded setpoint for living-rm!
+2026-10-22T10:55:42-0400 spruce python[26921]: 2026-10-22 10:55:42.910 [cold-watch] No recorded setpoint for upstairs!
+2026-10-22T10:55:45-0400 spruce python[26921]: 2026-10-22 10:55:45.572 gridworks_mqtt:  active -- response_timeout --> awaiting_peer
+2026-10-22T10:55:45-0400 spruce python[26921]: 2026-10-22 10:55:45.632 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-10-22T10:55:45-0400 spruce python[26921]: 2026-10-22 10:55:45.633 start_reupload: sent 2 events. 0 reupload events pending. Total events in reupload: 2.  Reuploads started: 10  completed: 1.

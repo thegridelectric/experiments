@@ -38,11 +38,12 @@ as validated Sema instances.
 - `dev-stack-recipe.md` — how to stand up more than one service on the
   laptop for a dev run, in start order, with the ports and the things
   that bit; the hand version of what OPS-614 turns into a tool.
-- `beta-field-windows/` — the one folder that is neither dated nor a
-  dataset: an ongoing field-test *practice*. Every window is a run
+- `beta-field-windows/` — the record of the beta field windows of
+  2026-09 and 2026-10, the rounds that ran the `jm/spruce-unlimbo`
+  branch in bounded windows on deployed houses before
+  `gridworks-scada/scripts/roll.sh` existed. Every window is a run
   folder under `runs/`, indexed in `runs.md`; the folder top holds the
-  tools and the latest round. Its durable how-to is
-  `field-window-recipe.md`. See its README.
+  tools that read them. See its README.
 - `src/gwexp/sema/` — the vendored Sema snapshot runtime (GENERATED —
   never hand-edit). Experiment scripts construct result instances
   through its classes so schema and axioms validate at construction.
@@ -55,6 +56,12 @@ as validated Sema instances.
 - `display.py` — interim wire-encoding → human-readable conversion for
   CSVs (temperatures to °F floats, flows to gpm). Goes away when unit
   harmonization ships.
+- `admin_drive.py` — drives a scada under admin from the laptop: a
+  scripted step list (`hp:off`, `valve:iso:close`, `relay:<node>:open`,
+  `snap`, `sleep:5`, `release`) sent through the real gwadmin client to
+  an entry of the laptop's gwa config, with every TX and the telling RX
+  lines logged. Runs with the scada venv. Written for `jm/spruce-unlimbo`
+  (`gwsproto.names`); its docstring names the `main` import to swap.
 - `capture_broker.py` — records every message published on the laptop's
   dev broker to `<out-dir>/broker-capture-<stamp>.jsonl`, through the
   broker's firehose, so MQTT and AMQP traffic are both in it. It proves

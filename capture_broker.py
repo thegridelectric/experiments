@@ -193,7 +193,8 @@ def main() -> int:
 
     assert proven is not None
     stopped = datetime.now().astimezone()
-    # house_window.sh notes each window it opens against this capture
+    # a driver running under this capture may note each run it opens, one
+    # line per run
     windows_file = out.with_suffix(".windows.txt")
     windows = windows_file.read_text().splitlines() if windows_file.exists() else []
     windows_file.unlink(missing_ok=True)

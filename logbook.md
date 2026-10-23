@@ -13,6 +13,17 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-10-22 · [stopgap-mm](2026-10-22-stopgap-mm/)** — the stopgap MarketMaker's `latest.price` path (OPS-615), twice: a dev rehearsal on the laptop broker (maker, MQTT witness, a dev LTN, the journal; the top-of-hour publish heard in 44 ms), then the first real hour on hw1 with the maker on its own box and cert, oak's LTN hearing it on the rjb topic 58 ms after the publish, and the journal row. PASS both; the design is Verified.
+- **2026-10-22 · [spruce-roll-rehearsal](2026-10-22-spruce-roll-rehearsal/)** — first live roll of spruce to `jm/spruce-unlimbo` and back under the box service with `roll.sh`: PASS each way; the script now takes `ssh -n` and sets stored events aside at the roll, because an event one line wrote is never acked by the other line's LTN and flaps the link every five seconds (which is what the legacy "Rebooting detected" alert saw); the branch needs a branch LTN as its peer before it stays up.
+- **2026-10-22 · [spruce-i2c-feedback-window](2026-10-22-spruce-i2c-feedback-window/)**
+  — 11 minute spruce window of `aa3b0709`: twelve iso-valve actuations
+  under admin, five expander 0x21 resets, four on the energize; each
+  repaired with the relay confirmed back 1.15 s after the dispatch (the
+  fifth, after a de-energize, 3.6 s on the relay's 2 s retry). PASS on
+  the repair. The Criticals were unobservable: a glitch goes to the LTN
+  only and the upstream link was refused all window; next window with
+  `--ltn`. A first window the same morning drove nothing (the driver
+  crashed on an import) and is not kept.
 - **2026-10-21 · [disentangle-dev-run](2026-10-21-disentangle-dev-run/)**
   — PASS: cedar from the d1 registry and a dev PII store to
   `gw.house.summary` over the dev broker, 15/15 harness checks, gateway

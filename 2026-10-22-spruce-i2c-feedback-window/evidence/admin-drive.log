@@ -1,0 +1,36 @@
+# PROVENANCE: the admin driver's log, written on the laptop (laptop clock, ET) by the one-off iso_toggle_drive.py (now experiments/admin_drive.py) during run 2, 2026-10-22; verbatim below
+08:13:07 mqtt started -> connecting
+08:13:08 mqtt connecting -> subscribing
+08:13:08 mqtt subscribing -> active
+08:13:08 link active
+08:13:10 TX admin.dispatch TurnOff -> admin.hp-boss
+08:13:15 TX admin.dispatch CloseValve -> admin.iso-valve-relay
+08:13:15 RX single.machine.state admin.iso-valve-relay ValveClosed
+08:13:20 TX admin.dispatch OpenValve -> admin.iso-valve-relay
+08:13:21 RX single.machine.state admin.iso-valve-relay ValveOpen
+08:13:25 TX admin.dispatch CloseValve -> admin.iso-valve-relay
+08:13:25 RX single.machine.state admin.iso-valve-relay ValveClosed
+08:13:30 TX admin.dispatch OpenValve -> admin.iso-valve-relay
+08:13:31 RX single.machine.state admin.iso-valve-relay ValveOpen
+08:13:35 TX admin.dispatch CloseValve -> admin.iso-valve-relay
+08:13:35 RX single.machine.state admin.iso-valve-relay ValveClosed
+08:13:40 TX admin.dispatch OpenValve -> admin.iso-valve-relay
+08:13:41 RX single.machine.state admin.iso-valve-relay ValveOpen
+08:13:45 TX admin.dispatch CloseValve -> admin.iso-valve-relay
+08:13:45 RX single.machine.state admin.iso-valve-relay ValveClosed
+08:13:50 TX admin.dispatch OpenValve -> admin.iso-valve-relay
+08:13:51 RX single.machine.state admin.iso-valve-relay ValveOpen
+08:13:55 TX admin.dispatch CloseValve -> admin.iso-valve-relay
+08:13:55 RX single.machine.state admin.iso-valve-relay ValveClosed
+08:13:59 RX single.machine.state admin.iso-valve-relay ValveClosed
+08:14:00 TX admin.dispatch OpenValve -> admin.iso-valve-relay
+08:14:00 RX single.machine.state admin.iso-valve-relay ValveOpen
+08:14:05 TX admin.dispatch CloseValve -> admin.iso-valve-relay
+08:14:05 RX single.machine.state admin.iso-valve-relay ValveClosed
+08:14:10 TX admin.dispatch OpenValve -> admin.iso-valve-relay
+08:14:10 RX single.machine.state admin.iso-valve-relay ValveOpen
+08:14:30 TX admin.release.control
+08:14:30 RX single.machine.state auto.lc.n.iso-valve-relay ValveOpen
+08:14:36 mqtt active -> backing_off
+08:14:36 done
+08:14:36 mqtt backing_off -> stopped
