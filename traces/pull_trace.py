@@ -17,8 +17,9 @@ The forest comes from the journal DB. This script writes, under
   .snapshot/       a sema snapshot built from the executor's seed copy, the
                    codec every body is decoded through
 
-It also prints every `gw.alert` the alerter broadcast inside the window, so
-the spec's `expected_out` is copied from the archive rather than recalled.
+It also prints every `gw.alert` the alerter broadcast inside the window
+about the tracked subtree, so the spec's `expected_out` is copied from the
+archive rather than recalled.
 
 and, once, `forest.json` beside the spec: the latest journaled
 `g.node.forest` before the window, restricted to the subtree the spec
@@ -33,7 +34,7 @@ was sent) or `latest` (the snapshot upgrades it to the latest version).
 There is no default; a spec without the line does not pull.
 
 Usage (from experiments/):
-  uv run traces/pull_trace.py ../wiki/gridworks-alerter/executor/traces/2026-10-15-oak-ltn-stop/trace.yaml
+  uv run traces/pull_trace.py ../wiki/gridworks-alerter/executor/traces/2026-10-20-oak-silence/trace.yaml
 
 Env: DB_ANALYST_URL in experiments/.env; the default AWS profile reads the
 `gwdev` bucket; SEMA_REPO (default: sibling ../sema, clean worktree, the
@@ -56,7 +57,7 @@ import psycopg
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from spot_check import db_url  # noqa: E402
+from spot_check import db_url
 
 EXPERIMENTS = Path(__file__).resolve().parents[1]
 UMBRELLA = EXPERIMENTS.parent
@@ -64,11 +65,15 @@ FOREST_TYPE = "g.node.forest"
 ALERT_TYPE = "gw.alert"
 DECODE_STANCES = {"as-sent": False, "latest": True}
 EVENTSTORE_BUCKET = "gwdev"
-EVENTSTORE_WORLD = "hw1__1"  # the ear's world instance; the universe's run on the hw1 broker
+EVENTSTORE_WORLD = (
+    "hw1__1"  # the ear's world instance; the universe's run on the hw1 broker
+)
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     p.add_argument("spec", type=Path, help="path to the trace.yaml in the wiki")
     return p.parse_args()
 
@@ -83,14 +88,17 @@ def domain_of(spec: Path) -> str:
 def as_utc(value: str | datetime.datetime) -> datetime.datetime:
     """A spec timestamp: YAML gives a datetime for `2026-10-15T18:50:00Z`, a str otherwise."""
     if isinstance(value, str):
-        value = datetime.datetime.fromisoformat(value.replace("Z", "+00:00"))
+        value = datetime.datetime.fromisoformat(value)
     if value.tzinfo is None:
-        value = value.replace(tzinfo=datetime.timezone.utc)
-    return value.astimezone(datetime.timezone.utc)
+        value = value.replace(tzinfo=datetime.UTC)
+    return value.astimezone(datetime.UTC)
 
 
 def iso(ts: datetime.datetime) -> str:
-    return ts.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.") + f"{ts.microsecond // 1000:03d}Z"
+    return (
+        ts.astimezone(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%S.")
+        + f"{ts.microsecond // 1000:03d}Z"
+    )
 
 
 def build_snapshot(seed: Path, out: Path, package: str) -> Path:
@@ -98,10 +106,18 @@ def build_snapshot(seed: Path, out: Path, package: str) -> Path:
     sema_repo = Path(os.environ.get("SEMA_REPO", UMBRELLA / "sema")).resolve()
     if not sema_repo.is_dir():
         raise SystemExit(f"sema repo not found at {sema_repo}; set SEMA_REPO")
-    subprocess.run(["uv", "run", "sema", "snapshot", "prepare", str(seed)], cwd=sema_repo, check=True,
-                   stdout=subprocess.DEVNULL)
-    subprocess.run(["uv", "run", "sema", "snapshot", "build", "--package-name", package], cwd=sema_repo,
-                   check=True, stdout=subprocess.DEVNULL)
+    subprocess.run(
+        ["uv", "run", "sema", "snapshot", "prepare", str(seed)],
+        cwd=sema_repo,
+        check=True,
+        stdout=subprocess.DEVNULL,
+    )
+    subprocess.run(
+        ["uv", "run", "sema", "snapshot", "build", "--package-name", package],
+        cwd=sema_repo,
+        check=True,
+        stdout=subprocess.DEVNULL,
+    )
     pkg_dir = out / ".snapshot" / package
     if pkg_dir.exists():
         shutil.rmtree(pkg_dir)
@@ -121,11 +137,15 @@ class StoredMessage(NamedTuple):
 
 
 def parse_key(key: str) -> StoredMessage:
-    from_alias, type_name, ms, _ear = key.rsplit("/", 1)[-1].removesuffix(".json").split("-")
+    from_alias, type_name, ms, _ear = (
+        key.rsplit("/", 1)[-1].removesuffix(".json").split("-")
+    )
     return StoredMessage(key, int(ms), from_alias, type_name)
 
 
-def list_window(s3, start: datetime.datetime, end: datetime.datetime) -> list[StoredMessage]:
+def list_window(
+    s3, start: datetime.datetime, end: datetime.datetime
+) -> list[StoredMessage]:
     """Every eventstore key whose arrival is inside [start, end), ordered by arrival.
     Day prefixes are UTC dates; a window may span several."""
     start_ms, end_ms = (int(t.timestamp() * 1000) for t in (start, end))
@@ -133,7 +153,9 @@ def list_window(s3, start: datetime.datetime, end: datetime.datetime) -> list[St
     day = start.date()
     while day <= end.date():
         prefix = f"{EVENTSTORE_WORLD}/eventstore/{day.strftime('%Y%m%d')}/"
-        for page in s3.get_paginator("list_objects_v2").paginate(Bucket=EVENTSTORE_BUCKET, Prefix=prefix):
+        for page in s3.get_paginator("list_objects_v2").paginate(
+            Bucket=EVENTSTORE_BUCKET, Prefix=prefix
+        ):
             for obj in page.get("Contents", []):
                 m = parse_key(obj["Key"])
                 if start_ms <= m.persisted_ms < end_ms:
@@ -145,25 +167,35 @@ def list_window(s3, start: datetime.datetime, end: datetime.datetime) -> list[St
 
 def fetch_body(s3, m: StoredMessage) -> dict:
     """The stored envelope's Payload: the body as the sender put it on the wire."""
-    stored = json.loads(s3.get_object(Bucket=EVENTSTORE_BUCKET, Key=m.key)["Body"].read())
-    return stored["Payload"] if "Payload" in stored else stored
+    stored = json.loads(
+        s3.get_object(Bucket=EVENTSTORE_BUCKET, Key=m.key)["Body"].read()
+    )
+    return stored.get("Payload", stored)
 
 
 def ms_iso(ms: int) -> str:
-    return iso(datetime.datetime.fromtimestamp(ms / 1000, tz=datetime.timezone.utc))
+    return iso(datetime.datetime.fromtimestamp(ms / 1000, tz=datetime.UTC))
 
 
 def restrict_forest(forest: dict, subtree: str) -> dict:
     """Keep the subtree's nodes and their ancestors; keep edges among the kept ids."""
+
     def keep(alias: str) -> bool:
-        return subtree.startswith(alias + ".") or alias == subtree or alias.startswith(subtree + ".")
+        return (
+            subtree.startswith(alias + ".")
+            or alias == subtree
+            or alias.startswith(subtree + ".")
+        )
+
     nodes = [n for n in forest["Nodes"] if keep(n["Alias"])]
     ids = {n["GNodeId"] for n in nodes}
     edges = forest.get("Edges")
     if isinstance(edges, dict):
         edges = {k: v for k, v in edges.items() if k in ids}
     elif isinstance(edges, list):
-        edges = [e for e in edges if all(v in ids for v in e.values() if isinstance(v, str))]
+        edges = [
+            e for e in edges if all(v in ids for v in e.values() if isinstance(v, str))
+        ]
     return {**forest, "Nodes": nodes, "Edges": edges}
 
 
@@ -187,10 +219,14 @@ def main() -> None:
 
     decode_stance = spec.get("decode")
     if decode_stance not in DECODE_STANCES:
-        raise SystemExit(f"trace.yaml needs `decode:` as one of {sorted(DECODE_STANCES)}, got {decode_stance!r}")
+        raise SystemExit(
+            f"trace.yaml needs `decode:` as one of {sorted(DECODE_STANCES)}, got {decode_stance!r}"
+        )
     auto_upgrade = DECODE_STANCES[decode_stance]
 
-    sys.path.insert(0, str(build_snapshot(seed, out, f"trace_{domain.replace('-', '_')}")))
+    sys.path.insert(
+        0, str(build_snapshot(seed, out, f"trace_{domain.replace('-', '_')}"))
+    )
     codec_mod = importlib.import_module(f"trace_{domain.replace('-', '_')}.sema.codec")
     codec = codec_mod.SemaCodec()
 
@@ -207,16 +243,21 @@ def main() -> None:
                 "select payload from gridworks.messages where message_type_name=%s and persisted_at < %s "
                 "and exists (select 1 from jsonb_array_elements(payload->'Nodes') n where n->>'Alias'=%s) "
                 "order by persisted_at desc limit 1",
-                (FOREST_TYPE, start, subtree))
+                (FOREST_TYPE, start, subtree),
+            )
             row = cur.fetchone()
             if row is None:
-                raise SystemExit(f"no journaled {FOREST_TYPE} before {start} holding {subtree}")
+                raise SystemExit(
+                    f"no journaled {FOREST_TYPE} before {start} holding {subtree}"
+                )
             forest = restrict_forest(row[0], subtree)
             refused = decode(forest)
             if refused:
                 raise SystemExit(f"restricted forest does not decode: {refused}")
             forest_path.write_text(json.dumps(forest, indent=1) + "\n")
-            print(f"forest: wrote {forest_path.relative_to(UMBRELLA)} ({len(forest['Nodes'])} nodes)")
+            print(
+                f"forest: wrote {forest_path.relative_to(UMBRELLA)} ({len(forest['Nodes'])} nodes)"
+            )
         else:
             print(f"forest: kept {forest_path.relative_to(UMBRELLA)}")
 
@@ -230,12 +271,17 @@ def main() -> None:
     n_body = 0
     with (out / "messages.jsonl").open("w") as w:
         for m in rows:
-            rec: dict = {"t": ms_iso(m.persisted_ms), "from": m.from_alias, "type": m.type_name, "body": None}
+            rec: dict = {
+                "t": ms_iso(m.persisted_ms),
+                "from": m.from_alias,
+                "type": m.type_name,
+                "body": None,
+            }
             if m.type_name in bodies_for:
                 payload = fetch_body(s3, m)
                 rec["body"] = payload
                 n_body += 1
-                key = (typ, payload.get("Version"))
+                key = (m.type_name, payload.get("Version"))
                 counts[key] = counts.get(key, 0) + 1
                 refused = decode(payload)
                 if refused:
@@ -244,19 +290,31 @@ def main() -> None:
             w.write(json.dumps(rec, separators=(",", ":")) + "\n")
 
     size_kb = (out / "messages.jsonl").stat().st_size // 1024
-    print(f"messages: {len(rows)} rows, {n_body} with bodies, {size_kb} kB -> {out.relative_to(UMBRELLA)}/messages.jsonl")
+    print(
+        f"messages: {len(rows)} rows, {n_body} with bodies, {size_kb} kB -> {out.relative_to(UMBRELLA)}/messages.jsonl"
+    )
     for key, n in sorted(counts.items()):
-        print(f"  {key[0]}/{key[1]}: {n} decoded" + (f", {refusals[key]} refused" if key in refusals else ""))
+        print(
+            f"  {key[0]}/{key[1]}: {n} decoded"
+            + (f", {refusals[key]} refused" if key in refusals else "")
+        )
     types: dict[str, int] = {}
     for m in rows:
         types[m.type_name] = types.get(m.type_name, 0) + 1
-    print("  by type: " + ", ".join(f"{t} {n}" for t, n in sorted(types.items(), key=lambda kv: -kv[1])))
+    print(
+        "  by type: "
+        + ", ".join(f"{t} {n}" for t, n in sorted(types.items(), key=lambda kv: -kv[1]))
+    )
 
-    print(f"alerts in the window ({ALERT_TYPE} from any sender): {len(alerts)}")
+    print(f"alerts in the window ({ALERT_TYPE} about {subtree}), the expected output:")
     for m in alerts:
         a = fetch_body(s3, m)
-        print(f"  {ms_iso(m.persisted_ms)} {a.get('State')} {a.get('Kind')} {a.get('AboutGNodeAlias')} "
-              f"AlertId={a.get('AlertId')} Summary={a.get('Summary')!r}")
+        if not str(a.get("AboutGNodeAlias", "")).startswith(subtree + "."):
+            continue
+        print(
+            f"  {ms_iso(m.persisted_ms)} {a.get('State')} {a.get('Kind')} {a.get('AboutGNodeAlias')} "
+            f"AlertId={a.get('AlertId')} Summary={a.get('Summary')!r}"
+        )
 
 
 if __name__ == "__main__":
