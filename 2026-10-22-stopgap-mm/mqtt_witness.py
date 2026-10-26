@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Stand in for an MQTT-native LTN: subscribe on the dev broker's MQTT face
 to the maker's rjb latest.price topic and write each arrival as one JSON
-line with the laptop's receive time. Run from the scada-main venv (paho).
+line with the laptop's receive time. Run from a scada venv with paho.
 
     python mqtt_witness.py <topic> <out.jsonl> [--host localhost] [--port 1885]
 """
