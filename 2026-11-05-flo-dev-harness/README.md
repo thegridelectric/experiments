@@ -67,8 +67,13 @@ Each step says what to run and what "ready" looks like. Times are ET.
 8. **bruce's matrix for the Nolan plant shape.** bruce loads a cached
    transition matrix per plant shape from
    `~/.config/bruce/graph_optimizer/` and refuses a request whose shape
-   has none; matrices are generated as a separate step. Which hash the
-   Nolan shape has, and how to generate it, is the open step below.
+   has none; matrices are generated as a separate step. The Nolan LTN
+   runs `BufferOnly`, so it models one 120 gallon tank at the tuning's
+   9 layers: the same shape as oak at the fleet `NumLayers`, cache file
+   `heat_pump_water_tank_268a5f12.matrix.npz`. Ready: that file is in
+   the folder (a laptop that built oak's matrices has it; otherwise copy
+   it from the flo box or build it once with
+   `CAN_COMPUTE_TRANSITION_MATRICES=true`).
 9. **The scada and LTN env.** `gridworks-scada/gw_spaceheat/.env`:
 
        SCADA_GRIDWORKS_MQTT__PORT=1885
@@ -111,8 +116,10 @@ steps say. Two things learned, both now in the steps: the registry's
 older `.env` had no `GNR_API_PORT` and the façade took 8000; and the
 alice tuning cannot be the first rung, because `flo.tuning.alice`
 requires an operator hold (ops word axiom 6) and under a hold the scada
-refuses dispatch, so the LTN never asks the FLO. Step 8 is open; step
-12 did not start (`venv/bin/gws` was run from the wrong directory).
+refuses dispatch, so the LTN never asks the FLO. 12:28 ET: step 8 closed (the
+Nolan shape hashes to oak's cached matrix) and step 12 started from the
+scada repo root; the LTN's link went active and it logged `FLO seasonal
+storage mode: BufferOnly`. Waiting on the 12:58 request.
 
 ## Folder contents & experimental method
 
