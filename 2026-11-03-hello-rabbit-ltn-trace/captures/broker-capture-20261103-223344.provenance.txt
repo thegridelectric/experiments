@@ -1,0 +1,9 @@
+Source: the laptop's gw-dev-rabbit, vhost d1__1: every message published to
+  any exchange, as the broker's firehose (amq.rabbitmq.trace, publish.#)
+  reported it, written by experiments/capture_broker.py.
+Window: 2026-11-03 22:33:44 to 00:09:08 EST (laptop clock); 2099 messages.
+Probe: a message published to amq.topic came back through the firehose at
+  22:33:44; every publish from then on is in the file.
+Timestamps: CapturedUnixMs is the laptop clock at receipt; stamps inside a
+  payload are the sender's clock.
+Regeneration: not possible. A new capture is a new run.

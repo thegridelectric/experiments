@@ -13,6 +13,7 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-11-05 · [flo-dev-harness](2026-11-05-flo-dev-harness/)** — the flo-as-a-service harness on one laptop: sim scada, scada-repo LTN, `gridworks-flo` as `d1.flo` on the dev broker, step-by-step for the team; the FLO, the façade and the LTN up, the bruce matrix for the Nolan shape the open step; alice cannot be rung 1 (it requires an operator hold, under which the LTN never asks). Found open.
 - **2026-11-03 · [hello-rabbit-ltn-trace](2026-11-03-hello-rabbit-ltn-trace/)** — first trace of a dev scada against the gwbase LTN on the dev broker, LTN taken away and brought back: the link activates on the LTN's ack of the scada's first ping and holds on the scada's minutely ack-required report; when the LTN leaves the scada's link falls to awaiting_peer 5 s after the unacked report, sends one ping, and its response.timeout event is persisted, not published; the LTN has no link state and says nothing on leaving. Two runs lost to laptop sleep (`caffeinate -i` does not hold it); put_layout.sh's params prompt reads its own here-string (OPS-614).
 - **2026-10-28 · [realtime-units-elm-check](2026-10-28-realtime-units-elm-check/)**
   — the real-time page on `jm/realtime-units` shows elm's live snapshot
