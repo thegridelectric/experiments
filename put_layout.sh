@@ -52,7 +52,7 @@ source_of() {
 sha_of() { if [ -f "$1" ]; then shasum -a 256 "$1" | cut -d' ' -f1; fi; }
 
 DIFFERS=0
-while IFS= read -r PLACE; do
+while IFS= read -r -u 3 PLACE; do
   DIR="$HOME/${PLACE%%:*}"
   for STEM in ${PLACE#*:}; do
     GEN="$(source_of "$STEM")"
@@ -85,5 +85,5 @@ while IFS= read -r PLACE; do
     [ "$(sha_of "$FILE")" = "$WANT" ] || { echo "$AT: sha256 MISMATCH after the copy"; exit 1; }
     echo "$AT: put (${WANT:0:12}); previous file: $KEPT"
   done
-done <<< "$PLACES"
+done 3<<< "$PLACES"
 [ "$CHANGE" = check ] && exit $DIFFERS || exit 0

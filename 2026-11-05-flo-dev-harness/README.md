@@ -22,7 +22,7 @@ Repos as siblings under one directory, on these branches:
 | repo | branch | role |
 |---|---|---|
 | gridworks-base | main | the dev broker |
-| grid-node-registry | `jm/dev-flo` (until merged) | `d1.flo` in the dev universe |
+| grid-node-registry | main | `d1.flo` in the dev universe |
 | gridworks-flo | main | the FLO service |
 | gridworks-scada | `jm/flo-over-the-broker` (PR 605) | the sim scada and the LTN |
 | optimal-flexibility | main (sibling checkout, `thdfw`) | bruce |
@@ -54,26 +54,42 @@ Each step says what to run and what "ready" looks like. Times are ET.
    identity file, as on the production box.
 6. **The layout pair.** `cd experiments && ./put_layout.sh dev check`;
    if any file differs, `./put_layout.sh dev <change>` places the scada
-   repo's Nolan fixtures under the deployed names in
+   repo's orange fixtures (the simulated House0 pair, one 120 gallon
+   tank, AllTanks, bruce tuning) under the deployed names in
    `~/.config/gridworks/scada/` and `~/.config/gridworks/ltn/`. The
-   Nolan LTN is `d1.isone.me.versant.keene.spruce`, so its FLO is `d1.flo`
-   with no configuration.
+   script's house argument also takes willow or nolan; nolan is not for
+   this harness, since its FLO tuning is alice. The orange LTN is
+   `d1.isone.ct.newhaven.orange1`, in the `d1` universe, so its FLO is
+   `d1.flo` with no configuration.
 7. **The FLO service.** `cd gridworks-flo && cp template.env .env`
    (the defaults are the dev broker and `d1.flo`);
    `uv sync --all-groups --all-extras` (the bruce extra installs the
    sibling `../optimal-flexibility` editable); `uv run gwflo rabbit`.
    Ready: the log says `Queue d1.flo-… bound with rj.*.*.*.*.d1-flo` and
    `Binding d1.flo-… to amq.topic with gw.*.to.flo.flo-params`.
-8. **bruce's matrix for the Nolan plant shape.** bruce loads a cached
-   transition matrix per plant shape from
-   `~/.config/bruce/graph_optimizer/` and refuses a request whose shape
-   has none; matrices are generated as a separate step. The Nolan LTN
-   runs `BufferOnly`, so it models one 120 gallon tank at the tuning's
-   9 layers: the same shape as oak at the fleet `NumLayers`, cache file
-   `heat_pump_water_tank_268a5f12.matrix.npz`. Ready: that file is in
-   the folder (a laptop that built oak's matrices has it; otherwise copy
-   it from the flo box or build it once with
-   `CAN_COMPUTE_TRANSITION_MATRICES=true`).
+8. **bruce's matrix for the plant shape.** bruce walks a graph of store
+   states and heat-pump actions, and the next state of every (state,
+   action) pair is computed once per plant shape and cached as
+   `~/.config/bruce/graph_optimizer/heat_pump_water_tank_<hash>.matrix.npz`;
+   the hash is over the shape fields only (layers, gallons, lift, the RWT
+   buckets, the thermal caps, the longest step, the discharge threshold),
+   so no per-request number changes it. bruce refuses a request whose
+   shape has no file. The orange pair is one 120 gallon tank at 9 layers
+   with the fleet tuning: hash `268a5f12`, which is also bruce's default
+   geometry. Three ways to get it, in order of preference:
+   - copy the file (175 KB, deterministic) from a laptop or the flo box
+     into `~/.config/bruce/graph_optimizer/`;
+   - build it once with bruce's own test: in `optimal-flexibility`,
+     `cp .env.example .env` (it sets `CAN_COMPUTE_TRANSITION_MATRICES=true`,
+     which bruce reads from that file) and `uv run pytest
+     tests/test_generate_bid.py`, about fifteen minutes;
+   - leave that `.env` in place and let the service build it on the
+     first request, which costs that slot (the LTN times out and bids its
+     fallback) and answers from the cache the next hour.
+
+   Ready: `ls ~/.config/bruce/graph_optimizer/` shows the `268a5f12`
+   file, and `optimal-flexibility/.env` is absent or not `true`, so the
+   service never builds in the request path.
 9. **The scada and LTN env.** `gridworks-scada/gw_spaceheat/.env`:
 
        SCADA_GRIDWORKS_MQTT__PORT=1885
@@ -98,7 +114,7 @@ Each step says what to run and what "ready" looks like. Times are ET.
     `gw_spaceheat/venv/bin/gws run --message-summary`. Ready: the LTN's
     link goes active and the LTN logs the operating status.
 13. **The round trip.** At `LTN_BID_LEAD_S` before the hour the LTN logs
-    the request; the FLO logs `Request from d1.isone.me.versant.keene.spruce
+    the request; the FLO logs `Request from d1.isone.ct.newhaven.orange1
     for slot <start>: flo.tuning.bruce` and `Answered … in <n> s: <k> pairs
     from bruce`; the LTN logs the bid for the slot. The capture has both
     wrapped words on `amq.topic`.
@@ -110,16 +126,16 @@ simulated hour per wall minute, several slots in a session.
 
 ## Found
 
-Open. 2026-11-05 12:08 to 12:12 ET: steps 1 to 7 and 9 to 11 ran on
-this laptop and the FLO, the registry façade and the LTN came up as the
-steps say. Two things learned, both now in the steps: the registry's
-older `.env` had no `GNR_API_PORT` and the façade took 8000; and the
-alice tuning cannot be the first rung, because `flo.tuning.alice`
-requires an operator hold (ops word axiom 6) and under a hold the scada
-refuses dispatch, so the LTN never asks the FLO. 12:28 ET: step 8 closed (the
-Nolan shape hashes to oak's cached matrix) and step 12 started from the
-scada repo root; the LTN's link went active and it logged `FLO seasonal
-storage mode: BufferOnly`. Waiting on the 12:58 request.
+Open. A first attempt on 2026-11-05, 12:08 to 12:28 ET, ran steps 1 to
+12 with the Nolan fixtures and was torn down before the hour: Nolan's
+tuning is alice, and `flo.tuning.alice` requires an operator hold (ops
+word axiom 6) under which the scada refuses dispatch, so that LTN never
+asks the FLO. Three things it taught are in the steps: the registry's
+older `.env` had no `GNR_API_PORT` and the façade took 8000; the sim
+scada starts from the scada repo root; and the orange shape's matrix is
+bruce's default geometry, already cached on a laptop that built oak's.
+The second attempt, with orange, is a step-by-step walk from a clean
+broker; its times are in `logs/clock.txt`.
 
 ## Folder contents & experimental method
 
