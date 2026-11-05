@@ -23,7 +23,7 @@ Most boxes run production off `main`. **Spruce does not**: its production plant
 control (`gwspaceheat`, and in season the `spruce-winter-hack`) runs the
 scada `actual-spruce` branch against the tlayouts `actual-spruce` layout, a
 different branch in both repos than the rest of the fleet, and it rolls to
-the `jm/spruce-unlimbo` scada with the tlayouts `jm/spruce` layout
+the `main` scada with the tlayouts `main` layout
 (`roll.sh spruce check` says which line it is on). For a spot-check this
 matters two ways: the channels and pico ids in spruce's journal reflect the
 layout of the line that was running; and emissions under

@@ -13,6 +13,15 @@ leading with what went well). Queued experiments live in
 `future/<slug>/` and sit at the top here as **queued** until their
 first run dates them.
 
+- **2026-11-03 · [hello-rabbit-ltn-trace](2026-11-03-hello-rabbit-ltn-trace/)** — first trace of a dev scada against the gwbase LTN on the dev broker, LTN taken away and brought back: the link activates on the LTN's ack of the scada's first ping and holds on the scada's minutely ack-required report; when the LTN leaves the scada's link falls to awaiting_peer 5 s after the unacked report, sends one ping, and its response.timeout event is persisted, not published; the LTN has no link state and says nothing on leaving. Two runs lost to laptop sleep (`caffeinate -i` does not hold it); put_layout.sh's params prompt reads its own here-string (OPS-614).
+- **2026-10-28 · [realtime-units-elm-check](2026-10-28-realtime-units-elm-check/)**
+  — the real-time page on `jm/realtime-units` shows elm's live snapshot
+  in the units its `layout.lite` 013 declares (hp-ewt 128.6 F where
+  the name-matched page gave 37.4 F), the pump table has elm's
+  secondary pump, PASS. The journalkeeper ran ten minutes against prod
+  from a shell that had sourced `experiments/.env`; no rows harmed,
+  recipe note added.
+- **2026-11-01 · [oaks-first-ltn](oaks-first-ltn/)** — dataset folder: how oak ran on the first field LTN, from the box log and the journal; six findings on the bid sweep, the store ceiling and the clearing rule; Found open on the sliding charge.
 - **2026-10-22 · [stopgap-mm](2026-10-22-stopgap-mm/)** — the stopgap MarketMaker's `latest.price` path (OPS-615), twice: a dev rehearsal on the laptop broker (maker, MQTT witness, a dev LTN, the journal; the top-of-hour publish heard in 44 ms), then the first real hour on hw1 with the maker on its own box and cert, oak's LTN hearing it on the rjb topic 58 ms after the publish, and the journal row. PASS both; the design is Verified.
 - **2026-10-22 · [spruce-roll-rehearsal](2026-10-22-spruce-roll-rehearsal/)** — first live roll of spruce to `jm/spruce-unlimbo` and back under the box service with `roll.sh`: PASS each way; the script now takes `ssh -n` and sets stored events aside at the roll, because an event one line wrote is never acked by the other line's LTN and flaps the link every five seconds (which is what the legacy "Rebooting detected" alert saw); the branch needs a branch LTN as its peer before it stays up.
 - **2026-10-22 · [spruce-i2c-feedback-window](2026-10-22-spruce-i2c-feedback-window/)**

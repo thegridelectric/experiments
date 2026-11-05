@@ -1,0 +1,44 @@
+INFO:     Started server process [74738]
+INFO:     Waiting for application startup.
+2026-10-28 14:38:43,718 INFO gateway.layouts: Seeded 6 of 6 layouts rows
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8100 (Press CTRL+C to quit)
+2026-10-28 14:38:45,106 INFO gateway.consumer: Consuming 'gw.#' on 'ear_tx' through queue 'gw.analyst.gateway.0d8b3b1f-b42b-4297-937b-b551b3d67ded'
+INFO:     127.0.0.1:61944 - "GET /gateway/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61954 - "GET /gateway/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62009 - "WebSocket /realtime/elm" [accepted]
+2026-10-28 14:40:11,405 INFO gateway.server: Client connected to 'elm' (1 clients)
+INFO:     connection open
+2026-10-28 14:40:11,406 INFO gateway.server: Client disconnected from 'elm' (0 clients)
+INFO:     connection closed
+INFO:     127.0.0.1:62011 - "WebSocket /realtime/elm" [accepted]
+2026-10-28 14:40:11,418 INFO gateway.server: Client connected to 'elm' (1 clients)
+INFO:     connection open
+2026-10-28 14:40:13,199 INFO gateway.server: Client disconnected from 'elm' (0 clients)
+INFO:     connection closed
+INFO:     127.0.0.1:62071 - "WebSocket /realtime/elm" [accepted]
+2026-10-28 14:40:50,723 INFO gateway.server: Client connected to 'elm' (1 clients)
+INFO:     connection open
+2026-10-28 14:40:50,724 INFO gateway.server: Client disconnected from 'elm' (0 clients)
+INFO:     connection closed
+INFO:     127.0.0.1:62073 - "WebSocket /realtime/elm" [accepted]
+2026-10-28 14:40:50,735 INFO gateway.server: Client connected to 'elm' (1 clients)
+INFO:     connection open
+2026-10-28 14:40:52,471 INFO gateway.server: Client disconnected from 'elm' (0 clients)
+INFO:     connection closed
+2026-10-28 14:46:00,466 INFO aio_pika.robust_connection: Connection to amqps://gw.analyst:******@hw1-tap.electricity.works:5671/hw1__1 closed. Reconnecting after 5 seconds.
+2026-10-28 14:46:00,481 ERROR aio_pika.tools: Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel object at 0x10b09e2d0>>> error: ChannelInvalidStateError: No active transport in channel
+INFO:     127.0.0.1:62471 - "WebSocket /realtime/elm" [accepted]
+2026-10-28 14:50:43,478 INFO gateway.server: Client connected to 'elm' (1 clients)
+INFO:     connection open
+2026-10-28 14:50:43,480 INFO gateway.server: Client disconnected from 'elm' (0 clients)
+INFO:     connection closed
+INFO:     127.0.0.1:62473 - "WebSocket /realtime/elm" [accepted]
+2026-10-28 14:50:43,490 INFO gateway.server: Client connected to 'elm' (1 clients)
+INFO:     connection open
+2026-10-28 14:50:45,223 INFO gateway.server: Client disconnected from 'elm' (0 clients)
+INFO:     connection closed
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [74738]

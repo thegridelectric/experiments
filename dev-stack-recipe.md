@@ -60,6 +60,17 @@ what you are testing.
 - **The web-backend dev login is seeded by hand.** One admin role with a
   null `ta_g_node_id` (`DEVRUN_API_USER` / `DEVRUN_API_PASSWORD` in
   `experiments/.env`); the dev-run runbook has the insert.
+- **`experiments/.env` names the production journal DB under the
+  journalkeeper's own variable.** Its `GJK_DB_URL` is the prod writer
+  login. A shell that has sourced it (`set -a; . experiments/.env`) and
+  then starts the journalkeeper runs it against production, whatever the
+  repo's `.env` says, because the environment outranks dotenv. Start a
+  service from a shell that has not sourced it, and check the process's
+  connections (`lsof -nP -p <pid> | grep TCP`) before trusting a run.
+- **The gateway on the tap broker.** Its queue prefix is a constant
+  (`web.gateway.`) that the `gw.analyst` login may not declare; run it
+  through a harness that sets `gateway.consumer.QUEUE_PREFIX` to
+  `gw.analyst.gateway.` (`2026-10-28-realtime-units-elm-check/run_gateway_on_tap.py`).
 - **A snapshot that lags the scada decodes degraded.** If the scada sends
   a word version the consumer's snapshot lacks, the row is not written
   and the log says `Degraded decode`. Publish the version the consumer has,

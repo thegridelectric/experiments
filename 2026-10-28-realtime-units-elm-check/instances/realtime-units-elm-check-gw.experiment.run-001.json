@@ -1,0 +1,11 @@
+{
+ "TypeName": "gw.experiment.run",
+ "Version": "001",
+ "ExperimentSlug": "realtime-units-elm-check",
+ "HostGNodeAlias": "hw1.isone.me.versant.keene.elm.scada",
+ "StartUnixMs": 1793212645000,
+ "EndUnixMs": 1793213431000,
+ "CodeRef": "harness/check.mjs",
+ "Verdict": "Pass",
+ "Claim": "The real-time page on gridworks-web-frontend jm/realtime-units shows elm's live snapshot converted through the unit elm's layout.lite 013 declares for each channel: hp-ewt, hp-lwt, dist-swt, tank1-depth1, zone1 temperature and setpoint, the flows and the pump and heat-pump power each equal the frontend's own conversion of the raw value, and the visualizer's converter gives the same number for the same journal sample; the pump table has the Secondary row because the layout declares secondary-flow."
+}

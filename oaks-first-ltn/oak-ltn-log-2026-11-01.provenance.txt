@@ -1,0 +1,8 @@
+Source: the oak LTN box (ssh alias `ltn`), systemd journal of gwltn@oak.service,
+  the gridworks-scada LTN at f1491b3c with optimal-flexibility at 2711f59.
+Window: 2026-11-01 14:00 to 2026-11-02 00:10 America/New_York (the box clock).
+Pull: ssh -n ltn 'journalctl -u gwltn@oak.service --no-pager --since "2026-11-01 14:00" --until "2026-11-02 00:10"'
+Reduction: the once-a-minute lines were dropped by hand; the lines kept are
+  those that name a bid, a contract, a plan or a store model. No script.
+Regeneration: the full window is re-pullable from the box's journal while it
+  is retained; the reduction is not reproducible as a file.

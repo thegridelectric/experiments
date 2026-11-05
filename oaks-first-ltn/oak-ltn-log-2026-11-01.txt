@@ -1,0 +1,400 @@
+Nov 01 14:00:00 ltn python[2066513]: 2026-11-01 14:00:00.199 [ltn] Received latest price
+Nov 01 14:00:00 ltn python[2066513]: 2026-11-01 14:00:00.200 [ltn] Sorted pq pairs: [(-100000, 13)] (x1000)
+Nov 01 14:00:00 ltn python[2066513]: 2026-11-01 14:00:00.200 [ltn] Payload price: 96740 (x1000)
+Nov 01 14:00:00 ltn python[2066513]: 2026-11-01 14:00:00.200 [ltn] Decided on quantity: 13 WattHours
+Nov 01 14:00:00 ltn python[2066513]: 2026-11-01 14:00:00.203 Getting plan at clearing price (in child process)
+Nov 01 14:00:00 ltn python[2066513]: 2026-11-01 14:00:00.334 Contract[5d7] 13:00 - 14:00: Total: 0.0 Wh | Used: 38 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 14:00:00.237) | Reason: Final energy accounting: used 37.66602781467965Wh of contracted 0.0Wh
+Nov 01 14:00:00 ltn python[2066513]: 2026-11-01 14:00:00.335 Created new contract! Contract[2a3] 14:00 - 15:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 14:00:00.334)
+Nov 01 14:00:00 ltn python[2066513]: 2026-11-01 14:00:00.383 Contract[2a3] 14:00 - 15:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 14:00:00.360)
+Nov 01 14:00:02 ltn python[2066513]: 2026-11-01 14:00:02.242 Done running bid runner
+Nov 01 14:00:02 ltn python[2066513]: 2026-11-01 14:00:02.243 [ltn] Cleaned up bid runner
+Nov 01 14:00:02 ltn python[2066513]: 2026-11-01 14:00:02.243 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 14:00:02 ltn python[2066513]: 2026-11-01 14:00:02.305 [ltn] FloNextHourPlans: storage_at_hour1=179.9 kWh, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 7.7, 0.0, 0.0, 0.0, 0.0, 0.0, 7.7, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.504 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 14:05:11 ltn python[2066513]: Version
+Nov 01 14:05:11 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 14:05:11 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.927 [ltn] Successfully received price forecast from the price service API
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.928 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.928 [ltn] Finding thermocline position and top temperature
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.928 [ltn] AllTanks model: (169.0, 158.9, 153.2, 1, 2)
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.929 [ltn] Settings ask for a 48 hour horizon
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.929 [ltn] Using a 48 hour horizon
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.932 Creating graph and finding shortest path (in child process)...
+Nov 01 14:05:11 ltn python[2066513]: 2026-11-01 14:05:11.932 [ltn] Started Dijkstra computation in background
+Nov 01 14:05:20 ltn python[2070182]: 2026-11-01 14:05:20,599 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 14:05:20 ltn python[2070182]: 2026-11-01 14:05:20,600 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 14:05:21 ltn python[2070182]: 2026-11-01 14:05:21,122 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 14:05:25 ltn python[2070182]: 2026-11-01 14:05:25,301 [INFO] optimal_flex.graph: Created edges in 4.2 seconds
+Nov 01 14:05:25 ltn python[2070182]: 2026-11-01 14:05:25,503 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 14:05:25 ltn python[2070182]: 2026-11-01 14:05:25,876 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 14:05:26 ltn python[2066513]: 2026-11-01 14:05:26.200 Built and solved in 14.27 seconds! Trimmed graph: 7326129 bytes
+Nov 01 14:05:26 ltn python[2066513]: 2026-11-01 14:05:26.200 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 14:57:03 ltn python[2066513]: 2026-11-01 14:57:03.105 [ltn] Finding current storage state...
+Nov 01 14:57:03 ltn python[2066513]: 2026-11-01 14:57:03.105 Getting bid...
+Nov 01 14:57:03 ltn python[2066513]: 2026-11-01 14:57:03.105 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 14:57:03 ltn python[2066513]: 2026-11-01 14:57:03.106 Generating PQ pairs and bid (in child process)
+Nov 01 14:57:13 ltn python[2070752]: 2026-11-01 14:57:13,994 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 14:57:14 ltn python[2066513]: 2026-11-01 14:57:14.312 Done! Found 1 PQ pairs.
+Nov 01 14:57:14 ltn python[2066513]: 2026-11-01 14:57:14.312 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 14:57:14 ltn python[2066513]: 2026-11-01 14:57:14.313 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793563200' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=0, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 15:00:00 ltn python[2066513]: 2026-11-01 15:00:00.333 Contract[2a3] 14:00 - 15:00: Total: 0.0 Wh | Used: 36 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 15:00:00.303) | Reason: Active contract has expired
+Nov 01 15:00:00 ltn python[2066513]: 2026-11-01 15:00:00.527 [ltn] Received latest price
+Nov 01 15:00:00 ltn python[2066513]: 2026-11-01 15:00:00.527 [ltn] Sorted pq pairs: [(-100000, 0)] (x1000)
+Nov 01 15:00:00 ltn python[2066513]: 2026-11-01 15:00:00.527 [ltn] Payload price: 103100 (x1000)
+Nov 01 15:00:00 ltn python[2066513]: 2026-11-01 15:00:00.527 [ltn] Decided on quantity: 0 WattHours
+Nov 01 15:00:00 ltn python[2066513]: 2026-11-01 15:00:00.528 Created new contract! Contract[a37] 15:00 - 16:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 15:00:00.528)
+Nov 01 15:00:00 ltn python[2066513]: 2026-11-01 15:00:00.530 Getting plan at clearing price (in child process)
+Nov 01 15:00:00 ltn python[2066513]: 2026-11-01 15:00:00.579 Contract[a37] 15:00 - 16:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 15:00:00.556)
+Nov 01 15:00:02 ltn python[2066513]: 2026-11-01 15:00:02.568 Done running bid runner
+Nov 01 15:00:02 ltn python[2066513]: 2026-11-01 15:00:02.568 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 15:00:02 ltn python[2066513]: 2026-11-01 15:00:02.569 [ltn] Cleaned up bid runner
+Nov 01 15:00:02 ltn python[2066513]: 2026-11-01 15:00:02.569 [ltn] FloNextHourPlans: storage_at_hour1=179.74 kWh, [0.0, 0.0, 0.0, 0.0, 0.0, 7.6, 0.0, 0.0, 0.0, 0.0, 0.0, 7.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.473 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 15:05:11 ltn python[2066513]: Version
+Nov 01 15:05:11 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 15:05:11 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.856 [ltn] Successfully received price forecast from the price service API
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.857 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.857 [ltn] Finding thermocline position and top temperature
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.857 [ltn] AllTanks model: (167.3, 157.3, 148.3, 1, 2)
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.858 [ltn] Settings ask for a 48 hour horizon
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.858 [ltn] Using a 48 hour horizon
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.861 Creating graph and finding shortest path (in child process)...
+Nov 01 15:05:11 ltn python[2066513]: 2026-11-01 15:05:11.861 [ltn] Started Dijkstra computation in background
+Nov 01 15:05:20 ltn python[2070767]: 2026-11-01 15:05:20,535 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 15:05:20 ltn python[2070767]: 2026-11-01 15:05:20,535 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 15:05:21 ltn python[2070767]: 2026-11-01 15:05:21,055 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 15:05:25 ltn python[2070767]: 2026-11-01 15:05:25,210 [INFO] optimal_flex.graph: Created edges in 4.2 seconds
+Nov 01 15:05:25 ltn python[2070767]: 2026-11-01 15:05:25,414 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 15:05:25 ltn python[2070767]: 2026-11-01 15:05:25,785 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 15:05:26 ltn python[2066513]: 2026-11-01 15:05:26.110 Built and solved in 14.25 seconds! Trimmed graph: 7326276 bytes
+Nov 01 15:05:26 ltn python[2066513]: 2026-11-01 15:05:26.110 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 15:40:31 ltn python[2066513]: 2026-11-01 15:40:31.230 scada_mqtt:  active -- mqtt_disconnected --> connecting
+Nov 01 15:40:32 ltn python[2066513]: 2026-11-01 15:40:32.255 scada_mqtt:  connecting -- mqtt_connect_failed --> connecting  no CONNACK
+Nov 01 15:40:34 ltn python[2066513]: 2026-11-01 15:40:34.257 scada_mqtt:  connecting -- mqtt_connect_failed --> connecting  no CONNACK
+Nov 01 15:40:38 ltn python[2066513]: 2026-11-01 15:40:38.259 scada_mqtt:  connecting -- mqtt_connect_failed --> connecting  no CONNACK
+Nov 01 15:40:46 ltn python[2066513]: 2026-11-01 15:40:46.332 scada_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+Nov 01 15:40:46 ltn python[2066513]: 2026-11-01 15:40:46.371 scada_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+Nov 01 15:40:46 ltn python[2066513]: 2026-11-01 15:40:46.446 scada_mqtt:  awaiting_peer -- message_from_peer --> active
+Nov 01 15:40:46 ltn python[2066513]: 2026-11-01 15:40:46.626 [ltn] Processing layout lite
+Nov 01 15:57:03 ltn python[2066513]: 2026-11-01 15:57:03.061 [ltn] Finding current storage state...
+Nov 01 15:57:03 ltn python[2066513]: 2026-11-01 15:57:03.061 Getting bid...
+Nov 01 15:57:03 ltn python[2066513]: 2026-11-01 15:57:03.061 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 15:57:03 ltn python[2066513]: 2026-11-01 15:57:03.061 Generating PQ pairs and bid (in child process)
+Nov 01 15:57:13 ltn python[2071299]: 2026-11-01 15:57:13,979 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 15:57:14 ltn python[2066513]: 2026-11-01 15:57:14.296 Done! Found 1 PQ pairs.
+Nov 01 15:57:14 ltn python[2066513]: 2026-11-01 15:57:14.297 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 15:57:14 ltn python[2066513]: 2026-11-01 15:57:14.297 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793566800' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=13, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 16:00:00 ltn python[2066513]: 2026-11-01 16:00:00.334 Contract[a37] 15:00 - 16:00: Total: 0.0 Wh | Used: 37 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 16:00:00.303) | Reason: Active contract has expired
+Nov 01 16:00:00 ltn python[2066513]: 2026-11-01 16:00:00.531 [ltn] Received latest price
+Nov 01 16:00:00 ltn python[2066513]: 2026-11-01 16:00:00.531 [ltn] Sorted pq pairs: [(-100000, 13)] (x1000)
+Nov 01 16:00:00 ltn python[2066513]: 2026-11-01 16:00:00.531 [ltn] Payload price: 134870 (x1000)
+Nov 01 16:00:00 ltn python[2066513]: 2026-11-01 16:00:00.531 [ltn] Decided on quantity: 13 WattHours
+Nov 01 16:00:00 ltn python[2066513]: 2026-11-01 16:00:00.532 Created new contract! Contract[eb3] 16:00 - 17:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 16:00:00.531)
+Nov 01 16:00:00 ltn python[2066513]: 2026-11-01 16:00:00.533 Getting plan at clearing price (in child process)
+Nov 01 16:00:00 ltn python[2066513]: 2026-11-01 16:00:00.592 Contract[eb3] 16:00 - 17:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 16:00:00.560)
+Nov 01 16:00:02 ltn python[2066513]: 2026-11-01 16:00:02.572 Done running bid runner
+Nov 01 16:00:02 ltn python[2066513]: 2026-11-01 16:00:02.573 [ltn] Cleaned up bid runner
+Nov 01 16:00:02 ltn python[2066513]: 2026-11-01 16:00:02.573 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 16:00:02 ltn python[2066513]: 2026-11-01 16:00:02.637 [ltn] FloNextHourPlans: storage_at_hour1=178.76 kWh, [0.0, 0.0, 0.0, 0.0, 7.1, 0.0, 0.0, 0.0, 0.0, 0.0, 7.7, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 16:05:11 ltn python[2066513]: 2026-11-01 16:05:11.447 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 16:05:11 ltn python[2066513]: Version
+Nov 01 16:05:11 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 16:05:11 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 16:05:12 ltn python[2066513]: 2026-11-01 16:05:12.612 [ltn] Successfully received price forecast from the price service API
+Nov 01 16:05:12 ltn python[2066513]: 2026-11-01 16:05:12.613 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 16:05:12 ltn python[2066513]: 2026-11-01 16:05:12.614 [ltn] Finding thermocline position and top temperature
+Nov 01 16:05:12 ltn python[2066513]: 2026-11-01 16:05:12.614 [ltn] AllTanks model: (165.7, 155.6, 144.3, 1, 2)
+Nov 01 16:05:12 ltn python[2066513]: 2026-11-01 16:05:12.614 [ltn] Settings ask for a 48 hour horizon
+Nov 01 16:05:12 ltn python[2066513]: 2026-11-01 16:05:12.614 [ltn] Using a 48 hour horizon
+Nov 01 16:05:12 ltn python[2066513]: 2026-11-01 16:05:12.618 Creating graph and finding shortest path (in child process)...
+Nov 01 16:05:12 ltn python[2066513]: 2026-11-01 16:05:12.618 [ltn] Started Dijkstra computation in background
+Nov 01 16:05:21 ltn python[2071311]: 2026-11-01 16:05:21,300 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 16:05:21 ltn python[2071311]: 2026-11-01 16:05:21,300 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 16:05:21 ltn python[2071311]: 2026-11-01 16:05:21,823 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 16:05:25 ltn python[2071311]: 2026-11-01 16:05:25,987 [INFO] optimal_flex.graph: Created edges in 4.2 seconds
+Nov 01 16:05:26 ltn python[2071311]: 2026-11-01 16:05:26,190 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 16:05:26 ltn python[2071311]: 2026-11-01 16:05:26,561 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 16:05:26 ltn python[2066513]: 2026-11-01 16:05:26.887 Built and solved in 14.27 seconds! Trimmed graph: 7324088 bytes
+Nov 01 16:05:26 ltn python[2066513]: 2026-11-01 16:05:26.887 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 16:57:03 ltn python[2066513]: 2026-11-01 16:57:03.803 [ltn] Finding current storage state...
+Nov 01 16:57:03 ltn python[2066513]: 2026-11-01 16:57:03.803 Getting bid...
+Nov 01 16:57:03 ltn python[2066513]: 2026-11-01 16:57:03.803 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 16:57:03 ltn python[2066513]: 2026-11-01 16:57:03.803 Generating PQ pairs and bid (in child process)
+Nov 01 16:57:14 ltn python[2071342]: 2026-11-01 16:57:14,710 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 16:57:15 ltn python[2066513]: 2026-11-01 16:57:15.027 Done! Found 1 PQ pairs.
+Nov 01 16:57:15 ltn python[2066513]: 2026-11-01 16:57:15.028 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 16:57:15 ltn python[2066513]: 2026-11-01 16:57:15.028 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793570400' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=0, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 17:00:00 ltn python[2066513]: 2026-11-01 17:00:00.342 Contract[eb3] 16:00 - 17:00: Total: 0.0 Wh | Used: 124 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 17:00:00.304) | Reason: Active contract has expired
+Nov 01 17:00:00 ltn python[2066513]: 2026-11-01 17:00:00.836 [ltn] Received latest price
+Nov 01 17:00:00 ltn python[2066513]: 2026-11-01 17:00:00.836 [ltn] Sorted pq pairs: [(-100000, 0)] (x1000)
+Nov 01 17:00:00 ltn python[2066513]: 2026-11-01 17:00:00.836 [ltn] Payload price: 212810 (x1000)
+Nov 01 17:00:00 ltn python[2066513]: 2026-11-01 17:00:00.836 [ltn] Decided on quantity: 0 WattHours
+Nov 01 17:00:00 ltn python[2066513]: 2026-11-01 17:00:00.838 Created new contract! Contract[8c3] 17:00 - 18:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 17:00:00.837)
+Nov 01 17:00:00 ltn python[2066513]: 2026-11-01 17:00:00.838 Getting plan at clearing price (in child process)
+Nov 01 17:00:00 ltn python[2066513]: 2026-11-01 17:00:00.899 Contract[8c3] 17:00 - 18:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 17:00:00.867)
+Nov 01 17:00:02 ltn python[2066513]: 2026-11-01 17:00:02.879 Done running bid runner
+Nov 01 17:00:02 ltn python[2066513]: 2026-11-01 17:00:02.880 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 17:00:02 ltn python[2066513]: 2026-11-01 17:00:02.880 [ltn] Cleaned up bid runner
+Nov 01 17:00:02 ltn python[2066513]: 2026-11-01 17:00:02.942 [ltn] FloNextHourPlans: storage_at_hour1=178.11 kWh, [0.0, 0.0, 0.0, 0.0, 0.0, 7.7, 2.3, 0.0, 0.0, 0.0, 0.0, 7.7, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 17:05:12 ltn python[2066513]: 2026-11-01 17:05:12.196 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 17:05:12 ltn python[2066513]: Version
+Nov 01 17:05:12 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 17:05:12 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 17:05:13 ltn python[2066513]: 2026-11-01 17:05:13.709 [ltn] Successfully received price forecast from the price service API
+Nov 01 17:05:13 ltn python[2066513]: 2026-11-01 17:05:13.710 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 17:05:13 ltn python[2066513]: 2026-11-01 17:05:13.711 [ltn] Finding thermocline position and top temperature
+Nov 01 17:05:13 ltn python[2066513]: 2026-11-01 17:05:13.711 [ltn] AllTanks model: (163.9, 153.6, 140.8, 1, 2)
+Nov 01 17:05:13 ltn python[2066513]: 2026-11-01 17:05:13.711 [ltn] Settings ask for a 48 hour horizon
+Nov 01 17:05:13 ltn python[2066513]: 2026-11-01 17:05:13.711 [ltn] Using a 48 hour horizon
+Nov 01 17:05:13 ltn python[2066513]: 2026-11-01 17:05:13.715 Creating graph and finding shortest path (in child process)...
+Nov 01 17:05:13 ltn python[2066513]: 2026-11-01 17:05:13.715 [ltn] Started Dijkstra computation in background
+Nov 01 17:05:22 ltn python[2071355]: 2026-11-01 17:05:22,379 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 17:05:22 ltn python[2071355]: 2026-11-01 17:05:22,379 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 17:05:22 ltn python[2071355]: 2026-11-01 17:05:22,903 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 17:05:27 ltn python[2071355]: 2026-11-01 17:05:27,071 [INFO] optimal_flex.graph: Created edges in 4.2 seconds
+Nov 01 17:05:27 ltn python[2071355]: 2026-11-01 17:05:27,275 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 17:05:27 ltn python[2071355]: 2026-11-01 17:05:27,648 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 17:05:27 ltn python[2066513]: 2026-11-01 17:05:27.976 Built and solved in 14.26 seconds! Trimmed graph: 7320653 bytes
+Nov 01 17:05:27 ltn python[2066513]: 2026-11-01 17:05:27.976 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 17:57:04 ltn python[2066513]: 2026-11-01 17:57:04.900 [ltn] Finding current storage state...
+Nov 01 17:57:04 ltn python[2066513]: 2026-11-01 17:57:04.900 Getting bid...
+Nov 01 17:57:04 ltn python[2066513]: 2026-11-01 17:57:04.900 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 17:57:04 ltn python[2066513]: 2026-11-01 17:57:04.901 Generating PQ pairs and bid (in child process)
+Nov 01 17:57:15 ltn python[2071379]: 2026-11-01 17:57:15,751 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 17:57:16 ltn python[2066513]: 2026-11-01 17:57:16.068 Done! Found 1 PQ pairs.
+Nov 01 17:57:16 ltn python[2066513]: 2026-11-01 17:57:16.068 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 17:57:16 ltn python[2066513]: 2026-11-01 17:57:16.069 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793574000' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=4, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 18:00:00 ltn python[2066513]: 2026-11-01 18:00:00.145 [ltn] Received latest price
+Nov 01 18:00:00 ltn python[2066513]: 2026-11-01 18:00:00.148 [ltn] Sorted pq pairs: [(-100000, 4)] (x1000)
+Nov 01 18:00:00 ltn python[2066513]: 2026-11-01 18:00:00.148 [ltn] Payload price: 132530 (x1000)
+Nov 01 18:00:00 ltn python[2066513]: 2026-11-01 18:00:00.148 [ltn] Decided on quantity: 4 WattHours
+Nov 01 18:00:00 ltn python[2066513]: 2026-11-01 18:00:00.150 Getting plan at clearing price (in child process)
+Nov 01 18:00:00 ltn python[2066513]: 2026-11-01 18:00:00.227 Contract[8c3] 17:00 - 18:00: Total: 0.0 Wh | Used: 155 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 18:00:00.188) | Reason: Final energy accounting: used 155.4751447656419Wh of contracted 0.0Wh
+Nov 01 18:00:00 ltn python[2066513]: 2026-11-01 18:00:00.229 Created new contract! Contract[2c4] 18:00 - 19:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 18:00:00.227)
+Nov 01 18:00:00 ltn python[2066513]: 2026-11-01 18:00:00.370 Contract[2c4] 18:00 - 19:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 18:00:00.256)
+Nov 01 18:00:02 ltn python[2066513]: 2026-11-01 18:00:02.199 Done running bid runner
+Nov 01 18:00:02 ltn python[2066513]: 2026-11-01 18:00:02.200 [ltn] Cleaned up bid runner
+Nov 01 18:00:02 ltn python[2066513]: 2026-11-01 18:00:02.200 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 18:00:02 ltn python[2066513]: 2026-11-01 18:00:02.261 [ltn] FloNextHourPlans: storage_at_hour1=177.46 kWh, [0.0, 0.0, 0.0, 0.0, 7.7, 2.0, 0.0, 0.0, 0.0, 0.0, 7.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 18:05:13 ltn python[2066513]: 2026-11-01 18:05:13.315 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 18:05:13 ltn python[2066513]: Version
+Nov 01 18:05:13 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 18:05:13 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 18:05:14 ltn python[2066513]: 2026-11-01 18:05:14.521 [ltn] Successfully received price forecast from the price service API
+Nov 01 18:05:14 ltn python[2066513]: 2026-11-01 18:05:14.521 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 18:05:14 ltn python[2066513]: 2026-11-01 18:05:14.522 [ltn] Finding thermocline position and top temperature
+Nov 01 18:05:14 ltn python[2066513]: 2026-11-01 18:05:14.522 [ltn] AllTanks model: (162.2, 151.8, 138.0, 1, 2)
+Nov 01 18:05:14 ltn python[2066513]: 2026-11-01 18:05:14.522 [ltn] Settings ask for a 48 hour horizon
+Nov 01 18:05:14 ltn python[2066513]: 2026-11-01 18:05:14.522 [ltn] Using a 48 hour horizon
+Nov 01 18:05:14 ltn python[2066513]: 2026-11-01 18:05:14.526 Creating graph and finding shortest path (in child process)...
+Nov 01 18:05:14 ltn python[2066513]: 2026-11-01 18:05:14.526 [ltn] Started Dijkstra computation in background
+Nov 01 18:05:23 ltn python[2071390]: 2026-11-01 18:05:23,211 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 18:05:23 ltn python[2071390]: 2026-11-01 18:05:23,211 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 18:05:23 ltn python[2071390]: 2026-11-01 18:05:23,733 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 18:05:27 ltn python[2071390]: 2026-11-01 18:05:27,866 [INFO] optimal_flex.graph: Created edges in 4.1 seconds
+Nov 01 18:05:28 ltn python[2071390]: 2026-11-01 18:05:28,069 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 18:05:28 ltn python[2071390]: 2026-11-01 18:05:28,440 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 18:05:28 ltn python[2066513]: 2026-11-01 18:05:28.766 Built and solved in 14.24 seconds! Trimmed graph: 7320797 bytes
+Nov 01 18:05:28 ltn python[2066513]: 2026-11-01 18:05:28.766 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 18:57:05 ltn python[2066513]: 2026-11-01 18:57:05.700 [ltn] Finding current storage state...
+Nov 01 18:57:05 ltn python[2066513]: 2026-11-01 18:57:05.700 Getting bid...
+Nov 01 18:57:05 ltn python[2066513]: 2026-11-01 18:57:05.700 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 18:57:05 ltn python[2066513]: 2026-11-01 18:57:05.700 Generating PQ pairs and bid (in child process)
+Nov 01 18:57:16 ltn python[2071470]: 2026-11-01 18:57:16,544 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 18:57:16 ltn python[2066513]: 2026-11-01 18:57:16.861 Done! Found 1 PQ pairs.
+Nov 01 18:57:16 ltn python[2066513]: 2026-11-01 18:57:16.861 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 18:57:16 ltn python[2066513]: 2026-11-01 18:57:16.862 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793577600' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=16, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 19:00:00 ltn python[2066513]: 2026-11-01 19:00:00.353 Contract[2c4] 18:00 - 19:00: Total: 0.0 Wh | Used: 37 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 19:00:00.303) | Reason: Active contract has expired
+Nov 01 19:00:00 ltn python[2066513]: 2026-11-01 19:00:00.533 [ltn] Received latest price
+Nov 01 19:00:00 ltn python[2066513]: 2026-11-01 19:00:00.534 [ltn] Sorted pq pairs: [(-100000, 16)] (x1000)
+Nov 01 19:00:00 ltn python[2066513]: 2026-11-01 19:00:00.534 [ltn] Payload price: 119740 (x1000)
+Nov 01 19:00:00 ltn python[2066513]: 2026-11-01 19:00:00.534 [ltn] Decided on quantity: 16 WattHours
+Nov 01 19:00:00 ltn python[2066513]: 2026-11-01 19:00:00.534 Created new contract! Contract[eac] 19:00 - 20:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 19:00:00.534)
+Nov 01 19:00:00 ltn python[2066513]: 2026-11-01 19:00:00.536 Getting plan at clearing price (in child process)
+Nov 01 19:00:00 ltn python[2066513]: 2026-11-01 19:00:00.598 Contract[eac] 19:00 - 20:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 19:00:00.564)
+Nov 01 19:00:02 ltn python[2066513]: 2026-11-01 19:00:02.576 Done running bid runner
+Nov 01 19:00:02 ltn python[2066513]: 2026-11-01 19:00:02.577 [ltn] Cleaned up bid runner
+Nov 01 19:00:02 ltn python[2066513]: 2026-11-01 19:00:02.577 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 19:00:02 ltn python[2066513]: 2026-11-01 19:00:02.638 [ltn] FloNextHourPlans: storage_at_hour1=175.99 kWh, [0.0, 0.0, 0.0, 7.2, 0.0, 0.0, 0.0, 0.0, 0.0, 7.7, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 19:05:14 ltn python[2066513]: 2026-11-01 19:05:14.122 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 19:05:14 ltn python[2066513]: Version
+Nov 01 19:05:14 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 19:05:14 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 19:05:15 ltn python[2066513]: 2026-11-01 19:05:15.666 [ltn] Successfully received price forecast from the price service API
+Nov 01 19:05:15 ltn python[2066513]: 2026-11-01 19:05:15.667 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 19:05:15 ltn python[2066513]: 2026-11-01 19:05:15.667 [ltn] Finding thermocline position and top temperature
+Nov 01 19:05:15 ltn python[2066513]: 2026-11-01 19:05:15.667 [ltn] AllTanks model: (160.6, 150.4, 135.6, 1, 2)
+Nov 01 19:05:15 ltn python[2066513]: 2026-11-01 19:05:15.668 [ltn] Settings ask for a 48 hour horizon
+Nov 01 19:05:15 ltn python[2066513]: 2026-11-01 19:05:15.668 [ltn] Using a 48 hour horizon
+Nov 01 19:05:15 ltn python[2066513]: 2026-11-01 19:05:15.671 Creating graph and finding shortest path (in child process)...
+Nov 01 19:05:15 ltn python[2066513]: 2026-11-01 19:05:15.671 [ltn] Started Dijkstra computation in background
+Nov 01 19:05:24 ltn python[2071485]: 2026-11-01 19:05:24,352 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 19:05:24 ltn python[2071485]: 2026-11-01 19:05:24,352 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 19:05:24 ltn python[2071485]: 2026-11-01 19:05:24,875 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 19:05:28 ltn python[2071485]: 2026-11-01 19:05:28,994 [INFO] optimal_flex.graph: Created edges in 4.1 seconds
+Nov 01 19:05:29 ltn python[2071485]: 2026-11-01 19:05:29,198 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 19:05:29 ltn python[2071485]: 2026-11-01 19:05:29,570 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 19:05:29 ltn python[2066513]: 2026-11-01 19:05:29.895 Built and solved in 14.22 seconds! Trimmed graph: 7319474 bytes
+Nov 01 19:05:29 ltn python[2066513]: 2026-11-01 19:05:29.895 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 19:57:06 ltn python[2066513]: 2026-11-01 19:57:06.850 [ltn] Finding current storage state...
+Nov 01 19:57:06 ltn python[2066513]: 2026-11-01 19:57:06.850 Getting bid...
+Nov 01 19:57:06 ltn python[2066513]: 2026-11-01 19:57:06.850 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 19:57:06 ltn python[2066513]: 2026-11-01 19:57:06.850 Generating PQ pairs and bid (in child process)
+Nov 01 19:57:17 ltn python[2071511]: 2026-11-01 19:57:17,693 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 19:57:18 ltn python[2066513]: 2026-11-01 19:57:18.009 Done! Found 1 PQ pairs.
+Nov 01 19:57:18 ltn python[2066513]: 2026-11-01 19:57:18.009 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 19:57:18 ltn python[2066513]: 2026-11-01 19:57:18.010 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793581200' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=13, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 20:00:00 ltn python[2066513]: 2026-11-01 20:00:00.346 Contract[eac] 19:00 - 20:00: Total: 0.0 Wh | Used: 37 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 20:00:00.303) | Reason: Active contract has expired
+Nov 01 20:00:00 ltn python[2066513]: 2026-11-01 20:00:00.905 [ltn] Received latest price
+Nov 01 20:00:00 ltn python[2066513]: 2026-11-01 20:00:00.905 [ltn] Sorted pq pairs: [(-100000, 13)] (x1000)
+Nov 01 20:00:00 ltn python[2066513]: 2026-11-01 20:00:00.905 [ltn] Payload price: 87490 (x1000)
+Nov 01 20:00:00 ltn python[2066513]: 2026-11-01 20:00:00.906 [ltn] Decided on quantity: 13 WattHours
+Nov 01 20:00:00 ltn python[2066513]: 2026-11-01 20:00:00.906 Created new contract! Contract[4d7] 20:00 - 21:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 20:00:00.906)
+Nov 01 20:00:00 ltn python[2066513]: 2026-11-01 20:00:00.907 Getting plan at clearing price (in child process)
+Nov 01 20:00:00 ltn python[2066513]: 2026-11-01 20:00:00.966 Contract[4d7] 20:00 - 21:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 20:00:00.934)
+Nov 01 20:00:02 ltn python[2066513]: 2026-11-01 20:00:02.947 Done running bid runner
+Nov 01 20:00:02 ltn python[2066513]: 2026-11-01 20:00:02.947 [ltn] Cleaned up bid runner
+Nov 01 20:00:02 ltn python[2066513]: 2026-11-01 20:00:02.947 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 20:00:03 ltn python[2066513]: 2026-11-01 20:00:03.010 [ltn] FloNextHourPlans: storage_at_hour1=175.01 kWh, [0.0, 0.0, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 7.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 20:05:15 ltn python[2066513]: 2026-11-01 20:05:15.232 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 20:05:15 ltn python[2066513]: Version
+Nov 01 20:05:15 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 20:05:15 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 20:05:16 ltn python[2066513]: 2026-11-01 20:05:16.691 [ltn] Successfully received price forecast from the price service API
+Nov 01 20:05:16 ltn python[2066513]: 2026-11-01 20:05:16.691 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 20:05:16 ltn python[2066513]: 2026-11-01 20:05:16.692 [ltn] Finding thermocline position and top temperature
+Nov 01 20:05:16 ltn python[2066513]: 2026-11-01 20:05:16.692 [ltn] AllTanks model: (158.9, 148.8, 133.4, 1, 2)
+Nov 01 20:05:16 ltn python[2066513]: 2026-11-01 20:05:16.692 [ltn] Settings ask for a 48 hour horizon
+Nov 01 20:05:16 ltn python[2066513]: 2026-11-01 20:05:16.692 [ltn] Using a 48 hour horizon
+Nov 01 20:05:16 ltn python[2066513]: 2026-11-01 20:05:16.696 Creating graph and finding shortest path (in child process)...
+Nov 01 20:05:16 ltn python[2066513]: 2026-11-01 20:05:16.696 [ltn] Started Dijkstra computation in background
+Nov 01 20:05:25 ltn python[2071523]: 2026-11-01 20:05:25,374 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 20:05:25 ltn python[2071523]: 2026-11-01 20:05:25,374 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 20:05:25 ltn python[2071523]: 2026-11-01 20:05:25,897 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 20:05:29 ltn python[2071523]: 2026-11-01 20:05:29,985 [INFO] optimal_flex.graph: Created edges in 4.1 seconds
+Nov 01 20:05:30 ltn python[2071523]: 2026-11-01 20:05:30,198 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 20:05:30 ltn python[2071523]: 2026-11-01 20:05:30,568 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 20:05:30 ltn python[2066513]: 2026-11-01 20:05:30.895 Built and solved in 14.2 seconds! Trimmed graph: 7318682 bytes
+Nov 01 20:05:30 ltn python[2066513]: 2026-11-01 20:05:30.895 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 20:57:07 ltn python[2066513]: 2026-11-01 20:57:07.881 [ltn] Finding current storage state...
+Nov 01 20:57:07 ltn python[2066513]: 2026-11-01 20:57:07.882 Getting bid...
+Nov 01 20:57:07 ltn python[2066513]: 2026-11-01 20:57:07.882 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 20:57:07 ltn python[2066513]: 2026-11-01 20:57:07.882 Generating PQ pairs and bid (in child process)
+Nov 01 20:57:18 ltn python[2071567]: 2026-11-01 20:57:18,736 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 20:57:19 ltn python[2066513]: 2026-11-01 20:57:19.053 Done! Found 1 PQ pairs.
+Nov 01 20:57:19 ltn python[2066513]: 2026-11-01 20:57:19.053 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 20:57:19 ltn python[2066513]: 2026-11-01 20:57:19.054 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793584800' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=13, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 21:00:00 ltn python[2066513]: 2026-11-01 21:00:00.269 [ltn] Received latest price
+Nov 01 21:00:00 ltn python[2066513]: 2026-11-01 21:00:00.270 [ltn] Sorted pq pairs: [(-100000, 13)] (x1000)
+Nov 01 21:00:00 ltn python[2066513]: 2026-11-01 21:00:00.270 [ltn] Payload price: 86230 (x1000)
+Nov 01 21:00:00 ltn python[2066513]: 2026-11-01 21:00:00.270 [ltn] Decided on quantity: 13 WattHours
+Nov 01 21:00:00 ltn python[2066513]: 2026-11-01 21:00:00.271 Getting plan at clearing price (in child process)
+Nov 01 21:00:00 ltn python[2066513]: 2026-11-01 21:00:00.330 Contract[4d7] 20:00 - 21:00: Total: 0.0 Wh | Used: 37 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 21:00:00.296) | Reason: Final energy accounting: used 37.49311986631817Wh of contracted 0.0Wh
+Nov 01 21:00:00 ltn python[2066513]: 2026-11-01 21:00:00.331 Created new contract! Contract[3a6] 21:00 - 22:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 21:00:00.330)
+Nov 01 21:00:00 ltn python[2066513]: 2026-11-01 21:00:00.396 Contract[3a6] 21:00 - 22:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 21:00:00.355)
+Nov 01 21:00:02 ltn python[2066513]: 2026-11-01 21:00:02.310 Done running bid runner
+Nov 01 21:00:02 ltn python[2066513]: 2026-11-01 21:00:02.311 [ltn] Cleaned up bid runner
+Nov 01 21:00:02 ltn python[2066513]: 2026-11-01 21:00:02.311 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 21:00:02 ltn python[2066513]: 2026-11-01 21:00:02.372 [ltn] FloNextHourPlans: storage_at_hour1=175.01 kWh, [0.0, 5.7, 0.0, 0.0, 0.0, 0.0, 0.0, 7.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 21:05:16 ltn python[2066513]: 2026-11-01 21:05:16.267 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 21:05:16 ltn python[2066513]: Version
+Nov 01 21:05:16 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 21:05:16 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 21:05:17 ltn python[2066513]: 2026-11-01 21:05:17.884 [ltn] Successfully received price forecast from the price service API
+Nov 01 21:05:17 ltn python[2066513]: 2026-11-01 21:05:17.885 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 21:05:17 ltn python[2066513]: 2026-11-01 21:05:17.885 [ltn] Finding thermocline position and top temperature
+Nov 01 21:05:17 ltn python[2066513]: 2026-11-01 21:05:17.885 [ltn] AllTanks model: (157.3, 147.4, 131.4, 1, 2)
+Nov 01 21:05:17 ltn python[2066513]: 2026-11-01 21:05:17.886 [ltn] Settings ask for a 48 hour horizon
+Nov 01 21:05:17 ltn python[2066513]: 2026-11-01 21:05:17.886 [ltn] Using a 48 hour horizon
+Nov 01 21:05:17 ltn python[2066513]: 2026-11-01 21:05:17.889 Creating graph and finding shortest path (in child process)...
+Nov 01 21:05:17 ltn python[2066513]: 2026-11-01 21:05:17.889 [ltn] Started Dijkstra computation in background
+Nov 01 21:05:26 ltn python[2071580]: 2026-11-01 21:05:26,542 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 21:05:26 ltn python[2071580]: 2026-11-01 21:05:26,542 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 21:05:27 ltn python[2071580]: 2026-11-01 21:05:27,064 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 21:05:31 ltn python[2071580]: 2026-11-01 21:05:31,137 [INFO] optimal_flex.graph: Created edges in 4.1 seconds
+Nov 01 21:05:31 ltn python[2071580]: 2026-11-01 21:05:31,340 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 21:05:31 ltn python[2071580]: 2026-11-01 21:05:31,710 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 21:05:32 ltn python[2066513]: 2026-11-01 21:05:32.032 Built and solved in 14.14 seconds! Trimmed graph: 7320476 bytes
+Nov 01 21:05:32 ltn python[2066513]: 2026-11-01 21:05:32.032 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 21:57:09 ltn python[2066513]: 2026-11-01 21:57:09.080 [ltn] Finding current storage state...
+Nov 01 21:57:09 ltn python[2066513]: 2026-11-01 21:57:09.080 Getting bid...
+Nov 01 21:57:09 ltn python[2066513]: 2026-11-01 21:57:09.080 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 21:57:09 ltn python[2066513]: 2026-11-01 21:57:09.081 Generating PQ pairs and bid (in child process)
+Nov 01 21:57:19 ltn python[2071609]: 2026-11-01 21:57:19,882 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 21:57:20 ltn python[2066513]: 2026-11-01 21:57:20.198 Done! Found 1 PQ pairs.
+Nov 01 21:57:20 ltn python[2066513]: 2026-11-01 21:57:20.198 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 21:57:20 ltn python[2066513]: 2026-11-01 21:57:20.199 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793588400' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=3416, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 22:00:00 ltn python[2066513]: 2026-11-01 22:00:00.337 Contract[3a6] 21:00 - 22:00: Total: 0.0 Wh | Used: 37 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 22:00:00.304) | Reason: Active contract has expired
+Nov 01 22:00:00 ltn python[2066513]: 2026-11-01 22:00:00.614 [ltn] Received latest price
+Nov 01 22:00:00 ltn python[2066513]: 2026-11-01 22:00:00.614 [ltn] Sorted pq pairs: [(-100000, 3416)] (x1000)
+Nov 01 22:00:00 ltn python[2066513]: 2026-11-01 22:00:00.614 [ltn] Payload price: 86090 (x1000)
+Nov 01 22:00:00 ltn python[2066513]: 2026-11-01 22:00:00.614 [ltn] Decided on quantity: 3416 WattHours
+Nov 01 22:00:00 ltn python[2066513]: 2026-11-01 22:00:00.616 Created new contract! Contract[f7c] 22:00 - 23:00: Total: 3416.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 22:00:00.615)
+Nov 01 22:00:00 ltn python[2066513]: 2026-11-01 22:00:00.617 Getting plan at clearing price (in child process)
+Nov 01 22:00:00 ltn python[2066513]: 2026-11-01 22:00:00.678 Contract[f7c] 22:00 - 23:00: Total: 3416.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 22:00:00.643)
+Nov 01 22:00:02 ltn python[2066513]: 2026-11-01 22:00:02.657 Done running bid runner
+Nov 01 22:00:02 ltn python[2066513]: 2026-11-01 22:00:02.658 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 22:00:02 ltn python[2066513]: 2026-11-01 22:00:02.658 [ltn] Cleaned up bid runner
+Nov 01 22:00:02 ltn python[2066513]: 2026-11-01 22:00:02.659 [ltn] FloNextHourPlans: storage_at_hour1=174.85 kWh, [4.5, 0.0, 0.0, 0.0, 0.0, 0.0, 7.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 22:05:17 ltn python[2066513]: 2026-11-01 22:05:17.464 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 22:05:17 ltn python[2066513]: Version
+Nov 01 22:05:17 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 22:05:17 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 22:05:18 ltn python[2066513]: 2026-11-01 22:05:18.695 [ltn] Successfully received price forecast from the price service API
+Nov 01 22:05:18 ltn python[2066513]: 2026-11-01 22:05:18.695 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 22:05:18 ltn python[2066513]: 2026-11-01 22:05:18.696 [ltn] Finding thermocline position and top temperature
+Nov 01 22:05:18 ltn python[2066513]: 2026-11-01 22:05:18.696 [ltn] AllTanks model: (151.2, 143.1, 141.3, 1, 2)
+Nov 01 22:05:18 ltn python[2066513]: 2026-11-01 22:05:18.696 [ltn] Settings ask for a 48 hour horizon
+Nov 01 22:05:18 ltn python[2066513]: 2026-11-01 22:05:18.696 [ltn] Using a 48 hour horizon
+Nov 01 22:05:18 ltn python[2066513]: 2026-11-01 22:05:18.700 Creating graph and finding shortest path (in child process)...
+Nov 01 22:05:18 ltn python[2066513]: 2026-11-01 22:05:18.700 [ltn] Started Dijkstra computation in background
+Nov 01 22:05:27 ltn python[2071621]: 2026-11-01 22:05:27,377 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 22:05:27 ltn python[2071621]: 2026-11-01 22:05:27,378 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 22:05:27 ltn python[2071621]: 2026-11-01 22:05:27,900 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 22:05:31 ltn python[2071621]: 2026-11-01 22:05:31,996 [INFO] optimal_flex.graph: Created edges in 4.1 seconds
+Nov 01 22:05:32 ltn python[2071621]: 2026-11-01 22:05:32,200 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 22:05:32 ltn python[2071621]: 2026-11-01 22:05:32,572 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 22:05:32 ltn python[2066513]: 2026-11-01 22:05:32.899 Built and solved in 14.2 seconds! Trimmed graph: 7321916 bytes
+Nov 01 22:05:32 ltn python[2066513]: 2026-11-01 22:05:32.899 BidRunner waiting for get_bid to be called before computing bid.
+Nov 01 22:57:09 ltn python[2066513]: 2026-11-01 22:57:09.860 [ltn] Finding current storage state...
+Nov 01 22:57:09 ltn python[2066513]: 2026-11-01 22:57:09.860 Getting bid...
+Nov 01 22:57:09 ltn python[2066513]: 2026-11-01 22:57:09.861 [ltn] Non-critical SCADA MQTT publish skipped (HeatPumpWaterTankParams): ValueError('Cannot publish HeatPumpWaterTankParams on SCADA MQTT: payload has no TypeName')
+Nov 01 22:57:09 ltn python[2066513]: 2026-11-01 22:57:09.861 Generating PQ pairs and bid (in child process)
+Nov 01 22:57:20 ltn python[2071921]: 2026-11-01 22:57:20,709 [INFO] optimal_flex.graph: Done (1 PQ pairs found).
+Nov 01 22:57:21 ltn python[2066513]: 2026-11-01 22:57:21.026 Done! Found 1 PQ pairs.
+Nov 01 22:57:21 ltn python[2066513]: 2026-11-01 22:57:21.027 BidRunner waiting for get_next_hour_plans to be called.
+Nov 01 22:57:21 ltn python[2066513]: 2026-11-01 22:57:21.027 [ltn] Bid: BidderAlias='hw1.isone.me.versant.keene.oak' MarketSlotName='e.rt60gate5.hw1.isone.me.versant.keene.1793592000' PqPairs=[PriceQuantityUnitless(PriceX1000=-100000, QuantityX1000=0, TypeName='price.quantity.unitless', Version='001')] InjectionIsPositive=True PriceUnit=<MarketPriceUnit.USDPerMWh: 'USDPerMWh'> QuantityUnit=<MarketQuantityUnit.AvgkW: 'AvgkW'> SignedMarketFeeTxn='BogusAlgoSignature' TypeName='bid' Version='000'
+Nov 01 23:00:00 ltn python[2066513]: 2026-11-01 23:00:00.337 Contract[f7c] 22:00 - 23:00: Total: 3416.0 Wh | Used: 3580 Wh | Status: CompletedUnknownOutcome  (created by s at 2026-11-01 23:00:00.304) | Reason: Active contract has expired
+Nov 01 23:00:00 ltn python[2066513]: 2026-11-01 23:00:00.885 [ltn] Received latest price
+Nov 01 23:00:00 ltn python[2066513]: 2026-11-01 23:00:00.886 [ltn] Sorted pq pairs: [(-100000, 0)] (x1000)
+Nov 01 23:00:00 ltn python[2066513]: 2026-11-01 23:00:00.886 [ltn] Payload price: 87420 (x1000)
+Nov 01 23:00:00 ltn python[2066513]: 2026-11-01 23:00:00.886 [ltn] Decided on quantity: 0 WattHours
+Nov 01 23:00:00 ltn python[2066513]: 2026-11-01 23:00:00.887 Created new contract! Contract[b37] 23:00 - 00:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-01 23:00:00.886)
+Nov 01 23:00:00 ltn python[2066513]: 2026-11-01 23:00:00.887 Getting plan at clearing price (in child process)
+Nov 01 23:00:00 ltn python[2066513]: 2026-11-01 23:00:00.947 Contract[b37] 23:00 - 00:00: Total: 0.0 Wh | Used: 0 Wh | Status: Received  (created by s at 2026-11-01 23:00:00.915)
+Nov 01 23:00:02 ltn python[2066513]: 2026-11-01 23:00:02.925 Done running bid runner
+Nov 01 23:00:02 ltn python[2066513]: 2026-11-01 23:00:02.925 [ltn] Cleaned up bid runner
+Nov 01 23:00:02 ltn python[2066513]: 2026-11-01 23:00:02.987 [ltn] Saved FloNextHourPlans to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/flo_next_hour_plans.json
+Nov 01 23:00:02 ltn python[2066513]: 2026-11-01 23:00:02.987 [ltn] FloNextHourPlans: storage_at_hour1=180.23 kWh, [0.0, 0.0, 0.0, 0.0, 0.0, 7.7, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Nov 01 23:05:18 ltn python[2066513]: 2026-11-01 23:05:18.223 Forecast pull https://forecast.electricity.works/hw1-isone-weather/latest-forecast/us.me.millinocket.moose failed: 1 validation error for GwWeatherForecast
+Nov 01 23:05:18 ltn python[2066513]: Version
+Nov 01 23:05:18 ltn python[2066513]:   Input should be '001' [type=literal_error, input_value='002', input_type=str]
+Nov 01 23:05:18 ltn python[2066513]:     For further information visit https://errors.pydantic.dev/2.11/v/literal_error
+Nov 01 23:05:19 ltn python[2066513]: 2026-11-01 23:05:19.463 [ltn] Successfully received price forecast from the price service API
+Nov 01 23:05:19 ltn python[2066513]: 2026-11-01 23:05:19.464 [ltn] Saved price forecast to /home/ubuntu/ltn-oak/.local/share/gridworks/ltn/price_forecast.csv
+Nov 01 23:05:19 ltn python[2066513]: 2026-11-01 23:05:19.465 [ltn] Finding thermocline position and top temperature
+Nov 01 23:05:19 ltn python[2066513]: 2026-11-01 23:05:19.465 [ltn] AllTanks model: (174.3, 163.6, 158.4, 1, 2)
+Nov 01 23:05:19 ltn python[2066513]: 2026-11-01 23:05:19.465 [ltn] Settings ask for a 48 hour horizon
+Nov 01 23:05:19 ltn python[2066513]: 2026-11-01 23:05:19.465 [ltn] Using a 48 hour horizon
+Nov 01 23:05:19 ltn python[2066513]: 2026-11-01 23:05:19.469 Creating graph and finding shortest path (in child process)...
+Nov 01 23:05:19 ltn python[2066513]: 2026-11-01 23:05:19.469 [ltn] Started Dijkstra computation in background
+Nov 01 23:05:28 ltn python[2072450]: 2026-11-01 23:05:28,152 [INFO] optimal_flex.transitions: Loading transition matrix from /home/ubuntu/.config/bruce/graph_optimizer/heat_pump_water_tank_2b6a76e0.matrix.npz
+Nov 01 23:05:28 ltn python[2072450]: 2026-11-01 23:05:28,152 [INFO] optimal_flex.graph: Loaded transition matrix in 0.0 seconds
+Nov 01 23:05:28 ltn python[2072450]: 2026-11-01 23:05:28,674 [INFO] optimal_flex.graph: Created nodes in 0.5 seconds
+Nov 01 23:05:32 ltn python[2072450]: 2026-11-01 23:05:32,713 [INFO] optimal_flex.graph: Created edges in 4.0 seconds
+Nov 01 23:05:32 ltn python[2072450]: 2026-11-01 23:05:32,917 [INFO] optimal_flex.graph: Found shortest path in 0.2 seconds
+Nov 01 23:05:33 ltn python[2072450]: 2026-11-01 23:05:33,288 [INFO] optimal_flex.graph: Trimmed graph in 0.2 seconds
+Nov 01 23:05:33 ltn python[2066513]: 2026-11-01 23:05:33.613 Built and solved in 14.14 seconds! Trimmed graph: 7321916 bytes
+Nov 01 23:05:33 ltn python[2066513]: 2026-11-01 23:05:33.613 BidRunner waiting for get_bid to be called before computing bid.
