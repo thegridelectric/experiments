@@ -69,6 +69,7 @@ archive/2026-09-15-alerter-no-data/watcher.py
 2026-10-22-stopgap-mm/mqtt_witness.py
 2026-10-28-realtime-units-elm-check/run_gateway_on_tap.py
 procedures/sieg-valve-calibration/drive.py
+2026-11-10-plant-crossing/crossing.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_live.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_store_once.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_store_sweep.py
@@ -90,7 +91,8 @@ procedures/sieg-valve-calibration/drive.py
 # and pika in the alerter venv (alerter-no-data). October: paho
 # (stopgap-mm witness) and the web-backend gateway checkout
 # (realtime-units-elm-check). November: gwadmin in the laptop scada venv
-# (the sieg-valve-calibration driver).
+# (the sieg-valve-calibration driver), and the scada venv's gw_spaceheat
+# and gwsproto (plant-crossing).
 FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \
     -not -path '*/__pycache__/*' | sed 's|^\./||' | sort \
     | grep -Fxv "$PYRIGHT_EXCLUDE")
