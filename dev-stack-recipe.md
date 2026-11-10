@@ -38,6 +38,7 @@ experiment taken out.
 | web-backend API | gridworks-web-backend | `uv run python -m api` | `POST /api/v2/sessions` answers |
 | web-backend gateway | gridworks-web-backend | `uv run python -m gateway` | `curl localhost:8100/gateway/health` |
 | frontend | gridworks-web-frontend | `node_modules/.bin/vite --port 5173 --strictPort` | the URL vite prints |
+| sim plant | gridworks-terminalasset | `GWTA_SERVICE_ALIAS=<the layout's TerminalAsset alias> GWTA_G_NODE_PATH=<folder>/g.node.gt.json uv run ta-plant --layout <layout.json>`, before or after the scada it feeds | logs `consuming; N channels every …s to <scada alias>` |
 | sim scada | gridworks-scada | the Nolan fixture layout with the alias changed, in a scratch config home (`experiments/put_layout.sh dev`) | its first `layout.lite` is journaled |
 
 Start the capture before anything under observation. Start the gateway
@@ -75,6 +76,12 @@ what you are testing.
   a word version the consumer's snapshot lacks, the row is not written
   and the log says `Degraded decode`. Publish the version the consumer has,
   or regenerate the consumer first.
+- **A service a script starts in the background cannot hear Ctrl-C.**
+  Bash starts a background job with SIGINT ignored, `uv run` and the
+  Python under it inherit that, and a service that stops on
+  `KeyboardInterrupt` then never stops. Turn job control on in the script
+  (`set -m`) and signal the job's process group (`kill -INT -- -$PID`);
+  `2026-11-10-plant-crossing/run.sh` does.
 
 ## Taking it down
 
