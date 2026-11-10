@@ -1,0 +1,23 @@
+2026-11-10 12:07:14,016 [WARNING] gwbase.gridworks_actor: d1.isone.ct.newhaven.hazel1.ta: gnr_url unset, alias self-heal off; a registry rename needs a provisioning redeploy
+2026-11-10 12:07:14,016 [INFO] gwbase.actor_base: Connecting to localhost:5672 vhost=d1__1
+2026-11-10 12:07:14,019 [INFO] gwbase.actor_base: Connection opened
+2026-11-10 12:07:14,019 [INFO] gwbase.actor_base: Creating a new channel
+2026-11-10 12:07:14,019 [INFO] gwbase.actor_base: Channel opened
+2026-11-10 12:07:14,019 [INFO] gwbase.actor_base: Adding consumer channel close callback
+2026-11-10 12:07:14,019 [INFO] gwbase.actor_base: Asserting consume exchange exists: ta_tx
+2026-11-10 12:07:14,019 [INFO] gwbase.actor_base: Consume exchange present: ta_tx
+2026-11-10 12:07:14,019 [INFO] gwbase.actor_base: Declaring queue d1.isone.ct.newhaven.hazel1.ta-F2ee
+2026-11-10 12:07:14,020 [INFO] gwbase.orchestrator: Binding ta_tx to d1.isone.ct.newhaven.hazel1.ta-F2ee with rj.*.*.*.*.d1-isone-ct-newhaven-hazel1-ta
+2026-11-10 12:07:14,021 [INFO] gwbase.actor_base: Queue d1.isone.ct.newhaven.hazel1.ta-F2ee bound with rj.*.*.*.*.d1-isone-ct-newhaven-hazel1-ta
+2026-11-10 12:07:14,021 [INFO] gwbase.actor_base: QOS set to: 100
+2026-11-10 12:07:14,021 [INFO] gwbase.actor_base: Start consuming
+2026-11-10 12:07:14,021 [INFO] gwbase.actor_base: Adding consumer cancellation callback
+2026-11-10 12:07:14,021 [INFO] gwbase.actor_base: Binding d1.isone.ct.newhaven.hazel1.ta-F2ee to amq.topic with gw.d1-isone-ct-newhaven-hazel1-scada.to.d1-isone-ct-newhaven-hazel1-ta.sim-plant-actuation
+2026-11-10 12:07:14,066 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] consuming; 35 channels every 5.0s to d1.isone.ct.newhaven.hazel1.scada
+2026-11-10 12:17:15,301 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] interrupted; stopping
+2026-11-10 12:17:15,301 [INFO] gwbase.actor_base: Consumer connection stopping
+2026-11-10 12:17:15,301 [INFO] gwbase.actor_base: Sending a Basic.Cancel RPC command to RabbitMQ
+2026-11-10 12:17:15,301 [INFO] gwbase.actor_base: Consumer connection stopped
+2026-11-10 12:17:15,305 [INFO] gwbase.actor_base: RabbitMQ acknowledged the cancellation of the consumer: ctag1.1f9cb847e1584f5eb350139370fe7be1
+2026-11-10 12:17:15,305 [WARNING] gwbase.actor_base: Consume channel 1 was closed: (0, 'Normal shutdown')
+2026-11-10 12:17:15,305 [INFO] gwbase.actor_base: Closing consume connection

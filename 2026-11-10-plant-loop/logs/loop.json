@@ -1,0 +1,103 @@
+{
+  "verdict": "PASS",
+  "checks": {
+    "scada alive at the end of the window": true,
+    "no shutdown but the run's own stop": true,
+    "a report for most minutes of the window": true,
+    "every plant-fed channel is in the reports": true,
+    "every plant-fed channel changed": true
+  },
+  "window_s": 600.0,
+  "reports": 10,
+  "plant_fed_channels": 14,
+  "unchanged_or_missing": [],
+  "shutdown_reasons": [
+    "Signal received: SIGINT (2)  KeyboardInterrupt"
+  ],
+  "seen": {
+    "buffer-hot-pipe": {
+      "readings": 117,
+      "distinct_values": 53,
+      "low": 4926,
+      "high": 5001
+    },
+    "dist-flow": {
+      "readings": 117,
+      "distinct_values": 54,
+      "low": 324,
+      "high": 411
+    },
+    "dist-flow-hz": {
+      "readings": 117,
+      "distinct_values": 117,
+      "low": 1852406,
+      "high": 2588298
+    },
+    "dist-rwt": {
+      "readings": 117,
+      "distinct_values": 53,
+      "low": 4990,
+      "high": 5073
+    },
+    "dist-swt": {
+      "readings": 117,
+      "distinct_values": 67,
+      "low": 4991,
+      "high": 5083
+    },
+    "hp-ewt": {
+      "readings": 117,
+      "distinct_values": 68,
+      "low": 4951,
+      "high": 5057
+    },
+    "hp-lwt": {
+      "readings": 117,
+      "distinct_values": 51,
+      "low": 4947,
+      "high": 5011
+    },
+    "primary-flow": {
+      "readings": 117,
+      "distinct_values": 55,
+      "low": 309,
+      "high": 396
+    },
+    "primary-flow-hz": {
+      "readings": 117,
+      "distinct_values": 117,
+      "low": 1881622,
+      "high": 2166068
+    },
+    "store-cold-pipe": {
+      "readings": 117,
+      "distinct_values": 53,
+      "low": 4922,
+      "high": 5016
+    },
+    "store-flow": {
+      "readings": 117,
+      "distinct_values": 65,
+      "low": 361,
+      "high": 453
+    },
+    "store-flow-hz": {
+      "readings": 117,
+      "distinct_values": 117,
+      "low": 1743937,
+      "high": 2050258
+    },
+    "store-hot-pipe": {
+      "readings": 117,
+      "distinct_values": 61,
+      "low": 4908,
+      "high": 4991
+    },
+    "zone1-main-temp": {
+      "readings": 117,
+      "distinct_values": 59,
+      "low": 4986,
+      "high": 5075
+    }
+  }
+}
