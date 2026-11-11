@@ -22,7 +22,16 @@ sys.path.insert(0, str(SCADA_REPO / "gw_spaceheat"))
 sys.path.insert(0, str(SCADA_REPO / "packages" / "gridworks-scada-protocol"))
 
 from gwproto.messages import ShutdownEvent  # noqa: E402
-from gwsproto.enums import ActorClass  # noqa: E402
+from gwsproto.data_classes.components import (  # noqa: E402
+    ElectricMeterComponent,
+    GpioSensorComponent,
+    I2cThermistorReaderComponent,
+    SimPicoBtuMeterComponent,
+    SimPicoTankModuleComponent,
+    SimSensorComponent,
+)
+from gwsproto.data_classes.sh_node import ShNode  # noqa: E402
+from gwsproto.enums import SimDeviceType  # noqa: E402
 from sema_snapshot.sema.codec import SemaCodec  # noqa: E402
 from sema_snapshot.sema.types import ReportEvent  # noqa: E402
 
@@ -52,16 +61,32 @@ def mark_ms(clock: Path, mark: str) -> int | None:
     return None
 
 
+def senses_the_plant(node: ShNode) -> bool:
+    """Whether what this node's device senses comes from the plant link:
+    a sim sensor or sim pico word, a simulated power meter, or a sensing
+    device on a simulated board."""
+    component = node.component
+    if isinstance(
+        component, (SimSensorComponent, SimPicoTankModuleComponent, SimPicoBtuMeterComponent)
+    ):
+        return True
+    if isinstance(component, ElectricMeterComponent):
+        return component.device_type.DeviceType == SimDeviceType.SimPowerMeter
+    if isinstance(component, (GpioSensorComponent, I2cThermistorReaderComponent)):
+        return component.board_component.simulated
+    return False
+
+
 def plant_fed_channels(scratch: Path) -> set[str]:
-    """The channels the scada takes from the plant link: those captured by
-    a SimSensorActor node, by the scada's own layout loader."""
+    """The channels the scada takes from the plant link, by the scada's
+    own layout loader."""
     config = scratch / "config" / "gridworks" / "scada"
     layout = load_layout(config / "hardware-layout.json", config / "operational-params.json")
     return set(
         layout.enabled_channel_names(
             channel.Name
             for channel in layout.data_channels.values()
-            if layout.nodes[channel.CapturedByNodeName].actor_class == ActorClass.SimSensorActor
+            if senses_the_plant(layout.nodes[channel.CapturedByNodeName])
         )
     )
 

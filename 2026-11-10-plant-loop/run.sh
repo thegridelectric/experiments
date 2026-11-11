@@ -4,6 +4,7 @@
 #
 #     ./run.sh                 ten minutes
 #     LOOP_SECONDS=90 ./run.sh a short trial
+#     SCADA_REPO=<checkout> ./run.sh   the scada from another checkout
 #
 # The scada runs from a scratch XDG home under ./scratch, so it shares no
 # config, data or log folder with any other scada on the laptop, and on the
@@ -17,7 +18,8 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(dirname "$(dirname "$HERE")")"
 LOGS="$HERE/logs"
 SCRATCH="$HERE/scratch"
-FIXTURES="$ROOT/gridworks-scada/tests/config"
+SCADA_REPO="${SCADA_REPO:-$ROOT/gridworks-scada}"
+FIXTURES="$SCADA_REPO/tests/config"
 PAIR="gw.house0.no.sieg.hazel"
 PLANT_ALIAS="d1.isone.ct.newhaven.hazel1.ta"
 LOOP_SECONDS="${LOOP_SECONDS:-600}"
@@ -30,7 +32,7 @@ stamp() { echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $1" >> "$LOGS/clock.txt"; }
 : > "$LOGS/clock.txt"
 
 {
-    echo "gridworks-scada $(git -C "$ROOT/gridworks-scada" rev-parse --short HEAD) $(git -C "$ROOT/gridworks-scada" status --porcelain | wc -l) dirty"
+    echo "gridworks-scada $(git -C "$SCADA_REPO" rev-parse --short HEAD) $(git -C "$SCADA_REPO" status --porcelain | wc -l) dirty"
     echo "gridworks-terminalasset $(git -C "$ROOT/gridworks-terminalasset" rev-parse --short HEAD) $(git -C "$ROOT/gridworks-terminalasset" status --porcelain | wc -l) dirty"
 } > "$LOGS/code-under-test.txt"
 
@@ -77,7 +79,7 @@ stamp "plant consuming"
 
 stamp "scada starting"
 (
-    cd "$ROOT/gridworks-scada"
+    cd "$SCADA_REPO"
     XDG_CONFIG_HOME="$SCRATCH/config" XDG_DATA_HOME="$SCRATCH/data" XDG_STATE_HOME="$SCRATCH/state" \
     SCADA_LOCAL_MQTT__PORT=18831 SCADA_WEATHER_SOURCE=Sim \
         exec uv run --locked gws run --message-summary --seconds-per-report "$SECONDS_PER_REPORT"
@@ -112,7 +114,7 @@ stamp "plant stopped"
 
 set +e
 (
-    cd "$ROOT/gridworks-scada"
+    cd "$SCADA_REPO"
     uv run --locked python "$HERE/loop_check.py" "$SCRATCH" "$LOGS"
 ) > "$LOGS/loop.json" 2> "$LOGS/loop_check.stderr"
 CHECK_EXIT=$?
