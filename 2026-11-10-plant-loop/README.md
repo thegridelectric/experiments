@@ -4,7 +4,8 @@
 > dev broker (OPS-40). The scada on the no-sieg House0 fixture, `ta-plant`
 > publishing `sim.plant.flux` to it, ten minutes. Does the scada live,
 > and does every channel it takes from the plant change in its reports?
-> Verdict: PASS for the 14 channels `SimSensorActor` carries.
+> Verdict: PASS for the 14 channels `SimSensorActor` carries, and PASS on
+> the re-run for all 35 once every device actor read from the plant.
 
 ## Why
 
@@ -64,15 +65,57 @@ Laptop, `d1` universe, `gw-dev-rabbit` (AMQP 5672, MQTT 1885, vhost
 - **The plant heard no actuation.** No actor sets a relay through the
   link yet.
 
+## Re-run: every device actor behind the plant
+
+18:27 to 18:37 UTC the same day, same script, same plant and seed. The
+logs, `loop.json` and the run instance in this folder are this run's;
+the first run's are in this repo's history at `69387ea`.
+
+- **The scada**: the `ow/plant-seam` tree `a75ee9a3` of
+  `gridworks-scada`, the one its `ci.sh` passed on, uncommitted on
+  `8f086541` because the commits were waiting on a signing passphrase
+  (`logs/code-under-test.txt`: `8f086541 44 dirty`). It ran from a
+  second checkout of that tree (`SCADA_REPO`), not the working tree. In
+  it the power meter, the tank modules and the BTU meter take their
+  channels from the plant link, and the relays send their positions.
+- **The check** counts every channel whose device senses the plant:
+  sim sensor and sim pico words and the simulated power meter. 35 on
+  this fixture, which is every channel in the flux.
+
+**PASS**, all five checks.
+
+- **The scada outlived the window**; one shutdown, the run's own SIGINT.
+  Ten reports.
+- **All 35 plant-fed channels are in the reports and all changed.** The
+  29 that are handed on as they arrive hold 114 readings each. The six
+  metered channels are read by the meter's own loop and reported on its
+  capture rule: 95 to 108 readings for five, and 4 for `hp-odu-pwr`.
+- **No flux channel went unread**: the link's "no sensor reads" warning
+  did not appear.
+- **No pico was called missing and no channel flatlined.** The one
+  Warning glitch was `no-ta-deed`, as in the first run.
+- **The plant heard 55 actuations across all 11 relays**, `vdc-relay`
+  among them.
+
+Not shown by this run: a plant that stops (the outage experiment), and
+anything on a board.
+
 ## Timeline
 
-UTC, from `logs/clock.txt`.
+UTC. The first run:
 
 - 12:07:13 plant starting; consuming at 12:07:14.
 - 12:07:14 scada starting.
 - 12:17:14 scada alive at the end of the window; stopped at 12:17:15.
 - 12:17:15 plant stopped.
 - 12:17:16 check ended, exit 0.
+
+The re-run, from `logs/clock.txt`:
+
+- 18:27:28 plant starting and consuming; scada starting.
+- 18:37:28 scada alive at the end of the window; stopped at 18:37:30.
+- 18:37:30 plant stopped.
+- 18:37:31 check ended, exit 0.
 
 ## Analysis notes
 
@@ -105,7 +148,8 @@ running service.
 - `README.md`.
 - `run.sh`: the whole run, wall clock per step. Needs `gw-dev-rabbit`,
   the local mosquitto (18831) and the sibling `gridworks-scada` and
-  `gridworks-terminalasset` checkouts.
+  `gridworks-terminalasset` checkouts; `SCADA_REPO` names another scada
+  checkout.
 - `loop_check.py`: the verdict from the scada's persisted events.
 - `emit_instances.py`: the run record from the logs.
 - `g.node.gt.json`: the plant's dev identity, as the plant wrote it.
