@@ -1,150 +1,100 @@
-# flo-dev-harness, 2026-11-05
+# flo-dev-harness, 2026-11-05 to 2026-11-10
 
-> What this is: the local dev harness for flo-as-a-service (OPS-514): a
-> sim scada, its LTN from `gridworks-scada` and the FLO service from
-> `gridworks-flo` on one laptop's dev broker, the LTN asking the FLO for a
-> slot and bidding off the answer. Found is open; the setup steps below
-> are the record so far and are written so anyone on the team can stand
-> the harness up on their own laptop.
+> What this is: the first FLO round trip on a laptop (OPS-514). A sim
+> scada and its LTN from `gridworks-scada` and the FLO service from
+> `gridworks-flo` ran on the dev broker, and the LTN bid off the FLO's
+> answer. Rung 1 passed on 2026-11-05. The logbook line is the index
+> record, and the stand-up steps are `../dev-stack-recipe.md` "A FLO
+> round trip".
 
 ## Why
 
-The FLO runs in production as `hw1.flo` and oak's LTN asks it over the
-broker, but nobody can watch a round trip end to end, change one side
-and watch again, without a house. The harness is that loop on a laptop:
-every piece real (the broker, the scada's MQTT link, the gwbase actor,
-the optimizer), only the plant simulated and the clock, later, stepped.
+The FLO runs in production as `hw1.flo`, and oak's LTN asks it over the
+broker. Without a house, though, nobody could watch a round trip end to
+end, change one side and watch again. The harness is that loop on a
+laptop: the broker, the scada's MQTT link, the gwbase actor and the
+optimizer are all real, and only the plant is simulated.
 
 ## Setup
 
-Repos as siblings under one directory, on these branches:
+The laptop's dev broker (`gw-dev-rabbit`, vhost `d1__1`), the registry
+seeded with the `d1` universe, `gridworks-flo` `main` as `d1.flo` with
+bruce from the sibling `optimal-flexibility`, and `gridworks-scada`
+`jm/flo-over-the-broker` (PR 605) for the sim scada and the LTN, on the
+orange pair (the simulated House0: one 120 gallon tank, AllTanks, bruce
+tuning; LTN `d1.isone.ct.newhaven.orange1`). The broker firehose capture
+ran throughout. Nothing deployed was touched.
 
-| repo | branch | role |
-|---|---|---|
-| gridworks-base | main | the dev broker |
-| grid-node-registry | main | `d1.flo` in the dev universe |
-| gridworks-flo | main | the FLO service |
-| gridworks-scada | `jm/flo-over-the-broker` (PR 605) | the sim scada and the LTN |
-| optimal-flexibility | main (sibling checkout, `thdfw`) | bruce |
-| experiments | this folder | the capture and the record |
-
-Docker and uv installed. The scada venv built with `tools/mkenv.sh` from
-the scada repo root.
-
-## Protocol
-
-Each step says what to run and what "ready" looks like. Times are ET.
-
-1. **Broker.** `cd gridworks-base && ./arm.sh` (`./x86.sh` on Intel).
-   Ready: `docker ps` shows `gw-dev-rabbit`; the management UI is on
-   15672, vhost `d1__1`, MQTT door 1885.
-2. **Registry database.** `cd grid-node-registry && docker compose up -d`
-   (container `gnr-postgres`, host port 5435). `.env` from `template.env`;
-   it MUST have `GNR_API_PORT=8010`, because 8000 is the sim scada's.
-   `uv sync --all-groups`.
-3. **Seed the dev universe.** `uv run gnr seed-dev` (`--wipe` if the
-   registry was seeded before; the GNodeIds derive from the alias, so a
-   re-seed keeps every id). Ready: `✓ seeded 29 d1 GNodes`.
-4. **Read façade.** `uv run gnr api` in its own window. Ready:
-   `curl localhost:8010/docs` is 200 and
-   `curl localhost:8010/gnr/g-node-by-alias/d1.flo` serves class `Flo`.
-5. **The FLO's identity.** `mkdir -p ~/.config/gridworks/flo &&
-   curl -s localhost:8010/gnr/g-node-by-alias/d1.flo | python3 -m json.tool
-   > ~/.config/gridworks/flo/g.node.gt.json`. The served record is the
-   identity file, as on the production box.
-6. **The layout pair.** `cd experiments && ./put_layout.sh dev check`;
-   if any file differs, `./put_layout.sh dev <change>` places the scada
-   repo's orange fixtures (the simulated House0 pair, one 120 gallon
-   tank, AllTanks, bruce tuning) under the deployed names in
-   `~/.config/gridworks/scada/` and `~/.config/gridworks/ltn/`. The
-   script's house argument also takes willow or nolan; nolan is not for
-   this harness, since its FLO tuning is alice. The orange LTN is
-   `d1.isone.ct.newhaven.orange1`, in the `d1` universe, so its FLO is
-   `d1.flo` with no configuration.
-7. **The FLO service.** `cd gridworks-flo && cp template.env .env`
-   (the defaults are the dev broker and `d1.flo`);
-   `uv sync --all-groups --all-extras` (the bruce extra installs the
-   sibling `../optimal-flexibility` editable); `uv run gwflo rabbit`.
-   Ready: the log says `Queue d1.flo-… bound with rj.*.*.*.*.d1-flo` and
-   `Binding d1.flo-… to amq.topic with gw.*.to.flo.flo-params`.
-8. **bruce's matrix for the plant shape.** bruce walks a graph of store
-   states and heat-pump actions, and the next state of every (state,
-   action) pair is computed once per plant shape and cached as
-   `~/.config/bruce/graph_optimizer/heat_pump_water_tank_<hash>.matrix.npz`;
-   the hash is over the shape fields only (layers, gallons, lift, the RWT
-   buckets, the thermal caps, the longest step, the discharge threshold),
-   so no per-request number changes it. bruce refuses a request whose
-   shape has no file. The orange pair is one 120 gallon tank at 9 layers
-   with the fleet tuning: hash `268a5f12`, which is also bruce's default
-   geometry. Three ways to get it, in order of preference:
-   - copy the file (175 KB, deterministic) from a laptop or the flo box
-     into `~/.config/bruce/graph_optimizer/`;
-   - build it once with bruce's own test: in `optimal-flexibility`,
-     `cp .env.example .env` (it sets `CAN_COMPUTE_TRANSITION_MATRICES=true`,
-     which bruce reads from that file) and `uv run pytest
-     tests/test_generate_bid.py`, about fifteen minutes;
-   - leave that `.env` in place and let the service build it on the
-     first request, which costs that slot (the LTN times out and bids its
-     fallback) and answers from the cache the next hour.
-
-   Ready: `ls ~/.config/bruce/graph_optimizer/` shows the `268a5f12`
-   file, and `optimal-flexibility/.env` is absent or not `true`, so the
-   service never builds in the request path.
-9. **The scada and LTN env.** `gridworks-scada/gw_spaceheat/.env`:
-
-       SCADA_GRIDWORKS_MQTT__PORT=1885
-       LTN_SCADA_MQTT__PORT=1885
-       LTN_SCADA_MQTT__TLS__USE_TLS=false
-       LTN_DASHBOARD__PRINT_GUI=false
-       LTN_WEATHER_SOURCE=Sim
-       LTN_BID_LEAD_S=120
-
-   The scada's MQTT settings default to TLS off; the LTN's default to
-   TLS on, so the LTN needs both lines. The bid lead puts the request
-   two minutes before the hour instead of three.
-10. **Capture.** `cd experiments && uv run python capture_broker.py
-    2026-11-05-flo-dev-harness/captures > 2026-11-05-flo-dev-harness/logs/capture.log`.
-    Ready: `capturing vhost d1__1`. Start it before the LTN and scada.
-11. **The LTN.** From `gridworks-scada/gw_spaceheat`:
-    `venv/bin/python -c "import sys; from ltn_app import LtnApp; sys.exit(LtnApp.main(env_file='.env', return_int=True))"`,
-    the box service's command. Ready: `scada_mqtt: … --> awaiting_peer`,
-    then `Main loop idle: waiting for gw.house.operating.status` until the
-    scada is up.
-12. **The sim scada.** From the scada repo root:
-    `gw_spaceheat/venv/bin/gws run --message-summary`. Ready: the LTN's
-    link goes active and the LTN logs the operating status.
-13. **The round trip.** At `LTN_BID_LEAD_S` before the hour the LTN logs
-    the request; the FLO logs `Request from d1.isone.ct.newhaven.orange1
-    for slot <start>: flo.tuning.bruce` and `Answered … in <n> s: <k> pairs
-    from bruce`; the LTN logs the bid for the slot. The capture has both
-    wrapped words on `amq.topic`.
-
-The pass criterion for rung 1 is the LTN's bid for the slot built from
-the FLO's answer, within the LTN's timeout. Rung 2 steps the clock: the
-scada and LTN on `Timestep` with the time coordinator broadcasting one
-simulated hour per wall minute, several slots in a session.
+The bar for rung 1: the LTN's bid for a slot is built from the FLO's
+answer, inside the LTN's timeout.
 
 ## Found
 
-Open. A first attempt on 2026-11-05, 12:08 to 12:28 ET, ran steps 1 to
-12 with the Nolan fixtures and was torn down before the hour: Nolan's
-tuning is alice, and `flo.tuning.alice` requires an operator hold (ops
-word axiom 6) under which the scada refuses dispatch, so that LTN never
-asks the FLO. Three things it taught are in the steps: the registry's
-older `.env` had no `GNR_API_PORT` and the façade took 8000; the sim
-scada starts from the scada repo root; and the orange shape's matrix is
-bruce's default geometry, already cached on a laptop that built oak's.
-The second attempt, with orange, is a step-by-step walk from a clean
-broker; its times are in `logs/clock.txt`.
+- **Rung 1: PASS.** With `LTN_BID_LEAD_S=600`, the LTN asked at
+  13:50:56 ET for the 14:00 slot, the FLO answered at 13:50:59, and the
+  bid was on the broker at 13:50:59.922. The capture has
+  `…orange1.to.flo.flo-params` and `d1-flo.to.ltn.flo-recommendation` on
+  `amq.topic`, and the LTN's copies of both to the scada.
+- Six milliseconds after the bid, the scada shut down on the LTN's copy
+  of the recommendation (`Scada does not expect to receive
+  FloRecommendation`). The running scada predated the handler merged to
+  `main` on 2026-11-04 (`085fbad5`, #604). The branch took it in a merge
+  at 13:54, and the 13:55 restart runs it.
+- A restarted LTN waits for the scada's operating status, because the
+  scada sends it at boot and then only when a field changes. The waits
+  were 43 s and 115 s (OPS-669).
+- The sim scada's buffer goes stale for about 50 s every four minutes,
+  which flaps `ScadaBlind` (OPS-670).
+- `gridworks-ltn`'s `ci.sh` publishes on the same vhost. On 2026-11-09
+  its stand-in `latest.price` made the harness LTN drop its bid
+  (OPS-671).
+
+The harness then served OPS-665 on 2026-11-09 and 2026-11-10: the
+`flo.recommendation` 001 words journaled from orange1's slots, and the
+web-backend route and visualizer page that read them.
+
+Rung 2, stepped time (the scada and LTN on `Timestep` with the time
+coordinator broadcasting one simulated hour per wall minute), did not
+run.
+
+## Timeline
+
+ET, from `logs/clock.attempt1.txt` and `logs/clock.txt`.
+
+- 2026-11-05 12:08 to 12:28: first attempt, with a layout whose tuning is
+  alice. Torn down before the hour, because alice needs an operator hold
+  under which the scada refuses dispatch.
+- 12:31: broker restarted clean. 13:12: the orange pair placed. 13:21:
+  the FLO started.
+- 13:35 to 13:47: the scada stopped by hand twice and the LTN restarted
+  three times, which showed the operating-status wait.
+- 13:50:56: request. 13:50:59: answer. 13:50:59.922: bid.
+- 13:54: the scada branch merged `main`. 13:55: scada restarted.
+- 2026-11-09 13:16 to 14:10: OPS-665 runs. The FLO answered at 13:45:52
+  with two pairs, and a seam-test `latest.price` dropped the bid at
+  13:49:38.
+- 2026-11-10 07:11 to 08:55: OPS-665 runs. The FLO answered at 07:13:14
+  with two pairs, and the visualizer page was checked against the
+  journaled 001 word.
 
 ## Folder contents & experimental method
 
-All data here is GENERATED on the laptop's dev broker; none of it is in
-the journal or the eventstore and a re-run is a new dataset. Nothing
-deployed is touched.
+All data here was GENERATED on the laptop's dev broker. None of it is in
+the journal DB or the eventstore, and a re-run is a new dataset. Nothing
+deployed was touched.
 
 - `README.md`: this record.
-- `captures/` (gitignored `*.jsonl`): the broker firehose capture.
-- `logs/`: `clock.txt` (each step's wall clock), `capture.log`, and the
-  LTN and scada stdout (`*.log`, gitignored).
-- `instances/`: the `gw.experiment.run` record, once Found closes.
+- `logs/clock.attempt1.txt`, `logs/clock.txt`: each step's wall clock, ET,
+  as the sessions wrote them.
+- `emit_instances.py`: writes the `gw.experiment.run` for rung 1 through
+  the vendored snapshot.
+- `instances/d1.isone.ct.newhaven.orange1-flo.round.trip-gw.experiment.run-001.json`:
+  the rung 1 run, PASS.
+- `captures/` and `logs/*.log` (gitignored): the firehose captures and
+  each service's stdout, kept on the laptop that ran them.
+
+Regenerate the instance:
+
+    uv run python emit_instances.py
+
+There is no reading data, so there is no display CSV.

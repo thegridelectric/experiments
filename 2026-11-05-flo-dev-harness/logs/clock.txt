@@ -1,3 +1,32 @@
 # attempt 2, orange, from a clean broker (ET)
 12:31:27 broker start (arm.sh); attempt 1 processes, gnr rabbit and gwwf stopped around it
 13:12:13 orange layout pair placed (put_layout.sh dev orange-house0)
+13:21:08 flo start (gwflo rabbit, by hand in a window)
+09:11:47 request 13:50:56, answer 13:50:59 (from the capture)
+13:16:54 prickly-mink: layout pair re-put from source (adds last-hour-dist-energy derived channel); gwltn .env -> orange1 (spruce copy kept as .env.hello-rabbit-spruce); orange1 LTN identity written to ~/.config/gridworks/ltn/g.node.gt.json
+13:18:07 prickly-mink: started gwflo rabbit (jm/flo-plot-words 05bce75), journalkeeper (a00b032, local gw-data-pg), gwltn rabbit (acd5e1e, orange1); capture from 11-05 still running
+13:18:43 prickly-mink: started sim scada (gws run, checkout at 71487f98)
+13:21:05 prickly-mink: local gw-data-pg tsdb schema lags journalkeeper (layout.lite persist fails on reading_channels column; no g_nodes row for orange1.ta); gridworks.messages table present, so the flo words can still be read there
+13:24:30 prickly-mink: gridworks-data .env pointed at db 'gridworks' (template says tsdb); fixed, alembic upgrade head on local tsdb d4a7c9e1b2f3 -> f7c3d1a2b4e5
+13:26:24 prickly-mink: local tsdb now at alembic head f7c3d1a2b4e5 via a scratchpad channel map (the committed scripts/channel_id_backfill_map.py names tlayouts main files that no longer exist; local branch jm/spruce created in tlayouts for its first layer)
+13:38:21 prickly-mink: stopped scada, gwltn, gwflo, journalkeeper before the 14:00 slot; next session reruns with GWLTN_BID_LEAD_S large so the request fires at start
+13:38:29 prickly-mink: stopped scada, gwltn, gwflo, journalkeeper before the 14:00 slot; next session reruns with GWLTN_BID_LEAD_S large so the request fires at start
+13:41:48 happy-hawthorn: restarted gwflo, journalkeeper, scada LTN (gws ltn run, LTN_BID_LEAD_S=900 so the request fires 13:45) and sim scada; logs *-2026-11-09b.log
+13:46:14 happy-hawthorn: LTN asked FLO for slot 1794250800 at 13:45:49, answered 13:45:52 (2 PQ pairs), bid published; latest.price to be sent by hand after 14:00:00
+13:50:49 happy-hawthorn: a latest.price from an unknown publisher at 13:49:38 made the LTN drop its bid (stale, before the hour); LTN restarted (log ltn-2026-11-09c.log) to re-ask the FLO; stand-in maker script armed for 14:00:00 (publish_latest_price.py in session scratchpad, log latest-price-2026-11-09b.log)
+13:52:23 happy-hawthorn: the 13:49:38 latest.price was gridworks-ltn's test_seam run by its ci.sh against the live dev broker (mmmic_tx binds rjb.# to amq.topic, the MQTT plugin's exchange); the sim orange1 LTN hears the maker topic. Do not run the gridworks-ltn gate while the harness holds a bid.
+13:55:55 happy-hawthorn: the same seam-test run also journaled a stand-in flo.recommendation for willow1 (593 B, placeholder commit) at 13:49; the real orange1 recommendation is the 6548 B row with StoreStateList
+14:02:15 happy-hawthorn: 14:00:00 price went out on mm/latest.price (dot, script bug), unheard; republished on mm/latest-price inside the slot
+14:08:48 happy-hawthorn: web-backend API (jm/flo-plot-words) started on 8001 against local tsdb; GET flo.recommendation for orange1 at the 14:00 slot checked (log web-api-2026-11-09.log)
+14:10:45 happy-hawthorn: web-backend route GET /api/v2/installations/<ltn>/flo.recommendation?time= verified on the local tsdb: orange1 14:00 slot -> the 001 word (5397 B), 15:00 slot -> 404 'No FLO was run in this hour'; backend .env gained PRICE_FORECAST_URL and SCADA_REPO from template.env (Settings required them); web-api still running on 8001
+07:11:36 dapper-horizon: stopped yesterday's gwflo (82705, predates 95da3dd) and web-backend 8001 (9898, predates d721da7)
+07:11:36 dapper-horizon: started gwflo (jm/flo-plot-words 2cadccb, bruce 95da3dd) and journalkeeper (local gw-data-pg), logs *-2026-11-10.log; LTN_BID_LEAD_S=3500 so the request fires at LTN start
+07:12:09 dapper-horizon: started LTN (gws ltn run) then sim scada (gws run), scada checkout 0118846f
+07:14:12 dapper-horizon: LTN asked FLO for slot 1794315600 (08:00 ET) at 07:13:10, answered 07:13:14 (2 pairs); journaled flo.recommendation 001 (6846 B) has EmptyStoreWh 155446, FullStoreWh 184794, PathCostUsd 8.25 / 12.28, TerminalCostEmptyStoreUsd 0.98
+07:14:14 dapper-horizon: stopped sim scada and LTN (scada holds 8000; the vite proxy wants the backend there)
+07:16:21 dapper-horizon: web-backend API (d721da7) on 8000 and vite on 5173 started; GET flo.recommendation for orange1 at 2026-11-10T13:20Z -> 001 word, both PathCostUsd present; yesterday's 14:00 row -> 500 (row predates the four fields, as the design says); regen_sema_snapshot.sh takes ALLOW_STAGED=1 on jm/flo-plot-words
+07:21:02 dapper-horizon: page check 1: FLO button at 07:19 ET -> 'FLO request failed: No FLO was run in this hour'; the axios interceptor rewraps the 404 so flo-api's isAxiosError branch never fires; fixed in flo-api.ts (validateStatus admits 404), test added, vitest 116 passed, tsc clean
+07:22:12 dapper-horizon: the page's no-FLO notice names the slot start in ET (VisualizerPage.tsx)
+07:47:29 dapper-horizon: four flo words published in sema (58a55b4); snapshots regenerated in optimal-flexibility, gridworks-flo, gridworks-journalkeeper, gridworks-scada, gridworks-ltn, gridworks-web-backend (api+gateway, published-only, ALLOW_STAGED switch removed); gates green: flo ci, ltn ci, jk ruff+pytest 122, web-backend pytest 51, bruce pytest 12; scada ci running
+07:53:55 dapper-horizon: scada ci green; changelogs folded to the squashed commits; side_quests removed from web-backend (git rm, staged), pytest 51
+08:55:26 dapper-horizon: wrap; thdfw main (1c5d60b) has two-head edges that break path_words on the branch; next move written to the design. Still running: broker, gw-data-pg, capture, gwflo (branch code in memory; checkout now on main), journalkeeper, web-backend on 8000, vite on 5173

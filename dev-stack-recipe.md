@@ -83,6 +83,51 @@ Leave the broker, the databases and `gnr rabbit` up; they are the laptop's
 standing dev state. The experiment's runbook ends with its own restore
 step for anything it placed.
 
+## A FLO round trip
+
+A sim scada, its LTN and the FLO service on the dev broker, the LTN asking
+the FLO for a slot and bidding off the answer. The first run is
+`2026-11-05-flo-dev-harness/`.
+
+| part | where | start | ready when |
+|---|---|---|---|
+| broker, registry dev state, read façade | as above | | `curl localhost:8010/gnr/g-node-by-alias/d1.flo` serves class `Flo` |
+| the FLO's identity | any | `mkdir -p ~/.config/gridworks/flo && curl -s localhost:8010/gnr/g-node-by-alias/d1.flo > ~/.config/gridworks/flo/g.node.gt.json` (once per laptop) | the file says `d1.flo`, class `Flo` |
+| bruce's matrix | any | copy `heat_pump_water_tank_268a5f12.matrix.npz` (175 KB) from another laptop or the flo box into `~/.config/bruce/graph_optimizer/`, or build it once with `uv run pytest tests/test_generate_bid.py` in `optimal-flexibility` (about fifteen minutes, with its `.env.example` copied to `.env`) | the file is there, and `optimal-flexibility/.env` is absent or not `true` |
+| layout pair | experiments | `./put_layout.sh dev check`, then `./put_layout.sh dev orange-house0` if a file differs | the orange pair (one 120 gallon tank, bruce tuning) under `~/.config/gridworks/scada/` and `.../ltn/` |
+| broker capture | experiments | as above | `capturing vhost d1__1` |
+| FLO service | gridworks-flo | `cp template.env .env` (the defaults are the dev broker and `d1.flo`); `uv sync --all-groups --all-extras`; `uv run gwflo rabbit` | `Binding d1.flo-… to amq.topic with gw.*.to.flo.flo-params` |
+| LTN | gridworks-scada, repo root | `gws ltn run --message-summary` with the venv active | `awaiting_peer`, then waiting for `gw.house.operating.status` |
+| sim scada | gridworks-scada, repo root | `gws run --message-summary` | the LTN logs the operating status |
+
+The scada and LTN read `gridworks-scada/.env` at the repo root: both MQTT
+clients on `localhost:1885` as `smqPublic` with TLS off
+(`SCADA_GRIDWORKS_MQTT__*` and `LTN_SCADA_MQTT__*`; the LTN's defaults to
+TLS on, so it needs its own TLS line), `LTN_DASHBOARD__PRINT_GUI=false`,
+`LTN_WEATHER_SOURCE=Sim` (no weather service needed) and
+`LTN_BID_LEAD_S`. Ready: `gws ltn run --dry-run` prints those three. The
+orange LTN is `d1.isone.ct.newhaven.orange1`, so its FLO is `d1.flo` with
+no configuration. The round trip: at `LTN_BID_LEAD_S` before the hour the
+FLO logs `Request from d1.isone.ct.newhaven.orange1 …` and `Answered … in
+<n> s: <k> pairs from bruce`, and the LTN logs its bid.
+
+**Things that bit:**
+- A bid lead longer than the minutes left in the hour fires the request
+  as soon as the LTN starts (`LTN_BID_LEAD_S=3500`), which saves waiting
+  for :57.
+- A layout whose FLO tuning is alice needs an operator hold (ops word
+  axiom 6), under which the scada refuses dispatch, so that LTN never asks
+  the FLO. Use a bruce layout.
+- `gws` runs only from the scada repo root: its interpreter line is the
+  relative `gw_spaceheat/venv/bin/python`.
+- The sim scada binds 8000. Stop it before moving the web-backend API to
+  8000 for a page check.
+- `gridworks-ltn`'s `ci.sh` publishes on the same vhost, and its stand-in
+  `latest.price` makes a running LTN drop its bid (OPS-671). Do not run
+  that gate while the stack has a bid out.
+- The market maker's price topic is `mm/latest-price`. A stand-in
+  published on `mm/latest.price` is not heard.
+
 ## A production-shaped journal DB: `tsdb_tap`
 
 `tsdb_tap` is a second database in the `gw-data-pg` container: the schema
