@@ -1,0 +1,78 @@
+2026-11-10 18:27:28,323 [WARNING] gwbase.gridworks_actor: d1.isone.ct.newhaven.hazel1.ta: gnr_url unset, alias self-heal off; a registry rename needs a provisioning redeploy
+2026-11-10 18:27:28,323 [INFO] gwbase.actor_base: Connecting to localhost:5672 vhost=d1__1
+2026-11-10 18:27:28,326 [INFO] gwbase.actor_base: Connection opened
+2026-11-10 18:27:28,326 [INFO] gwbase.actor_base: Creating a new channel
+2026-11-10 18:27:28,327 [INFO] gwbase.actor_base: Channel opened
+2026-11-10 18:27:28,327 [INFO] gwbase.actor_base: Adding consumer channel close callback
+2026-11-10 18:27:28,327 [INFO] gwbase.actor_base: Asserting consume exchange exists: ta_tx
+2026-11-10 18:27:28,327 [INFO] gwbase.actor_base: Consume exchange present: ta_tx
+2026-11-10 18:27:28,327 [INFO] gwbase.actor_base: Declaring queue d1.isone.ct.newhaven.hazel1.ta-Fa06
+2026-11-10 18:27:28,328 [INFO] gwbase.orchestrator: Binding ta_tx to d1.isone.ct.newhaven.hazel1.ta-Fa06 with rj.*.*.*.*.d1-isone-ct-newhaven-hazel1-ta
+2026-11-10 18:27:28,329 [INFO] gwbase.actor_base: Queue d1.isone.ct.newhaven.hazel1.ta-Fa06 bound with rj.*.*.*.*.d1-isone-ct-newhaven-hazel1-ta
+2026-11-10 18:27:28,329 [INFO] gwbase.actor_base: QOS set to: 100
+2026-11-10 18:27:28,329 [INFO] gwbase.actor_base: Start consuming
+2026-11-10 18:27:28,329 [INFO] gwbase.actor_base: Adding consumer cancellation callback
+2026-11-10 18:27:28,329 [INFO] gwbase.actor_base: Binding d1.isone.ct.newhaven.hazel1.ta-Fa06 to amq.topic with gw.d1-isone-ct-newhaven-hazel1-scada.to.d1-isone-ct-newhaven-hazel1-ta.sim-plant-actuation
+2026-11-10 18:27:28,373 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] consuming; 35 channels every 5.0s to d1.isone.ct.newhaven.hazel1.scada
+2026-11-10 18:27:29,426 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-scada-ops-relay Energize
+2026-11-10 18:27:29,466 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-relay Energize
+2026-11-10 18:27:29,467 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-hack-relay Energize
+2026-11-10 18:27:29,467 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-scada-ops-relay Energize
+2026-11-10 18:27:29,467 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-relay Energize
+2026-11-10 18:27:29,467 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-hack-relay Energize
+2026-11-10 18:27:29,467 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard charge-discharge-relay DeEnergize
+2026-11-10 18:27:29,467 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard store-pump-relay DeEnergize
+2026-11-10 18:27:29,467 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard tstat-common-relay DeEnergize
+2026-11-10 18:27:29,467 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard zone1-main-failsafe-relay DeEnergize
+2026-11-10 18:27:29,468 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard zone1-main-ops-relay DeEnergize
+2026-11-10 18:27:29,468 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-failsafe-relay Energize
+2026-11-10 18:27:29,468 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard aquastat-ctrl-relay Energize
+2026-11-10 18:27:32,413 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard vdc-relay Energize
+2026-11-10 18:27:33,377 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-scada-ops-relay Energize
+2026-11-10 18:27:33,378 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-relay Energize
+2026-11-10 18:27:33,378 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-hack-relay Energize
+2026-11-10 18:27:33,378 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard charge-discharge-relay DeEnergize
+2026-11-10 18:27:33,378 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard store-pump-relay DeEnergize
+2026-11-10 18:27:33,378 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard tstat-common-relay DeEnergize
+2026-11-10 18:27:33,378 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard zone1-main-failsafe-relay DeEnergize
+2026-11-10 18:27:33,378 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard zone1-main-ops-relay DeEnergize
+2026-11-10 18:27:33,379 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-failsafe-relay Energize
+2026-11-10 18:27:33,379 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard aquastat-ctrl-relay Energize
+2026-11-10 18:27:33,379 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard vdc-relay Energize
+2026-11-10 18:27:33,412 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-relay DeEnergize
+2026-11-10 18:27:33,412 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-hack-relay DeEnergize
+2026-11-10 18:27:37,417 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard vdc-relay DeEnergize
+2026-11-10 18:28:34,417 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard store-pump-relay DeEnergize
+2026-11-10 18:28:34,459 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard charge-discharge-relay DeEnergize
+2026-11-10 18:28:34,460 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-scada-ops-relay DeEnergize
+2026-11-10 18:29:58,002 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-hack-relay DeEnergize
+2026-11-10 18:29:58,043 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard aquastat-ctrl-relay Energize
+2026-11-10 18:29:58,043 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard store-pump-relay DeEnergize
+2026-11-10 18:29:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-relay DeEnergize
+2026-11-10 18:29:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard zone1-main-failsafe-relay DeEnergize
+2026-11-10 18:29:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-scada-ops-relay DeEnergize
+2026-11-10 18:29:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-failsafe-relay Energize
+2026-11-10 18:29:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard charge-discharge-relay DeEnergize
+2026-11-10 18:29:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard tstat-common-relay DeEnergize
+2026-11-10 18:29:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard vdc-relay DeEnergize
+2026-11-10 18:29:58,045 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard zone1-main-ops-relay DeEnergize
+2026-11-10 18:30:00,423 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-relay Energize
+2026-11-10 18:30:00,424 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-hack-relay Energize
+2026-11-10 18:34:58,002 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-scada-ops-relay DeEnergize
+2026-11-10 18:34:58,043 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard hp-failsafe-relay Energize
+2026-11-10 18:34:58,043 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard zone1-main-failsafe-relay DeEnergize
+2026-11-10 18:34:58,043 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-relay Energize
+2026-11-10 18:34:58,043 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard zone1-main-ops-relay DeEnergize
+2026-11-10 18:34:58,043 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard vdc-relay DeEnergize
+2026-11-10 18:34:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard tstat-common-relay DeEnergize
+2026-11-10 18:34:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard store-pump-relay DeEnergize
+2026-11-10 18:34:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard charge-discharge-relay DeEnergize
+2026-11-10 18:34:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard aquastat-ctrl-relay Energize
+2026-11-10 18:34:58,044 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] heard secondary-pump-hack-relay Energize
+2026-11-10 18:37:30,612 [INFO] gwta.plant: [d1.isone.ct.newhaven.hazel1.ta] interrupted; stopping
+2026-11-10 18:37:30,612 [INFO] gwbase.actor_base: Consumer connection stopping
+2026-11-10 18:37:30,612 [INFO] gwbase.actor_base: Sending a Basic.Cancel RPC command to RabbitMQ
+2026-11-10 18:37:30,612 [INFO] gwbase.actor_base: Consumer connection stopped
+2026-11-10 18:37:30,616 [INFO] gwbase.actor_base: RabbitMQ acknowledged the cancellation of the consumer: ctag1.89e79acbe8d1400788c3c9d9d7722f51
+2026-11-10 18:37:30,616 [WARNING] gwbase.actor_base: Consume channel 1 was closed: (0, 'Normal shutdown')
+2026-11-10 18:37:30,616 [INFO] gwbase.actor_base: Closing consume connection

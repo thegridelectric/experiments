@@ -1,0 +1,440 @@
+{
+ "verdict": "PASS",
+ "checked_at_utc": "2026-11-12T11:23:35+00:00",
+ "services_created_at": {
+  "rabbit": "2026-11-11 21:32:55 +0000 GMT",
+  "mosquitto": "2026-11-11 21:32:55 +0000 GMT",
+  "plant": "2026-11-11 21:32:55 +0000 GMT",
+  "scada": "2026-11-11 21:49:57 +0000 GMT"
+ },
+ "checks": {
+  "the four services are running": true,
+  "the scada has not shut down": true,
+  "the plant shows every channel the scada takes from it": true,
+  "the plant heard every relay of the layout": true,
+  "the scada reported for two minutes or more": true,
+  "every plant-fed channel is in the reports": true,
+  "plant-fed channels moved": true
+ },
+ "reports": 813,
+ "reports_the_snapshot_refuses": 3,
+ "first_refusal": "Validation failed: 2 validation errors for ReportEvent\nReport.FsmReportList.15.AtomicList.4\n  Value error, Axiom 2 failed: event fields must be present if and only if report_type is Event. [type=value_error, input_value={'MachineHandle': 'auto.l...port', 'Version': '001'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error\nReport.FsmReportList.17.AtomicList.6\n  Value error, Axiom 2 failed: event fields must be present if and only if report_type is Event. [type=value_error, input_value={'MachineHandle': 'auto.l...port', 'Version': '001'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error",
+ "plant_fed_channels": 50,
+ "plant_fed_channels_that_moved": 50,
+ "actuations_heard": 2593,
+ "actuations_by_relay": {
+  "aquastat-ctrl-relay": {
+   "Energize": 170,
+   "DeEnergize": 0
+  },
+  "charge-discharge-relay": {
+   "Energize": 31,
+   "DeEnergize": 153
+  },
+  "hp-failsafe-relay": {
+   "Energize": 170,
+   "DeEnergize": 0
+  },
+  "hp-loop-keep-send-relay": {
+   "Energize": 43,
+   "DeEnergize": 130
+  },
+  "hp-loop-on-off-relay": {
+   "Energize": 171,
+   "DeEnergize": 8
+  },
+  "hp-scada-ops-relay": {
+   "Energize": 48,
+   "DeEnergize": 125
+  },
+  "primary-pump-failsafe-relay": {
+   "Energize": 0,
+   "DeEnergize": 170
+  },
+  "primary-pump-scada-ops-relay": {
+   "Energize": 0,
+   "DeEnergize": 170
+  },
+  "store-pump-relay": {
+   "Energize": 43,
+   "DeEnergize": 141
+  },
+  "tstat-common-relay": {
+   "Energize": 0,
+   "DeEnergize": 170
+  },
+  "vdc-relay": {
+   "Energize": 3,
+   "DeEnergize": 167
+  },
+  "zone1-down-failsafe-relay": {
+   "Energize": 0,
+   "DeEnergize": 170
+  },
+  "zone1-down-ops-relay": {
+   "Energize": 0,
+   "DeEnergize": 170
+  },
+  "zone2-up-failsafe-relay": {
+   "Energize": 0,
+   "DeEnergize": 170
+  },
+  "zone2-up-ops-relay": {
+   "Energize": 0,
+   "DeEnergize": 170
+  }
+ },
+ "the_heat_pump_ran": true,
+ "seen": {
+  "buffer-depth1-device": {
+   "readings": 9754,
+   "distinct_values": 1865,
+   "low": 2595,
+   "high": 5168,
+   "last": 4754
+  },
+  "buffer-depth1-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9610,
+   "low": 1226030,
+   "high": 2076302,
+   "last": 1350293
+  },
+  "buffer-depth2-device": {
+   "readings": 9754,
+   "distinct_values": 1923,
+   "low": 2605,
+   "high": 4995,
+   "last": 4262
+  },
+  "buffer-depth2-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9662,
+   "low": 1276832,
+   "high": 2072844,
+   "last": 1506762
+  },
+  "buffer-depth3-device": {
+   "readings": 9754,
+   "distinct_values": 1855,
+   "low": 2552,
+   "high": 4696,
+   "last": 4090
+  },
+  "buffer-depth3-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9594,
+   "low": 1368236,
+   "high": 2090720,
+   "last": 1563334
+  },
+  "buffer-hot-pipe": {
+   "readings": 9754,
+   "distinct_values": 1699,
+   "low": 2526,
+   "high": 5296,
+   "last": 5041
+  },
+  "dist-flow": {
+   "readings": 9754,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 519,
+   "last": 519
+  },
+  "dist-flow-hz": {
+   "readings": 9754,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 96200383,
+   "last": 96200383
+  },
+  "dist-pump-pwr": {
+   "readings": 169,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 60,
+   "last": 60
+  },
+  "dist-rwt": {
+   "readings": 9754,
+   "distinct_values": 1470,
+   "low": 2295,
+   "high": 4499,
+   "last": 4332
+  },
+  "dist-swt": {
+   "readings": 9754,
+   "distinct_values": 1658,
+   "low": 2526,
+   "high": 5240,
+   "last": 5040
+  },
+  "hp-ewt": {
+   "readings": 9754,
+   "distinct_values": 2171,
+   "low": 2236,
+   "high": 4588,
+   "last": 4301
+  },
+  "hp-idu-pwr": {
+   "readings": 169,
+   "distinct_values": 87,
+   "low": 10,
+   "high": 1783,
+   "last": 1750
+  },
+  "hp-lwt": {
+   "readings": 9754,
+   "distinct_values": 2520,
+   "low": 2144,
+   "high": 5313,
+   "last": 5047
+  },
+  "hp-odu-pwr": {
+   "readings": 172,
+   "distinct_values": 102,
+   "low": 20,
+   "high": 2679,
+   "last": 2630
+  },
+  "primary-flow": {
+   "readings": 9754,
+   "distinct_values": 10,
+   "low": 0,
+   "high": 642,
+   "last": 583
+  },
+  "primary-flow-hz": {
+   "readings": 9754,
+   "distinct_values": 10,
+   "low": 0,
+   "high": 118845639,
+   "last": 108041538
+  },
+  "primary-pump-pwr": {
+   "readings": 164,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 60,
+   "last": 60
+  },
+  "sieg-cold": {
+   "readings": 9754,
+   "distinct_values": 1983,
+   "low": 2361,
+   "high": 4593,
+   "last": 4302
+  },
+  "sieg-flow": {
+   "readings": 9754,
+   "distinct_values": 8,
+   "low": 0,
+   "high": 642,
+   "last": 0
+  },
+  "sieg-flow-hz": {
+   "readings": 9754,
+   "distinct_values": 8,
+   "low": 0,
+   "high": 118845520,
+   "last": 0
+  },
+  "sieg-hot": {
+   "readings": 9754,
+   "distinct_values": 1096,
+   "low": 1872,
+   "high": 2967,
+   "last": 1872
+  },
+  "store-cold-pipe": {
+   "readings": 9754,
+   "distinct_values": 1680,
+   "low": 2006,
+   "high": 3773,
+   "last": 3646
+  },
+  "store-flow": {
+   "readings": 9754,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 713,
+   "last": 0
+  },
+  "store-flow-hz": {
+   "readings": 9754,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 132050741,
+   "last": 0
+  },
+  "store-hot-pipe": {
+   "readings": 9754,
+   "distinct_values": 2505,
+   "low": 2056,
+   "high": 5192,
+   "last": 4381
+  },
+  "store-pump-pwr": {
+   "readings": 165,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 60,
+   "last": 0
+  },
+  "tank1-depth1-device": {
+   "readings": 9754,
+   "distinct_values": 1368,
+   "low": 2512,
+   "high": 4476,
+   "last": 4473
+  },
+  "tank1-depth1-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9700,
+   "low": 1437586,
+   "high": 2104666,
+   "last": 1438333
+  },
+  "tank1-depth2-device": {
+   "readings": 9754,
+   "distinct_values": 1380,
+   "low": 2500,
+   "high": 4361,
+   "last": 4358
+  },
+  "tank1-depth2-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9679,
+   "low": 1474662,
+   "high": 2108705,
+   "last": 1475380
+  },
+  "tank1-depth3-device": {
+   "readings": 9754,
+   "distinct_values": 1392,
+   "low": 2488,
+   "high": 4267,
+   "last": 4265
+  },
+  "tank1-depth3-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9437,
+   "low": 1505166,
+   "high": 2112868,
+   "last": 1505860
+  },
+  "tank2-depth1-device": {
+   "readings": 9754,
+   "distinct_values": 1378,
+   "low": 2475,
+   "high": 4205,
+   "last": 4203
+  },
+  "tank2-depth1-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9613,
+   "low": 1525477,
+   "high": 2117160,
+   "last": 1526163
+  },
+  "tank2-depth2-device": {
+   "readings": 9754,
+   "distinct_values": 1380,
+   "low": 2462,
+   "high": 4164,
+   "last": 4162
+  },
+  "tank2-depth2-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9560,
+   "low": 1538947,
+   "high": 2121412,
+   "last": 1539634
+  },
+  "tank2-depth3-device": {
+   "readings": 9754,
+   "distinct_values": 1360,
+   "low": 2450,
+   "high": 4114,
+   "last": 4112
+  },
+  "tank2-depth3-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9532,
+   "low": 1555462,
+   "high": 2125590,
+   "last": 1556144
+  },
+  "tank3-depth1-device": {
+   "readings": 9754,
+   "distinct_values": 1315,
+   "low": 2438,
+   "high": 4037,
+   "last": 4035
+  },
+  "tank3-depth1-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9559,
+   "low": 1581114,
+   "high": 2129685,
+   "last": 1581777
+  },
+  "tank3-depth2-device": {
+   "readings": 9754,
+   "distinct_values": 1226,
+   "low": 2427,
+   "high": 3935,
+   "last": 3933
+  },
+  "tank3-depth2-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9548,
+   "low": 1615314,
+   "high": 2133601,
+   "last": 1615948
+  },
+  "tank3-depth3-device": {
+   "readings": 9754,
+   "distinct_values": 1121,
+   "low": 2415,
+   "high": 3816,
+   "last": 3814
+  },
+  "tank3-depth3-micro-v": {
+   "readings": 9754,
+   "distinct_values": 9533,
+   "low": 1655337,
+   "high": 2137421,
+   "last": 1655936
+  },
+  "zone1-down-temp": {
+   "readings": 9754,
+   "distinct_values": 333,
+   "low": 1699,
+   "high": 2031,
+   "last": 1983
+  },
+  "zone1-down-whitewire-pwr": {
+   "readings": 169,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 10,
+   "last": 10
+  },
+  "zone2-up-temp": {
+   "readings": 9754,
+   "distinct_values": 333,
+   "low": 1699,
+   "high": 2031,
+   "last": 1983
+  },
+  "zone2-up-whitewire-pwr": {
+   "readings": 169,
+   "distinct_values": 2,
+   "low": 0,
+   "high": 10,
+   "last": 10
+  }
+ }
+}
