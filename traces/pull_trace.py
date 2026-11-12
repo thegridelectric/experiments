@@ -2,10 +2,10 @@
 """Materialise an executor trace's input from the S3 eventstore.
 
 A trace spec (`wiki/<domain>/executor/traces/<name>/trace.yaml`) names a
-window, the senders, which types keep their bodies, and the tracked set as
-a forest fixture. The messages come from the eventstore (the ear's archive
-of everything on the broker: pings, acks and every other word a consumer's
-snapshot may not take), keyed `<world>/eventstore/<YYYYMMDD>/<from_alias>-
+window, the senders, which types keep their bodies, and, for a domain that
+reads the forest, the tracked set as a forest fixture. The messages come
+from the eventstore (the ear's archive of everything on the broker: pings,
+acks and every other word a consumer's snapshot may not take), keyed `<world>/eventstore/<YYYYMMDD>/<from_alias>-
 <type>-<persisted_ms>-<ear>.json`; the key alone gives a message's arrival,
 sender and type, and the body is fetched only for the types the spec keeps.
 The forest comes from the journal DB. This script writes, under
@@ -17,12 +17,12 @@ The forest comes from the journal DB. This script writes, under
   .snapshot/       a sema snapshot built from the executor's seed copy, the
                    codec every body is decoded through
 
-It also prints every `gw.alert` the alerter broadcast inside the window
-about the tracked subtree, so the spec's `expected_out` is copied from the
+With a tracked set it also prints every `gw.alert` the alerter broadcast
+inside the window about the tracked subtree, so the spec's `expected_out` is copied from the
 archive rather than recalled.
 
-and, once, `forest.json` beside the spec: the latest journaled
-`g.node.forest` before the window, restricted to the subtree the spec
+and, once, when the spec names a tracked set, `forest.json` beside the
+spec: the latest journaled `g.node.forest` before the window, restricted to the subtree the spec
 names. The forest is a declared input, so it lives with the spec and is
 never overwritten.
 
@@ -49,6 +49,7 @@ import os
 import shutil
 import subprocess
 import sys
+from collections.abc import Callable
 from pathlib import Path
 from typing import NamedTuple
 
@@ -199,44 +200,14 @@ def restrict_forest(forest: dict, subtree: str) -> dict:
     return {**forest, "Nodes": nodes, "Edges": edges}
 
 
-def main() -> None:
-    args = parse_args()
-    spec_path = args.spec.resolve()
-    spec = yaml.safe_load(spec_path.read_text())
-    domain = domain_of(spec_path)
-    name = spec["name"]
-    out = EXPERIMENTS / "traces" / domain / name
-    out.mkdir(parents=True, exist_ok=True)
-    seed = spec_path.parents[2] / "sema_seed_request.yaml"
-    if not seed.exists():
-        raise SystemExit(f"executor seed copy missing: {seed}")
-
-    start, end = (as_utc(spec["window"][k]) for k in ("start", "end"))
-    senders = list(spec["senders"])
-    bodies_for = set(spec["bodies_for"])
-    subtree = spec["tracked_set"]["subtree"]
-    forest_path = spec_path.parent / spec["tracked_set"]["forest"]
-
-    decode_stance = spec.get("decode")
-    if decode_stance not in DECODE_STANCES:
-        raise SystemExit(
-            f"trace.yaml needs `decode:` as one of {sorted(DECODE_STANCES)}, got {decode_stance!r}"
-        )
-    auto_upgrade = DECODE_STANCES[decode_stance]
-
-    sys.path.insert(
-        0, str(build_snapshot(seed, out, f"trace_{domain.replace('-', '_')}"))
-    )
-    codec_mod = importlib.import_module(f"trace_{domain.replace('-', '_')}.sema.codec")
-    codec = codec_mod.SemaCodec()
-
-    def decode(body: dict) -> str | None:
-        try:
-            codec.from_dict(body, auto_upgrade=auto_upgrade)
-            return None
-        except Exception as e:  # noqa: BLE001 - the refusal text is the record
-            return str(e).splitlines()[0][:200]
-
+def pull_forest(
+    forest_path: Path,
+    subtree: str,
+    start: datetime.datetime,
+    decode: Callable[[dict], str | None],
+) -> None:
+    """Write the latest journaled forest before the window, restricted to the
+    subtree, beside the spec, once; an existing forest.json is kept."""
     with psycopg.connect(db_url()) as conn, conn.cursor() as cur:
         if not forest_path.exists():
             cur.execute(
@@ -260,6 +231,49 @@ def main() -> None:
             )
         else:
             print(f"forest: kept {forest_path.relative_to(UMBRELLA)}")
+
+
+def main() -> None:
+    args = parse_args()
+    spec_path = args.spec.resolve()
+    spec = yaml.safe_load(spec_path.read_text())
+    domain = domain_of(spec_path)
+    name = spec["name"]
+    out = EXPERIMENTS / "traces" / domain / name
+    out.mkdir(parents=True, exist_ok=True)
+    seed = spec_path.parents[2] / "sema_seed_request.yaml"
+    if not seed.exists():
+        raise SystemExit(f"executor seed copy missing: {seed}")
+
+    start, end = (as_utc(spec["window"][k]) for k in ("start", "end"))
+    senders = list(spec["senders"])
+    bodies_for = set(spec["bodies_for"])
+    tracked_set = spec.get("tracked_set")
+
+    decode_stance = spec.get("decode")
+    if decode_stance not in DECODE_STANCES:
+        raise SystemExit(
+            f"trace.yaml needs `decode:` as one of {sorted(DECODE_STANCES)}, got {decode_stance!r}"
+        )
+    auto_upgrade = DECODE_STANCES[decode_stance]
+
+    sys.path.insert(
+        0, str(build_snapshot(seed, out, f"trace_{domain.replace('-', '_')}"))
+    )
+    codec_mod = importlib.import_module(f"trace_{domain.replace('-', '_')}.sema.codec")
+    codec = codec_mod.SemaCodec()
+
+    def decode(body: dict) -> str | None:
+        try:
+            codec.from_dict(body, auto_upgrade=auto_upgrade)
+            return None
+        except Exception as e:  # noqa: BLE001 - the refusal text is the record
+            return str(e).splitlines()[0][:200]
+
+    if tracked_set is not None:
+        pull_forest(
+            spec_path.parent / tracked_set["forest"], tracked_set["subtree"], start, decode
+        )
 
     s3 = boto3.client("s3")
     window = list_window(s3, start, end)
@@ -306,6 +320,9 @@ def main() -> None:
         + ", ".join(f"{t} {n}" for t, n in sorted(types.items(), key=lambda kv: -kv[1]))
     )
 
+    if tracked_set is None:
+        return
+    subtree = tracked_set["subtree"]
     print(f"alerts in the window ({ALERT_TYPE} about {subtree}), the expected output:")
     for m in alerts:
         a = fetch_body(s3, m)
