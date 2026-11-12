@@ -1,0 +1,73 @@
+# A simulated Beech: the scada and the plant it runs, with the two brokers
+# they meet on.
+#
+#     docker compose up --build -d
+#     ./check.sh
+#     docker compose down
+#
+# The four share one network namespace, the broker's, so each finds the
+# others on localhost at the ports it uses on a laptop: AMQP 5672 and MQTT
+# 1885 on the dev rabbit, the scada's local MQTT on 1883, the scada's web
+# server on 8000. Nothing is published to the host, so the stack stands
+# beside a dev stack already on the laptop.
+name: beech-sim
+
+x-on-the-brokers-network: &on-the-brokers-network
+  network_mode: "service:rabbit"
+  depends_on:
+    rabbit:
+      condition: service_healthy
+
+services:
+  rabbit:
+    image: ghcr.io/thegridelectric/dev-rabbit:latest
+    hostname: rabbit
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_port_connectivity"]
+      interval: 5s
+      timeout: 10s
+      retries: 24
+
+  mosquitto:
+    <<: *on-the-brokers-network
+    image: eclipse-mosquitto:2
+    command: ["mosquitto", "-c", "/mosquitto-no-auth.conf"]
+
+  plant:
+    <<: *on-the-brokers-network
+    build:
+      context: ../../gridworks-terminalasset
+    environment:
+      GWTA_SERVICE_ALIAS: d1.isone.me.versant.keene.beech.ta
+      GWTA_G_NODE_PATH: /home/gwta/g.node.gt.json
+    volumes:
+      - ./house:/house:ro
+    command:
+      - --layout
+      - /house/hardware-layout.json
+      - --fmu
+      - /opt/gwta/BeechPlant.fmu
+      - --fmu-overrides
+      - /house/plant-overrides.json
+    stop_signal: SIGINT
+
+  scada:
+    <<: *on-the-brokers-network
+    build:
+      context: ../../gridworks-scada
+      dockerfile: ../experiments/2026-11-11-beech-sim-compose/scada.Dockerfile
+    environment:
+      SCADA_GRIDWORKS_MQTT__PORT: 1885
+      SCADA_WEATHER_SOURCE: Sim
+    volumes:
+      - ./house:/house:ro
+    # The scada finds its layout pair by their deployed names in its config
+    # home, where it also writes: the pair is copied there at each start.
+    entrypoint: ["sh", "-c"]
+    command:
+      - >
+        mkdir -p "$$HOME/.config/gridworks/scada" &&
+        cp /house/hardware-layout.json /house/operational-params.json
+        "$$HOME/.config/gridworks/scada/" &&
+        exec python gw_spaceheat/gws run --message-summary --seconds-per-report 60
+    stop_signal: SIGINT

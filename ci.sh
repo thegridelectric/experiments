@@ -71,6 +71,9 @@ archive/2026-09-15-alerter-no-data/watcher.py
 procedures/sieg-valve-calibration/drive.py
 2026-11-10-plant-crossing/crossing.py
 2026-11-10-plant-loop/loop_check.py
+2026-11-11-beech-sim-compose/stack_check.py
+2026-11-11-beech-sim-compose/channel_readings.py
+2026-11-11-beech-sim-compose/beech_sim_gen.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_live.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_store_once.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_store_sweep.py
@@ -93,7 +96,9 @@ procedures/sieg-valve-calibration/drive.py
 # (stopgap-mm witness) and the web-backend gateway checkout
 # (realtime-units-elm-check). November: gwadmin in the laptop scada venv
 # (the sieg-valve-calibration driver), and the scada venv's gw_spaceheat
-# and gwsproto (plant-crossing, plant-loop).
+# and gwsproto (plant-crossing, plant-loop,
+# beech-sim-compose's stack_check and channel_readings), and a tlayouts tree
+# on the path (beech-sim-compose's beech_sim_gen).
 FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \
     -not -path '*/__pycache__/*' | sed 's|^\./||' | sort \
     | grep -Fxv "$PYRIGHT_EXCLUDE")
