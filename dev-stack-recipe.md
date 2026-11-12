@@ -217,6 +217,17 @@ does not exist, so its alembic runs need the URL override above. `psql`
 cannot parse a `+psycopg2` URL; use the plain `postgresql://` form or
 `docker exec`.
 
+## A scada and its plant in containers
+
+`2026-11-11-beech-sim-compose/compose.yaml` stands up a sim scada, the
+sim plant it runs and the two brokers they meet on with `docker compose
+up --build -d`, beside the laptop's standing stack: the four share one
+network namespace and publish no port, so nothing collides with port
+8000 or the standing broker. It builds from the sibling
+`gridworks-scada` and `gridworks-terminalasset` checkouts as they stand,
+so check both branches first. `scada.Dockerfile` there is the one recipe
+for a scada image; the house is whatever layout pair sits in `house/`.
+
 ## Leaving it better
 
 A session that uses this recipe and finds a step missing, a port

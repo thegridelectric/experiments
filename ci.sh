@@ -67,7 +67,10 @@ future/pico-rejoin/rejoin_trace.py
 2026-09-15-alerter-no-data/mock_scada.py
 2026-09-15-alerter-no-data/watcher.py
 2026-11-10-plant-crossing/crossing.py
-2026-11-10-plant-loop/loop_check.py'
+2026-11-10-plant-loop/loop_check.py
+2026-11-11-beech-sim-compose/stack_check.py
+2026-11-11-beech-sim-compose/channel_readings.py
+2026-11-11-beech-sim-compose/beech_sim_gen.py'
 # Top five: environments this repo lacks (smbus2 pi-only · gnr env ·
 # the pi scada checkout's venv · the laptop scada venv (admin_drive) ·
 # MicroPython on-pico); next four: spruce on-box harnesses (smbus2 /
@@ -82,7 +85,9 @@ future/pico-rejoin/rejoin_trace.py
 # smbus2 and the starter-scripts venv on the pi (gw108-ct-testing capture and ladder), paho
 # and the box venv (spruce-admin-panel, beech-dist-010v-sweep), gwbase
 # and pika in the alerter venv (alerter-no-data). November: the scada
-# venv's gw_spaceheat and gwsproto (plant-crossing, plant-loop).
+# venv's gw_spaceheat and gwsproto (plant-crossing, plant-loop,
+# beech-sim-compose's stack_check and channel_readings), and a tlayouts tree on the path
+# (beech-sim-compose's beech_sim_gen).
 FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \
     -not -path '*/__pycache__/*' | sed 's|^\./||' | sort \
     | grep -Fxv "$PYRIGHT_EXCLUDE")
