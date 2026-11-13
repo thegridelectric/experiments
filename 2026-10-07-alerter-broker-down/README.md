@@ -41,7 +41,7 @@ root narrowed to the mocked spruce), the tap (`gwalerter tap`,
 `TAP_RECONCILE_S` 20, same store), the prober (`gwalerter probe`,
 `PROBE_INTERVAL_S` 10, `PROBE_FAILURES_TO_RAISE` 3, the AMQP door the
 alerter's own URL, the MQTT door `localhost:1885` plain), and the mock
-scada from `../2026-09-15-alerter-no-data/mock_scada.py` talking every
+scada from `../archive/2026-09-15-alerter-no-data/mock_scada.py` talking every
 5 s throughout. The broker container is stopped for 240 s, twice the
 `NoData` threshold, and started again. Nothing deployed is touched.
 

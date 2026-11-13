@@ -9,41 +9,56 @@ as validated Sema instances.
 - `logbook.md` — chronological index, one line per experiment, newest
   first. The canonical record of each experiment is the README in its
   folder.
-- `<date>-<slug>/` — one folder per experiment: README (start from
+
+Four kinds of folder, told apart by where they sit:
+
+- `<date>-<slug>/` — one **experiment**: README (start from
   `experiment-README-template.md`; header is "<slug>, <date>", ends
   with a "Folder contents & experimental method" section that opens
   by stating how the data was obtained and what is in the immutable
   store), harness code, captured data, and `instances/` holding
-  sema-typed results. The date is the FIRST RUN.
-- `future/<slug>/` — queued experiments that have not yet run: README
-  (why / setup / protocol, Found open) and any prepared harness code,
-  no data. On first run the folder moves to `<run-date>-<slug>/`. Instance filenames are dash-separated
+  sema-typed results. The date is the FIRST RUN. The current season's
+  experiments sit at the top; `archive/<date>-<slug>/` holds the older
+  ones, moved there whole once their findings are distilled, with the
+  logbook still pointing at them. Instance filenames are dash-separated
   fields, each field internally LeftRightDot (dashes inside a field
   become dots), ordered `<subject>-<condition?>-<type.name>-<version>.json`
   — the same grammar as the S3 eventstore keys, parsed by a bare
-  split on dash.
-- `<slug>/` (no date) — a **dataset** folder: one pull from the immutable
+  split on dash. An S3 key is the immutable store's name for a file and
+  does not change when a folder moves.
+- `future/<slug>/` — a **queued** experiment that has not yet run: README
+  (why / setup / protocol, Found open) and any prepared harness code,
+  no data. On first run the folder moves to `<run-date>-<slug>/`.
+- `datasets/<slug>/` — a **dataset**: one pull from the immutable
   store, reduced and committed once, with the analyses that read it.
   Undated because questions keep arriving on the same data; a new
   question on the pull goes in the folder, a pull of other channels or
   another window gets its own folder. The README follows the template
   with the header `<slug>` and names the first pull in its "what this
-  is" line; "Found" holds one verdict per tested claim. The one so far
-  is `dist-loop-experiments/`, the fleet's distribution loops over the
-  2025–26 heating season.
-- `pico-power-cycling/` — the fleet's pico reliability runs, dated
-  folders under one undated parent, with the firmware track record at
-  the top. Same shape as `beta-field-windows/`: a practice, not one
-  experiment.
+  is" line; "Found" holds one verdict per tested claim.
+  `datasets/dist-loop-experiments/` is the fleet's distribution loops
+  over the 2025–26 heating season; `datasets/lg-hydrokit-signatures/`
+  the LG pair at beech and oak; `datasets/spruce-radiant-slab/` the
+  slab model; `datasets/oaks-first-ltn/` oak on the first field LTN.
+- `practices/<slug>/` — a **practice**: dated run folders under one
+  undated parent, with the standing record at the top.
+  `practices/pico-power-cycling/` is the fleet's pico reliability runs
+  with the firmware track record; `practices/beta-field-windows/` the
+  beta field windows of 2026-09 and 2026-10, the rounds that ran the
+  `jm/spruce-unlimbo` branch in bounded windows on deployed houses
+  before `gridworks-scada/scripts/roll.sh` existed, every window a run
+  folder under `runs/` indexed in `runs.md`.
+- `procedures/<slug>/` — a **procedure**: a measurement run on every
+  house of a kind and repeated when the hardware changes, with the
+  recipe, driver and reader at the top and a dated run folder per house
+  under `runs/`. The first is `procedures/sieg-valve-calibration/`, the
+  Siegenthaler valve's positions in motor seconds.
+
+The tools and recipes at the top:
+
 - `dev-stack-recipe.md` — how to stand up more than one service on the
   laptop for a dev run, in start order, with the ports and the things
   that bit; the hand version of what OPS-614 turns into a tool.
-- `beta-field-windows/` — the record of the beta field windows of
-  2026-09 and 2026-10, the rounds that ran the `jm/spruce-unlimbo`
-  branch in bounded windows on deployed houses before
-  `gridworks-scada/scripts/roll.sh` existed. Every window is a run
-  folder under `runs/`, indexed in `runs.md`; the folder top holds the
-  tools that read them. See its README.
 - `src/gwexp/sema/` — the vendored Sema snapshot runtime (GENERATED —
   never hand-edit). Experiment scripts construct result instances
   through its classes so schema and axioms validate at construction.

@@ -22,7 +22,7 @@ first run dates them.
   secondary pump, PASS. The journalkeeper ran ten minutes against prod
   from a shell that had sourced `experiments/.env`; no rows harmed,
   recipe note added.
-- **2026-11-01 · [oaks-first-ltn](oaks-first-ltn/)** — dataset folder: how oak ran on the first field LTN, from the box log and the journal; six findings on the bid sweep, the store ceiling and the clearing rule; Found open on the sliding charge.
+- **2026-11-01 · [oaks-first-ltn](datasets/oaks-first-ltn/)** — dataset folder: how oak ran on the first field LTN, from the box log and the journal; six findings on the bid sweep, the store ceiling and the clearing rule; Found open on the sliding charge.
 - **2026-10-22 · [stopgap-mm](2026-10-22-stopgap-mm/)** — the stopgap MarketMaker's `latest.price` path (OPS-615), twice: a dev rehearsal on the laptop broker (maker, MQTT witness, a dev LTN, the journal; the top-of-hour publish heard in 44 ms), then the first real hour on hw1 with the maker on its own box and cert, oak's LTN hearing it on the rjb topic 58 ms after the publish, and the journal row. PASS both; the design is Verified.
 - **2026-10-22 · [spruce-roll-rehearsal](2026-10-22-spruce-roll-rehearsal/)** — first live roll of spruce to `jm/spruce-unlimbo` and back under the box service with `roll.sh`: PASS each way; the script now takes `ssh -n` and sets stored events aside at the roll, because an event one line wrote is never acked by the other line's LTN and flaps the link every five seconds (which is what the legacy "Rebooting detected" alert saw); the branch needs a branch LTN as its peer before it stays up.
 - **2026-10-22 · [spruce-i2c-feedback-window](2026-10-22-spruce-i2c-feedback-window/)**
@@ -67,7 +67,7 @@ first run dates them.
   morning. Found: with the distribution pump faster than the primary
   (4.6 against 4.3 gpm), the view animates water out of the buffer
   bottom where it flows in.
-- **2026-10-15 · [spruce-radiant-slab](spruce-radiant-slab/)** — dataset
+- **2026-10-15 · [spruce-radiant-slab](datasets/spruce-radiant-slab/)** — dataset
   folder for the Knife's Edge slab question: what the journal holds for
   spruce and from when, two pulls (Sep 21 to 25, Oct 6 to 8), and a
   two-lump floor-and-room workbook fitted in two least-squares stages on
@@ -76,7 +76,7 @@ first run dates them.
   0.191 kW per °F of floor minus air and C 2.59 kWh per °F, RMS 0.42 °F
   over charge and float. The flow meter is on the hot side of a 108 °F
   mixing valve, so heat in is hot flow times the distribution drop.
-- **2026-10-14 · [pico-power-cycling/reboot-storm](pico-power-cycling/2026-10-14-reboot-storm/)**
+- **2026-10-14 · [pico-power-cycling/reboot-storm](practices/pico-power-cycling/2026-10-14-reboot-storm/)**
   — analysis: bus reboots per house per day (journal DB, 09-01 to
   10-14) against the boxes' firmware upload history, then the
   mechanism from the journal's post times. The storm at maple, oak, fir
@@ -86,7 +86,7 @@ first run dates them.
   the new firmware posts from the main loop instead of the timer
   callback, so one post in five arrives ~1 s late; every reboot, old
   firmware included, fires at 60.0x s since one pico's last post.
-  Folder `pico-power-cycling/` now groups the pico runs (gap-analysis,
+  Folder `practices/pico-power-cycling/` now groups the pico runs (gap-analysis,
   link-census moved in).
 - **2026-10-11 · [prod-broker-outage-drill](2026-10-11-prod-broker-outage-drill/)** —
   the prod broker (hw1-1) stopped on purpose, listeners down 9 min 20 s:
@@ -124,7 +124,7 @@ first run dates them.
   re-creates by reconcile (count 2, no second page). Two stale test words
   in the dev broker's durable tap queue paged and were closed by the same
   reconcile.
-- **2026-10-06 · [dist-loop-experiments](dist-loop-experiments/)** —
+- **2026-10-06 · [dist-loop-experiments](datasets/dist-loop-experiments/)** —
   the whitepaper's claims against five houses' 2025–26 season from the
   journal DB. The steady-circulation emitter drop is not a constant
   20 °F: it rises with supply temperature at every house (beech 17 °F at
@@ -133,20 +133,20 @@ first run dates them.
   beech, a call from the idle upstairs zone during a steady downstairs
   call puts its loop's cold water through the return, the heat pump and
   the supply, back within five minutes of the call ending.
-- **2026-09-30 · [alerter-to-alertmanager](2026-09-30-alerter-to-alertmanager/)** —
+- **2026-09-30 · [alerter-to-alertmanager](archive/2026-09-30-alerter-to-alertmanager/)** —
   the alerter's `gw.alert` through the new tap into a local Alertmanager:
   a mocked spruce goes quiet, NoData fires and pages the receiver 35 s
   after the last report, resumes and the Resolved closes it; the alerter
   and tap restarted with the alert open re-page nothing and still
   resolve. PASS.
-- **2026-09-28 · [sieg-keep-ratio-map](2026-09-28-sieg-keep-ratio-map/)** —
+- **2026-09-28 · [sieg-keep-ratio-map](archive/2026-09-28-sieg-keep-ratio-map/)** —
   maple's valve mapped from 26 script-driven stops in two windows: keep
   onset 27 to 30 s, half point 38 s, keep complete 54 to 57 s from the
   send stop; a stop counted from the keep end lands 4 s further toward
   keep than its count; the store relay does not enter; the meters' lag
   in motion is about 1 s, the 4 s inferred earlier being that plus
   the keep-side offset.
-- **2026-09-28 · [maple-ecodan-start-in-full-keep](2026-09-28-maple-ecodan-start-in-full-keep/)** —
+- **2026-09-28 · [maple-ecodan-start-in-full-keep](archive/2026-09-28-maple-ecodan-start-in-full-keep/)** —
   four windows in a day, admin-driven; the closed starts fit the sieg
   loop at 0.8 gal of water, a 9.5 s turnover at 5 gpm, with the fitted
   volume growing with temperature (losses still to model). First window: the Ecodan called with the
@@ -156,14 +156,14 @@ first run dates them.
   compressor runs 1 to 2.5 min past relay 6 opening (HpOff is the relay,
   the power is the run-down). The 07:15 report was lost to closing on the
   laptop clock.
-- **2026-09-27 · [beta-field-windows](beta-field-windows/)** — round five,
+- **2026-09-27 · [beta-field-windows](practices/beta-field-windows/)** — round five,
   maple, 11 min on `92b4e5d1`: basic-sieg 4d VERIFIED. The send-line pico
   keeps its `sieg-send` name, `sieg-send-flow` is an identity over it and
   `primary-flow` the sum; all 22 strip lines and 449 report readings hold
   primary = sieg + send within 0.01 gpm through a 110 s move to full send.
   Boot relay posture (4ci) holds; seven boot glitches, all known
   params-version / disabled-roster kinds.
-- **2026-09-20 · [maple-starts-heating](2026-09-20-maple-starts-heating/)** —
+- **2026-09-20 · [maple-starts-heating](archive/2026-09-20-maple-starts-heating/)** —
   field support bringing maple out of Standby into BufferOnly heating on
   scada `main`. With the sieg valve parked at full send the always-running
   primary pump cooled the buffer top 8 F in twelve minutes once the heat
@@ -172,7 +172,7 @@ first run dates them.
   the heat pump on; a stopped hall flow reads 0.02 gpm, not 0; and a
   defrost profile from 67 spring defrosts (about two minutes under 100 W
   inside each, commanded on).
-- **2026-09-19 · [spruce-pico-params](2026-09-19-spruce-pico-params/)** —
+- **2026-09-19 · [spruce-pico-params](archive/2026-09-19-spruce-pico-params/)** —
   why some spruce picos reboot without posting params (OPS-552). Two power
   cycles of the pico rail with the starter API listener in the scada's
   place, winter hack left running. PASS: the boot-time params post is a
@@ -180,7 +180,7 @@ first run dates them.
   different set each time); path, name and word are right whenever it is
   sent. The fix is firmware-side retry, or the scada noticing an unchecked
   pico.
-- **2026-09-23 · [beta-field-windows](beta-field-windows/)** —
+- **2026-09-23 · [beta-field-windows](practices/beta-field-windows/)** —
   round four (`jm/spruce-unlimbo` `847d9ca9`), spruce and beech, first run
   on the axiom-table window pairs. PASS: both boot on the new layouts,
   announce `layout.lite` + `ta.deed`, snapshot every 30 s with all state
@@ -190,7 +190,7 @@ first run dates them.
   pipe channels (both houses) and beech's buffer pipe and well never read
   a value; beech's two Hubitat zone channels never populate; the
   UnknownChannels logger reports beech's declared-disabled channels.
-- **2026-09-19 · [beta-field-windows](beta-field-windows/)** —
+- **2026-09-19 · [beta-field-windows](practices/beta-field-windows/)** —
   round three (`jm/spruce-unlimbo` `dfc35644`), beech and spruce, `--debug`.
   PASS on both new commits: the startup announcement sends `layout.lite`
   then the `ta.deed` (spruce) or a `no-ta-deed` Warning glitch (beech), once
@@ -199,7 +199,7 @@ first run dates them.
   (the power meter never feeds the derived generator), a zone calling at
   boot is invisible until the 300 s GPIO capture boundary, five spruce
   picos reboot without posting params.
-- **2026-09-18 · [beta-field-windows](beta-field-windows/)** —
+- **2026-09-18 · [beta-field-windows](practices/beta-field-windows/)** —
   the closing rung of correct-house0: the unlimbo scada (`jm/spruce-unlimbo`
   `cd34f5ef`) in a bounded window on spruce (Nolan layout) and beech (House0,
   ops Standby) against the tlayouts-generated pairs, read through the log and
@@ -211,18 +211,18 @@ first run dates them.
   cycler power-cycle the whole bank every 65 s. Beech Standby drove to a known
   off state at boot and the Krida port word agrees with the log; its picos
   never reported. Open: a full-send sieg move that ends in SteadyBlend.
-- **2026-09-16 · [gwalert-no-data-page](2026-09-16-gwalert-no-data-page/)** —
+- **2026-09-16 · [gwalert-no-data-page](archive/2026-09-16-gwalert-no-data-page/)** —
   the deployed spruce scada stopped for 15 min on the live fleet: gwalert
   pages Opsgenie 14.7 min after the stop, alert `2026-09-16-spruce-no_data`
   created and answered from the phone; fresh data seen 5 min after the
   restart. PASS. Motivated by 2026-09-15, when the evening spruce outage
   folded into the morning's open, acknowledged alert and paged nobody.
-- **2026-09-15 · [alerter-no-data](2026-09-15-alerter-no-data/)** — the
+- **2026-09-15 · [alerter-no-data](archive/2026-09-15-alerter-no-data/)** — the
   broker alerter's NoData rule on the dev broker: a mocked house talks,
   goes quiet, resumes; the alerter is restarted with the alert open. Not
   yet run against `gw.alert`; the runbook and PASS bar are in the folder.
 
-- **2026-09-12 · [beech-dist-010v-sweep](2026-09-12-beech-dist-010v-sweep/)**
+- **2026-09-12 · [beech-dist-010v-sweep](archive/2026-09-12-beech-dist-010v-sweep/)**
   — the house0-zero-ten-outputs witness. Beech 2026-09-13 (`jm/spruce-unlimbo`
   `e6d5b39b`, short plan): the GP8403 arm works on the deployed plant, all
   ten levels echoed and the dist pump's power followed the level (4 W at
@@ -234,32 +234,32 @@ first run dates them.
   tank picos, so the dist-btu pico never posted). Run 2 the same day on
   `6bfa2bf9` (the clamp): 10 V held, pump power 48 W. Dev rung 09-12 and
   the two 10-minute sim soaks 09-13 in the README.
-- **2026-09-10 · [beech-krida-witness](2026-09-10-beech-krida-witness/)**
+- **2026-09-10 · [beech-krida-witness](archive/2026-09-10-beech-krida-witness/)**
   — krida-retirement rung 3 on real hardware: a 5-minute window scada (`jm/spruce-unlimbo` `1a7a41d1`, derived beech layout, dev broker only) on beech, admin takes zone1-down on the second Krida and makes a heat call, dist flow + pump power watched. Dev rung on the sim House0 fixture PASS (first admin exercise on a House0 tree); beech 2026-09-11 PASS nine of nine: relays 17+18 acked, read back and seen in the port word, dist pump ran under the call (flow 0 → 200) and stopped on release, deployed scada back unchanged. Pump power not witnessed (eGauge driver fault).
-- **2026-09-10 · [pico-state-reported](2026-09-10-pico-state-reported/)**
+- **2026-09-10 · [pico-state-reported](archive/2026-09-10-pico-state-reported/)**
   — journalkeeper `3a8bc57` against the actual-spruce sim scada on the dev broker with an LTN peer: `<node>-pico-state` channels created from `layout.lite` 012, Alive → Flatlined readable in order, PASS; no cycler state channel exists to order against; the unlimbo line's `layout.lite` 013 is staging and outside the journal seed.
-- **2026-09-08 to 09-09 · [five-v-boss-hold](2026-09-08-five-v-boss-hold/)**
+- **2026-09-08 to 09-09 · [five-v-boss-hold](archive/2026-09-08-five-v-boss-hold/)**
   — the 5 V hold through admin: dev-broker rung (three scada fixes) then `gwa watch spruce` on the real gw108, PASS both; three layout picos never posted; RebootPicos missing from the row.
-- **2026-09-08 · [gw108-relay-stress / honeysuckle](2026-08-23-gw108-relay-stress/2026-09-08-honeysuckle/)**
+- **2026-09-08 · [gw108-relay-stress / honeysuckle](archive/2026-08-23-gw108-relay-stress/2026-09-08-honeysuckle/)**
   — the 0x21 reset needs the house, not the board: the same B/F/A
   triplet on the bench gw108 with nothing on the relay contacts gave
   0/100, 0/30, 0/30 (spruce boards: 35/100 and 17/100 on B). Relay
   stress runs now live in one folder, harness at the top, a dated
   subfolder per run.
-- **2026-09-08 · [gw108-relay-stress / spruce-board2](2026-08-23-gw108-relay-stress/2026-09-08-spruce-board2/)**
+- **2026-09-08 · [gw108-relay-stress / spruce-board2](archive/2026-08-23-gw108-relay-stress/2026-09-08-spruce-board2/)**
   — the 0x21 reset on iso-relay switching follows the house, not the
   gw108: on the replaced board B2 reset 17/100 with no other coil on
   (08-23: 35/100, edge flipped energize → de-energize), 0/60 with two or
   more other coils on (F2, A2). Two-coil rule stands; the electrical
   question moves to the iso actuator / relay supply.
-- **2026-09-08 · [spruce-admin-panel](2026-09-08-spruce-admin-panel/)**
+- **2026-09-08 · [spruce-admin-panel](archive/2026-09-08-spruce-admin-panel/)**
   — PASS: the real admin TUI drives the real spruce gw108 through the
   krida-retirement rung-1 command interfaces: three vdc power cycles
   (picos back in 7–9 s), secondary pump and iso valve each witnessed
   against secondary-flow, DAC speed against flow; one 0x21 expander
   reset survived; tank params POST rejected pending gridworks-pico #15;
   hp-boss does not handle its relay's ack (Open on the design).
-- **2026-09-07 · [admin-reboots-picos](2026-09-07-admin-reboots-picos/)**
+- **2026-09-07 · [admin-reboots-picos](archive/2026-09-07-admin-reboots-picos/)**
   — PASS on the journal side: the real admin client, over dev rabbit,
   asks a local sim Nolan scada's pico-cycler to reboot the picos; the
   persisted reports carry the flatline rows before the self-provoked
@@ -269,11 +269,11 @@ first run dates them.
   a later cycle) and one gap (admin gets no acknowledgement of the
   command, only snapshots). Run 4 on the fixes (`b095261c`): all three
   cycles confirm 20 s after their close, on the sim reboot.
-- **2026-09-07 · [hp-boss-admin-drive](2026-09-07-hp-boss-admin-drive/)**
+- **2026-09-07 · [hp-boss-admin-drive](archive/2026-09-07-hp-boss-admin-drive/)**
   — PASS: the real admin client, over dev rabbit, turns the heat pump off
   and on through hp-boss on a local Nolan/SimGw108 scada; first run found
   hp-boss gated on a Krida-only ActuatorsReady.
-- **2026-09-06 · [spruce-pump-speed-sweep](2026-09-06-spruce-pump-speed-sweep/)**
+- **2026-09-06 · [spruce-pump-speed-sweep](archive/2026-09-06-spruce-pump-speed-sweep/)**
   — phase two of the DAC rung on the real spruce secondary pump
   (Grundfos UPMS 20-78 F): iso valve open, pump on, sweep the 0-10V
   output linearly and in jumps, flow versus volts as the speed curve.
@@ -289,7 +289,7 @@ first run dates them.
   at a version sema squashed on 08-13, outside the layout closure so no
   conformance check saw it); the word is now seeded into the tlayouts
   snapshot and rides the scada closure copy. Run pending.
-- **2026-09-05 · [fis-gate-battery](2026-09-05-fis-gate-battery/)** — the FIS
+- **2026-09-05 · [fis-gate-battery](archive/2026-09-05-fis-gate-battery/)** — the FIS
   connect gate run against a real 4.1.8 broker + rmqbot's gate overlay on the
   dev universe (`d1__1`), stand-up-fis step 8. Green on the fifth run: 26/26
   verdicts, 100-connect storm max 0.63 s. The first run found the blocking
@@ -311,7 +311,7 @@ first run dates them.
   firmware has no retry (one connect, wait forever), so the schedule
   lives in the driver/DHCP/router stack; baseline at home, then the
   sick pico onsite.
-- **2026-09-07 → 09-10 · [gw108-ct-testing](2026-09-07-gw108-ct-testing/)** —
+- **2026-09-07 → 09-10 · [gw108-ct-testing](archive/2026-09-07-gw108-ct-testing/)** —
   a gw108 CT input with nothing on it reads 94 % of the CT on a
   neighbouring input (spruce run 3, P0 against P3). Cause, from the
   RevB schematic: the four inputs' return node `1V65` is held by two
@@ -321,13 +321,13 @@ first run dates them.
   before spruce. The README walks the circuit; the CTs only need to say
   on or off. `speed-ladder/`: the same CT across six pump drive levels,
   fold locked at every one, rms up 27-fold from minimum to maximum.
-- **2026-09-05 · [dac-output-bench](2026-09-05-dac-output-bench/)** —
+- **2026-09-05 · [dac-output-bench](archive/2026-09-05-dac-output-bench/)** —
   FAIL (2 of 3 claims not reached), two findings: `verify_eeprom`
   reprograms every boot on bytes that match the layout, and an admin
   dispatch the scada forwards never reaches `ZeroTenOutputer`
   (`_send_to` drops unrouted nodes silently). Isolation held; reproducer
   in place.
-- **2026-08-27 · [ops-457-replay](2026-08-27-ops-457-replay/)** — PASS: a real
+- **2026-08-27 · [ops-457-replay](archive/2026-08-27-ops-457-replay/)** — PASS: a real
   `gnr-ear` (local retry cache, dead S3 endpoint) witnessed a regenesis
   onto a scratch `hw1` registry; wiped and rebuilt with `gnr rebuild
   --capture-dir` from that capture alone — 25 applied, 27/27 forest
@@ -336,14 +336,14 @@ first run dates them.
   rebuilt from B2 alone (`--seedstore --from 20260827`) equals Helsinki,
   25/25 new-epoch checkpoints (the 2 pre-epoch snapshots mismatch by
   construction).
-- **2026-08-27 · [ops-457-regenesis](2026-08-27-ops-457-regenesis/)** — PASS:
+- **2026-08-27 · [ops-457-regenesis](archive/2026-08-27-ops-457-regenesis/)** — PASS:
   registry regenesis from the B2 seed store's latest forest snapshots
   through `gnr create` (25/25 nodes, same GNodeIds, `create.cmd/001`, no
   position points), rehearsed on a scratch `hw1` registry and equal to
   the old box's dump field-for-field; idempotent on re-run. Then run for
   real against the Helsinki box at 20:32 UTC: 25/25, witnessed in B2 as
   the registry's second epoch (OPS-507).
-- **2026-08-23 · [gw108-relay-stress / spruce](2026-08-23-gw108-relay-stress/2026-08-23-spruce/)**
+- **2026-08-23 · [gw108-relay-stress / spruce](archive/2026-08-23-gw108-relay-stress/2026-08-23-spruce/)**
   — does relay switching on the gw108 0x21 expander provoke its POR reset,
   and does command spacing mitigate it? Runs A–F (charge valve off
   throughout, 1 s toggles, hack stopped): ENERGIZING the iso-valve relay
@@ -357,7 +357,7 @@ first run dates them.
   hardware evidence for Joe; software rule: never energize the iso relay
   with < 2 other 0x21 coils on. Cooling kept alive except ~1–2.5 min in
   the all-off runs.
-- **2026-08-23 · [spruce-store-charge-valve](2026-08-23-spruce-store-charge-valve/)**
+- **2026-08-23 · [spruce-store-charge-valve](archive/2026-08-23-spruce-store-charge-valve/)**
   — which drive state OPENS the charge valve, and does the iso-closed
   charge circuit flow? NEITHER: legs D (de-energized) and E (energized),
   iso closed + pump on, both dead-head — flow 0, secondary temps /
@@ -368,7 +368,7 @@ first run dates them.
   (secondary-lwt/ewt + store-hot-pipe). Originally run 2026-08-16 with the
   relay not wired to the valve — void; folder re-dated to the first real
   run, prior artifacts in git history.
-- **2026-08-15 · [living-room-thermostat-deadband](2026-08-15-living-room-thermostat-deadband/)**
+- **2026-08-15 · [living-room-thermostat-deadband](archive/2026-08-15-living-room-thermostat-deadband/)**
   — analysis: a week of the living-room air temp (zone2-living-rm-gw-temp)
   vs the zone-5 fan-coil call, via Thomas's falling-edge method. Deadband is
   too tight to resolve at the room sensor — per-cycle swing ~0.09F, the stat
@@ -376,7 +376,7 @@ first run dates them.
   assumption; ~1.5F warmer than our replacement's 70F target). It STOPPED
   2026-08-11 19:18 ET (a long final call, then dead ~92 h); the room reached
   76F, +4.4F past its call point, with no call — the failure George reported.
-- **2026-08-15 · [spruce-fancoil-dist-test](2026-08-15-spruce-fancoil-dist-test/)**
+- **2026-08-15 · [spruce-fancoil-dist-test](archive/2026-08-15-spruce-fancoil-dist-test/)**
   — incident probe: George's living-room (zone 5) fan-coil thermostat
   "wasn't working". Forced the zone-5 call at the scada relay (hack stopped,
   zone 3 held off, deployed scada left publishing). dist-flow jumped
@@ -385,7 +385,7 @@ first run dates them.
   (matches the zone-5 opto reading idle). Open: dist-pump-pwr stayed ~0 W
   while flow rose — flow likely primary-loop-driven, or the pump is below
   the 5 W async threshold. Zones restored to thermostat, hack restarted.
-- **2026-08-15 · [sim-boot-from-word](2026-08-15-sim-boot-from-word/)**
+- **2026-08-15 · [sim-boot-from-word](archive/2026-08-15-sim-boot-from-word/)**
   — PASS: a real ScadaApp booted on gw-dev-rabbit through the new
   word-native `HydronicLayout.from_word` (nolan pair), with `simulate_sensors`
   swapping 3 pico sensors → SimSensorActor + `sim.sensor.component.gt`
@@ -393,14 +393,14 @@ first run dates them.
   Component union). 60 nodes, 59 channels, 35 non-null; NolanLocalControl
   resolved, sim sensors self-generated, relays no-op'd. Verifies from_word +
   the sema sim-in-union change end to end on a real broker (the owed EDD boot).
-- **2026-08-15 · [gwsproto-sema-layover](2026-08-15-gwsproto-sema-layover/)**
+- **2026-08-15 · [gwsproto-sema-layover](archive/2026-08-15-gwsproto-sema-layover/)**
   — PASS: a fieldless, config-less `GwsprotoSemaType` base gives all 145
   gwsproto words `type_name_value()` with the discriminated union
   byte-identical and the suite green (193/1). Also pins WHY the sema
   runtime can't be adopted as-is: gwproto discovery keys on a field
   literally named `TypeName`, so sema's snake `type_name` + alias is
   invisible to it while still passing `sema validate`.
-- **2026-08-12 · [dac-bus-bench](2026-08-12-dac-bus-bench/)** — the DAC
+- **2026-08-12 · [dac-bus-bench](archive/2026-08-12-dac-bus-bench/)** — the DAC
   leg's bench rung on honeysuckle (scada `e551c2e1`): mux select +
   Multi-Write + bare EEPROM read all through the I2cBus single owner on
   the real TCA9548A/MCP4728, zero write failures. Boot #1 converged the
@@ -409,7 +409,7 @@ first run dates them.
   the immediate re-verify failed; boot #2 verified clean first-pass
   (Multi-Write provably EEPROM-free). PASS with finding; settle fix +
   sim busy model landed same day.
-- **2026-08-12 · [spruce-witness-window](2026-08-12-spruce-witness-window/)**
+- **2026-08-12 · [spruce-witness-window](archive/2026-08-12-spruce-witness-window/)**
   — first witnessed scada actuation on spruce (NolanLocalControl scripted
   witness, on-peak windows). #1 FAIL: a third ConfigList-walker bug spun
   the event loop (420k log lines, no snapshots, witness never ran); one
@@ -419,25 +419,25 @@ first run dates them.
   dist response through the Caleffi box ≤29 s (off ~5 s);
   secondary-flow 7.46 GPM in seconds at the 65% EEPROM default
   (off ~4 s). Warm takeover witnessed ×2; holds never moved.
-- **2026-08-11 · [gwwf-scheduler-witness](2026-08-11-gwwf-scheduler-witness/)**
+- **2026-08-11 · [gwwf-scheduler-witness](archive/2026-08-11-gwwf-scheduler-witness/)**
   — OPS-436 build step 3 witness: the record-driven scheduler ran a
   full scenario on gw-dev-rabbit at second-scale record schedules (no
   time mocking) — observation slots, a silent slot, an interpolated
   replay, per-channel forecasts on a non-uniform slice grid, and a
   fidelity-downgrade glitch, all decoded via the snapshot. PASS.
-- **2026-08-11 · [nws-updatetime-probe](2026-08-11-nws-updatetime-probe/)**
+- **2026-08-11 · [nws-updatetime-probe](archive/2026-08-11-nws-updatetime-probe/)**
   — RUNNING: 5-min poll of the CAR/60,114 hourly product's stamps for
   a day or two, quantifying `updateTime` freshness at :30 (the gwwf
   forecast broadcast phase, OPS-436). First poll already showed
   `updateTime` ~7 h behind a fresh-looking `generatedAt`.
-- **2026-08-11 · [gwwf-obs-roundtrip](2026-08-11-gwwf-obs-roundtrip/)**
+- **2026-08-11 · [gwwf-obs-roundtrip](archive/2026-08-11-gwwf-obs-roundtrip/)**
   — OPS-436 build step 1 witness: gwwf's publish path broadcast one
   `gw.weather.observation` on gw-dev-rabbit with radio channel =
   location alias; a slug-only tap received it and decoded byte-equal
   through the vendored staging snapshot. PASS. Pinned: the
   radio-channel tail keeps its dots (per-segment wildcards work).
   Bonus: boot validation rejects pre-0.5.x all-zeros dev GNodeIds.
-- **2026-08-10 · [hp-snafu-and-pico-blackout-postmortem](2026-08-10-hp-snafu-and-pico-blackout-postmortem/)**
+- **2026-08-10 · [hp-snafu-and-pico-blackout-postmortem](archive/2026-08-10-hp-snafu-and-pico-blackout-postmortem/)**
   — all six layout picos flatlined ~17:04 ET and stayed zombie; root
   cause pinned to the GridWorks SSID's 2.4 GHz radio going off the air
   (the pi's own wlan0 lost the same network at 17:04:29; router still
@@ -448,7 +448,7 @@ first run dates them.
   — ODU rose to normal standby on its own schedule 19:58–21:30, no
   pump, no compressor, the 07-29 soft-off shape. Recovery pending: a
   router power-cycle (owner call or site visit).
-- **2026-08-10 · [ads-declared-rate](2026-08-10-ads-declared-rate/)**
+- **2026-08-10 · [ads-declared-rate](archive/2026-08-10-ads-declared-rate/)**
   — the unlimbo scada's reader→bus path at the LAYOUT-DECLARED ADS
   rate. Bench rung (08-10), both pairings PASS: gated reads 137 ms at
   8 SPS vs 75 ms at 16 SPS with the readback gate green throughout
@@ -463,7 +463,7 @@ first run dates them.
   store-pump-failsafe node), and the experiment env shared the
   deployed scada's event persister (archived + cleaned; future
   windows use their own paths name).
-- **2026-08-06 · [ads-noise](2026-08-06-ads-noise/)** — re-run,
+- **2026-08-06 · [ads-noise](archive/2026-08-06-ads-noise/)** — re-run,
   two windows. Run 1 invalidated: the gwspaceheat-restart watchdog
   fired 35 s into the window and restarted the scada under the
   harness — the two-masters-on-one-ADS signature (mux-swapped
@@ -481,17 +481,17 @@ first run dates them.
   de-hacked: board facts from the box's layout (5k6 per the Gw108
   schematic, not the hardcoded 5.65), provenance in results. Folder
   carries the 07-30 first run's record too.
-- **2026-08-05 · [registry-projection-rig](2026-08-05-registry-projection-rig/)**
+- **2026-08-05 · [registry-projection-rig](archive/2026-08-05-registry-projection-rig/)**
   — OPS-443's dev-universe experiment, all four legs PASS: gjk bootstrap
   via the read API (28/28 nodes), MarketMaker re-parent → projection
   re-alias + full ear slice capture (cmd/ack/forest, SendTimeMs →
   created_at), snapshot heals a corrupted row. Edge projection not
   wire-exercised (no seeded edge).
-- **2026-08-05 · [pico-link-census](pico-power-cycling/2026-08-05-link-census/)** —
+- **2026-08-05 · [pico-link-census](practices/pico-power-cycling/2026-08-05-link-census/)** —
   analysis, NEGATIVE result: MAC OUI cannot discriminate wired vs wifi
   picos (ethernet firmware sets no WIZnet MAC). Ground truth is each
   pico's comms_config.json; right fix is firmware self-report.
-- **2026-08-03 · [pico-gap-analysis](pico-power-cycling/2026-08-03-gap-analysis/)** —
+- **2026-08-03 · [pico-gap-analysis](practices/pico-power-cycling/2026-08-03-gap-analysis/)** —
   gaps + glitches + their Venn, 56 d: fir/oak/maple tied clean (router
   pick free to rest on other criteria); spruce's "flaky pico" is a
   FEEDBACK LOOP (permanent zombie → half-hourly VDC shakes → one
@@ -504,17 +504,17 @@ first run dates them.
   congestion too: after removing 3 more wifi picos (fancoil/pipes1/
   floor1, 08-10 deploy), secondary-BTU gaps 14.0 → 2.25/day, mean gap
   duration ~halved, the 165-min outlier gone.
-- **2026-07-30 · [spruce-no-cool-postmortem](2026-07-30-spruce-no-cool-postmortem/)**
+- **2026-07-30 · [spruce-no-cool-postmortem](archive/2026-07-30-spruce-no-cool-postmortem/)**
   — heat pump soft-OFF overnight + two gw108 chip failures (0x21
   expander per-start brownouts; dac3 i2c death).
-- **2026-06-12 · [sim-plant-flux](2026-06-12-sim-plant-flux/)** — PASS:
+- **2026-06-12 · [sim-plant-flux](archive/2026-06-12-sim-plant-flux/)** — PASS:
   SimulatedPlant emits flux async-gated (30 of 200 ticks), matching a
   reference filter.
-- **2026-06-11 · [sim-time-bridge](2026-06-11-sim-time-bridge/)** —
+- **2026-06-11 · [sim-time-bridge](archive/2026-06-11-sim-time-bridge/)** —
   VERIFIED (scoped): sim.timestep crosses AMQP→MQTT to scada-side
   listeners.
-- **2026-06-11 · [sim-sensor](2026-06-11-sim-sensor/)** — PASS: generic
+- **2026-06-11 · [sim-sensor](archive/2026-06-11-sim-sensor/)** — PASS: generic
   SimSensor publishes 20/20 expected channels, witnessed on a broker.
-- **2026-06-11 · [stale-layout-migration](2026-06-11-stale-layout-migration/)**
+- **2026-06-11 · [stale-layout-migration](archive/2026-06-11-stale-layout-migration/)**
   — accidental sema teaching story: sema-typed migration = lookup;
   dangling names = archaeology.

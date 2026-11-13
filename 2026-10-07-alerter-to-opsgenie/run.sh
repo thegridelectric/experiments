@@ -13,7 +13,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 ALERTER=../../gridworks-alerter
-NO_DATA=../2026-09-15-alerter-no-data
+NO_DATA=../archive/2026-09-15-alerter-no-data
 # The Opsgenie credentials come from the experiments .env (gitignored,
 # `OPSGENIE_API_KEY`, `OPSGENIE_TEAM_ID`) or the environment.
 [ -f ../.env ] && { set -a; source ../.env; set +a; }

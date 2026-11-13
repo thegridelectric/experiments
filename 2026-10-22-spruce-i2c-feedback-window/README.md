@@ -17,7 +17,7 @@ actor to check its expander at once, retries the command at 2 s and
 Critical. The claim: a reset met by an actuation raises its Critical
 within a second and has the relay back within ten.
 
-The 2026-08-23 relay stress run (`../2026-08-23-gw108-relay-stress/`)
+The 2026-08-23 relay stress run (`../archive/2026-08-23-gw108-relay-stress/`)
 found that energizing the iso-valve relay with no other 0x21 coil on
 resets the chip about one toggle in three, so toggling the iso under
 admin is the reproducer.

@@ -22,50 +22,50 @@ uv sync -q
 
 echo "==> pyright (zero errors, all repo scripts)"
 PYRIGHT_EXCLUDE='admin_drive.py
-2026-08-06-ads-noise/ads_noise_experiment.py
-2026-08-05-registry-projection-rig/rig_reparent.py
+archive/2026-08-06-ads-noise/ads_noise_experiment.py
+archive/2026-08-05-registry-projection-rig/rig_reparent.py
 offer_contract.py
-2026-08-10-ads-declared-rate/capture_window.py
+archive/2026-08-10-ads-declared-rate/capture_window.py
 future/pico-rejoin/rejoin_trace.py
-2026-08-15-spruce-fancoil-dist-test/spruce_fancoil_dist_test.py
-2026-08-23-spruce-store-charge-valve/charge_valve_polarity.py
-2026-08-23-gw108-relay-stress/relay_stress.py
-2026-09-06-spruce-pump-speed-sweep/sweep.py
-2026-09-12-beech-dist-010v-sweep/dist_sweep.py
-2026-09-10-beech-krida-witness/heat_call.py
-2026-09-10-pico-state-reported/read_pico_states.py
-2026-09-28-sieg-keep-ratio-map/drive_keep_ratio.py
-2026-06-11-sim-sensor/sim_sensor_experiment.py
-2026-06-11-sim-time-bridge/harness.py
-2026-06-11-stale-layout-migration/layout_roundtrip_check.py
-2026-06-11-stale-layout-migration/make_imaginary_layout.py
-2026-06-12-sim-plant-flux/simulated_plant.py
-2026-08-11-gwwf-obs-roundtrip/roundtrip.py
-2026-08-11-gwwf-scheduler-witness/witness.py
-2026-08-11-nws-updatetime-probe/probe.py
-2026-08-12-gwwf-record-broadcast/witness.py
-2026-08-12-dac-bus-bench/append_dac_writer.py
-2026-08-14-sasl-mechanism-spike/actor_test.py
-2026-08-14-sasl-mechanism-spike/client_test.py
-2026-08-25-ops498-load/assert_dev_run.py
-2026-08-25-ops498-load/seed_current_era.py
-2026-08-27-ops-457-regenesis/regenesis.py
-2026-09-05-dac-output-bench/bench_dispatch.py
-2026-09-05-fis-gate-battery/battery.py
-2026-09-05-fis-gate-battery/mint.py
-2026-09-05-fis-gate-battery/rig.py
-2026-09-05-fis-gate-battery/storm.py
-2026-09-07-admin-reboots-picos/admin_reboots_picos.py
-2026-09-07-gw108-ct-testing/capture.py
-2026-09-07-gw108-ct-testing/speed-ladder/ladder.py
-2026-09-07-hp-boss-admin-drive/hp_boss_admin_drive.py
-2026-09-08-five-v-boss-hold/five_v_boss_hold.py
-2026-09-08-spruce-admin-panel/extract_window.py
-2026-09-08-spruce-admin-panel/flow_watch.py
-2026-09-08-spruce-admin-panel/rig-log/afternoon/egauge_live.py
-2026-09-08-spruce-admin-panel/rig_record.py
-2026-09-15-alerter-no-data/mock_scada.py
-2026-09-15-alerter-no-data/watcher.py
+archive/2026-08-15-spruce-fancoil-dist-test/spruce_fancoil_dist_test.py
+archive/2026-08-23-spruce-store-charge-valve/charge_valve_polarity.py
+archive/2026-08-23-gw108-relay-stress/relay_stress.py
+archive/2026-09-06-spruce-pump-speed-sweep/sweep.py
+archive/2026-09-12-beech-dist-010v-sweep/dist_sweep.py
+archive/2026-09-10-beech-krida-witness/heat_call.py
+archive/2026-09-10-pico-state-reported/read_pico_states.py
+archive/2026-09-28-sieg-keep-ratio-map/drive_keep_ratio.py
+archive/2026-06-11-sim-sensor/sim_sensor_experiment.py
+archive/2026-06-11-sim-time-bridge/harness.py
+archive/2026-06-11-stale-layout-migration/layout_roundtrip_check.py
+archive/2026-06-11-stale-layout-migration/make_imaginary_layout.py
+archive/2026-06-12-sim-plant-flux/simulated_plant.py
+archive/2026-08-11-gwwf-obs-roundtrip/roundtrip.py
+archive/2026-08-11-gwwf-scheduler-witness/witness.py
+archive/2026-08-11-nws-updatetime-probe/probe.py
+archive/2026-08-12-gwwf-record-broadcast/witness.py
+archive/2026-08-12-dac-bus-bench/append_dac_writer.py
+archive/2026-08-14-sasl-mechanism-spike/actor_test.py
+archive/2026-08-14-sasl-mechanism-spike/client_test.py
+archive/2026-08-25-ops498-load/assert_dev_run.py
+archive/2026-08-25-ops498-load/seed_current_era.py
+archive/2026-08-27-ops-457-regenesis/regenesis.py
+archive/2026-09-05-dac-output-bench/bench_dispatch.py
+archive/2026-09-05-fis-gate-battery/battery.py
+archive/2026-09-05-fis-gate-battery/mint.py
+archive/2026-09-05-fis-gate-battery/rig.py
+archive/2026-09-05-fis-gate-battery/storm.py
+archive/2026-09-07-admin-reboots-picos/admin_reboots_picos.py
+archive/2026-09-07-gw108-ct-testing/capture.py
+archive/2026-09-07-gw108-ct-testing/speed-ladder/ladder.py
+archive/2026-09-07-hp-boss-admin-drive/hp_boss_admin_drive.py
+archive/2026-09-08-five-v-boss-hold/five_v_boss_hold.py
+archive/2026-09-08-spruce-admin-panel/extract_window.py
+archive/2026-09-08-spruce-admin-panel/flow_watch.py
+archive/2026-09-08-spruce-admin-panel/rig-log/afternoon/egauge_live.py
+archive/2026-09-08-spruce-admin-panel/rig_record.py
+archive/2026-09-15-alerter-no-data/mock_scada.py
+archive/2026-09-15-alerter-no-data/watcher.py
 2026-10-22-stopgap-mm/mqtt_witness.py
 2026-10-28-realtime-units-elm-check/run_gateway_on_tap.py'
 # Top five: environments this repo lacks (smbus2 pi-only · gnr env ·
@@ -94,8 +94,8 @@ echo "==> emitters reproduce committed instances"
 # new folder's emitter is exercised without editing this file.
 # beta-field-windows/emit_instances.py takes a run folder and a code ref
 # (one record per window); its run instances are validated below.
-for e in */emit_instances.py */*/emit_instances.py; do
-    case "$e" in beta-field-windows/emit_instances.py) continue ;; esac
+for e in */emit_instances.py */*/emit_instances.py */*/*/emit_instances.py; do
+    case "$e" in practices/beta-field-windows/emit_instances.py) continue ;; esac
     (cd "$(dirname "$e")" && uv run python emit_instances.py >/dev/null)
 done
 git diff --exit-code -- '*/instances' \
@@ -105,8 +105,9 @@ echo "==> sema validate every instance"
 fail=0
 for f in */instances/*-00[0-9].json */instances/*/*-00[0-9].json */*-gw.readings-000.json \
          */*/instances/*-00[0-9].json */*/instances/*/*-00[0-9].json */*/*-gw.readings-000.json \
-         */runs/*/instances/*-00[0-9].json \
-         */defrost-signatures/*-gw.readings-000.json; do
+         */*/*/instances/*-00[0-9].json */*/*/instances/*/*-00[0-9].json */*/*/*-gw.readings-000.json \
+         */runs/*/instances/*-00[0-9].json */*/runs/*/instances/*-00[0-9].json \
+         */defrost-signatures/*-gw.readings-000.json */*/defrost-signatures/*-gw.readings-000.json; do
     case "$f" in */instances/beech-window-gw.house0.*-000.json) continue ;; esac
     out=$(cd "$SEMA_REPO" && uv run sema validate "$(pwd)/../experiments/$f" 2>&1 | tail -1)
     case "$out" in

@@ -28,7 +28,7 @@ Five processes from `run.sh`: the alerter (`gwalerter rabbit`, fresh
 store under the run dir, `NO_DATA_SILENCE_S` 30, `DETECTOR_TICK_S` 2,
 fleet root narrowed to the mocked spruce), the tap (`gwalerter tap`,
 `TAP_RECONCILE_S` 20, same store), the mock scada from
-`../2026-09-15-alerter-no-data/mock_scada.py` (talk 20 s, quiet 60 s,
+`../archive/2026-09-15-alerter-no-data/mock_scada.py` (talk 20 s, quiet 60 s,
 resume 20 s), then a second alerter and a second tap started on the
 same store while the alert is open. Nothing deployed is touched; the
 alert pages whoever the team's policy pages.
