@@ -1,0 +1,127 @@
+[
+ {
+  "case": "no_cert_tls_refused",
+  "pass": true,
+  "detail": "error:IncompatibleProtocolError:StreamLostError: (\"Stream connection lost: SSLError(1, '[SSL: TLSV13_ALERT_CERTIFICATE_REQUIRED] tlsv13 alert certificate requir"
+ },
+ {
+  "case": "unknown_principal_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'PrincipalNotFound') want=('Denied', 'PrincipalNotFound')"
+ },
+ {
+  "case": "weather_first_connect_allow",
+  "pass": true,
+  "detail": "allow in 0.04s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "same_instance_idempotent",
+  "pass": true,
+  "detail": "allow; A open=True; auth_events=('Authorized', 'IdempotentReconnect') want=('Authorized', 'IdempotentReconnect')"
+ },
+ {
+  "case": "supersession_predecessor_closed",
+  "pass": false,
+  "detail": "B allow in 0.06s; A closed=False; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "revoked_instance_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'InstanceRevoked') want=('Denied', 'InstanceRevoked')"
+ },
+ {
+  "case": "wrong_alias_claim_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'AliasMismatch') want=('Denied', 'AliasMismatch')"
+ },
+ {
+  "case": "wrong_class_claim_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'ClassMismatch') want=('Denied', 'ClassMismatch')"
+ },
+ {
+  "case": "run_claim_vs_vhost_deny_fresh_principal",
+  "pass": false,
+  "detail": "deny-user; user-verdict auth_events=('Denied', 'NotInRegistry') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "run_claim_vs_vhost_deny_with_live_lease",
+  "pass": false,
+  "detail": "allow (gap: /auth/vhost sees no instance id, so B's lease admits it)"
+ },
+ {
+  "case": "run_outside_universe_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'RunOutsideUniverse') want=('Denied', 'RunOutsideUniverse')"
+ },
+ {
+  "case": "suspended_principal_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'PrincipalSuspended') want=('Denied', 'PrincipalSuspended')"
+ },
+ {
+  "case": "suspension_does_not_kill_live_lease",
+  "pass": true,
+  "detail": "B open=True (eviction = suspend + kill, separately)"
+ },
+ {
+  "case": "topic_write_own_alias_ok",
+  "pass": true,
+  "detail": "ok"
+ },
+ {
+  "case": "topic_write_stale_alias_denied",
+  "pass": false,
+  "detail": "closed; FIS logged TopicWriteAliasMismatch=False"
+ },
+ {
+  "case": "user_id_own_identity_ok",
+  "pass": true,
+  "detail": "ok"
+ },
+ {
+  "case": "user_id_forged_refused_by_broker",
+  "pass": false,
+  "detail": "closed"
+ },
+ {
+  "case": "service_principal_allow",
+  "pass": false,
+  "detail": "deny-user; auth_events=('Denied', 'NotInRegistry') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "kill_unconfirmed_fail_closed",
+  "pass": true,
+  "detail": "deny-user; B kept its lease and connection=True; auth_events=('Denied', 'KillUnconfirmed') want=('Denied', 'KillUnconfirmed')"
+ },
+ {
+  "case": "clean_restart_admitted_fast",
+  "pass": false,
+  "detail": "deny-user in 4.155s; auth_events=('Denied', 'KillUnconfirmed') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "mqtt_scada_connect_allow",
+  "pass": true,
+  "detail": "allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "mqtt_subscribe_read_allowed",
+  "pass": true,
+  "detail": "suback"
+ },
+ {
+  "case": "mqtt_publish_own_alias_ok",
+  "pass": true,
+  "detail": "ok"
+ },
+ {
+  "case": "mqtt_publish_stale_alias_disconnected",
+  "pass": true,
+  "detail": "disconnected"
+ },
+ {
+  "case": "mqtt_client_id_not_uuid_refused",
+  "pass": true,
+  "detail": "refused:Bad user name or password"
+ }
+]

@@ -1,0 +1,30 @@
+15:04:31 FIS up; universe d1; mirror seeded from gnr — see runs/20260905T1904/fis.log
+15:04:31 PASS  no_cert_tls_refused: error:IncompatibleProtocolError:StreamLostError: ("Stream connection lost: SSLError(1, '[SSL: TLSV13_ALERT_CERTIFICATE_REQUIRED] tlsv13 alert certificate requir
+15:04:31 PASS  unknown_principal_deny: deny-user; auth_events=('Denied', 'PrincipalNotFound') want=('Denied', 'PrincipalNotFound')
+15:04:31 PASS  weather_first_connect_allow: allow in 0.43s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+15:04:32 PASS  same_instance_idempotent: allow; A open=True; auth_events=('Authorized', 'IdempotentReconnect') want=('Authorized', 'IdempotentReconnect')
+15:04:44 PASS  supersession_predecessor_closed: B allow in 10.46s; A gone=True; weather live now=1; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+15:04:44 PASS  revoked_instance_deny: deny-user; auth_events=('Denied', 'InstanceRevoked') want=('Denied', 'InstanceRevoked')
+15:04:44 PASS  wrong_alias_claim_deny: deny-user; auth_events=('Denied', 'AliasMismatch') want=('Denied', 'AliasMismatch')
+15:04:44 PASS  wrong_class_claim_deny: deny-user; auth_events=('Denied', 'ClassMismatch') want=('Denied', 'ClassMismatch')
+15:04:44 PASS  run_claim_vs_vhost_deny_fresh_principal: deny-vhost; user-verdict=('Authorized', 'IdempotentReconnect')
+15:04:55 KNOWN-GAP run_claim_vs_vhost_with_live_lease: allow (expected deny; /auth/vhost sees no instance id, so a live lease admits it)
+15:05:00 PASS  run_outside_universe_deny: deny-user; auth_events=('Denied', 'RunOutsideUniverse') want=('Denied', 'RunOutsideUniverse')
+15:05:00 PASS  suspended_principal_deny: deny-user; auth_events=('Denied', 'PrincipalSuspended') want=('Denied', 'PrincipalSuspended')
+15:05:01 FAIL  suspension_does_not_kill_live_lease: B open=False (eviction = suspend + kill, separately; gated on the supersession finding)
+15:05:01 PASS  ltn_first_connect_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+15:05:03 PASS  topic_write_own_alias_ok: ok
+15:05:03 PASS  topic_write_stale_alias_denied: closed 403
+15:05:03 PASS  service_principal_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+15:05:05 PASS  service_topic_write_allowed: own claimed alias
+15:05:08 PASS  user_id_own_identity_ok: user_id = self
+15:05:08 PASS  user_id_forged_refused_by_broker: closed 406
+15:05:09 PASS  kill_unconfirmed_fail_closed: deny-user; auth_events=('Denied', 'KillUnconfirmed') want=('Denied', 'KillUnconfirmed')
+15:05:10 PASS  ctl_unreachable_fail_closed: deny-user; auth_events=('Denied', 'KillUnconfirmed') want=('Denied', 'KillUnconfirmed')
+15:05:12 PASS  clean_restart_admitted_fast: allow in 0.487s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+15:05:13 PASS  mqtt_scada_connect_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+15:05:13 PASS  mqtt_subscribe_read_allowed: suback
+15:05:15 PASS  mqtt_publish_own_alias_ok: ok
+15:05:15 PASS  mqtt_publish_stale_alias_disconnected: disconnected
+15:05:19 PASS  mqtt_client_id_not_uuid_refused: refused:Bad user name or password
+15:05:19 26/27 cases pass

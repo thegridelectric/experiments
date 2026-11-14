@@ -90,7 +90,8 @@ ET, 2026-10-28.
 - **The journalkeeper ran against production for about ten minutes
   (18:37 to 18:47 UTC).** The shell that started it had sourced
   `experiments/.env` to read the tap URL, and that file's `GJK_DB_URL`
-  is the prod writer login; the environment outranks the repo's `.env`.
+  held the prod writer login on that day; the environment outranks the
+  repo's `.env`.
   Checked on prod afterwards: the window's messages are snapshots,
   power and reports only, there are no duplicate `(channel_id,
   timestamp)` readings, both tables have unique keys that refuse a

@@ -1,0 +1,16 @@
+08:20:23 FIS up; universe d1; mirror seeded from gnr — see runs/20260905T1220/fis.log
+08:20:23 PASS  no_cert_tls_refused: error:IncompatibleProtocolError:StreamLostError: ("Stream connection lost: SSLError(1, '[SSL: TLSV13_ALERT_CERTIFICATE_REQUIRED] tlsv13 alert certificate requir
+08:20:23 PASS  unknown_principal_deny: deny-user; auth_events=('Denied', 'PrincipalNotFound') want=('Denied', 'PrincipalNotFound')
+08:20:23 PASS  weather_first_connect_allow: allow in 0.03s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+08:20:24 PASS  same_instance_idempotent: allow; A open=True; auth_events=('Authorized', 'IdempotentReconnect') want=('Authorized', 'IdempotentReconnect')
+08:20:32 FAIL  supersession_predecessor_closed: B deny-user in 4.20s; A gone=True; weather live now=0 (FINDING when live>1: FIS confirmed the kill via the management listing, not an authoritative real-time view, so A was never seen); auth_events=('Denied', 'KillUnconfirmed') want=('Authorized', 'Superseded')
+08:20:32 FAIL  revoked_instance_deny: allow; auth_events=('Authorized', 'IdempotentReconnect') want=('Denied', 'InstanceRevoked')
+08:20:32 PASS  wrong_alias_claim_deny: deny-user; auth_events=('Denied', 'AliasMismatch') want=('Denied', 'AliasMismatch')
+08:20:32 PASS  wrong_class_claim_deny: deny-user; auth_events=('Denied', 'ClassMismatch') want=('Denied', 'ClassMismatch')
+08:20:32 PASS  run_claim_vs_vhost_deny_fresh_principal: deny-vhost; user-verdict=('Authorized', 'IdempotentReconnect')
+08:20:32 KNOWN-GAP run_claim_vs_vhost_with_live_lease: allow (expected deny; /auth/vhost sees no instance id, so a live lease admits it)
+08:20:33 PASS  run_outside_universe_deny: deny-user; auth_events=('Denied', 'RunOutsideUniverse') want=('Denied', 'RunOutsideUniverse')
+08:20:33 PASS  suspended_principal_deny: deny-user; auth_events=('Denied', 'PrincipalSuspended') want=('Denied', 'PrincipalSuspended')
+08:20:33 FAIL  suspension_does_not_kill_live_lease: B open=False (eviction = suspend + kill, separately)
+08:20:33 FAIL  topic_write_cases: skipped: B never connected
+08:20:33 9/13 cases pass

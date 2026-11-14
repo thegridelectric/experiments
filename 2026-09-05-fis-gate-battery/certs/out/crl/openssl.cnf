@@ -1,0 +1,8 @@
+[ca]
+default_ca = throwaway
+[throwaway]
+database    = out/crl/index.txt
+crlnumber   = out/crl/crlnumber
+certificate = out/ca.pem
+private_key = out/ca.key
+default_md  = sha256

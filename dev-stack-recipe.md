@@ -52,6 +52,9 @@ what you are testing.
   gitignored `.env` before vite starts.
 - **The frontend proxies `/api` to 8000.** For a dashboard check the
   backend API moves to 8000, which means the sim scada is stopped first.
+- **Vite started with `--host localhost` listens on IPv6 only.** On this
+  Mac `localhost` resolves to `::1` for vite and to `127.0.0.1` for the
+  browser, so the page never loads. Start it with `--host 0.0.0.0`.
 - **A service that died stays dead quietly.** Before a check, list what is
   listening: `lsof -nP -iTCP -sTCP:LISTEN | grep -E '8000|8001|8010|8100|5173'`.
 - **The registry's forest broadcast is daily.** A change in the registry

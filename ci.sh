@@ -67,7 +67,8 @@ archive/2026-09-08-spruce-admin-panel/rig_record.py
 archive/2026-09-15-alerter-no-data/mock_scada.py
 archive/2026-09-15-alerter-no-data/watcher.py
 2026-10-22-stopgap-mm/mqtt_witness.py
-2026-10-28-realtime-units-elm-check/run_gateway_on_tap.py'
+2026-10-28-realtime-units-elm-check/run_gateway_on_tap.py
+procedures/sieg-valve-calibration/drive.py'
 # Top five: environments this repo lacks (smbus2 pi-only · gnr env ·
 # the pi scada checkout's venv · the laptop scada venv (admin_drive) ·
 # MicroPython on-pico); next four: spruce on-box harnesses (smbus2 /
@@ -83,7 +84,8 @@ archive/2026-09-15-alerter-no-data/watcher.py
 # and the box venv (spruce-admin-panel, beech-dist-010v-sweep), gwbase
 # and pika in the alerter venv (alerter-no-data). October: paho
 # (stopgap-mm witness) and the web-backend gateway checkout
-# (realtime-units-elm-check).
+# (realtime-units-elm-check). November: gwadmin in the laptop scada venv
+# (the sieg-valve-calibration driver).
 FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \
     -not -path '*/__pycache__/*' | sed 's|^\./||' | sort \
     | grep -Fxv "$PYRIGHT_EXCLUDE")
@@ -103,6 +105,7 @@ git diff --exit-code -- '*/instances' \
 
 echo "==> sema validate every instance"
 fail=0
+shopt -s nullglob  # an unmatched pattern is skipped, not validated as a literal path
 for f in */instances/*-00[0-9].json */instances/*/*-00[0-9].json */*-gw.readings-000.json \
          */*/instances/*-00[0-9].json */*/instances/*/*-00[0-9].json */*/*-gw.readings-000.json \
          */*/*/instances/*-00[0-9].json */*/*/instances/*/*-00[0-9].json */*/*/*-gw.readings-000.json \

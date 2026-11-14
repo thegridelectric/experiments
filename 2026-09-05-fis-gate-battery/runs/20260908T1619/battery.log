@@ -1,0 +1,46 @@
+12:19:54 out/crl/d29925e1.r0: revoked=[] nextUpdate=Sep  8 16:19:54 2027 GMT
+12:19:55 FIS up on localhost; universe d1; mirror seeded from the registry — see runs/20260908T1619/fis.log
+12:19:55 PASS  no_cert_tls_refused: error:IncompatibleProtocolError:StreamLostError: ("Stream connection lost: SSLError(1, '[SSL: TLSV13_ALERT_CERTIFICATE_REQUIRED] tlsv13 alert certificate requir
+12:19:55 PASS  unknown_principal_deny: deny-user; auth_events=('Denied', 'PrincipalNotFound') want=('Denied', 'PrincipalNotFound')
+12:19:55 PASS  weather_first_connect_allow: allow in 0.02s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+12:19:56 PASS  same_instance_idempotent: allow; A open=True; auth_events=('Authorized', 'IdempotentReconnect') want=('Authorized', 'IdempotentReconnect')
+12:20:03 PASS  supersession_predecessor_closed: B allow in 6.15s; A gone=True; weather live now=1; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+12:20:03 PASS  revoked_instance_deny: deny-user; auth_events=('Denied', 'InstanceRevoked') want=('Denied', 'InstanceRevoked')
+12:20:03 PASS  wrong_alias_claim_deny: deny-user; auth_events=('Denied', 'AliasMismatch') want=('Denied', 'AliasMismatch')
+12:20:03 PASS  wrong_class_claim_deny: deny-user; auth_events=('Denied', 'ClassMismatch') want=('Denied', 'ClassMismatch')
+12:20:03 PASS  run_claim_vs_vhost_deny_fresh_principal: deny-vhost; user-verdict=('Authorized', 'IdempotentReconnect')
+12:20:09 PASS  run_claim_vs_vhost_deny_with_live_lease: deny-vhost (weather live on d1__1 while this connection claimed d1__2)
+12:20:09 KNOWN-LIMIT broker_wide_kill_closed_other_run: B closed=True
+12:20:10 reopened B as a fresh instance: allow
+12:20:10 PASS  run_outside_universe_deny: deny-user; auth_events=('Denied', 'RunOutsideUniverse') want=('Denied', 'RunOutsideUniverse')
+12:20:10 PASS  suspended_principal_deny: deny-user; auth_events=('Denied', 'PrincipalSuspended') want=('Denied', 'PrincipalSuspended')
+12:20:12 PASS  suspension_does_not_kill_live_lease: B open=True (eviction = suspend + kill, separately)
+12:20:12 PASS  ltn_first_connect_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+12:20:14 PASS  topic_write_own_alias_ok: ok
+12:20:14 PASS  topic_write_stale_alias_denied: closed 403
+12:20:14 PASS  service_principal_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+12:20:16 PASS  service_topic_write_allowed: own claimed alias
+12:20:18 PASS  user_id_own_identity_ok: user_id = self
+12:20:18 PASS  user_id_forged_refused_by_broker: closed 406
+12:20:19 PASS  kill_unconfirmed_fail_closed: deny-user; auth_events=('Denied', 'KillUnconfirmed') want=('Denied', 'KillUnconfirmed')
+12:20:20 PASS  clean_restart_admitted_fast: allow in 0.071s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+12:20:20 PASS  mqtt_scada_connect_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+12:20:20 PASS  mqtt_subscribe_read_allowed: suback
+12:20:22 PASS  mqtt_publish_own_alias_ok: ok
+12:20:22 PASS  mqtt_publish_stale_alias_disconnected: disconnected
+12:20:26 PASS  mqtt_client_id_not_uuid_refused: refused:Bad user name or password
+12:20:27 PASS  ssl_options_merge_conf_and_advanced: {ok,[{cacertfile,"/certs/ca.pem"},      {certfile,"/certs/server.pem"},      {keyfile,"/certs/server.key"},      {verify,verify_peer},      {fail_if_no_peer_cert,true},      {crl_check,peer},      {cr
+12:20:39 PASS  same_cn_pair_ping_pong_amqp: allow/allow/allow; A closed by B=True; B closed by A'=True
+12:20:39 PASS  same_cn_pair_ping_pong_mqtt: allow/allow; old kicked=True
+12:20:41 out/crl/d29925e1.r0: revoked=[weather scada] nextUpdate=Sep  8 16:20:41 2027 GMT
+12:20:44 PASS  revoked_cert_refused_amqp: error:IncompatibleProtocolError:StreamLostError: ("Stream connection lost: SSLError(1, '[SSL: SSLV3_ALERT_CERTIFICATE_REVOKED] ssl/tls alert certificate revoked; FIS asked=False
+12:20:49 PASS  revoked_cert_refused_mqtt: refused
+12:20:49 PASS  broker_log_names_revocation: 2026-09-08 16:20:41.819475+00:00 [error] <0.4517.0> {tls_alert,{certificate_revoked,"TLS server: In state wait_cert at ssl_handshake.erl:2177 generated SERVER A
+12:20:49 PASS  newer_cert_admitted_amqp: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+12:20:49 PASS  newer_cert_admitted_mqtt: allow
+12:20:49 PASS  no_broker_restart: StartedAt 2026-09-08T16:16:40.99307076Z
+12:20:49 out/crl/d29925e1.r0: revoked=[weather scada] nextUpdate=Sep  8 16:20:50 2026 GMT
+12:20:56 PASS  expired_crl_refuses_all: amqp error:IncompatibleProtocolError:StreamLostError: ("Stream connection lost: SSLError(1, '[SSL: SSLV3_ALERT_BAD_CERTIFICATE] ssl/tls alert bad certificate (_ssl.c; mqtt refused
+12:20:56 out/crl/d29925e1.r0: revoked=[weather scada] nextUpdate=Sep  8 16:20:56 2027 GMT
+12:20:56 PASS  fresh_crl_admits_again: allow
+12:20:56 38/38 cases pass

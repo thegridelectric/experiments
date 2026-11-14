@@ -1,0 +1,31 @@
+17:04:08 FIS up on hw1-2.electricity.works; universe hw1; mirror seeded from the registry — see runs/20260906T2104-hw1-2/fis.log
+17:04:08 PASS  no_cert_tls_refused: error:IncompatibleProtocolError:StreamLostError: ("Stream connection lost: SSLError(1, '[SSL: TLSV13_ALERT_CERTIFICATE_REQUIRED] tlsv13 alert certificate requir
+17:04:10 PASS  unknown_principal_deny: deny-user; auth_events=('Denied', 'PrincipalNotFound') want=('Denied', 'PrincipalNotFound')
+17:04:11 PASS  weather_first_connect_allow: allow in 0.83s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+17:04:14 PASS  same_instance_idempotent: allow; A open=True; auth_events=('Authorized', 'IdempotentReconnect') want=('Authorized', 'IdempotentReconnect')
+17:04:25 PASS  supersession_predecessor_closed: B allow in 6.76s; A gone=True; weather live now=1; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+17:04:27 PASS  revoked_instance_deny: deny-user; auth_events=('Denied', 'InstanceRevoked') want=('Denied', 'InstanceRevoked')
+17:04:28 PASS  wrong_alias_claim_deny: deny-user; auth_events=('Denied', 'AliasMismatch') want=('Denied', 'AliasMismatch')
+17:04:30 PASS  wrong_class_claim_deny: deny-user; auth_events=('Denied', 'ClassMismatch') want=('Denied', 'ClassMismatch')
+17:04:32 PASS  run_claim_vs_vhost_deny_fresh_principal: deny-vhost; user-verdict=('Authorized', 'Superseded')
+17:04:38 PASS  run_claim_vs_vhost_deny_with_live_lease: deny-vhost (weather live on hw1__2 while this connection claimed hw1__1)
+17:04:38 KNOWN-LIMIT broker_wide_kill_closed_other_run: B closed=True
+17:04:40 reopened B as a fresh instance: allow
+17:04:41 PASS  run_outside_universe_deny: deny-user; auth_events=('Denied', 'RunOutsideUniverse') want=('Denied', 'RunOutsideUniverse')
+17:04:44 PASS  suspended_principal_deny: deny-user; auth_events=('Denied', 'PrincipalSuspended') want=('Denied', 'PrincipalSuspended')
+17:04:45 PASS  suspension_does_not_kill_live_lease: B open=True (eviction = suspend + kill, separately)
+17:04:47 PASS  ltn_first_connect_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+17:04:49 PASS  topic_write_own_alias_ok: ok
+17:04:49 PASS  topic_write_stale_alias_denied: closed 403
+17:04:51 PASS  service_principal_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+17:04:53 PASS  service_topic_write_allowed: own claimed alias
+17:04:55 PASS  user_id_own_identity_ok: user_id = self
+17:04:56 PASS  user_id_forged_refused_by_broker: closed 406
+17:05:00 PASS  kill_unconfirmed_fail_closed: deny-user; auth_events=('Denied', 'KillUnconfirmed') want=('Denied', 'KillUnconfirmed')
+17:05:05 PASS  clean_restart_admitted_fast: allow in 0.669s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+17:05:06 PASS  mqtt_scada_connect_allow: allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')
+17:05:06 PASS  mqtt_subscribe_read_allowed: suback
+17:05:08 PASS  mqtt_publish_own_alias_ok: ok
+17:05:08 PASS  mqtt_publish_stale_alias_disconnected: disconnected
+17:05:13 PASS  mqtt_client_id_not_uuid_refused: refused:Bad user name or password
+17:05:15 27/27 cases pass

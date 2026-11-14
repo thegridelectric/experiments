@@ -1,0 +1,192 @@
+[
+ {
+  "case": "no_cert_tls_refused",
+  "pass": true,
+  "detail": "error:IncompatibleProtocolError:StreamLostError: (\"Stream connection lost: SSLError(1, '[SSL: TLSV13_ALERT_CERTIFICATE_REQUIRED] tlsv13 alert certificate requir"
+ },
+ {
+  "case": "unknown_principal_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'PrincipalNotFound') want=('Denied', 'PrincipalNotFound')"
+ },
+ {
+  "case": "weather_first_connect_allow",
+  "pass": true,
+  "detail": "allow in 0.08s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "same_instance_idempotent",
+  "pass": true,
+  "detail": "allow; A open=True; auth_events=('Authorized', 'IdempotentReconnect') want=('Authorized', 'IdempotentReconnect')"
+ },
+ {
+  "case": "supersession_predecessor_closed",
+  "pass": true,
+  "detail": "B allow in 6.18s; A gone=True; weather live now=1; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "revoked_instance_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'InstanceRevoked') want=('Denied', 'InstanceRevoked')"
+ },
+ {
+  "case": "wrong_alias_claim_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'AliasMismatch') want=('Denied', 'AliasMismatch')"
+ },
+ {
+  "case": "wrong_class_claim_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'ClassMismatch') want=('Denied', 'ClassMismatch')"
+ },
+ {
+  "case": "run_claim_vs_vhost_deny_fresh_principal",
+  "pass": true,
+  "detail": "deny-vhost; user-verdict=('Authorized', 'IdempotentReconnect')"
+ },
+ {
+  "case": "run_claim_vs_vhost_deny_with_live_lease",
+  "pass": true,
+  "detail": "deny-vhost (weather live on d1__1 while this connection claimed d1__2)"
+ },
+ {
+  "case": "run_outside_universe_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'RunOutsideUniverse') want=('Denied', 'RunOutsideUniverse')"
+ },
+ {
+  "case": "suspended_principal_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'PrincipalSuspended') want=('Denied', 'PrincipalSuspended')"
+ },
+ {
+  "case": "suspension_does_not_kill_live_lease",
+  "pass": true,
+  "detail": "B open=True (eviction = suspend + kill, separately)"
+ },
+ {
+  "case": "ltn_first_connect_allow",
+  "pass": true,
+  "detail": "allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "topic_write_own_alias_ok",
+  "pass": true,
+  "detail": "ok"
+ },
+ {
+  "case": "topic_write_stale_alias_denied",
+  "pass": true,
+  "detail": "closed 403"
+ },
+ {
+  "case": "service_principal_allow",
+  "pass": true,
+  "detail": "allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "service_topic_write_allowed",
+  "pass": true,
+  "detail": "own claimed alias"
+ },
+ {
+  "case": "user_id_own_identity_ok",
+  "pass": true,
+  "detail": "user_id = self"
+ },
+ {
+  "case": "user_id_forged_refused_by_broker",
+  "pass": true,
+  "detail": "closed 406"
+ },
+ {
+  "case": "kill_unconfirmed_fail_closed",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'KillUnconfirmed') want=('Denied', 'KillUnconfirmed')"
+ },
+ {
+  "case": "clean_restart_admitted_fast",
+  "pass": true,
+  "detail": "allow in 0.086s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "mqtt_scada_connect_allow",
+  "pass": true,
+  "detail": "allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "mqtt_subscribe_read_allowed",
+  "pass": true,
+  "detail": "suback"
+ },
+ {
+  "case": "mqtt_publish_own_alias_ok",
+  "pass": true,
+  "detail": "ok"
+ },
+ {
+  "case": "mqtt_publish_stale_alias_disconnected",
+  "pass": true,
+  "detail": "disconnected"
+ },
+ {
+  "case": "mqtt_client_id_not_uuid_refused",
+  "pass": true,
+  "detail": "refused:Bad user name or password"
+ },
+ {
+  "case": "ssl_options_merge_conf_and_advanced",
+  "pass": true,
+  "detail": "{ok,[{cacertfile,\"/certs/ca.pem\"},      {certfile,\"/certs/server.pem\"},      {keyfile,\"/certs/server.key\"},      {verify,verify_peer},      {fail_if_no_peer_cert,true},      {crl_check,peer},      {cr"
+ },
+ {
+  "case": "same_cn_pair_ping_pong_amqp",
+  "pass": true,
+  "detail": "allow/allow/allow; A closed by B=True; B closed by A'=True"
+ },
+ {
+  "case": "same_cn_pair_ping_pong_mqtt",
+  "pass": true,
+  "detail": "allow/allow; old kicked=True"
+ },
+ {
+  "case": "revoked_cert_refused_amqp",
+  "pass": false,
+  "detail": "error:IncompatibleProtocolError:StreamLostError: (\"Stream connection lost: SSLError(1, '[SSL: SSLV3_ALERT_CERTIFICATE_REVOKED] ssl/tls alert certificate revoked; FIS asked=False"
+ },
+ {
+  "case": "revoked_cert_refused_mqtt",
+  "pass": true,
+  "detail": "refused"
+ },
+ {
+  "case": "broker_log_names_revocation",
+  "pass": true,
+  "detail": "\u001b[38;5;160m2026-09-08 16:17:33.190786+00:00 [error] <0.2069.0> {tls_alert,{certificate_revoked,\"TLS server: In state wait_cert at ssl_handshake.erl:2177 generat"
+ },
+ {
+  "case": "newer_cert_admitted_amqp",
+  "pass": true,
+  "detail": "allow; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "newer_cert_admitted_mqtt",
+  "pass": true,
+  "detail": "allow"
+ },
+ {
+  "case": "no_broker_restart",
+  "pass": true,
+  "detail": "StartedAt 2026-09-08T16:16:40.99307076Z"
+ },
+ {
+  "case": "expired_crl_refuses_all",
+  "pass": false,
+  "detail": "amqp error:IncompatibleProtocolError:StreamLostError: (\"Stream connection lost: SSLError(1, '[SSL: SSLV3_ALERT_BAD_CERTIFICATE] ssl/tls alert bad certificate (_ssl.c; mqtt refused"
+ },
+ {
+  "case": "fresh_crl_admits_again",
+  "pass": true,
+  "detail": "allow"
+ }
+]

@@ -1,0 +1,67 @@
+[
+ {
+  "case": "no_cert_tls_refused",
+  "pass": true,
+  "detail": "error:IncompatibleProtocolError:StreamLostError: (\"Stream connection lost: SSLError(1, '[SSL: TLSV13_ALERT_CERTIFICATE_REQUIRED] tlsv13 alert certificate requir"
+ },
+ {
+  "case": "unknown_principal_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'PrincipalNotFound') want=('Denied', 'PrincipalNotFound')"
+ },
+ {
+  "case": "weather_first_connect_allow",
+  "pass": true,
+  "detail": "allow in 0.03s; auth_events=('Authorized', 'Superseded') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "same_instance_idempotent",
+  "pass": true,
+  "detail": "allow; A open=True; auth_events=('Authorized', 'IdempotentReconnect') want=('Authorized', 'IdempotentReconnect')"
+ },
+ {
+  "case": "supersession_predecessor_closed",
+  "pass": false,
+  "detail": "B deny-user in 4.20s; A gone=True; weather live now=0 (FINDING when live>1: FIS confirmed the kill via the management listing, not an authoritative real-time view, so A was never seen); auth_events=('Denied', 'KillUnconfirmed') want=('Authorized', 'Superseded')"
+ },
+ {
+  "case": "revoked_instance_deny",
+  "pass": false,
+  "detail": "allow; auth_events=('Authorized', 'IdempotentReconnect') want=('Denied', 'InstanceRevoked')"
+ },
+ {
+  "case": "wrong_alias_claim_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'AliasMismatch') want=('Denied', 'AliasMismatch')"
+ },
+ {
+  "case": "wrong_class_claim_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'ClassMismatch') want=('Denied', 'ClassMismatch')"
+ },
+ {
+  "case": "run_claim_vs_vhost_deny_fresh_principal",
+  "pass": true,
+  "detail": "deny-vhost; user-verdict=('Authorized', 'IdempotentReconnect')"
+ },
+ {
+  "case": "run_outside_universe_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'RunOutsideUniverse') want=('Denied', 'RunOutsideUniverse')"
+ },
+ {
+  "case": "suspended_principal_deny",
+  "pass": true,
+  "detail": "deny-user; auth_events=('Denied', 'PrincipalSuspended') want=('Denied', 'PrincipalSuspended')"
+ },
+ {
+  "case": "suspension_does_not_kill_live_lease",
+  "pass": false,
+  "detail": "B open=False (eviction = suspend + kill, separately)"
+ },
+ {
+  "case": "topic_write_cases",
+  "pass": false,
+  "detail": "skipped: B never connected"
+ }
+]

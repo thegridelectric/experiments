@@ -1,0 +1,20 @@
+2026-09-06T21:01:00+00:00 hw1-2 systemd[1]: Started fis-api.service - Fleet Index Service — the broker's connect-time authority (loopback :8080).
+2026-09-06T21:01:01+00:00 hw1-2 fis[15993]: INFO:     Started server process [15993]
+2026-09-06T21:01:01+00:00 hw1-2 fis[15993]: INFO:     Waiting for application startup.
+2026-09-06T21:01:01+00:00 hw1-2 fis[15993]: INFO:     Application startup complete.
+2026-09-06T21:01:01+00:00 hw1-2 fis[15993]: INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+2026-09-06T21:01:01+00:00 hw1-2 fis[15993]: INFO:     127.0.0.1:44590 - "GET /ping HTTP/1.1" 200 OK
+--- ad-hoc fis api ---
+INFO:     Started server process [15902]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54438 - "GET /ping HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54458 - "POST /auth/user HTTP/1.1" 200 OK
+supersession kill failed for 2af8a877-7cd6-47a8-870e-929370997469 (run hw1__2): Client error '401 Unauthorized' for url 'http://localhost:15672/api/connections/username/2af8a877-7cd6-47a8-870e-929370997469'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+INFO:     127.0.0.1:54444 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15902]

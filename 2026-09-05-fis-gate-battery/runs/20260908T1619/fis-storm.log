@@ -1,0 +1,612 @@
+warning: `VIRTUAL_ENV=/Users/jessica/.cache/uv/archive-v0/pjDtSdYP-MxZ6Yj5sPj83` does not match the project environment path `/Users/jessica/GridWorks/gridworks-fleet-index-service/.venv` and will be ignored; use `--active` to target the active environment instead
+INFO:     Started server process [61059]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+INFO httpx: HTTP Request: POST http://localhost:8000/gnr/g-node-forest-request "HTTP/1.1 200 OK"
+INFO fis.mirror: reconcile d1: 29 node(s) — inserted=29 updated=0 renamed=0 unchanged=0 missing=0
+INFO:     127.0.0.1:53823 - "GET /ping HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/1cd11eae-42bf-468f-b5ab-2c71fc22089b "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/1cd11eae-42bf-468f-b5ab-2c71fc22089b "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=1cd11eae-42bf-468f-b5ab-2c71fc22089b run=d1__1 instance=63565c21-3f19-40a0-bde4-92ffbae6ca6d
+INFO:     127.0.0.1:54083 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/b8ec462b-651e-4b35-b4e3-3491b4b382e5 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/ca9ee780-8044-437a-b6e1-4b61041b2e61 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/4b12ad9f-6a21-49e1-92d2-03efd88bb62e "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/4b12ad9f-6a21-49e1-92d2-03efd88bb62e "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=4b12ad9f-6a21-49e1-92d2-03efd88bb62e run=d1__1 instance=998d9538-8ecb-491f-84a2-0158e2a8c83a
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/ca9ee780-8044-437a-b6e1-4b61041b2e61 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/b8ec462b-651e-4b35-b4e3-3491b4b382e5 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/fb58a004-8ab2-41f0-bc4c-719518f3170d "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54102 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/59a33e36-f495-4c1c-8fbb-4afedb7a8e3c "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/fb58a004-8ab2-41f0-bc4c-719518f3170d "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/7d59e6b1-83d4-4779-9fcb-8236a5019ff0 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=ca9ee780-8044-437a-b6e1-4b61041b2e61 run=d1__1 instance=b093e7cc-576b-475e-9c42-4faddadba93c
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/64de4a66-5701-46db-aeb7-df0c883bebfe "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=b8ec462b-651e-4b35-b4e3-3491b4b382e5 run=d1__1 instance=c17b592e-bc35-48e3-8579-9021e26bed84
+INFO:     127.0.0.1:54098 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/ac4cd292-c0fb-463b-9bda-08be5e73523d "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/7d59e6b1-83d4-4779-9fcb-8236a5019ff0 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/59a33e36-f495-4c1c-8fbb-4afedb7a8e3c "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/a2c88819-436e-474b-ac13-fab69f16fd0e "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/64de4a66-5701-46db-aeb7-df0c883bebfe "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/ac4cd292-c0fb-463b-9bda-08be5e73523d "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54099 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=fb58a004-8ab2-41f0-bc4c-719518f3170d run=d1__1 instance=a536382b-6c39-4899-99bb-e04af43216c7
+INFO fis.api: auth/user allow (superseded) principal=7d59e6b1-83d4-4779-9fcb-8236a5019ff0 run=d1__1 instance=28386a7f-27db-4fb4-ad3c-8c865eeeb9b8
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/68864c8a-8e2a-47e5-b9c3-4d7a19eeab8a "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54115 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54135 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/1f13fb64-069d-4fa8-b658-3f32f8c7e371 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/39e68933-3a42-4d95-88ba-1552be7cc3c6 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/a3fd2c3a-e13c-44cc-a7fb-bed3d27cce82 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/a2c88819-436e-474b-ac13-fab69f16fd0e "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/e9afea19-ff30-4bbf-b885-a48830c42880 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=b8ec462b-651e-4b35-b4e3-3491b4b382e5 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54099 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=59a33e36-f495-4c1c-8fbb-4afedb7a8e3c run=d1__1 instance=1248415e-2f2d-426c-b5de-e63f7c5d6778
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/74a69e3d-fe94-4676-8f06-a3143c8edca2 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/68864c8a-8e2a-47e5-b9c3-4d7a19eeab8a "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/1f13fb64-069d-4fa8-b658-3f32f8c7e371 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=ac4cd292-c0fb-463b-9bda-08be5e73523d run=d1__1 instance=8b1ee6f5-d9ce-4bd3-935d-d4f1f43ba2a7
+INFO fis.api: auth/user allow (superseded) principal=64de4a66-5701-46db-aeb7-df0c883bebfe run=d1__1 instance=f7a732a2-a857-451d-ba27-2a3eef4fb079
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/094d682c-a827-4fb0-8000-5eb29285737f "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/a3fd2c3a-e13c-44cc-a7fb-bed3d27cce82 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/39e68933-3a42-4d95-88ba-1552be7cc3c6 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/e9afea19-ff30-4bbf-b885-a48830c42880 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=a2c88819-436e-474b-ac13-fab69f16fd0e run=d1__1 instance=f7c4bddc-ab20-41a8-ae3d-7b7d98f61ec7
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=fb58a004-8ab2-41f0-bc4c-719518f3170d vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54115 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/74a69e3d-fe94-4676-8f06-a3143c8edca2 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/01062673-39d8-4380-9559-0f91fcba79ba "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/9a01b48b-26c6-4dde-9d35-adca33b28762 "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54107 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=1f13fb64-069d-4fa8-b658-3f32f8c7e371 run=d1__1 instance=a5741558-8aeb-4bf0-9d05-ce3d29d605ea
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/e0bb1b4f-42e7-417f-b3b6-38cc13734900 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=68864c8a-8e2a-47e5-b9c3-4d7a19eeab8a run=d1__1 instance=5b1807bc-3da0-4299-9b2b-a09846df8d54
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/094d682c-a827-4fb0-8000-5eb29285737f "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/9edcae5b-9a03-4eed-8179-f0af3bc97f01 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=a3fd2c3a-e13c-44cc-a7fb-bed3d27cce82 run=d1__1 instance=eb1c380d-a707-46d7-960c-8ddb84bf52c4
+INFO fis.api: auth/user allow (superseded) principal=39e68933-3a42-4d95-88ba-1552be7cc3c6 run=d1__1 instance=28b81dbd-61ac-4675-9df7-cd867e0b1f1c
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/05055ee4-7613-4247-8b77-bfcbc674cf3b "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=7d59e6b1-83d4-4779-9fcb-8236a5019ff0 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54135 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/31e3157c-442e-49da-9317-e4b4650bf395 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/01062673-39d8-4380-9559-0f91fcba79ba "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54117 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=e9afea19-ff30-4bbf-b885-a48830c42880 run=d1__1 instance=625e4ba7-c28e-411a-84eb-dd374c626653
+INFO:     127.0.0.1:54122 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/9a01b48b-26c6-4dde-9d35-adca33b28762 "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54113 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/29bcdb30-2ea5-4d4a-8c8f-9d9e5c4b77d0 "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54142 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54124 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54138 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54128 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/10fd6096-d96e-4241-a121-da793ce2f9f5 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=74a69e3d-fe94-4676-8f06-a3143c8edca2 run=d1__1 instance=616e3446-2b96-4e4a-9dc3-0ae045de8d45
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/e0bb1b4f-42e7-417f-b3b6-38cc13734900 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/9edcae5b-9a03-4eed-8179-f0af3bc97f01 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=094d682c-a827-4fb0-8000-5eb29285737f run=d1__1 instance=69519e86-1288-41bc-80f5-a5e9a9589314
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/05055ee4-7613-4247-8b77-bfcbc674cf3b "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/31e3157c-442e-49da-9317-e4b4650bf395 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/0a15712a-a793-4b1c-bb91-3b49f4d2507d "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/7c28c418-98dc-4d55-8646-d2c2522421bd "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=01062673-39d8-4380-9559-0f91fcba79ba run=d1__1 instance=67912ddb-9253-4dbb-b3a4-ca0ea85111f4
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=59a33e36-f495-4c1c-8fbb-4afedb7a8e3c vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54135 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54121 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/6c582e07-0720-4607-9315-33f0de2cc3dd "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/cdc2f95e-8c00-4188-ae17-da3236517fab "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/29bcdb30-2ea5-4d4a-8c8f-9d9e5c4b77d0 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=9a01b48b-26c6-4dde-9d35-adca33b28762 run=d1__1 instance=3b4f8c61-83db-4eb4-9a4f-23a65fcb21f1
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/10fd6096-d96e-4241-a121-da793ce2f9f5 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/b3893c4c-afb3-432b-aa35-184169f9497d "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/17877766-dd3a-45ca-98da-706ffe1bcc00 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=9edcae5b-9a03-4eed-8179-f0af3bc97f01 run=d1__1 instance=a7cf13db-1c3a-4225-8c47-5d9383221292
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/0a15712a-a793-4b1c-bb91-3b49f4d2507d "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=05055ee4-7613-4247-8b77-bfcbc674cf3b run=d1__1 instance=83373c60-14d2-436b-954a-cac084797851
+INFO fis.api: auth/user allow (superseded) principal=e0bb1b4f-42e7-417f-b3b6-38cc13734900 run=d1__1 instance=da3291b5-f996-44e8-be40-d7df2229750c
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/7c28c418-98dc-4d55-8646-d2c2522421bd "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=64de4a66-5701-46db-aeb7-df0c883bebfe vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54113 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/6c582e07-0720-4607-9315-33f0de2cc3dd "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=31e3157c-442e-49da-9317-e4b4650bf395 run=d1__1 instance=c4c8e748-852b-4f20-bacb-33fcf5e0cb26
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/cdc2f95e-8c00-4188-ae17-da3236517fab "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=29bcdb30-2ea5-4d4a-8c8f-9d9e5c4b77d0 run=d1__1 instance=05c7f93e-c8fc-4543-9a9e-9bbf380056f3
+INFO fis.api: auth/user allow (superseded) principal=10fd6096-d96e-4241-a121-da793ce2f9f5 run=d1__1 instance=b0934da2-1bda-41a2-9428-967bfefb450e
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/b3893c4c-afb3-432b-aa35-184169f9497d "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=ac4cd292-c0fb-463b-9bda-08be5e73523d vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54122 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=a2c88819-436e-474b-ac13-fab69f16fd0e vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54115 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54133 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54136 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54157 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=68864c8a-8e2a-47e5-b9c3-4d7a19eeab8a vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54138 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=a3fd2c3a-e13c-44cc-a7fb-bed3d27cce82 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54142 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=1f13fb64-069d-4fa8-b658-3f32f8c7e371 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54135 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=39e68933-3a42-4d95-88ba-1552be7cc3c6 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54124 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54140 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54083 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54148 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54145 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54146 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54147 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54165 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/17877766-dd3a-45ca-98da-706ffe1bcc00 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/01d3f963-b6b1-4489-9c03-e452c6b8a1b5 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/3ce29411-3ff7-4055-a707-eb91edcac258 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=6c582e07-0720-4607-9315-33f0de2cc3dd run=d1__1 instance=c2f59bcb-3406-4c78-8f9d-b04593383945
+INFO fis.api: auth/user allow (superseded) principal=b3893c4c-afb3-432b-aa35-184169f9497d run=d1__1 instance=1696b68f-4b95-4f48-8c51-420ab3d42137
+INFO fis.api: auth/user allow (superseded) principal=7c28c418-98dc-4d55-8646-d2c2522421bd run=d1__1 instance=b606648c-d206-43e1-8658-339be8cdd9b6
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/01d3f963-b6b1-4489-9c03-e452c6b8a1b5 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=0a15712a-a793-4b1c-bb91-3b49f4d2507d run=d1__1 instance=b8475d4b-ef6b-49aa-9367-dedc9ece77cd
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/b3896fcd-3a87-448c-b3c7-c1ae3d040b1d "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=cdc2f95e-8c00-4188-ae17-da3236517fab run=d1__1 instance=126f70ad-00a8-4ebe-8229-2343c3dd381b
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/44b18906-90d2-476f-8b18-0c398ca5d9d3 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/3ce29411-3ff7-4055-a707-eb91edcac258 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/4639080f-4e4d-4b70-aa18-895d5f8e88f0 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=17877766-dd3a-45ca-98da-706ffe1bcc00 run=d1__1 instance=f3a8180e-9cd9-4313-a2eb-d44989710e54
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/b3896fcd-3a87-448c-b3c7-c1ae3d040b1d "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=01d3f963-b6b1-4489-9c03-e452c6b8a1b5 run=d1__1 instance=015310ef-d894-4eb3-b270-19620ec2aae3
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/44b18906-90d2-476f-8b18-0c398ca5d9d3 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/4639080f-4e4d-4b70-aa18-895d5f8e88f0 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=094d682c-a827-4fb0-8000-5eb29285737f vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54113 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=3ce29411-3ff7-4055-a707-eb91edcac258 run=d1__1 instance=6fedd9e3-b263-4c6d-a4af-8db2ed2abf0c
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=29bcdb30-2ea5-4d4a-8c8f-9d9e5c4b77d0 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54148 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=b3896fcd-3a87-448c-b3c7-c1ae3d040b1d run=d1__1 instance=a0f5e801-a256-44e4-b6ef-377b177cea27
+INFO fis.api: auth/user allow (superseded) principal=44b18906-90d2-476f-8b18-0c398ca5d9d3 run=d1__1 instance=66a547b5-4de9-47c8-b753-245be6bf9b46
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/649fd61d-5681-4ea3-8ecb-c6a98525c84a "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=4639080f-4e4d-4b70-aa18-895d5f8e88f0 run=d1__1 instance=1f35bdd2-505e-4149-ab41-3fedbc485e5f
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/3585c001-96c7-4105-8772-df220344b296 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/8251dee6-c99b-4727-b47e-b321793c44b6 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=01062673-39d8-4380-9559-0f91fcba79ba vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54138 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/3eb0cd3c-d4c7-44ad-8fad-38b54717ab91 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/9291839e-7d73-4af9-adfd-e7e7a40a1c9e "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=9a01b48b-26c6-4dde-9d35-adca33b28762 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54142 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=e0bb1b4f-42e7-417f-b3b6-38cc13734900 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54136 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/649fd61d-5681-4ea3-8ecb-c6a98525c84a "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/3585c001-96c7-4105-8772-df220344b296 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=e9afea19-ff30-4bbf-b885-a48830c42880 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54135 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/8251dee6-c99b-4727-b47e-b321793c44b6 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/3eb0cd3c-d4c7-44ad-8fad-38b54717ab91 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/9291839e-7d73-4af9-adfd-e7e7a40a1c9e "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/e4f82e82-e192-4491-9f84-8785e9723892 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=74a69e3d-fe94-4676-8f06-a3143c8edca2 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54122 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/800a12cc-fcfc-4e8f-ac27-283ff7c8a624 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=649fd61d-5681-4ea3-8ecb-c6a98525c84a run=d1__1 instance=7f17a976-2f94-4bb9-b403-c6626a3c41a7
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=10fd6096-d96e-4241-a121-da793ce2f9f5 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54124 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=8251dee6-c99b-4727-b47e-b321793c44b6 run=d1__1 instance=576b5d29-ba91-4e07-ad45-2a6c7b56539c
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/e4f82e82-e192-4491-9f84-8785e9723892 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=3585c001-96c7-4105-8772-df220344b296 run=d1__1 instance=3cf981ce-1878-43bb-8e2a-d8b8862da3c0
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=9edcae5b-9a03-4eed-8179-f0af3bc97f01 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54146 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=3eb0cd3c-d4c7-44ad-8fad-38b54717ab91 run=d1__1 instance=79135d1c-c1c8-4523-ad18-a0eff142b18c
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/800a12cc-fcfc-4e8f-ac27-283ff7c8a624 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=05055ee4-7613-4247-8b77-bfcbc674cf3b vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54133 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=31e3157c-442e-49da-9317-e4b4650bf395 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54121 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54102 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54158 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54150 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54149 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54156 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54144 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54171 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54098 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54163 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54161 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54164 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54159 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54166 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54167 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54174 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=9291839e-7d73-4af9-adfd-e7e7a40a1c9e run=d1__1 instance=782c8452-84c6-4bbb-afa0-e2eafc7e62a2
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/6c4631a1-7a6d-405d-8f79-bb69978e7f66 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=800a12cc-fcfc-4e8f-ac27-283ff7c8a624 run=d1__1 instance=9b79bc77-019b-45a9-aaea-c18eabaf5e29
+INFO fis.api: auth/user allow (superseded) principal=e4f82e82-e192-4491-9f84-8785e9723892 run=d1__1 instance=831aa957-7778-4772-bf2f-b17aac919d6c
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/6c4631a1-7a6d-405d-8f79-bb69978e7f66 "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54160 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=b3893c4c-afb3-432b-aa35-184169f9497d vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54166 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=0a15712a-a793-4b1c-bb91-3b49f4d2507d vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54158 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=6c582e07-0720-4607-9315-33f0de2cc3dd vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54148 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=cdc2f95e-8c00-4188-ae17-da3236517fab vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54113 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=17877766-dd3a-45ca-98da-706ffe1bcc00 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54156 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=44b18906-90d2-476f-8b18-0c398ca5d9d3 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54171 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=3585c001-96c7-4105-8772-df220344b296 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54164 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=4639080f-4e4d-4b70-aa18-895d5f8e88f0 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54159 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=649fd61d-5681-4ea3-8ecb-c6a98525c84a vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54138 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=3eb0cd3c-d4c7-44ad-8fad-38b54717ab91 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54142 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=8251dee6-c99b-4727-b47e-b321793c44b6 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54136 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=01d3f963-b6b1-4489-9c03-e452c6b8a1b5 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54135 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=b3896fcd-3a87-448c-b3c7-c1ae3d040b1d vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54122 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=7c28c418-98dc-4d55-8646-d2c2522421bd vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54167 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=3ce29411-3ff7-4055-a707-eb91edcac258 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54144 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54181 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54176 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=1cd11eae-42bf-468f-b5ab-2c71fc22089b vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54200 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=6c4631a1-7a6d-405d-8f79-bb69978e7f66 run=d1__1 instance=ffbc2420-e0e4-4921-a51a-bd2cf9e223ff
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=e4f82e82-e192-4491-9f84-8785e9723892 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54158 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/d36367b8-c4ed-4a74-9051-4718bc39ac3c "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=800a12cc-fcfc-4e8f-ac27-283ff7c8a624 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54166 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=9291839e-7d73-4af9-adfd-e7e7a40a1c9e vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54148 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54182 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/d36367b8-c4ed-4a74-9051-4718bc39ac3c "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/06935bad-021d-4d3e-8f38-43581ff29f1b "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=6c4631a1-7a6d-405d-8f79-bb69978e7f66 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/b1186ecd-5b48-4cd9-a734-a2961c246f32 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=d36367b8-c4ed-4a74-9051-4718bc39ac3c run=d1__1 instance=a3aea404-d958-472c-9e73-e0ac5a10303f
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/06935bad-021d-4d3e-8f38-43581ff29f1b "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/b1186ecd-5b48-4cd9-a734-a2961c246f32 "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54184 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/8e6c2d1e-b3b4-4422-b59a-662542540a84 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/430e1821-27dc-4e5c-8d10-fbbb552f068a "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=06935bad-021d-4d3e-8f38-43581ff29f1b run=d1__1 instance=4382e18a-dad0-471b-8cf4-b2c8da5b008c
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/8e6c2d1e-b3b4-4422-b59a-662542540a84 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=b1186ecd-5b48-4cd9-a734-a2961c246f32 run=d1__1 instance=289968c3-7ae9-47d1-b33e-a6297f2eac41
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/494f8a00-42b8-4014-bc0e-73b5a25820af "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=d36367b8-c4ed-4a74-9051-4718bc39ac3c vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54186 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54083 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/494f8a00-42b8-4014-bc0e-73b5a25820af "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/430e1821-27dc-4e5c-8d10-fbbb552f068a "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/fc8043ec-7f8d-427f-b2e0-56cafb97bd11 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=8e6c2d1e-b3b4-4422-b59a-662542540a84 run=d1__1 instance=9d58b851-b1d7-41eb-a7e1-06d505298fe9
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=06935bad-021d-4d3e-8f38-43581ff29f1b vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/f5a66cf2-2c12-4f63-bc37-28cf83e8c8e7 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=b1186ecd-5b48-4cd9-a734-a2961c246f32 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54166 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/a716cd7a-8105-4611-a648-01eaf6a87dd2 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=494f8a00-42b8-4014-bc0e-73b5a25820af run=d1__1 instance=74e90d23-a023-44b3-a259-595b2c701cfc
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/2ce05ee0-9914-44fd-be51-c2bf28265444 "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54183 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/fc8043ec-7f8d-427f-b2e0-56cafb97bd11 "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54187 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/3c3fdbe4-1b7f-4e0d-b1e0-9c9e74b2e1bd "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=430e1821-27dc-4e5c-8d10-fbbb552f068a run=d1__1 instance=5fe235e3-0706-400c-8ca0-a180179eb0f2
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/f5a66cf2-2c12-4f63-bc37-28cf83e8c8e7 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/a716cd7a-8105-4611-a648-01eaf6a87dd2 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/9eb998b6-5667-4219-93b0-1e69686267fa "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/2ce05ee0-9914-44fd-be51-c2bf28265444 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=8e6c2d1e-b3b4-4422-b59a-662542540a84 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/797a38fe-e4c5-4607-a11b-2f9c93260ade "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/2d57ae22-48d7-492f-ae7f-5b9af35ebb44 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/68161cb7-af72-40ba-94b3-2a3976bce8b0 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/d74efcdf-cee4-4a4b-8736-107cc5bb44f8 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=fc8043ec-7f8d-427f-b2e0-56cafb97bd11 run=d1__1 instance=22606637-e620-41a1-9072-e97390781202
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/3c3fdbe4-1b7f-4e0d-b1e0-9c9e74b2e1bd "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/c4f30aaf-60cd-4f95-82f4-971dd548934e "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=f5a66cf2-2c12-4f63-bc37-28cf83e8c8e7 run=d1__1 instance=2cb92384-0320-466b-88f9-969b039ec372
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=494f8a00-42b8-4014-bc0e-73b5a25820af vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54183 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/9eb998b6-5667-4219-93b0-1e69686267fa "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54188 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=a716cd7a-8105-4611-a648-01eaf6a87dd2 run=d1__1 instance=8810fef1-3678-491b-8e57-1b9a8c6593d7
+INFO:     127.0.0.1:54189 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=2ce05ee0-9914-44fd-be51-c2bf28265444 run=d1__1 instance=d839d5a1-48bb-49c6-bdf5-c21ded0bf616
+INFO:     127.0.0.1:54102 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/543dddfc-c0ba-480a-bbbb-e0c4a3329086 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/797a38fe-e4c5-4607-a11b-2f9c93260ade "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/68161cb7-af72-40ba-94b3-2a3976bce8b0 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/2d57ae22-48d7-492f-ae7f-5b9af35ebb44 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/c146b475-a938-460e-83b5-b66e27f2e4c1 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/6c5a8ba9-c37e-4de9-81dc-b702e77825c7 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/d8b2eca2-2248-45cc-97ac-2bb1ecf74953 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/c4f30aaf-60cd-4f95-82f4-971dd548934e "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/d74efcdf-cee4-4a4b-8736-107cc5bb44f8 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=4b12ad9f-6a21-49e1-92d2-03efd88bb62e vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54226 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=3c3fdbe4-1b7f-4e0d-b1e0-9c9e74b2e1bd run=d1__1 instance=c4995655-f74b-4996-8da1-e90d3ff26e3a
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/91d5390b-8b8a-48e6-a944-c6e838e03d5c "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=9eb998b6-5667-4219-93b0-1e69686267fa run=d1__1 instance=4211fc33-7d26-4df0-a111-f39249c27a62
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/543dddfc-c0ba-480a-bbbb-e0c4a3329086 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/311df6fc-4f8b-4ba6-8925-7a564f5a888b "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=68161cb7-af72-40ba-94b3-2a3976bce8b0 run=d1__1 instance=7925201d-a54d-4d91-b3c8-0306dedd299d
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/c146b475-a938-460e-83b5-b66e27f2e4c1 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=2d57ae22-48d7-492f-ae7f-5b9af35ebb44 run=d1__1 instance=439c9115-e2af-454c-903f-5b9c688b1b4f
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=430e1821-27dc-4e5c-8d10-fbbb552f068a vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=797a38fe-e4c5-4607-a11b-2f9c93260ade run=d1__1 instance=5e7e27b4-88d7-4f80-908e-537f2835d8d9
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/48543034-3a63-4e8a-89bc-59c33caf61f7 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/7f275dbb-6993-432c-b693-f7a7bd2c3737 "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54185 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54197 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/d8b2eca2-2248-45cc-97ac-2bb1ecf74953 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/6c5a8ba9-c37e-4de9-81dc-b702e77825c7 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/91d5390b-8b8a-48e6-a944-c6e838e03d5c "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=d74efcdf-cee4-4a4b-8736-107cc5bb44f8 run=d1__1 instance=90abf217-5ded-478b-bd70-c3db6488da67
+INFO fis.api: auth/user allow (superseded) principal=c4f30aaf-60cd-4f95-82f4-971dd548934e run=d1__1 instance=3d517588-e0ae-48f9-baf8-3626a1a06887
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/311df6fc-4f8b-4ba6-8925-7a564f5a888b "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=c146b475-a938-460e-83b5-b66e27f2e4c1 run=d1__1 instance=c7146ac8-382f-4459-9aad-00585163ac05
+INFO fis.api: auth/user allow (superseded) principal=543dddfc-c0ba-480a-bbbb-e0c4a3329086 run=d1__1 instance=d170776b-5060-45bc-ad68-8ecc4334ff31
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=fc8043ec-7f8d-427f-b2e0-56cafb97bd11 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54183 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/48543034-3a63-4e8a-89bc-59c33caf61f7 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/7f275dbb-6993-432c-b693-f7a7bd2c3737 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/0e47d823-4065-481d-9f76-cc4ab7fc0b89 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/be4b847a-7a6f-40c8-8aee-a075c3ca2969 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=91d5390b-8b8a-48e6-a944-c6e838e03d5c run=d1__1 instance=0e4cc7c7-42c2-4683-bda1-20e22fe54737
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/743a97e5-bcb8-4c57-872e-66c82dc750f9 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=6c5a8ba9-c37e-4de9-81dc-b702e77825c7 run=d1__1 instance=29bb9cd8-8ad9-49ec-a041-a4c06ab92701
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=f5a66cf2-2c12-4f63-bc37-28cf83e8c8e7 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54166 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=d8b2eca2-2248-45cc-97ac-2bb1ecf74953 run=d1__1 instance=2180b7e5-d6e3-473a-a4fa-f2a85a7f88a5
+INFO:     127.0.0.1:54098 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54193 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=311df6fc-4f8b-4ba6-8925-7a564f5a888b run=d1__1 instance=d0ac9bff-f68b-4f8f-ac5a-c3ede09708d9
+INFO:     127.0.0.1:54205 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54194 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/5b0b18d6-e2a3-4a1b-b23d-b8338b9f42d2 "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54207 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/0e47d823-4065-481d-9f76-cc4ab7fc0b89 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=7f275dbb-6993-432c-b693-f7a7bd2c3737 run=d1__1 instance=49af81ae-468d-489e-b345-58ccb2570812
+INFO:     127.0.0.1:54191 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54209 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54204 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54203 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54190 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54202 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54199 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/be4b847a-7a6f-40c8-8aee-a075c3ca2969 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/a97e94e8-be8d-45bf-b8f7-97f264354b87 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/743a97e5-bcb8-4c57-872e-66c82dc750f9 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/bf0d37e3-f8c2-43c6-9cd7-bfb7604fb4df "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=48543034-3a63-4e8a-89bc-59c33caf61f7 run=d1__1 instance=d3152e8d-ee13-490e-96e6-68dfce6da097
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/83e2c20d-0030-4d08-954f-eb95a5486a28 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=a716cd7a-8105-4611-a648-01eaf6a87dd2 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/9c313e48-8c17-4a38-88b4-eeda691c2d80 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/5b0b18d6-e2a3-4a1b-b23d-b8338b9f42d2 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/57aab038-7714-45a6-a01c-d623d2437020 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/8368ba48-6f4a-41e0-a5f1-46b5ddf79f9e "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/bf0d37e3-f8c2-43c6-9cd7-bfb7604fb4df "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=2ce05ee0-9914-44fd-be51-c2bf28265444 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54183 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/a97e94e8-be8d-45bf-b8f7-97f264354b87 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/e4241b75-81c9-461b-9056-49029483304d "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54192 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=743a97e5-bcb8-4c57-872e-66c82dc750f9 run=d1__1 instance=82c7ac37-b931-4548-a6e2-167f601170ec
+INFO fis.api: auth/user allow (superseded) principal=be4b847a-7a6f-40c8-8aee-a075c3ca2969 run=d1__1 instance=9ab56f4d-b42c-4372-8c64-41abfecab678
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/83e2c20d-0030-4d08-954f-eb95a5486a28 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/cbfb37e4-2d89-466d-94e1-5dabb3ccfbb0 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=0e47d823-4065-481d-9f76-cc4ab7fc0b89 run=d1__1 instance=fcde3d6a-db57-498c-8243-74d6bc32ff58
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/9c313e48-8c17-4a38-88b4-eeda691c2d80 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/8368ba48-6f4a-41e0-a5f1-46b5ddf79f9e "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=9eb998b6-5667-4219-93b0-1e69686267fa vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54205 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=5b0b18d6-e2a3-4a1b-b23d-b8338b9f42d2 run=d1__1 instance=16eaa974-0560-404d-aced-9f0776a91b10
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/57aab038-7714-45a6-a01c-d623d2437020 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/81fd1157-4072-479a-85bd-e036e58863e1 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/4abd0bf4-e904-4fc5-a279-66048c88bef7 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=a97e94e8-be8d-45bf-b8f7-97f264354b87 run=d1__1 instance=95886b34-93d6-4cd2-924b-58133d2affce
+INFO fis.api: auth/user allow (superseded) principal=bf0d37e3-f8c2-43c6-9cd7-bfb7604fb4df run=d1__1 instance=582b900c-0ba9-4957-a95c-4f0d079e15fd
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/e4241b75-81c9-461b-9056-49029483304d "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=68161cb7-af72-40ba-94b3-2a3976bce8b0 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54166 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/cbfb37e4-2d89-466d-94e1-5dabb3ccfbb0 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=83e2c20d-0030-4d08-954f-eb95a5486a28 run=d1__1 instance=5081cc6f-77f5-4309-a5f7-de6dfb67c708
+INFO fis.api: auth/user allow (superseded) principal=9c313e48-8c17-4a38-88b4-eeda691c2d80 run=d1__1 instance=d4260a7d-8f52-43ca-80ee-5d8d64f2ffcb
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=2d57ae22-48d7-492f-ae7f-5b9af35ebb44 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54158 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/81fd1157-4072-479a-85bd-e036e58863e1 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/4abd0bf4-e904-4fc5-a279-66048c88bef7 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=8368ba48-6f4a-41e0-a5f1-46b5ddf79f9e run=d1__1 instance=e46ca65a-855e-4f9d-b2ab-aac802ab5944
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=3c3fdbe4-1b7f-4e0d-b1e0-9c9e74b2e1bd vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54187 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=57aab038-7714-45a6-a01c-d623d2437020 run=d1__1 instance=a27af814-2f4d-40b9-b82a-ee138bd71916
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=797a38fe-e4c5-4607-a11b-2f9c93260ade vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54148 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/2a663b8a-9b7b-4bfe-93ad-e8e2b5d6b6a8 "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54206 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54198 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=d8b2eca2-2248-45cc-97ac-2bb1ecf74953 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=91d5390b-8b8a-48e6-a944-c6e838e03d5c vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54183 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=e4241b75-81c9-461b-9056-49029483304d run=d1__1 instance=6c4b89d2-9dc8-42d5-a2cd-f6a4ea593318
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=c146b475-a938-460e-83b5-b66e27f2e4c1 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54190 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=81fd1157-4072-479a-85bd-e036e58863e1 run=d1__1 instance=032295b5-c96a-4128-8019-a4ec01667279
+INFO fis.api: auth/user allow (superseded) principal=cbfb37e4-2d89-466d-94e1-5dabb3ccfbb0 run=d1__1 instance=4623a37f-6f07-485d-9bb6-017880fa5351
+INFO fis.api: auth/user allow (superseded) principal=4abd0bf4-e904-4fc5-a279-66048c88bef7 run=d1__1 instance=ed35f45e-ab3f-4c03-ad77-97426a9aeab3
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=6c5a8ba9-c37e-4de9-81dc-b702e77825c7 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54204 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/2a663b8a-9b7b-4bfe-93ad-e8e2b5d6b6a8 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/f61dbc15-5255-4dc9-b90d-ac8d76deedd1 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=d74efcdf-cee4-4a4b-8736-107cc5bb44f8 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54200 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=543dddfc-c0ba-480a-bbbb-e0c4a3329086 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54113 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/f61dbc15-5255-4dc9-b90d-ac8d76deedd1 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=c4f30aaf-60cd-4f95-82f4-971dd548934e vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54193 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54211 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54210 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54208 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54213 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54214 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54083 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54220 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54215 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54217 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54216 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=311df6fc-4f8b-4ba6-8925-7a564f5a888b vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54205 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/ce00fa1d-9955-49da-a0b1-95f5ef077242 "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54223 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=2a663b8a-9b7b-4bfe-93ad-e8e2b5d6b6a8 run=d1__1 instance=7c4892b8-d120-40dc-818a-7ae3dc16fa06
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/4e6ae7db-bc1a-4798-ac5a-4c0c27a6337c "HTTP/1.1 204 No Content"
+INFO:     127.0.0.1:54224 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54221 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54222 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=7f275dbb-6993-432c-b693-f7a7bd2c3737 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=f61dbc15-5255-4dc9-b90d-ac8d76deedd1 run=d1__1 instance=df0c0fe5-b998-4dde-932d-45f5bc91b992
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=48543034-3a63-4e8a-89bc-59c33caf61f7 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/ce00fa1d-9955-49da-a0b1-95f5ef077242 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=743a97e5-bcb8-4c57-872e-66c82dc750f9 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54198 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/4e6ae7db-bc1a-4798-ac5a-4c0c27a6337c "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/73c972f2-9c0f-4b57-b818-8613b9e919ec "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/76e754e3-3f21-4c9d-87d2-74a7a200bca3 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/73c972f2-9c0f-4b57-b818-8613b9e919ec "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54225 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=83e2c20d-0030-4d08-954f-eb95a5486a28 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54204 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=ce00fa1d-9955-49da-a0b1-95f5ef077242 run=d1__1 instance=c3ec84da-6928-4dea-bc3a-e5a68a672988
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=8368ba48-6f4a-41e0-a5f1-46b5ddf79f9e vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54183 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=be4b847a-7a6f-40c8-8aee-a075c3ca2969 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54205 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=4e6ae7db-bc1a-4798-ac5a-4c0c27a6337c run=d1__1 instance=7c182d57-94e9-479d-ab07-23704a73a353
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=a97e94e8-be8d-45bf-b8f7-97f264354b87 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54190 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/76e754e3-3f21-4c9d-87d2-74a7a200bca3 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=5b0b18d6-e2a3-4a1b-b23d-b8338b9f42d2 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54166 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=0e47d823-4065-481d-9f76-cc4ab7fc0b89 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54187 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=bf0d37e3-f8c2-43c6-9cd7-bfb7604fb4df vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54158 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=9c313e48-8c17-4a38-88b4-eeda691c2d80 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54148 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=57aab038-7714-45a6-a01c-d623d2437020 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54200 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/351e0f13-a995-4bbe-a537-451b05bbe1c7 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=cbfb37e4-2d89-466d-94e1-5dabb3ccfbb0 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54113 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/2fc76041-d7eb-4bff-9191-a4c0dbe9fdd9 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=76e754e3-3f21-4c9d-87d2-74a7a200bca3 run=d1__1 instance=e6ff450b-4041-4af2-9be0-65400eda558a
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/4fede978-032c-4b4f-afc7-d3d8b576fe41 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/user allow (superseded) principal=73c972f2-9c0f-4b57-b818-8613b9e919ec run=d1__1 instance=9ee13472-3551-4122-88bc-2a59126f484f
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=e4241b75-81c9-461b-9056-49029483304d vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54216 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/351e0f13-a995-4bbe-a537-451b05bbe1c7 "HTTP/1.1 200 OK"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=4abd0bf4-e904-4fc5-a279-66048c88bef7 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54193 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=81fd1157-4072-479a-85bd-e036e58863e1 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54156 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54227 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54228 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54229 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54230 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54102 - "POST /auth/user HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/2fc76041-d7eb-4bff-9191-a4c0dbe9fdd9 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/4fede978-032c-4b4f-afc7-d3d8b576fe41 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=351e0f13-a995-4bbe-a537-451b05bbe1c7 run=d1__1 instance=f1670a69-3b94-47d0-9540-30c885def895
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=f61dbc15-5255-4dc9-b90d-ac8d76deedd1 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=ce00fa1d-9955-49da-a0b1-95f5ef077242 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=4e6ae7db-bc1a-4798-ac5a-4c0c27a6337c vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54198 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=2a663b8a-9b7b-4bfe-93ad-e8e2b5d6b6a8 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54183 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=76e754e3-3f21-4c9d-87d2-74a7a200bca3 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54190 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=73c972f2-9c0f-4b57-b818-8613b9e919ec vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54205 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=2fc76041-d7eb-4bff-9191-a4c0dbe9fdd9 run=d1__1 instance=24d0451e-00e5-4f52-8629-ccaea82017f8
+INFO:     127.0.0.1:54232 - "POST /auth/user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54098 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=4fede978-032c-4b4f-afc7-d3d8b576fe41 run=d1__1 instance=93ca8120-b00b-4690-b075-e5b11ae16f4b
+INFO:     127.0.0.1:54231 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=351e0f13-a995-4bbe-a537-451b05bbe1c7 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=2fc76041-d7eb-4bff-9191-a4c0dbe9fdd9 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54182 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=4fede978-032c-4b4f-afc7-d3d8b576fe41 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54198 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/adf06d94-e46f-4af2-922a-b137511bd4a3 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/adf06d94-e46f-4af2-922a-b137511bd4a3 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=adf06d94-e46f-4af2-922a-b137511bd4a3 run=d1__1 instance=13aaa848-834f-47d1-87c3-46fd5e6f80a5
+INFO:     127.0.0.1:54083 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=adf06d94-e46f-4af2-922a-b137511bd4a3 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/573b7ca8-e361-4369-a948-f8c31f1935e9 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/1a805089-7a3e-4f39-8c96-62456f2777ca "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/1a805089-7a3e-4f39-8c96-62456f2777ca "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/573b7ca8-e361-4369-a948-f8c31f1935e9 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=1a805089-7a3e-4f39-8c96-62456f2777ca run=d1__1 instance=e8322ac6-755f-4b9f-a803-d9c1ef5637fe
+INFO:     127.0.0.1:54098 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=ca9ee780-8044-437a-b6e1-4b61041b2e61 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54098 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=573b7ca8-e361-4369-a948-f8c31f1935e9 run=d1__1 instance=bd134eb6-ec1e-4bdc-ba1d-da46acf12697
+INFO:     127.0.0.1:54102 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=1a805089-7a3e-4f39-8c96-62456f2777ca vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/4d0e1596-7f39-4927-b064-43018b7f94fe "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=573b7ca8-e361-4369-a948-f8c31f1935e9 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/4d0e1596-7f39-4927-b064-43018b7f94fe "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=4d0e1596-7f39-4927-b064-43018b7f94fe run=d1__1 instance=1e670181-330e-4b14-adc6-f66ea0c0a6e8
+INFO:     127.0.0.1:54083 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=4d0e1596-7f39-4927-b064-43018b7f94fe vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/743f4307-14a0-407e-8c93-18832f781cc7 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/743f4307-14a0-407e-8c93-18832f781cc7 "HTTP/1.1 200 OK"
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/d2312d06-3b36-4e85-8d45-a11e8e97aad6 "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/d2312d06-3b36-4e85-8d45-a11e8e97aad6 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=743f4307-14a0-407e-8c93-18832f781cc7 run=d1__1 instance=b86b9e86-ccda-4f18-8f93-db2d2eb0f89d
+INFO:     127.0.0.1:54098 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/user allow (superseded) principal=d2312d06-3b36-4e85-8d45-a11e8e97aad6 run=d1__1 instance=11d068bd-15b4-4451-bf83-e6c04e699d65
+INFO:     127.0.0.1:54102 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=743f4307-14a0-407e-8c93-18832f781cc7 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/ffbd1682-a597-49c0-86ce-2ab41684ae14 "HTTP/1.1 204 No Content"
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=d2312d06-3b36-4e85-8d45-a11e8e97aad6 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/ffbd1682-a597-49c0-86ce-2ab41684ae14 "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=ffbd1682-a597-49c0-86ce-2ab41684ae14 run=d1__1 instance=860dd999-4e01-4a28-a263-8de0087a3915
+INFO:     127.0.0.1:54083 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=ffbd1682-a597-49c0-86ce-2ab41684ae14 vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO httpx: HTTP Request: DELETE http://localhost:15673/api/connections/username/cad9b416-4252-4280-870b-142a22e79b4a "HTTP/1.1 204 No Content"
+INFO httpx: HTTP Request: GET http://localhost:15673/api/connections/username/cad9b416-4252-4280-870b-142a22e79b4a "HTTP/1.1 200 OK"
+INFO fis.api: auth/user allow (superseded) principal=cad9b416-4252-4280-870b-142a22e79b4a run=d1__1 instance=335f1715-14ee-40ca-8172-578f7d27804e
+INFO:     127.0.0.1:54102 - "POST /auth/user HTTP/1.1" 200 OK
+INFO fis.api: auth/vhost allow (vhost-run-match) principal=cad9b416-4252-4280-870b-142a22e79b4a vhost=d1__1 tags='d1__1'
+INFO:     127.0.0.1:54215 - "POST /auth/vhost HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [61059]
