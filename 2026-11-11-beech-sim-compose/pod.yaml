@@ -1,0 +1,159 @@
+# A simulated Beech, as one Pod: the same four processes as compose.yaml.
+# Containers in a Pod share one network namespace, which is what
+# compose.yaml builds with network_mode: service:rabbit. Nothing is
+# published to the host.
+#
+# Kube play starts every container together and has no readiness probe,
+# so plant and scada wait until the ports the compose health gate was
+# covering are open. It also does not build these two images: the
+# Dockerfiles do not sit in image-named directories.
+#
+# Run from this directory. Kube play resolves ./house from the working
+# directory, not from this file.
+#
+#     podman build -t localhost/beech-sim_plant:latest \
+#         ../../gridworks-terminalasset
+#     podman build -t localhost/beech-sim_scada:latest \
+#         -f scada.Dockerfile ../../gridworks-scada
+#     podman kube play pod.yaml
+#     podman kube down pod.yaml
+#
+# The scada's event files land in ./events and stay there across kube
+# down. The mount is /events, not a directory under the scada home:
+# a mount there makes Podman create the parent as root, and the scada
+# user can no longer create its log directory beside it. An init
+# container chowns /events to the scada user. Rootless Podman maps the
+# host user to container root, so a directory owned by the host user is
+# not writable by scada. keep-id would line those uids up, and it also
+# forces every container in the pod to run as that uid, including rabbit.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: beech-sim
+spec:
+  restartPolicy: Never
+  hostname: rabbit
+  initContainers:
+    - name: events
+      image: localhost/beech-sim_scada:latest
+      securityContext:
+        runAsUser: 0
+      command: ["sh", "-c", "chown 1000:1000 /events"]
+      volumeMounts:
+        - name: events
+          mountPath: /events
+  containers:
+    - name: rabbit
+      image: ghcr.io/thegridelectric/dev-rabbit:latest
+      livenessProbe:
+        exec:
+          command:
+            - gosu
+            - rabbitmq
+            - rabbitmq-diagnostics
+            - -q
+            - check_port_connectivity
+        initialDelaySeconds: 20
+        periodSeconds: 5
+        timeoutSeconds: 10
+        failureThreshold: 24
+
+    - name: mosquitto
+      image: docker.io/library/eclipse-mosquitto:2
+      args: ["mosquitto", "-c", "/mosquitto-no-auth.conf"]
+
+    - name: plant
+      image: localhost/beech-sim_plant:latest
+      env:
+        - name: GWTA_SERVICE_ALIAS
+          value: d1.isone.me.versant.keene.beech.ta
+        - name: GWTA_G_NODE_PATH
+          value: /home/gwta/g.node.gt.json
+      volumeMounts:
+        - name: house
+          mountPath: /house
+          readOnly: true
+      lifecycle:
+        stopSignal: SIGINT
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import socket
+          import time
+          need = {5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          PY
+          exec ta-plant \
+            --layout /house/hardware-layout.json \
+            --fmu /opt/gwta/BeechPlant.fmu \
+            --fmu-overrides /house/plant-overrides.json
+
+    - name: scada
+      image: localhost/beech-sim_scada:latest
+      env:
+        - name: SCADA_GRIDWORKS_MQTT__PORT
+          value: "1885"
+        - name: SCADA_WEATHER_SOURCE
+          value: Sim
+        - name: SCADA_PATHS__EVENT_DIR
+          value: /events
+      volumeMounts:
+        - name: house
+          mountPath: /house
+          readOnly: true
+        - name: events
+          mountPath: /events
+      lifecycle:
+        stopSignal: SIGINT
+      # The scada finds its layout pair by their deployed names in its
+      # config home, where it also writes: the pair is copied there at
+      # each start.
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - << 'PY'
+          import socket
+          import time
+          need = {5672, 1883, 1885}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          PY
+          mkdir -p "$HOME/.config/gridworks/scada"
+          cp /house/hardware-layout.json /house/operational-params.json \
+            "$HOME/.config/gridworks/scada/"
+          exec python gw_spaceheat/gws run --message-summary --seconds-per-report 60
+  volumes:
+    - name: house
+      hostPath:
+        path: ./house
+        type: Directory
+    - name: events
+      hostPath:
+        path: ./events
+        type: DirectoryOrCreate

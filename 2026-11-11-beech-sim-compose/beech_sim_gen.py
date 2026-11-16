@@ -1,6 +1,8 @@
 """The layout pair of a simulated Beech: the all-sim House0 skeleton that
 tlayouts authors for orange, with Beech's two zones, its three 120-gallon
-store tanks and a d1 identity of its own.
+store tanks and a d1 identity of its own. Every sensing component is one
+the plant shows, so no pico posts: the web server the word requires is
+kept and does not serve.
 
 Run by gen_layout.sh, which puts a tlayouts tree at a pinned commit on the
 path and runs this in the scada's environment, where the node and channel
@@ -24,6 +26,7 @@ sys.path[:0] = [str(TLAYOUTS), str(TLAYOUTS / "src")]
 from orange_sim_gen import HOUSE0_SIM  # noqa: E402
 from tlayouts.house0_sema_gen import ZoneCircuitSpec, gen_artifacts  # noqa: E402
 from tlayouts.sema.codec import default_codec  # noqa: E402
+from tlayouts.sema.types.web_server_component_gt import WebServerComponentGt  # noqa: E402
 
 HOUSE = "d1.isone.me.versant.keene.beech"
 ZONES = ["down", "up"]
@@ -82,8 +85,22 @@ LAYOUT = OUT_DIR / "hardware-layout.json"
 PARAMS = OUT_DIR / "operational-params.json"
 
 
+def unserved(layout):
+    """The layout with every web server set not to serve."""
+    components = [
+        c.model_copy(
+            update={"web_server": c.web_server.model_copy(update={"serve": False})}
+        )
+        if isinstance(c, WebServerComponentGt)
+        else c
+        for c in layout.components
+    ]
+    return layout.model_copy(update={"components": components})
+
+
 def main() -> None:
     layout, params = gen_artifacts(BEECH_SIM, LAYOUT if LAYOUT.exists() else None)
+    layout = unserved(layout)
     for path, word in ((LAYOUT, layout), (PARAMS, params)):
         as_dict = word.to_dict()
         default_codec.from_dict(as_dict)
