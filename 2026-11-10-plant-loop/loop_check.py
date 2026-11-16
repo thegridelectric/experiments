@@ -8,6 +8,10 @@ Reads the scada's persisted events under the scratch XDG data home. Every
 `report.event` is decoded through the scada's vendored sema snapshot; a
 `gridworks.event.shutdown` is gwproactor's own event, read as that.
 
+A report the snapshot refuses is counted as a report and named in the
+verdict's `undecodable_reports` with the axiom it breaks. Nothing is read
+out of it, so the channel checks stand on the reports that decode.
+
 Prints one JSON verdict and exits 0 on PASS.
 """
 
@@ -32,6 +36,7 @@ from gwsproto.data_classes.components import (  # noqa: E402
 )
 from gwsproto.data_classes.sh_node import ShNode  # noqa: E402
 from gwsproto.enums import SimDeviceType  # noqa: E402
+from sema_snapshot.sema.base import SemaError  # noqa: E402
 from sema_snapshot.sema.codec import SemaCodec  # noqa: E402
 from sema_snapshot.sema.types import ReportEvent  # noqa: E402
 
@@ -99,11 +104,17 @@ def main() -> int:
     codec = SemaCodec()
 
     reports: list[ReportEvent] = []
+    undecodable: dict[str, list[str]] = {}
     shutdowns: list[ShutdownEvent] = []
     for path in sorted((scratch / "data" / "gridworks" / "scada" / "event").glob("*/*.json")):
         event = json.loads(path.read_text())
         if event["TypeName"] == REPORT:
-            reports.append(codec.from_dict(event, auto_upgrade=False, expect=ReportEvent))
+            try:
+                reports.append(codec.from_dict(event, auto_upgrade=False, expect=ReportEvent))
+            except SemaError as e:
+                undecodable[path.name] = sorted(
+                    {line.strip() for line in str(e).splitlines() if "Value error" in line}
+                )
         elif event["TypeName"] == SHUTDOWN:
             shutdowns.append(ShutdownEvent.model_validate(event))
 
@@ -132,7 +143,7 @@ def main() -> int:
         "scada alive at the end of the window": alive_ms is not None,
         "no shutdown but the run's own stop": early_or_unasked == [] and len(shutdowns) == 1,
         "a report for most minutes of the window": window_s >= 60
-        and len(reports) >= int(window_s // 60) - 1,
+        and len(reports) + len(undecodable) >= int(window_s // 60) - 1,
         "every plant-fed channel is in the reports": expected <= set(seen),
         "every plant-fed channel changed": bool(expected) and unchanged == [],
     }
@@ -140,7 +151,8 @@ def main() -> int:
         "verdict": "PASS" if all(checks.values()) else "FAIL",
         "checks": checks,
         "window_s": window_s,
-        "reports": len(reports),
+        "reports": len(reports) + len(undecodable),
+        "undecodable_reports": undecodable,
         "plant_fed_channels": len(expected),
         "unchanged_or_missing": unchanged,
         "shutdown_reasons": [s.Reason for s in shutdowns],

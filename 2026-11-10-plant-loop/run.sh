@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# The loop: a scada on the no-sieg House0 fixture with ta-plant feeding it
-# over the dev broker. Needs gw-dev-rabbit and the local mosquitto up.
+# The loop: a scada on a House0 fixture with ta-plant feeding it over the
+# dev broker. Needs gw-dev-rabbit and the local mosquitto up.
 #
-#     ./run.sh                 ten minutes
+#     ./run.sh                 ten minutes on hazel, which has no sieg loop
+#     LOOP_HOUSE=orange ./run.sh       on orange, which has one
 #     LOOP_SECONDS=90 ./run.sh a short trial
 #     SCADA_REPO=<checkout> ./run.sh   the scada from another checkout
 #
@@ -16,12 +17,34 @@ set -m
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(dirname "$(dirname "$HERE")")"
-LOGS="$HERE/logs"
-SCRATCH="$HERE/scratch"
 SCADA_REPO="${SCADA_REPO:-$ROOT/gridworks-scada}"
 FIXTURES="$SCADA_REPO/tests/config"
-PAIR="gw.house0.no.sieg.hazel"
-PLANT_ALIAS="d1.isone.ct.newhaven.hazel1.ta"
+case "${LOOP_HOUSE:-hazel}" in
+    hazel)
+        PAIR="gw.house0.no.sieg.hazel"
+        HOUSE_ALIAS="d1.isone.ct.newhaven.hazel1"
+        RUN_AS="$HOUSE_ALIAS"
+        LOGS="$HERE/logs"
+        SCRATCH="$HERE/scratch"
+        IDENTITY="$HERE/g.node.gt.json"
+        ;;
+    orange)
+        PAIR="gw.house0.orange"
+        HOUSE_ALIAS="d1.isone.ct.newhaven.orange1"
+        # orange1 is the house a dev scada and its LTN run as on this
+        # laptop's broker. The loop runs the fixture under a name of its
+        # own, so it shares no topic with them.
+        RUN_AS="d1.isone.ct.newhaven.orange1loop"
+        LOGS="$HERE/logs-orange"
+        SCRATCH="$HERE/scratch-orange"
+        IDENTITY="$LOGS/g.node.gt.json"
+        ;;
+    *)
+        echo "ABORT: LOOP_HOUSE is hazel or orange"
+        exit 2
+        ;;
+esac
+PLANT_ALIAS="$RUN_AS.ta"
 LOOP_SECONDS="${LOOP_SECONDS:-600}"
 SECONDS_PER_REPORT=60
 
@@ -36,20 +59,29 @@ stamp() { echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $1" >> "$LOGS/clock.txt"; }
     echo "gridworks-terminalasset $(git -C "$ROOT/gridworks-terminalasset" rev-parse --short HEAD) $(git -C "$ROOT/gridworks-terminalasset" status --porcelain | wc -l) dirty"
 } > "$LOGS/code-under-test.txt"
 
-# The fixture pair as deployed names. The one edit: the web server takes a
-# port nothing holds, since another scada on the laptop may hold the
-# fixture's.
-cp "$FIXTURES/$PAIR.operational.params.json" "$SCRATCH/config/gridworks/scada/operational-params.json"
-python3 - "$FIXTURES/$PAIR.layout.json" "$LAYOUT" <<'EOF'
+# The fixture pair as deployed names. The edits: the house runs as RUN_AS,
+# and the web server takes a port nothing holds, since another scada on the
+# laptop may hold the fixture's.
+python3 - "$FIXTURES/$PAIR" "$SCRATCH/config/gridworks/scada" "$HOUSE_ALIAS" "$RUN_AS" <<'EOF'
 import json, socket, sys
-layout = json.load(open(sys.argv[1]))
+fixture, config, house_alias, run_as = sys.argv[1:5]
+
+
+def as_run(path: str) -> str:
+    text = open(path).read()
+    assert f'"{house_alias}.scada"' in text, (path, house_alias)
+    return text.replace(f'"{house_alias}', f'"{run_as}')
+
+
+open(f"{config}/operational-params.json", "w").write(as_run(f"{fixture}.operational.params.json"))
+layout = json.loads(as_run(f"{fixture}.layout.json"))
 with socket.socket() as s:
     s.bind(("", 0))
     port = s.getsockname()[1]
 servers = [c["WebServer"] for c in layout["Components"] if "WebServer" in c]
 assert len(servers) == 1, servers
 servers[0]["Port"] = port
-json.dump(layout, open(sys.argv[2], "w"), indent=2)
+json.dump(layout, open(f"{config}/hardware-layout.json", "w"), indent=2)
 print(f"web server port {port}")
 EOF
 
@@ -65,7 +97,7 @@ trap stop_all EXIT
 stamp "plant starting"
 (
     cd "$ROOT/gridworks-terminalasset"
-    GWTA_SERVICE_ALIAS="$PLANT_ALIAS" GWTA_G_NODE_PATH="$HERE/g.node.gt.json" \
+    GWTA_SERVICE_ALIAS="$PLANT_ALIAS" GWTA_G_NODE_PATH="$IDENTITY" \
         exec uv run --locked ta-plant --layout "$LAYOUT" --seed 20261110
 ) > "$LOGS/plant.log" 2>&1 &
 PLANT_PID=$!
