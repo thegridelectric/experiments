@@ -56,7 +56,10 @@ What it keeps from orange and the real Beech does not have: the
 operational params (no operator hold, so local control runs the house;
 seasonal storage `AllTanks`) and the Siegenthaler strategy `StratProtect`
 (the real Beech holds full send). The scada copies the pair into its
-config home under their deployed names at each start.
+config home under their deployed names at each start. Every sensing
+component is one the plant shows, so no pico posts: the web server the
+word requires does not serve. The run under Found had a layout whose web
+server served on 8080, the one difference from the layout here.
 
 **The plant's coefficients** are the Modelica model's placeholders.
 `house/plant-overrides.json` is the place to change them: any parameter
@@ -205,8 +208,12 @@ encoding), from the committed `logs/reports.json`:
     python3 -c "import csv,json,sys; d=json.load(open('logs/reports.json')); w=csv.writer(sys.stdout); w.writerow(['channel','readings','distinct_values','low','high','last']); [w.writerow([n,*d['seen'][n].values()]) for n in d['plant_fed_channels']]" > logs/reports-display.csv
 
 - `compose.yaml`: the stack.
+- `pod.yaml`: the same four processes as one Pod, for
+  `podman kube play`. Not the stack the run under Found used.
 - `scada.Dockerfile`, `scada.Dockerfile.dockerignore`: the scada's image,
   built with a `gridworks-scada` checkout as its context.
+- `build-scada-arm64.sh`: the same image for linux/arm64. Needs the
+  qemu-aarch64 binfmt; never run to completion here.
 - `gen_layout.sh`, `beech_sim_gen.py`: the house's generator. The shell
   script extracts tlayouts at the pinned commit and runs the Python in the
   scada's environment.

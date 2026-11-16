@@ -23,10 +23,11 @@ services:
     image: ghcr.io/thegridelectric/dev-rabbit:latest
     hostname: rabbit
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_port_connectivity"]
+      test: ["CMD", "gosu", "rabbitmq", "rabbitmq-diagnostics", "-q", "check_port_connectivity"]
       interval: 5s
       timeout: 10s
       retries: 24
+      start_period: 20s
 
   mosquitto:
     <<: *on-the-brokers-network
@@ -51,16 +52,36 @@ services:
       - /house/plant-overrides.json
     stop_signal: SIGINT
 
+  # The events directory is created as the host user. The scada user is a
+  # different host uid under rootless podman, so chown it before scada starts.
+  events-owner:
+    build:
+      context: ../../gridworks-scada
+      dockerfile: ../experiments/2026-11-11-beech-sim-compose/scada.Dockerfile
+    user: "0:0"
+    volumes:
+      - ./events:/events
+    entrypoint: ["chown"]
+    command: ["1000:1000", "/events"]
+    restart: "no"
+
   scada:
     <<: *on-the-brokers-network
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      events-owner:
+        condition: service_completed_successfully
     build:
       context: ../../gridworks-scada
       dockerfile: ../experiments/2026-11-11-beech-sim-compose/scada.Dockerfile
     environment:
       SCADA_GRIDWORKS_MQTT__PORT: 1885
       SCADA_WEATHER_SOURCE: Sim
+      SCADA_PATHS__EVENT_DIR: /events
     volumes:
       - ./house:/house:ro
+      - ./events:/events
     # The scada finds its layout pair by their deployed names in its config
     # home, where it also writes: the pair is copied there at each start.
     entrypoint: ["sh", "-c"]
