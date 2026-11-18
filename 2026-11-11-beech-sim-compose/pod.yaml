@@ -9,11 +9,14 @@
 # container's 5432; the web app, 5173; and the realtime gateway, 8100.
 #
 # Kube play starts every container together and has no readiness probe,
-# so plant, scada, the LTN, the FLO, the price actor, the market maker,
+# so the plants, scadas, LTNs, the FLO, the price actor, the market maker,
 # the weather actor, its API and its mint, the ear, the keeper, the
 # web API and the frontend wait until the ports they use are open. The
-# scada and the LTN also wait until the weather service lists the
-# house's bundle. It does not build images. ./run.sh does,
+# scadas and the LTNs also wait until the weather service lists the
+# house's bundle. Two scada+ta pairs run: ./house is AllTanks
+# (d1.isone.me.versant.keene.beech.at) and ./house-buffer is BufferOnly
+# (d1.isone.me.versant.keene.beech.buf). Each scada has its own local Mosquitto.
+# It does not build images. ./run.sh does,
 # then plays this file. Kube play resolves ./house from the working
 # directory, and the script moves there.
 #
@@ -31,7 +34,8 @@
 #
 # The scada and the LTN run from the one scada image, so the LTN is the
 # one the scada's checkout deploys and the two agree on the words between
-# them. Each copies the layout pair from ./house into its config home.
+# them. Each copies its layout pair from ./house or ./house-buffer into
+# its config home.
 #
 # The price service is two containers from one image. price watches
 # ISO-NE and writes the kept forecast; price-api serves it on the pod's
@@ -64,17 +68,19 @@
 # role name: gw_admin, gw_journalkeeper (the keeper), gw_visualizer
 # (the web API), gw_alerts, gw_analyst. journal_boot.py creates them,
 # the gridworks tables from the gw_data models in the keeper image, a
-# TerminalAsset row for this house, and the dashboard login beech /
-# beech. The database has no volume, so kube down drops it;
+# TerminalAsset row for each house folder, and the dashboard login
+# beech / beech (an admin, so both houses). The database has no volume,
+# so kube down drops it;
 # ./eventstore stays.
 #
 # The web app is http://localhost:5173/gridworks-web-frontend/ . Vite
 # proxies /api to the API on the pod's localhost:8000, so the browser
 # only talks to 5173 for the journal pages. The realtime page dials the
 # gateway at ws://localhost:8100. The frontend's weather panel learns
-# this house's bundle at start: the web container reads the layout's
+# each house's bundle at start: the web container reads the layout's
 # LeafTransactiveNode alias and the operational params'
-# WeatherBundleName from ./house into VITE_HOUSE_WEATHER_BUNDLES.
+# WeatherBundleName from ./house and ./house-buffer into
+# VITE_HOUSE_WEATHER_BUNDLES.
 #
 # The scada's event files land in ./events and stay there across kube
 # down. The mount is /events, not a directory under the scada home:
@@ -96,10 +102,12 @@ spec:
       image: localhost/beech-sim_scada:latest
       securityContext:
         runAsUser: 0
-      command: ["sh", "-c", "chown 1000:1000 /events"]
+      command: ["sh", "-c", "chown 1000:1000 /events /events-buffer"]
       volumeMounts:
         - name: events
           mountPath: /events
+        - name: events-buffer
+          mountPath: /events-buffer
     - name: price-data
       image: localhost/beech-sim_price:latest
       securityContext:
@@ -128,11 +136,19 @@ spec:
       image: docker.io/library/eclipse-mosquitto:2
       args: ["mosquitto", "-c", "/mosquitto-no-auth.conf"]
 
+    - name: mosquitto-buffer
+      image: docker.io/library/eclipse-mosquitto:2
+      volumeMounts:
+        - name: mosquitto-1884
+          mountPath: /mosquitto-1884.conf
+          readOnly: true
+      args: ["mosquitto", "-c", "/mosquitto-1884.conf"]
+
     - name: plant
       image: localhost/beech-sim_plant:latest
       env:
         - name: GWTA_SERVICE_ALIAS
-          value: d1.isone.me.versant.keene.beech.ta
+          value: d1.isone.me.versant.keene.beech.at.ta
         - name: GWTA_G_NODE_PATH
           value: /home/gwta/g.node.gt.json
       volumeMounts:
@@ -253,6 +269,168 @@ spec:
           value: http://127.0.0.1:8532/hw1-isone-me-versant-keene-ps/gw0-price-forecast
       volumeMounts:
         - name: house
+          mountPath: /house
+          readOnly: true
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import json
+          import socket
+          import time
+          import urllib.request
+          need = {1885, 8532}
+          deadline = time.monotonic() + 300
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          url = "http://127.0.0.1:8531/d1-weather/bundles"
+          while True:
+              try:
+                  with urllib.request.urlopen(url, timeout=2) as response:
+                      listed = json.load(response)
+                  if any(item.get("Name") == "us.me.millinocket.moose" for item in listed):
+                      break
+              except (OSError, ValueError):
+                  pass
+              if time.monotonic() > deadline:
+                  raise SystemExit("weather bundle us.me.millinocket.moose is not listed")
+              time.sleep(1)
+          PY
+          mkdir -p "$HOME/.config/gridworks/ltn"
+          cp /house/hardware-layout.json /house/operational-params.json \
+            "$HOME/.config/gridworks/ltn/"
+          exec python gw_spaceheat/gws ltn run --message-summary
+
+    - name: plant-buffer
+      image: localhost/beech-sim_plant:latest
+      env:
+        - name: GWTA_SERVICE_ALIAS
+          value: d1.isone.me.versant.keene.beech.buf.ta
+        - name: GWTA_G_NODE_PATH
+          value: /home/gwta/g.node.gt.json
+      volumeMounts:
+        - name: house-buffer
+          mountPath: /house
+          readOnly: true
+      lifecycle:
+        stopSignal: SIGINT
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import socket
+          import time
+          need = {5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          PY
+          exec ta-plant \
+            --layout /house/hardware-layout.json \
+            --fmu /opt/gwta/BeechPlant.fmu \
+            --fmu-overrides /house/plant-overrides.json
+
+    - name: scada-buffer
+      image: localhost/beech-sim_scada:latest
+      env:
+        - name: SCADA_GRIDWORKS_MQTT__PORT
+          value: "1885"
+        - name: SCADA_LOCAL_MQTT__PORT
+          value: "1884"
+        - name: SCADA_WEATHER_SOURCE
+          value: Gwwf
+        - name: SCADA_WEATHER_API_URL
+          value: http://127.0.0.1:8531/d1-weather
+        - name: SCADA_PATHS__EVENT_DIR
+          value: /events
+      volumeMounts:
+        - name: house-buffer
+          mountPath: /house
+          readOnly: true
+        - name: events-buffer
+          mountPath: /events
+      lifecycle:
+        stopSignal: SIGINT
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - << 'PY'
+          import json
+          import socket
+          import time
+          import urllib.request
+          need = {5672, 1884, 1885}
+          deadline = time.monotonic() + 300
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          url = "http://127.0.0.1:8531/d1-weather/bundles"
+          while True:
+              try:
+                  with urllib.request.urlopen(url, timeout=2) as response:
+                      listed = json.load(response)
+                  if any(item.get("Name") == "us.me.millinocket.moose" for item in listed):
+                      break
+              except (OSError, ValueError):
+                  pass
+              if time.monotonic() > deadline:
+                  raise SystemExit("weather bundle us.me.millinocket.moose is not listed")
+              time.sleep(1)
+          PY
+          mkdir -p "$HOME/.config/gridworks/scada"
+          cp /house/hardware-layout.json /house/operational-params.json \
+            /house/ta-deed.json "$HOME/.config/gridworks/scada/"
+          exec python gw_spaceheat/gws run --message-summary --seconds-per-report 60
+
+    - name: ltn-buffer
+      image: localhost/beech-sim_scada:latest
+      env:
+        - name: LTN_SCADA_MQTT__PORT
+          value: "1885"
+        - name: LTN_SCADA_MQTT__TLS__USE_TLS
+          value: "false"
+        - name: LTN_WEATHER_SOURCE
+          value: Gwwf
+        - name: LTN_WEATHER_API_URL
+          value: http://127.0.0.1:8531/d1-weather
+        - name: LTN_DASHBOARD__PRINT_GUI
+          value: "false"
+        - name: LTN_PRICE_FORECAST_URL
+          value: http://127.0.0.1:8532/hw1-isone-me-versant-keene-ps/gw0-price-forecast
+      volumeMounts:
+        - name: house-buffer
           mountPath: /house
           readOnly: true
       command: ["sh", "-c"]
@@ -714,6 +892,12 @@ spec:
         - name: journal-boot
           mountPath: /journal_boot.py
           readOnly: true
+        - name: house
+          mountPath: /house
+          readOnly: true
+        - name: house-buffer
+          mountPath: /house-buffer
+          readOnly: true
       command: ["python", "/journal_boot.py"]
 
     # The API reads the journal as gw_visualizer. The gateway fans the
@@ -822,17 +1006,24 @@ spec:
         - name: house
           mountPath: /house
           readOnly: true
+        - name: house-buffer
+          mountPath: /house-buffer
+          readOnly: true
       command: ["sh", "-c"]
       args:
         - |
           VITE_HOUSE_WEATHER_BUNDLES="$(node -e '
           const fs = require("fs");
-          const read = (name) => JSON.parse(fs.readFileSync("/house/" + name, "utf8"));
-          const house = read("hardware-layout.json").GNodes.find(
-            (gNode) => gNode.GNodeClass === "LeafTransactiveNode"
-          ).Alias;
-          const bundle = read("operational-params.json").WeatherBundleName;
-          process.stdout.write(JSON.stringify({ [house]: bundle }));
+          const bundles = {};
+          for (const dir of ["/house", "/house-buffer"]) {
+            const layout = JSON.parse(fs.readFileSync(dir + "/hardware-layout.json", "utf8"));
+            const params = JSON.parse(fs.readFileSync(dir + "/operational-params.json", "utf8"));
+            const house = layout.GNodes.find(
+              (gNode) => gNode.GNodeClass === "LeafTransactiveNode"
+            ).Alias;
+            bundles[house] = params.WeatherBundleName;
+          }
+          process.stdout.write(JSON.stringify(bundles));
           ')" || exit 1
           export VITE_HOUSE_WEATHER_BUNDLES
           node -e '
@@ -855,10 +1046,22 @@ spec:
       hostPath:
         path: ./house
         type: Directory
+    - name: house-buffer
+      hostPath:
+        path: ./house-buffer
+        type: Directory
     - name: events
       hostPath:
         path: ./events
         type: DirectoryOrCreate
+    - name: events-buffer
+      hostPath:
+        path: ./events-buffer
+        type: DirectoryOrCreate
+    - name: mosquitto-1884
+      hostPath:
+        path: ./mosquitto-1884.conf
+        type: File
     - name: flo
       hostPath:
         path: ./flo

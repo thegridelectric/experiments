@@ -46,20 +46,23 @@ local MQTT 1883) and the compose file holds no address and no credential.
 Nothing is published to the host: the stack ran beside the laptop's
 standing `gw-dev-rabbit` and a dev scada on it, and touched neither.
 
-**The house** (`house/`, read-only in both containers): a `gw.house0.layout`
-and its `gw.house0.operational.params`, made by `gen_layout.sh` with
-tlayouts' House0 generator at `10110cc`. It is the all-sim House0 that
-tlayouts authors for orange, with what makes it Beech changed: two zones
-(`down`, `up`), three 120-gallon store tanks, rolling distribution
-energy, and GNodes of its own under `d1.isone.me.versant.keene.beech`.
-What it keeps from orange and the real Beech does not have: the
-operational params (no operator hold, so local control runs the house;
-seasonal storage `AllTanks`) and the Siegenthaler strategy `StratProtect`
-(the real Beech holds full send). The scada copies the pair into its
-config home under their deployed names at each start. Every sensing
-component is one the plant shows, so no pico posts: the web server the
-word requires does not serve. The run under Found had a layout whose web
-server served on 8080, the one difference from the layout here.
+**The houses** (`house/` AllTanks, `house-buffer/` BufferOnly): each a
+`gw.house0.layout` and its `gw.house0.operational.params`, made by
+`gen_layout.sh` with tlayouts' House0 generator at `10110cc`. They are
+the all-sim House0 that tlayouts authors for orange, with what makes
+them Beech changed: two zones (`down`, `up`), three 120-gallon store
+tanks, rolling distribution energy. `house/` is
+`d1.isone.me.versant.keene.beech.at` at `AllTanks`; `house-buffer/` is
+`d1.isone.me.versant.keene.beech.buf` at `BufferOnly`, the same plant so
+the two assets can be compared. What they keep from orange and the real
+Beech does not have: no operator hold, so local control runs the house,
+and the Siegenthaler strategy `StratProtect` (the real Beech holds full
+send). Each scada copies its pair into its config home under their
+deployed names at each start. Every sensing component is one the plant
+shows, so no pico posts: the web server the word requires does not
+serve. The run under Found had a layout whose web server served on
+8080, the one difference from the layout here. Each scada has its own
+local Mosquitto (1883 for beech-at, 1884 for beech-buf).
 
 **The plant's coefficients** are the Modelica model's placeholders,
 except the zones' (fitted to the house) and the thermostat wire: a
@@ -220,13 +223,13 @@ encoding), from the committed `logs/reports.json`:
   lists them. The zip's `run.sh` loads the images and plays the pod.
   It holds `price.env` and `mm.env`.
 - `stop.sh`: stops the pod. The journal database goes with it.
-  `./eventstore`, `./events` and the bruce volume stay.
+  `./eventstore`, `./events`, `./events-buffer` and the bruce volume stay.
 - `pod.yaml`: the same four processes as one Pod, for
-  `podman kube play`, with the house's LTN (the scada checkout's
-  `gws ltn run`, from the scada's image), the FLO it asks, the price
-  service the LTN reads (`gwpf rabbit` and `gwpf api`, one image), the
-  market maker it clears against (`gwmm rabbit`), the weather service
-  the house reads (`gwwf rabbit` and `gwwf api`, its own Postgres on
+  `podman kube play`, with two scada+ta pairs (AllTanks beech-at and
+  BufferOnly beech-buf) and an LTN for each, the FLO they ask, the price
+  service the LTNs read (`gwpf rabbit` and `gwpf api`, one image), the
+  market maker they clear against (`gwmm rabbit`), the weather service
+  they read (`gwwf rabbit` and `gwwf api`, its own Postgres on
   pod port 5436, dev records minted at each start), and the journal: the
   ear writing `./eventstore` (`ear listen --no-s3`), TimescaleDB
   published on host port 5433, the keeper, and the web app on host
@@ -259,9 +262,10 @@ encoding), from the committed `logs/reports.json`:
 - `frontend.Dockerfile`, `frontend.Dockerfile.dockerignore`: the web
   frontend's image, built with a `gridworks-web-frontend` checkout as
   its context. Vite proxies `/api` to the API in the pod. At start the
-  container reads the house's GNode alias and `WeatherBundleName` from
-  `./house` into `VITE_HOUSE_WEATHER_BUNDLES`, so the weather panel
-  draws the bundle the house's operational params name.
+  container reads each house's GNode alias and `WeatherBundleName` from
+  `./house` and `./house-buffer` into `VITE_HOUSE_WEATHER_BUNDLES`, so
+  the weather panel draws the bundle that house's operational params
+  name.
 - `flo.Dockerfile`, `flo.Dockerfile.dockerignore`: the FLO's image, built
   with a `gridworks-flo` checkout as its context and the sibling
   `optimal-flexibility` as the `bruce` context.
@@ -275,16 +279,19 @@ encoding), from the committed `logs/reports.json`:
   built with a `gridworks-scada` checkout as its context.
 - `build-scada-arm64.sh`: the same image for linux/arm64. Needs the
   qemu-aarch64 binfmt; never run to completion here.
-- `gen_layout.sh`, `beech_sim_gen.py`: the house's generator. The shell
+- `gen_layout.sh`, `beech_sim_gen.py`: the houses' generator. The shell
   script extracts tlayouts at the pinned commit and runs the Python in the
-  scada's environment.
+  scada's environment, once per house.
 - `house/hardware-layout.json`, `house/operational-params.json`: the
-  generator's output, a `gw.house0.layout` and a
+  AllTanks generator output, a `gw.house0.layout` and a
   `gw.house0.operational.params`. Regenerating gives the same bytes.
-- `house/ta-deed.json`: the house's `ta.deed`, a simulated asset
-  attested so the scada accepts dispatch. Written by the generator.
+- `house/ta-deed.json`: the AllTanks house's `ta.deed`, a simulated
+  asset attested so the scada accepts dispatch. Written by the generator.
 - `house/plant-overrides.json`: the plant's `--fmu-overrides`. Written by
   hand. Holds the outdoor temperature and `PZoneValve` (175 W).
+- `house-buffer/`: the BufferOnly pair, `d1.isone.me.versant.keene.beech.buf`,
+  the same plant overrides. Written by the generator.
+- `mosquitto-1884.conf`: the BufferOnly scada's local broker, port 1884.
 - `check.py`: the verdict, run on the laptop. `stack_check.py`: what it
   runs inside the scada's container to read the persisted events.
 - `plot_channels.py`: the pictures, run on the laptop.

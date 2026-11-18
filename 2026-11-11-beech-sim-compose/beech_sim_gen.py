@@ -13,19 +13,28 @@ Run by gen_layout.sh, which puts a tlayouts tree at a pinned commit on the
 path and runs this in the scada's environment, where the node and channel
 names tlayouts imports live:
 
-    python beech_sim_gen.py <tlayouts tree> <out dir>
+    python beech_sim_gen.py <tlayouts tree> <out dir> [<house alias> [<storage>]]
 
+`<house alias>` defaults to `d1.isone.me.versant.keene.beech.at`.
+`<storage>` is `AllTanks` or `BufferOnly` and defaults to `AllTanks`.
 Ids are kept across runs: the previous layout in <out dir> is the
-generator's reference.
+generator's reference. Aliases follow the house argument.
 """
 
 import dataclasses
 import json
 import sys
+import uuid
 from pathlib import Path
 
 TLAYOUTS = Path(sys.argv[1]).resolve()
 OUT_DIR = Path(sys.argv[2]).resolve()
+HOUSE = (
+    sys.argv[3] if len(sys.argv) > 3 else "d1.isone.me.versant.keene.beech.at"
+)
+STORAGE = sys.argv[4] if len(sys.argv) > 4 else "AllTanks"
+if STORAGE not in ("AllTanks", "BufferOnly"):
+    raise SystemExit(f"storage must be AllTanks or BufferOnly, not {STORAGE!r}")
 sys.path[:0] = [str(TLAYOUTS), str(TLAYOUTS / "src")]
 
 from gwsproto.enums import TaValidationState  # noqa: E402
@@ -38,13 +47,30 @@ from tlayouts.sema.enums.g_node_status import GNodeStatus  # noqa: E402
 from tlayouts.sema.types.g_node_gt import GNodeGt  # noqa: E402
 from tlayouts.sema.types.web_server_component_gt import WebServerComponentGt  # noqa: E402
 
-HOUSE = "d1.isone.me.versant.keene.beech"
 MAKER = "d1.isone.me.versant.keene"
 ZONES = ["down", "up"]
+BEECH_AT = "d1.isone.me.versant.keene.beech.at"
+LABEL = "BufferOnly" if STORAGE == "BufferOnly" else "AllTanks"
+SHORT = "beech-buf" if STORAGE == "BufferOnly" else "beech-at"
+_ALIAS = {
+    "LeafTransactiveNode": lambda house: house,
+    "TerminalAsset": lambda house: f"{house}.ta",
+    "Scada": lambda house: f"{house}.scada",
+}
+_DISPLAY = {
+    "LeafTransactiveNode": "LeafTransactiveNode",
+    "TerminalAsset": "TerminalAsset",
+    "Scada": "Scada",
+}
 
-GNODES = [
+LAYOUT = OUT_DIR / "hardware-layout.json"
+PARAMS = OUT_DIR / "operational-params.json"
+DEED = OUT_DIR / "ta-deed.json"
+FLO_G_NODE = OUT_DIR.parent / "flo" / "g.node.gt.json"
+
+BEECH_GNODES = [
     {
-        "Alias": HOUSE,
+        "Alias": BEECH_AT,
         "BaseClass": "LeafTransactiveNode",
         "DisplayName": "Simulated Beech LeafTransactiveNode",
         "GNodeClass": "LeafTransactiveNode",
@@ -55,7 +81,7 @@ GNODES = [
         "Version": "006",
     },
     {
-        "Alias": f"{HOUSE}.ta",
+        "Alias": f"{BEECH_AT}.ta",
         "BaseClass": "TerminalAsset",
         "DisplayName": "Simulated Beech TerminalAsset",
         "GNodeClass": "TerminalAsset",
@@ -66,7 +92,7 @@ GNODES = [
         "Version": "006",
     },
     {
-        "Alias": f"{HOUSE}.scada",
+        "Alias": f"{BEECH_AT}.scada",
         "BaseClass": "Logical",
         "DisplayName": "Simulated Beech Scada",
         "GNodeClass": "Scada",
@@ -77,9 +103,78 @@ GNODES = [
     },
 ]
 
+
+def display_name(cls: str) -> str:
+    if cls == "TerminalAsset":
+        return SHORT
+    return f"{SHORT} {_DISPLAY[cls]}"
+
+
+def mint_gnodes(house: str) -> list[dict]:
+    point = str(uuid.uuid4())
+    return [
+        {
+            "Alias": house,
+            "BaseClass": "LeafTransactiveNode",
+            "DisplayName": display_name("LeafTransactiveNode"),
+            "GNodeClass": "LeafTransactiveNode",
+            "GNodeId": str(uuid.uuid4()),
+            "PositionPointId": point,
+            "Status": "Active",
+            "TypeName": "g.node.gt",
+            "Version": "006",
+        },
+        {
+            "Alias": f"{house}.ta",
+            "BaseClass": "TerminalAsset",
+            "DisplayName": display_name("TerminalAsset"),
+            "GNodeClass": "TerminalAsset",
+            "GNodeId": str(uuid.uuid4()),
+            "PositionPointId": point,
+            "Status": "Active",
+            "TypeName": "g.node.gt",
+            "Version": "006",
+        },
+        {
+            "Alias": f"{house}.scada",
+            "BaseClass": "Logical",
+            "DisplayName": display_name("Scada"),
+            "GNodeClass": "Scada",
+            "GNodeId": str(uuid.uuid4()),
+            "Status": "Active",
+            "TypeName": "g.node.gt",
+            "Version": "006",
+        },
+    ]
+
+
+def with_house(nodes: list[dict], house: str) -> list[dict]:
+    """Keep ids; point aliases and display names at this house."""
+    out: list[dict] = []
+    for node in nodes:
+        g_node = dict(node)
+        cls = g_node["GNodeClass"]
+        g_node["Alias"] = _ALIAS[cls](house)
+        g_node["DisplayName"] = display_name(cls)
+        out.append(g_node)
+    return out
+
+
+def gnodes() -> list[dict]:
+    if LAYOUT.exists():
+        return with_house(json.loads(LAYOUT.read_text())["GNodes"], HOUSE)
+    if HOUSE == BEECH_AT:
+        return with_house(BEECH_GNODES, HOUSE)
+    return mint_gnodes(HOUSE)
+
+
+GNODES = gnodes()
+
 BEECH_SIM = dataclasses.replace(
     HOUSE0_SIM,
-    scada_display_name="Simulated Beech Scada",
+    scada_display_name=next(
+        g["DisplayName"] for g in GNODES if g["GNodeClass"] == "Scada"
+    ),
     zone_list=ZONES,
     critical_zone_list=ZONES,
     zone_kwh_per_deg_f_list=[1, 0],
@@ -92,9 +187,10 @@ BEECH_SIM = dataclasses.replace(
 )
 assert all(isinstance(c, ZoneCircuitSpec) for c in BEECH_SIM.zone_circuits)
 
+_TA = next(g for g in GNODES if g["GNodeClass"] == "TerminalAsset")
 TA_DEED = TaDeed(
-    TaId=GNODES[1]["GNodeId"],
-    TaAlias=GNODES[1]["Alias"],
+    TaId=_TA["GNodeId"],
+    TaAlias=_TA["Alias"],
     ValidationState=TaValidationState.ValidatedSimulatedAsset,
     ValidatorAlias="d1.validator.gridworks",
     IssuedS=1794852000,
@@ -109,11 +205,6 @@ FLO = GNodeGt(
     status=GNodeStatus.Active,
     display_name="Simulated FLO",
 )
-
-LAYOUT = OUT_DIR / "hardware-layout.json"
-PARAMS = OUT_DIR / "operational-params.json"
-DEED = OUT_DIR / "ta-deed.json"
-FLO_G_NODE = OUT_DIR.parent / "flo" / "g.node.gt.json"
 
 
 def unserved(layout):
@@ -136,6 +227,7 @@ def main() -> None:
         as_dict = word.to_dict()
         if path == PARAMS:
             as_dict["MarketMakerAlias"] = MAKER
+            as_dict["FamilyParams"]["SeasonalStorageMode"] = STORAGE
         default_codec.from_dict(as_dict)
         path.write_text(json.dumps(as_dict, indent=2) + "\n")
         print(f"wrote {path}")
