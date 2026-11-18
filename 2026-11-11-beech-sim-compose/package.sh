@@ -87,7 +87,7 @@ fi
 STAGING="$(mktemp -d)"
 trap 'rm -rf "$STAGING"' EXIT
 ROOT="$STAGING/$NAME"
-mkdir -p "$ROOT/house" "$ROOT/flo"
+mkdir -p "$ROOT/house" "$ROOT/house-buffer" "$ROOT/flo"
 
 echo "saving images (this is several gigabytes)"
 podman save -o "$ROOT/images.tar" "${ALL_IMAGES[@]}"
@@ -99,9 +99,10 @@ if [[ "$have_bruce" -eq 1 ]]; then
 fi
 
 cp -a house/. "$ROOT/house/"
+cp -a house-buffer/. "$ROOT/house-buffer/"
 cp -a flo/. "$ROOT/flo/"
 cp -a journal_boot.py pod.yaml stop.sh flo_matrix.py images.sh \
-    price.env mm.env "$ROOT/"
+    mosquitto-1884.conf price.env mm.env "$ROOT/"
 cp -a run-packaged.sh "$ROOT/run.sh"
 chmod +x "$ROOT/run.sh" "$ROOT/stop.sh"
 
