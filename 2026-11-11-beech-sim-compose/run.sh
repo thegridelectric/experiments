@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Build the sim images and start the pod.
+#
+#     ./run.sh
+#
+# Podman keeps the image layers. A later run reuses them and rebuilds an
+# image only when that image's files have changed, so the builds stay in
+# build.sh. Stop with ./stop.sh. A zip from ./package.sh is a different
+# tree: its run.sh loads the packed images and does not build.
+set -euxo pipefail
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$HERE"
+
+if podman pod exists beech-sim; then
+    echo "beech-sim is already up. Stop it with ./stop.sh" >&2
+    exit 1
+fi
+
+"$HERE/build.sh"
+podman kube play pod.yaml
