@@ -4,6 +4,11 @@ store tanks and a d1 identity of its own. Every sensing component is one
 the plant shows, so no pico posts: the web server the word requires is
 kept and does not serve.
 
+Beside the pair it writes the house's ta.deed, a simulated asset attested
+so the scada accepts dispatch, and, in a flo folder next to <out dir>, the
+g.node.gt of the d1.flo the house's LTN asks. The operational params name
+the dev-universe Keene maker, the market maker the pod runs.
+
 Run by gen_layout.sh, which puts a tlayouts tree at a pinned commit on the
 path and runs this in the scada's environment, where the node and channel
 names tlayouts imports live:
@@ -23,12 +28,18 @@ TLAYOUTS = Path(sys.argv[1]).resolve()
 OUT_DIR = Path(sys.argv[2]).resolve()
 sys.path[:0] = [str(TLAYOUTS), str(TLAYOUTS / "src")]
 
+from gwsproto.enums import TaValidationState  # noqa: E402
+from gwsproto.named_types import TaDeed  # noqa: E402
 from orange_sim_gen import HOUSE0_SIM  # noqa: E402
 from tlayouts.house0_sema_gen import ZoneCircuitSpec, gen_artifacts  # noqa: E402
 from tlayouts.sema.codec import default_codec  # noqa: E402
+from tlayouts.sema.enums.base_g_node_class import BaseGNodeClass  # noqa: E402
+from tlayouts.sema.enums.g_node_status import GNodeStatus  # noqa: E402
+from tlayouts.sema.types.g_node_gt import GNodeGt  # noqa: E402
 from tlayouts.sema.types.web_server_component_gt import WebServerComponentGt  # noqa: E402
 
 HOUSE = "d1.isone.me.versant.keene.beech"
+MAKER = "d1.isone.me.versant.keene"
 ZONES = ["down", "up"]
 
 GNODES = [
@@ -81,8 +92,28 @@ BEECH_SIM = dataclasses.replace(
 )
 assert all(isinstance(c, ZoneCircuitSpec) for c in BEECH_SIM.zone_circuits)
 
+TA_DEED = TaDeed(
+    TaId=GNODES[1]["GNodeId"],
+    TaAlias=GNODES[1]["Alias"],
+    ValidationState=TaValidationState.ValidatedSimulatedAsset,
+    ValidatorAlias="d1.validator.gridworks",
+    IssuedS=1794852000,
+)
+
+# The GNodeId grid-node-registry's dev universe gives d1.flo.
+FLO = GNodeGt(
+    g_node_id="87f059f6-aeb2-4e85-ab17-0fa49995a3ef",
+    alias="d1.flo",
+    base_class=BaseGNodeClass.Logical,
+    g_node_class="Flo",
+    status=GNodeStatus.Active,
+    display_name="Simulated FLO",
+)
+
 LAYOUT = OUT_DIR / "hardware-layout.json"
 PARAMS = OUT_DIR / "operational-params.json"
+DEED = OUT_DIR / "ta-deed.json"
+FLO_G_NODE = OUT_DIR.parent / "flo" / "g.node.gt.json"
 
 
 def unserved(layout):
@@ -103,9 +134,18 @@ def main() -> None:
     layout = unserved(layout)
     for path, word in ((LAYOUT, layout), (PARAMS, params)):
         as_dict = word.to_dict()
+        if path == PARAMS:
+            as_dict["MarketMakerAlias"] = MAKER
         default_codec.from_dict(as_dict)
         path.write_text(json.dumps(as_dict, indent=2) + "\n")
         print(f"wrote {path}")
+    DEED.write_text(TA_DEED.model_dump_json(indent=2) + "\n")
+    print(f"wrote {DEED}")
+    flo = FLO.to_dict()
+    default_codec.from_dict(flo)
+    FLO_G_NODE.parent.mkdir(exist_ok=True)
+    FLO_G_NODE.write_text(json.dumps(flo, indent=2) + "\n")
+    print(f"wrote {FLO_G_NODE}")
 
 
 if __name__ == "__main__":

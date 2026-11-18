@@ -61,10 +61,14 @@ component is one the plant shows, so no pico posts: the web server the
 word requires does not serve. The run under Found had a layout whose web
 server served on 8080, the one difference from the layout here.
 
-**The plant's coefficients** are the Modelica model's placeholders.
-`house/plant-overrides.json` is the place to change them: any parameter
-of `Beech.Plant`, and the outdoor temperature, which the plant holds at
--5 °C.
+**The plant's coefficients** are the Modelica model's placeholders,
+except the zones' (fitted to the house) and the thermostat wire: a
+calling zone's `*-whitewire-pwr` reads 175 W (`PZoneValve` in
+`house/plant-overrides.json`), as Beech's eGauge does. The layout
+keeps the house's own heat-call split, greater than 10 W.
+`house/plant-overrides.json` is also the place to change any other
+parameter of `Beech.Plant`, and the outdoor temperature, which the
+plant holds at -5 °C.
 
 ## Found
 
@@ -208,8 +212,65 @@ encoding), from the committed `logs/reports.json`:
     python3 -c "import csv,json,sys; d=json.load(open('logs/reports.json')); w=csv.writer(sys.stdout); w.writerow(['channel','readings','distinct_values','low','high','last']); [w.writerow([n,*d['seen'][n].values()]) for n in d['plant_fed_channels']]" > logs/reports-display.csv
 
 - `compose.yaml`: the stack.
+- `run.sh`: builds the images (cached layers; a later run rebuilds an
+  image only when its files changed) and starts the pod.
+- `build.sh`: the image builds, on their own.
+- `package.sh`: zips the images and the files another box needs to run
+  the sim, without the sibling checkouts. `./package.sh --dry-run`
+  lists them. The zip's `run.sh` loads the images and plays the pod.
+  It holds `price.env` and `mm.env`.
+- `stop.sh`: stops the pod. The journal database goes with it.
+  `./eventstore`, `./events` and the bruce volume stay.
 - `pod.yaml`: the same four processes as one Pod, for
-  `podman kube play`. Not the stack the run under Found used.
+  `podman kube play`, with the house's LTN (the scada checkout's
+  `gws ltn run`, from the scada's image), the FLO it asks, the price
+  service the LTN reads (`gwpf rabbit` and `gwpf api`, one image), the
+  market maker it clears against (`gwmm rabbit`), the weather service
+  the house reads (`gwwf rabbit` and `gwwf api`, its own Postgres on
+  pod port 5436, dev records minted at each start), and the journal: the
+  ear writing `./eventstore` (`ear listen --no-s3`), TimescaleDB
+  published on host port 5433, the keeper, and the web app on host
+  port 5173 (`http://localhost:5173/gridworks-web-frontend/`, login
+  `beech` / `beech`) with its realtime gateway on host port 8100. The
+  FLO runs under
+  memory and CPU limits. Not the stack the run under Found used.
+- `price.Dockerfile`, `price.Dockerfile.dockerignore`: the price
+  service's image, built with a `gridworks-price-forecast` checkout as
+  its context. `./price.env` (gitignored) holds the ISO-NE account.
+- `mm.Dockerfile`, `mm.Dockerfile.dockerignore`: the market maker's
+  image, built with a `gridworks-marketmaker` checkout as its context.
+  `./mm.env` (gitignored) holds the ISO-NE account. The house's
+  operational params name this maker, `d1.isone.me.versant.keene`.
+- `journal.Dockerfile`, `journal.Dockerfile.dockerignore`: the journal
+  keeper's image, built with a `gridworks-journalkeeper` checkout as
+  its context. `journal_boot.py` creates the dev roles and the
+  `gridworks` tables before the keeper starts.
+- `weather.Dockerfile`, `weather.Dockerfile.dockerignore`: the weather
+  service's image, built from
+  `https://github.com/thegridelectric/gridworks-weather-forecast.git`.
+  The scada and the LTN read `http://127.0.0.1:8531/d1-weather`.
+- `ear.Dockerfile`, `ear.Dockerfile.dockerignore`: the ear's image,
+  built from `https://github.com/thegridelectric/gridworks-ear.git`.
+  With `--no-s3` it writes each message under `./eventstore`.
+- `web.Dockerfile`, `web.Dockerfile.dockerignore`: the web backend's
+  image, built with a `gridworks-web-backend` checkout as its context.
+  `python -m api` reads the journal; `python -m gateway` serves the
+  realtime page.
+- `frontend.Dockerfile`, `frontend.Dockerfile.dockerignore`: the web
+  frontend's image, built with a `gridworks-web-frontend` checkout as
+  its context. Vite proxies `/api` to the API in the pod. At start the
+  container reads the house's GNode alias and `WeatherBundleName` from
+  `./house` into `VITE_HOUSE_WEATHER_BUNDLES`, so the weather panel
+  draws the bundle the house's operational params name.
+- `flo.Dockerfile`, `flo.Dockerfile.dockerignore`: the FLO's image, built
+  with a `gridworks-flo` checkout as its context and the sibling
+  `optimal-flexibility` as the `bruce` context.
+- `flo_matrix.py`: fills the bruce volume with the house's transition
+  matrices, one per seasonal storage mode, run once in the FLO's image.
+  Beech's took 535 s (AllTanks) and 1105 s (BufferOnly) on one core,
+  peaking at 452 MB.
+- `flo/g.node.gt.json`: the FLO's identity, `d1.flo` under the dev
+  universe's GNodeId. Written by the generator.
 - `scada.Dockerfile`, `scada.Dockerfile.dockerignore`: the scada's image,
   built with a `gridworks-scada` checkout as its context.
 - `build-scada-arm64.sh`: the same image for linux/arm64. Needs the
@@ -220,8 +281,10 @@ encoding), from the committed `logs/reports.json`:
 - `house/hardware-layout.json`, `house/operational-params.json`: the
   generator's output, a `gw.house0.layout` and a
   `gw.house0.operational.params`. Regenerating gives the same bytes.
+- `house/ta-deed.json`: the house's `ta.deed`, a simulated asset
+  attested so the scada accepts dispatch. Written by the generator.
 - `house/plant-overrides.json`: the plant's `--fmu-overrides`. Written by
-  hand.
+  hand. Holds the outdoor temperature and `PZoneValve` (175 W).
 - `check.py`: the verdict, run on the laptop. `stack_check.py`: what it
   runs inside the scada's container to read the persisted events.
 - `plot_channels.py`: the pictures, run on the laptop.
