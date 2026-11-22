@@ -1,0 +1,228 @@
+INFO:     Started server process [2623]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+BTU data from primary-btu: 2 measurements
+  hp-lwt: raw=4037 (CelsiusTimes100), interpreted=40370 (WaterTempCTimes1000), pico adc=1588.4 mV, thermistor=5197 ohm
+  hp-ewt: raw=3379 (CelsiusTimes100), interpreted=33790 (WaterTempCTimes1000), pico adc=1812.4 mV, thermistor=6822 ohm
+INFO:     192.168.2.4:57531 - "POST /primary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from secondary-btu: 2 measurements
+  secondary-lwt: raw=2384 (CelsiusTimes100), interpreted=23840 (WaterTempCTimes1000), pico adc=2154.7 mV, thermistor=10535 ohm
+  secondary-ewt: raw=2329 (CelsiusTimes100), interpreted=23290 (WaterTempCTimes1000), pico adc=2173.2 mV, thermistor=10801 ohm
+INFO:     192.168.2.3:60075 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from dist-btu: 2 measurements
+  dist-swt: raw=2465 (CelsiusTimes100), interpreted=24650 (WaterTempCTimes1000), pico adc=2127.3 mV, thermistor=10158 ohm
+  dist-rwt: raw=2380 (CelsiusTimes100), interpreted=23800 (WaterTempCTimes1000), pico adc=2156.0 mV, thermistor=10554 ohm
+INFO:     192.168.2.6:58692 - "POST /dist-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:43:59.897] secondary-hx-depth2: 1.837 V, R_th=7.1 kOhm, 91.151 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64870 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:08.137] secondary-hx-depth3: 1.599 V, R_th=5.31 kOhm, 103.698 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64871 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:11.039] pipes1-depth1: 2.177 V, R_th=10.95 kOhm, 73.366 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.039] pipes1-depth2: 2.188 V, R_th=11.11 kOhm, 72.804 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.039] pipes1-depth3: 3.3 V, R_th=9322494.35 kOhm, -195.157 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:50852 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:11.297] floor1-depth1: 2.339 V, R_th=13.75 kOhm, 64.489 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.297] floor1-depth2: 2.24 V, R_th=11.93 kOhm, 69.995 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.297] floor1-depth3: 2.211 V, R_th=11.48 kOhm, 71.519 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:52882 - "POST /floor1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:11.436] tank1-depth1: 2.249 V, R_th=12.1 kOhm, 69.461 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.436] tank1-depth2: 2.259 V, R_th=12.26 kOhm, 68.925 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.436] tank1-depth3: 2.259 V, R_th=12.26 kOhm, 68.921 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.13:57337 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:11.469] fancoil-depth1: 2.188 V, R_th=11.12 kOhm, 72.762 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.469] fancoil-depth2: 2.188 V, R_th=11.12 kOhm, 72.75 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.469] fancoil-depth3: 3.3 V, R_th=9322494.35 kOhm, -195.157 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:59613 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:11.921] buffer-depth1: 1.483 V, R_th=4.61 kOhm, 110.007 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.921] buffer-depth2: 1.556 V, R_th=5.04 kOhm, 106.02 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:11.921] buffer-depth3: 1.996 V, R_th=8.65 kOhm, 82.915 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.7:57139 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+BTU data from secondary-btu: 1 measurements
+  secondary-pump-ct: raw=169 (VoltsTimes100), interpreted=169 (VoltsTimes100)
+INFO:     192.168.2.3:60076 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from secondary-btu: 1 measurements
+  secondary-pump-ct: raw=167 (VoltsTimes100), interpreted=167 (VoltsTimes100)
+INFO:     192.168.2.3:60077 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:25.010] secondary-hx-depth2: 1.839 V, R_th=7.11 kOhm, 91.045 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64872 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:37.773] secondary-hx-depth3: 1.601 V, R_th=5.32 kOhm, 103.59 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64873 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:44:48.889] secondary-hx-depth1: 3.3 V, R_th=3728994.35 kOhm, -185.907 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:48.889] secondary-hx-depth2: 1.84 V, R_th=7.12 kOhm, 90.98 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:44:48.889] secondary-hx-depth3: 1.602 V, R_th=5.33 kOhm, 103.563 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64874 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+BTU data from secondary-btu: 1 measurements
+  secondary-pump-ct: raw=169 (VoltsTimes100), interpreted=169 (VoltsTimes100)
+INFO:     192.168.2.3:60078 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:10.785] pipes1-depth1: 2.177 V, R_th=10.96 kOhm, 73.344 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:10.785] pipes1-depth2: 2.188 V, R_th=11.12 kOhm, 72.773 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:10.785] pipes1-depth3: 3.3 V, R_th=18644994.35 kOhm, -201.749 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:50853 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:11.122] secondary-hx-depth2: 1.841 V, R_th=7.13 kOhm, 90.941 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64875 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:11.163] fancoil-depth1: 2.189 V, R_th=11.13 kOhm, 72.746 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:11.163] fancoil-depth2: 2.189 V, R_th=11.13 kOhm, 72.731 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:11.163] fancoil-depth3: 3.3 V, R_th=4661244.35 kOhm, -188.219 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:59614 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:11.261] tank1-depth1: 2.249 V, R_th=12.1 kOhm, 69.458 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:11.261] tank1-depth2: 2.259 V, R_th=12.26 kOhm, 68.924 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:11.261] tank1-depth3: 2.259 V, R_th=12.26 kOhm, 68.923 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.13:57338 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:11.681] buffer-depth1: 1.483 V, R_th=4.61 kOhm, 110.004 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:11.681] buffer-depth2: 1.556 V, R_th=5.04 kOhm, 106.032 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:11.681] buffer-depth3: 1.996 V, R_th=8.65 kOhm, 82.916 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.7:57140 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:12.043] floor1-depth1: 2.339 V, R_th=13.75 kOhm, 64.497 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:12.043] floor1-depth2: 2.239 V, R_th=11.93 kOhm, 69.999 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:12.043] floor1-depth3: 2.211 V, R_th=11.48 kOhm, 71.524 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:52883 - "POST /floor1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:15.666] secondary-hx-depth3: 1.603 V, R_th=5.34 kOhm, 103.479 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64876 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+BTU data from secondary-btu: 1 measurements
+  secondary-pump-ct: raw=167 (VoltsTimes100), interpreted=167 (VoltsTimes100)
+INFO:     192.168.2.3:60079 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from primary-btu: 1 measurements
+  hp-lwt: raw=4017 (CelsiusTimes100), interpreted=40170 (WaterTempCTimes1000), pico adc=1595.0 mV, thermistor=5239 ohm
+INFO:     192.168.2.4:57532 - "POST /primary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from primary-btu: 1 measurements
+  hp-ewt: raw=3359 (CelsiusTimes100), interpreted=33590 (WaterTempCTimes1000), pico adc=1819.3 mV, thermistor=6880 ohm
+INFO:     192.168.2.4:57533 - "POST /primary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:49.003] secondary-hx-depth1: 3.3 V, R_th=2663565.78 kOhm, -182.345 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:49.003] secondary-hx-depth2: 1.843 V, R_th=7.15 kOhm, 90.859 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:45:49.003] secondary-hx-depth3: 1.605 V, R_th=5.35 kOhm, 103.393 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64877 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:45:56.422] secondary-hx-depth2: 1.843 V, R_th=7.15 kOhm, 90.833 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64878 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:01.783] secondary-hx-depth3: 1.605 V, R_th=5.35 kOhm, 103.37 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64879 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:10.531] pipes1-depth1: 2.178 V, R_th=10.97 kOhm, 73.311 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:10.531] pipes1-depth2: 2.188 V, R_th=11.12 kOhm, 72.75 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:10.531] pipes1-depth3: 3.3 V, R_th=9322494.35 kOhm, -195.157 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:50854 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:11.085] tank1-depth1: 2.249 V, R_th=12.1 kOhm, 69.461 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:11.085] tank1-depth2: 2.259 V, R_th=12.26 kOhm, 68.925 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:11.085] tank1-depth3: 2.259 V, R_th=12.26 kOhm, 68.925 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.13:57339 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:11.441] buffer-depth1: 1.483 V, R_th=4.61 kOhm, 110.002 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:11.441] buffer-depth2: 1.556 V, R_th=5.04 kOhm, 106.003 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:11.441] buffer-depth3: 1.996 V, R_th=8.65 kOhm, 82.911 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.7:57141 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:11.761] floor1-depth1: 2.339 V, R_th=13.75 kOhm, 64.493 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:11.761] floor1-depth2: 2.24 V, R_th=11.93 kOhm, 69.989 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:11.761] floor1-depth3: 2.211 V, R_th=11.48 kOhm, 71.515 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:52884 - "POST /floor1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:11.903] fancoil-depth1: 2.189 V, R_th=11.13 kOhm, 72.73 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:11.903] fancoil-depth2: 2.189 V, R_th=11.13 kOhm, 72.714 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:11.903] fancoil-depth3: 3.3 V, R_th=9322494.35 kOhm, -195.157 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:59615 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:13.705] pipes1-depth2: 2.189 V, R_th=11.13 kOhm, 72.744 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:50855 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:20.019] pipes1-depth1: 2.178 V, R_th=10.97 kOhm, 73.302 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:50856 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:31.108] secondary-hx-depth2: 1.845 V, R_th=7.17 kOhm, 90.728 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64880 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:49.216] secondary-hx-depth3: 1.607 V, R_th=5.36 kOhm, 103.261 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64881 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:46:49.244] secondary-hx-depth1: 3.3 V, R_th=2330619.35 kOhm, -180.906 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:49.244] secondary-hx-depth2: 1.846 V, R_th=7.17 kOhm, 90.697 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:46:49.244] secondary-hx-depth3: 1.607 V, R_th=5.36 kOhm, 103.261 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64882 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+BTU data from primary-btu: 1 measurements
+  hp-lwt: raw=3997 (CelsiusTimes100), interpreted=39970 (WaterTempCTimes1000), pico adc=1601.7 mV, thermistor=5282 ohm
+INFO:     192.168.2.4:57534 - "POST /primary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:47:10.338] pipes1-depth1: 2.179 V, R_th=10.98 kOhm, 73.276 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:10.338] pipes1-depth2: 2.189 V, R_th=11.13 kOhm, 72.723 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:10.338] pipes1-depth3: 3.3 V, R_th=9322494.35 kOhm, -195.157 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.8:50857 - "POST /pipes1/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:47:11.199] buffer-depth1: 1.483 V, R_th=4.61 kOhm, 109.999 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:11.199] buffer-depth2: 1.556 V, R_th=5.04 kOhm, 106.0 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:11.199] buffer-depth3: 1.996 V, R_th=8.65 kOhm, 82.907 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.7:57142 - "POST /buffer/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:47:11.478] floor1-depth1: 2.339 V, R_th=13.75 kOhm, 64.49 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:11.478] floor1-depth2: 2.24 V, R_th=11.93 kOhm, 69.988 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:11.478] floor1-depth3: 2.211 V, R_th=11.48 kOhm, 71.513 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.10:52885 - "POST /floor1/microvolts HTTP/1.0" 200 OK
+BTU data from dist-btu: 3 measurements
+  dist-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+  dist-swt: raw=2457 (CelsiusTimes100), interpreted=24570 (WaterTempCTimes1000), pico adc=2130.0 mV, thermistor=10195 ohm
+  dist-rwt: raw=2374 (CelsiusTimes100), interpreted=23740 (WaterTempCTimes1000), pico adc=2158.1 mV, thermistor=10583 ohm
+INFO:     192.168.2.6:58693 - "POST /dist-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:47:11.590] fancoil-depth1: 2.189 V, R_th=11.14 kOhm, 72.708 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:11.590] fancoil-depth2: 2.19 V, R_th=11.14 kOhm, 72.693 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:11.590] fancoil-depth3: 3.3 V, R_th=4661244.35 kOhm, -188.219 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.9:59616 - "POST /fancoil/microvolts HTTP/1.0" 200 OK
+
+[2026-11-20 13:47:11.961] tank1-depth1: 2.249 V, R_th=12.1 kOhm, 69.46 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:11.961] tank1-depth2: 2.259 V, R_th=12.26 kOhm, 68.925 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:11.961] tank1-depth3: 2.259 V, R_th=12.26 kOhm, 68.923 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.13:57340 - "POST /tank1/microvolts HTTP/1.0" 200 OK
+BTU data from primary-btu: 3 measurements
+  primary-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+  hp-lwt: raw=3997 (CelsiusTimes100), interpreted=39970 (WaterTempCTimes1000), pico adc=1601.7 mV, thermistor=5282 ohm
+  hp-ewt: raw=3343 (CelsiusTimes100), interpreted=33430 (WaterTempCTimes1000), pico adc=1824.8 mV, thermistor=6927 ohm
+INFO:     192.168.2.4:57535 - "POST /primary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from store-btu: 1 measurements
+  store-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+INFO:     192.168.2.5:56002 - "POST /store-btu/multichannel-snapshot HTTP/1.0" 200 OK
+BTU data from secondary-btu: 4 measurements
+  secondary-flow: raw=0 (GpmTimes100), interpreted=0 (GpmTimes100)
+  secondary-lwt: raw=2378 (CelsiusTimes100), interpreted=23780 (WaterTempCTimes1000), pico adc=2156.7 mV, thermistor=10564 ohm
+  secondary-ewt: raw=2327 (CelsiusTimes100), interpreted=23270 (WaterTempCTimes1000), pico adc=2173.9 mV, thermistor=10810 ohm
+  secondary-pump-ct: raw=168 (VoltsTimes100), interpreted=168 (VoltsTimes100)
+INFO:     192.168.2.3:60080 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:47:20.528] secondary-hx-depth3: 1.609 V, R_th=5.38 kOhm, 103.152 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64883 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+BTU data from secondary-btu: 1 measurements
+  secondary-pump-ct: raw=169 (VoltsTimes100), interpreted=169 (VoltsTimes100)
+INFO:     192.168.2.3:60081 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:47:29.590] secondary-hx-depth2: 1.847 V, R_th=7.19 kOhm, 90.623 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64884 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+BTU data from secondary-btu: 1 measurements
+  secondary-pump-ct: raw=168 (VoltsTimes100), interpreted=168 (VoltsTimes100)
+INFO:     192.168.2.3:60082 - "POST /secondary-btu/multichannel-snapshot HTTP/1.0" 200 OK
+
+[2026-11-20 13:47:49.031] secondary-hx-depth1: 3.3 V, R_th=2663565.78 kOhm, -182.345 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:49.031] secondary-hx-depth2: 1.848 V, R_th=7.19 kOhm, 90.581 F (R_fixed=5.65 kOhm)
+[2026-11-20 13:47:49.031] secondary-hx-depth3: 1.611 V, R_th=5.39 kOhm, 103.08 F (R_fixed=5.65 kOhm)
+INFO:     192.168.2.2:64885 - "POST /secondary-hx/microvolts HTTP/1.0" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2623]

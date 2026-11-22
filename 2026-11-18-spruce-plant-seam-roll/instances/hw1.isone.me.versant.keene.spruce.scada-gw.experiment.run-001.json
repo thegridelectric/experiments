@@ -1,0 +1,11 @@
+{
+ "TypeName": "gw.experiment.run",
+ "Version": "001",
+ "ExperimentSlug": "spruce-plant-seam-roll",
+ "HostGNodeAlias": "hw1.isone.me.versant.keene.spruce.scada",
+ "StartUnixMs": 1795047286000,
+ "EndUnixMs": 1795050001000,
+ "CodeRef": "gridworks-scada jm/plant-seam 72c00fa3 (PR 630) from main 7e8e52f4; merged as 2b2028f0; tlayouts main pair",
+ "Verdict": "Pass",
+ "Claim": "The plant seam (PR 630) runs on a real box with no device-path glitch: clean boot on spruce, the fleet's one GPIO relay actuated twice under the pico cycler with the picos rebooting each time, every relay and power channel reporting with pre-roll values, for 45 minutes before the merged main."
+}

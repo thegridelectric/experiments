@@ -46,6 +46,11 @@ what you are testing.
 
 ## Things that bit
 
+- The registry's `.env` predates `GNR_SNAPSHOT_INTERVAL_S`: `gnr rabbit`
+  refuses to start until the line from `template.env` is copied in. Its
+  database is the `gnr-postgres` container on 5435, which `docker ps`
+  may show stopped.
+
 - **The frontend's real-time page dials its own origin.** Vite proxies
   only `/api`, so the gateway websocket needs
   `VITE_GRIDWORKS_WS_BASE_URL=ws://localhost:8100` in the frontend's
@@ -57,18 +62,25 @@ what you are testing.
   browser, so the page never loads. Start it with `--host 0.0.0.0`.
 - **A service that died stays dead quietly.** Before a check, list what is
   listening: `lsof -nP -iTCP -sTCP:LISTEN | grep -E '8000|8001|8010|8100|5173'`.
+- **A journalkeeper that outlived its session keeps journaling.** It has
+  no port to list, so it is invisible to the listener check, and a second
+  start beside it doubles every `messages` row and races the first on
+  reading-channel creation (`unique_name_terminal_asset_deactivated_date`
+  errors in both logs). Before starting one, `pgrep -fl run_journal_keeper`
+  and kill what is already there; two had run side by side for five days
+  when the weather archive check found them on 2026-11-15.
 - **The registry's forest broadcast is daily.** A change in the registry
   reaches journalkeeper's `g_nodes` on the next broadcast or on a rerun of
   the forest bootstrap against the read API.
 - **The web-backend dev login is seeded by hand.** One admin role with a
   null `ta_g_node_id` (`DEVRUN_API_USER` / `DEVRUN_API_PASSWORD` in
   `experiments/.env`); the dev-run runbook has the insert.
-- **`experiments/.env` names the production journal DB under the
-  journalkeeper's own variable.** Its `GJK_DB_URL` is the prod writer
-  login. A shell that has sourced it (`set -a; . experiments/.env`) and
-  then starts the journalkeeper runs it against production, whatever the
-  repo's `.env` says, because the environment outranks dotenv. Start a
-  service from a shell that has not sourced it, and check the process's
+- **The environment outranks a repo's `.env`.** A shell that has sourced
+  another `.env` (`set -a; . experiments/.env`) passes those values to
+  every service it starts, ahead of the service's own `.env`. The only
+  journal-DB login in `experiments/.env` is the read-only
+  `DB_ANALYST_URL`. Start a service from a shell that has not sourced a
+  foreign `.env`, and check the process's
   connections (`lsof -nP -p <pid> | grep TCP`) before trusting a run.
 - **The gateway on the tap broker.** Its queue prefix is a constant
   (`web.gateway.`) that the `gw.analyst` login may not declare; run it
@@ -102,6 +114,13 @@ the FLO for a slot and bidding off the answer. The first run is
 | FLO service | gridworks-flo | `cp template.env .env` (the defaults are the dev broker and `d1.flo`); `uv sync --all-groups --all-extras`; `uv run gwflo rabbit` | `Binding d1.flo-… to amq.topic with gw.*.to.flo.flo-params` |
 | LTN | gridworks-scada, repo root | `gws ltn run --message-summary` with the venv active | `awaiting_peer`, then waiting for `gw.house.operating.status` |
 | sim scada | gridworks-scada, repo root | `gws run --message-summary` | the LTN logs the operating status |
+
+A simulated layout needs a plant (scada executor `plant.md` "On a
+simulated layout"). The laptop runs none on the broker, so the scada's
+`.env` says `SCADA_PLANT_LINK=Standing`, the plant inside the scada; with
+the default `Broker` every simulated sensor is silent, the LTN reads
+`ScadaBlind=True` and never asks the FLO, and the watchdog stops the
+scada after about six minutes.
 
 The scada and LTN read `gridworks-scada/.env` at the repo root: both MQTT
 clients on `localhost:1885` as `smqPublic` with TLS off
@@ -243,6 +262,26 @@ run the api with `BACKEND_API_PORT=8000` for that run and
 headless check with the installed Chrome needs only `playwright-core`
 (`channel: 'chrome'`) in a scratch folder; the oak visualizer drew every
 plot this way on 2026-10-25.
+
+**The FLO re-run on it.** The visualizer's FLO view gains a re-run panel
+when the backend it talks to mounts the route: install bruce beside the
+API with `uv sync --group dev --group rerun` (optimal-flexibility `main`
+as the lock pins it) and start the api with `BACKEND_FLO_RERUN=in-process`.
+The panel edits the hour's bruce penalty tuning and draws bruce's answer
+in place of the journaled plot; a solve takes about six seconds once the
+tank shape's matrix is cached under `~/.config/bruce/graph_optimizer`,
+and a shape never solved on this laptop needs
+`CAN_COMPUTE_TRANSITION_MATRICES=true` once. bruce reads `flo.params` at
+the version its snapshot vendors (002 on 2026-11-15); an older hour
+answers 422 saying so. Checked 2026-11-15 on beech's 02:00Z hour of that
+day from `tsdb_tap`: the unchanged re-run reproduced the journaled path,
+and the stability penalty off changed it, at the API and on the page.
+A page check beside another session's dev server: in dev mode the
+browser calls the API at port 5173 whatever port vite took, so build a
+preview instead, `VITE_GRIDWORKS_API_BASE_URL=http://localhost:<api port>
+vite build --outDir <scratch>/dist` then `vite preview --outDir
+<scratch>/dist --port 4173` (4173 is in the backend's CORS list; 5176 is
+not), and drive it with `playwright-core` as above.
 
 **Reset between runs**, keeping the copied tables and the layout history:
 

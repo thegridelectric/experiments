@@ -68,7 +68,12 @@ archive/2026-09-15-alerter-no-data/mock_scada.py
 archive/2026-09-15-alerter-no-data/watcher.py
 2026-10-22-stopgap-mm/mqtt_witness.py
 2026-10-28-realtime-units-elm-check/run_gateway_on_tap.py
-procedures/sieg-valve-calibration/drive.py'
+procedures/sieg-valve-calibration/drive.py
+2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_live.py
+2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_store_once.py
+2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_store_sweep.py
+2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct2_sweep.py
+2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct_probe.py'
 # Top five: environments this repo lacks (smbus2 pi-only · gnr env ·
 # the pi scada checkout's venv · the laptop scada venv (admin_drive) ·
 # MicroPython on-pico); next four: spruce on-box harnesses (smbus2 /

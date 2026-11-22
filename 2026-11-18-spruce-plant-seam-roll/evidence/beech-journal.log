@@ -1,0 +1,1248 @@
+2026-11-18T19:57:51-0500 beech python[102795]: 2026-11-18 19:57:51.296 [derived-generator] Currently in on-peak or no on-peak period coming up soon
+2026-11-18T19:57:51-0500 beech python[102795]: 2026-11-18 19:57:51.299 [derived-generator] Rolling dist energy: 668 Wh
+2026-11-18T19:57:58-0500 beech python[102795]: 2026-11-18 19:57:58.015 [scada] Contract[971] 19:00 - 20:00: Total: 0.0 Wh | Used: 35.6 Wh | Status: Active  (created by ltn at 2026-11-18 19:57:57.925)
+2026-11-18T19:58:11-0500 beech python[102795]: 2026-11-18 19:58:11.680 [la] State: HpOff
+2026-11-18T19:58:15-0500 beech python[102795]: 2026-11-18 19:58:15.584 [lc] Top state: Dormant
+2026-11-18T19:58:15-0500 beech python[102795]: 2026-11-18 19:58:15.584 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T19:58:45-0500 beech python[102795]: 2026-11-18 19:58:45.880 [scada] Contract[971] 19:00 - 20:00: Total: 0.0 Wh | Used: 36.3 Wh | Status: Active  (created by ltn at 2026-11-18 19:58:45.794)
+2026-11-18T19:58:49-0500 beech systemd[1]: Stopping gwspaceheat.service - GridWorks spaceheat service...
+2026-11-18T19:58:49-0500 beech python[102795]: 2026-11-18 19:58:49.009 Shutting down due to ShutdownMessage, [Signal received: SIGTERM (15)  Service stopped]
+2026-11-18T19:58:49-0500 beech python[102795]: 2026-11-18 19:58:49.308 Tasks: 42  [DONE]
+2026-11-18T19:58:49-0500 beech python[102795]:         1/42  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f94290c70>
+2026-11-18T19:58:49-0500 beech python[102795]:         2/42  send_ping<gridworks_mqtt>       done:True   (cancelled)  <coroutine object LinkManager.send_ping at 0x7f94275f30>
+2026-11-18T19:58:49-0500 beech python[102795]:         3/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94275a80>
+2026-11-18T19:58:49-0500 beech python[102795]:         4/42  i2c-bus-heartbeat               done:True   (cancelled)  <coroutine object I2cBus._heartbeat at 0x7f94290ad0>
+2026-11-18T19:58:49-0500 beech python[102795]:         5/42  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f94290d40>
+2026-11-18T19:58:49-0500 beech python[102795]:         6/42  send_ping<local_mqtt>           done:True   (cancelled)  <coroutine object LinkManager.send_ping at 0x7f94276020>
+2026-11-18T19:58:49-0500 beech python[102795]:         7/42  disabled_roster                 done:True   (cancelled)  <coroutine object Scada.disabled_roster_task at 0x7f94291cb0>
+2026-11-18T19:58:49-0500 beech python[102795]:         8/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94274e50>
+2026-11-18T19:58:49-0500 beech python[102795]:         9/42  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f94290e10>
+2026-11-18T19:58:49-0500 beech python[102795]:         10/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f942755d0>
+2026-11-18T19:58:49-0500 beech python[102795]:         11/42  send_ping<admin>                done:True   (cancelled)  <coroutine object LinkManager.send_ping at 0x7f94276110>
+2026-11-18T19:58:49-0500 beech python[102795]:         12/42  LeafAlly keepalive              done:True   (cancelled)  <coroutine object BufferOnlyLeafAlly.main at 0x7f943731d0>
+2026-11-18T19:58:49-0500 beech python[102795]:         13/42  scada top_state_tracker         done:True   (cancelled)  <coroutine object Scada.state_tracker at 0x7f943a9a20>
+2026-11-18T19:58:49-0500 beech python[102795]:         14/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94275b70>
+2026-11-18T19:58:49-0500 beech python[102795]:         15/42  dist-010v-main                  done:True   (cancelled)  <coroutine object ZeroTenOutputer.main_loop at 0x7f94290ee0>
+2026-11-18T19:58:49-0500 beech python[102795]:         16/42  picocycler keepalive            done:True   (cancelled)  <coroutine object PicoCycler.main at 0x7f943a4900>
+2026-11-18T19:58:49-0500 beech python[102795]:         17/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94275210>
+2026-11-18T19:58:49-0500 beech python[102795]:         18/42  primary-010v-main               done:True   (cancelled)  <coroutine object ZeroTenOutputer.main_loop at 0x7f94290fb0>
+2026-11-18T19:58:49-0500 beech python[102795]:         19/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f942756c0>
+2026-11-18T19:58:49-0500 beech python[102795]:         20/42  Derived Generator keepalive     done:True   (cancelled)  <coroutine object DerivedGenerator.main at 0x7f94275030>
+2026-11-18T19:58:49-0500 beech python[102795]:         21/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94275c60>
+2026-11-18T19:58:49-0500 beech python[102795]:         22/42  store-010v-main                 done:True   (cancelled)  <coroutine object ZeroTenOutputer.main_loop at 0x7f94291150>
+2026-11-18T19:58:49-0500 beech python[102795]:         23/42  LocalControl keepalive          done:True   (cancelled)  <coroutine object LocalControlTouBase.main at 0x7f942949e0>
+2026-11-18T19:58:49-0500 beech python[102795]:         24/42  watchdog_manager.join           done:True   exception: None  <coroutine object WatchdogManager.join at 0x7f94297a00>
+2026-11-18T19:58:49-0500 beech python[102795]:         25/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94275300>
+2026-11-18T19:58:49-0500 beech python[102795]:         26/42  ApiBtuMeter keepalive           done:True   (cancelled)  <coroutine object ApiBtuMeter.main at 0x7f942912f0>
+2026-11-18T19:58:49-0500 beech python[102795]:         27/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f942757b0>
+2026-11-18T19:58:49-0500 beech python[102795]:         28/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94275d50>
+2026-11-18T19:58:49-0500 beech python[102795]:         29/42  ApiBtuMeter keepalive           done:True   (cancelled)  <coroutine object ApiBtuMeter.main at 0x7f94291490>
+2026-11-18T19:58:49-0500 beech python[102795]:         30/42  Sieg Loop Synchronous Report    done:True   (cancelled)  <coroutine object SiegLoop.main at 0x7f945234c0>
+2026-11-18T19:58:49-0500 beech python[102795]:         31/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f942753f0>
+2026-11-18T19:58:49-0500 beech python[102795]:         32/42  ApiBtuMeter keepalive           done:True   (cancelled)  <coroutine object ApiBtuMeter.main at 0x7f94291560>
+2026-11-18T19:58:49-0500 beech python[102795]:         33/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f942758a0>
+2026-11-18T19:58:49-0500 beech python[102795]:         34/42  report_sender                   done:True   (cancelled)  <coroutine object Scada.report_sending_task at 0x7f94291700>
+2026-11-18T19:58:49-0500 beech python[102795]:         35/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94275e40>
+2026-11-18T19:58:49-0500 beech python[102795]:         36/42  ApiBtuMeter keepalive           done:True   (cancelled)  <coroutine object ApiBtuMeter.main at 0x7f94291630>
+2026-11-18T19:58:49-0500 beech python[102795]:         37/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f94275990>
+2026-11-18T19:58:49-0500 beech python[102795]:         38/42  ColdWatch                       done:True   (cancelled)  <coroutine object ColdWatch.main at 0x7f94294660>
+2026-11-18T19:58:49-0500 beech python[102795]:         39/42  ApiTankModule keepalive         done:True   (cancelled)  <coroutine object ApiTankModule.main at 0x7f94290ba0>
+2026-11-18T19:58:49-0500 beech python[102795]:         40/42  relay state reporter            done:True   (cancelled)  <coroutine object Relay.main at 0x7f942754e0>
+2026-11-18T19:58:49-0500 beech python[102795]:         41/42  process_messages                done:True   (cancelled)  <coroutine object Proactor.process_messages at 0x7f943a8ca0>
+2026-11-18T19:58:49-0500 beech python[102795]:         42/42  snap_sender                     done:True   (cancelled)  <coroutine object Scada.snap_sending_task at 0x7f94291b10>
+2026-11-18T19:58:49-0500 beech python[102795]: 2026-11-18 19:58:49.309 Tasks: 1  [PENDING]
+2026-11-18T19:58:49-0500 beech python[102795]:         1/1  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f942ab4c0>
+2026-11-18T19:58:49-0500 beech python[102795]: 2026-11-18 19:58:49.309 Tasks: 1  [WAITING FOR]
+2026-11-18T19:58:49-0500 beech python[102795]:         1/1  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7f942ab4c0>
+2026-11-18T19:58:49-0500 beech python[102795]: 2026-11-18 19:58:49.375 Tasks: 1  [DONE]
+2026-11-18T19:58:49-0500 beech python[102795]:         1/1  power-meter.join                done:True   exception: None  <coroutine object SyncThreadActor.join at 0x7f942ab4c0>
+2026-11-18T19:58:49-0500 beech python[102795]: 2026-11-18 19:58:49.375 Tasks: 0  [PENDING]
+2026-11-18T19:58:49-0500 beech python[102795]: 2026-11-18 19:58:49.375 --Proactor<s>.join()
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 226.17025351524353
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7779805660248
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77666902542114
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77777457237244
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77736806869507
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7780866622925
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7774498462677
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77731490135193
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77772426605225
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.778525352478
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.777907371521
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77770733833313
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77666664123535
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7767469882965
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7789075374603
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.78489089012146
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77811789512634
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77841353416443
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7799563407898
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77707409858704
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7777531147003
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77826476097107
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.78998708724976
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7785041332245
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77971482276917
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77813243865967
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.78195452690125
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.78088569641113
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.77859926223755
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.78075766563416
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.781213760376
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7818615436554
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7787103652954
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7775900363922
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7756578922272
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7784550189972
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7774336338043
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7781150341034
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7772948741913
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 2.2
+2026-11-18T19:58:49-0500 beech python[102795]: [pico-cycler] Sleeping for 297.7767083644867
+2026-11-18T19:58:50-0500 beech systemd[1]: gwspaceheat.service: Deactivated successfully.
+2026-11-18T19:58:50-0500 beech systemd[1]: Stopped gwspaceheat.service - GridWorks spaceheat service.
+2026-11-18T19:58:50-0500 beech systemd[1]: gwspaceheat.service: Consumed 4min 12.635s CPU time.
+2026-11-18T19:58:52-0500 beech systemd[1]: Started gwspaceheat.service - GridWorks spaceheat service.
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.557
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.557 Env file: </home/pi/gridworks-scada/.env>  exists: True
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.557 Settings:
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.559 {
+2026-11-18T19:58:57-0500 beech python[105163]:   "paths": {
+2026-11-18T19:58:57-0500 beech python[105163]:     "base": "gridworks",
+2026-11-18T19:58:57-0500 beech python[105163]:     "name": "scada",
+2026-11-18T19:58:57-0500 beech python[105163]:     "relative_path": "gridworks/scada",
+2026-11-18T19:58:57-0500 beech python[105163]:     "data_home": "/home/pi/.local/share",
+2026-11-18T19:58:57-0500 beech python[105163]:     "state_home": "/home/pi/.local/state",
+2026-11-18T19:58:57-0500 beech python[105163]:     "config_home": "/home/pi/.config",
+2026-11-18T19:58:57-0500 beech python[105163]:     "data_dir": "/home/pi/.local/share/gridworks/scada",
+2026-11-18T19:58:57-0500 beech python[105163]:     "config_dir": "/home/pi/.config/gridworks/scada",
+2026-11-18T19:58:57-0500 beech python[105163]:     "certs_dir": "/home/pi/.config/gridworks/scada/certs",
+2026-11-18T19:58:57-0500 beech python[105163]:     "event_dir": "/home/pi/.local/share/gridworks/scada/event",
+2026-11-18T19:58:57-0500 beech python[105163]:     "log_dir": "/home/pi/.local/state/gridworks/scada/log",
+2026-11-18T19:58:57-0500 beech python[105163]:     "hardware_layout": "/home/pi/.config/gridworks/scada/hardware-layout.json",
+2026-11-18T19:58:57-0500 beech python[105163]:     "operational_params": "/home/pi/.config/gridworks/scada/operational-params.json",
+2026-11-18T19:58:57-0500 beech python[105163]:     "tadeed": "/home/pi/.config/gridworks/scada/ta-deed.json"
+2026-11-18T19:58:57-0500 beech python[105163]:   },
+2026-11-18T19:58:57-0500 beech python[105163]:   "logging": {
+2026-11-18T19:58:57-0500 beech python[105163]:     "base_log_name": "gridworks",
+2026-11-18T19:58:57-0500 beech python[105163]:     "base_log_level": 30,
+2026-11-18T19:58:57-0500 beech python[105163]:     "levels": {
+2026-11-18T19:58:57-0500 beech python[105163]:       "message_summary": 30,
+2026-11-18T19:58:57-0500 beech python[105163]:       "lifecycle": 20,
+2026-11-18T19:58:57-0500 beech python[105163]:       "comm_event": 20,
+2026-11-18T19:58:57-0500 beech python[105163]:       "io_loop": 20
+2026-11-18T19:58:57-0500 beech python[105163]:     },
+2026-11-18T19:58:57-0500 beech python[105163]:     "formatter": {
+2026-11-18T19:58:57-0500 beech python[105163]:       "fmt": "%(asctime)s %(message)s",
+2026-11-18T19:58:57-0500 beech python[105163]:       "datefmt": "",
+2026-11-18T19:58:57-0500 beech python[105163]:       "default_msec_format": "%s.%03d",
+2026-11-18T19:58:57-0500 beech python[105163]:       "use_utc": false
+2026-11-18T19:58:57-0500 beech python[105163]:     },
+2026-11-18T19:58:57-0500 beech python[105163]:     "file_handler": {
+2026-11-18T19:58:57-0500 beech python[105163]:       "filename": "proactor.log",
+2026-11-18T19:58:57-0500 beech python[105163]:       "bytes_per_log_file": 2097152,
+2026-11-18T19:58:57-0500 beech python[105163]:       "num_log_files": 10,
+2026-11-18T19:58:57-0500 beech python[105163]:       "level": 0
+2026-11-18T19:58:57-0500 beech python[105163]:     },
+2026-11-18T19:58:57-0500 beech python[105163]:     "io_loop": {
+2026-11-18T19:58:57-0500 beech python[105163]:       "file_handler": {
+2026-11-18T19:58:57-0500 beech python[105163]:         "filename": "io_loop.log",
+2026-11-18T19:58:57-0500 beech python[105163]:         "bytes_per_log_file": 2097152,
+2026-11-18T19:58:57-0500 beech python[105163]:         "num_log_files": 2,
+2026-11-18T19:58:57-0500 beech python[105163]:         "level": 0
+2026-11-18T19:58:57-0500 beech python[105163]:       },
+2026-11-18T19:58:57-0500 beech python[105163]:       "on_screen": false
+2026-11-18T19:58:57-0500 beech python[105163]:     },
+2026-11-18T19:58:57-0500 beech python[105163]:     "aiohttp_logging": false,
+2026-11-18T19:58:57-0500 beech python[105163]:     "paho_logging": false
+2026-11-18T19:58:57-0500 beech python[105163]:   },
+2026-11-18T19:58:57-0500 beech python[105163]:   "proactor": {
+2026-11-18T19:58:57-0500 beech python[105163]:     "mqtt_link_poll_seconds": 60.0,
+2026-11-18T19:58:57-0500 beech python[105163]:     "ack_timeout_seconds": 5.0,
+2026-11-18T19:58:57-0500 beech python[105163]:     "num_initial_event_reuploads": 5,
+2026-11-18T19:58:57-0500 beech python[105163]:     "num_inflight_events": 50
+2026-11-18T19:58:57-0500 beech python[105163]:   },
+2026-11-18T19:58:57-0500 beech python[105163]:   "pico_cycler_state_logging": false,
+2026-11-18T19:58:57-0500 beech python[105163]:   "unknown_channel_logging": false,
+2026-11-18T19:58:57-0500 beech python[105163]:   "power_meter_logging_level": 20,
+2026-11-18T19:58:57-0500 beech python[105163]:   "contract_rep_logging_level": 20,
+2026-11-18T19:58:57-0500 beech python[105163]:   "paho_logging": false,
+2026-11-18T19:58:57-0500 beech python[105163]:   "local_mqtt": {
+2026-11-18T19:58:57-0500 beech python[105163]:     "host": "beech2.local",
+2026-11-18T19:58:57-0500 beech python[105163]:     "port": 1883,
+2026-11-18T19:58:57-0500 beech python[105163]:     "keepalive": 60,
+2026-11-18T19:58:57-0500 beech python[105163]:     "bind_address": "",
+2026-11-18T19:58:57-0500 beech python[105163]:     "bind_port": 0,
+2026-11-18T19:58:57-0500 beech python[105163]:     "username": "sara",
+2026-11-18T19:58:57-0500 beech python[105163]:     "password": "**********",
+2026-11-18T19:58:57-0500 beech python[105163]:     "tls": {
+2026-11-18T19:58:57-0500 beech python[105163]:       "use_tls": false,
+2026-11-18T19:58:57-0500 beech python[105163]:       "port": 8883,
+2026-11-18T19:58:57-0500 beech python[105163]:       "paths": {
+2026-11-18T19:58:57-0500 beech python[105163]:         "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/ca.crt",
+2026-11-18T19:58:57-0500 beech python[105163]:         "cert_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/local_mqtt.crt",
+2026-11-18T19:58:57-0500 beech python[105163]:         "private_key_path": "/home/pi/.config/gridworks/scada/certs/local_mqtt/private/local_mqtt.pem"
+2026-11-18T19:58:57-0500 beech python[105163]:       },
+2026-11-18T19:58:57-0500 beech python[105163]:       "cert_reqs": 2,
+2026-11-18T19:58:57-0500 beech python[105163]:       "ciphers": null,
+2026-11-18T19:58:57-0500 beech python[105163]:       "keyfile_password": ""
+2026-11-18T19:58:57-0500 beech python[105163]:     }
+2026-11-18T19:58:57-0500 beech python[105163]:   },
+2026-11-18T19:58:57-0500 beech python[105163]:   "gridworks_mqtt": {
+2026-11-18T19:58:57-0500 beech python[105163]:     "host": "hw1-1.electricity.works",
+2026-11-18T19:58:57-0500 beech python[105163]:     "port": 1883,
+2026-11-18T19:58:57-0500 beech python[105163]:     "keepalive": 60,
+2026-11-18T19:58:57-0500 beech python[105163]:     "bind_address": "",
+2026-11-18T19:58:57-0500 beech python[105163]:     "bind_port": 0,
+2026-11-18T19:58:57-0500 beech python[105163]:     "username": null,
+2026-11-18T19:58:57-0500 beech python[105163]:     "password": "",
+2026-11-18T19:58:57-0500 beech python[105163]:     "tls": {
+2026-11-18T19:58:57-0500 beech python[105163]:       "use_tls": true,
+2026-11-18T19:58:57-0500 beech python[105163]:       "port": 8883,
+2026-11-18T19:58:57-0500 beech python[105163]:       "paths": {
+2026-11-18T19:58:57-0500 beech python[105163]:         "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/ca.crt",
+2026-11-18T19:58:57-0500 beech python[105163]:         "cert_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/gridworks_mqtt.crt",
+2026-11-18T19:58:57-0500 beech python[105163]:         "private_key_path": "/home/pi/.config/gridworks/scada/certs/gridworks_mqtt/private/gridworks_mqtt.pem"
+2026-11-18T19:58:57-0500 beech python[105163]:       },
+2026-11-18T19:58:57-0500 beech python[105163]:       "cert_reqs": 2,
+2026-11-18T19:58:57-0500 beech python[105163]:       "ciphers": null,
+2026-11-18T19:58:57-0500 beech python[105163]:       "keyfile_password": ""
+2026-11-18T19:58:57-0500 beech python[105163]:     }
+2026-11-18T19:58:57-0500 beech python[105163]:   },
+2026-11-18T19:58:57-0500 beech python[105163]:   "clock_source": "Wall",
+2026-11-18T19:58:57-0500 beech python[105163]:   "plant_link": "Broker",
+2026-11-18T19:58:57-0500 beech python[105163]:   "weather_source": "Gwwf",
+2026-11-18T19:58:57-0500 beech python[105163]:   "weather_api_url": "https://forecast.electricity.works/hw1-isone-weather",
+2026-11-18T19:58:57-0500 beech python[105163]:   "weather_pull_timeout_s": 20.0,
+2026-11-18T19:58:57-0500 beech python[105163]:   "seconds_per_report": 300,
+2026-11-18T19:58:57-0500 beech python[105163]:   "seconds_per_snapshot": 30,
+2026-11-18T19:58:57-0500 beech python[105163]:   "async_power_reporting_threshold": 0.02,
+2026-11-18T19:58:57-0500 beech python[105163]:   "power_meter_lost_after_s": 10.0,
+2026-11-18T19:58:57-0500 beech python[105163]:   "persister": {
+2026-11-18T19:58:57-0500 beech python[105163]:     "max_bytes": 524288000
+2026-11-18T19:58:57-0500 beech python[105163]:   },
+2026-11-18T19:58:57-0500 beech python[105163]:   "admin": {
+2026-11-18T19:58:57-0500 beech python[105163]:     "host": "localhost",
+2026-11-18T19:58:57-0500 beech python[105163]:     "port": 1883,
+2026-11-18T19:58:57-0500 beech python[105163]:     "keepalive": 60,
+2026-11-18T19:58:57-0500 beech python[105163]:     "bind_address": "",
+2026-11-18T19:58:57-0500 beech python[105163]:     "bind_port": 0,
+2026-11-18T19:58:57-0500 beech python[105163]:     "username": "sara",
+2026-11-18T19:58:57-0500 beech python[105163]:     "password": "**********",
+2026-11-18T19:58:57-0500 beech python[105163]:     "tls": {
+2026-11-18T19:58:57-0500 beech python[105163]:       "use_tls": false,
+2026-11-18T19:58:57-0500 beech python[105163]:       "port": 8883,
+2026-11-18T19:58:57-0500 beech python[105163]:       "paths": {
+2026-11-18T19:58:57-0500 beech python[105163]:         "ca_cert_path": "/home/pi/.config/gridworks/scada/certs/admin/ca.crt",
+2026-11-18T19:58:57-0500 beech python[105163]:         "cert_path": "/home/pi/.config/gridworks/scada/certs/admin/admin.crt",
+2026-11-18T19:58:57-0500 beech python[105163]:         "private_key_path": "/home/pi/.config/gridworks/scada/certs/admin/private/admin.pem"
+2026-11-18T19:58:57-0500 beech python[105163]:       },
+2026-11-18T19:58:57-0500 beech python[105163]:       "cert_reqs": 2,
+2026-11-18T19:58:57-0500 beech python[105163]:       "ciphers": null,
+2026-11-18T19:58:57-0500 beech python[105163]:       "keyfile_password": ""
+2026-11-18T19:58:57-0500 beech python[105163]:     },
+2026-11-18T19:58:57-0500 beech python[105163]:     "enabled": true,
+2026-11-18T19:58:57-0500 beech python[105163]:     "name": "admin",
+2026-11-18T19:58:57-0500 beech python[105163]:     "max_timeout_seconds": 86400.0
+2026-11-18T19:58:57-0500 beech python[105163]:   }
+2026-11-18T19:58:57-0500 beech python[105163]: }
+2026-11-18T19:58:57-0500 beech python[105163]: ScadaSettings(
+2026-11-18T19:58:57-0500 beech python[105163]:     paths=ScadaPaths(
+2026-11-18T19:58:57-0500 beech python[105163]:         base=PosixPath('gridworks'),
+2026-11-18T19:58:57-0500 beech python[105163]:         name=PosixPath('scada'),
+2026-11-18T19:58:57-0500 beech python[105163]:         relative_path=PosixPath('gridworks/scada'),
+2026-11-18T19:58:57-0500 beech python[105163]:         data_home=PosixPath('/home/pi/.local/share'),
+2026-11-18T19:58:57-0500 beech python[105163]:         state_home=PosixPath('/home/pi/.local/state'),
+2026-11-18T19:58:57-0500 beech python[105163]:         config_home=PosixPath('/home/pi/.config'),
+2026-11-18T19:58:57-0500 beech python[105163]:         data_dir=PosixPath('/home/pi/.local/share/gridworks/scada'),
+2026-11-18T19:58:57-0500 beech python[105163]:         config_dir=PosixPath('/home/pi/.config/gridworks/scada'),
+2026-11-18T19:58:57-0500 beech python[105163]:         certs_dir=PosixPath('/home/pi/.config/gridworks/scada/certs'),
+2026-11-18T19:58:57-0500 beech python[105163]:         event_dir=PosixPath('/home/pi/.local/share/gridworks/scada/event'),
+2026-11-18T19:58:57-0500 beech python[105163]:         log_dir=PosixPath('/home/pi/.local/state/gridworks/scada/log'),
+2026-11-18T19:58:57-0500 beech python[105163]:         hardware_layout=PosixPath('/home/pi/.config/gridworks/scada/hardware-lay
+2026-11-18T19:58:57-0500 beech python[105163]: out.json'),
+2026-11-18T19:58:57-0500 beech python[105163]:         operational_params=PosixPath('/home/pi/.config/gridworks/scada/operation
+2026-11-18T19:58:57-0500 beech python[105163]: al-params.json'),
+2026-11-18T19:58:57-0500 beech python[105163]:         tadeed=PosixPath('/home/pi/.config/gridworks/scada/ta-deed.json')
+2026-11-18T19:58:57-0500 beech python[105163]:     ),
+2026-11-18T19:58:57-0500 beech python[105163]:     logging=LoggingSettings(
+2026-11-18T19:58:57-0500 beech python[105163]:         base_log_name='gridworks',
+2026-11-18T19:58:57-0500 beech python[105163]:         base_log_level=30,
+2026-11-18T19:58:57-0500 beech python[105163]:         levels=LoggerLevels(
+2026-11-18T19:58:57-0500 beech python[105163]:             message_summary=30,
+2026-11-18T19:58:57-0500 beech python[105163]:             lifecycle=20,
+2026-11-18T19:58:57-0500 beech python[105163]:             comm_event=20,
+2026-11-18T19:58:57-0500 beech python[105163]:             io_loop=20
+2026-11-18T19:58:57-0500 beech python[105163]:         ),
+2026-11-18T19:58:57-0500 beech python[105163]:         formatter=FormatterSettings(
+2026-11-18T19:58:57-0500 beech python[105163]:             fmt='%(asctime)s %(message)s',
+2026-11-18T19:58:57-0500 beech python[105163]:             datefmt='',
+2026-11-18T19:58:57-0500 beech python[105163]:             default_msec_format='%s.%03d',
+2026-11-18T19:58:57-0500 beech python[105163]:             use_utc=False
+2026-11-18T19:58:57-0500 beech python[105163]:         ),
+2026-11-18T19:58:57-0500 beech python[105163]:         file_handler=RotatingFileHandlerSettings(
+2026-11-18T19:58:57-0500 beech python[105163]:             filename='proactor.log',
+2026-11-18T19:58:57-0500 beech python[105163]:             bytes_per_log_file=2097152,
+2026-11-18T19:58:57-0500 beech python[105163]:             num_log_files=10,
+2026-11-18T19:58:57-0500 beech python[105163]:             level=0
+2026-11-18T19:58:57-0500 beech python[105163]:         ),
+2026-11-18T19:58:57-0500 beech python[105163]:         io_loop=IOLoopLoggerSettings(
+2026-11-18T19:58:57-0500 beech python[105163]:             file_handler=RotatingFileHandlerSettings(
+2026-11-18T19:58:57-0500 beech python[105163]:                 filename='io_loop.log',
+2026-11-18T19:58:57-0500 beech python[105163]:                 bytes_per_log_file=2097152,
+2026-11-18T19:58:57-0500 beech python[105163]:                 num_log_files=2,
+2026-11-18T19:58:57-0500 beech python[105163]:                 level=0
+2026-11-18T19:58:57-0500 beech python[105163]:             ),
+2026-11-18T19:58:57-0500 beech python[105163]:             on_screen=False
+2026-11-18T19:58:57-0500 beech python[105163]:         ),
+2026-11-18T19:58:57-0500 beech python[105163]:         aiohttp_logging=False,
+2026-11-18T19:58:57-0500 beech python[105163]:         paho_logging=False
+2026-11-18T19:58:57-0500 beech python[105163]:     ),
+2026-11-18T19:58:57-0500 beech python[105163]:     proactor=ProactorSettings(
+2026-11-18T19:58:57-0500 beech python[105163]:         mqtt_link_poll_seconds=60.0,
+2026-11-18T19:58:57-0500 beech python[105163]:         ack_timeout_seconds=5.0,
+2026-11-18T19:58:57-0500 beech python[105163]:         num_initial_event_reuploads=5,
+2026-11-18T19:58:57-0500 beech python[105163]:         num_inflight_events=50
+2026-11-18T19:58:57-0500 beech python[105163]:     ),
+2026-11-18T19:58:57-0500 beech python[105163]:     pico_cycler_state_logging=False,
+2026-11-18T19:58:57-0500 beech python[105163]:     unknown_channel_logging=False,
+2026-11-18T19:58:57-0500 beech python[105163]:     power_meter_logging_level=20,
+2026-11-18T19:58:57-0500 beech python[105163]:     contract_rep_logging_level=20,
+2026-11-18T19:58:57-0500 beech python[105163]:     paho_logging=False,
+2026-11-18T19:58:57-0500 beech python[105163]:     local_mqtt=MQTTClient(
+2026-11-18T19:58:57-0500 beech python[105163]:         host='beech2.local',
+2026-11-18T19:58:57-0500 beech python[105163]:         port=1883,
+2026-11-18T19:58:57-0500 beech python[105163]:         keepalive=60,
+2026-11-18T19:58:57-0500 beech python[105163]:         bind_address='',
+2026-11-18T19:58:57-0500 beech python[105163]:         bind_port=0,
+2026-11-18T19:58:57-0500 beech python[105163]:         username='sara',
+2026-11-18T19:58:57-0500 beech python[105163]:         password=SecretStr('**********'),
+2026-11-18T19:58:57-0500 beech python[105163]:         tls=TLSInfo(
+2026-11-18T19:58:57-0500 beech python[105163]:             use_tls=False,
+2026-11-18T19:58:57-0500 beech python[105163]:             port=8883,
+2026-11-18T19:58:57-0500 beech python[105163]:             paths=TLSPaths(
+2026-11-18T19:58:57-0500 beech python[105163]:                 ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/l
+2026-11-18T19:58:57-0500 beech python[105163]: ocal_mqtt/ca.crt'),
+2026-11-18T19:58:57-0500 beech python[105163]:                 cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/loca
+2026-11-18T19:58:57-0500 beech python[105163]: l_mqtt/local_mqtt.crt'),
+2026-11-18T19:58:57-0500 beech python[105163]:                 private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+2026-11-18T19:58:57-0500 beech python[105163]: ts/local_mqtt/private/local_mqtt.pem')
+2026-11-18T19:58:57-0500 beech python[105163]:             ),
+2026-11-18T19:58:57-0500 beech python[105163]:             cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+2026-11-18T19:58:57-0500 beech python[105163]:             ciphers=None,
+2026-11-18T19:58:57-0500 beech python[105163]:             keyfile_password=SecretStr('')
+2026-11-18T19:58:57-0500 beech python[105163]:         )
+2026-11-18T19:58:57-0500 beech python[105163]:     ),
+2026-11-18T19:58:57-0500 beech python[105163]:     gridworks_mqtt=MQTTClient(
+2026-11-18T19:58:57-0500 beech python[105163]:         host='hw1-1.electricity.works',
+2026-11-18T19:58:57-0500 beech python[105163]:         port=1883,
+2026-11-18T19:58:57-0500 beech python[105163]:         keepalive=60,
+2026-11-18T19:58:57-0500 beech python[105163]:         bind_address='',
+2026-11-18T19:58:57-0500 beech python[105163]:         bind_port=0,
+2026-11-18T19:58:57-0500 beech python[105163]:         username=None,
+2026-11-18T19:58:57-0500 beech python[105163]:         password=SecretStr(''),
+2026-11-18T19:58:57-0500 beech python[105163]:         tls=TLSInfo(
+2026-11-18T19:58:57-0500 beech python[105163]:             use_tls=True,
+2026-11-18T19:58:57-0500 beech python[105163]:             port=8883,
+2026-11-18T19:58:57-0500 beech python[105163]:             paths=TLSPaths(
+2026-11-18T19:58:57-0500 beech python[105163]:                 ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/g
+2026-11-18T19:58:57-0500 beech python[105163]: ridworks_mqtt/ca.crt'),
+2026-11-18T19:58:57-0500 beech python[105163]:                 cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/grid
+2026-11-18T19:58:57-0500 beech python[105163]: works_mqtt/gridworks_mqtt.crt'),
+2026-11-18T19:58:57-0500 beech python[105163]:                 private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+2026-11-18T19:58:57-0500 beech python[105163]: ts/gridworks_mqtt/private/gridworks_mqtt.pem')
+2026-11-18T19:58:57-0500 beech python[105163]:             ),
+2026-11-18T19:58:57-0500 beech python[105163]:             cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+2026-11-18T19:58:57-0500 beech python[105163]:             ciphers=None,
+2026-11-18T19:58:57-0500 beech python[105163]:             keyfile_password=SecretStr('')
+2026-11-18T19:58:57-0500 beech python[105163]:         )
+2026-11-18T19:58:57-0500 beech python[105163]:     ),
+2026-11-18T19:58:57-0500 beech python[105163]:     clock_source=<ClockSource.Wall: 'Wall'>,
+2026-11-18T19:58:57-0500 beech python[105163]:     plant_link=<PlantLinkKind.Broker: 'Broker'>,
+2026-11-18T19:58:57-0500 beech python[105163]:     weather_source=<WeatherSourceKind.Gwwf: 'Gwwf'>,
+2026-11-18T19:58:57-0500 beech python[105163]:     weather_api_url='https://forecast.electricity.works/hw1-isone-weather',
+2026-11-18T19:58:57-0500 beech python[105163]:     weather_pull_timeout_s=20.0,
+2026-11-18T19:58:57-0500 beech python[105163]:     seconds_per_report=300,
+2026-11-18T19:58:57-0500 beech python[105163]:     seconds_per_snapshot=30,
+2026-11-18T19:58:57-0500 beech python[105163]:     async_power_reporting_threshold=0.02,
+2026-11-18T19:58:57-0500 beech python[105163]:     power_meter_lost_after_s=10.0,
+2026-11-18T19:58:57-0500 beech python[105163]:     persister=PersisterSettings(max_bytes=524288000),
+2026-11-18T19:58:57-0500 beech python[105163]:     admin=AdminLinkSettings(
+2026-11-18T19:58:57-0500 beech python[105163]:         host='localhost',
+2026-11-18T19:58:57-0500 beech python[105163]:         port=1883,
+2026-11-18T19:58:57-0500 beech python[105163]:         keepalive=60,
+2026-11-18T19:58:57-0500 beech python[105163]:         bind_address='',
+2026-11-18T19:58:57-0500 beech python[105163]:         bind_port=0,
+2026-11-18T19:58:57-0500 beech python[105163]:         username='sara',
+2026-11-18T19:58:57-0500 beech python[105163]:         password=SecretStr('**********'),
+2026-11-18T19:58:57-0500 beech python[105163]:         tls=TLSInfo(
+2026-11-18T19:58:57-0500 beech python[105163]:             use_tls=False,
+2026-11-18T19:58:57-0500 beech python[105163]:             port=8883,
+2026-11-18T19:58:57-0500 beech python[105163]:             paths=TLSPaths(
+2026-11-18T19:58:57-0500 beech python[105163]:                 ca_cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/a
+2026-11-18T19:58:57-0500 beech python[105163]: dmin/ca.crt'),
+2026-11-18T19:58:57-0500 beech python[105163]:                 cert_path=PosixPath('/home/pi/.config/gridworks/scada/certs/admi
+2026-11-18T19:58:57-0500 beech python[105163]: n/admin.crt'),
+2026-11-18T19:58:57-0500 beech python[105163]:                 private_key_path=PosixPath('/home/pi/.config/gridworks/scada/cer
+2026-11-18T19:58:57-0500 beech python[105163]: ts/admin/private/admin.pem')
+2026-11-18T19:58:57-0500 beech python[105163]:             ),
+2026-11-18T19:58:57-0500 beech python[105163]:             cert_reqs=<VerifyMode.CERT_REQUIRED: 2>,
+2026-11-18T19:58:57-0500 beech python[105163]:             ciphers=None,
+2026-11-18T19:58:57-0500 beech python[105163]:             keyfile_password=SecretStr('')
+2026-11-18T19:58:57-0500 beech python[105163]:         ),
+2026-11-18T19:58:57-0500 beech python[105163]:         enabled=True,
+2026-11-18T19:58:57-0500 beech python[105163]:         name='admin',
+2026-11-18T19:58:57-0500 beech python[105163]:         max_timeout_seconds=86400.0
+2026-11-18T19:58:57-0500 beech python[105163]:     )
+2026-11-18T19:58:57-0500 beech python[105163]: )
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.645 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.beech.scada', short_name='s')> reindexing events
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.646 Proactor <ProactorName(long_name='hw1.isone.me.versant.keene.beech.scada', short_name='s')> reindexing complete.
+2026-11-18T19:58:57-0500 beech python[105163]:   0 events present for upload, using approximately 0 KB / 0.0 MB storage space.
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.657 [scada] clock: WallClock
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.668 Skip binding of 'trigger' to model due to model override policy.
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.668 Skip binding of 'may_trigger' to model due to model override policy.
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.726 [la] Params: AlphaTimes10=108 BetaTimes100=-19 GammaEx6=889 IntermediatePowerKw=3.6 IntermediateRswtF=125 DdPowerKw=12.5 DdRswtF=155 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=166 LoadOverestimationPercent=0 CopIntercept=1.8 CopOatCoeff=0.012 CopLwtCoeff=0.0 CopMin=1.8 CopMinOatF=0.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.727 Creating LeafAlly with strategy BufferOnly, using actors.leaf_ally.house0.buffer_only.BufferOnlyLeafAlly
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.729 Skip binding of 'WakeUp' to model due to model override policy.
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.730 [derived-generator] self.timezone: America/New_York
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.730 [derived-generator] Params: AlphaTimes10=108 BetaTimes100=-19 GammaEx6=889 IntermediatePowerKw=3.6 IntermediateRswtF=125 DdPowerKw=12.5 DdRswtF=155 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=166 LoadOverestimationPercent=0 CopIntercept=1.8 CopOatCoeff=0.012 CopLwtCoeff=0.0 CopMin=1.8 CopMinOatF=0.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.736 [lc] Params: AlphaTimes10=108 BetaTimes100=-19 GammaEx6=889 IntermediatePowerKw=3.6 IntermediateRswtF=125 DdPowerKw=12.5 DdRswtF=155 DdDeltaTF=20 HpMaxKwEl=9.66 MaxEwtF=166 LoadOverestimationPercent=0 CopIntercept=1.8 CopOatCoeff=0.012 CopLwtCoeff=0.0 CopMin=1.8 CopMinOatF=0.0 HpTurnOnMinutes=12 TypeName='ha1.params' Version='006'
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.742 [lc] Set auto.lc.n command tree
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.743 Skip binding of 'trigger' to model due to model override policy.
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.743 Skip binding of 'may_trigger' to model due to model override policy.
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.744 [lc] STARTING BufferOnly LocalControl
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.744 Creating LocalControl (Standby False, gw.house0.layout, SeasonalStorageMode BufferOnly, ServiceMode Heating), using actors.local_control.house0.buffer_only_tou.BufferOnlyTouLocalControl
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.745 [sieg-loop] Running HoldFullSend
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.767
+2026-11-18T19:58:57-0500 beech python[105163]: Subscription info for <hw1.isone.me.versant.keene.beech.scada> [construction]
+2026-11-18T19:58:57-0500 beech python[105163]:   Client name: <gridworks_mqtt>  topic_dst: <ltn>
+2026-11-18T19:58:57-0500 beech python[105163]:     Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/ltn/SOME_MESSAGE_TYPE
+2026-11-18T19:58:57-0500 beech python[105163]:     Subscriptions:
+2026-11-18T19:58:57-0500 beech python[105163]:       [('gw/hw1-isone-me-versant-keene-beech/to/s/#', <QOS.AtMostOnce: 0>)]
+2026-11-18T19:58:57-0500 beech python[105163]:   Client name: <local_mqtt>  topic_dst: <s2>
+2026-11-18T19:58:57-0500 beech python[105163]:     Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/s2/SOME_MESSAGE_TYPE
+2026-11-18T19:58:57-0500 beech python[105163]:     Subscriptions:
+2026-11-18T19:58:57-0500 beech python[105163]:       [('gw/hw1-isone-me-versant-keene-beech-scada-s2/to/s/#', <QOS.AtMostOnce: 0>)]
+2026-11-18T19:58:57-0500 beech python[105163]:   Client name: <admin>  topic_dst: <admin>
+2026-11-18T19:58:57-0500 beech python[105163]:     Publish to: gw/hw1-isone-me-versant-keene-beech-scada/to/admin/SOME_MESSAGE_TYPE
+2026-11-18T19:58:57-0500 beech python[105163]:     Subscriptions:
+2026-11-18T19:58:57-0500 beech python[105163]:       [('gw/admin/to/hw1-isone-me-versant-keene-beech-scada/#', <QOS.AtMostOnce: 0>)]
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.783 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.795 Loaded ContractHb into hb
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.795 Starting with contract 971
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.796 ++Proactor<s>.join()
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.798 Tasks: 61  [Proactor.join() - all tasks]
+2026-11-18T19:58:57-0500 beech python[105163]:         1/61  hp-failsafe-relay-boot-adopt    done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fc40>
+2026-11-18T19:58:57-0500 beech python[105163]:         2/61  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779220>
+2026-11-18T19:58:57-0500 beech python[105163]:         3/61  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa8aaee60>
+2026-11-18T19:58:57-0500 beech python[105163]:         4/61  primary-pump-scada-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87985e0>
+2026-11-18T19:58:57-0500 beech python[105163]:         5/61  zone2-up-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8799120>
+2026-11-18T19:58:57-0500 beech python[105163]:         6/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fd30>
+2026-11-18T19:58:57-0500 beech python[105163]:         7/61  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87792f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         8/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87986d0>
+2026-11-18T19:58:57-0500 beech python[105163]:         9/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799210>
+2026-11-18T19:58:57-0500 beech python[105163]:         10/61  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87793c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         11/61  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fe20>
+2026-11-18T19:58:57-0500 beech python[105163]:         12/61  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7fa876f100>
+2026-11-18T19:58:57-0500 beech python[105163]:         13/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87988b0>
+2026-11-18T19:58:57-0500 beech python[105163]:         14/61  LeafAlly keepalive              done:False   exception: None  <coroutine object BufferOnlyLeafAlly.main at 0x7fa885f2a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         15/61  vdc-relay-boot-adopt            done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892f6a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         16/61  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885f030>
+2026-11-18T19:58:57-0500 beech python[105163]:         17/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892ff10>
+2026-11-18T19:58:57-0500 beech python[105163]:         18/61  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa8aadfc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         19/61  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa8a61d00>
+2026-11-18T19:58:57-0500 beech python[105163]:         20/61  hp-loop-keep-send-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87989a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         21/61  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa8779560>
+2026-11-18T19:58:57-0500 beech python[105163]:         22/61  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ee90>
+2026-11-18T19:58:57-0500 beech python[105163]:         23/61  hp-loop-on-off-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87987c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         24/61  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa8799300>
+2026-11-18T19:58:57-0500 beech python[105163]:         25/61  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa892eb60>
+2026-11-18T19:58:57-0500 beech python[105163]:         26/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798a90>
+2026-11-18T19:58:57-0500 beech python[105163]:         27/61  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa89f2dc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         28/61  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885edc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         29/61  aquastat-ctrl-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798040>
+2026-11-18T19:58:57-0500 beech python[105163]:         30/61  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87993f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         31/61  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7fa877c820>
+2026-11-18T19:58:57-0500 beech python[105163]:         32/61  zone1-down-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798b80>
+2026-11-18T19:58:57-0500 beech python[105163]:         33/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f790>
+2026-11-18T19:58:57-0500 beech python[105163]:         34/61  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ef60>
+2026-11-18T19:58:57-0500 beech python[105163]:         35/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87984f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         36/61  pat_watchdog                    done:False   exception: None  <coroutine object WatchdogManager._check_pats at 0x7fa8ad8760>
+2026-11-18T19:58:57-0500 beech python[105163]:         37/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798130>
+2026-11-18T19:58:57-0500 beech python[105163]:         38/61  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87994e0>
+2026-11-18T19:58:57-0500 beech python[105163]:         39/61  LocalControl keepalive          done:False   exception: None  <coroutine object LocalControlTouBase.main at 0x7fa877cba0>
+2026-11-18T19:58:57-0500 beech python[105163]:         40/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798c70>
+2026-11-18T19:58:57-0500 beech python[105163]:         41/61  tstat-common-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892f880>
+2026-11-18T19:58:57-0500 beech python[105163]:         42/61  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778c70>
+2026-11-18T19:58:57-0500 beech python[105163]:         43/61  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798220>
+2026-11-18T19:58:57-0500 beech python[105163]:         44/61  contract_resumer                done:False   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7fa87797d0>
+2026-11-18T19:58:57-0500 beech python[105163]:         45/61  zone1-down-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798d60>
+2026-11-18T19:58:57-0500 beech python[105163]:         46/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f970>
+2026-11-18T19:58:57-0500 beech python[105163]:         47/61  Task-1                          done:False   exception: None  <coroutine object Proactor.run_forever at 0x7fa8b8ee00>
+2026-11-18T19:58:57-0500 beech python[105163]:         48/61  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778d40>
+2026-11-18T19:58:57-0500 beech python[105163]:         49/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798310>
+2026-11-18T19:58:57-0500 beech python[105163]:         50/61  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa8779490>
+2026-11-18T19:58:57-0500 beech python[105163]:         51/61  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa876c580>
+2026-11-18T19:58:57-0500 beech python[105163]:         52/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798e50>
+2026-11-18T19:58:57-0500 beech python[105163]:         53/61  charge-discharge-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fa60>
+2026-11-18T19:58:57-0500 beech python[105163]:         54/61  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778ee0>
+2026-11-18T19:58:57-0500 beech python[105163]:         55/61  primary-pump-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798400>
+2026-11-18T19:58:57-0500 beech python[105163]:         56/61  unknown_channel_logger          done:False   exception: None  <coroutine object Scada.unknown_channel_logging_task at 0x7fa892f5b0>
+2026-11-18T19:58:57-0500 beech python[105163]:         57/61  zone2-up-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798f40>
+2026-11-18T19:58:57-0500 beech python[105163]:         58/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fb50>
+2026-11-18T19:58:57-0500 beech python[105163]:         59/61  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779080>
+2026-11-18T19:58:57-0500 beech python[105163]:         60/61  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7fa8779630>
+2026-11-18T19:58:57-0500 beech python[105163]:         61/61  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799030>
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.800 Tasks: 100  [WAITING FOR]
+2026-11-18T19:58:57-0500 beech python[105163]:         1/100  zone2-up-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8799120>
+2026-11-18T19:58:57-0500 beech python[105163]:         2/100  buffer.join                     done:False   exception: None  <coroutine object ApiTankModule.join at 0x7fa87b1fc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         3/100  lc.join                         done:False   exception: None  <coroutine object LocalControl.join at 0x7fa87b0040>
+2026-11-18T19:58:57-0500 beech python[105163]:         4/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799210>
+2026-11-18T19:58:57-0500 beech python[105163]:         5/100  LeafAlly keepalive              done:False   exception: None  <coroutine object BufferOnlyLeafAlly.main at 0x7fa885f2a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         6/100  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885f030>
+2026-11-18T19:58:57-0500 beech python[105163]:         7/100  tank1.join                      done:False   exception: None  <coroutine object ApiTankModule.join at 0x7fa87b2140>
+2026-11-18T19:58:57-0500 beech python[105163]:         8/100  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa8a61d00>
+2026-11-18T19:58:57-0500 beech python[105163]:         9/100  hp-boss.join                    done:False   exception: None  <coroutine object HpBoss.join at 0x7fa87b01c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         10/100  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ee90>
+2026-11-18T19:58:57-0500 beech python[105163]:         11/100  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa892eb60>
+2026-11-18T19:58:57-0500 beech python[105163]:         12/100  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885edc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         13/100  tank2.join                      done:False   exception: None  <coroutine object ApiTankModule.join at 0x7fa87b22c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         14/100  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7fa877c820>
+2026-11-18T19:58:57-0500 beech python[105163]:         15/100  sieg-loop.join                  done:False   exception: None  <coroutine object SiegLoop.join at 0x7fa87b0340>
+2026-11-18T19:58:57-0500 beech python[105163]:         16/100  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ef60>
+2026-11-18T19:58:57-0500 beech python[105163]:         17/100  LocalControl keepalive          done:False   exception: None  <coroutine object LocalControlTouBase.main at 0x7fa877cba0>
+2026-11-18T19:58:57-0500 beech python[105163]:         18/100  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778c70>
+2026-11-18T19:58:57-0500 beech python[105163]:         19/100  tank3.join                      done:False   exception: None  <coroutine object ApiTankModule.join at 0x7fa87b2440>
+2026-11-18T19:58:57-0500 beech python[105163]:         20/100  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa87b04c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         21/100  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778d40>
+2026-11-18T19:58:57-0500 beech python[105163]:         22/100  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa876c580>
+2026-11-18T19:58:57-0500 beech python[105163]:         23/100  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778ee0>
+2026-11-18T19:58:57-0500 beech python[105163]:         24/100  dist-010v.join                  done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa87b25c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         25/100  hubitat.join                    done:False   exception: None  <coroutine object Hubitat.join at 0x7fa87b0640>
+2026-11-18T19:58:57-0500 beech python[105163]:         26/100  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779080>
+2026-11-18T19:58:57-0500 beech python[105163]:         27/100  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779220>
+2026-11-18T19:58:57-0500 beech python[105163]:         28/100  primary-010v.join               done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa87b2740>
+2026-11-18T19:58:57-0500 beech python[105163]:         29/100  i2c-bus.join                    done:False   exception: None  <coroutine object I2cBus.join at 0x7fa87b07c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         30/100  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87792f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         31/100  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87793c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         32/100  store-010v.join                 done:False   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa87b28c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         33/100  vdc-relay-boot-adopt            done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892f6a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         34/100  vdc-relay.join                  done:False   exception: None  <coroutine object Relay.join at 0x7fa87b0940>
+2026-11-18T19:58:57-0500 beech python[105163]:         35/100  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa8aadfc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         36/100  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa8779560>
+2026-11-18T19:58:57-0500 beech python[105163]:         37/100  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa8799300>
+2026-11-18T19:58:57-0500 beech python[105163]:         38/100  primary-btu.join                done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa87b2a40>
+2026-11-18T19:58:57-0500 beech python[105163]:         39/100  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa89f2dc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         40/100  tstat-common-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7fa87b0ac0>
+2026-11-18T19:58:57-0500 beech python[105163]:         41/100  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87993f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         42/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f790>
+2026-11-18T19:58:57-0500 beech python[105163]:         43/100  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87994e0>
+2026-11-18T19:58:57-0500 beech python[105163]:         44/100  dist-btu.join                   done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa87b2bc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         45/100  tstat-common-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892f880>
+2026-11-18T19:58:57-0500 beech python[105163]:         46/100  charge-discharge-relay.join     done:False   exception: None  <coroutine object Relay.join at 0x7fa87b0c40>
+2026-11-18T19:58:57-0500 beech python[105163]:         47/100  contract_resumer                done:False   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7fa87797d0>
+2026-11-18T19:58:57-0500 beech python[105163]:         48/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f970>
+2026-11-18T19:58:57-0500 beech python[105163]:         49/100  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa8779490>
+2026-11-18T19:58:57-0500 beech python[105163]:         50/100  store-btu.join                  done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa87b2d40>
+2026-11-18T19:58:57-0500 beech python[105163]:         51/100  charge-discharge-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fa60>
+2026-11-18T19:58:57-0500 beech python[105163]:         52/100  hp-failsafe-relay.join          done:False   exception: None  <coroutine object Relay.join at 0x7fa87b0dc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         53/100  unknown_channel_logger          done:False   exception: None  <coroutine object Scada.unknown_channel_logging_task at 0x7fa892f5b0>
+2026-11-18T19:58:57-0500 beech python[105163]:         54/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fb50>
+2026-11-18T19:58:57-0500 beech python[105163]:         55/100  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7fa8779630>
+2026-11-18T19:58:57-0500 beech python[105163]:         56/100  sieg-btu.join                   done:False   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa87b2ec0>
+2026-11-18T19:58:57-0500 beech python[105163]:         57/100  hp-failsafe-relay-boot-adopt    done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fc40>
+2026-11-18T19:58:57-0500 beech python[105163]:         58/100  hp-scada-ops-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7fa87b0f40>
+2026-11-18T19:58:57-0500 beech python[105163]:         59/100  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa8aaee60>
+2026-11-18T19:58:57-0500 beech python[105163]:         60/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fd30>
+2026-11-18T19:58:57-0500 beech python[105163]:         61/100  hp-scada-ops-relay-boot-adopt   done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fe20>
+2026-11-18T19:58:57-0500 beech python[105163]:         62/100  aquastat-ctrl-relay.join        done:False   exception: None  <coroutine object Relay.join at 0x7fa87b10c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         63/100  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7fa876f100>
+2026-11-18T19:58:57-0500 beech python[105163]:         64/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892ff10>
+2026-11-18T19:58:57-0500 beech python[105163]:         65/100  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa875e0a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         66/100  hp-loop-on-off-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87987c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         67/100  store-pump-relay.join           done:False   exception: None  <coroutine object Relay.join at 0x7fa87b1240>
+2026-11-18T19:58:57-0500 beech python[105163]:         68/100  aquastat-ctrl-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798040>
+2026-11-18T19:58:57-0500 beech python[105163]:         69/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798130>
+2026-11-18T19:58:57-0500 beech python[105163]:         70/100  primary-pump-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7fa87b13c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         71/100  io_loop_manager.join            done:False   exception: None  <coroutine object IOLoop.join at 0x7fa876f400>
+2026-11-18T19:58:57-0500 beech python[105163]:         72/100  store-pump-relay-boot-adopt     done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798220>
+2026-11-18T19:58:57-0500 beech python[105163]:         73/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798310>
+2026-11-18T19:58:57-0500 beech python[105163]:         74/100  primary-pump-scada-ops-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7fa87b1540>
+2026-11-18T19:58:57-0500 beech python[105163]:         75/100  _WebManager.join                done:False   exception: None  <coroutine object _WebManager.join at 0x7fa876f580>
+2026-11-18T19:58:57-0500 beech python[105163]:         76/100  primary-pump-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798400>
+2026-11-18T19:58:57-0500 beech python[105163]:         77/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87984f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         78/100  hp-loop-on-off-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7fa87b16c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         79/100  s.join                          done:False   exception: None  <coroutine object PrimeActor.join at 0x7fa876f700>
+2026-11-18T19:58:57-0500 beech python[105163]:         80/100  primary-pump-scada-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87985e0>
+2026-11-18T19:58:57-0500 beech python[105163]:         81/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87986d0>
+2026-11-18T19:58:57-0500 beech python[105163]:         82/100  hp-loop-keep-send-relay.join    done:False   exception: None  <coroutine object Relay.join at 0x7fa87b1840>
+2026-11-18T19:58:57-0500 beech python[105163]:         83/100  la.join                         done:False   exception: None  <coroutine object LeafAlly.join at 0x7fa876f880>
+2026-11-18T19:58:57-0500 beech python[105163]:         84/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87988b0>
+2026-11-18T19:58:57-0500 beech python[105163]:         85/100  hp-loop-keep-send-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87989a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         86/100  zone1-down-failsafe-relay.join  done:False   exception: None  <coroutine object Relay.join at 0x7fa87b19c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         87/100  five-v-boss.join                done:False   exception: None  <coroutine object FiveVBoss.join at 0x7fa876fa00>
+2026-11-18T19:58:57-0500 beech python[105163]:         88/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798a90>
+2026-11-18T19:58:57-0500 beech python[105163]:         89/100  zone1-down-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798b80>
+2026-11-18T19:58:57-0500 beech python[105163]:         90/100  zone1-down-ops-relay.join       done:False   exception: None  <coroutine object Relay.join at 0x7fa87b1b40>
+2026-11-18T19:58:57-0500 beech python[105163]:         91/100  pico-cycler.join                done:False   exception: None  <coroutine object PicoCycler.join at 0x7fa876fb80>
+2026-11-18T19:58:57-0500 beech python[105163]:         92/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798c70>
+2026-11-18T19:58:57-0500 beech python[105163]:         93/100  zone1-down-ops-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798d60>
+2026-11-18T19:58:57-0500 beech python[105163]:         94/100  zone2-up-failsafe-relay.join    done:False   exception: None  <coroutine object Relay.join at 0x7fa87b1cc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         95/100  derived-generator.join          done:False   exception: None  <coroutine object DerivedGenerator.join at 0x7fa876fd00>
+2026-11-18T19:58:57-0500 beech python[105163]:         96/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798e50>
+2026-11-18T19:58:57-0500 beech python[105163]:         97/100  zone2-up-failsafe-relay-boot-adopt  done:False   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798f40>
+2026-11-18T19:58:57-0500 beech python[105163]:         98/100  zone2-up-ops-relay.join         done:False   exception: None  <coroutine object Relay.join at 0x7fa87b1e40>
+2026-11-18T19:58:57-0500 beech python[105163]:         99/100  cold-watch.join                 done:False   exception: None  <coroutine object ColdWatch.join at 0x7fa876fe80>
+2026-11-18T19:58:57-0500 beech python[105163]:         100/100  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799030>
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.803 [derived-generator] SynthGen about to get forecasts
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.809 [cold-watch] Could not find latest temperature for down!
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.810 [cold-watch] Could not find latest temperature for up!
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.824 [sieg-loop] Just received state HpOff from HpBoss
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.825 [scada] Actuator dist-010v is ready. 1/3
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.825 [scada] Actuator primary-010v is ready. 2/3
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.826 [scada] Actuator store-010v is ready. 3/3
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.826 [scada] All actuators are ready!
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.827 [sieg-loop] Moving to full send
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.827 [lc] Initializing relays
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.828 [lc] de-energizing most relays
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.829 [lc] DischargeStore to charge-discharge-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.829 [lc] SwitchToHeatPump to primary-pump-failsafe-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.830 [lc] OpenRelay to primary-pump-scada-ops-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.831 [lc] OpenRelay to store-pump-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.831 [lc] CloseRelay to tstat-common-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.832 [lc] SwitchToWallThermostat to zone1-down-failsafe-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.833 [lc] OpenRelay to zone1-down-ops-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.833 [lc] SwitchToWallThermostat to zone2-up-failsafe-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.834 [lc] OpenRelay to zone2-up-ops-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.834 [lc] energizing certain critical relays
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.835 [lc] auto.lc.n sending SwitchToScada to Hp Failsafe auto.lc.n.hp-failsafe-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.835 [lc] auto.lc.n sending SwitchToScada to Aquastat Ctrl auto.lc.n.aquastat-ctrl-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.836 [lc] Is on peak: turning off HP
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.836 [lc] TurnOff to hp-boss
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.837 [lc] Setting 010 defaults inside initialize_actuators
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.838 [lc] Just set auto.lc.n.store-010v to 65 from auto.lc.n
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.839 [lc] Just set auto.lc.n.primary-010v to 62 from auto.lc.n
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.840 [lc] Just set auto.lc.n.dist-010v to 35 from auto.lc.n
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.865 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='0c3425ce-af3e-4f6c-bc33-7a4f5dad0a8a' SendTimeUnixMs=1795049937836 TypeName='fsm.event' Version='000'
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.865 [hp-boss] Command 2b638f75-93d9-48f6-84bb-cca3b79008d2 superseded by 0c3425ce-af3e-4f6c-bc33-7a4f5dad0a8a before its relay reported
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.866 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.868 [store-010v] Dispatch from auto.lc.n: volts x10 65
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.869 [primary-010v] Dispatch from auto.lc.n: volts x10 62
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.870 [dist-010v] Dispatch from auto.lc.n: volts x10 35
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.875 [sieg-loop] Just received state HpOff from HpBoss
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.879 [sieg-loop] auto.lc.n.sieg-loop sending SendMore to HpLoopKeepSend relay auto.lc.n.sieg-loop.hp-loop-keep-send-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.880 [sieg-loop] auto.lc.n.sieg-loop sending CloseRelay to HpLoopOnOff relay auto.lc.n.sieg-loop.hp-loop-on-off-relay
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.881 [sieg-loop] StartKeepingLess: FullyKeep -> KeepingLess
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.881 [sieg-loop] Motor toward send for 104 s from keep_seconds 94
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.887 [dist-010v] dist-010v: output range set to 0-10 V
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.887 [primary-010v] primary-010v: output range set to 0-10 V
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.888 [store-010v] store-010v: output range set to 0-10 V
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.890 admin:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.919 Tasks: 55  [DONE]
+2026-11-18T19:58:57-0500 beech python[105163]:         1/55  hp-failsafe-relay-boot-adopt    done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fc40>
+2026-11-18T19:58:57-0500 beech python[105163]:         2/55  hp-scada-ops-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7fa87b0f40>
+2026-11-18T19:58:57-0500 beech python[105163]:         3/55  primary-010v.join               done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa87b2740>
+2026-11-18T19:58:57-0500 beech python[105163]:         4/55  primary-pump-scada-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87985e0>
+2026-11-18T19:58:57-0500 beech python[105163]:         5/55  buffer.join                     done:True   exception: None  <coroutine object ApiTankModule.join at 0x7fa87b1fc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         6/55  zone2-up-ops-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8799120>
+2026-11-18T19:58:57-0500 beech python[105163]:         7/55  i2c-bus.join                    done:True   exception: None  <coroutine object I2cBus.join at 0x7fa87b07c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         8/55  lc.join                         done:True   exception: None  <coroutine object LocalControl.join at 0x7fa87b0040>
+2026-11-18T19:58:57-0500 beech python[105163]:         9/55  hp-loop-keep-send-relay.join    done:True   exception: None  <coroutine object Relay.join at 0x7fa87b1840>
+2026-11-18T19:58:57-0500 beech python[105163]:         10/55  la.join                         done:True   exception: None  <coroutine object LeafAlly.join at 0x7fa876f880>
+2026-11-18T19:58:57-0500 beech python[105163]:         11/55  aquastat-ctrl-relay.join        done:True   exception: None  <coroutine object Relay.join at 0x7fa87b10c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         12/55  hp-scada-ops-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fe20>
+2026-11-18T19:58:57-0500 beech python[105163]:         13/55  store-010v.join                 done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa87b28c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         14/55  tank1.join                      done:True   exception: None  <coroutine object ApiTankModule.join at 0x7fa87b2140>
+2026-11-18T19:58:57-0500 beech python[105163]:         15/55  vdc-relay-boot-adopt            done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892f6a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         16/55  vdc-relay.join                  done:True   exception: None  <coroutine object Relay.join at 0x7fa87b0940>
+2026-11-18T19:58:57-0500 beech python[105163]:         17/55  hp-boss.join                    done:True   exception: None  <coroutine object HpBoss.join at 0x7fa87b01c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         18/55  hp-loop-keep-send-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87989a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         19/55  zone1-down-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7fa87b19c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         20/55  five-v-boss.join                done:True   exception: None  <coroutine object FiveVBoss.join at 0x7fa876fa00>
+2026-11-18T19:58:57-0500 beech python[105163]:         21/55  hp-loop-on-off-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa87987c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         22/55  store-pump-relay.join           done:True   exception: None  <coroutine object Relay.join at 0x7fa87b1240>
+2026-11-18T19:58:57-0500 beech python[105163]:         23/55  primary-btu.join                done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa87b2a40>
+2026-11-18T19:58:57-0500 beech python[105163]:         24/55  tank2.join                      done:True   exception: None  <coroutine object ApiTankModule.join at 0x7fa87b22c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         25/55  tstat-common-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7fa87b0ac0>
+2026-11-18T19:58:57-0500 beech python[105163]:         26/55  aquastat-ctrl-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798040>
+2026-11-18T19:58:57-0500 beech python[105163]:         27/55  sieg-loop.join                  done:True   exception: None  <coroutine object SiegLoop.join at 0x7fa87b0340>
+2026-11-18T19:58:57-0500 beech python[105163]:         28/55  zone1-down-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798b80>
+2026-11-18T19:58:57-0500 beech python[105163]:         29/55  zone1-down-ops-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7fa87b1b40>
+2026-11-18T19:58:57-0500 beech python[105163]:         30/55  pico-cycler.join                done:True   exception: None  <coroutine object PicoCycler.join at 0x7fa876fb80>
+2026-11-18T19:58:57-0500 beech python[105163]:         31/55  primary-pump-failsafe-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7fa87b13c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         32/55  dist-btu.join                   done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa87b2bc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         33/55  io_loop_manager.join            done:True   exception: None  <coroutine object IOLoop.join at 0x7fa876f400>
+2026-11-18T19:58:57-0500 beech python[105163]:         34/55  tank3.join                      done:True   exception: None  <coroutine object ApiTankModule.join at 0x7fa87b2440>
+2026-11-18T19:58:57-0500 beech python[105163]:         35/55  tstat-common-relay-boot-adopt   done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892f880>
+2026-11-18T19:58:57-0500 beech python[105163]:         36/55  charge-discharge-relay.join     done:True   exception: None  <coroutine object Relay.join at 0x7fa87b0c40>
+2026-11-18T19:58:57-0500 beech python[105163]:         37/55  store-pump-relay-boot-adopt     done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798220>
+2026-11-18T19:58:57-0500 beech python[105163]:         38/55  zone1-down-ops-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798d60>
+2026-11-18T19:58:57-0500 beech python[105163]:         39/55  zone2-up-failsafe-relay.join    done:True   exception: None  <coroutine object Relay.join at 0x7fa87b1cc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         40/55  derived-generator.join          done:True   exception: None  <coroutine object DerivedGenerator.join at 0x7fa876fd00>
+2026-11-18T19:58:57-0500 beech python[105163]:         41/55  primary-pump-scada-ops-relay.join  done:True   exception: None  <coroutine object Relay.join at 0x7fa87b1540>
+2026-11-18T19:58:57-0500 beech python[105163]:         42/55  store-btu.join                  done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa87b2d40>
+2026-11-18T19:58:57-0500 beech python[105163]:         43/55  _WebManager.join                done:True   exception: None  <coroutine object _WebManager.join at 0x7fa876f580>
+2026-11-18T19:58:57-0500 beech python[105163]:         44/55  hp-loop-on-off-relay.join       done:True   exception: None  <coroutine object Relay.join at 0x7fa87b16c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         45/55  dist-010v.join                  done:True   exception: None  <coroutine object ZeroTenOutputer.join at 0x7fa87b25c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         46/55  charge-discharge-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa892fa60>
+2026-11-18T19:58:57-0500 beech python[105163]:         47/55  hp-failsafe-relay.join          done:True   exception: None  <coroutine object Relay.join at 0x7fa87b0dc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         48/55  primary-pump-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798400>
+2026-11-18T19:58:57-0500 beech python[105163]:         49/55  unknown_channel_logger          done:True   exception: None  <coroutine object Scada.unknown_channel_logging_task at 0x7fa892f5b0>
+2026-11-18T19:58:57-0500 beech python[105163]:         50/55  hubitat.join                    done:True   exception: None  <coroutine object Hubitat.join at 0x7fa87b0640>
+2026-11-18T19:58:57-0500 beech python[105163]:         51/55  zone2-up-failsafe-relay-boot-adopt  done:True   exception: None  <coroutine object Relay._boot_adopt at 0x7fa8798f40>
+2026-11-18T19:58:57-0500 beech python[105163]:         52/55  zone2-up-ops-relay.join         done:True   exception: None  <coroutine object Relay.join at 0x7fa87b1e40>
+2026-11-18T19:58:57-0500 beech python[105163]:         53/55  cold-watch.join                 done:True   exception: None  <coroutine object ColdWatch.join at 0x7fa876fe80>
+2026-11-18T19:58:57-0500 beech python[105163]:         54/55  sieg-btu.join                   done:True   exception: None  <coroutine object ApiBtuMeter.join at 0x7fa87b2ec0>
+2026-11-18T19:58:57-0500 beech python[105163]:         55/55  s.join                          done:True   exception: None  <coroutine object PrimeActor.join at 0x7fa876f700>
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.920 Tasks: 45  [PENDING]
+2026-11-18T19:58:57-0500 beech python[105163]:         1/45  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779220>
+2026-11-18T19:58:57-0500 beech python[105163]:         2/45  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa8aaee60>
+2026-11-18T19:58:57-0500 beech python[105163]:         3/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fd30>
+2026-11-18T19:58:57-0500 beech python[105163]:         4/45  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87792f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         5/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87986d0>
+2026-11-18T19:58:57-0500 beech python[105163]:         6/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799210>
+2026-11-18T19:58:57-0500 beech python[105163]:         7/45  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87793c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         8/45  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7fa876f100>
+2026-11-18T19:58:57-0500 beech python[105163]:         9/45  LeafAlly keepalive              done:False   exception: None  <coroutine object BufferOnlyLeafAlly.main at 0x7fa885f2a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         10/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87988b0>
+2026-11-18T19:58:57-0500 beech python[105163]:         11/45  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885f030>
+2026-11-18T19:58:57-0500 beech python[105163]:         12/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892ff10>
+2026-11-18T19:58:57-0500 beech python[105163]:         13/45  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa8aadfc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         14/45  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa8a61d00>
+2026-11-18T19:58:57-0500 beech python[105163]:         15/45  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa875e0a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         16/45  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ee90>
+2026-11-18T19:58:57-0500 beech python[105163]:         17/45  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa8779560>
+2026-11-18T19:58:57-0500 beech python[105163]:         18/45  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa8799300>
+2026-11-18T19:58:57-0500 beech python[105163]:         19/45  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa892eb60>
+2026-11-18T19:58:57-0500 beech python[105163]:         20/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798a90>
+2026-11-18T19:58:57-0500 beech python[105163]:         21/45  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885edc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         22/45  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa89f2dc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         23/45  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87993f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         24/45  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7fa877c820>
+2026-11-18T19:58:57-0500 beech python[105163]:         25/45  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ef60>
+2026-11-18T19:58:57-0500 beech python[105163]:         26/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f790>
+2026-11-18T19:58:57-0500 beech python[105163]:         27/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798130>
+2026-11-18T19:58:57-0500 beech python[105163]:         28/45  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87994e0>
+2026-11-18T19:58:57-0500 beech python[105163]:         29/45  LocalControl keepalive          done:False   exception: None  <coroutine object LocalControlTouBase.main at 0x7fa877cba0>
+2026-11-18T19:58:57-0500 beech python[105163]:         30/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798c70>
+2026-11-18T19:58:57-0500 beech python[105163]:         31/45  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778c70>
+2026-11-18T19:58:57-0500 beech python[105163]:         32/45  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7fa8779630>
+2026-11-18T19:58:57-0500 beech python[105163]:         33/45  contract_resumer                done:False   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7fa87797d0>
+2026-11-18T19:58:57-0500 beech python[105163]:         34/45  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa87b04c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         35/45  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778d40>
+2026-11-18T19:58:57-0500 beech python[105163]:         36/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f970>
+2026-11-18T19:58:57-0500 beech python[105163]:         37/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798310>
+2026-11-18T19:58:57-0500 beech python[105163]:         38/45  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa8779490>
+2026-11-18T19:58:57-0500 beech python[105163]:         39/45  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa876c580>
+2026-11-18T19:58:57-0500 beech python[105163]:         40/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798e50>
+2026-11-18T19:58:57-0500 beech python[105163]:         41/45  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778ee0>
+2026-11-18T19:58:57-0500 beech python[105163]:         42/45  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779080>
+2026-11-18T19:58:57-0500 beech python[105163]:         43/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fb50>
+2026-11-18T19:58:57-0500 beech python[105163]:         44/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87984f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         45/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799030>
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.921 Tasks: 45  [WAITING FOR]
+2026-11-18T19:58:57-0500 beech python[105163]:         1/45  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779220>
+2026-11-18T19:58:57-0500 beech python[105163]:         2/45  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa8aaee60>
+2026-11-18T19:58:57-0500 beech python[105163]:         3/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fd30>
+2026-11-18T19:58:57-0500 beech python[105163]:         4/45  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87792f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         5/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87986d0>
+2026-11-18T19:58:57-0500 beech python[105163]:         6/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799210>
+2026-11-18T19:58:57-0500 beech python[105163]:         7/45  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87793c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         8/45  startup_announcer               done:False   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7fa876f100>
+2026-11-18T19:58:57-0500 beech python[105163]:         9/45  LeafAlly keepalive              done:False   exception: None  <coroutine object BufferOnlyLeafAlly.main at 0x7fa885f2a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         10/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87988b0>
+2026-11-18T19:58:57-0500 beech python[105163]:         11/45  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885f030>
+2026-11-18T19:58:57-0500 beech python[105163]:         12/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892ff10>
+2026-11-18T19:58:57-0500 beech python[105163]:         13/45  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa8aadfc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         14/45  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa8a61d00>
+2026-11-18T19:58:57-0500 beech python[105163]:         15/45  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa875e0a0>
+2026-11-18T19:58:57-0500 beech python[105163]:         16/45  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ee90>
+2026-11-18T19:58:57-0500 beech python[105163]:         17/45  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa8779560>
+2026-11-18T19:58:57-0500 beech python[105163]:         18/45  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa8799300>
+2026-11-18T19:58:57-0500 beech python[105163]:         19/45  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa892eb60>
+2026-11-18T19:58:57-0500 beech python[105163]:         20/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798a90>
+2026-11-18T19:58:57-0500 beech python[105163]:         21/45  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885edc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         22/45  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa89f2dc0>
+2026-11-18T19:58:57-0500 beech python[105163]:         23/45  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87993f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         24/45  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7fa877c820>
+2026-11-18T19:58:57-0500 beech python[105163]:         25/45  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ef60>
+2026-11-18T19:58:57-0500 beech python[105163]:         26/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f790>
+2026-11-18T19:58:57-0500 beech python[105163]:         27/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798130>
+2026-11-18T19:58:57-0500 beech python[105163]:         28/45  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87994e0>
+2026-11-18T19:58:57-0500 beech python[105163]:         29/45  LocalControl keepalive          done:False   exception: None  <coroutine object LocalControlTouBase.main at 0x7fa877cba0>
+2026-11-18T19:58:57-0500 beech python[105163]:         30/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798c70>
+2026-11-18T19:58:57-0500 beech python[105163]:         31/45  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778c70>
+2026-11-18T19:58:57-0500 beech python[105163]:         32/45  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7fa8779630>
+2026-11-18T19:58:57-0500 beech python[105163]:         33/45  contract_resumer                done:False   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7fa87797d0>
+2026-11-18T19:58:57-0500 beech python[105163]:         34/45  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa87b04c0>
+2026-11-18T19:58:57-0500 beech python[105163]:         35/45  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778d40>
+2026-11-18T19:58:57-0500 beech python[105163]:         36/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f970>
+2026-11-18T19:58:57-0500 beech python[105163]:         37/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798310>
+2026-11-18T19:58:57-0500 beech python[105163]:         38/45  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa8779490>
+2026-11-18T19:58:57-0500 beech python[105163]:         39/45  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa876c580>
+2026-11-18T19:58:57-0500 beech python[105163]:         40/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798e50>
+2026-11-18T19:58:57-0500 beech python[105163]:         41/45  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778ee0>
+2026-11-18T19:58:57-0500 beech python[105163]:         42/45  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779080>
+2026-11-18T19:58:57-0500 beech python[105163]:         43/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fb50>
+2026-11-18T19:58:57-0500 beech python[105163]:         44/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87984f0>
+2026-11-18T19:58:57-0500 beech python[105163]:         45/45  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799030>
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.944 admin:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-11-18T19:58:57-0500 beech python[105163]: 2026-11-18 19:58:57.986 local_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.002 local_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.012 local_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.325 gridworks_mqtt:  connecting -- mqtt_connected --> awaiting_setup_and_peer
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.377 gridworks_mqtt:  awaiting_setup_and_peer -- mqtt_suback --> awaiting_peer
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.538 gridworks_mqtt:  awaiting_peer -- message_from_peer --> active
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.538 start_reupload: sent 5 events. 3 reupload events pending. Total events in reupload: 8.  Reuploads started: 1  completed: 0.
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.620 [derived-generator] Calculating rswt_quadratic_params: [ 2.48424372e-03 -3.98921576e-01  1.46488888e+01]
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.628 [derived-generator] Updating usable and required energy
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.628 [derived-generator] Got a Live forecast starting 2026-11-18 20:00:00
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.936 Tasks: 1  [DONE]
+2026-11-18T19:58:58-0500 beech python[105163]:         1/1  startup_announcer               done:True   exception: None  <coroutine object Scada.announce_at_first_broker_link at 0x7fa876f100>
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.937 Tasks: 44  [PENDING]
+2026-11-18T19:58:58-0500 beech python[105163]:         1/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779220>
+2026-11-18T19:58:58-0500 beech python[105163]:         2/44  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa8aaee60>
+2026-11-18T19:58:58-0500 beech python[105163]:         3/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87792f0>
+2026-11-18T19:58:58-0500 beech python[105163]:         4/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fd30>
+2026-11-18T19:58:58-0500 beech python[105163]:         5/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87986d0>
+2026-11-18T19:58:58-0500 beech python[105163]:         6/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799210>
+2026-11-18T19:58:58-0500 beech python[105163]:         7/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87793c0>
+2026-11-18T19:58:58-0500 beech python[105163]:         8/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87988b0>
+2026-11-18T19:58:58-0500 beech python[105163]:         9/44  LeafAlly keepalive              done:False   exception: None  <coroutine object BufferOnlyLeafAlly.main at 0x7fa885f2a0>
+2026-11-18T19:58:58-0500 beech python[105163]:         10/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885f030>
+2026-11-18T19:58:58-0500 beech python[105163]:         11/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892ff10>
+2026-11-18T19:58:58-0500 beech python[105163]:         12/44  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa8aadfc0>
+2026-11-18T19:58:58-0500 beech python[105163]:         13/44  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa8a61d00>
+2026-11-18T19:58:58-0500 beech python[105163]:         14/44  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa875e0a0>
+2026-11-18T19:58:58-0500 beech python[105163]:         15/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ee90>
+2026-11-18T19:58:58-0500 beech python[105163]:         16/44  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa8779560>
+2026-11-18T19:58:58-0500 beech python[105163]:         17/44  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa8799300>
+2026-11-18T19:58:58-0500 beech python[105163]:         18/44  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa892eb60>
+2026-11-18T19:58:58-0500 beech python[105163]:         19/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798a90>
+2026-11-18T19:58:58-0500 beech python[105163]:         20/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885edc0>
+2026-11-18T19:58:58-0500 beech python[105163]:         21/44  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa89f2dc0>
+2026-11-18T19:58:58-0500 beech python[105163]:         22/44  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87993f0>
+2026-11-18T19:58:58-0500 beech python[105163]:         23/44  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7fa877c820>
+2026-11-18T19:58:58-0500 beech python[105163]:         24/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ef60>
+2026-11-18T19:58:58-0500 beech python[105163]:         25/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f790>
+2026-11-18T19:58:58-0500 beech python[105163]:         26/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87984f0>
+2026-11-18T19:58:58-0500 beech python[105163]:         27/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798130>
+2026-11-18T19:58:58-0500 beech python[105163]:         28/44  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87994e0>
+2026-11-18T19:58:58-0500 beech python[105163]:         29/44  LocalControl keepalive          done:False   exception: None  <coroutine object LocalControlTouBase.main at 0x7fa877cba0>
+2026-11-18T19:58:58-0500 beech python[105163]:         30/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798c70>
+2026-11-18T19:58:58-0500 beech python[105163]:         31/44  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778c70>
+2026-11-18T19:58:58-0500 beech python[105163]:         32/44  contract_resumer                done:False   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7fa87797d0>
+2026-11-18T19:58:58-0500 beech python[105163]:         33/44  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa87b04c0>
+2026-11-18T19:58:58-0500 beech python[105163]:         34/44  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778d40>
+2026-11-18T19:58:58-0500 beech python[105163]:         35/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f970>
+2026-11-18T19:58:58-0500 beech python[105163]:         36/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798310>
+2026-11-18T19:58:58-0500 beech python[105163]:         37/44  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa8779490>
+2026-11-18T19:58:58-0500 beech python[105163]:         38/44  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa876c580>
+2026-11-18T19:58:58-0500 beech python[105163]:         39/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798e50>
+2026-11-18T19:58:58-0500 beech python[105163]:         40/44  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778ee0>
+2026-11-18T19:58:58-0500 beech python[105163]:         41/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779080>
+2026-11-18T19:58:58-0500 beech python[105163]:         42/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fb50>
+2026-11-18T19:58:58-0500 beech python[105163]:         43/44  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7fa8779630>
+2026-11-18T19:58:58-0500 beech python[105163]:         44/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799030>
+2026-11-18T19:58:58-0500 beech python[105163]: 2026-11-18 19:58:58.938 Tasks: 44  [WAITING FOR]
+2026-11-18T19:58:58-0500 beech python[105163]:         1/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779220>
+2026-11-18T19:58:58-0500 beech python[105163]:         2/44  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa8aaee60>
+2026-11-18T19:58:58-0500 beech python[105163]:         3/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87792f0>
+2026-11-18T19:58:58-0500 beech python[105163]:         4/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fd30>
+2026-11-18T19:58:58-0500 beech python[105163]:         5/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87986d0>
+2026-11-18T19:58:58-0500 beech python[105163]:         6/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799210>
+2026-11-18T19:58:58-0500 beech python[105163]:         7/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87793c0>
+2026-11-18T19:58:58-0500 beech python[105163]:         8/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87988b0>
+2026-11-18T19:58:58-0500 beech python[105163]:         9/44  LeafAlly keepalive              done:False   exception: None  <coroutine object BufferOnlyLeafAlly.main at 0x7fa885f2a0>
+2026-11-18T19:58:58-0500 beech python[105163]:         10/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885f030>
+2026-11-18T19:58:58-0500 beech python[105163]:         11/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892ff10>
+2026-11-18T19:58:58-0500 beech python[105163]:         12/44  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa8aadfc0>
+2026-11-18T19:58:58-0500 beech python[105163]:         13/44  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa8a61d00>
+2026-11-18T19:58:58-0500 beech python[105163]:         14/44  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa875e0a0>
+2026-11-18T19:58:58-0500 beech python[105163]:         15/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ee90>
+2026-11-18T19:58:58-0500 beech python[105163]:         16/44  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa8779560>
+2026-11-18T19:58:58-0500 beech python[105163]:         17/44  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa8799300>
+2026-11-18T19:58:58-0500 beech python[105163]:         18/44  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa892eb60>
+2026-11-18T19:58:58-0500 beech python[105163]:         19/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798a90>
+2026-11-18T19:58:58-0500 beech python[105163]:         20/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885edc0>
+2026-11-18T19:58:58-0500 beech python[105163]:         21/44  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa89f2dc0>
+2026-11-18T19:58:58-0500 beech python[105163]:         22/44  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87993f0>
+2026-11-18T19:58:58-0500 beech python[105163]:         23/44  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7fa877c820>
+2026-11-18T19:58:58-0500 beech python[105163]:         24/44  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ef60>
+2026-11-18T19:58:58-0500 beech python[105163]:         25/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f790>
+2026-11-18T19:58:58-0500 beech python[105163]:         26/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87984f0>
+2026-11-18T19:58:58-0500 beech python[105163]:         27/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798130>
+2026-11-18T19:58:58-0500 beech python[105163]:         28/44  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87994e0>
+2026-11-18T19:58:58-0500 beech python[105163]:         29/44  LocalControl keepalive          done:False   exception: None  <coroutine object LocalControlTouBase.main at 0x7fa877cba0>
+2026-11-18T19:58:58-0500 beech python[105163]:         30/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798c70>
+2026-11-18T19:58:58-0500 beech python[105163]:         31/44  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778c70>
+2026-11-18T19:58:58-0500 beech python[105163]:         32/44  contract_resumer                done:False   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7fa87797d0>
+2026-11-18T19:58:58-0500 beech python[105163]:         33/44  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa87b04c0>
+2026-11-18T19:58:58-0500 beech python[105163]:         34/44  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778d40>
+2026-11-18T19:58:58-0500 beech python[105163]:         35/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f970>
+2026-11-18T19:58:58-0500 beech python[105163]:         36/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798310>
+2026-11-18T19:58:58-0500 beech python[105163]:         37/44  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa8779490>
+2026-11-18T19:58:58-0500 beech python[105163]:         38/44  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa876c580>
+2026-11-18T19:58:58-0500 beech python[105163]:         39/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798e50>
+2026-11-18T19:58:58-0500 beech python[105163]:         40/44  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778ee0>
+2026-11-18T19:58:58-0500 beech python[105163]:         41/44  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779080>
+2026-11-18T19:58:58-0500 beech python[105163]:         42/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fb50>
+2026-11-18T19:58:58-0500 beech python[105163]:         43/44  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7fa8779630>
+2026-11-18T19:58:58-0500 beech python[105163]:         44/44  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799030>
+2026-11-18T19:58:59-0500 beech python[105163]: 2026-11-18 19:58:59.208 Reupload completed. Reuploads started: 1  completed: 1.
+2026-11-18T19:59:00-0500 beech python[105163]: 2026-11-18 19:59:00.631 [derived-generator] Rolling dist energy: None
+2026-11-18T19:59:00-0500 beech python[105163]: 2026-11-18 19:59:00.804 [pico-cycler] TRIGGERING PICO REBOOT! startup
+2026-11-18T19:59:00-0500 beech python[105163]: 2026-11-18 19:59:00.805 [pico-cycler] OpenRelay to vdc-relay
+2026-11-18T19:59:02-0500 beech python[105163]: 2026-11-18 19:59:02.812 [lc] Top state: Normal
+2026-11-18T19:59:02-0500 beech python[105163]: 2026-11-18 19:59:02.813 [lc] LocalControl: BufferOnly  |  State: Initializing
+2026-11-18T19:59:05-0500 beech python[105163]: 2026-11-18 19:59:05.819 [pico-cycler] CloseRelay to vdc-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.153 [scada] First Buffer temps arrived! Sending to LocalControl
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.158 [lc] Buffer fresh: False
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.159 [lc] Blind since 7 seconds
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.173 [scada] New Dispatch Contract!
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.174 [scada] DispatchContractLive: LocalControl -> Ltn
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.195 [la] Processing SlowDispatchContract!
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.196 [la] Got a slow dispatch contract ... waking up
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.197 [la] Waking up
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.201 [la] WakeUp: Dormant -> Initializing
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.204 [la] update_relays with previous_state Dormant and state Initializing
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.206 [la] TurnOff to hp-boss
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.208 [la] Initializing actuators
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.208 [la] de-energizing most relays
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.210 [la] SwitchToHeatPump to primary-pump-failsafe-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.212 [la] OpenRelay to primary-pump-scada-ops-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.214 [la] OpenRelay to store-pump-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.215 [la] CloseRelay to tstat-common-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.217 [la] SwitchToWallThermostat to zone1-down-failsafe-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.219 [la] OpenRelay to zone1-down-ops-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.220 [la] SwitchToWallThermostat to zone2-up-failsafe-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.221 [la] OpenRelay to zone2-up-ops-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.221 [la] Taking care of relays with default energized positions
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.222 [la] ltn.la sending SwitchToScada to Hp Failsafe ltn.la.hp-failsafe-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.222 [la] ltn.la sending SwitchToScada to Aquastat Ctrl ltn.la.aquastat-ctrl-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.223 [la] TurnOff to hp-boss
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.224 [la] Just set ltn.la.store-010v to 65 from ltn.la
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.225 [la] Just set ltn.la.primary-010v to 62 from ltn.la
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.225 [la] Just set ltn.la.dist-010v to 35 from ltn.la
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.227 [lc] Top State TopGoDormant: Normal -> Dormant
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.228 [lc] Set top state command tree
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.228 [lc] GoDormant: Initializing -> Dormant
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.233 [hp-boss] Got FromHandle='ltn.la' ToHandle='ltn.la.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='a9d208e3-2a3b-4f96-aa3c-979c2606c6ce' SendTimeUnixMs=1795049950204 TypeName='fsm.event' Version='000'
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.234 [hp-boss] ltn.la.hp-boss sending OpenRelay to ltn.la.hp-boss.hp-scada-ops-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.240 [hp-boss] Got FromHandle='ltn.la' ToHandle='ltn.la.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='416a296a-a782-444d-8722-6e4bc8fa0500' SendTimeUnixMs=1795049950223 TypeName='fsm.event' Version='000'
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.241 [hp-boss] Command a9d208e3-2a3b-4f96-aa3c-979c2606c6ce superseded by 416a296a-a782-444d-8722-6e4bc8fa0500 before its relay reported
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.242 [hp-boss] ltn.la.hp-boss sending OpenRelay to ltn.la.hp-boss.hp-scada-ops-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.243 [store-010v] Dispatch from ltn.la: volts x10 65
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.244 [primary-010v] Dispatch from ltn.la: volts x10 62
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.245 [dist-010v] Dispatch from ltn.la: volts x10 35
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.247 [sieg-loop] Just received state HpOff from HpBoss
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.252 [sieg-loop] Just received state HpOff from HpBoss
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.255 [la] State: Initializing
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.256 [la] NoMoreElec: Initializing -> HpOff
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.257 [la] update_relays with previous_state Initializing and state HpOff
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.257 [la] TurnOff to hp-boss
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.258 [la] ltn.la sending SwitchToScada to Hp Failsafe ltn.la.hp-failsafe-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.259 [la] ltn.la sending SwitchToScada to Aquastat Ctrl ltn.la.aquastat-ctrl-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.265 [hp-boss] Got FromHandle='ltn.la' ToHandle='ltn.la.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='5c90d841-10fb-46c9-9a4a-dbcfaa143168' SendTimeUnixMs=1795049950257 TypeName='fsm.event' Version='000'
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.266 [hp-boss] Command 416a296a-a782-444d-8722-6e4bc8fa0500 superseded by 5c90d841-10fb-46c9-9a4a-dbcfaa143168 before its relay reported
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.267 [hp-boss] ltn.la.hp-boss sending OpenRelay to ltn.la.hp-boss.hp-scada-ops-relay
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.287 [sieg-loop] Just received state HpOff from HpBoss
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.292 Tasks: 1  [DONE]
+2026-11-18T19:59:10-0500 beech python[105163]:         1/1  contract_resumer                done:True   exception: None  <coroutine object Scada.resume_at_first_forecast at 0x7fa87797d0>
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.293 Tasks: 43  [PENDING]
+2026-11-18T19:59:10-0500 beech python[105163]:         1/43  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779220>
+2026-11-18T19:59:10-0500 beech python[105163]:         2/43  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa8aaee60>
+2026-11-18T19:59:10-0500 beech python[105163]:         3/43  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87792f0>
+2026-11-18T19:59:10-0500 beech python[105163]:         4/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fd30>
+2026-11-18T19:59:10-0500 beech python[105163]:         5/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87986d0>
+2026-11-18T19:59:10-0500 beech python[105163]:         6/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799210>
+2026-11-18T19:59:10-0500 beech python[105163]:         7/43  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87793c0>
+2026-11-18T19:59:10-0500 beech python[105163]:         8/43  LeafAlly keepalive              done:False   exception: None  <coroutine object BufferOnlyLeafAlly.main at 0x7fa885f2a0>
+2026-11-18T19:59:10-0500 beech python[105163]:         9/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87988b0>
+2026-11-18T19:59:10-0500 beech python[105163]:         10/43  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885f030>
+2026-11-18T19:59:10-0500 beech python[105163]:         11/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892ff10>
+2026-11-18T19:59:10-0500 beech python[105163]:         12/43  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa8aadfc0>
+2026-11-18T19:59:10-0500 beech python[105163]:         13/43  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa8a61d00>
+2026-11-18T19:59:10-0500 beech python[105163]:         14/43  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa875e0a0>
+2026-11-18T19:59:10-0500 beech python[105163]:         15/43  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ee90>
+2026-11-18T19:59:10-0500 beech python[105163]:         16/43  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa8779560>
+2026-11-18T19:59:10-0500 beech python[105163]:         17/43  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa8799300>
+2026-11-18T19:59:10-0500 beech python[105163]:         18/43  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa892eb60>
+2026-11-18T19:59:10-0500 beech python[105163]:         19/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798a90>
+2026-11-18T19:59:10-0500 beech python[105163]:         20/43  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885edc0>
+2026-11-18T19:59:10-0500 beech python[105163]:         21/43  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa89f2dc0>
+2026-11-18T19:59:10-0500 beech python[105163]:         22/43  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87993f0>
+2026-11-18T19:59:10-0500 beech python[105163]:         23/43  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7fa877c820>
+2026-11-18T19:59:10-0500 beech python[105163]:         24/43  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ef60>
+2026-11-18T19:59:10-0500 beech python[105163]:         25/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f790>
+2026-11-18T19:59:10-0500 beech python[105163]:         26/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798130>
+2026-11-18T19:59:10-0500 beech python[105163]:         27/43  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87994e0>
+2026-11-18T19:59:10-0500 beech python[105163]:         28/43  LocalControl keepalive          done:False   exception: None  <coroutine object LocalControlTouBase.main at 0x7fa877cba0>
+2026-11-18T19:59:10-0500 beech python[105163]:         29/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798c70>
+2026-11-18T19:59:10-0500 beech python[105163]:         30/43  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778c70>
+2026-11-18T19:59:10-0500 beech python[105163]:         31/43  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7fa8779630>
+2026-11-18T19:59:10-0500 beech python[105163]:         32/43  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa87b04c0>
+2026-11-18T19:59:10-0500 beech python[105163]:         33/43  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778d40>
+2026-11-18T19:59:10-0500 beech python[105163]:         34/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f970>
+2026-11-18T19:59:10-0500 beech python[105163]:         35/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798310>
+2026-11-18T19:59:10-0500 beech python[105163]:         36/43  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa8779490>
+2026-11-18T19:59:10-0500 beech python[105163]:         37/43  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa876c580>
+2026-11-18T19:59:10-0500 beech python[105163]:         38/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798e50>
+2026-11-18T19:59:10-0500 beech python[105163]:         39/43  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778ee0>
+2026-11-18T19:59:10-0500 beech python[105163]:         40/43  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779080>
+2026-11-18T19:59:10-0500 beech python[105163]:         41/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fb50>
+2026-11-18T19:59:10-0500 beech python[105163]:         42/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87984f0>
+2026-11-18T19:59:10-0500 beech python[105163]:         43/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799030>
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.294 Tasks: 43  [WAITING FOR]
+2026-11-18T19:59:10-0500 beech python[105163]:         1/43  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779220>
+2026-11-18T19:59:10-0500 beech python[105163]:         2/43  scada top_state_tracker         done:False   exception: None  <coroutine object Scada.state_tracker at 0x7fa8aaee60>
+2026-11-18T19:59:10-0500 beech python[105163]:         3/43  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87792f0>
+2026-11-18T19:59:10-0500 beech python[105163]:         4/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fd30>
+2026-11-18T19:59:10-0500 beech python[105163]:         5/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87986d0>
+2026-11-18T19:59:10-0500 beech python[105163]:         6/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799210>
+2026-11-18T19:59:10-0500 beech python[105163]:         7/43  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa87793c0>
+2026-11-18T19:59:10-0500 beech python[105163]:         8/43  LeafAlly keepalive              done:False   exception: None  <coroutine object BufferOnlyLeafAlly.main at 0x7fa885f2a0>
+2026-11-18T19:59:10-0500 beech python[105163]:         9/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87988b0>
+2026-11-18T19:59:10-0500 beech python[105163]:         10/43  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885f030>
+2026-11-18T19:59:10-0500 beech python[105163]:         11/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892ff10>
+2026-11-18T19:59:10-0500 beech python[105163]:         12/43  process_messages                done:False   exception: None  <coroutine object Proactor.process_messages at 0x7fa8aadfc0>
+2026-11-18T19:59:10-0500 beech python[105163]:         13/43  picocycler keepalive            done:False   exception: None  <coroutine object PicoCycler.main at 0x7fa8a61d00>
+2026-11-18T19:59:10-0500 beech python[105163]:         14/43  watchdog_manager.join           done:False   exception: None  <coroutine object WatchdogManager.join at 0x7fa875e0a0>
+2026-11-18T19:59:10-0500 beech python[105163]:         15/43  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ee90>
+2026-11-18T19:59:10-0500 beech python[105163]:         16/43  report_sender                   done:False   exception: None  <coroutine object Scada.report_sending_task at 0x7fa8779560>
+2026-11-18T19:59:10-0500 beech python[105163]:         17/43  send_ping<gridworks_mqtt>       done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa8799300>
+2026-11-18T19:59:10-0500 beech python[105163]:         18/43  Derived Generator keepalive     done:False   exception: None  <coroutine object DerivedGenerator.main at 0x7fa892eb60>
+2026-11-18T19:59:10-0500 beech python[105163]:         19/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798a90>
+2026-11-18T19:59:10-0500 beech python[105163]:         20/43  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885edc0>
+2026-11-18T19:59:10-0500 beech python[105163]:         21/43  i2c-bus-heartbeat               done:False   exception: None  <coroutine object I2cBus._heartbeat at 0x7fa89f2dc0>
+2026-11-18T19:59:10-0500 beech python[105163]:         22/43  send_ping<local_mqtt>           done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87993f0>
+2026-11-18T19:59:10-0500 beech python[105163]:         23/43  ColdWatch                       done:False   exception: None  <coroutine object ColdWatch.main at 0x7fa877c820>
+2026-11-18T19:59:10-0500 beech python[105163]:         24/43  ApiTankModule keepalive         done:False   exception: None  <coroutine object ApiTankModule.main at 0x7fa885ef60>
+2026-11-18T19:59:10-0500 beech python[105163]:         25/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f790>
+2026-11-18T19:59:10-0500 beech python[105163]:         26/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798130>
+2026-11-18T19:59:10-0500 beech python[105163]:         27/43  send_ping<admin>                done:False   exception: None  <coroutine object LinkManager.send_ping at 0x7fa87994e0>
+2026-11-18T19:59:10-0500 beech python[105163]:         28/43  LocalControl keepalive          done:False   exception: None  <coroutine object LocalControlTouBase.main at 0x7fa877cba0>
+2026-11-18T19:59:10-0500 beech python[105163]:         29/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798c70>
+2026-11-18T19:59:10-0500 beech python[105163]:         30/43  dist-010v-main                  done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778c70>
+2026-11-18T19:59:10-0500 beech python[105163]:         31/43  disabled_roster                 done:False   exception: None  <coroutine object Scada.disabled_roster_task at 0x7fa8779630>
+2026-11-18T19:59:10-0500 beech python[105163]:         32/43  power-meter.join                done:False   exception: None  <coroutine object SyncThreadActor.join at 0x7fa87b04c0>
+2026-11-18T19:59:10-0500 beech python[105163]:         33/43  primary-010v-main               done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778d40>
+2026-11-18T19:59:10-0500 beech python[105163]:         34/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892f970>
+2026-11-18T19:59:10-0500 beech python[105163]:         35/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798310>
+2026-11-18T19:59:10-0500 beech python[105163]:         36/43  snap_sender                     done:False   exception: None  <coroutine object Scada.snap_sending_task at 0x7fa8779490>
+2026-11-18T19:59:10-0500 beech python[105163]:         37/43  Sieg Loop Synchronous Report    done:False   exception: None  <coroutine object SiegLoop.main at 0x7fa876c580>
+2026-11-18T19:59:10-0500 beech python[105163]:         38/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8798e50>
+2026-11-18T19:59:10-0500 beech python[105163]:         39/43  store-010v-main                 done:False   exception: None  <coroutine object ZeroTenOutputer.main_loop at 0x7fa8778ee0>
+2026-11-18T19:59:10-0500 beech python[105163]:         40/43  ApiBtuMeter keepalive           done:False   exception: None  <coroutine object ApiBtuMeter.main at 0x7fa8779080>
+2026-11-18T19:59:10-0500 beech python[105163]:         41/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa892fb50>
+2026-11-18T19:59:10-0500 beech python[105163]:         42/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa87984f0>
+2026-11-18T19:59:10-0500 beech python[105163]:         43/43  relay state reporter            done:False   exception: None  <coroutine object Relay.main at 0x7fa8799030>
+2026-11-18T19:59:10-0500 beech python[105163]: 2026-11-18 19:59:10.956 [sieg-btu] btu report period of 300s. seconds_to_next_top is 49.0
+2026-11-18T19:59:12-0500 beech python[105163]: 2026-11-18 19:59:12.405 [store-btu] btu report period of 300s. seconds_to_next_top is 47.6
+2026-11-18T19:59:12-0500 beech python[105163]: 2026-11-18 19:59:12.903 [dist-btu] btu report period of 300s. seconds_to_next_top is 47.1
+2026-11-18T19:59:16-0500 beech python[105163]: 2026-11-18 19:59:16.890 [primary-btu] btu report period of 300s. seconds_to_next_top is 43.1
+2026-11-18T19:59:45-0500 beech python[105163]: 2026-11-18 19:59:45.884 [scada] Contract[971] 19:00 - 20:00: Total: 0.0 Wh | Used: 37.0 Wh | Status: Active  (created by ltn at 2026-11-18 19:59:45.798)
+2026-11-18T19:59:58-0500 beech python[105163]: 2026-11-18 19:59:58.804 Top state: Auto
+2026-11-18T19:59:58-0500 beech python[105163]: 2026-11-18 19:59:58.804 Auto state: LeafTransactiveNode
+2026-11-18T19:59:59-0500 beech python[105163]: 2026-11-18 19:59:59.807 [la] State: HpOff
+2026-11-18T20:00:00-0500 beech python[105163]: 2026-11-18 20:00:00.752 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 0 Wh | Status: Created  (created by ltn at 2026-11-18 20:00:00.569)
+2026-11-18T20:00:00-0500 beech python[105163]: 2026-11-18 20:00:00.755 [la] Processing SlowDispatchContract!
+2026-11-18T20:00:00-0500 beech python[105163]: 2026-11-18 20:00:00.755 [la] State: HpOff
+2026-11-18T20:00:01-0500 beech python[105163]: 2026-11-18 20:00:01.160 [derived-generator] Got a Live forecast starting 2026-11-18 21:00:00
+2026-11-18T20:00:01-0500 beech python[105163]: 2026-11-18 20:00:01.243 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:00:01-0500 beech python[105163]: 2026-11-18 20:00:01.246 [derived-generator] Rolling dist energy: None
+2026-11-18T20:00:02-0500 beech python[105163]: 2026-11-18 20:00:02.815 [lc] Top state: Dormant
+2026-11-18T20:00:02-0500 beech python[105163]: 2026-11-18 20:00:02.816 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:00:42-0500 beech python[105163]: 2026-11-18 20:00:42.006 [sieg-loop] ltn.la.sieg-loop sending OpenRelay to HpLoopOnOff relay ltn.la.sieg-loop.hp-loop-on-off-relay
+2026-11-18T20:00:42-0500 beech python[105163]: 2026-11-18 20:00:42.010 [sieg-loop] ResetToFullySend: KeepingLess -> FullySend
+2026-11-18T20:00:42-0500 beech python[105163]: 2026-11-18 20:00:42.012 [sieg-loop] Motor stopped after 104.0 s: keep_seconds 0
+2026-11-18T20:00:45-0500 beech python[105163]: 2026-11-18 20:00:45.883 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 0.0 Wh | Status: Active  (created by ltn at 2026-11-18 20:00:45.800)
+2026-11-18T20:00:59-0500 beech python[105163]: 2026-11-18 20:00:59.812 [la] State: HpOff
+2026-11-18T20:01:01-0500 beech python[105163]: 2026-11-18 20:01:01.402 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:01:01-0500 beech python[105163]: 2026-11-18 20:01:01.411 [derived-generator] Rolling dist energy: None
+2026-11-18T20:01:02-0500 beech python[105163]: 2026-11-18 20:01:02.817 [lc] Top state: Dormant
+2026-11-18T20:01:02-0500 beech python[105163]: 2026-11-18 20:01:02.818 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:01:46-0500 beech python[105163]: 2026-11-18 20:01:46.027 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 0.5 Wh | Status: Active  (created by ltn at 2026-11-18 20:01:45.803)
+2026-11-18T20:01:59-0500 beech python[105163]: 2026-11-18 20:01:59.817 [la] State: HpOff
+2026-11-18T20:02:01-0500 beech python[105163]: 2026-11-18 20:02:01.544 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:02:01-0500 beech python[105163]: 2026-11-18 20:02:01.547 [derived-generator] Rolling dist energy: None
+2026-11-18T20:02:02-0500 beech python[105163]: 2026-11-18 20:02:02.819 [lc] Top state: Dormant
+2026-11-18T20:02:02-0500 beech python[105163]: 2026-11-18 20:02:02.820 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:02:45-0500 beech python[105163]: 2026-11-18 20:02:45.995 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 1.1 Wh | Status: Active  (created by ltn at 2026-11-18 20:02:45.805)
+2026-11-18T20:02:59-0500 beech python[105163]: 2026-11-18 20:02:59.821 [la] State: HpOff
+2026-11-18T20:03:01-0500 beech python[105163]: 2026-11-18 20:03:01.700 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:03:01-0500 beech python[105163]: 2026-11-18 20:03:01.707 [derived-generator] Rolling dist energy: None
+2026-11-18T20:03:02-0500 beech python[105163]: 2026-11-18 20:03:02.822 [lc] Top state: Dormant
+2026-11-18T20:03:02-0500 beech python[105163]: 2026-11-18 20:03:02.822 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:03:45-0500 beech python[105163]: 2026-11-18 20:03:45.904 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 1.7 Wh | Status: Active  (created by ltn at 2026-11-18 20:03:45.808)
+2026-11-18T20:03:59-0500 beech python[105163]: 2026-11-18 20:03:59.825 [la] State: HpOff
+2026-11-18T20:04:01-0500 beech python[105163]: 2026-11-18 20:04:01.852 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:04:01-0500 beech python[105163]: 2026-11-18 20:04:01.856 [derived-generator] Rolling dist energy: None
+2026-11-18T20:04:02-0500 beech python[105163]: 2026-11-18 20:04:02.823 [lc] Top state: Dormant
+2026-11-18T20:04:02-0500 beech python[105163]: 2026-11-18 20:04:02.823 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:04:46-0500 beech python[105163]: 2026-11-18 20:04:46.047 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 2.4 Wh | Status: Active  (created by ltn at 2026-11-18 20:04:45.811)
+2026-11-18T20:04:58-0500 beech python[105163]: 2026-11-18 20:04:58.802 Top state: Auto
+2026-11-18T20:04:58-0500 beech python[105163]: 2026-11-18 20:04:58.802 Auto state: LeafTransactiveNode
+2026-11-18T20:04:59-0500 beech python[105163]: 2026-11-18 20:04:59.829 [la] State: HpOff
+2026-11-18T20:05:01-0500 beech python[105163]: 2026-11-18 20:05:01.940 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:05:01-0500 beech python[105163]: 2026-11-18 20:05:01.944 [derived-generator] Rolling dist energy: None
+2026-11-18T20:05:02-0500 beech python[105163]: 2026-11-18 20:05:02.824 [lc] Top state: Dormant
+2026-11-18T20:05:02-0500 beech python[105163]: 2026-11-18 20:05:02.825 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:05:45-0500 beech python[105163]: 2026-11-18 20:05:45.898 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 3.2 Wh | Status: Active  (created by ltn at 2026-11-18 20:05:45.812)
+2026-11-18T20:05:59-0500 beech python[105163]: 2026-11-18 20:05:59.833 [la] State: HpOff
+2026-11-18T20:06:02-0500 beech python[105163]: 2026-11-18 20:06:02.092 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:06:02-0500 beech python[105163]: 2026-11-18 20:06:02.096 [derived-generator] Rolling dist energy: None
+2026-11-18T20:06:02-0500 beech python[105163]: 2026-11-18 20:06:02.827 [lc] Top state: Dormant
+2026-11-18T20:06:02-0500 beech python[105163]: 2026-11-18 20:06:02.827 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:06:46-0500 beech python[105163]: 2026-11-18 20:06:46.054 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 3.7 Wh | Status: Active  (created by ltn at 2026-11-18 20:06:45.814)
+2026-11-18T20:06:59-0500 beech python[105163]: 2026-11-18 20:06:59.839 [la] State: HpOff
+2026-11-18T20:07:02-0500 beech python[105163]: 2026-11-18 20:07:02.244 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:07:02-0500 beech python[105163]: 2026-11-18 20:07:02.246 [derived-generator] Rolling dist energy: None
+2026-11-18T20:07:02-0500 beech python[105163]: 2026-11-18 20:07:02.828 [lc] Top state: Dormant
+2026-11-18T20:07:02-0500 beech python[105163]: 2026-11-18 20:07:02.829 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:07:46-0500 beech python[105163]: 2026-11-18 20:07:46.054 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 4.3 Wh | Status: Active  (created by ltn at 2026-11-18 20:07:45.816)
+2026-11-18T20:07:59-0500 beech python[105163]: 2026-11-18 20:07:59.843 [la] State: HpOff
+2026-11-18T20:08:02-0500 beech python[105163]: 2026-11-18 20:08:02.373 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:08:02-0500 beech python[105163]: 2026-11-18 20:08:02.376 [derived-generator] Rolling dist energy: None
+2026-11-18T20:08:02-0500 beech python[105163]: 2026-11-18 20:08:02.830 [lc] Top state: Dormant
+2026-11-18T20:08:02-0500 beech python[105163]: 2026-11-18 20:08:02.831 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:08:46-0500 beech python[105163]: 2026-11-18 20:08:46.052 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 5.0 Wh | Status: Active  (created by ltn at 2026-11-18 20:08:45.819)
+2026-11-18T20:08:59-0500 beech python[105163]: 2026-11-18 20:08:59.846 [la] State: HpOff
+2026-11-18T20:09:02-0500 beech python[105163]: 2026-11-18 20:09:02.525 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:09:02-0500 beech python[105163]: 2026-11-18 20:09:02.528 [derived-generator] Rolling dist energy: None
+2026-11-18T20:09:02-0500 beech python[105163]: 2026-11-18 20:09:02.833 [lc] Top state: Dormant
+2026-11-18T20:09:02-0500 beech python[105163]: 2026-11-18 20:09:02.834 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:09:46-0500 beech python[105163]: 2026-11-18 20:09:46.061 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 5.7 Wh | Status: Active  (created by ltn at 2026-11-18 20:09:45.820)
+2026-11-18T20:09:58-0500 beech python[105163]: 2026-11-18 20:09:58.802 Top state: Auto
+2026-11-18T20:09:58-0500 beech python[105163]: 2026-11-18 20:09:58.802 Auto state: LeafTransactiveNode
+2026-11-18T20:09:59-0500 beech python[105163]: 2026-11-18 20:09:59.850 [la] State: HpOff
+2026-11-18T20:10:02-0500 beech python[105163]: 2026-11-18 20:10:02.606 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:10:02-0500 beech python[105163]: 2026-11-18 20:10:02.609 [derived-generator] Rolling dist energy: None
+2026-11-18T20:10:02-0500 beech python[105163]: 2026-11-18 20:10:02.835 [lc] Top state: Dormant
+2026-11-18T20:10:02-0500 beech python[105163]: 2026-11-18 20:10:02.836 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:10:45-0500 beech python[105163]: 2026-11-18 20:10:45.906 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 6.5 Wh | Status: Active  (created by ltn at 2026-11-18 20:10:45.821)
+2026-11-18T20:10:59-0500 beech python[105163]: 2026-11-18 20:10:59.853 [la] State: HpOff
+2026-11-18T20:11:02-0500 beech python[105163]: 2026-11-18 20:11:02.757 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:11:02-0500 beech python[105163]: 2026-11-18 20:11:02.759 [derived-generator] Rolling dist energy: None
+2026-11-18T20:11:02-0500 beech python[105163]: 2026-11-18 20:11:02.837 [lc] Top state: Dormant
+2026-11-18T20:11:02-0500 beech python[105163]: 2026-11-18 20:11:02.837 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:11:45-0500 beech python[105163]: 2026-11-18 20:11:45.906 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 7.0 Wh | Status: Active  (created by ltn at 2026-11-18 20:11:45.822)
+2026-11-18T20:11:59-0500 beech python[105163]: 2026-11-18 20:11:59.860 [la] State: HpOff
+2026-11-18T20:12:02-0500 beech python[105163]: 2026-11-18 20:12:02.906 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:12:02-0500 beech python[105163]: 2026-11-18 20:12:02.909 [derived-generator] Rolling dist energy: None
+2026-11-18T20:12:02-0500 beech python[105163]: 2026-11-18 20:12:02.911 [lc] Top state: Dormant
+2026-11-18T20:12:02-0500 beech python[105163]: 2026-11-18 20:12:02.912 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:12:46-0500 beech python[105163]: 2026-11-18 20:12:46.071 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 7.6 Wh | Status: Active  (created by ltn at 2026-11-18 20:12:45.828)
+2026-11-18T20:12:59-0500 beech python[105163]: 2026-11-18 20:12:59.865 [la] State: HpOff
+2026-11-18T20:13:03-0500 beech python[105163]: 2026-11-18 20:13:03.063 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:13:03-0500 beech python[105163]: 2026-11-18 20:13:03.066 [derived-generator] Rolling dist energy: None
+2026-11-18T20:13:03-0500 beech python[105163]: 2026-11-18 20:13:03.068 [lc] Top state: Dormant
+2026-11-18T20:13:03-0500 beech python[105163]: 2026-11-18 20:13:03.068 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:13:46-0500 beech python[105163]: 2026-11-18 20:13:46.060 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 8.2 Wh | Status: Active  (created by ltn at 2026-11-18 20:13:45.831)
+2026-11-18T20:13:59-0500 beech python[105163]: 2026-11-18 20:13:59.871 [la] State: HpOff
+2026-11-18T20:14:03-0500 beech python[105163]: 2026-11-18 20:14:03.217 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:14:03-0500 beech python[105163]: 2026-11-18 20:14:03.220 [derived-generator] Rolling dist energy: None
+2026-11-18T20:14:03-0500 beech python[105163]: 2026-11-18 20:14:03.222 [lc] Top state: Dormant
+2026-11-18T20:14:03-0500 beech python[105163]: 2026-11-18 20:14:03.222 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:14:46-0500 beech python[105163]: 2026-11-18 20:14:46.079 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 8.9 Wh | Status: Active  (created by ltn at 2026-11-18 20:14:45.840)
+2026-11-18T20:14:58-0500 beech python[105163]: 2026-11-18 20:14:58.802 Top state: Auto
+2026-11-18T20:14:58-0500 beech python[105163]: 2026-11-18 20:14:58.802 Auto state: LeafTransactiveNode
+2026-11-18T20:14:59-0500 beech python[105163]: 2026-11-18 20:14:59.875 [la] State: HpOff
+2026-11-18T20:15:03-0500 beech python[105163]: 2026-11-18 20:15:03.356 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:15:03-0500 beech python[105163]: 2026-11-18 20:15:03.358 [derived-generator] Rolling dist energy: None
+2026-11-18T20:15:03-0500 beech python[105163]: 2026-11-18 20:15:03.359 [lc] Top state: Dormant
+2026-11-18T20:15:03-0500 beech python[105163]: 2026-11-18 20:15:03.360 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:15:45-0500 beech python[105163]: 2026-11-18 20:15:45.935 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 9.7 Wh | Status: Active  (created by ltn at 2026-11-18 20:15:45.846)
+2026-11-18T20:15:59-0500 beech python[105163]: 2026-11-18 20:15:59.878 [la] State: HpOff
+2026-11-18T20:16:03-0500 beech python[105163]: 2026-11-18 20:16:03.479 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:16:03-0500 beech python[105163]: 2026-11-18 20:16:03.482 [derived-generator] Rolling dist energy: None
+2026-11-18T20:16:03-0500 beech python[105163]: 2026-11-18 20:16:03.483 [lc] Top state: Dormant
+2026-11-18T20:16:03-0500 beech python[105163]: 2026-11-18 20:16:03.483 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:16:46-0500 beech python[105163]: 2026-11-18 20:16:46.096 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 10.1 Wh | Status: Active  (created by ltn at 2026-11-18 20:16:45.849)
+2026-11-18T20:16:59-0500 beech python[105163]: 2026-11-18 20:16:59.882 [la] State: HpOff
+2026-11-18T20:17:03-0500 beech python[105163]: 2026-11-18 20:17:03.618 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:17:03-0500 beech python[105163]: 2026-11-18 20:17:03.621 [derived-generator] Rolling dist energy: None
+2026-11-18T20:17:03-0500 beech python[105163]: 2026-11-18 20:17:03.622 [lc] Top state: Dormant
+2026-11-18T20:17:03-0500 beech python[105163]: 2026-11-18 20:17:03.622 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:17:46-0500 beech python[105163]: 2026-11-18 20:17:46.083 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 10.8 Wh | Status: Active  (created by ltn at 2026-11-18 20:17:45.858)
+2026-11-18T20:17:59-0500 beech python[105163]: 2026-11-18 20:17:59.886 [la] State: HpOff
+2026-11-18T20:18:03-0500 beech python[105163]: 2026-11-18 20:18:03.773 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:18:03-0500 beech python[105163]: 2026-11-18 20:18:03.776 [derived-generator] Rolling dist energy: None
+2026-11-18T20:18:03-0500 beech python[105163]: 2026-11-18 20:18:03.777 [lc] Top state: Dormant
+2026-11-18T20:18:03-0500 beech python[105163]: 2026-11-18 20:18:03.777 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:18:46-0500 beech python[105163]: 2026-11-18 20:18:46.094 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 11.4 Wh | Status: Active  (created by ltn at 2026-11-18 20:18:45.864)
+2026-11-18T20:18:59-0500 beech python[105163]: 2026-11-18 20:18:59.890 [la] State: HpOff
+2026-11-18T20:19:03-0500 beech python[105163]: 2026-11-18 20:19:03.929 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:19:03-0500 beech python[105163]: 2026-11-18 20:19:03.931 [derived-generator] Rolling dist energy: None
+2026-11-18T20:19:03-0500 beech python[105163]: 2026-11-18 20:19:03.933 [lc] Top state: Dormant
+2026-11-18T20:19:03-0500 beech python[105163]: 2026-11-18 20:19:03.933 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:19:46-0500 beech python[105163]: 2026-11-18 20:19:46.094 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 12.0 Wh | Status: Active  (created by ltn at 2026-11-18 20:19:45.867)
+2026-11-18T20:19:58-0500 beech python[105163]: 2026-11-18 20:19:58.802 Top state: Auto
+2026-11-18T20:19:58-0500 beech python[105163]: 2026-11-18 20:19:58.802 Auto state: LeafTransactiveNode
+2026-11-18T20:19:59-0500 beech python[105163]: 2026-11-18 20:19:59.894 [la] State: HpOff
+2026-11-18T20:20:04-0500 beech python[105163]: 2026-11-18 20:20:04.081 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:20:04-0500 beech python[105163]: 2026-11-18 20:20:04.083 [derived-generator] Rolling dist energy: None
+2026-11-18T20:20:04-0500 beech python[105163]: 2026-11-18 20:20:04.084 [lc] Top state: Dormant
+2026-11-18T20:20:04-0500 beech python[105163]: 2026-11-18 20:20:04.084 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:20:45-0500 beech python[105163]: 2026-11-18 20:20:45.958 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 12.8 Wh | Status: Active  (created by ltn at 2026-11-18 20:20:45.875)
+2026-11-18T20:20:59-0500 beech python[105163]: 2026-11-18 20:20:59.898 [la] State: HpOff
+2026-11-18T20:21:04-0500 beech python[105163]: 2026-11-18 20:21:04.230 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:21:04-0500 beech python[105163]: 2026-11-18 20:21:04.232 [derived-generator] Rolling dist energy: None
+2026-11-18T20:21:04-0500 beech python[105163]: 2026-11-18 20:21:04.233 [lc] Top state: Dormant
+2026-11-18T20:21:04-0500 beech python[105163]: 2026-11-18 20:21:04.233 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:21:46-0500 beech python[105163]: 2026-11-18 20:21:46.123 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 13.3 Wh | Status: Active  (created by ltn at 2026-11-18 20:21:45.882)
+2026-11-18T20:21:59-0500 beech python[105163]: 2026-11-18 20:21:59.903 [la] State: HpOff
+2026-11-18T20:22:04-0500 beech python[105163]: 2026-11-18 20:22:04.359 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:22:04-0500 beech python[105163]: 2026-11-18 20:22:04.361 [derived-generator] Rolling dist energy: None
+2026-11-18T20:22:04-0500 beech python[105163]: 2026-11-18 20:22:04.363 [lc] Top state: Dormant
+2026-11-18T20:22:04-0500 beech python[105163]: 2026-11-18 20:22:04.363 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:22:46-0500 beech python[105163]: 2026-11-18 20:22:46.112 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 13.9 Wh | Status: Active  (created by ltn at 2026-11-18 20:22:45.884)
+2026-11-18T20:22:59-0500 beech python[105163]: 2026-11-18 20:22:59.909 [la] State: HpOff
+2026-11-18T20:23:04-0500 beech python[105163]: 2026-11-18 20:23:04.475 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:23:04-0500 beech python[105163]: 2026-11-18 20:23:04.477 [derived-generator] Rolling dist energy: None
+2026-11-18T20:23:04-0500 beech python[105163]: 2026-11-18 20:23:04.478 [lc] Top state: Dormant
+2026-11-18T20:23:04-0500 beech python[105163]: 2026-11-18 20:23:04.478 [lc] LocalControl: BufferOnly  |  State: Dormant
+2026-11-18T20:23:46-0500 beech python[105163]: 2026-11-18 20:23:46.134 [scada] Contract[088] 20:00 - 21:00: Total: 0.0 Wh | Used: 14.6 Wh | Status: Active  (created by ltn at 2026-11-18 20:23:45.892)
+2026-11-18T20:23:59-0500 beech python[105163]: 2026-11-18 20:23:59.913 [la] State: HpOff
+2026-11-18T20:24:04-0500 beech python[105163]: 2026-11-18 20:24:04.626 [derived-generator] Preparing for a morning onpeak + afternoon onpeak
+2026-11-18T20:24:04-0500 beech python[105163]: 2026-11-18 20:24:04.628 [derived-generator] Rolling dist energy: None
+2026-11-18T20:24:04-0500 beech python[105163]: 2026-11-18 20:24:04.629 [lc] Top state: Dormant
+2026-11-18T20:24:04-0500 beech python[105163]: 2026-11-18 20:24:04.630 [lc] LocalControl: BufferOnly  |  State: Dormant

@@ -1,0 +1,54 @@
+# provenance: journalctl -u gwspaceheat on spruce, since 16:20 ET 2026-11-20, filtered to admin dispatches, hp-boss, glitches, EEPROM and unserved posts; box clock
+Nov 20 16:20:57 spruce python[4990]: 2026-11-20 16:20:57.558 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+Nov 20 16:20:57 spruce python[4990]: 2026-11-20 16:20:57.561 [hp-boss] auto.lc.n.hp-boss sending CloseRelay to auto.lc.n.hp-boss.secondary-pump-relay (call HpOff, sensed Unknown)
+Nov 20 16:20:57 spruce python[4990]: 2026-11-20 16:20:57.686 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='1218ef3b-cd07-4b73-8447-95552dacd3b7' SendTimeUnixMs=1795209657630 TypeName='fsm.event' Version='000'
+Nov 20 16:20:57 spruce python[4990]: 2026-11-20 16:20:57.688 [hp-boss] Command fa90bbe6-8e50-402f-a850-e8d467e2cc4b superseded by 1218ef3b-cd07-4b73-8447-95552dacd3b7 before its relay reported
+Nov 20 16:20:57 spruce python[4990]: 2026-11-20 16:20:57.688 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+Nov 20 16:20:57 spruce python[4990]: 2026-11-20 16:20:57.842 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.secondary-pump-relay (call HpOff, sensed HpDetectedOff)
+Nov 20 16:20:57 spruce python[4990]: 2026-11-20 16:20:57.930 [secondary-010v] Warning Glitch: i2c-dac-eeprom-reprogrammed
+Nov 20 16:21:18 spruce python[4990]: 2026-11-20 16:21:18.413 POST /secondary-hx/microvolts is served by no actor; the post says pico_5a5127 microvolts 100
+Nov 20 16:21:18 spruce python[4990]: 2026-11-20 16:21:18.757 POST /secondary-hx/microvolts is served by no actor; the post says pico_5a5127 microvolts 100
+Nov 20 16:21:18 spruce python[4990]: 2026-11-20 16:21:18.781 POST /secondary-hx/microvolts is served by no actor; the post says pico_5a5127 microvolts 100
+Nov 20 16:21:18 spruce python[4990]: 2026-11-20 16:21:18.807 POST /secondary-hx/microvolts is served by no actor; the post says pico_5a5127 microvolts 100
+Nov 20 16:21:48 spruce python[4990]: 2026-11-20 16:21:48.926 POST /secondary-hx/tank-module-params is served by no actor; the post says pico_5a5127 tank.module.params 200
+Nov 20 16:22:18 spruce python[4990]: 2026-11-20 16:22:18.821 POST /secondary-hx/microvolts is served by no actor; the post says pico_5a5127 microvolts 100
+Nov 20 16:22:19 spruce python[4990]: 2026-11-20 16:22:19.772 POST /secondary-hx/tank-module-params is served by no actor; the post says pico_5a5127 tank.module.params 200
+Nov 20 16:22:51 spruce python[4990]: 2026-11-20 16:22:50.998 POST /secondary-hx/tank-module-params is served by no actor; the post says pico_5a5127 tank.module.params 200
+Nov 20 16:23:18 spruce python[4990]: 2026-11-20 16:23:18.844 POST /secondary-hx/microvolts is served by no actor; the post says pico_5a5127 microvolts 100
+Nov 20 16:23:21 spruce python[4990]: 2026-11-20 16:23:21.844 POST /secondary-hx/tank-module-params is served by no actor; the post says pico_5a5127 tank.module.params 200
+Nov 20 16:23:53 spruce python[4990]: 2026-11-20 16:23:53.067 POST /secondary-hx/tank-module-params is served by no actor; the post says pico_5a5127 tank.module.params 200
+Nov 20 16:24:18 spruce python[4990]: 2026-11-20 16:24:18.859 POST /secondary-hx/microvolts is served by no actor; the post says pico_5a5127 microvolts 100
+Nov 20 16:24:23 spruce python[4990]: 2026-11-20 16:24:23.913 POST /secondary-hx/tank-module-params is served by no actor; the post says pico_5a5127 tank.module.params 200
+Nov 20 16:25:01 spruce python[5656]: 2026-11-20 16:25:01.779 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+Nov 20 16:25:01 spruce python[5656]: 2026-11-20 16:25:01.785 [hp-boss] auto.lc.n.hp-boss sending CloseRelay to auto.lc.n.hp-boss.secondary-pump-relay (call HpOff, sensed Unknown)
+Nov 20 16:25:01 spruce python[5656]: 2026-11-20 16:25:01.914 [hp-boss] Got FromHandle='auto.lc.n' ToHandle='auto.lc.n.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='cd600aeb-ee16-4b47-a13f-e4fb2d014da2' SendTimeUnixMs=1795209901859 TypeName='fsm.event' Version='000'
+Nov 20 16:25:01 spruce python[5656]: 2026-11-20 16:25:01.914 [hp-boss] Command 5c51c8b3-af6e-4238-a523-c6fec61a6a62 superseded by cd600aeb-ee16-4b47-a13f-e4fb2d014da2 before its relay reported
+Nov 20 16:25:01 spruce python[5656]: 2026-11-20 16:25:01.915 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.hp-scada-ops-relay
+Nov 20 16:25:02 spruce python[5656]: 2026-11-20 16:25:02.003 [secondary-010v] secondary-010v: EEPROM verified against the ops power-on level
+Nov 20 16:25:02 spruce python[5656]: 2026-11-20 16:25:02.078 [hp-boss] auto.lc.n.hp-boss sending OpenRelay to auto.lc.n.hp-boss.secondary-pump-relay (call HpOff, sensed HpDetectedOff)
+Nov 20 16:25:23 spruce python[5656]: 2026-11-20 16:25:23.879 [scada] AdminDispatch CloseRelay to admin.secondary-pump-relay
+Nov 20 16:25:23 spruce python[5656]: 2026-11-20 16:25:23.887 [scada] Admin takes secondary-pump-relay: admin.secondary-pump-relay
+Nov 20 16:25:35 spruce python[5656]: 2026-11-20 16:25:35.833 [scada] AdminAnalogDispatch 35 to admin.secondary-010v
+Nov 20 16:25:35 spruce python[5656]: 2026-11-20 16:25:35.837 [secondary-010v] Dispatch from admin: volts x10 35
+Nov 20 16:25:46 spruce python[5656]: 2026-11-20 16:25:46.491 [scada] AdminDispatch OpenValve to admin.charge-valve-relay
+Nov 20 16:25:53 spruce python[5656]: 2026-11-20 16:25:53.201 [secondary-hx] Info Glitch: secondary-hx pico params differ from the answer: NumSampleAverages, AsyncCaptureDeltaMicroVolts
+Nov 20 16:25:56 spruce python[5656]: 2026-11-20 16:25:56.952 [scada] AdminDispatch CloseRelay to admin.store-pump-relay
+Nov 20 16:26:08 spruce python[5656]: 2026-11-20 16:26:08.295 [scada] AdminAnalogDispatch 45 to admin.secondary-010v
+Nov 20 16:26:08 spruce python[5656]: 2026-11-20 16:26:08.297 [secondary-010v] Dispatch from admin: volts x10 45
+Nov 20 16:27:06 spruce python[5656]: 2026-11-20 16:27:06.328 [scada] AdminAnalogDispatch 76 to admin.secondary-010v
+Nov 20 16:27:06 spruce python[5656]: 2026-11-20 16:27:06.331 [secondary-010v] Dispatch from admin: volts x10 76
+Nov 20 16:27:16 spruce python[5656]: 2026-11-20 16:27:16.157 [scada] AdminDispatch TurnOn to admin.hp-boss
+Nov 20 16:27:16 spruce python[5656]: 2026-11-20 16:27:16.175 [hp-boss] admin.hp-boss sending OpenRelay to admin.hp-boss.secondary-pump-relay (call HpOff, sensed HpDetectedOff)
+Nov 20 16:27:16 spruce python[5656]: 2026-11-20 16:27:16.176 [scada] Admin returns secondary-pump-relay to admin.hp-boss
+Nov 20 16:27:16 spruce python[5656]: 2026-11-20 16:27:16.177 [hp-boss] Got FromHandle='admin' ToHandle='admin.hp-boss' EventType='turn.hp.on.off' EventName='TurnOn' TriggerId='a7a80700-7cc6-4593-9858-74eda2537a85' SendTimeUnixMs=1795210036065 TypeName='fsm.event' Version='000'
+Nov 20 16:27:16 spruce python[5656]: 2026-11-20 16:27:16.181 [hp-boss] admin.hp-boss sending CloseRelay to admin.hp-boss.hp-scada-ops-relay
+Nov 20 16:27:51 spruce python[5656]: 2026-11-20 16:27:51.048 [hp-boss] admin.hp-boss sending CloseRelay to admin.hp-boss.secondary-pump-relay (call HpOn, sensed HpDetectedOn)
+Nov 20 16:31:45 spruce python[5656]: 2026-11-20 16:31:45.383 [scada] AdminDispatch TurnOff to admin.hp-boss
+Nov 20 16:31:45 spruce python[5656]: 2026-11-20 16:31:45.384 [hp-boss] Got FromHandle='admin' ToHandle='admin.hp-boss' EventType='turn.hp.on.off' EventName='TurnOff' TriggerId='9477ad67-26b1-4fa0-ba8e-53bee7833152' SendTimeUnixMs=1795210305290 TypeName='fsm.event' Version='000'
+Nov 20 16:31:45 spruce python[5656]: 2026-11-20 16:31:45.389 [hp-boss] admin.hp-boss sending OpenRelay to admin.hp-boss.hp-scada-ops-relay
+Nov 20 16:33:44 spruce python[5656]: 2026-11-20 16:33:44.142 [hp-boss] admin.hp-boss sending OpenRelay to admin.hp-boss.secondary-pump-relay (call HpOff, sensed HpDetectedOff)
+Nov 20 16:34:16 spruce python[5656]: 2026-11-20 16:34:16.684 [scada] AdminDispatch CloseValve to admin.iso-valve-relay
+Nov 20 16:34:35 spruce python[5656]: 2026-11-20 16:34:35.584 [scada] AdminDispatch CloseValve to admin.charge-valve-relay
+Nov 20 16:34:44 spruce python[5656]: 2026-11-20 16:34:44.030 [scada] AdminDispatch OpenValve to admin.charge-valve-relay
+Nov 20 16:35:51 spruce python[5656]: 2026-11-20 16:35:51.407 [scada] AdminDispatch CloseValve to admin.charge-valve-relay
+Nov 20 16:36:50 spruce python[5656]: 2026-11-20 16:36:50.087 [scada] AdminDispatch OpenValve to admin.iso-valve-relay
