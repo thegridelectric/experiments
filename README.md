@@ -111,7 +111,16 @@ The tools and recipes at the top:
   capture or pull goes untouched to the immutable store, its key named
   in the folder's README, and the folder commits the reduced form the
   analysis reads (the lines the question needs, or one compact row
-  per message). A file a folder script regenerates from our own
+  per message). The store for an experiment's own bytes is
+  `s3://gwdev/experiments/<folder>/<file>` (`aws s3 cp <file>
+  s3://gwdev/experiments/<folder>/<file>`, then `aws s3 ls` to see the
+  byte count match); the README's "Folder contents" names the key, the
+  byte count and the fetch-then-reduce commands, and the local copy is
+  removed once the listing matches. A broker or tap capture reduces
+  to a `-rows.jsonl` sibling (receive time, routing key, TypeName,
+  Version, bytes, one row per message), and `.gitignore` keeps the
+  full `tap-capture-*.jsonl` out so `git add -A` is safe. A file a
+  folder script regenerates from our own
   immutable store (the journal DB, the eventstore, a committed
   instance) is named with the tail `-regen` before its extension and
   is gitignored; the script, its command in the README and its log

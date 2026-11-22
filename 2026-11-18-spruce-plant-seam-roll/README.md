@@ -76,13 +76,16 @@ the journal DB. The fleet traffic the tap heard is also in the journal.
   `journalctl` follows of the box services through the window.
 - `evidence/tap-stdout.log`, `evidence/tap-fleet-stdout.log`: `tap_listen.py`
   stdout (read-only tap broker), spruce only and then the fleet roll.
-- `evidence/tap-capture-20261118-191232.jsonl` (3.4 MB, spruce window) and
-  `evidence/tap-capture-20261118-194918.jsonl` (19.6 MB, fleet roll): the
-  full captures, untouched. Over the 2 MB cap, so not committed: they go
-  to the immutable store (key to be named here) and the folder commits
-  their reduction, `evidence/tap-capture-*-rows.jsonl`, one row per
-  message (receive time, routing key, TypeName, Version, bytes):
+- The full tap captures, untouched, are in the immutable store, over the
+  2 MB cap: `s3://gwdev/experiments/2026-11-18-spruce-plant-seam-roll/tap-capture-20261118-191232.jsonl`
+  (3,446,595 bytes, the spruce window) and
+  `s3://gwdev/experiments/2026-11-18-spruce-plant-seam-roll/tap-capture-20261118-194918.jsonl`
+  (19,615,468 bytes, the fleet roll). The folder commits their reduction,
+  `evidence/tap-capture-*-rows.jsonl`, one row per message (receive time,
+  routing key, TypeName, Version, bytes). To regenerate the rows, fetch
+  a capture beside them and run the reducer:
 
+      aws s3 cp s3://gwdev/experiments/2026-11-18-spruce-plant-seam-roll/tap-capture-20261118-194918.jsonl 2026-11-18-spruce-plant-seam-roll/evidence/
       uv run python 2026-11-18-spruce-plant-seam-roll/reduce_capture.py
 
 - `emit_instances.py`: writes

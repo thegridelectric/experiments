@@ -27,3 +27,7 @@ raw/
 # from the spec in wiki/<domain>/executor/traces/<name>/; never committed.
 traces/*/*/messages.jsonl
 traces/*/*/.snapshot/
+# Full tap captures are over the cap and live in the immutable store
+# (s3://gwdev/experiments/<folder>/), their key named in the folder's
+# README; the committed form is the -rows.jsonl reduction beside them.
+*/evidence/tap-capture-*[0-9].jsonl
