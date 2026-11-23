@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Start the sim from a zip ./package.sh wrote. Load the packed images,
-# import the bruce volume if it is packed, then play the pod. Stop with
-# ./stop.sh.
+# pull Rabbit, Mosquitto, Postgres and Timescale, import the bruce
+# volume if it is packed, then play the pod. Stop with ./stop.sh.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -42,6 +42,11 @@ else
     echo "no images.tar.gz or images.tar in $HERE" >&2
     exit 1
 fi
+
+for img in "${PULL_IMAGES[@]}"; do
+    echo "pulling $img"
+    podman pull "$img"
+done
 
 if [[ -f bruce.tar ]]; then
     if podman volume exists "$BRUCE_VOLUME"; then

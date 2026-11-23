@@ -70,8 +70,9 @@ calling zone's `*-whitewire-pwr` reads 175 W (`PZoneValve` in
 `house/plant-overrides.json`), as Beech's eGauge does. The layout
 keeps the house's own heat-call split, greater than 10 W.
 `house/plant-overrides.json` is also the place to change any other
-parameter of `Beech.Plant`, and the outdoor temperature, which the
-plant holds at -5 °C.
+parameter of `Beech.Plant`. The outdoor temperature starts at -5 °C
+there and then follows the `us.me.millinocket.moose` forecast: each
+slice is a point, and the plant draws a straight line between them.
 
 ## Found
 
@@ -218,10 +219,11 @@ encoding), from the committed `logs/reports.json`:
 - `run.sh`: builds the images (cached layers; a later run rebuilds an
   image only when its files changed) and starts the pod.
 - `build.sh`: the image builds, on their own.
-- `package.sh`: zips the images and the files another box needs to run
-  the sim, without the sibling checkouts. `./package.sh --dry-run`
-  lists them. The zip's `run.sh` loads the images and plays the pod.
-  It holds `price.env` and `mm.env`.
+- `package.sh`: zips the images this tree builds and the files another
+  box needs to run the sim, without the sibling checkouts.
+  `./package.sh --dry-run` lists them. The zip's `run.sh` loads those
+  images, pulls Rabbit, Mosquitto, Postgres and Timescale, and plays
+  the pod. It holds `price.env` and `mm.env`.
 - `stop.sh`: stops the pod. The journal database goes with it.
   `./eventstore`, `./events`, `./events-buffer` and the bruce volume stay.
 - `pod.yaml`: the same four processes as one Pod, for

@@ -29,10 +29,16 @@ services:
       retries: 24
       start_period: 20s
 
+  # Ubuntu attaches an AppArmor profile to the path /usr/sbin/mosquitto.
+  # The shell copies the binary and execs the copy, so the process never
+  # enters that profile.
   mosquitto:
     <<: *on-the-brokers-network
     image: eclipse-mosquitto:2
-    command: ["mosquitto", "-c", "/mosquitto-no-auth.conf"]
+    command:
+      - sh
+      - -c
+      - cp /usr/sbin/mosquitto /tmp/mosquitto && exec /tmp/mosquitto -c /mosquitto-no-auth.conf
 
   plant:
     <<: *on-the-brokers-network

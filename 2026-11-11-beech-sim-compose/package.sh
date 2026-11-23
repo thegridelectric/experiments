@@ -7,8 +7,8 @@
 #     ./package.sh --dry-run   # list what would go in, write nothing
 #
 # Writes beech-sim-<utc>-<arch>.zip in this directory. It holds the ISO-NE
-# accounts from ./price.env and ./mm.env. The Timescale image is several
-# gigabytes; the zip is that plus the rest.
+# accounts from ./price.env and ./mm.env, and the images this tree builds.
+# The other box pulls Rabbit, Mosquitto, Postgres and Timescale.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -43,7 +43,7 @@ missing=()
 if [[ "$BUILD" -eq 1 ]]; then
     "$HERE/build.sh"
 fi
-for img in "${ALL_IMAGES[@]}"; do
+for img in "${SIM_IMAGES[@]}"; do
     if ! podman image exists "$img"; then
         missing+=("$img")
     fi
@@ -70,8 +70,10 @@ if podman volume exists "$BRUCE_VOLUME"; then
     have_bruce=1
 fi
 
-echo "images:"
-printf '  %s\n' "${ALL_IMAGES[@]}"
+echo "packed images:"
+printf '  %s\n' "${SIM_IMAGES[@]}"
+echo "pulled on the other box:"
+printf '  %s\n' "${PULL_IMAGES[@]}"
 echo "files: house/ flo/ journal_boot.py pod.yaml stop.sh flo_matrix.py price.env mm.env"
 if [[ "$have_bruce" -eq 1 ]]; then
     echo "bruce volume: $BRUCE_VOLUME"
@@ -89,8 +91,10 @@ trap 'rm -rf "$STAGING"' EXIT
 ROOT="$STAGING/$NAME"
 mkdir -p "$ROOT/house" "$ROOT/house-buffer" "$ROOT/flo"
 
-echo "saving images (this is several gigabytes)"
-podman save -o "$ROOT/images.tar" "${ALL_IMAGES[@]}"
+echo "saving built images"
+# Without --multi-image-archive every name after the first is stored as
+# a tag of the first image, so the archive contains only that image.
+podman save --multi-image-archive -o "$ROOT/images.tar" "${SIM_IMAGES[@]}"
 gzip -1 "$ROOT/images.tar"
 
 if [[ "$have_bruce" -eq 1 ]]; then
@@ -111,15 +115,19 @@ chmod +x "$ROOT/run.sh" "$ROOT/stop.sh"
     echo "arch=$ARCH"
     echo "packed_utc=$STAMP"
     echo "bruce=$have_bruce"
-    echo "images<<"
-    printf '%s\n' "${ALL_IMAGES[@]}"
+    echo "packed<<"
+    printf '%s\n' "${SIM_IMAGES[@]}"
+    echo ">>"
+    echo "pull<<"
+    printf '%s\n' "${PULL_IMAGES[@]}"
     echo ">>"
 } > "$ROOT/MANIFEST"
 
 cat > "$ROOT/README.md" <<'EOF'
-A packaged Beech simulation. Needs Podman, the same CPU architecture as
-the box that wrote the zip (see `arch=` in MANIFEST), and the host ports
-5173, 5433 and 8100 free.
+A packaged Beech simulation. Needs Podman, a network to pull Rabbit,
+Mosquitto, Postgres and Timescale, the same CPU architecture as the box
+that wrote the zip (see `arch=` in MANIFEST), and the host ports 5173,
+5433 and 8100 free.
 
     unzip beech-sim-*.zip
     cd beech-sim-*

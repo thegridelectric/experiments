@@ -74,9 +74,10 @@
 # ./eventstore stays.
 #
 # The web app is http://localhost:5173/gridworks-web-frontend/ . Vite
-# proxies /api to the API on the pod's localhost:8000, so the browser
-# only talks to 5173 for the journal pages. The realtime page dials the
-# gateway at ws://localhost:8100. The frontend's weather panel learns
+# proxies /api to the API on the pod's localhost:8000, and proxies the
+# realtime socket to the gateway on the pod's localhost:8100, so the
+# browser only talks to 5173 and the page works under any host that
+# reached it. The frontend's weather panel learns
 # each house's bundle at start: the web container reads the layout's
 # LeafTransactiveNode alias and the operational params'
 # WeatherBundleName from ./house and ./house-buffer into
@@ -132,9 +133,15 @@ spec:
         timeoutSeconds: 10
         failureThreshold: 24
 
+    # Ubuntu attaches an AppArmor profile to the path /usr/sbin/mosquitto.
+    # The shell copies the binary and execs the copy, so the process never
+    # enters that profile.
     - name: mosquitto
       image: docker.io/library/eclipse-mosquitto:2
-      args: ["mosquitto", "-c", "/mosquitto-no-auth.conf"]
+      args:
+        - sh
+        - -c
+        - cp /usr/sbin/mosquitto /tmp/mosquitto && exec /tmp/mosquitto -c /mosquitto-no-auth.conf
 
     - name: mosquitto-buffer
       image: docker.io/library/eclipse-mosquitto:2
@@ -142,7 +149,10 @@ spec:
         - name: mosquitto-1884
           mountPath: /mosquitto-1884.conf
           readOnly: true
-      args: ["mosquitto", "-c", "/mosquitto-1884.conf"]
+      args:
+        - sh
+        - -c
+        - cp /usr/sbin/mosquitto /tmp/mosquitto && exec /tmp/mosquitto -c /mosquitto-1884.conf
 
     - name: plant
       image: localhost/beech-sim_plant:latest
@@ -182,7 +192,9 @@ spec:
           exec ta-plant \
             --layout /house/hardware-layout.json \
             --fmu /opt/gwta/BeechPlant.fmu \
-            --fmu-overrides /house/plant-overrides.json
+            --fmu-overrides /house/plant-overrides.json \
+            --weather-url http://127.0.0.1:8531/d1-weather \
+            --weather-bundle us.me.millinocket.moose
 
     - name: scada
       image: localhost/beech-sim_scada:latest
@@ -350,7 +362,9 @@ spec:
           exec ta-plant \
             --layout /house/hardware-layout.json \
             --fmu /opt/gwta/BeechPlant.fmu \
-            --fmu-overrides /house/plant-overrides.json
+            --fmu-overrides /house/plant-overrides.json \
+            --weather-url http://127.0.0.1:8531/d1-weather \
+            --weather-bundle us.me.millinocket.moose
 
     - name: scada-buffer
       image: localhost/beech-sim_scada:latest
@@ -995,9 +1009,6 @@ spec:
 
     - name: web
       image: localhost/beech-sim_frontend:latest
-      env:
-        - name: VITE_GRIDWORKS_WS_BASE_URL
-          value: ws://localhost:8100
       ports:
         - containerPort: 5173
           hostPort: 5173
