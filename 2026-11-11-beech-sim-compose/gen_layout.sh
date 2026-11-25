@@ -13,7 +13,7 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(dirname "$HERE")/.."
-TLAYOUTS_SHA=3516263
+TLAYOUTS_SHA=4572c35
 SCADA_REPO="${SCADA_REPO:-$ROOT/gridworks-scada}"
 
 TREE="$(mktemp -d)"

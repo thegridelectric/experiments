@@ -48,7 +48,10 @@ standing `gw-dev-rabbit` and a dev scada on it, and touched neither.
 
 **The houses** (`house/` AllTanks, `house-buffer/` BufferOnly): each a
 `gw.house0.layout` and its `gw.house0.operational.params`, made by
-`gen_layout.sh` with tlayouts' House0 generator at `10110cc`. They are
+`gen_layout.sh` with tlayouts' House0 generator at `4572c35`. Their
+params name `flo.tuning.bruce` 002, so the pod's scada image is built
+from a `gridworks-scada` whose snapshot has that version (`main` at
+`45cd599d` does). They are
 the all-sim House0 that tlayouts authors for orange, with what makes
 them Beech changed: two zones (`down`, `up`), three 120-gallon store
 tanks, rolling distribution energy. `house/` is
@@ -194,13 +197,11 @@ distribution loop on its own (display only, gitignored with their CSV):
 
     uv run python plot_channels.py
 
-The scada persists its events in its container, under
-`/home/scada/.local/share/gridworks/scada/event/`, a folder per UTC day
-and a JSON file per event. They go with the container; to keep them:
+The scada persists its events under `./events` (mounted at `/events`,
+its `SCADA_PATHS__EVENT_DIR`), a folder per UTC day and a JSON file per
+event. They stay across `docker compose down`.
 
-    docker compose cp scada:/home/scada/.local/share/gridworks/scada/event ./events
-
-The house, from scratch (needs `10110cc` fetched in the sibling
+The house, from scratch (needs `4572c35` fetched in the sibling
 `tlayouts` checkout):
 
     ./gen_layout.sh
