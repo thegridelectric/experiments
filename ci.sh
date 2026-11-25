@@ -73,9 +73,9 @@ procedures/sieg-valve-calibration/drive.py
 2026-11-10-plant-loop/loop_check.py
 2026-11-11-beech-sim-compose/stack_check.py
 2026-11-11-beech-sim-compose/channel_readings.py
-2026-11-11-beech-sim-compose/beech_sim_gen.py
-2026-11-11-beech-sim-compose/journal_boot.py
-2026-11-11-beech-sim-compose/flo_matrix.py
+dev-sim/beech_sim_gen.py
+dev-sim/journal_boot.py
+dev-sim/flo_matrix.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_live.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_store_once.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_store_sweep.py

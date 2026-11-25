@@ -2,7 +2,7 @@
 # they meet on.
 #
 #     docker compose up --build -d
-#     ./check.sh
+#     ./check.py
 #     docker compose down
 #
 # The four share one network namespace, the broker's, so each finds the
@@ -48,7 +48,7 @@ services:
       GWTA_SERVICE_ALIAS: d1.isone.me.versant.keene.beech.at.ta
       GWTA_G_NODE_PATH: /home/gwta/g.node.gt.json
     volumes:
-      - ./house:/house:ro
+      - ../dev-sim/house:/house:ro
     command:
       - --layout
       - /house/hardware-layout.json
@@ -63,7 +63,7 @@ services:
   events-owner:
     build:
       context: ../../gridworks-scada
-      dockerfile: ../experiments/2026-11-11-beech-sim-compose/scada.Dockerfile
+      dockerfile: ../experiments/dev-sim/scada.Dockerfile
     user: "0:0"
     volumes:
       - ./events:/events
@@ -80,13 +80,13 @@ services:
         condition: service_completed_successfully
     build:
       context: ../../gridworks-scada
-      dockerfile: ../experiments/2026-11-11-beech-sim-compose/scada.Dockerfile
+      dockerfile: ../experiments/dev-sim/scada.Dockerfile
     environment:
       SCADA_GRIDWORKS_MQTT__PORT: 1885
       SCADA_WEATHER_SOURCE: Sim
       SCADA_PATHS__EVENT_DIR: /events
     volumes:
-      - ./house:/house:ro
+      - ../dev-sim/house:/house:ro
       - ./events:/events
     # The scada finds its layout pair by their deployed names in its config
     # home, where it also writes: the pair is copied there at each start.
