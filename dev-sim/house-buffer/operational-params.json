@@ -600,12 +600,9 @@
   },
   "CopCurve": {
     "TypeName": "cop.curve",
-    "Version": "000",
+    "Version": "001",
     "Intercept": 1.02,
-    "OatCoeff": 0.0257,
-    "LwtCoeff": 0.0,
-    "Min": 1.4,
-    "MinOatF": 15.0
+    "LwtMinusOatCoeff": 0.0
   },
   "HeatingCurve": {
     "TypeName": "heating.curve",
@@ -639,8 +636,8 @@
   "MarketProductName": "rt60gate5",
   "FloTuning": {
     "TypeName": "flo.tuning.bruce",
-    "Version": "002",
-    "NumLayers": 9,
+    "Version": "003",
+    "NumLayers": 27,
     "StorageLossesPercent": 0.5,
     "HpMinKwEl": 0.0,
     "HpMaxKwTh": 25.0,
@@ -659,18 +656,20 @@
     "RswtPenaltyDecay": 0.9,
     "RswtPenaltyExponentRate": 0.05,
     "RswtPenaltyDecayMaxHour": 12,
-    "UnmetLoadPenaltyEnabled": true,
-    "UnmetLoadPenaltyWeight": 10.0,
     "ShortCyclePenaltyEnabled": false,
     "ShortCyclePenaltyWeight": 6.0,
-    "StabilityPenaltyEnabled": true,
+    "StabilityPenaltyEnabled": false,
     "StabilityPenaltyWeight": 0.5,
     "StabilityPenaltyDecay": 0.75,
     "StabilityPenaltyThresholdKwh": 10.0,
     "StabilityPenaltyThresholdPriceMwh": 15.0,
     "StabilityPenaltyHorizonHours": 20,
     "TerminalCostEnabled": true,
-    "TerminalCostEndWindowHours": 24
+    "TerminalCostEndWindowHours": 24,
+    "Experimental": {
+      "UnmetLoadPenaltyEnabled": true,
+      "UnmetLoadPenaltyWeight": 10.0
+    }
   },
   "WeatherBundleName": "us.me.millinocket.moose",
   "Tariff": {

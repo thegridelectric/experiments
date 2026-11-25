@@ -5,7 +5,7 @@
 #
 #     podman build -t localhost/beech-sim_mm:latest -f mm.Dockerfile \
 #         --ignorefile mm.Dockerfile.dockerignore \
-#         ../../gridworks-marketmaker
+#         .sources/gridworks-marketmaker
 
 FROM python:3.12-slim-bookworm AS build
 COPY --from=ghcr.io/astral-sh/uv:0.12.23 /uv /usr/local/bin/uv

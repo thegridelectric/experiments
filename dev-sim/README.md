@@ -13,19 +13,22 @@ standing stack and has no date. The record of its first runs is
     ./stop.sh
 
 `run.sh` builds the images and plays `pod.yaml`. It needs Podman, the
-sibling checkouts `build.sh` names (`gridworks-terminalasset`,
-`gridworks-scada`, `gridworks-flo`, `optimal-flexibility`,
-`gridworks-price-forecast`, `gridworks-marketmaker`,
-`gridworks-journalkeeper`, `gridworks-web-backend`,
-`gridworks-web-frontend`), the ISO-NE account in `./price.env` and
-`./mm.env` (gitignored; `pod.yaml`'s header gives the names), and the
-bruce volume filled once per house shape (the command is in `pod.yaml`'s
-header). Each image is built from whatever its checkout is on.
+ISO-NE account in `./price.env` and `./mm.env` (gitignored; `pod.yaml`'s
+header gives the names), and the bruce volume filled once per house
+shape (the command is in `pod.yaml`'s header).
+
+`sources.txt` names the commit of every repo the pod is built from.
+`fetch-sources.sh` clones each sibling checkout into `./.sources/` at
+that commit, and the builds and the house generator read only
+`./.sources/`, so a sibling's branch and working tree do not matter and
+are not touched. Each image has its commit as the label `gw.source`. To
+move a pin, change its line and run `./run.sh`; a change to the
+`tlayouts` or `gridworks-scada` pin also needs `./gen_layout.sh`.
 
 Three ports are published on the host: the web app on 5173
 (`http://localhost:5173/gridworks-web-frontend/`, login `beech` /
 `beech`), the realtime gateway on 8100, and the journal database on
-5433. Everything else is on the pod's localhost.
+5434. Everything else is on the pod's localhost.
 
 `stop.sh` drops the journal database with the pod. `./eventstore`,
 `./events`, `./events-buffer` and the bruce volume stay.
@@ -38,11 +41,8 @@ Three ports are published on the host: the web app on 5173
 into the one market maker, `d1.isone.me.versant.keene`, so the two
 houses share a market.
 
-`gen_layout.sh` makes them with tlayouts' House0 generator at `4572c35`.
-Their params name `flo.tuning.bruce` 002, so the scada image is built
-from a `gridworks-scada` whose snapshot has that version (`main` at
-`45cd599d` does), and the FLO image from a `gridworks-flo` that decodes
-it.
+`gen_layout.sh` makes them with tlayouts' House0 generator, with
+tlayouts and the scada at their commits in `sources.txt`.
 
 ## Files
 
@@ -64,7 +64,7 @@ it.
   they read (`gwwf rabbit` and `gwwf api`, its own Postgres on
   pod port 5436, dev records minted at each start), and the journal: the
   ear writing `./eventstore` (`ear listen --no-s3`), TimescaleDB
-  published on host port 5433, the keeper, and the web app on host
+  published on host port 5434, the keeper, and the web app on host
   port 5173 (`http://localhost:5173/gridworks-web-frontend/`, login
   `beech` / `beech`) with its realtime gateway on host port 8100. The
   FLO runs under
@@ -82,10 +82,10 @@ it.
   `gridworks` tables before the keeper starts.
 - `weather.Dockerfile`, `weather.Dockerfile.dockerignore`: the weather
   service's image, built from
-  `https://github.com/thegridelectric/gridworks-weather-forecast.git`.
+  the `gridworks-weather-forecast` checkout.
   The scada and the LTN read `http://127.0.0.1:8531/d1-weather`.
 - `ear.Dockerfile`, `ear.Dockerfile.dockerignore`: the ear's image,
-  built from `https://github.com/thegridelectric/gridworks-ear.git`.
+  built from the `gridworks-ear` checkout.
   With `--no-s3` it writes each message under `./eventstore`.
 - `web.Dockerfile`, `web.Dockerfile.dockerignore`: the web backend's
   image, built with a `gridworks-web-backend` checkout as its context.
@@ -107,6 +107,8 @@ it.
   peaking at 452 MB.
 - `flo/g.node.gt.json`: the FLO's identity, `d1.flo` under the dev
   universe's GNodeId. Written by the generator.
+- `sources.txt`, `fetch-sources.sh`: the commit of each repo the pod is
+  built from, and the script that puts `./.sources/<repo>` at it.
 - `scada.Dockerfile`, `scada.Dockerfile.dockerignore`: the scada's image,
   built with a `gridworks-scada` checkout as its context.
 - `build-scada-arm64.sh`: the same image for linux/arm64. Needs the

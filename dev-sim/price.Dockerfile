@@ -6,7 +6,7 @@
 #
 #     podman build -t localhost/beech-sim_price:latest -f price.Dockerfile \
 #         --ignorefile price.Dockerfile.dockerignore \
-#         ../../gridworks-price-forecast
+#         .sources/gridworks-price-forecast
 #
 # Two commands of one image: `gwpf rabbit` watches ISO-NE and writes the
 # kept forecast, `gwpf api` serves it.

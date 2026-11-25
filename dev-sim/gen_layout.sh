@@ -5,20 +5,15 @@
 #     ./gen_layout.sh
 #
 # Writes ./house (AllTanks, d1.isone.me.versant.keene.beech.at) and
-# ./house-buffer (BufferOnly, d1.isone.me.versant.keene.beech.buf). Needs the
-# sibling tlayouts checkout to hold TLAYOUTS_SHA (fetched; it need not be
-# checked out) and the sibling gridworks-scada checkout, whose
-# environment the generator runs in.
+# ./house-buffer (BufferOnly, d1.isone.me.versant.keene.beech.buf) from
+# tlayouts at the commit sources.txt names, with the generator run in the
+# environment of the scada at its commit there.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="$(dirname "$HERE")/.."
-TLAYOUTS_SHA=4572c35
-SCADA_REPO="${SCADA_REPO:-$ROOT/gridworks-scada}"
-
-TREE="$(mktemp -d)"
-trap 'rm -rf "$TREE"' EXIT
-git -C "$ROOT/tlayouts" archive "$TLAYOUTS_SHA" | tar -x -C "$TREE"
+"$HERE/fetch-sources.sh"
+TREE="$HERE/.sources/tlayouts"
+SCADA_REPO="$HERE/.sources/gridworks-scada"
 
 mkdir -p "$HERE/house" "$HERE/house-buffer"
 (cd "$SCADA_REPO" && uv run --locked python "$HERE/beech_sim_gen.py" "$TREE" \

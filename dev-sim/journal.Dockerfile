@@ -5,7 +5,7 @@
 #
 #     podman build -t localhost/beech-sim_journal:latest -f journal.Dockerfile \
 #         --ignorefile journal.Dockerfile.dockerignore \
-#         ../../gridworks-journalkeeper
+#         .sources/gridworks-journalkeeper
 
 FROM python:3.12-slim-bookworm AS build
 COPY --from=ghcr.io/astral-sh/uv:0.12.23 /uv /usr/local/bin/uv

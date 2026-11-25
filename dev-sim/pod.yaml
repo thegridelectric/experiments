@@ -5,7 +5,7 @@
 # that reads the journal.
 # Containers in a Pod share one network namespace, which is what
 # compose.yaml builds with network_mode: service:rabbit. Three ports
-# are published to the host: the journal database, 5433 to the
+# are published to the host: the journal database, 5434 to the
 # container's 5432; the web app, 5173; and the realtime gateway, 8100.
 #
 # Kube play starts every container together and has no readiness probe,
@@ -17,8 +17,7 @@
 # (d1.isone.me.versant.keene.beech.at) and ./house-buffer is BufferOnly
 # (d1.isone.me.versant.keene.beech.buf). Each scada has its own local Mosquitto.
 # It does not build images. ./run.sh does,
-# then plays this file. Kube play resolves ./house from the working
-# directory, and the script moves there.
+# then plays this file with each ./ hostPath made absolute to this folder.
 #
 # The FLO answers only plant shapes whose bruce transition matrix is in
 # the beech-sim-bruce volume, which survives kube down. Fill it once per
@@ -62,7 +61,7 @@
 # TimescaleDB. Inside the pod the database is localhost:5432; from the
 # host, as the read-only role:
 #
-#     postgresql://gw_analyst:gw_analyst@127.0.0.1:5433/tsdb
+#     postgresql://gw_analyst:gw_analyst@127.0.0.1:5434/tsdb
 #
 # The superuser is postgres/postgres. Dev roles, password equal to the
 # role name: gw_admin, gw_journalkeeper (the keeper), gw_visualizer
@@ -842,7 +841,7 @@ spec:
           value: tsdb
       ports:
         - containerPort: 5432
-          hostPort: 5433
+          hostPort: 5434
           protocol: TCP
 
     # Direct file store: --no-s3 skips the object store and writes each

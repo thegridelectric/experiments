@@ -5,7 +5,7 @@
 #
 #     podman build -t localhost/beech-sim_flo:latest -f flo.Dockerfile \
 #         --ignorefile flo.Dockerfile.dockerignore \
-#         --build-context bruce=../../optimal-flexibility ../../gridworks-flo
+#         --build-context bruce=.sources/optimal-flexibility .sources/gridworks-flo
 FROM python:3.12-slim-bookworm AS build
 COPY --from=ghcr.io/astral-sh/uv:0.12.23 /uv /usr/local/bin/uv
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=never

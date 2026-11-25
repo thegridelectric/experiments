@@ -70,5 +70,8 @@ elif ! podman volume exists "$BRUCE_VOLUME"; then
 fi
 
 mkdir -p events eventstore
-podman kube play pod.yaml
+# The podman service resolves a relative hostPath from its own working
+# directory, which under `podman machine` is inside the VM, so the pod is
+# played with this folder's absolute path in place of each "./".
+sed "s|path: \./|path: $HERE/|" pod.yaml | podman kube play -
 echo "web app: http://localhost:5173/gridworks-web-frontend/  (beech / beech)"
