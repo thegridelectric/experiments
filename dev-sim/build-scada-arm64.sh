@@ -9,7 +9,8 @@
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONTEXT="$(dirname "$HERE")/../gridworks-scada"
+"$HERE/fetch-sources.sh"
+CONTEXT="$HERE/.sources/gridworks-scada"
 TAG="${TAG:-scada:arm64}"
 
 if [[ ! -e /proc/sys/fs/binfmt_misc/qemu-aarch64 ]]; then

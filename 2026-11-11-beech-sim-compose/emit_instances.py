@@ -22,7 +22,7 @@ from gwexp.sema.types import GwExperimentRun  # noqa: E402
 
 LOGS = HERE / "logs"
 INSTANCES = HERE / "instances"
-SCADA_ALIAS = "d1.isone.me.versant.keene.beech.at.scada"
+SCADA_ALIAS = "d1.isone.me.versant.keene.beech.scada"
 VERDICTS = {"PASS": GwExperimentVerdict.Pass, "FAIL": GwExperimentVerdict.Fail}
 DOCKER_TIME = "%Y-%m-%d %H:%M:%S %z %Z"
 

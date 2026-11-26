@@ -127,7 +127,7 @@ cat > "$ROOT/README.md" <<'EOF'
 A packaged Beech simulation. Needs Podman, a network to pull Rabbit,
 Mosquitto, Postgres and Timescale, the same CPU architecture as the box
 that wrote the zip (see `arch=` in MANIFEST), and the host ports 5173,
-5433 and 8100 free.
+5434 and 8100 free.
 
     unzip beech-sim-*.zip
     cd beech-sim-*

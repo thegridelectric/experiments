@@ -10,6 +10,7 @@ event, read as that. Prints one JSON object.
 """
 
 import json
+import os
 import sys
 from pathlib import Path
 from typing import NamedTuple
@@ -36,7 +37,7 @@ from sema_to_dc import load_layout  # noqa: E402
 REPORT = "report.event"
 SHUTDOWN = "gridworks.event.shutdown"
 CONFIG = Path.home() / ".config" / "gridworks" / "scada"
-EVENTS = Path.home() / ".local" / "share" / "gridworks" / "scada" / "event"
+EVENTS = Path(os.environ["SCADA_PATHS__EVENT_DIR"])
 
 
 class ChannelSeen(NamedTuple):

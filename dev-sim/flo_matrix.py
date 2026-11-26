@@ -30,7 +30,14 @@ from bruce.sema.enums import SeasonalStorageMode
 from bruce.sema.types import FloParams, FloTuningBruce
 from bruce.service import params_from_request
 
-SAMPLE = Path(gwflo.__file__).parent / "sema" / "samples" / "flo.params.001.json"
+SAMPLES = Path(gwflo.__file__).parent / "sema" / "samples"
+
+
+def flo_params_sample() -> dict:
+    """The FLO's own flo.params sample, at the one version its snapshot
+    vendors."""
+    (sample,) = SAMPLES.glob("flo.params.*.json")
+    return json.loads(sample.read_text())
 
 
 def water_store(layout: dict) -> dict:
@@ -44,7 +51,7 @@ def water_store(layout: dict) -> dict:
 def request(
     tuning: FloTuningBruce, mode: SeasonalStorageMode, store: dict
 ) -> FloParams:
-    sample = json.loads(SAMPLE.read_text())
+    sample = flo_params_sample()
     tanks = store["TotalStoreTanks"] if mode is SeasonalStorageMode.AllTanks else 1
     sensors = tanks * store["TempSensorsPerTank"]
     sample.update(
@@ -72,7 +79,7 @@ def main() -> None:
         print(
             f"{mode.value}: "
             f"{asset.transition_matrix_params().cache_filename(asset.name)} "
-            f"shape {matrix.shape} in {time.monotonic() - start:.0f} s, "
+            f"shape {matrix.next_state_index.shape} in {time.monotonic() - start:.0f} s, "
             f"peak {peak_mb:.0f} MB",
             flush=True,
         )

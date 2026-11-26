@@ -312,8 +312,14 @@ up --build -d`, beside the laptop's standing stack: the four share one
 network namespace and publish no port, so nothing collides with port
 8000 or the standing broker. It builds from the sibling
 `gridworks-scada` and `gridworks-terminalasset` checkouts as they stand,
-so check both branches first. `scada.Dockerfile` there is the one recipe
-for a scada image; the house is whatever layout pair sits in `house/`.
+so check both branches first. The scada image's one recipe is
+`dev-sim/scada.Dockerfile`, and the house is whatever layout pair sits in
+`dev-sim/house/`.
+
+`dev-sim/` is the same idea grown to a whole `d1` world as one Pod for
+`podman kube play`: two houses, the FLO, price, the market maker,
+weather, the journal and the web app. It publishes 5173, 8100 and 5434
+on the host (5433 is `gw-data-pg`'s). Its README has the run.
 
 ## Leaving it better
 

@@ -1,11 +1,12 @@
 # syntax=docker/dockerfile:1
 #
-# The weather service from its git repo, which is the build context:
+# The weather service from a gridworks-weather-forecast checkout, which
+# is the build context:
 #
 #     podman build -t localhost/beech-sim_weather:latest \
 #         -f weather.Dockerfile \
 #         --ignorefile weather.Dockerfile.dockerignore \
-#         https://github.com/thegridelectric/gridworks-weather-forecast.git
+#         .sources/gridworks-weather-forecast
 #
 # One image, three commands. `gwwf rabbit` fetches and publishes and is
 # the only writer of the service's database. `gwwf api` serves the read

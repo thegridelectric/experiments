@@ -4,7 +4,7 @@
 #
 #     podman build -f scada.Dockerfile \
 #       --ignorefile scada.Dockerfile.dockerignore \
-#       ../../gridworks-scada
+#       .sources/gridworks-scada
 #     ./build-scada-arm64.sh
 #
 # The build stage installs the locked environment. The runtime stage keeps

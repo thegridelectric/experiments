@@ -18,4 +18,7 @@ if podman pod exists beech-sim; then
 fi
 
 "$HERE/build.sh"
-podman kube play pod.yaml
+# The podman service resolves a relative hostPath from its own working
+# directory, which under `podman machine` is inside the VM, so the pod is
+# played with this folder's absolute path in place of each "./".
+sed "s|path: \./|path: $HERE/|" pod.yaml | podman kube play -

@@ -10,7 +10,7 @@ as validated Sema instances.
   first. The canonical record of each experiment is the README in its
   folder.
 
-Four kinds of folder, told apart by where they sit:
+Five kinds of folder, told apart by where they sit:
 
 - `<date>-<slug>/` — one **experiment**: README (start from
   `experiment-README-template.md`; header is "<slug>, <date>", ends
@@ -53,6 +53,11 @@ Four kinds of folder, told apart by where they sit:
   recipe, driver and reader at the top and a dated run folder per house
   under `runs/`. The first is `procedures/sieg-valve-calibration/`, the
   Siegenthaler valve's positions in motor seconds.
+- `dev-sim/` — the **standing stack**: the dev simulation as one Pod,
+  with its images' Dockerfiles, its run scripts and its houses. Undated
+  because it is what runs, changed in place; an experiment that runs on
+  it is a dated folder of its own and names the commit of the stack it
+  ran.
 
 The tools and recipes at the top:
 

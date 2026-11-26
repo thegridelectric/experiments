@@ -7,7 +7,7 @@
 #
 #     podman build -t localhost/beech-sim_frontend:latest -f frontend.Dockerfile \
 #         --ignorefile frontend.Dockerfile.dockerignore \
-#         ../../gridworks-web-frontend
+#         .sources/gridworks-web-frontend
 
 FROM node:22-bookworm-slim
 WORKDIR /app

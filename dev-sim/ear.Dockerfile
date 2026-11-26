@@ -1,11 +1,10 @@
 # syntax=docker/dockerfile:1
 #
-# The ear, built from the gridworks-ear repository. There is no local
-# checkout; the context is the git URL:
+# The ear from a gridworks-ear checkout, which is the build context:
 #
 #     podman build -t localhost/beech-sim_ear:latest -f ear.Dockerfile \
 #         --ignorefile ear.Dockerfile.dockerignore \
-#         https://github.com/thegridelectric/gridworks-ear.git
+#         .sources/gridworks-ear
 #
 # `ear listen --no-s3` writes each message under XDG_DATA_HOME. The pod
 # sets that to the host mount.
