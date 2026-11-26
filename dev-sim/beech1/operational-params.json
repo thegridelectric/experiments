@@ -1,13 +1,13 @@
 {
   "TypeName": "gw.operational.params",
   "Version": "000",
-  "ScadaAlias": "d1.isone.me.versant.keene.beech.buf.scada",
+  "ScadaAlias": "d1.isone.me.versant.keene.beech1.scada",
   "FamilyParams": {
     "TypeName": "gw.house0.family.params",
     "Version": "000",
-    "SiegLoopStrategy": "StratProtect",
-    "KeepBufferFull": false,
-    "SeasonalStorageMode": "BufferOnly"
+    "SiegLoopStrategy": "HoldFullSend",
+    "KeepBufferFull": true,
+    "SeasonalStorageMode": "AllTanks"
   },
   "CaptureTuningList": [
     {
@@ -16,7 +16,7 @@
       "ChannelName": "hp-odu-pwr",
       "CapturePeriodS": 300,
       "AsyncCapture": true,
-      "AsyncCaptureDelta": 200,
+      "AsyncCaptureDelta": 300,
       "PollPeriodMs": 1000
     },
     {
@@ -25,7 +25,16 @@
       "ChannelName": "hp-idu-pwr",
       "CapturePeriodS": 300,
       "AsyncCapture": true,
-      "AsyncCaptureDelta": 200,
+      "AsyncCaptureDelta": 300,
+      "PollPeriodMs": 1000
+    },
+    {
+      "TypeName": "capture.tuning",
+      "Version": "000",
+      "ChannelName": "dist-pump-pwr",
+      "CapturePeriodS": 300,
+      "AsyncCapture": true,
+      "AsyncCaptureDelta": 4,
       "PollPeriodMs": 1000
     },
     {
@@ -34,7 +43,7 @@
       "ChannelName": "primary-pump-pwr",
       "CapturePeriodS": 300,
       "AsyncCapture": true,
-      "AsyncCaptureDelta": 5,
+      "AsyncCaptureDelta": 4,
       "PollPeriodMs": 1000
     },
     {
@@ -43,13 +52,13 @@
       "ChannelName": "store-pump-pwr",
       "CapturePeriodS": 300,
       "AsyncCapture": true,
-      "AsyncCaptureDelta": 5,
+      "AsyncCaptureDelta": 4,
       "PollPeriodMs": 1000
     },
     {
       "TypeName": "capture.tuning",
       "Version": "000",
-      "ChannelName": "dist-pump-pwr",
+      "ChannelName": "oil-boiler-pwr",
       "CapturePeriodS": 300,
       "AsyncCapture": true,
       "AsyncCaptureDelta": 5,
@@ -61,7 +70,7 @@
       "ChannelName": "zone1-down-whitewire-pwr",
       "CapturePeriodS": 300,
       "AsyncCapture": true,
-      "AsyncCaptureDelta": 10,
+      "AsyncCaptureDelta": 5,
       "PollPeriodMs": 1000
     },
     {
@@ -70,7 +79,7 @@
       "ChannelName": "zone2-up-whitewire-pwr",
       "CapturePeriodS": 300,
       "AsyncCapture": true,
-      "AsyncCaptureDelta": 10,
+      "AsyncCaptureDelta": 5,
       "PollPeriodMs": 1000
     },
     {
@@ -570,19 +579,19 @@
       "TypeName": "zero.ten.power.on",
       "Version": "000",
       "NodeName": "dist-010v",
-      "PowerOnVoltsTimesTen": 20
+      "PowerOnVoltsTimesTen": 35
     },
     {
       "TypeName": "zero.ten.power.on",
       "Version": "000",
       "NodeName": "primary-010v",
-      "PowerOnVoltsTimesTen": 40
+      "PowerOnVoltsTimesTen": 62
     },
     {
       "TypeName": "zero.ten.power.on",
       "Version": "000",
       "NodeName": "store-010v",
-      "PowerOnVoltsTimesTen": 0
+      "PowerOnVoltsTimesTen": 65
     }
   ],
   "Standby": false,
@@ -601,31 +610,31 @@
   "CopCurve": {
     "TypeName": "cop.curve",
     "Version": "001",
-    "Intercept": 1.02,
-    "LwtMinusOatCoeff": 0.0
+    "Intercept": 2.96,
+    "LwtMinusOatCoeff": -0.00628
   },
   "HeatingCurve": {
     "TypeName": "heating.curve",
     "Version": "000",
-    "BaselineAlphaTimes10": 55,
-    "BaselineBetaTimes100": -10,
-    "BaselineGammaEx6": 0,
-    "AlphaEx6": -450000,
-    "BetaEx6": 30000,
-    "GammaEx6": -1000,
-    "DeltaEx6": -500,
-    "EpsilonEx6": 6000,
-    "ZetaEx6": 300000,
-    "EtaEx6": 500000,
-    "RhoTimes100": 120,
-    "IntermediatePowerKw": 1.5,
-    "IntermediateRswtF": 100,
-    "DdPowerKw": 5.5,
-    "DdRswtF": 150,
-    "DdRoomTempF": 68,
+    "BaselineAlphaTimes10": 108,
+    "BaselineBetaTimes100": -19,
+    "BaselineGammaEx6": 889,
+    "AlphaEx6": -3818084,
+    "BetaEx6": 144224,
+    "GammaEx6": 559,
+    "DeltaEx6": 0,
+    "EpsilonEx6": 45342,
+    "ZetaEx6": 28144,
+    "EtaEx6": 423390,
+    "RhoTimes100": 180,
+    "IntermediatePowerKw": 3.6,
+    "IntermediateRswtF": 125,
+    "DdPowerKw": 12.5,
+    "DdRswtF": 155,
+    "DdRoomTempF": 66,
     "DdDeltaTF": 20,
-    "MaxEwtF": 170,
-    "MassFlowKgH": 480
+    "MaxEwtF": 166,
+    "MassFlowKgH": 436
   },
   "HpTurnOnMinutes": 12,
   "HpMaxKwEl": 9.66,

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Start the sim from a zip ./package.sh wrote. Load the packed images,
-# pull Rabbit, Mosquitto, Postgres and Timescale, import the bruce
+# pull Rabbit, the registry, Mosquitto, Postgres and Timescale, import the bruce
 # volume if it is packed, then play the pod. Stop with ./stop.sh.
 set -euo pipefail
 
@@ -23,8 +23,10 @@ if podman pod exists beech-sim; then
     exit 1
 fi
 
-for need in pod.yaml house/hardware-layout.json house/operational-params.json \
-    house/plant-overrides.json house/ta-deed.json flo/g.node.gt.json \
+for need in pod.yaml plant-overrides.json flo/g.node.gt.json \
+    beech1/hardware-layout.json beech1/operational-params.json \
+    beech1/ta-deed.json beech2/hardware-layout.json \
+    beech2/operational-params.json beech2/ta-deed.json \
     journal_boot.py price.env mm.env; do
     if [[ ! -e "$need" ]]; then
         echo "missing $need" >&2
@@ -62,14 +64,14 @@ elif ! podman volume exists "$BRUCE_VOLUME"; then
     echo "  podman volume create --ignore $BRUCE_VOLUME" >&2
     echo "  podman run --rm --memory 8g --cpus 1 \\" >&2
     echo "    -e CAN_COMPUTE_TRANSITION_MATRICES=true -e BRUCE_BASE_PATH=/bruce \\" >&2
-    echo "    -v $BRUCE_VOLUME:/bruce:U -v ./house:/house:ro,z \\" >&2
+    echo "    -v $BRUCE_VOLUME:/bruce:U -v ./beech1:/house:ro,z \\" >&2
     echo "    -v ./flo_matrix.py:/flo_matrix.py:ro,z \\" >&2
     echo "    --entrypoint python localhost/beech-sim_flo:latest \\" >&2
     echo "    /flo_matrix.py /house" >&2
     exit 1
 fi
 
-mkdir -p events eventstore
+mkdir -p events-beech1 events-beech2 eventstore
 # The podman service resolves a relative hostPath from its own working
 # directory, which under `podman machine` is inside the VM, so the pod is
 # played with this folder's absolute path in place of each "./".

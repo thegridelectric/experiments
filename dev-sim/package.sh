@@ -8,7 +8,8 @@
 #
 # Writes beech-sim-<utc>-<arch>.zip in this directory. It holds the ISO-NE
 # accounts from ./price.env and ./mm.env, and the images this tree builds.
-# The other box pulls Rabbit, Mosquitto, Postgres and Timescale.
+# The other box pulls Rabbit, the registry, Mosquitto, Postgres and
+# Timescale.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -55,10 +56,11 @@ if [[ ${#missing[@]} -gt 0 ]]; then
     exit 1
 fi
 
-for need in price.env mm.env house/hardware-layout.json \
-    house/operational-params.json house/plant-overrides.json \
-    house/ta-deed.json flo/g.node.gt.json journal_boot.py pod.yaml \
-    stop.sh flo_matrix.py; do
+for need in price.env mm.env plant-overrides.json flo/g.node.gt.json \
+    beech1/hardware-layout.json beech1/operational-params.json \
+    beech1/ta-deed.json beech2/hardware-layout.json \
+    beech2/operational-params.json beech2/ta-deed.json \
+    journal_boot.py pod.yaml stop.sh flo_matrix.py; do
     if [[ ! -e "$need" ]]; then
         echo "missing $need" >&2
         exit 1
@@ -74,7 +76,7 @@ echo "packed images:"
 printf '  %s\n' "${SIM_IMAGES[@]}"
 echo "pulled on the other box:"
 printf '  %s\n' "${PULL_IMAGES[@]}"
-echo "files: house/ flo/ journal_boot.py pod.yaml stop.sh flo_matrix.py price.env mm.env"
+echo "files: beech1/ beech2/ flo/ plant-overrides.json journal_boot.py pod.yaml stop.sh flo_matrix.py price.env mm.env"
 if [[ "$have_bruce" -eq 1 ]]; then
     echo "bruce volume: $BRUCE_VOLUME"
 else
@@ -89,7 +91,7 @@ fi
 STAGING="$(mktemp -d)"
 trap 'rm -rf "$STAGING"' EXIT
 ROOT="$STAGING/$NAME"
-mkdir -p "$ROOT/house" "$ROOT/house-buffer" "$ROOT/flo"
+mkdir -p "$ROOT/beech1" "$ROOT/beech2" "$ROOT/flo"
 
 echo "saving built images"
 # Without --multi-image-archive every name after the first is stored as
@@ -102,11 +104,11 @@ if [[ "$have_bruce" -eq 1 ]]; then
     podman volume export "$BRUCE_VOLUME" -o "$ROOT/bruce.tar"
 fi
 
-cp -a house/. "$ROOT/house/"
-cp -a house-buffer/. "$ROOT/house-buffer/"
+cp -a beech1/. "$ROOT/beech1/"
+cp -a beech2/. "$ROOT/beech2/"
 cp -a flo/. "$ROOT/flo/"
 cp -a journal_boot.py pod.yaml stop.sh flo_matrix.py images.sh \
-    mosquitto-1884.conf price.env mm.env "$ROOT/"
+    mosquitto-1884.conf plant-overrides.json price.env mm.env "$ROOT/"
 cp -a run-packaged.sh "$ROOT/run.sh"
 chmod +x "$ROOT/run.sh" "$ROOT/stop.sh"
 
@@ -125,7 +127,7 @@ chmod +x "$ROOT/run.sh" "$ROOT/stop.sh"
 
 cat > "$ROOT/README.md" <<'EOF'
 A packaged Beech simulation. Needs Podman, a network to pull Rabbit,
-Mosquitto, Postgres and Timescale, the same CPU architecture as the box
+the registry, Mosquitto, Postgres and Timescale, the same CPU architecture as the box
 that wrote the zip (see `arch=` in MANIFEST), and the host ports 5173,
 5434 and 8100 free.
 

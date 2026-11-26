@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Stop the sim pod. The journal database goes with it. ./eventstore,
-# ./events and the bruce volume stay.
+# Stop the sim pod. The journal database and the registry's database go
+# with it. ./eventstore, ./events-beech1, ./events-beech2 and the bruce
+# volume stay.
 #
 #     ./stop.sh
 set -euxo pipefail

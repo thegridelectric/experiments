@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Fill the beech-sim-bruce volume with the transition matrices the FLO
-# needs for the house in ./house, one per seasonal storage mode.
+# needs for the twins, one per seasonal storage mode. The twins have one
+# store, so ./beech1 stands for both.
 #
 #     ./fill-bruce.sh
 #
@@ -23,7 +24,7 @@ fi
 podman volume create --ignore "$BRUCE_VOLUME" >/dev/null
 podman run --rm --memory 8g --cpus 1 \
     -e CAN_COMPUTE_TRANSITION_MATRICES=true -e BRUCE_BASE_PATH=/bruce \
-    -v "$BRUCE_VOLUME":/bruce:U -v ./house:/house:ro,z \
+    -v "$BRUCE_VOLUME":/bruce:U -v ./beech1:/house:ro,z \
     -v ./flo_matrix.py:/flo_matrix.py:ro,z \
     --entrypoint python localhost/beech-sim_flo:latest \
     /flo_matrix.py /house

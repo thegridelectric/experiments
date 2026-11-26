@@ -2,20 +2,17 @@
 
 The timescale container comes up empty. Roles follow the dev convention
 (password equals the role name). Tables are the gw_data models installed
-in the keeper image.
+in the keeper image. No GNode is written here: the keeper fills g_nodes
+from the registry's g.node.forest.
 """
 
 from __future__ import annotations
 
-import json
 import os
 import socket
 import time
-from pathlib import Path
 
 from sqlalchemy import create_engine, text
-
-HOUSE_DIRS = (Path("/house"), Path("/house-buffer"))
 
 ADMIN_URL = os.environ["JOURNAL_ADMIN_URL"]
 ROLES = (
@@ -123,38 +120,6 @@ def _bootstrap() -> None:
                 text(f"GRANT SELECT ON ALL TABLES IN SCHEMA gridworks TO {name}")
             )
         conn.execute(text("GRANT UPDATE ON gridworks.users TO gw_visualizer"))
-        for folder in HOUSE_DIRS:
-            layout_path = folder / "hardware-layout.json"
-            if not layout_path.exists():
-                continue
-            layout = json.loads(layout_path.read_text())
-            for g_node in layout["GNodes"]:
-                if g_node.get("GNodeClass") != "TerminalAsset":
-                    continue
-                conn.execute(
-                    text(
-                        """
-                        INSERT INTO gridworks.g_nodes
-                            (id, alias, base_class, g_node_class, status, display_name)
-                        VALUES (
-                            :id, :alias, :base_class, :g_node_class, :status,
-                            :display_name
-                        )
-                        ON CONFLICT (id) DO UPDATE SET
-                            alias = EXCLUDED.alias,
-                            display_name = EXCLUDED.display_name,
-                            status = EXCLUDED.status
-                        """
-                    ),
-                    {
-                        "id": g_node["GNodeId"],
-                        "alias": g_node["Alias"],
-                        "base_class": g_node["BaseClass"],
-                        "g_node_class": g_node["GNodeClass"],
-                        "status": g_node["Status"],
-                        "display_name": g_node["DisplayName"],
-                    },
-                )
         conn.execute(
             text(
                 """

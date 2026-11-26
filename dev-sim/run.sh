@@ -17,6 +17,14 @@ if podman pod exists beech-sim; then
     exit 1
 fi
 
+# The registry's image is pulled, and its tag is the commit sources.txt
+# names for the export the houses are copied from.
+gnr_commit="$(awk '$1 == "grid-node-registry" {print $2}' sources.txt)"
+if ! grep -q "grid-node-registry:${gnr_commit}\$" pod.yaml; then
+    echo "pod.yaml's registry image is not at sources.txt's commit $gnr_commit" >&2
+    exit 1
+fi
+"$HERE/houses.sh" --check
 "$HERE/build.sh"
 # The podman service resolves a relative hostPath from its own working
 # directory, which under `podman machine` is inside the VM, so the pod is

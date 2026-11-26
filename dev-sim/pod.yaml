@@ -1,8 +1,8 @@
 # A simulated Beech, as one Pod: the four processes of compose.yaml, the
 # house's LTN, the FLO it asks, the price service the LTN reads, the
 # market maker it clears against, the weather service the house reads,
-# the journal (the ear, the keeper, and TimescaleDB), and the web app
-# that reads the journal.
+# the GNode registry, the journal (the ear, the keeper, and TimescaleDB),
+# and the web app that reads the journal.
 # Containers in a Pod share one network namespace, which is what
 # compose.yaml builds with network_mode: service:rabbit. Three ports
 # are published to the host: the journal database, 5434 to the
@@ -10,12 +10,13 @@
 #
 # Kube play starts every container together and has no readiness probe,
 # so the plants, scadas, LTNs, the FLO, the price actor, the market maker,
-# the weather actor, its API and its mint, the ear, the keeper, the
-# web API and the frontend wait until the ports they use are open. The
-# scadas and the LTNs also wait until the weather service lists the
-# house's bundle. Two scada+ta pairs run: ./house is AllTanks
-# (d1.isone.me.versant.keene.beech.at) and ./house-buffer is BufferOnly
-# (d1.isone.me.versant.keene.beech.buf). Each scada has its own local Mosquitto.
+# the weather actor, its API and its mint, the registry, the ear, the
+# keeper, the web API and the frontend wait until the ports they use are
+# open. The scadas and the LTNs also wait until the weather service lists
+# the house's bundle. Two scada+ta pairs run, twins built from one spec:
+# ./beech1 is AllTanks (d1.isone.me.versant.keene.beech1) and ./beech2 is
+# BufferOnly (d1.isone.me.versant.keene.beech2). Each scada has its own
+# local Mosquitto.
 # It does not build images. ./run.sh does,
 # then plays this file with each ./ hostPath made absolute to this folder.
 #
@@ -26,14 +27,16 @@
 #     podman volume create --ignore beech-sim-bruce
 #     podman run --rm --memory 8g --cpus 1 \
 #         -e CAN_COMPUTE_TRANSITION_MATRICES=true -e BRUCE_BASE_PATH=/bruce \
-#         -v beech-sim-bruce:/bruce:U -v ./house:/house:ro,z \
+#         -v beech-sim-bruce:/bruce:U -v ./beech1:/house:ro,z \
 #         -v ./flo_matrix.py:/flo_matrix.py:ro,z \
 #         --entrypoint python localhost/beech-sim_flo:latest \
 #         /flo_matrix.py /house
 #
+# The twins have one store, so ./beech1 fills the matrices of both modes.
+#
 # The scada and the LTN run from the one scada image, so the LTN is the
 # one the scada's checkout deploys and the two agree on the words between
-# them. Each copies its layout pair from ./house or ./house-buffer into
+# them. Each copies its layout pair from ./beech1 or ./beech2 into
 # its config home.
 #
 # The price service is two containers from one image. price watches
@@ -66,11 +69,18 @@
 # The superuser is postgres/postgres. Dev roles, password equal to the
 # role name: gw_admin, gw_journalkeeper (the keeper), gw_visualizer
 # (the web API), gw_alerts, gw_analyst. journal_boot.py creates them,
-# the gridworks tables from the gw_data models in the keeper image, a
-# TerminalAsset row for each house folder, and the dashboard login
-# beech / beech (an admin, so both houses). The database has no volume,
-# so kube down drops it;
+# the gridworks tables from the gw_data models in the keeper image, and
+# the dashboard login beech / beech (an admin, so both houses). The
+# database has no volume, so kube down drops it;
 # ./eventstore stays.
+#
+# The journal's g_nodes rows are a projection of the registry. gnr runs
+# the registry as d1.gnr on its own Postgres (gnr-db, port 5435), seeded
+# with the dev universe at each start. It waits until the keeper is
+# consuming, then broadcasts each g.node.forest a few seconds after its
+# own start, and the keeper writes g_nodes from those. A house's name on
+# the web app is its TerminalAsset's DisplayName in the registry's seed:
+# beech-at and beech-buf.
 #
 # The web app is http://localhost:5173/gridworks-web-frontend/ . Vite
 # proxies /api to the API on the pod's localhost:8000, and proxies the
@@ -79,11 +89,11 @@
 # reached it. The frontend's weather panel learns
 # each house's bundle at start: the web container reads the layout's
 # LeafTransactiveNode alias and the operational params'
-# WeatherBundleName from ./house and ./house-buffer into
+# WeatherBundleName from ./beech1 and ./beech2 into
 # VITE_HOUSE_WEATHER_BUNDLES.
 #
-# The scada's event files land in ./events and stay there across kube
-# down. The mount is /events, not a directory under the scada home:
+# Each scada's event files are written to ./events-beech1 or
+# ./events-beech2 and stay there across kube down. The mount is /events, not a directory under the scada home:
 # a mount there makes Podman create the parent as root, and the scada
 # user can no longer create its log directory beside it. An init
 # container chowns /events to the scada user. Rootless Podman maps the
@@ -102,12 +112,12 @@ spec:
       image: localhost/beech-sim_scada:latest
       securityContext:
         runAsUser: 0
-      command: ["sh", "-c", "chown 1000:1000 /events /events-buffer"]
+      command: ["sh", "-c", "chown 1000:1000 /events-beech1 /events-beech2"]
       volumeMounts:
-        - name: events
-          mountPath: /events
-        - name: events-buffer
-          mountPath: /events-buffer
+        - name: events-beech1
+          mountPath: /events-beech1
+        - name: events-beech2
+          mountPath: /events-beech2
     - name: price-data
       image: localhost/beech-sim_price:latest
       securityContext:
@@ -135,14 +145,14 @@ spec:
     # Ubuntu attaches an AppArmor profile to the path /usr/sbin/mosquitto.
     # The shell copies the binary and execs the copy, so the process never
     # enters that profile.
-    - name: mosquitto
+    - name: mosquitto1
       image: docker.io/library/eclipse-mosquitto:2
       args:
         - sh
         - -c
         - cp /usr/sbin/mosquitto /tmp/mosquitto && exec /tmp/mosquitto -c /mosquitto-no-auth.conf
 
-    - name: mosquitto-buffer
+    - name: mosquitto2
       image: docker.io/library/eclipse-mosquitto:2
       volumeMounts:
         - name: mosquitto-1884
@@ -153,16 +163,19 @@ spec:
         - -c
         - cp /usr/sbin/mosquitto /tmp/mosquitto && exec /tmp/mosquitto -c /mosquitto-1884.conf
 
-    - name: plant
+    - name: plant1
       image: localhost/beech-sim_plant:latest
       env:
         - name: GWTA_SERVICE_ALIAS
-          value: d1.isone.me.versant.keene.beech.at.ta
+          value: d1.isone.me.versant.keene.beech1.ta
         - name: GWTA_G_NODE_PATH
           value: /home/gwta/g.node.gt.json
       volumeMounts:
-        - name: house
+        - name: beech1
           mountPath: /house
+          readOnly: true
+        - name: plant-overrides
+          mountPath: /plant-overrides.json
           readOnly: true
       lifecycle:
         stopSignal: SIGINT
@@ -191,11 +204,11 @@ spec:
           exec ta-plant \
             --layout /house/hardware-layout.json \
             --fmu /opt/gwta/BeechPlant.fmu \
-            --fmu-overrides /house/plant-overrides.json \
+            --fmu-overrides /plant-overrides.json \
             --weather-url http://127.0.0.1:8531/d1-weather \
             --weather-bundle us.me.millinocket.moose
 
-    - name: scada
+    - name: scada1
       image: localhost/beech-sim_scada:latest
       env:
         - name: SCADA_GRIDWORKS_MQTT__PORT
@@ -207,10 +220,10 @@ spec:
         - name: SCADA_PATHS__EVENT_DIR
           value: /events
       volumeMounts:
-        - name: house
+        - name: beech1
           mountPath: /house
           readOnly: true
-        - name: events
+        - name: events-beech1
           mountPath: /events
       lifecycle:
         stopSignal: SIGINT
@@ -263,7 +276,7 @@ spec:
     # price forecast is the price service on the pod's localhost, the
     # route price-api serves. Its weather is the weather service on the
     # pod's localhost, the bundle the house's operational params name.
-    - name: ltn
+    - name: ltn1
       image: localhost/beech-sim_scada:latest
       env:
         - name: LTN_SCADA_MQTT__PORT
@@ -279,7 +292,7 @@ spec:
         - name: LTN_PRICE_FORECAST_URL
           value: http://127.0.0.1:8532/hw1-isone-me-versant-keene-ps/gw0-price-forecast
       volumeMounts:
-        - name: house
+        - name: beech1
           mountPath: /house
           readOnly: true
       command: ["sh", "-c"]
@@ -323,16 +336,19 @@ spec:
             "$HOME/.config/gridworks/ltn/"
           exec python gw_spaceheat/gws ltn run --message-summary
 
-    - name: plant-buffer
+    - name: plant2
       image: localhost/beech-sim_plant:latest
       env:
         - name: GWTA_SERVICE_ALIAS
-          value: d1.isone.me.versant.keene.beech.buf.ta
+          value: d1.isone.me.versant.keene.beech2.ta
         - name: GWTA_G_NODE_PATH
           value: /home/gwta/g.node.gt.json
       volumeMounts:
-        - name: house-buffer
+        - name: beech2
           mountPath: /house
+          readOnly: true
+        - name: plant-overrides
+          mountPath: /plant-overrides.json
           readOnly: true
       lifecycle:
         stopSignal: SIGINT
@@ -361,11 +377,11 @@ spec:
           exec ta-plant \
             --layout /house/hardware-layout.json \
             --fmu /opt/gwta/BeechPlant.fmu \
-            --fmu-overrides /house/plant-overrides.json \
+            --fmu-overrides /plant-overrides.json \
             --weather-url http://127.0.0.1:8531/d1-weather \
             --weather-bundle us.me.millinocket.moose
 
-    - name: scada-buffer
+    - name: scada2
       image: localhost/beech-sim_scada:latest
       env:
         - name: SCADA_GRIDWORKS_MQTT__PORT
@@ -379,10 +395,10 @@ spec:
         - name: SCADA_PATHS__EVENT_DIR
           value: /events
       volumeMounts:
-        - name: house-buffer
+        - name: beech2
           mountPath: /house
           readOnly: true
-        - name: events-buffer
+        - name: events-beech2
           mountPath: /events
       lifecycle:
         stopSignal: SIGINT
@@ -427,7 +443,7 @@ spec:
             /house/ta-deed.json "$HOME/.config/gridworks/scada/"
           exec python gw_spaceheat/gws run --message-summary --seconds-per-report 60
 
-    - name: ltn-buffer
+    - name: ltn2
       image: localhost/beech-sim_scada:latest
       env:
         - name: LTN_SCADA_MQTT__PORT
@@ -443,7 +459,7 @@ spec:
         - name: LTN_PRICE_FORECAST_URL
           value: http://127.0.0.1:8532/hw1-isone-me-versant-keene-ps/gw0-price-forecast
       volumeMounts:
-        - name: house-buffer
+        - name: beech2
           mountPath: /house
           readOnly: true
       command: ["sh", "-c"]
@@ -846,6 +862,93 @@ spec:
 
     # Direct file store: --no-s3 skips the object store and writes each
     # message under XDG_DATA_HOME, which is the host mount.
+    # The registry's own database. Nothing else reads it, and it is not
+    # published. It has no volume: the registry is seeded at each start.
+    - name: gnr-db
+      image: docker.io/library/postgres:16
+      env:
+        - name: POSTGRES_USER
+          value: gnr
+        - name: POSTGRES_PASSWORD
+          value: gnrpass
+        - name: POSTGRES_DB
+          value: gnr
+      args: ["postgres", "-c", "port=5435"]
+
+    # The GNode registry, d1.gnr. It creates its schema, loads the dev
+    # universe, waits until the keeper's queue has a consumer (a forest
+    # broadcast before that reaches no one), then runs the write loop,
+    # whose first snapshot is GNR_SNAPSHOT_STARTUP_DELAY_S after start.
+    # The image tag is the grid-node-registry commit in sources.txt.
+    - name: gnr
+      image: ghcr.io/thegridelectric/grid-node-registry:3e9c863978dc091de7862bc358488628da7ca52c
+      env:
+        - name: GNR_UNIVERSE
+          value: d1
+        - name: GNR_DB_URL
+          value: postgresql+psycopg://gnr:gnrpass@127.0.0.1:5435/gnr
+        - name: GNR_SERVICE_ALIAS
+          value: d1.gnr
+        - name: GNR_SUPER_ALIAS
+          value: d1.super1
+        - name: GNR_TIME_COORDINATOR_ALIAS
+          value: d1.time
+        - name: GNR_SNAPSHOT_INTERVAL_S
+          value: "86400"
+        - name: GNR_SNAPSHOT_STARTUP_DELAY_S
+          value: "5"
+        - name: GNR_RABBIT__URL
+          value: amqp://smqPublic:smqPublic@localhost:5672/d1__1
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import base64
+          import json
+          import socket
+          import time
+          import urllib.request
+          need = {5435, 5672, 15672}
+          deadline = time.monotonic() + 300
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          request = urllib.request.Request(
+              "http://127.0.0.1:15672/api/queues/d1__1?columns=name,consumers",
+              headers={
+                  "Authorization": "Basic "
+                  + base64.b64encode(b"smqPublic:smqPublic").decode()
+              },
+          )
+          while True:
+              try:
+                  with urllib.request.urlopen(request, timeout=2) as response:
+                      queues = json.load(response)
+                  if any(
+                      q["name"].startswith("d1.journal") and q.get("consumers")
+                      for q in queues
+                  ):
+                      break
+              except (OSError, ValueError):
+                  pass
+              if time.monotonic() > deadline:
+                  raise SystemExit("the keeper d1.journal is not consuming")
+              time.sleep(1)
+          PY
+          alembic upgrade head
+          gnr seed-dev --wipe
+          exec gnr rabbit
+
     - name: ear
       image: localhost/beech-sim_ear:latest
       securityContext:
@@ -904,12 +1007,6 @@ spec:
       volumeMounts:
         - name: journal-boot
           mountPath: /journal_boot.py
-          readOnly: true
-        - name: house
-          mountPath: /house
-          readOnly: true
-        - name: house-buffer
-          mountPath: /house-buffer
           readOnly: true
       command: ["python", "/journal_boot.py"]
 
@@ -1013,11 +1110,11 @@ spec:
           hostPort: 5173
           protocol: TCP
       volumeMounts:
-        - name: house
-          mountPath: /house
+        - name: beech1
+          mountPath: /beech1
           readOnly: true
-        - name: house-buffer
-          mountPath: /house-buffer
+        - name: beech2
+          mountPath: /beech2
           readOnly: true
       command: ["sh", "-c"]
       args:
@@ -1025,7 +1122,7 @@ spec:
           VITE_HOUSE_WEATHER_BUNDLES="$(node -e '
           const fs = require("fs");
           const bundles = {};
-          for (const dir of ["/house", "/house-buffer"]) {
+          for (const dir of ["/beech1", "/beech2"]) {
             const layout = JSON.parse(fs.readFileSync(dir + "/hardware-layout.json", "utf8"));
             const params = JSON.parse(fs.readFileSync(dir + "/operational-params.json", "utf8"));
             const house = layout.GNodes.find(
@@ -1052,22 +1149,26 @@ spec:
           '
           exec npx vite --host 0.0.0.0 --port 5173 --strictPort
   volumes:
-    - name: house
+    - name: beech1
       hostPath:
-        path: ./house
+        path: ./beech1
         type: Directory
-    - name: house-buffer
+    - name: beech2
       hostPath:
-        path: ./house-buffer
+        path: ./beech2
         type: Directory
-    - name: events
+    - name: events-beech1
       hostPath:
-        path: ./events
+        path: ./events-beech1
         type: DirectoryOrCreate
-    - name: events-buffer
+    - name: events-beech2
       hostPath:
-        path: ./events-buffer
+        path: ./events-beech2
         type: DirectoryOrCreate
+    - name: plant-overrides
+      hostPath:
+        path: ./plant-overrides.json
+        type: File
     - name: mosquitto-1884
       hostPath:
         path: ./mosquitto-1884.conf

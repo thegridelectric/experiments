@@ -5,34 +5,34 @@
     {
       "TypeName": "g.node.gt",
       "Version": "006",
-      "GNodeId": "57f36c6c-c1f7-41fb-a5d3-03cab6a37b31",
-      "Alias": "d1.isone.me.versant.keene.beech.buf",
+      "GNodeId": "0f603a10-1b3e-4d67-ac4e-6011abab9429",
+      "Alias": "d1.isone.me.versant.keene.beech2",
       "BaseClass": "LeafTransactiveNode",
       "GNodeClass": "LeafTransactiveNode",
       "Status": "Active",
-      "PositionPointId": "9ecdf41b-281f-4d52-8c8e-b0d936cf02bd",
-      "DisplayName": "beech-buf LeafTransactiveNode"
+      "PositionPointId": "6282c4a2-4679-4cc4-9e27-9e1ed4aa6d5a",
+      "DisplayName": "Beech2 LTN"
     },
     {
       "TypeName": "g.node.gt",
       "Version": "006",
-      "GNodeId": "85402005-192a-4808-9e47-1e48f4552477",
-      "Alias": "d1.isone.me.versant.keene.beech.buf.ta",
+      "GNodeId": "2ebfffee-0173-41c4-9b16-2c6fbdbd79d2",
+      "Alias": "d1.isone.me.versant.keene.beech2.ta",
       "BaseClass": "TerminalAsset",
       "GNodeClass": "TerminalAsset",
       "Status": "Active",
-      "PositionPointId": "9ecdf41b-281f-4d52-8c8e-b0d936cf02bd",
-      "DisplayName": "beech-buf"
+      "PositionPointId": "61aa2d5d-02ab-4894-a55b-fb81ee13604c",
+      "DisplayName": "Beech2"
     },
     {
       "TypeName": "g.node.gt",
       "Version": "006",
-      "GNodeId": "8cbd3e51-af7b-4717-9f63-8cb2bb02339b",
-      "Alias": "d1.isone.me.versant.keene.beech.buf.scada",
+      "GNodeId": "d185149c-4e0f-4434-bc83-9814474e2a54",
+      "Alias": "d1.isone.me.versant.keene.beech2.scada",
       "BaseClass": "Logical",
       "GNodeClass": "Scada",
       "Status": "Active",
-      "DisplayName": "beech-buf Scada"
+      "DisplayName": "Beech2 Scada"
     }
   ],
   "ShNodes": [
@@ -41,8 +41,8 @@
       "Version": "303",
       "Name": "s",
       "ActorClass": "PrimaryScada",
-      "DisplayName": "beech-buf Scada",
-      "ShNodeId": "89f40ee2-35de-484f-abb1-ed2c3d554803"
+      "DisplayName": "Sim Keene Beech Scada",
+      "ShNodeId": "85272a1c-9845-4a55-8e02-0dc3524bcdd0"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -50,7 +50,7 @@
       "Name": "s2",
       "ActorClass": "SecondaryScada",
       "DisplayName": "Secondary Scada",
-      "ShNodeId": "e3ad9a35-4593-4d9f-87e2-e23ec8d41fd7"
+      "ShNodeId": "35aa8670-e766-487b-9179-24b7e58d3c8e"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -59,7 +59,7 @@
       "Handle": "admin",
       "ActorClass": "NoActor",
       "DisplayName": "Local Admin",
-      "ShNodeId": "3a43fae1-feb6-4e62-9237-4bc5c220afe9"
+      "ShNodeId": "52c79f12-d808-49af-9fda-769960422dc0"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -68,7 +68,7 @@
       "Handle": "auto",
       "ActorClass": "NoActor",
       "DisplayName": "Auto - FSM for dispatch contract",
-      "ShNodeId": "9ec84952-dd78-45f8-a2c5-59f33019de61"
+      "ShNodeId": "b29499bf-c223-4cb3-b77a-fabb80d34927"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -76,7 +76,7 @@
       "Name": "ltn",
       "ActorClass": "NoActor",
       "DisplayName": "LeafTransactiveNode",
-      "ShNodeId": "9eb1c453-1cde-4b9b-8916-91938fbc2072"
+      "ShNodeId": "ff768e5a-83ef-4b5a-a097-9dfe6e3a8aaf"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -86,7 +86,7 @@
       "Handle": "ltn.la",
       "ActorClass": "LeafAlly",
       "DisplayName": "Leaf Ally",
-      "ShNodeId": "0bb63377-a23b-4d75-b1c4-2b7bf02539b1"
+      "ShNodeId": "4f96d618-8fcd-4509-9128-1afab0d41a6e"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -96,7 +96,7 @@
       "Handle": "auto.five-v-boss",
       "ActorClass": "FiveVBoss",
       "DisplayName": "Five V Boss - can hold the picos' 5VDC supply off",
-      "ShNodeId": "f10c364a-e1c8-49af-a0f9-223d4c3be88f"
+      "ShNodeId": "d96adfb6-de2b-4319-b8ae-e23633c92899"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -106,7 +106,7 @@
       "Handle": "auto.five-v-boss.pico-cycler",
       "ActorClass": "PicoCycler",
       "DisplayName": "Pico Cycler - responsible for power cycling the 5VDC bus",
-      "ShNodeId": "8a3a156a-0308-48e4-8a6f-ebfc1693ffb9"
+      "ShNodeId": "6ae983c3-c51e-4e27-8f7b-304c70d72066"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -115,7 +115,7 @@
       "ActorHierarchyName": "s.derived-generator",
       "ActorClass": "DerivedGenerator",
       "DisplayName": "Derived Generator",
-      "ShNodeId": "0431cfca-dab8-47d8-8193-c5c65d506ce2"
+      "ShNodeId": "33d70d6f-5da6-4225-bd05-8b8b01202776"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -124,7 +124,7 @@
       "ActorHierarchyName": "s.cold-watch",
       "ActorClass": "ColdWatch",
       "DisplayName": "Cold Watch",
-      "ShNodeId": "ee3163d7-786a-4ee1-b84c-5417d6fc8f58"
+      "ShNodeId": "49868337-8b8a-49dc-bdaa-3af9448bf05b"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -134,7 +134,7 @@
       "Handle": "auto.lc",
       "ActorClass": "LocalControl",
       "DisplayName": "LocalControl",
-      "ShNodeId": "4806e0d0-98f3-4a6c-ad8f-6fc7a6e9062f"
+      "ShNodeId": "106523d0-595a-4b2f-912b-9a6e9485c33f"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -143,7 +143,7 @@
       "Handle": "auto.lc.n",
       "ActorClass": "NoActor",
       "DisplayName": "LocalControl Normal",
-      "ShNodeId": "db6fc929-fb21-42e5-be39-749882bbb5ba"
+      "ShNodeId": "87d1e091-b025-4034-8d7c-c89ac7e273d1"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -152,7 +152,7 @@
       "Handle": "auto.lc.backup",
       "ActorClass": "NoActor",
       "DisplayName": "LocalControl Backup",
-      "ShNodeId": "9df1dd53-6bd3-4f4c-902a-0b1a9896af44"
+      "ShNodeId": "4b42b005-f0fb-4d3e-860f-d867bec4b297"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -161,7 +161,7 @@
       "Handle": "auto.lc.cold-override",
       "ActorClass": "NoActor",
       "DisplayName": "LocalControl Cold Override",
-      "ShNodeId": "296280c6-fdca-47d7-9a20-1b478cf4bb3f"
+      "ShNodeId": "6d3f1c85-8791-431d-a0ac-3c2b75825f59"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -170,7 +170,7 @@
       "Handle": "auto.lc.scada-blind",
       "ActorClass": "NoActor",
       "DisplayName": "LocalControl Scada Blind",
-      "ShNodeId": "05b1e50c-eba3-475d-b74f-d88a8122a22e"
+      "ShNodeId": "6f7801b6-5b2e-42c3-af0d-deea212324da"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -179,7 +179,7 @@
       "Handle": "auto.lc.standby",
       "ActorClass": "NoActor",
       "DisplayName": "LocalControl Standby",
-      "ShNodeId": "95b1e413-bdf2-4099-a9b9-9f530e3cc2d5"
+      "ShNodeId": "7629d987-fe1d-4dae-b57b-3755c9af4015"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -189,7 +189,7 @@
       "Handle": "auto.hp-boss",
       "ActorClass": "HpBoss",
       "DisplayName": "HeatpumpBoss",
-      "ShNodeId": "d115b41f-86b1-4d7a-b725-ed4ac6293e0b"
+      "ShNodeId": "99f5abf1-6241-46a7-acfc-047b31186814"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -199,7 +199,7 @@
       "Handle": "auto.sieg-loop",
       "ActorClass": "SiegLoop",
       "DisplayName": "Sieg Loop",
-      "ShNodeId": "1ad09d84-6c69-401f-ba85-20b6821c980c"
+      "ShNodeId": "b6daddb7-2133-45eb-8590-1c52775d7634"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -207,9 +207,9 @@
       "Name": "power-meter",
       "ActorHierarchyName": "s.power-meter",
       "ActorClass": "PowerMeter",
-      "DisplayName": "Main Power Meter Simulated Test System",
-      "ComponentId": "c891e1ea-1906-4ec3-b887-dcb59d7ed37b",
-      "ShNodeId": "7aa78491-96da-4795-824c-cc2b13592e5d"
+      "DisplayName": "Primary Power Meter",
+      "ComponentId": "e1dfc1e5-36f6-4887-b04a-d523db1feb1a",
+      "ShNodeId": "692ce476-2fd2-4421-a2e4-138dc53686bf"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -217,9 +217,9 @@
       "Name": "hp-odu",
       "ActorClass": "NoActor",
       "DisplayName": "Hp Odu",
-      "ComponentId": "d372c8ad-e5f9-4a87-8f97-ca519f407db2",
+      "ComponentId": "bd1ed414-c75a-4e8e-8f92-68d222a0957b",
       "NameplatePowerW": 6000,
-      "ShNodeId": "5377de9a-098b-42b0-9748-c1bd8971b290"
+      "ShNodeId": "125aa801-2b1d-49e8-b502-6a97625f7bf7"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -227,25 +227,9 @@
       "Name": "hp-idu",
       "ActorClass": "NoActor",
       "DisplayName": "Hp Idu",
-      "ComponentId": "f7475ab0-cb62-46e4-82de-ac7c5b10b5e4",
+      "ComponentId": "3ec6c58f-0ff2-48f5-b902-acfc5e6f5c89",
       "NameplatePowerW": 4000,
-      "ShNodeId": "385697b0-0a89-4d13-b2c6-e5d31967a16f"
-    },
-    {
-      "TypeName": "spaceheat.node.gt",
-      "Version": "303",
-      "Name": "primary-pump",
-      "ActorClass": "NoActor",
-      "DisplayName": "Primary Pump",
-      "ShNodeId": "daab4f40-3160-46b8-a580-b3d44ecf4b97"
-    },
-    {
-      "TypeName": "spaceheat.node.gt",
-      "Version": "303",
-      "Name": "store-pump",
-      "ActorClass": "NoActor",
-      "DisplayName": "Store Pump",
-      "ShNodeId": "a8c8b604-ccca-441e-98f8-3d22db4f7d45"
+      "ShNodeId": "7a1ece09-cd67-4ddf-9d88-c56907f1a279"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -253,7 +237,35 @@
       "Name": "dist-pump",
       "ActorClass": "NoActor",
       "DisplayName": "Dist Pump",
-      "ShNodeId": "1dcc996e-d6dd-4c00-83e2-15aaf7f5748e"
+      "NameplatePowerW": 80,
+      "ShNodeId": "6b1d60ba-7941-4a9d-91f4-6b7736815757"
+    },
+    {
+      "TypeName": "spaceheat.node.gt",
+      "Version": "303",
+      "Name": "primary-pump",
+      "ActorClass": "NoActor",
+      "DisplayName": "Primary Pump",
+      "NameplatePowerW": 80,
+      "ShNodeId": "2d8ed1fb-08a4-4e17-84f6-2171d9d6d14a"
+    },
+    {
+      "TypeName": "spaceheat.node.gt",
+      "Version": "303",
+      "Name": "store-pump",
+      "ActorClass": "NoActor",
+      "DisplayName": "Store Pump",
+      "NameplatePowerW": 80,
+      "ShNodeId": "1fe25874-cdac-4ce6-ad4a-010c4a0e77fc"
+    },
+    {
+      "TypeName": "spaceheat.node.gt",
+      "Version": "303",
+      "Name": "oil-boiler",
+      "ActorClass": "NoActor",
+      "DisplayName": "Oil Boiler",
+      "NameplatePowerW": 200,
+      "ShNodeId": "e134f7a3-44e5-4a42-b4bb-e5181af9a90d"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -261,8 +273,8 @@
       "Name": "zone1-down-whitewire",
       "ActorClass": "NoActor",
       "DisplayName": "Zone1 Down Whitewire",
-      "NameplatePowerW": 10,
-      "ShNodeId": "54b31f49-451c-49a3-95d0-4b70eaf1c10f"
+      "NameplatePowerW": 50,
+      "ShNodeId": "bcf70f92-ee7d-4b02-8a3b-f6c8c97e6aa8"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -270,8 +282,8 @@
       "Name": "zone2-up-whitewire",
       "ActorClass": "NoActor",
       "DisplayName": "Zone2 Up Whitewire",
-      "NameplatePowerW": 10,
-      "ShNodeId": "d7f489a1-734a-4dde-b3c0-618ec1b53721"
+      "NameplatePowerW": 50,
+      "ShNodeId": "7bda8ae4-57ae-43f2-811f-ef2c711e685d"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -279,8 +291,8 @@
       "Name": "web-server",
       "ActorClass": "NoActor",
       "DisplayName": "Web Server",
-      "ComponentId": "52b242e3-3339-46ac-8662-306601cfab19",
-      "ShNodeId": "183d9fb2-f3b8-41fb-b85e-0a66769a5717"
+      "ComponentId": "c030fd42-eea7-4b90-ba44-aafda19360c7",
+      "ShNodeId": "36401465-6279-48db-a4a8-0f6313c4c0b6"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -288,7 +300,7 @@
       "Name": "zone1-down",
       "ActorClass": "NoActor",
       "DisplayName": "Zone 1 Down",
-      "ShNodeId": "1bba1919-06fe-475d-8a67-337f1adf080b"
+      "ShNodeId": "b8cc6fba-edd7-4661-b99b-3c91f32e1524"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -297,8 +309,8 @@
       "ActorHierarchyName": "s.zone1-down-temp-sensor",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Zone 1 Down Temp Sensor",
-      "ComponentId": "5bfde199-1d99-4960-af61-a8d4100f7875",
-      "ShNodeId": "fc1c1fc9-145a-49ef-83bb-b236c66bdabc"
+      "ComponentId": "e6669f08-e1d0-4b67-a457-af4b1418ed72",
+      "ShNodeId": "dea3b26f-e757-4059-bdfa-341fc47ed120"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -306,7 +318,7 @@
       "Name": "zone2-up",
       "ActorClass": "NoActor",
       "DisplayName": "Zone 2 Up",
-      "ShNodeId": "53911899-e4cb-4de7-bce9-b3f922fb7267"
+      "ShNodeId": "92a13b5f-54bd-4f39-914f-6dd940e7d289"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -315,17 +327,17 @@
       "ActorHierarchyName": "s.zone2-up-temp-sensor",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Zone 2 Up Temp Sensor",
-      "ComponentId": "d073288c-803a-4beb-98fe-35922af8869b",
-      "ShNodeId": "7c7312b4-b9b9-468d-8d68-f6611d788102"
+      "ComponentId": "a6355f83-51e6-4594-add4-ab359a8a3638",
+      "ShNodeId": "f3d5173d-7fc4-4515-84c4-f1d76a61bb7a"
     },
     {
       "TypeName": "spaceheat.node.gt",
       "Version": "303",
       "Name": "krida",
       "ActorClass": "NoActor",
-      "DisplayName": "Sim Krida relay panel",
-      "ComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
-      "ShNodeId": "c094d6c9-47b7-4aea-a0c5-dc45d47f43cb"
+      "DisplayName": "Sim Beech Krida relay panel",
+      "ComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
+      "ShNodeId": "e33bfe69-7c03-482b-b75a-3469c500755f"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -334,7 +346,7 @@
       "ActorHierarchyName": "s.i2c-bus",
       "ActorClass": "I2cBus",
       "DisplayName": "I2C Bus",
-      "ShNodeId": "3be66230-4f04-41b9-bc53-08b0c699042a"
+      "ShNodeId": "ed452ba1-d0e3-400f-b5f5-adb4cfd886bf"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -344,8 +356,8 @@
       "Handle": "auto.five-v-boss.pico-cycler.vdc-relay",
       "ActorClass": "Relay",
       "DisplayName": "5VDC Relay",
-      "ComponentId": "d7b373a5-1a30-497c-a85d-3d368ab4b6be",
-      "ShNodeId": "eaa3bec9-49c5-45b9-93ed-d14978fb921b"
+      "ComponentId": "e02da0be-57f9-49cb-910e-089e8ae6cf8c",
+      "ShNodeId": "fb765774-836c-47be-93c4-8767dce832cb"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -355,8 +367,8 @@
       "Handle": "auto.tstat-common-relay",
       "ActorClass": "Relay",
       "DisplayName": "TStat Common Relay",
-      "ComponentId": "92f0f6d2-40cb-4e65-a8fb-2a56a5449e6f",
-      "ShNodeId": "50e671d9-2820-47f2-96bc-516677d9d4a9"
+      "ComponentId": "c6471c3e-1c1a-4e6b-a009-ac43d6d68f7b",
+      "ShNodeId": "3e9e2a29-f1e6-4182-b982-d2ca5e1f48d2"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -366,8 +378,8 @@
       "Handle": "auto.charge-discharge-relay",
       "ActorClass": "Relay",
       "DisplayName": "Store Charge/Discharge Relay",
-      "ComponentId": "343a1ada-2118-46f5-800b-ff5f10291fe2",
-      "ShNodeId": "89ed5cb0-4d0f-4921-a304-51c5e61add7e"
+      "ComponentId": "e53c6f2d-1d38-4c06-b0c0-165c6e9c7265",
+      "ShNodeId": "71e49898-e8b2-4f2d-85dd-e456dcdd4acc"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -377,8 +389,8 @@
       "Handle": "auto.hp-failsafe-relay",
       "ActorClass": "Relay",
       "DisplayName": "Hp Failsafe Relay",
-      "ComponentId": "288fe332-968f-4e6b-926f-fb61e4d7fa19",
-      "ShNodeId": "a4c6e7cb-cebb-43d0-b65f-f81f56deb93c"
+      "ComponentId": "136b1c42-657e-46c9-a235-a1b04ceb4406",
+      "ShNodeId": "cada1fdf-3e7b-49eb-b352-a79181ebc8da"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -388,8 +400,8 @@
       "Handle": "auto.hp-boss.hp-scada-ops-relay",
       "ActorClass": "Relay",
       "DisplayName": "Hp Scada Ops Relay",
-      "ComponentId": "c3b67210-3e4e-48f8-98fc-fb54aee43254",
-      "ShNodeId": "ac28bdad-9230-470f-8108-530bd7ed0c06"
+      "ComponentId": "4ced879f-25bd-4b83-bd96-3bc254923397",
+      "ShNodeId": "629a62df-443e-462e-93ab-ef71745d8bd8"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -399,8 +411,8 @@
       "Handle": "auto.aquastat-ctrl-relay",
       "ActorClass": "Relay",
       "DisplayName": "Aquastat Ctrl Relay",
-      "ComponentId": "dbca4505-24a9-473f-b88b-4c02eaaed3e2",
-      "ShNodeId": "32ede24d-9c8c-4501-9d11-db308923b0d0"
+      "ComponentId": "f8fe2bae-33f6-4366-a083-5e31e1ebc115",
+      "ShNodeId": "e7b8b1df-1ef5-4e3a-b920-458bad1bc52f"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -410,8 +422,8 @@
       "Handle": "auto.store-pump-relay",
       "ActorClass": "Relay",
       "DisplayName": "Store Pump Relay",
-      "ComponentId": "829b5d3d-492d-43f5-b62a-301138f608bf",
-      "ShNodeId": "89677aac-db46-403a-bb31-59a39d51a9f6"
+      "ComponentId": "5490443a-29f7-48b9-8133-bf18d081db06",
+      "ShNodeId": "788dd85a-5755-47e8-ab05-466fe50050b0"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -421,8 +433,8 @@
       "Handle": "auto.primary-pump-failsafe-relay",
       "ActorClass": "Relay",
       "DisplayName": "Primary Pump Failsafe",
-      "ComponentId": "f2e269bf-1564-4841-8ce5-43cd39494455",
-      "ShNodeId": "0460110a-6b2c-405b-8d91-1ae169e7b53c"
+      "ComponentId": "a1a6b11e-98c5-4cbd-a72e-4189f96ffd72",
+      "ShNodeId": "9313f701-cbd6-49e6-ad4e-2d2d317f981d"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -432,8 +444,8 @@
       "Handle": "auto.primary-pump-scada-ops-relay",
       "ActorClass": "Relay",
       "DisplayName": "Primary Pump SCADA Ops",
-      "ComponentId": "7d34b741-7be5-4218-b6ea-15b8f22cec85",
-      "ShNodeId": "3d6c3fea-4d94-4f3e-8784-014afe828e75"
+      "ComponentId": "81fea85f-bfe1-4e46-aef7-c3a8d1d69f2b",
+      "ShNodeId": "8f86e812-267c-4554-b3d0-301ab4f405f9"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -443,8 +455,8 @@
       "Handle": "auto.sieg-loop.hp-loop-on-off-relay",
       "ActorClass": "Relay",
       "DisplayName": "Hp Loop Valve Active/Dormant Relay",
-      "ComponentId": "836b5958-e0ff-470c-b121-007359c120b4",
-      "ShNodeId": "6f4013d3-882d-4008-a961-09cbdd34d4bc"
+      "ComponentId": "c58912d0-0aaf-4bfd-b6b0-a2dcb516180c",
+      "ShNodeId": "861dd64a-2e92-4b22-9a2f-48d465c2bf04"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -454,8 +466,8 @@
       "Handle": "auto.sieg-loop.hp-loop-keep-send-relay",
       "ActorClass": "Relay",
       "DisplayName": "Hp Loop Valve SendMore/SendLess Relay",
-      "ComponentId": "806af334-b266-4726-bb47-cf904797edaa",
-      "ShNodeId": "f3c5f19c-fc71-4c3c-9dfc-d16c63d31cca"
+      "ComponentId": "fe358ab7-3593-4b0f-8942-567579129bf0",
+      "ShNodeId": "d51ea9a4-9911-4b3e-b8cc-9e7004209b91"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -465,8 +477,8 @@
       "Handle": "auto.zone1-down-failsafe-relay",
       "ActorClass": "Relay",
       "DisplayName": "Down Zone 1 Failsf",
-      "ComponentId": "dded7843-9bc8-4e58-b34f-750d086e5ef3",
-      "ShNodeId": "bf28d164-7224-4d09-95de-27eac7b1f86e"
+      "ComponentId": "a65f6ce2-de3c-47f7-87ce-5ac8e31d0e96",
+      "ShNodeId": "93618b32-8af0-4905-b31f-2298dbff116a"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -476,8 +488,8 @@
       "Handle": "auto.zone1-down-ops-relay",
       "ActorClass": "Relay",
       "DisplayName": "Down Zone Scada Ops",
-      "ComponentId": "1d820ae3-32b6-415b-91d3-0c535976ff51",
-      "ShNodeId": "9b242caa-6b72-4e7e-b3f2-ed4cec374f2f"
+      "ComponentId": "434dab55-d9b6-4226-9fda-ea2556dea168",
+      "ShNodeId": "8c150e9f-de59-47b3-bade-7118c33a887e"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -487,8 +499,8 @@
       "Handle": "auto.zone2-up-failsafe-relay",
       "ActorClass": "Relay",
       "DisplayName": "Up Zone 2 Failsf",
-      "ComponentId": "13b64383-2350-44d2-8f19-e585f82c69ca",
-      "ShNodeId": "f9aac36c-4ae1-472c-9206-4f602b518962"
+      "ComponentId": "bdbdca4f-3f01-48df-947c-f292e3e4644e",
+      "ShNodeId": "7b1df082-47e2-4c63-9bab-c423f0112aa1"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -498,8 +510,8 @@
       "Handle": "auto.zone2-up-ops-relay",
       "ActorClass": "Relay",
       "DisplayName": "Up Zone Scada Ops",
-      "ComponentId": "3efb210d-1756-461b-84b0-02d5414b672a",
-      "ShNodeId": "a8aba701-ddf3-4032-bf76-2e45a8bac331"
+      "ComponentId": "924cb5bf-923e-4200-adca-6bdfdc2043f0",
+      "ShNodeId": "15480322-5f1f-4138-8f74-25c32a9743b0"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -508,8 +520,8 @@
       "ActorHierarchyName": "s.buffer",
       "ActorClass": "ApiTankModule",
       "DisplayName": "Buffer SIMULATED ApiTankModule actor",
-      "ComponentId": "92d81360-3561-4ae1-ae22-e4d61c4f4216",
-      "ShNodeId": "4e428209-2aa1-47d4-88bd-4dcfc0fdfaa2"
+      "ComponentId": "7c568549-030a-462f-879e-9d2638cbb828",
+      "ShNodeId": "11ca8da7-a715-4612-a9cb-f046dc2e62ca"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -517,7 +529,7 @@
       "Name": "buffer-depth1",
       "ActorClass": "NoActor",
       "DisplayName": "buffer-depth1",
-      "ShNodeId": "719c3073-f2d9-4942-bf56-f484b7c0b99d"
+      "ShNodeId": "569a7534-38dc-4c01-bade-2f40dd7cf438"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -525,7 +537,7 @@
       "Name": "buffer-depth2",
       "ActorClass": "NoActor",
       "DisplayName": "buffer-depth2",
-      "ShNodeId": "2bdbaf15-dc04-46ca-8346-e264c84d67e0"
+      "ShNodeId": "e9003fc2-34a0-4896-86d7-166bc165038f"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -533,7 +545,7 @@
       "Name": "buffer-depth3",
       "ActorClass": "NoActor",
       "DisplayName": "buffer-depth3",
-      "ShNodeId": "c4023434-85ed-4790-8bfc-7a333715ea93"
+      "ShNodeId": "5a4914b9-87fc-4b71-9a17-64bdcc2b32aa"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -542,8 +554,8 @@
       "ActorHierarchyName": "s.tank1",
       "ActorClass": "ApiTankModule",
       "DisplayName": "Tank1 SIMULATED ApiTankModule actor",
-      "ComponentId": "1d3d92a5-b878-479b-99fa-6406eba1fc30",
-      "ShNodeId": "31791879-b021-4f67-a647-a25fae086b2e"
+      "ComponentId": "a06a8ba6-4850-40e4-ab65-d3f9985fa0cc",
+      "ShNodeId": "45326798-a003-48f6-aaf8-1ede279663ed"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -551,7 +563,7 @@
       "Name": "tank1-depth1",
       "ActorClass": "NoActor",
       "DisplayName": "tank1-depth1",
-      "ShNodeId": "f21567cb-6e21-4e42-b5c1-cfc2b7055722"
+      "ShNodeId": "9122725d-619b-4cd3-96d9-9d0060adc279"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -559,7 +571,7 @@
       "Name": "tank1-depth2",
       "ActorClass": "NoActor",
       "DisplayName": "tank1-depth2",
-      "ShNodeId": "bcefb7b5-5882-4fa9-a92a-142c6bf2ad97"
+      "ShNodeId": "f8d44da7-f922-4c6a-bcac-6cff12df19cb"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -567,7 +579,7 @@
       "Name": "tank1-depth3",
       "ActorClass": "NoActor",
       "DisplayName": "tank1-depth3",
-      "ShNodeId": "d207d59d-b9fd-452c-aa72-7fe6c938c4bc"
+      "ShNodeId": "86fa40f5-947f-4858-b4c3-b3eef48b65ae"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -576,8 +588,8 @@
       "ActorHierarchyName": "s.tank2",
       "ActorClass": "ApiTankModule",
       "DisplayName": "Tank2 SIMULATED ApiTankModule actor",
-      "ComponentId": "7dc2ed19-150e-4b9f-80df-d6893479f90f",
-      "ShNodeId": "87a73902-8c2f-4df2-8f68-f573bdbfe3e7"
+      "ComponentId": "65aefaf6-f547-4ec7-8609-92698a19e161",
+      "ShNodeId": "63afed43-90e8-40b8-ac0a-01d25cd0a1bc"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -585,7 +597,7 @@
       "Name": "tank2-depth1",
       "ActorClass": "NoActor",
       "DisplayName": "tank2-depth1",
-      "ShNodeId": "1708ca8e-9a25-4833-8dfd-30233abc8374"
+      "ShNodeId": "0e13e763-d675-4b91-b9d0-35afef365fc9"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -593,7 +605,7 @@
       "Name": "tank2-depth2",
       "ActorClass": "NoActor",
       "DisplayName": "tank2-depth2",
-      "ShNodeId": "0ba6983e-0657-43b6-9a4b-fadee3d4679e"
+      "ShNodeId": "e843acf0-7e95-44ba-b2e4-6f21da5a686b"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -601,7 +613,7 @@
       "Name": "tank2-depth3",
       "ActorClass": "NoActor",
       "DisplayName": "tank2-depth3",
-      "ShNodeId": "a77108fb-4ed7-4218-bbfb-02aef6a5ca65"
+      "ShNodeId": "7389c4f7-5658-46ca-a667-61693c7bd340"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -610,8 +622,8 @@
       "ActorHierarchyName": "s.tank3",
       "ActorClass": "ApiTankModule",
       "DisplayName": "Tank3 SIMULATED ApiTankModule actor",
-      "ComponentId": "386bcaa1-3cef-4f7b-92c5-eaf218939e63",
-      "ShNodeId": "b85ed181-136f-4145-a4b0-673c42b5a4a5"
+      "ComponentId": "b5524674-62d0-4743-a185-5ca8e62c4c06",
+      "ShNodeId": "4fa09a8a-8c26-432e-86f9-9fbd610ab5f9"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -619,7 +631,7 @@
       "Name": "tank3-depth1",
       "ActorClass": "NoActor",
       "DisplayName": "tank3-depth1",
-      "ShNodeId": "9ccb92cf-4bd7-4db9-ab64-ce63d573217e"
+      "ShNodeId": "c8cdbb81-f1bc-4bd3-ab46-d295070787cc"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -627,7 +639,7 @@
       "Name": "tank3-depth2",
       "ActorClass": "NoActor",
       "DisplayName": "tank3-depth2",
-      "ShNodeId": "8aa89497-b974-40ec-abf0-435665eba29c"
+      "ShNodeId": "b25eb376-fb05-4ed3-aa8a-3d16c1d13b15"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -635,7 +647,7 @@
       "Name": "tank3-depth3",
       "ActorClass": "NoActor",
       "DisplayName": "tank3-depth3",
-      "ShNodeId": "6a4247a0-70f6-4cf3-8b27-021f251d4881"
+      "ShNodeId": "5342422a-7cef-43c5-b91b-3ffdbc181ed4"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -645,8 +657,8 @@
       "Handle": "auto.dist-010v",
       "ActorClass": "ZeroTenOutputer",
       "DisplayName": "Dist Pump 010V",
-      "ComponentId": "9e84acaa-c35e-4a37-b692-92a8ac386528",
-      "ShNodeId": "7b54286e-5253-43b5-af3d-45acd24844f4"
+      "ComponentId": "427b2387-e1e5-4eec-8e55-451513913077",
+      "ShNodeId": "992371cb-b04b-46fa-a176-2f2f7a55e3e4"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -656,8 +668,8 @@
       "Handle": "auto.primary-010v",
       "ActorClass": "ZeroTenOutputer",
       "DisplayName": "Primary Pump 010V",
-      "ComponentId": "7bf5f0f8-a970-46ad-9c63-080b90cadd43",
-      "ShNodeId": "849c415e-43bd-4a34-ad4a-3d65bc6e6db6"
+      "ComponentId": "c1b39b88-aa35-42d6-ade0-d98aa81b8252",
+      "ShNodeId": "8728a4e3-757f-4127-a0bb-849f0aa2d635"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -667,8 +679,8 @@
       "Handle": "auto.store-010v",
       "ActorClass": "ZeroTenOutputer",
       "DisplayName": "Store Pump 010V",
-      "ComponentId": "73f8f25f-13b3-4d8d-b03a-462b9690d213",
-      "ShNodeId": "783a254f-4ff4-40ff-a8dd-5d8697809cdb"
+      "ComponentId": "dbfa8922-234e-408a-b123-25735b22a4ac",
+      "ShNodeId": "418630e7-3c34-4be4-a720-27599531e3e3"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -677,8 +689,8 @@
       "ActorHierarchyName": "s.dist-flow",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Dist Flow Sim Flow Meter",
-      "ComponentId": "fd43cfce-9757-44dc-a0f4-6b8b9115cdc2",
-      "ShNodeId": "5271c851-4f2f-4ac5-b8e6-c007754a31d8"
+      "ComponentId": "c3c16e59-d102-4950-b6a7-5d434c1987a0",
+      "ShNodeId": "54f74eb8-0c17-46cf-98f0-fb5a7ca37b9e"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -687,8 +699,8 @@
       "ActorHierarchyName": "s.primary-flow",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Primary Flow Sim Flow Meter",
-      "ComponentId": "160c73da-8cee-4340-974d-880f9d2c2b6b",
-      "ShNodeId": "842f5174-c97e-478c-baeb-7d5d5114d85c"
+      "ComponentId": "2d5b8848-5ec0-466b-ae10-bf90e4c35c1c",
+      "ShNodeId": "aad9f38f-9de6-48d1-9e1e-0f5bb8b83879"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -697,8 +709,8 @@
       "ActorHierarchyName": "s.store-flow",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Store Flow Sim Flow Meter",
-      "ComponentId": "388318e0-b701-4c77-b9a8-58c05543a780",
-      "ShNodeId": "f3d85065-2866-4592-827e-b8365815d7f5"
+      "ComponentId": "efae1d72-dd52-4d28-9969-c6deb8e4689c",
+      "ShNodeId": "00d19598-5009-4531-8e72-96e9c094a782"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -707,8 +719,8 @@
       "ActorHierarchyName": "s.sieg-flow",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Sieg Flow Sim Flow Meter",
-      "ComponentId": "c2b17c5c-90a9-4a18-92a9-e125a12a0278",
-      "ShNodeId": "780933bc-a642-4ef7-8cf6-2a345d4722d2"
+      "ComponentId": "5e43626c-1c34-4995-9932-c1c744788d86",
+      "ShNodeId": "3edd08d4-aebf-4bb5-bd35-b861b617a30e"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -717,8 +729,8 @@
       "ActorHierarchyName": "s.hp-lwt",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Hp Lwt Sim Temp Sensor",
-      "ComponentId": "11989f14-f3d7-44f3-928d-0ee0fc82623d",
-      "ShNodeId": "01d46b13-8c60-4924-8b98-06ec2f6a5b21"
+      "ComponentId": "361326e0-c49a-43a2-b706-7ef10a2104f2",
+      "ShNodeId": "75b26737-75d4-4864-a374-c0fa61bf183a"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -727,8 +739,8 @@
       "ActorHierarchyName": "s.hp-ewt",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Hp Ewt Sim Temp Sensor",
-      "ComponentId": "a6caa1a7-4ae9-4897-8c0e-d6538f28fdc8",
-      "ShNodeId": "1a8167e8-c5a6-40db-bd41-44cfd23e0fe9"
+      "ComponentId": "cb4bb944-b4b6-4e1b-aaad-f97eb91827d3",
+      "ShNodeId": "55073097-53fa-45cd-a208-7c395e3ed33e"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -737,8 +749,8 @@
       "ActorHierarchyName": "s.dist-swt",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Dist Swt Sim Temp Sensor",
-      "ComponentId": "9fee5204-6d27-45b2-9498-99d433c3e355",
-      "ShNodeId": "a8527299-743d-4fb3-b2a5-f8cd16b7dad0"
+      "ComponentId": "4ab399c1-6b66-4442-8289-7064efd5a0ed",
+      "ShNodeId": "849f44fb-87f8-41fe-91f9-c2daa3faec2b"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -747,8 +759,8 @@
       "ActorHierarchyName": "s.dist-rwt",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Dist Rwt Sim Temp Sensor",
-      "ComponentId": "443076fd-6651-4869-a7eb-27ebd2ec0c19",
-      "ShNodeId": "20577349-6d34-48d3-9e5a-b29ae043796d"
+      "ComponentId": "3538b023-3406-4e58-bbf0-cdb8c149bf79",
+      "ShNodeId": "69023320-8c54-492e-81b1-3b3c6b5926f7"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -757,8 +769,8 @@
       "ActorHierarchyName": "s.store-hot-pipe",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Store Hot Pipe Sim Temp Sensor",
-      "ComponentId": "7d3ddef0-e924-4275-834a-8f8b64431ed6",
-      "ShNodeId": "a3c6dd8f-a62f-493c-a119-036ca288624a"
+      "ComponentId": "2a5cedf4-9499-4904-a44c-2267d201cf76",
+      "ShNodeId": "4d25a0b9-f4b3-4ab9-9d82-b202555f53e7"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -767,8 +779,8 @@
       "ActorHierarchyName": "s.store-cold-pipe",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Store Cold Pipe Sim Temp Sensor",
-      "ComponentId": "7b8f168d-6c7a-443c-9191-67fe5d932952",
-      "ShNodeId": "23ad59e1-c3fe-4708-ba50-2d9a33c7793a"
+      "ComponentId": "aca5bd0c-d9ee-4e58-a839-7af907ea5c44",
+      "ShNodeId": "a10397d1-5240-459b-90a4-cfdcd230a9ce"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -777,8 +789,8 @@
       "ActorHierarchyName": "s.buffer-hot-pipe",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Buffer Hot Pipe Sim Temp Sensor",
-      "ComponentId": "8353861a-8c42-432c-ad8a-90b43e5c7963",
-      "ShNodeId": "4d75915b-13f3-400c-9756-afcecc2250e5"
+      "ComponentId": "f02362dc-ec86-4ad8-bf1d-ee423b5b8077",
+      "ShNodeId": "6a16f23b-27d1-4947-aaa8-aaf393b670b4"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -787,8 +799,8 @@
       "ActorHierarchyName": "s.sieg-cold",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Sieg Cold Sim Temp Sensor",
-      "ComponentId": "5703d9db-8c2a-4b85-82ff-61fde6bbbb3c",
-      "ShNodeId": "21c21d40-9ce0-4054-a5d3-41035845862a"
+      "ComponentId": "9b0bf731-12c2-4634-8ba1-2775f6312a7e",
+      "ShNodeId": "23ed1566-76cb-4601-8003-686418b05191"
     },
     {
       "TypeName": "spaceheat.node.gt",
@@ -797,8 +809,8 @@
       "ActorHierarchyName": "s.sieg-hot",
       "ActorClass": "SimSensorActor",
       "DisplayName": "Sieg Hot Sim Temp Sensor",
-      "ComponentId": "987972ef-97ab-4c96-8c06-0c8f16ef05f7",
-      "ShNodeId": "336ee489-ad98-48bb-b637-0805a70a2f0a"
+      "ComponentId": "31230e25-7de8-44e4-86b2-cedef43299fc",
+      "ShNodeId": "810bb9ad-fb59-4d7f-878f-ab61ab3bf274"
     }
   ],
   "DataChannels": [
@@ -811,8 +823,8 @@
       "CapturedByNodeName": "power-meter",
       "TelemetryName": "PowerW",
       "Quantity": "Power",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "fa919a1c-942d-4aa8-9f06-45e8f13156c6"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "0c531e7c-a144-413d-8606-16a553b2b171"
     },
     {
       "TypeName": "data.channel.gt",
@@ -823,32 +835,8 @@
       "CapturedByNodeName": "power-meter",
       "TelemetryName": "PowerW",
       "Quantity": "Power",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "eb7ac184-dd62-45b5-b987-94f86ff1b0a6"
-    },
-    {
-      "TypeName": "data.channel.gt",
-      "Version": "004",
-      "Name": "primary-pump-pwr",
-      "DisplayName": "PRIMARY PUMP PWR",
-      "AboutNodeName": "primary-pump",
-      "CapturedByNodeName": "power-meter",
-      "TelemetryName": "PowerW",
-      "Quantity": "Power",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "e857539e-16f1-4c4c-a91b-c4556ce212a5"
-    },
-    {
-      "TypeName": "data.channel.gt",
-      "Version": "004",
-      "Name": "store-pump-pwr",
-      "DisplayName": "STORE PUMP PWR",
-      "AboutNodeName": "store-pump",
-      "CapturedByNodeName": "power-meter",
-      "TelemetryName": "PowerW",
-      "Quantity": "Power",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "c99a9cdb-801b-4f14-a5cb-26542ffde22e"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "98b6f088-6ee7-4c1b-b628-fe4313276f3a"
     },
     {
       "TypeName": "data.channel.gt",
@@ -859,8 +847,44 @@
       "CapturedByNodeName": "power-meter",
       "TelemetryName": "PowerW",
       "Quantity": "Power",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "2c347067-9bea-4c7e-910c-52b226fcbe75"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "80c8d717-f1dc-46d0-b762-94b9acebe4a3"
+    },
+    {
+      "TypeName": "data.channel.gt",
+      "Version": "004",
+      "Name": "primary-pump-pwr",
+      "DisplayName": "PRIMARY PUMP PWR",
+      "AboutNodeName": "primary-pump",
+      "CapturedByNodeName": "power-meter",
+      "TelemetryName": "PowerW",
+      "Quantity": "Power",
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "6eccf937-fb40-4b16-8c3f-d8798abec54a"
+    },
+    {
+      "TypeName": "data.channel.gt",
+      "Version": "004",
+      "Name": "store-pump-pwr",
+      "DisplayName": "STORE PUMP PWR",
+      "AboutNodeName": "store-pump",
+      "CapturedByNodeName": "power-meter",
+      "TelemetryName": "PowerW",
+      "Quantity": "Power",
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "6385a93b-76a3-45e0-8ef9-a20af7c4a805"
+    },
+    {
+      "TypeName": "data.channel.gt",
+      "Version": "004",
+      "Name": "oil-boiler-pwr",
+      "DisplayName": "OIL BOILER PWR",
+      "AboutNodeName": "oil-boiler",
+      "CapturedByNodeName": "power-meter",
+      "TelemetryName": "PowerW",
+      "Quantity": "Power",
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "c785525b-353d-4538-bd29-cac70c9ef128"
     },
     {
       "TypeName": "data.channel.gt",
@@ -871,8 +895,8 @@
       "CapturedByNodeName": "power-meter",
       "TelemetryName": "PowerW",
       "Quantity": "Power",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "3cae3f19-b18b-4735-b876-23bf8fe6e825"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "dd2761ee-a27e-49e2-a5ac-13280e113ebb"
     },
     {
       "TypeName": "data.channel.gt",
@@ -883,8 +907,8 @@
       "CapturedByNodeName": "power-meter",
       "TelemetryName": "PowerW",
       "Quantity": "Power",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "b3575ed0-aa9e-428a-a812-e2f7ecf7a1a6"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "4936649e-2e21-46da-bd06-47af3729cda7"
     },
     {
       "TypeName": "data.channel.gt",
@@ -895,8 +919,8 @@
       "CapturedByNodeName": "zone1-down-temp-sensor",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "bbb38814-3905-410a-be2b-5806435c4ad5"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "92d68b46-c97d-4e97-a5bc-34c70aa54771"
     },
     {
       "TypeName": "data.channel.gt",
@@ -907,8 +931,8 @@
       "CapturedByNodeName": "zone2-up-temp-sensor",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "4790bf7a-a96e-412e-9f1f-95abc471042b"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "96f45d6f-72a0-40e8-bef6-f9405a8956ee"
     },
     {
       "TypeName": "data.channel.gt",
@@ -919,8 +943,8 @@
       "CapturedByNodeName": "vdc-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "edb5f9bd-cea3-4776-957a-03f5ab1a3585"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "ab3bc81b-6b5d-4217-a6e3-40278df7f1dd"
     },
     {
       "TypeName": "data.channel.gt",
@@ -931,8 +955,8 @@
       "CapturedByNodeName": "tstat-common-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "3f97577e-3f12-48e8-bf9d-6b0f9a7f4ed6"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "75006f1e-c1d3-496a-8c28-a15e23a0735d"
     },
     {
       "TypeName": "data.channel.gt",
@@ -943,8 +967,8 @@
       "CapturedByNodeName": "charge-discharge-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "b63060aa-55f9-422b-84aa-99542f2662ad"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "b4c4cd98-4112-46e9-bda3-f2a673d8b5be"
     },
     {
       "TypeName": "data.channel.gt",
@@ -955,8 +979,8 @@
       "CapturedByNodeName": "hp-failsafe-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "3e231a71-4b5e-4ff1-824a-7473a03fffe3"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "d5db19fc-630c-4f6e-9a2b-2d5d49066f21"
     },
     {
       "TypeName": "data.channel.gt",
@@ -967,8 +991,8 @@
       "CapturedByNodeName": "hp-scada-ops-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "8375ddf8-82b2-4646-a675-5164b5a4e413"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "ad1f7133-6881-4a23-b441-578a33650247"
     },
     {
       "TypeName": "data.channel.gt",
@@ -979,8 +1003,8 @@
       "CapturedByNodeName": "aquastat-ctrl-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "d0063927-bc1b-4c73-87de-3d62ba9306de"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "c4ad928a-26ed-41f4-a452-9c89d1ec958a"
     },
     {
       "TypeName": "data.channel.gt",
@@ -991,8 +1015,8 @@
       "CapturedByNodeName": "store-pump-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "71a059b0-cdf7-42e5-a7be-7cf3ef34ca0a"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "d3da661b-2e84-4ae4-b0b5-1d1e8dad5822"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1003,8 +1027,8 @@
       "CapturedByNodeName": "primary-pump-failsafe-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "64aa402a-8523-4e8f-9a4b-f7e8b78eafb8"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "b7991052-91da-4a30-afc8-0afbd8c873bb"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1015,8 +1039,8 @@
       "CapturedByNodeName": "primary-pump-scada-ops-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "0a0c2d8b-3491-4385-8129-9115a8fae6d5"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "9b8590eb-7cc8-4189-a398-c25a94458ebc"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1027,8 +1051,8 @@
       "CapturedByNodeName": "hp-loop-on-off-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "96f9078c-66ff-48f1-8dbc-808f57c3df3d"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "2f029a23-2ef5-4186-b31e-41baaf09e0d2"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1039,8 +1063,8 @@
       "CapturedByNodeName": "hp-loop-keep-send-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "55038091-e0ba-4e58-9ebe-91047e6e33ac"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "3c7156e5-bc72-4bd0-93ba-fdbc0be0fdfb"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1051,8 +1075,8 @@
       "CapturedByNodeName": "zone1-down-failsafe-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "62de16ba-57c1-41f6-8a7c-8f06e478d919"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "0ab3ff98-454c-4743-8c71-2d713eaad1dc"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1063,8 +1087,8 @@
       "CapturedByNodeName": "zone1-down-ops-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "b2c02367-e635-43d7-95bd-3ad0208ac6e1"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "023c9e6a-4b4a-4682-8d24-20c7a8eda84a"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1075,8 +1099,8 @@
       "CapturedByNodeName": "zone2-up-failsafe-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "617279f8-ded9-4b40-8b69-2db08e58c39e"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "1c8e4dce-02a0-4171-8e19-11dae0d31070"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1087,8 +1111,8 @@
       "CapturedByNodeName": "zone2-up-ops-relay",
       "TelemetryName": "RelayState",
       "Quantity": "Unitless",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "c0f0dcd1-024c-4dad-8346-05cb218795e0"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "95829cb3-0aa4-4074-b62a-76b253d72ae2"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1099,8 +1123,8 @@
       "CapturedByNodeName": "buffer",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "be00fbc7-0ec9-4094-bbbd-ff5976624ab1"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "8a49853d-d93a-4a75-8f9b-2c50236d01d8"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1111,8 +1135,8 @@
       "CapturedByNodeName": "buffer",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "1cceb9e1-4ff1-4501-99c0-4004e0765360"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "3699254a-1321-45cd-a0cd-09da13503ff4"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1123,8 +1147,8 @@
       "CapturedByNodeName": "buffer",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "a96c68a7-1feb-45eb-878b-6f404ef5f228"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "402188f4-c546-4699-b766-d31ccc2d33b3"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1135,8 +1159,8 @@
       "CapturedByNodeName": "buffer",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "435a4f5c-7af3-4241-81f4-afa1df05b9a9"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "b27fa079-bdc8-444a-8a54-4875e3df47ed"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1147,8 +1171,8 @@
       "CapturedByNodeName": "buffer",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "374c6fef-c87f-485c-ada6-aee88f483f7c"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "1f1f2aa3-19c4-4375-93b7-eeafb9da25fa"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1159,8 +1183,8 @@
       "CapturedByNodeName": "buffer",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "c2d29d25-5ef8-421a-acc5-0ddd831f827f"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "46504210-27c5-4b1f-a687-d8f2acb51f54"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1171,8 +1195,8 @@
       "CapturedByNodeName": "tank1",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "2f3aff6f-9abc-4186-80ad-cb9bfe990bfe"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "6fc1270a-3e4d-4ae5-958f-0b0ca300f19f"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1183,8 +1207,8 @@
       "CapturedByNodeName": "tank1",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "c41937ef-e35a-40b4-bb90-11388ec82037"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "01f8c38e-ed94-4790-97d6-94eebac3a04b"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1195,8 +1219,8 @@
       "CapturedByNodeName": "tank1",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "4b47f51c-088d-40f9-9356-a9244751424b"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "a33e7a02-76fa-49a6-abb0-00d55745cd6b"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1207,8 +1231,8 @@
       "CapturedByNodeName": "tank1",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "d5c7b9b4-3fe9-4dfb-9000-5b730293bb8d"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "7d4b515c-49e4-4761-b300-240ad1aef497"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1219,8 +1243,8 @@
       "CapturedByNodeName": "tank1",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "960e8f81-5945-4491-830d-c20fe94ff7b3"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "559f0014-c81b-4392-bc3f-1ec988b90b6a"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1231,8 +1255,8 @@
       "CapturedByNodeName": "tank1",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "4b911dd5-a066-46c1-90b1-c09ae5717899"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "0f3b27ed-52b2-4b33-ab38-d92614e272fd"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1243,8 +1267,8 @@
       "CapturedByNodeName": "tank2",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "26a6430e-416a-4fe4-abf7-83afa7cb074b"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "74b165ca-b7c1-42c2-b8f8-be00bfd55ade"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1255,8 +1279,8 @@
       "CapturedByNodeName": "tank2",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "9d26363f-4280-4bd2-9514-f2760f6a469f"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "1cd434d8-fd5c-4e1f-9a2d-b3acb6b4b480"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1267,8 +1291,8 @@
       "CapturedByNodeName": "tank2",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "d033ea6b-cb4b-46e7-87b9-d23e9fc0e282"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "77a43ae9-de09-4434-839f-39aebe091d18"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1279,8 +1303,8 @@
       "CapturedByNodeName": "tank2",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "2f96ab09-c2a1-42a3-bad2-5c0957d94c54"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "d5b93741-5eb9-48bf-9b62-71860343e85e"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1291,8 +1315,8 @@
       "CapturedByNodeName": "tank2",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "3942a556-a5d1-47a6-847e-f1e332136271"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "51c68efa-56ab-4921-989b-6dc992290ead"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1303,8 +1327,8 @@
       "CapturedByNodeName": "tank2",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "92a7a581-8874-4e08-8754-5dfc8f73bf2d"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "ea3b7de1-97ae-4765-941b-8907231a0e98"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1315,8 +1339,8 @@
       "CapturedByNodeName": "tank3",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "201c9b44-59ce-43cc-bec7-d54fef183196"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "7d05468e-ed00-4eb5-a899-d1763e6a386e"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1327,8 +1351,8 @@
       "CapturedByNodeName": "tank3",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "b2a9664a-bc81-42e3-aec8-d1d7dfcef314"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "184e412e-765a-44a2-a76d-25abcf47bd24"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1339,8 +1363,8 @@
       "CapturedByNodeName": "tank3",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "54bd0dae-d415-4ca8-9422-6ed6991a9626"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "00cc51bd-bcd1-447d-8059-de531e6afb38"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1351,8 +1375,8 @@
       "CapturedByNodeName": "tank3",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "c94a8393-8959-4dae-89e4-5cf495c3c259"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "8c5b948a-12a5-4061-a3da-55906a2d5a25"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1363,8 +1387,8 @@
       "CapturedByNodeName": "tank3",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "856fe3b8-5734-4466-9964-8779e5400c6d"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "f7e406a7-b33b-4e13-9027-6d475eb0a347"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1375,8 +1399,8 @@
       "CapturedByNodeName": "tank3",
       "TelemetryName": "MicroVolts",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "1a38703a-b6ae-4e7e-9a23-9826cb0f33c0"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "1902c215-019e-4539-acdc-2dd922647c10"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1387,8 +1411,8 @@
       "CapturedByNodeName": "dist-010v",
       "TelemetryName": "VoltsTimesTen",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "9835b1d0-d0b7-4f43-a421-3dd3d2f8168c"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "506c3612-5643-4060-b6dd-3ad2c5762dfd"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1399,8 +1423,8 @@
       "CapturedByNodeName": "primary-010v",
       "TelemetryName": "VoltsTimesTen",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "e3721e18-26d4-4675-903a-6014adc07a0c"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "e02ec761-e662-402d-a84b-361b1d7fbc94"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1411,8 +1435,8 @@
       "CapturedByNodeName": "store-010v",
       "TelemetryName": "VoltsTimesTen",
       "Quantity": "Voltage",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "0dcaa409-7494-433e-9efa-7d6e4e9aa18d"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "951f70fb-f8ba-4795-aa29-ae25e88ed26a"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1423,8 +1447,8 @@
       "CapturedByNodeName": "dist-flow",
       "TelemetryName": "GpmTimes100",
       "Quantity": "FlowRate",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "41f7cc95-50c6-409e-84cf-28f528d71fd0"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "8695792b-97dc-47cf-ae80-11f898fa04f1"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1435,8 +1459,8 @@
       "CapturedByNodeName": "dist-flow",
       "TelemetryName": "MicroHz",
       "Quantity": "Frequency",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "e762645f-f42d-4f8a-81fd-73c4a2466ec9"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "3310e145-eacc-4d3d-9472-769f956e7eeb"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1447,8 +1471,8 @@
       "CapturedByNodeName": "primary-flow",
       "TelemetryName": "GpmTimes100",
       "Quantity": "FlowRate",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "bcb70bb9-2198-4a78-9175-ec7d752e742a"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "da4e4381-b321-488c-823f-39bc195c808e"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1459,8 +1483,8 @@
       "CapturedByNodeName": "primary-flow",
       "TelemetryName": "MicroHz",
       "Quantity": "Frequency",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "85b43cb4-6976-48c9-a824-d866c382ebe1"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "4136c9b7-f2ee-43da-85f8-abee9c948c00"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1471,8 +1495,8 @@
       "CapturedByNodeName": "store-flow",
       "TelemetryName": "GpmTimes100",
       "Quantity": "FlowRate",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "10617e11-e6fc-40a3-8d90-c9aa7adb17a1"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "615b9d13-3ef5-43da-b773-7f690e8204fb"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1483,8 +1507,8 @@
       "CapturedByNodeName": "store-flow",
       "TelemetryName": "MicroHz",
       "Quantity": "Frequency",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "6a9beb99-c5bd-4094-b971-b2da50275ed9"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "7f55aa2a-eaee-45e6-89d9-ab67ede1831d"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1495,8 +1519,8 @@
       "CapturedByNodeName": "sieg-flow",
       "TelemetryName": "GpmTimes100",
       "Quantity": "FlowRate",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "ad88afe4-d216-4deb-8d66-ec6ef074f18d"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "f167fea8-513d-4f2c-9f5f-560f6c537767"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1507,8 +1531,8 @@
       "CapturedByNodeName": "sieg-flow",
       "TelemetryName": "MicroHz",
       "Quantity": "Frequency",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "dff42e55-df51-4c48-9180-7898ff784163"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "b3019733-6196-49db-ab5e-7f0d7dedc085"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1519,8 +1543,8 @@
       "CapturedByNodeName": "hp-lwt",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "cbb89285-f7e0-45f8-b337-7036f770be5d"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "0e21b90f-665a-4a5e-a81c-7938afd90f03"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1531,8 +1555,8 @@
       "CapturedByNodeName": "hp-ewt",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "26a647a2-31c7-4037-96ba-0bb2b70f2032"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "42dc0a03-5ccd-4f67-8b78-79f54c2d481f"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1543,8 +1567,8 @@
       "CapturedByNodeName": "dist-swt",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "0be810c5-c571-4cf9-9d5e-e5e66a11ab6e"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "c4486965-1ba1-4d64-a3ac-e69121e8612d"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1555,8 +1579,8 @@
       "CapturedByNodeName": "dist-rwt",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "6fab2d9b-8fc8-4011-8cad-ace77be5e2f2"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "2011c45d-4db8-40ae-b161-3f3f4367c107"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1567,8 +1591,8 @@
       "CapturedByNodeName": "store-hot-pipe",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "3405fff5-ba7a-49ce-b740-26f0838a452c"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "8ea444d0-919a-4ff8-9df1-6f46b52b5392"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1579,8 +1603,8 @@
       "CapturedByNodeName": "store-cold-pipe",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "ce04e9c4-7919-4913-b3d4-1d9d646946e3"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "d0c22c9c-50d5-40b0-80f5-e6517db0f4d7"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1591,8 +1615,8 @@
       "CapturedByNodeName": "buffer-hot-pipe",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "3382f2a4-6f08-434a-8ba0-fa36fb970fca"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "62b4d071-9acc-4c68-a24c-5613b353cdeb"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1603,8 +1627,8 @@
       "CapturedByNodeName": "sieg-cold",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "6f3e47bd-65e9-4e57-a902-b21d97d5922f"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "fceb8b2e-7ec9-437f-8799-55e9ee9bdee5"
     },
     {
       "TypeName": "data.channel.gt",
@@ -1615,15 +1639,15 @@
       "CapturedByNodeName": "sieg-hot",
       "TelemetryName": "CelsiusTimes100",
       "Quantity": "Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta",
-      "Id": "5b71994c-1b38-41da-967f-8fa958601e60"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta",
+      "Id": "6549be86-20aa-456a-bc91-da0dd0841de8"
     }
   ],
   "DerivedChannels": [
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "12e99926-b832-4d98-ae79-b703e60aa260",
+      "Id": "4ba819ae-3e70-4a16-b640-ee11b310777e",
       "Name": "transactive-power",
       "CreatedByNodeName": "power-meter",
       "Strategy": "transactive-power",
@@ -1635,12 +1659,12 @@
       "OutputQuantity": "Power",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Transactive Power W",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "aabee58a-7277-4e71-9aa5-ba3128e918a2",
+      "Id": "e238b0bb-3c16-4b9f-b2b9-aea963444c8c",
       "Name": "sieg-send-flow",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "difference",
@@ -1652,12 +1676,12 @@
       "OutputQuantity": "FlowRate",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Sieg Send Flow Gpm X 100 (primary-flow - sieg-flow)",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "42324f43-240f-4ce6-9860-9913d286fed1",
+      "Id": "a9837ebc-5595-46b2-b4bc-73fc3b637152",
       "Name": "usable-energy",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "system-model",
@@ -1673,12 +1697,12 @@
         }
       },
       "DisplayName": "Usable Energy Wh",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "b646c1f2-e565-43b8-b9c6-0d0dbf2da322",
+      "Id": "d128e490-9290-44c9-83d8-9bdff16ca3c0",
       "Name": "required-energy",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "system-model",
@@ -1694,12 +1718,12 @@
         }
       },
       "DisplayName": "Required Energy Wh",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "f916812e-8a39-498f-abe6-6f90bac37c07",
+      "Id": "f30a6921-3a9d-4ba2-be15-f46af4e308e5",
       "Name": "last-hour-dist-energy",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "rolling-dist-energy",
@@ -1713,12 +1737,12 @@
       "EmissionMethod": "Periodic",
       "EmitPeriodS": 60,
       "DisplayName": "Last Hour Distribution Energy Wh",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "c2aad0ff-bde3-4b80-ae50-529cd1851b53",
+      "Id": "ebfcac35-182c-4eec-9e4c-44747e24e19b",
       "Name": "zone1-down-heat-call",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "heat-call",
@@ -1735,12 +1759,12 @@
         "Threshold": 10
       },
       "DisplayName": "Zone1 Down Heat Call",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "31e68f1c-f14a-491c-bd5a-0a16f6200d0b",
+      "Id": "7404d7ba-556f-4ff1-8815-ff26f44547ba",
       "Name": "zone2-up-heat-call",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "heat-call",
@@ -1757,12 +1781,12 @@
         "Threshold": 10
       },
       "DisplayName": "Zone2 Up Heat Call",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "beb1260e-043f-4b69-8fc8-615a9a2556b8",
+      "Id": "4bd8c2d3-9e11-4384-8260-5545c29d7e02",
       "Name": "buffer-depth1",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1773,12 +1797,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Buffer Depth1 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "6dcfd098-2393-44f6-9f32-45c5452c6eca",
+      "Id": "d4926746-ef8b-45b6-9ed0-82dfd0e7c074",
       "Name": "buffer-depth2",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1789,12 +1813,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Buffer Depth2 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "f99e69e5-a300-4adc-a337-995c2abd15fd",
+      "Id": "ad9e9373-a55c-42f1-a91f-a6e79d872bb1",
       "Name": "buffer-depth3",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1805,12 +1829,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Buffer Depth3 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "3808bdb1-388c-4526-90f1-08a69cfff134",
+      "Id": "606810d6-425b-4914-8526-c4cfe10838db",
       "Name": "tank1-depth1",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1821,12 +1845,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank1 Depth1 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "db4de846-7d2f-4f4a-9b0b-54fb07bff540",
+      "Id": "0bde0673-5700-4a65-b74d-bde86820fd95",
       "Name": "tank1-depth2",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1837,12 +1861,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank1 Depth2 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "100915a6-742b-4228-8767-5fe76c6e3695",
+      "Id": "43d8095d-6ab2-405f-a73c-4d099b51f8d2",
       "Name": "tank1-depth3",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1853,12 +1877,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank1 Depth3 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "0acfa073-a3c5-4ca8-8185-6b924ae3e7c7",
+      "Id": "d09a5cff-5d8f-4de4-9c85-f0378f3a8b34",
       "Name": "tank2-depth1",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1869,12 +1893,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank2 Depth1 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "192f106c-e23e-47d6-a5c1-df184ac0669d",
+      "Id": "4dbcb8c5-e166-4362-a699-f9a643d4b8d1",
       "Name": "tank2-depth2",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1885,12 +1909,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank2 Depth2 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "4e123f6f-a879-4300-84a1-9f3684027685",
+      "Id": "fb463e86-7b26-4d76-9dcf-5351f20fb310",
       "Name": "tank2-depth3",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1901,12 +1925,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank2 Depth3 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "896a4172-d21d-44c6-b8ab-3be4e20d86c1",
+      "Id": "4277fbf4-966e-4eb1-a1f4-0a4e932b7cab",
       "Name": "tank3-depth1",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1917,12 +1941,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank3 Depth1 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "391ae474-cad3-46e4-b185-6e30c1f48e14",
+      "Id": "64d55287-c14f-4797-b0cc-d1263916e7e9",
       "Name": "tank3-depth2",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1933,12 +1957,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank3 Depth2 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "5c144266-8464-430e-8a7d-517d35b06fd0",
+      "Id": "a115774f-80a9-42be-9500-d42a6ba9f94f",
       "Name": "tank3-depth3",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "identity",
@@ -1949,12 +1973,12 @@
       "OutputQuantity": "Temperature",
       "EmissionMethod": "OnTrigger",
       "DisplayName": "Tank3 Depth3 Effective Temperature",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "db6cd21f-a5e3-41f0-abc6-5bf91cfc80c3",
+      "Id": "c4b9506c-207f-41e4-ad98-253d6b997327",
       "Name": "dist-pump-running",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "circulator-running",
@@ -1970,12 +1994,12 @@
         "ThresholdW": 4
       },
       "DisplayName": "Dist Pump Running",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "7c36b4d5-b820-41b0-908a-e18b929962c6",
+      "Id": "0c499e13-74ff-4a51-a876-46046f1d1f60",
       "Name": "primary-pump-running",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "circulator-running",
@@ -1991,12 +2015,12 @@
         "ThresholdW": 4
       },
       "DisplayName": "Primary Pump Running",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "c08cac69-bae8-4b56-adc3-352f0a531d4c",
+      "Id": "f88c69dd-e140-45e0-92fa-8bd9776f8cfc",
       "Name": "store-pump-running",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "circulator-running",
@@ -2012,12 +2036,12 @@
         "ThresholdW": 4
       },
       "DisplayName": "Store Pump Running",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "c39a2f3c-2398-4b7d-a530-1a4c8c59ebf8",
+      "Id": "311ce76d-6fd4-4fa2-a859-25643ce8f26c",
       "Name": "zone1-down-set",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "simple-falling-edge-setpoint",
@@ -2034,12 +2058,12 @@
         "SetpointThresholdFX100": 200
       },
       "DisplayName": "Zone1 Down Predicted Setpoint",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     },
     {
       "TypeName": "derived.channel.gt",
       "Version": "003",
-      "Id": "a7764f93-7cb3-4977-809e-b94e16989bbe",
+      "Id": "16708ea4-17d9-43aa-a265-b0a5f1273e14",
       "Name": "zone2-up-set",
       "CreatedByNodeName": "derived-generator",
       "Strategy": "simple-falling-edge-setpoint",
@@ -2056,14 +2080,14 @@
         "SetpointThresholdFX100": 200
       },
       "DisplayName": "Zone2 Up Predicted Setpoint",
-      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech.buf.ta"
+      "TerminalAssetAlias": "d1.isone.me.versant.keene.beech2.ta"
     }
   ],
   "Components": [
     {
       "TypeName": "electric.meter.component.gt",
       "Version": "001",
-      "ComponentId": "c891e1ea-1906-4ec3-b887-dcb59d7ed37b",
+      "ComponentId": "e1dfc1e5-36f6-4887-b04a-d523db1feb1a",
       "DeviceType": "SimPowerMeter",
       "ConfigList": [
         {
@@ -2079,6 +2103,11 @@
         {
           "TypeName": "electric.meter.channel.config",
           "Version": "000",
+          "ChannelName": "dist-pump-pwr"
+        },
+        {
+          "TypeName": "electric.meter.channel.config",
+          "Version": "000",
           "ChannelName": "primary-pump-pwr"
         },
         {
@@ -2089,7 +2118,7 @@
         {
           "TypeName": "electric.meter.channel.config",
           "Version": "000",
-          "ChannelName": "dist-pump-pwr"
+          "ChannelName": "oil-boiler-pwr"
         },
         {
           "TypeName": "electric.meter.channel.config",
@@ -2102,32 +2131,32 @@
           "ChannelName": "zone2-up-whitewire-pwr"
         }
       ],
-      "DisplayName": "Power Meter for Simulated Test system"
+      "DisplayName": "EGauge Power Meter"
     },
     {
       "TypeName": "device.component.gt",
       "Version": "000",
-      "ComponentId": "d372c8ad-e5f9-4a87-8f97-ca519f407db2",
+      "ComponentId": "bd1ed414-c75a-4e8e-8f92-68d222a0957b",
       "DeviceType": "SimHpOdu",
       "DisplayName": "Sim heat-pump outdoor unit"
     },
     {
       "TypeName": "device.component.gt",
       "Version": "000",
-      "ComponentId": "f7475ab0-cb62-46e4-82de-ac7c5b10b5e4",
+      "ComponentId": "3ec6c58f-0ff2-48f5-b902-acfc5e6f5c89",
       "DeviceType": "SimHpIdu",
       "DisplayName": "Sim heat-pump indoor unit"
     },
     {
       "TypeName": "web.server.component.gt",
       "Version": "001",
-      "ComponentId": "52b242e3-3339-46ac-8662-306601cfab19",
+      "ComponentId": "c030fd42-eea7-4b90-ba44-aafda19360c7",
       "DeviceType": "AbstractWebServer",
       "WebServer": {
         "Serve": false,
         "Host": "0.0.0.0",
         "Name": "default",
-        "Port": 8080,
+        "Port": 8000,
         "Kwargs": {}
       },
       "DisplayName": "Web Server default"
@@ -2135,33 +2164,33 @@
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "5bfde199-1d99-4960-af61-a8d4100f7875",
+      "ComponentId": "e6669f08-e1d0-4b67-a457-af4b1418ed72",
       "DeviceType": "SimSensor",
       "DisplayName": "Zone 1 Down Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "d073288c-803a-4beb-98fe-35922af8869b",
+      "ComponentId": "a6355f83-51e6-4594-add4-ab359a8a3638",
       "DeviceType": "SimSensor",
       "DisplayName": "Zone 2 Up Temp Sensor"
     },
     {
       "TypeName": "scada.board.component.gt",
       "Version": "000",
-      "ComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "DeviceType": "SimKridaDoubleRelayBoard16",
       "I2cAddressList": [
         32,
         33
       ],
-      "DisplayName": "Sim Krida relay panel"
+      "DisplayName": "Sim Beech Krida relay panel"
     },
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "d7b373a5-1a30-497c-a85d-3d368ab4b6be",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "e02da0be-57f9-49cb-910e-089e8ae6cf8c",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay1",
       "ConfigList": [
         {
@@ -2183,8 +2212,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "92f0f6d2-40cb-4e65-a8fb-2a56a5449e6f",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "c6471c3e-1c1a-4e6b-a009-ac43d6d68f7b",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay2",
       "ConfigList": [
         {
@@ -2206,8 +2235,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "343a1ada-2118-46f5-800b-ff5f10291fe2",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "e53c6f2d-1d38-4c06-b0c0-165c6e9c7265",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay3",
       "ConfigList": [
         {
@@ -2229,8 +2258,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "288fe332-968f-4e6b-926f-fb61e4d7fa19",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "136b1c42-657e-46c9-a235-a1b04ceb4406",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay5",
       "ConfigList": [
         {
@@ -2252,8 +2281,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "c3b67210-3e4e-48f8-98fc-fb54aee43254",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "4ced879f-25bd-4b83-bd96-3bc254923397",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay6",
       "ConfigList": [
         {
@@ -2275,8 +2304,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "dbca4505-24a9-473f-b88b-4c02eaaed3e2",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "f8fe2bae-33f6-4366-a083-5e31e1ebc115",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay8",
       "ConfigList": [
         {
@@ -2298,8 +2327,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "829b5d3d-492d-43f5-b62a-301138f608bf",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "5490443a-29f7-48b9-8133-bf18d081db06",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay9",
       "ConfigList": [
         {
@@ -2321,8 +2350,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "f2e269bf-1564-4841-8ce5-43cd39494455",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "a1a6b11e-98c5-4cbd-a72e-4189f96ffd72",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay12",
       "ConfigList": [
         {
@@ -2344,8 +2373,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "7d34b741-7be5-4218-b6ea-15b8f22cec85",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "81fea85f-bfe1-4e46-aef7-c3a8d1d69f2b",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay11",
       "ConfigList": [
         {
@@ -2367,8 +2396,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "836b5958-e0ff-470c-b121-007359c120b4",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "c58912d0-0aaf-4bfd-b6b0-a2dcb516180c",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay14",
       "ConfigList": [
         {
@@ -2390,8 +2419,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "806af334-b266-4726-bb47-cf904797edaa",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "fe358ab7-3593-4b0f-8942-567579129bf0",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay15",
       "ConfigList": [
         {
@@ -2413,8 +2442,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "dded7843-9bc8-4e58-b34f-750d086e5ef3",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "a65f6ce2-de3c-47f7-87ce-5ac8e31d0e96",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay17",
       "ConfigList": [
         {
@@ -2436,8 +2465,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "1d820ae3-32b6-415b-91d3-0c535976ff51",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "434dab55-d9b6-4226-9fda-ea2556dea168",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay18",
       "ConfigList": [
         {
@@ -2459,8 +2488,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "13b64383-2350-44d2-8f19-e585f82c69ca",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "bdbdca4f-3f01-48df-947c-f292e3e4644e",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay19",
       "ConfigList": [
         {
@@ -2482,8 +2511,8 @@
     {
       "TypeName": "i2c.relay.component.gt",
       "Version": "000",
-      "ComponentId": "3efb210d-1756-461b-84b0-02d5414b672a",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "924cb5bf-923e-4200-adca-6bdfdc2043f0",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "RelayName": "Relay20",
       "ConfigList": [
         {
@@ -2505,7 +2534,7 @@
     {
       "TypeName": "sim.pico.tank.module.component.gt",
       "Version": "001",
-      "ComponentId": "92d81360-3561-4ae1-ae22-e4d61c4f4216",
+      "ComponentId": "7c568549-030a-462f-879e-9d2638cbb828",
       "DeviceType": "SimSensor",
       "DisplayName": "Buffer",
       "PicoHwUid": "sim-buffer-pico",
@@ -2523,7 +2552,7 @@
     {
       "TypeName": "sim.pico.tank.module.component.gt",
       "Version": "001",
-      "ComponentId": "1d3d92a5-b878-479b-99fa-6406eba1fc30",
+      "ComponentId": "a06a8ba6-4850-40e4-ab65-d3f9985fa0cc",
       "DeviceType": "SimSensor",
       "DisplayName": "Tank1",
       "PicoHwUid": "sim-tank1-pico",
@@ -2541,7 +2570,7 @@
     {
       "TypeName": "sim.pico.tank.module.component.gt",
       "Version": "001",
-      "ComponentId": "7dc2ed19-150e-4b9f-80df-d6893479f90f",
+      "ComponentId": "65aefaf6-f547-4ec7-8609-92698a19e161",
       "DeviceType": "SimSensor",
       "DisplayName": "Tank2",
       "PicoHwUid": "sim-tank2-pico",
@@ -2559,7 +2588,7 @@
     {
       "TypeName": "sim.pico.tank.module.component.gt",
       "Version": "001",
-      "ComponentId": "386bcaa1-3cef-4f7b-92c5-eaf218939e63",
+      "ComponentId": "b5524674-62d0-4743-a185-5ca8e62c4c06",
       "DeviceType": "SimSensor",
       "DisplayName": "Tank3",
       "PicoHwUid": "sim-tank3-pico",
@@ -2577,8 +2606,8 @@
     {
       "TypeName": "i2c.dac.output.component.gt",
       "Version": "000",
-      "ComponentId": "9e84acaa-c35e-4a37-b692-92a8ac386528",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "427b2387-e1e5-4eec-8e55-451513913077",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "DacName": "Dfr1",
       "ConfigList": [
         {
@@ -2594,8 +2623,8 @@
     {
       "TypeName": "i2c.dac.output.component.gt",
       "Version": "000",
-      "ComponentId": "7bf5f0f8-a970-46ad-9c63-080b90cadd43",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "c1b39b88-aa35-42d6-ade0-d98aa81b8252",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "DacName": "Dfr1",
       "ConfigList": [
         {
@@ -2611,8 +2640,8 @@
     {
       "TypeName": "i2c.dac.output.component.gt",
       "Version": "000",
-      "ComponentId": "73f8f25f-13b3-4d8d-b03a-462b9690d213",
-      "BoardComponentId": "a84dd763-5b92-4ff7-ac12-53ec6e39429a",
+      "ComponentId": "dbfa8922-234e-408a-b123-25735b22a4ac",
+      "BoardComponentId": "a1c5e55b-8546-454c-b8c7-50fb6a4515aa",
       "DacName": "Dfr2",
       "ConfigList": [
         {
@@ -2628,91 +2657,91 @@
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "fd43cfce-9757-44dc-a0f4-6b8b9115cdc2",
+      "ComponentId": "c3c16e59-d102-4950-b6a7-5d434c1987a0",
       "DeviceType": "SimSensor",
       "DisplayName": "Dist Flow Sim Flow Meter"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "160c73da-8cee-4340-974d-880f9d2c2b6b",
+      "ComponentId": "2d5b8848-5ec0-466b-ae10-bf90e4c35c1c",
       "DeviceType": "SimSensor",
       "DisplayName": "Primary Flow Sim Flow Meter"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "388318e0-b701-4c77-b9a8-58c05543a780",
+      "ComponentId": "efae1d72-dd52-4d28-9969-c6deb8e4689c",
       "DeviceType": "SimSensor",
       "DisplayName": "Store Flow Sim Flow Meter"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "c2b17c5c-90a9-4a18-92a9-e125a12a0278",
+      "ComponentId": "5e43626c-1c34-4995-9932-c1c744788d86",
       "DeviceType": "SimSensor",
       "DisplayName": "Sieg Flow Sim Flow Meter"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "11989f14-f3d7-44f3-928d-0ee0fc82623d",
+      "ComponentId": "361326e0-c49a-43a2-b706-7ef10a2104f2",
       "DeviceType": "SimSensor",
       "DisplayName": "Hp Lwt Sim Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "a6caa1a7-4ae9-4897-8c0e-d6538f28fdc8",
+      "ComponentId": "cb4bb944-b4b6-4e1b-aaad-f97eb91827d3",
       "DeviceType": "SimSensor",
       "DisplayName": "Hp Ewt Sim Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "9fee5204-6d27-45b2-9498-99d433c3e355",
+      "ComponentId": "4ab399c1-6b66-4442-8289-7064efd5a0ed",
       "DeviceType": "SimSensor",
       "DisplayName": "Dist Swt Sim Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "443076fd-6651-4869-a7eb-27ebd2ec0c19",
+      "ComponentId": "3538b023-3406-4e58-bbf0-cdb8c149bf79",
       "DeviceType": "SimSensor",
       "DisplayName": "Dist Rwt Sim Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "7d3ddef0-e924-4275-834a-8f8b64431ed6",
+      "ComponentId": "2a5cedf4-9499-4904-a44c-2267d201cf76",
       "DeviceType": "SimSensor",
       "DisplayName": "Store Hot Pipe Sim Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "7b8f168d-6c7a-443c-9191-67fe5d932952",
+      "ComponentId": "aca5bd0c-d9ee-4e58-a839-7af907ea5c44",
       "DeviceType": "SimSensor",
       "DisplayName": "Store Cold Pipe Sim Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "8353861a-8c42-432c-ad8a-90b43e5c7963",
+      "ComponentId": "f02362dc-ec86-4ad8-bf1d-ee423b5b8077",
       "DeviceType": "SimSensor",
       "DisplayName": "Buffer Hot Pipe Sim Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "5703d9db-8c2a-4b85-82ff-61fde6bbbb3c",
+      "ComponentId": "9b0bf731-12c2-4634-8ba1-2775f6312a7e",
       "DeviceType": "SimSensor",
       "DisplayName": "Sieg Cold Sim Temp Sensor"
     },
     {
       "TypeName": "sim.sensor.component.gt",
       "Version": "000",
-      "ComponentId": "987972ef-97ab-4c96-8c06-0c8f16ef05f7",
+      "ComponentId": "31230e25-7de8-44e4-86b2-cedef43299fc",
       "DeviceType": "SimSensor",
       "DisplayName": "Sieg Hot Sim Temp Sensor"
     }

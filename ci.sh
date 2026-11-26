@@ -73,7 +73,7 @@ procedures/sieg-valve-calibration/drive.py
 2026-11-10-plant-loop/loop_check.py
 2026-11-11-beech-sim-compose/stack_check.py
 2026-11-11-beech-sim-compose/channel_readings.py
-dev-sim/beech_sim_gen.py
+dev-sim/twin_houses.py
 dev-sim/journal_boot.py
 dev-sim/flo_matrix.py
 2026-11-20-spruce-gw108-revc-bench/evidence/ct-window3/ct1_live.py
@@ -99,8 +99,8 @@ dev-sim/flo_matrix.py
 # (realtime-units-elm-check). November: gwadmin in the laptop scada venv
 # (the sieg-valve-calibration driver), and the scada venv's gw_spaceheat
 # and gwsproto (plant-crossing, plant-loop,
-# beech-sim-compose's stack_check and channel_readings), a tlayouts tree
-# on the path (beech-sim-compose's beech_sim_gen), sqlalchemy and gw_data
+# beech-sim-compose's stack_check and channel_readings), gwsproto in the
+# scada's environment at its pin (dev-sim's twin_houses), sqlalchemy and gw_data
 # in the keeper image (journal_boot), and the FLO image's gwflo and bruce
 # (flo_matrix).
 FILES=$(find . -name '*.py' -not -path './.venv/*' -not -path './src/*' \
