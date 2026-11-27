@@ -1,0 +1,36 @@
+{
+  "verdict": "PASS",
+  "checks": {
+    "link heard the wanted fluxes": true,
+    "link: every sensed channel, none extra": true,
+    "witness decoded every flux through the snapshot": true,
+    "witness: every sensed channel, none extra, in every flux": true,
+    "values drift": true,
+    "witness saw the restated Energize and the DeEnergize": true
+  },
+  "expected_channels": 35,
+  "fluxes_to_link": 5,
+  "fluxes_to_witness": 6,
+  "channels_that_moved": 35,
+  "unsensed_channels": [],
+  "extra_or_missing_at_link": [],
+  "actuations_on_the_wire": [
+    [
+      "store-pump-relay",
+      "Energize"
+    ],
+    [
+      "store-pump-relay",
+      "Energize"
+    ],
+    [
+      "store-pump-relay",
+      "DeEnergize"
+    ]
+  ],
+  "undecodable": [],
+  "topics": [
+    "gw/d1-isone-ct-newhaven-hazel1-scada/to/d1-isone-ct-newhaven-hazel1-ta/sim-plant-actuation",
+    "gw/d1-isone-ct-newhaven-hazel1-ta/to/d1-isone-ct-newhaven-hazel1-scada/sim-plant-flux"
+  ]
+}

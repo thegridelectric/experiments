@@ -1,0 +1,1099 @@
+# A simulated Beech, as one Pod: the four processes of compose.yaml, the
+# house's LTN, the FLO it asks, the price service the LTN reads, the
+# market maker it clears against, the weather service the house reads,
+# the journal (the ear, the keeper, and TimescaleDB), and the web app
+# that reads the journal.
+# Containers in a Pod share one network namespace, which is what
+# compose.yaml builds with network_mode: service:rabbit. Three ports
+# are published to the host: the journal database, 5434 to the
+# container's 5432; the web app, 5173; and the realtime gateway, 8100.
+#
+# Kube play starts every container together and has no readiness probe,
+# so the plants, scadas, LTNs, the FLO, the price actor, the market maker,
+# the weather actor, its API and its mint, the ear, the keeper, the
+# web API and the frontend wait until the ports they use are open. The
+# scadas and the LTNs also wait until the weather service lists the
+# house's bundle. Two scada+ta pairs run: ./house is AllTanks
+# (d1.isone.me.versant.keene.beech.at) and ./house-buffer is BufferOnly
+# (d1.isone.me.versant.keene.beech.buf). Each scada has its own local Mosquitto.
+# It does not build images. ./run.sh does,
+# then plays this file with each ./ hostPath made absolute to this folder.
+#
+# The FLO answers only plant shapes whose bruce transition matrix is in
+# the beech-sim-bruce volume, which survives kube down. Fill it once per
+# house shape or bruce tuning, before the pod starts:
+#
+#     podman volume create --ignore beech-sim-bruce
+#     podman run --rm --memory 8g --cpus 1 \
+#         -e CAN_COMPUTE_TRANSITION_MATRICES=true -e BRUCE_BASE_PATH=/bruce \
+#         -v beech-sim-bruce:/bruce:U -v ./house:/house:ro,z \
+#         -v ./flo_matrix.py:/flo_matrix.py:ro,z \
+#         --entrypoint python localhost/beech-sim_flo:latest \
+#         /flo_matrix.py /house
+#
+# The scada and the LTN run from the one scada image, so the LTN is the
+# one the scada's checkout deploys and the two agree on the words between
+# them. Each copies its layout pair from ./house or ./house-buffer into
+# its config home.
+#
+# The price service is two containers from one image. price watches
+# ISO-NE and writes the kept forecast; price-api serves it on the pod's
+# localhost, where the LTN reads it. They share the forecast directory,
+# which an init container chowns to the price user. The ISO-NE account
+# is ./price.env (gitignored). A name set on the containers wins over
+# the same name in that file:
+#
+#     GWPF_ISONE_USER=you@example.com
+#     GWPF_ISONE_API_PASS=...
+#
+# The market maker publishes latest.price for d1.isone.me.versant.keene,
+# the maker the house's operational params name. Its ISO-NE account is
+# ./mm.env (gitignored), read the same way:
+#
+#     GWMM_ISONE_USER=you@example.com
+#     GWMM_ISONE_API_PASS=...
+#
+# The ear consumes ear_tx and `ear listen --no-s3` writes each message
+# as a file under ./eventstore, at
+# gridworks/ear/output/need_to_put/d1__1/. The ear runs as container
+# root, which rootless Podman maps to the host user, so that directory
+# stays readable on the host. The keeper reads the same exchange into
+# TimescaleDB. Inside the pod the database is localhost:5432; from the
+# host, as the read-only role:
+#
+#     postgresql://gw_analyst:gw_analyst@127.0.0.1:5434/tsdb
+#
+# The superuser is postgres/postgres. Dev roles, password equal to the
+# role name: gw_admin, gw_journalkeeper (the keeper), gw_visualizer
+# (the web API), gw_alerts, gw_analyst. journal_boot.py creates them,
+# the gridworks tables from the gw_data models in the keeper image, a
+# TerminalAsset row for each house folder, and the dashboard login
+# beech / beech (an admin, so both houses). The database has no volume,
+# so kube down drops it;
+# ./eventstore stays.
+#
+# The web app is http://localhost:5173/gridworks-web-frontend/ . Vite
+# proxies /api to the API on the pod's localhost:8000, and proxies the
+# realtime socket to the gateway on the pod's localhost:8100, so the
+# browser only talks to 5173 and the page works under any host that
+# reached it. The frontend's weather panel learns
+# each house's bundle at start: the web container reads the layout's
+# LeafTransactiveNode alias and the operational params'
+# WeatherBundleName from ./house and ./house-buffer into
+# VITE_HOUSE_WEATHER_BUNDLES.
+#
+# The scada's event files land in ./events and stay there across kube
+# down. The mount is /events, not a directory under the scada home:
+# a mount there makes Podman create the parent as root, and the scada
+# user can no longer create its log directory beside it. An init
+# container chowns /events to the scada user. Rootless Podman maps the
+# host user to container root, so a directory owned by the host user is
+# not writable by scada. keep-id would line those uids up, and it also
+# forces every container in the pod to run as that uid, including rabbit.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: beech-sim
+spec:
+  restartPolicy: Never
+  hostname: rabbit
+  initContainers:
+    - name: events
+      image: localhost/beech-sim_scada:latest
+      securityContext:
+        runAsUser: 0
+      command: ["sh", "-c", "chown 1000:1000 /events /events-buffer"]
+      volumeMounts:
+        - name: events
+          mountPath: /events
+        - name: events-buffer
+          mountPath: /events-buffer
+    - name: price-data
+      image: localhost/beech-sim_price:latest
+      securityContext:
+        runAsUser: 0
+      command: ["sh", "-c", "chown 1000:1000 /var/lib/price-forecast"]
+      volumeMounts:
+        - name: price-data
+          mountPath: /var/lib/price-forecast
+  containers:
+    - name: rabbit
+      image: ghcr.io/thegridelectric/dev-rabbit:latest
+      livenessProbe:
+        exec:
+          command:
+            - gosu
+            - rabbitmq
+            - rabbitmq-diagnostics
+            - -q
+            - check_port_connectivity
+        initialDelaySeconds: 20
+        periodSeconds: 5
+        timeoutSeconds: 10
+        failureThreshold: 24
+
+    # Ubuntu attaches an AppArmor profile to the path /usr/sbin/mosquitto.
+    # The shell copies the binary and execs the copy, so the process never
+    # enters that profile.
+    - name: mosquitto
+      image: docker.io/library/eclipse-mosquitto:2
+      args:
+        - sh
+        - -c
+        - cp /usr/sbin/mosquitto /tmp/mosquitto && exec /tmp/mosquitto -c /mosquitto-no-auth.conf
+
+    - name: mosquitto-buffer
+      image: docker.io/library/eclipse-mosquitto:2
+      volumeMounts:
+        - name: mosquitto-1884
+          mountPath: /mosquitto-1884.conf
+          readOnly: true
+      args:
+        - sh
+        - -c
+        - cp /usr/sbin/mosquitto /tmp/mosquitto && exec /tmp/mosquitto -c /mosquitto-1884.conf
+
+    - name: plant
+      image: localhost/beech-sim_plant:latest
+      env:
+        - name: GWTA_SERVICE_ALIAS
+          value: d1.isone.me.versant.keene.beech.at.ta
+        - name: GWTA_G_NODE_PATH
+          value: /home/gwta/g.node.gt.json
+      volumeMounts:
+        - name: house
+          mountPath: /house
+          readOnly: true
+      lifecycle:
+        stopSignal: SIGINT
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import socket
+          import time
+          need = {5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          PY
+          exec ta-plant \
+            --layout /house/hardware-layout.json \
+            --fmu /opt/gwta/BeechPlant.fmu \
+            --fmu-overrides /house/plant-overrides.json \
+            --weather-url http://127.0.0.1:8531/d1-weather \
+            --weather-bundle us.me.millinocket.moose
+
+    - name: scada
+      image: localhost/beech-sim_scada:latest
+      env:
+        - name: SCADA_GRIDWORKS_MQTT__PORT
+          value: "1885"
+        - name: SCADA_WEATHER_SOURCE
+          value: Gwwf
+        - name: SCADA_WEATHER_API_URL
+          value: http://127.0.0.1:8531/d1-weather
+        - name: SCADA_PATHS__EVENT_DIR
+          value: /events
+      volumeMounts:
+        - name: house
+          mountPath: /house
+          readOnly: true
+        - name: events
+          mountPath: /events
+      lifecycle:
+        stopSignal: SIGINT
+      # The scada finds its layout pair by their deployed names in its
+      # config home, where it also writes: the pair is copied there at
+      # each start.
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - << 'PY'
+          import json
+          import socket
+          import time
+          import urllib.request
+          need = {5672, 1883, 1885}
+          deadline = time.monotonic() + 300
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          url = "http://127.0.0.1:8531/d1-weather/bundles"
+          while True:
+              try:
+                  with urllib.request.urlopen(url, timeout=2) as response:
+                      listed = json.load(response)
+                  if any(item.get("Name") == "us.me.millinocket.moose" for item in listed):
+                      break
+              except (OSError, ValueError):
+                  pass
+              if time.monotonic() > deadline:
+                  raise SystemExit("weather bundle us.me.millinocket.moose is not listed")
+              time.sleep(1)
+          PY
+          mkdir -p "$HOME/.config/gridworks/scada"
+          cp /house/hardware-layout.json /house/operational-params.json \
+            /house/ta-deed.json "$HOME/.config/gridworks/scada/"
+          exec python gw_spaceheat/gws run --message-summary --seconds-per-report 60
+
+    # The house's LTN, on rabbit's MQTT face with the scada's upstream link
+    # and the FLO; mosquitto on 1883 is the scada's local broker. Its
+    # price forecast is the price service on the pod's localhost, the
+    # route price-api serves. Its weather is the weather service on the
+    # pod's localhost, the bundle the house's operational params name.
+    - name: ltn
+      image: localhost/beech-sim_scada:latest
+      env:
+        - name: LTN_SCADA_MQTT__PORT
+          value: "1885"
+        - name: LTN_SCADA_MQTT__TLS__USE_TLS
+          value: "false"
+        - name: LTN_WEATHER_SOURCE
+          value: Gwwf
+        - name: LTN_WEATHER_API_URL
+          value: http://127.0.0.1:8531/d1-weather
+        - name: LTN_DASHBOARD__PRINT_GUI
+          value: "false"
+        - name: LTN_PRICE_FORECAST_URL
+          value: http://127.0.0.1:8532/hw1-isone-me-versant-keene-ps/gw0-price-forecast
+      volumeMounts:
+        - name: house
+          mountPath: /house
+          readOnly: true
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import json
+          import socket
+          import time
+          import urllib.request
+          need = {1885, 8532}
+          deadline = time.monotonic() + 300
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          url = "http://127.0.0.1:8531/d1-weather/bundles"
+          while True:
+              try:
+                  with urllib.request.urlopen(url, timeout=2) as response:
+                      listed = json.load(response)
+                  if any(item.get("Name") == "us.me.millinocket.moose" for item in listed):
+                      break
+              except (OSError, ValueError):
+                  pass
+              if time.monotonic() > deadline:
+                  raise SystemExit("weather bundle us.me.millinocket.moose is not listed")
+              time.sleep(1)
+          PY
+          mkdir -p "$HOME/.config/gridworks/ltn"
+          cp /house/hardware-layout.json /house/operational-params.json \
+            "$HOME/.config/gridworks/ltn/"
+          exec python gw_spaceheat/gws ltn run --message-summary
+
+    - name: plant-buffer
+      image: localhost/beech-sim_plant:latest
+      env:
+        - name: GWTA_SERVICE_ALIAS
+          value: d1.isone.me.versant.keene.beech.buf.ta
+        - name: GWTA_G_NODE_PATH
+          value: /home/gwta/g.node.gt.json
+      volumeMounts:
+        - name: house-buffer
+          mountPath: /house
+          readOnly: true
+      lifecycle:
+        stopSignal: SIGINT
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import socket
+          import time
+          need = {5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          PY
+          exec ta-plant \
+            --layout /house/hardware-layout.json \
+            --fmu /opt/gwta/BeechPlant.fmu \
+            --fmu-overrides /house/plant-overrides.json \
+            --weather-url http://127.0.0.1:8531/d1-weather \
+            --weather-bundle us.me.millinocket.moose
+
+    - name: scada-buffer
+      image: localhost/beech-sim_scada:latest
+      env:
+        - name: SCADA_GRIDWORKS_MQTT__PORT
+          value: "1885"
+        - name: SCADA_LOCAL_MQTT__PORT
+          value: "1884"
+        - name: SCADA_WEATHER_SOURCE
+          value: Gwwf
+        - name: SCADA_WEATHER_API_URL
+          value: http://127.0.0.1:8531/d1-weather
+        - name: SCADA_PATHS__EVENT_DIR
+          value: /events
+      volumeMounts:
+        - name: house-buffer
+          mountPath: /house
+          readOnly: true
+        - name: events-buffer
+          mountPath: /events
+      lifecycle:
+        stopSignal: SIGINT
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - << 'PY'
+          import json
+          import socket
+          import time
+          import urllib.request
+          need = {5672, 1884, 1885}
+          deadline = time.monotonic() + 300
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          url = "http://127.0.0.1:8531/d1-weather/bundles"
+          while True:
+              try:
+                  with urllib.request.urlopen(url, timeout=2) as response:
+                      listed = json.load(response)
+                  if any(item.get("Name") == "us.me.millinocket.moose" for item in listed):
+                      break
+              except (OSError, ValueError):
+                  pass
+              if time.monotonic() > deadline:
+                  raise SystemExit("weather bundle us.me.millinocket.moose is not listed")
+              time.sleep(1)
+          PY
+          mkdir -p "$HOME/.config/gridworks/scada"
+          cp /house/hardware-layout.json /house/operational-params.json \
+            /house/ta-deed.json "$HOME/.config/gridworks/scada/"
+          exec python gw_spaceheat/gws run --message-summary --seconds-per-report 60
+
+    - name: ltn-buffer
+      image: localhost/beech-sim_scada:latest
+      env:
+        - name: LTN_SCADA_MQTT__PORT
+          value: "1885"
+        - name: LTN_SCADA_MQTT__TLS__USE_TLS
+          value: "false"
+        - name: LTN_WEATHER_SOURCE
+          value: Gwwf
+        - name: LTN_WEATHER_API_URL
+          value: http://127.0.0.1:8531/d1-weather
+        - name: LTN_DASHBOARD__PRINT_GUI
+          value: "false"
+        - name: LTN_PRICE_FORECAST_URL
+          value: http://127.0.0.1:8532/hw1-isone-me-versant-keene-ps/gw0-price-forecast
+      volumeMounts:
+        - name: house-buffer
+          mountPath: /house
+          readOnly: true
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import json
+          import socket
+          import time
+          import urllib.request
+          need = {1885, 8532}
+          deadline = time.monotonic() + 300
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          url = "http://127.0.0.1:8531/d1-weather/bundles"
+          while True:
+              try:
+                  with urllib.request.urlopen(url, timeout=2) as response:
+                      listed = json.load(response)
+                  if any(item.get("Name") == "us.me.millinocket.moose" for item in listed):
+                      break
+              except (OSError, ValueError):
+                  pass
+              if time.monotonic() > deadline:
+                  raise SystemExit("weather bundle us.me.millinocket.moose is not listed")
+              time.sleep(1)
+          PY
+          mkdir -p "$HOME/.config/gridworks/ltn"
+          cp /house/hardware-layout.json /house/operational-params.json \
+            "$HOME/.config/gridworks/ltn/"
+          exec python gw_spaceheat/gws ltn run --message-summary
+
+    # The dev universe's FLO. The limits keep its builds from starving the
+    # house, at the FLO service's own sizing: two workers at its measured
+    # all-tanks peak of about 2 GB each under 6 GB, and two cores for the
+    # two workers. A build
+    # over the memory limit is killed and the pool replaces its worker. One
+    # thread per worker, or numpy sizes its pools to the host's cores.
+    - name: flo
+      image: localhost/beech-sim_flo:latest
+      env:
+        - name: GWFLO_RABBIT__URL
+          value: amqp://smqPublic:smqPublic@localhost:5672/d1__1
+        - name: GWFLO_SERVICE_ALIAS
+          value: d1.flo
+        - name: GWFLO_G_NODE_PATH
+          value: /flo/g.node.gt.json
+        - name: GWFLO_SUPER_ALIAS
+          value: d1.super1
+        - name: GWFLO_TIME_COORDINATOR_ALIAS
+          value: d1.time
+        - name: GWFLO_WORKERS
+          value: "2"
+        - name: GWFLO_REPLY_DEADLINE_S
+          value: "240"
+        - name: BRUCE_BASE_PATH
+          value: /bruce
+        - name: OMP_NUM_THREADS
+          value: "1"
+        - name: OPENBLAS_NUM_THREADS
+          value: "1"
+        - name: MKL_NUM_THREADS
+          value: "1"
+      resources:
+        requests:
+          cpu: "1"
+          memory: 4Gi
+        limits:
+          cpu: "2"
+          memory: 6Gi
+      volumeMounts:
+        - name: flo
+          mountPath: /flo
+          readOnly: true
+        - name: bruce
+          mountPath: /bruce
+          readOnly: true
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import socket
+          import time
+          need = {5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          PY
+          exec gwflo rabbit
+
+    # The price service's actor. It writes the kept forecast once ISO-NE
+    # answers; price-api serves that file and does not call ISO-NE.
+    - name: price
+      image: localhost/beech-sim_price:latest
+      env: &price-env
+        - name: GWPF_SERVICE_ALIAS
+          value: d1.price
+        - name: GWPF_G_NODE_PATH
+          value: /price/g.node.gt.json
+        - name: GWPF_DATA_DIR
+          value: /var/lib/price-forecast
+        - name: GWPF_RABBIT__URL
+          value: amqp://smqPublic:smqPublic@localhost:5672/d1__1
+        - name: GWPF_MY_SUPER_ALIAS
+          value: d1.super1
+        - name: GWPF_MY_TIME_COORDINATOR_ALIAS
+          value: d1.time
+        - name: GWPF_API_HOST
+          value: 127.0.0.1
+        - name: GWPF_API_PORT
+          value: "8532"
+        - name: GWPF_MARKET_MAKER_ALIAS
+          value: d1.isone.me.versant.keene
+        - name: GWPF_LTN_ROUTE
+          value: /hw1-isone-me-versant-keene-ps/gw0-price-forecast
+      volumeMounts:
+        - name: price-data
+          mountPath: /var/lib/price-forecast
+        - name: price-env
+          mountPath: /price.env
+          readOnly: true
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import os
+          import socket
+          import time
+
+          from dotenv import dotenv_values
+
+          need = {5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          for key, value in dotenv_values("/price.env").items():
+              if value is not None and key not in os.environ:
+                  os.environ[key] = value
+          os.execvp("gwpf", ["gwpf", "rabbit"])
+          PY
+
+    - name: price-api
+      image: localhost/beech-sim_price:latest
+      env: *price-env
+      volumeMounts:
+        - name: price-data
+          mountPath: /var/lib/price-forecast
+          readOnly: true
+        - name: price-env
+          mountPath: /price.env
+          readOnly: true
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import os
+
+          from dotenv import dotenv_values
+
+          for key, value in dotenv_values("/price.env").items():
+              if value is not None and key not in os.environ:
+                  os.environ[key] = value
+          os.execvp("gwpf", ["gwpf", "api"])
+          PY
+
+    # The dev-universe Keene maker. It publishes latest.price on the
+    # broker's rjb bridge, which is the topic the LTN subscribes to from
+    # the house's operational params. Bids arrive and are dropped.
+    - name: mm
+      image: localhost/beech-sim_mm:latest
+      env:
+        - name: GWMM_SERVICE_ALIAS
+          value: d1.isone.me.versant.keene
+        - name: GWMM_G_NODE_PATH
+          value: /mm/g.node.gt.json
+        - name: GWMM_MARKET_PRODUCT
+          value: rt60gate5
+        - name: GWMM_RABBIT__URL
+          value: amqp://smqPublic:smqPublic@localhost:5672/d1__1
+        - name: GWMM_MY_SUPER_ALIAS
+          value: d1.super1
+        - name: GWMM_MY_TIME_COORDINATOR_ALIAS
+          value: d1.time
+      volumeMounts:
+        - name: mm-env
+          mountPath: /mm.env
+          readOnly: true
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import os
+          import socket
+          import time
+
+          from dotenv import dotenv_values
+
+          need = {5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          for key, value in dotenv_values("/mm.env").items():
+              if value is not None and key not in os.environ:
+                  os.environ[key] = value
+          os.execvp("gwmm", ["gwmm", "rabbit"])
+          PY
+
+    # The weather service's own database. Timescale already listens on
+    # 5432 in this network namespace, so this Postgres takes the port
+    # the service uses in its own dev compose. Nothing else reads it,
+    # and it is not published.
+    - name: weather-db
+      image: docker.io/library/postgres:16
+      env:
+        - name: POSTGRES_USER
+          value: gwwf
+        - name: POSTGRES_PASSWORD
+          value: gwwfpass
+        - name: POSTGRES_DB
+          value: gwwf
+      args: ["postgres", "-c", "port=5436"]
+
+    # The weather actor. It migrates the empty database, then fetches
+    # and publishes. The dev records are minted by weather-mint once
+    # this process is answering.
+    - name: weather
+      image: localhost/beech-sim_weather:latest
+      env: &weather-env
+        - name: GWWF_SERVICE_ALIAS
+          value: d1.weather
+        - name: GWWF_G_NODE_PATH
+          value: /weather/g.node.gt.json
+        - name: GWWF_RABBIT__URL
+          value: amqp://smqPublic:smqPublic@localhost:5672/d1__1
+        - name: GWWF_MY_SUPER_ALIAS
+          value: d1.super
+        - name: GWWF_MY_TIME_COORDINATOR_ALIAS
+          value: d1.time
+        - name: GWWF_DB_URL
+          value: postgresql+psycopg://gwwf:gwwfpass@127.0.0.1:5436/gwwf
+        - name: GWWF_API_HOST
+          value: 127.0.0.1
+        - name: GWWF_API_PORT
+          value: "8531"
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import socket
+          import time
+          need = {5436, 5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          PY
+          alembic upgrade head
+          exec gwwf rabbit
+
+    # The read façade. The scada and the LTN pull the house's bundle
+    # from /d1-weather. Migrating here is a no-op once weather has
+    # reached head, and it covers this process winning the race.
+    - name: weather-api
+      image: localhost/beech-sim_weather:latest
+      env: *weather-env
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import socket
+          import time
+          need = {5436}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          PY
+          alembic upgrade head
+          exec gwwf api
+
+    # Mints dev-records/ onto the empty database, in filename order,
+    # then exits. The house's bundle is us.me.millinocket.moose.
+    - name: weather-mint
+      image: localhost/beech-sim_weather:latest
+      env: *weather-env
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import glob
+          import socket
+          import subprocess
+          import time
+          need = {5672}
+          ports_deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > ports_deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          records = sorted(glob.glob("/app/dev-records/[0-9]*.json"))
+          if not records:
+              raise SystemExit("no dev records in the image")
+          minted = False
+          deadline = time.monotonic() + 180
+          while time.monotonic() < deadline:
+              if subprocess.run(["gwwf", "create", records[0]]).returncode == 0:
+                  minted = True
+                  break
+              time.sleep(2)
+          if not minted:
+              raise SystemExit("weather actor did not accept the first record")
+          for path in records[1:]:
+              subprocess.run(["gwwf", "create", path], check=True)
+          PY
+
+    - name: timescale
+      image: docker.io/timescale/timescaledb-ha:pg18-ts2.25
+      env:
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        - name: POSTGRES_DB
+          value: tsdb
+      ports:
+        - containerPort: 5432
+          hostPort: 5434
+          protocol: TCP
+
+    # Direct file store: --no-s3 skips the object store and writes each
+    # message under XDG_DATA_HOME, which is the host mount.
+    - name: ear
+      image: localhost/beech-sim_ear:latest
+      securityContext:
+        runAsUser: 0
+      env:
+        - name: EAR_SERVICE_ALIAS
+          value: d1.ear
+        - name: EAR_WORLD_INSTANCE_ALIAS
+          value: d1__1
+        - name: EAR_CONSUME_EXCHANGE
+          value: ear_tx
+        - name: EAR_RABBIT__URL
+          value: amqp://smqPublic:smqPublic@localhost:5672/d1__1
+        - name: XDG_DATA_HOME
+          value: /eventstore
+      volumeMounts:
+        - name: eventstore
+          mountPath: /eventstore
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import os
+          import socket
+          import time
+
+          need = {5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          os.execvp("ear", ["ear", "listen", "--no-s3"])
+          PY
+
+    - name: journal
+      image: localhost/beech-sim_journal:latest
+      env:
+        - name: GJK_SERVICE_ALIAS
+          value: d1.journal
+        - name: GJK_RABBIT__URL
+          value: amqp://smqPublic:smqPublic@localhost:5672/d1__1
+        - name: GJK_DB_URL
+          value: postgresql+psycopg2://gw_journalkeeper:gw_journalkeeper@127.0.0.1:5432/tsdb
+        - name: JOURNAL_ADMIN_URL
+          value: postgresql+psycopg2://postgres:postgres@127.0.0.1:5432/tsdb
+      volumeMounts:
+        - name: journal-boot
+          mountPath: /journal_boot.py
+          readOnly: true
+        - name: house
+          mountPath: /house
+          readOnly: true
+        - name: house-buffer
+          mountPath: /house-buffer
+          readOnly: true
+      command: ["python", "/journal_boot.py"]
+
+    # The API reads the journal as gw_visualizer. The gateway fans the
+    # broker out to the realtime page. Vite on the frontend proxies /api
+    # here, so this port stays inside the pod.
+    - name: web-api
+      image: localhost/beech-sim_web:latest
+      env: &web-env
+        - name: BACKEND_JOURNAL_DB_PASSWORD
+          value: unused
+        - name: BACKEND_BACKOFFICE_DB_PASSWORD
+          value: unused
+        - name: BACKEND_TSDB_URL
+          value: postgresql+asyncpg://gw_visualizer:gw_visualizer@127.0.0.1:5432/tsdb
+        - name: BACKEND_ACCESS_TOKEN_SECRET
+          value: beech-sim
+        - name: BACKEND_RUNNING_LOCALLY
+          value: "true"
+        - name: BACKEND_API_PORT
+          value: "8000"
+        - name: BACKEND_PRICE_FORECAST_URL
+          value: http://127.0.0.1:8532/hw1-isone-me-versant-keene-ps/gw0-price-forecast
+        - name: BACKEND_SCADA_REPO
+          value: thegridelectric/gridworks-scada
+        - name: BACKEND_RABBIT_USER
+          value: smqPublic
+        - name: BACKEND_RABBIT_PASSWORD
+          value: smqPublic
+        - name: BACKEND_RABBIT_HOST
+          value: 127.0.0.1
+        - name: BACKEND_RABBIT_PORT
+          value: "5672"
+        - name: BACKEND_RABBIT_VHOST
+          value: d1__1
+        - name: BACKEND_RABBIT_TLS
+          value: "false"
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import os
+          import socket
+          import time
+
+          need = {5432}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          os.execvp("python", ["python", "-m", "api"])
+          PY
+
+    - name: web-gateway
+      image: localhost/beech-sim_web:latest
+      env: *web-env
+      ports:
+        - containerPort: 8100
+          hostPort: 8100
+          protocol: TCP
+      command: ["sh", "-c"]
+      args:
+        - |
+          python - <<'PY'
+          import os
+          import socket
+          import time
+
+          need = {5432, 5672}
+          deadline = time.monotonic() + 180
+          while need:
+              for port in list(need):
+                  try:
+                      socket.create_connection(("127.0.0.1", port), 1).close()
+                  except OSError:
+                      continue
+                  need.discard(port)
+              if need and time.monotonic() > deadline:
+                  raise SystemExit(
+                      "still closed: " + ",".join(map(str, sorted(need)))
+                  )
+              if need:
+                  time.sleep(1)
+          os.execvp("python", ["python", "-m", "gateway"])
+          PY
+
+    - name: web
+      image: localhost/beech-sim_frontend:latest
+      ports:
+        - containerPort: 5173
+          hostPort: 5173
+          protocol: TCP
+      volumeMounts:
+        - name: house
+          mountPath: /house
+          readOnly: true
+        - name: house-buffer
+          mountPath: /house-buffer
+          readOnly: true
+      command: ["sh", "-c"]
+      args:
+        - |
+          VITE_HOUSE_WEATHER_BUNDLES="$(node -e '
+          const fs = require("fs");
+          const bundles = {};
+          for (const dir of ["/house", "/house-buffer"]) {
+            const layout = JSON.parse(fs.readFileSync(dir + "/hardware-layout.json", "utf8"));
+            const params = JSON.parse(fs.readFileSync(dir + "/operational-params.json", "utf8"));
+            const house = layout.GNodes.find(
+              (gNode) => gNode.GNodeClass === "LeafTransactiveNode"
+            ).Alias;
+            bundles[house] = params.WeatherBundleName;
+          }
+          process.stdout.write(JSON.stringify(bundles));
+          ')" || exit 1
+          export VITE_HOUSE_WEATHER_BUNDLES
+          node -e '
+          const net = require("net");
+          const deadline = Date.now() + 180000;
+          function probe() {
+            const socket = net.connect(8000, "127.0.0.1");
+            socket.on("connect", () => { socket.end(); process.exit(0); });
+            socket.on("error", () => {
+              socket.destroy();
+              if (Date.now() > deadline) process.exit(1);
+              setTimeout(probe, 1000);
+            });
+          }
+          probe();
+          '
+          exec npx vite --host 0.0.0.0 --port 5173 --strictPort
+  volumes:
+    - name: house
+      hostPath:
+        path: ./house
+        type: Directory
+    - name: house-buffer
+      hostPath:
+        path: ./house-buffer
+        type: Directory
+    - name: events
+      hostPath:
+        path: ./events
+        type: DirectoryOrCreate
+    - name: events-buffer
+      hostPath:
+        path: ./events-buffer
+        type: DirectoryOrCreate
+    - name: mosquitto-1884
+      hostPath:
+        path: ./mosquitto-1884.conf
+        type: File
+    - name: flo
+      hostPath:
+        path: ./flo
+        type: Directory
+    - name: bruce
+      persistentVolumeClaim:
+        claimName: beech-sim-bruce
+    - name: price-data
+      emptyDir: {}
+    - name: price-env
+      hostPath:
+        path: ./price.env
+        type: File
+    - name: mm-env
+      hostPath:
+        path: ./mm.env
+        type: File
+    - name: eventstore
+      hostPath:
+        path: ./eventstore
+        type: DirectoryOrCreate
+    - name: journal-boot
+      hostPath:
+        path: ./journal_boot.py
+        type: File
